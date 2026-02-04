@@ -1,0 +1,90 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 200 ランダムイベント発生 - 202～205 石版
+; ------------------------------------------------------------------------------
+
+; □ 202 石版赤
+; ◆ 0 読めなかった
+@KOJO_27_0_SYSTEM_MESSAGE_200_202_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+
+	SELECTCASE KOJO_MODE
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「重要なモノなんだろうけど、読めないんじゃどうしようもない…じゃ済まないか\n　ここから出る為に、なんとかして読めるようにならないと！」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「重要なモノなんだろうけど、読めないんじゃどうしようもないわね…」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「う～ん、似たようなモンすら記憶に無いわね　どんだけ古いのよこの場所」\n"
+	ENDSELECT
+	
+	; キャラクター対応 追加口上
+	FOR LCOUNT, 1, CHARANUM
+		; 自分と娘は除外
+		IF !(NO:LCOUNT == NO:(TARGET) || CFLAG:LCOUNT:104 != 0)
+			
+			; PTに居る
+			IF IN_PT(NO:LCOUNT)
+			
+				SELECTCASE NO:LCOUNT
+				; パチュリー
+				CASE 8
+					; 喪失中
+					IF CFLAG:(GET_ID_FROM_NO(NO:LCOUNT)):29
+						CALL KOJO_27_0_ADD_MESSAGE, @"「こういうの読めそうな魔法使いが、この有様じゃねえ…」\n"
+					; 通常
+					ELSE
+						CALL KOJO_27_0_ADD_MESSAGE, @"「魔法使いってこういうの読めないの？　何だか日常的に読んでそうな雰囲気だけど？」\n"
+					ENDIF
+				
+				; 永琳
+				CASE 29
+					; 喪失中
+					IF CFLAG:(GET_ID_FROM_NO(NO:LCOUNT)):29
+						CALL KOJO_27_0_ADD_MESSAGE, @"「こういうの読めそうな月の頭脳が、こういう時に限って倒れてるのよねえ……」\n"
+					; 通常
+					ELSE
+						CALL KOJO_27_0_ADD_MESSAGE, @"「お師匠様なら読めるかもと思ったんだけど、やっぱダメ？」\n"
+						CALL KOJO_27_0_ADD_MESSAGE, @"「お師匠様でも読めないの？　もしかしてこの世界の文字じゃないとか？」\n"
+					ENDIF
+					
+				; 小鈴
+				CASE 107
+					; 喪失中
+					IF CFLAG:(GET_ID_FROM_NO(NO:LCOUNT)):29
+						CALL KOJO_27_0_ADD_MESSAGE, @"「どんな本でも読める子がいるけど、今はタイミングが悪いねえ」\n"
+					; 通常
+					ELSE
+						CALL KOJO_27_0_ADD_MESSAGE, @"「どう%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(NO:LCOUNT))%、読めそう？　やっぱり本じゃないと読めない？」\n"
+					ENDIF
+				ENDSELECT
+				
+			; PTに居ない
+			ELSE
+
+			ENDIF
+		ENDIF
+	NEXT
+RETURN 1
+
+
+; □ 203 石版青
+; ◆ 0 読めなかった
+@KOJO_27_0_SYSTEM_MESSAGE_200_203_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 石版関連の口上は 202 石版赤 で統一
+	CALL KOJO_27_0_SYSTEM_MESSAGE_200_202_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN 1
+
+
+; □ 204 石版黄
+; ◆ 0 読めなかった
+@KOJO_27_0_SYSTEM_MESSAGE_200_204_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 石版関連の口上は 202 石版赤 で統一
+	CALL KOJO_27_0_SYSTEM_MESSAGE_200_202_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN 1
+
+
+; □ 205 石版緑
+; ◆ 0 読めなかった
+@KOJO_27_0_SYSTEM_MESSAGE_200_205_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 石版関連の口上は 202 石版赤 で統一
+	CALL KOJO_27_0_SYSTEM_MESSAGE_200_202_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN 1

@@ -1,0 +1,102 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 16 同室に敵
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_16(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+#DIM ENEMY_COUNT
+	
+	VARSET ENEMY_COUNT
+	
+	; 同室に敵がいるかチェック
+	FOR LCOUNT, 0, FLAG:1
+		SIF FLAG:5 == DA:LCOUNT:4 && (DA:LCOUNT:0 != 18 || DA:LCOUNT:45 == 1)
+			ENEMY_COUNT++
+	NEXT
+	
+	; 同室に敵は居ない
+	SIF ENEMY_COUNT == 0
+		RETURN 0
+		
+	; 汎用口上
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「この部屋、エッチな敵さんがいるみたいね♥」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「近くに敵が居ると、つい聞き耳を立てちゃうのよね」\n"
+	ENDSELECT
+	
+	; 部屋に4体以上の敵が居る(現在の所、同時出現数以上で設定)
+	IF ENEMY_COUNT >= 4
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「この部屋、エッチな気配がいっぱいするぅ♥」\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（沢山の敵が居る部屋……　逃げる前に捕まったら……）\n"
+		CASE "強気"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「流石のあたしでも、一度に大量の敵と戦うのは避けたいわね」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ちょっとこの部屋、敵さん多すぎじゃない！？）\n"
+		ENDSELECT
+	ENDIF
+	
+	; 結界部屋に居る
+	IF FLAG:5 == FLAG:98
+		; 催眠中
+		IF KOJO_27_0_IS_HYPNO()
+			; 催眠種類で分岐
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				
+			; 発情・感情操作系
+			CASE 1
+				
+			; 無意識・認識操作系
+			CASE 2
+				RETURN 0
+			ENDSELECT
+		ENDIF
+		
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんなカワイイ子が居るのに結界の所為で襲えないなんて、敵さんも災難ねえ♥」\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「結界の中に敵は入って来れないけど……　いつかは出なきゃならないし……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「近くに敵が居るけど……　け、結界張ってるから大丈夫だよね……」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「安全な結界の中に居るとはいえ、目の前に敵さんが居るってのは気が休まらないわ」\n"
+		ENDSELECT
+		
+	; 通常の部屋に居る
+	ELSE
+		; 催眠中
+		IF KOJO_27_0_IS_HYPNO()
+			; 催眠種類で分岐
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				
+			; 発情・感情操作系
+			CASE 1
+				
+			; 無意識・認識操作系
+			CASE 2
+				RETURN 0
+			ENDSELECT
+		ENDIF
+		
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（おっきな声出したら、近くの敵に襲われちゃうかも♥）\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（同じ部屋に敵がいる……　襲われちゃったら、あたし……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（近くの敵に気付かれたらどうしよう……）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（こっちが敵に気付いてるんだから、相手も気付いてる可能性はあるわよね……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（同じ部屋に敵が居るとか、気が気じゃないわ）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（近くの敵に気付かれないよう、出来るだけ気をつけて……）\n"
+		ENDSELECT
+	ENDIF
+RETURN 1

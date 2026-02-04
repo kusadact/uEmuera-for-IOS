@@ -1,0 +1,78 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 4 ふたなり
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_4(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; はえてない！
+	SIF !GET_PENIS(TARGET)
+		RETURN 0
+			
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 通常時
+	; 射精中毒 Lv0
+	IF ABL:12 == 0
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（射精するのって……　気持ちよかったなぁ……♥）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「股間にぶらさがってるコレ、なんとかなんないかしら」\n"
+		ENDSELECT
+		
+	; 射精中毒 Lv1
+	ELSEIF ABL:12 == 1
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（オスってずるいわ、射精なんて気持ちいいこと秘密にしてるんだもの）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（このままおちんちん付きっぱなしだと、多分あたし……射精にドハマリしちゃう♥）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（おちんちんがある状態で歩くのって、どうにも落ち着かないわ）\n"
+		ENDSELECT
+		
+	; 射精中毒 Lv2
+	ELSEIF ABL:12 == 2
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（えっちな事なんて考えてなかったのに、かってにちんぽ勃っちゃうとか反則よぉ♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（……あっ♥　……おちんちん、ちょっと勃ってきちゃった♥♥）\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（だめぇっ♥　おちんちんがっ、きもちいいの欲しがってるっ♥♥）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"\d%CALLNAME:TARGET%は勃起したペニスを無意識に\@(BASE:3 == 0) ? しごいている # 服の上から撫で回している \@…\d\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あたしには雄のモノなんてついてない……　射精は気持ちよくない……　そう思い込まないと！）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（――ッ！？　あたし今、おちんちん射精するコトばかり考えてたっ！？）\n"
+			
+		ENDSELECT
+		
+	; 射精中毒 Lv3以上
+	ELSEIF ABL:12 >= 3 || TALENT:121
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（えっちな事ばっか考えてるオスの気持ちが、わかった気がするわ……\n　ちんぽの所為で、あたしも……♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（誰かあたしのおちんぽ……　いじめてくれないかなぁ♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（どうしよ……っ♥　おちんぽ射精っ♥　したくなってきちゃったぁ♥♥）\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（やだぁっ♥　やだあぁぁっ♥　あたしの頭ぁ……ちんぽに支配されちゃう……っ♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（おちんぽパンパンに張って……っ……！　誰でもいいから犯したいっ！！）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ううっ……　射精したい……っ　おちんちん射精したいぃっ……っ）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（うううっ……！　なんでっ……おちんちん……っ　勝手に勃起して……っ！？）\n"
+		ENDSELECT
+	ENDIF
+RETURN 1

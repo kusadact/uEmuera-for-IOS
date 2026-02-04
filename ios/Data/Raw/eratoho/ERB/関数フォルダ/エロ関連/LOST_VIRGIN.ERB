@@ -1,0 +1,249 @@
+﻿;処女喪失処理
+;ARG:1	特殊回避条件指定（0：指定なし　1：HP満タンで回避可能　2：回避不可）
+;ARG:2	喪失理由(1:敵 2:味方合意 3:味方無理矢理 4:罠 5:バイブ自慰 6:出産)
+;ARG:3	相手ID（喪失理由１，２，３の場合のみ）
+@LOST_VIRGIN(CHARA_ID, ARG:1 = 0, ARG:2, ARG:3)
+#DIM CHARA_ID
+#DIM MP_DAMAGE
+#DIM MP_DAMAGE_RATE
+#DIM AVOID_FLAG
+
+VARSET AVOID_FLAG
+
+
+;ありえないIDのキャラは除外
+SIF !INRANGE(CHARA_ID, 0, CHARANUM - 1)
+	RETURN
+
+;非処女も除外
+SIF TALENT:CHARA_ID:0 == 0
+	RETURN
+
+;貞操帯による処女喪失回避
+IF CFLAG:CHARA_ID:47 == 1
+	PRINTFORML 触手把貞操帯的鎖孔当做女性性器的替代的插了進去開始了侵犯……
+	PRINTFORMW 不知為何好像連接到了自己的体内一樣讓自己也感覚被異物插入了……
+	RETURN
+ENDIF
+
+
+;回避判定
+;-------------------------------------------------------------------------------
+;特殊回避条件：HPが最大値なら回避可能
+IF ARG:1 == 1
+	SIF BASE:CHARA_ID:HP == MAXBASE:CHARA_ID:HP
+		AVOID_FLAG = 1
+ENDIF
+
+;通常回避条件：敵が相手
+IF ARG:2 == 1
+	;HPが最大値なら回避可能
+	IF BASE:CHARA_ID:HP == MAXBASE:CHARA_ID:HP
+		AVOID_FLAG = 1
+	ENDIF
+	
+	;HPが1/3以上で確立回避
+	IF BASE:CHARA_ID:HP >= (MAXBASE:CHARA_ID:HP / 3)
+		IF BASE:CHARA_ID:HP > RAND:(MAXBASE:CHARA_ID:HP + 1)
+			AVOID_FLAG = 1
+		ENDIF
+	ENDIF
+	
+	;戦闘素質が敵より1割以上高いと確率で回避、戦闘力の差の半分が固定補正
+	IF (ABL:CHARA_ID:98 * 11 / 10) > DA:(ARG:3):5
+		IF (RAND:(ABL:CHARA_ID:98) + ((ABL:CHARA_ID:98 - DA:(ARG:3):5) / 2)) > DA:(ARG:3):5
+			AVOID_FLAG = 1
+		ENDIF
+	ENDIF
+ENDIF
+
+;通常回避条件：非絶頂中
+IF !CFLAG:CHARA_ID:35
+	;V防御コマンド使用、又は非拘束状態なら回避
+	IF CFLAG:CHARA_ID:50 == 53 || CFLAG:CHARA_ID:20 == 0
+		AVOID_FLAG = 1
+	ENDIF
+ENDIF
+
+;特殊回避条件：いかなる状況でも回避不可
+IF ARG:1 == 2
+	AVOID_FLAG = 0
+ENDIF
+
+
+;実処理
+;-------------------------------------------------------------------------------
+;処女喪失を回避
+IF AVOID_FLAG
+	;喪失回避メッセージ
+	CALL PRINT_MESSAGE(CHARA_ID, 136, 0, CALLNAME:CHARA_ID, "", 0, 2)
+	;敵の攻撃かつ、自分よりも弱い敵には追加メッセージを表示
+	IF ARG:2 == 1 && (ABL:CHARA_ID:98 * 11 / 10) > DA:(ARG:3):5
+		CALL PRINT_MESSAGE(CHARA_ID, 136, 0, CALLNAME:CHARA_ID, "", 0, 4)
+	ENDIF
+	
+;処女消失
+ELSE
+	;喪失の直前メッセージ
+	CALL PRINT_MESSAGE(CHARA_ID, 136, 0, CALLNAME:CHARA_ID, "", 0, 1)
+	;敵の攻撃かつ、自分よりも弱い敵には追加メッセージを表示
+	IF ARG:2 == 1 && (ABL:CHARA_ID:98 * 11 / 10) > DA:(ARG:3):5
+		CALL PRINT_MESSAGE(CHARA_ID, 136, 0, CALLNAME:CHARA_ID, "", 0, 3)
+	ENDIF
+	
+	;---------------------------------------------------------------------------
+	;基本MPダメージ
+	MP_DAMAGE = 1000
+
+	;貞操観念
+	IF TALENT:CHARA_ID:30
+		MP_DAMAGE = MP_DAMAGE * 3 / 2
+	ENDIF
+	IF TALENT:CHARA_ID:31
+		MP_DAMAGE = MP_DAMAGE / 2
+	ENDIF
+
+
+	;発情or絶頂中は少し軽減
+	IF CFLAG:CHARA_ID:28 || CFLAG:CHARA_ID:35
+		MP_DAMAGE = MP_DAMAGE * 8 / 10
+	ENDIF
+
+
+	;PTメンバー以外はこっそり軽減
+	IF CHECK_MEMBER_FROM_ID(CHARA_ID) == 0
+		MP_DAMAGE /= 3
+	ENDIF
+
+	;戦闘素質差による増減
+	IF ARG:2 == 1 && (ABL:CHARA_ID:98 * 11 / 10) > DA:(ARG:3):5
+		MP_DAMAGE += ABL:(CHARA_ID):98 * 100 / DA:(ARG:3):5
+	ENDIF
+
+	;---------------------------------------------------------------------------
+	;基本MPダメージ倍率
+	MP_DAMAGE_RATE = 100
+
+	;触手中毒によるMPダメージ倍率補正
+	SELECTCASE ABL:CHARA_ID:11
+	CASE 0
+		MP_DAMAGE_RATE -= 0
+	CASE 1
+		MP_DAMAGE_RATE -= 10
+	CASE 2
+		MP_DAMAGE_RATE -= 25
+	CASEELSE
+		MP_DAMAGE_RATE -= 50
+	ENDSELECT
+
+	;TPによるMPダメージ倍率補正
+	SELECTCASE BASE:CHARA_ID:TP
+	CASE IS <= 25
+		MP_DAMAGE_RATE -= 15
+	CASE IS <= 50
+		MP_DAMAGE_RATE -= 10
+	CASE IS <= 75
+		MP_DAMAGE_RATE -= 5
+	ENDSELECT
+	
+	MP_DAMAGE = MP_DAMAGE * MP_DAMAGE_RATE / 100
+	
+	;---------------------------------------------------------------------------
+	;処女喪失メッセージ表示
+	SELECTCASE ARG:2
+	CASE 1
+		CALL PRINT_MESSAGE(CHARA_ID, 136, 0, CALLNAME:CHARA_ID, "", MP_DAMAGE)
+	CASE 2
+		CALL PRINT_MESSAGE(CHARA_ID, 136, 3, CALLNAME:CHARA_ID, "", MP_DAMAGE)
+	CASE 3
+		CALL PRINT_MESSAGE(CHARA_ID, 136, 4, CALLNAME:CHARA_ID, "", MP_DAMAGE)
+	CASE 4
+		CALL PRINT_MESSAGE(CHARA_ID, 136, 5, CALLNAME:CHARA_ID, "", MP_DAMAGE)
+	CASE 5
+		CALL PRINT_MESSAGE(CHARA_ID, 136, 1, CALLNAME:CHARA_ID, "", MP_DAMAGE)
+	CASE 6
+		CALL PRINT_MESSAGE(CHARA_ID, 136, 2, CALLNAME:CHARA_ID, "", MP_DAMAGE)
+	ENDSELECT
+	
+	;---------------------------------------------------------------------------
+	;子孫が処女喪失した場合、先祖が同じPTに居たらMPダメージ
+	IF CFLAG:CHARA_ID:104
+		CALL LOST_VIRGIN_OFFSPRING(1, NO:CHARA_ID, CFLAG:CHARA_ID:104)
+		CALL LOST_VIRGIN_OFFSPRING(FLAG:10, NO:CHARA_ID, CFLAG:CHARA_ID:104)
+		CALL LOST_VIRGIN_OFFSPRING(FLAG:11, NO:CHARA_ID, CFLAG:CHARA_ID:104)
+	ENDIF
+
+	;屈服刻印追加
+	IF TALENT:CHARA_ID:0 == 1
+		CALL GET_VIRGIN_MARK(CHARA_ID, DA:(ARG:3):0)
+	ENDIF
+	
+	;口上で処女膜が再生物か判定するので喪失タイミングは後
+	TALENT:CHARA_ID:0 = 0
+	
+	IF CHECK_MEMBER_FROM_ID(CHARA_ID)
+		CALL ADD_FEELING(CHARA_ID, -20)
+	ENDIF
+
+	IF CFLAG:CHARA_ID:29 == 0
+		BASE:CHARA_ID:MP = LIMIT(BASE:CHARA_ID:MP - MP_DAMAGE, 0, MAXBASE:CHARA_ID:MP)
+		IF BASE:CHARA_ID:MP <= 0
+			CALL HEART_BREAK(CHARA_ID)
+		ENDIF
+	ENDIF
+
+	;ED用記録
+	IF ARG:2 == 1
+		CALL ADD_HISTORY(DAY, CHARA_ID,, 2, ARG:2, @"%SAVESTR:(ARG:3)%")
+	ELSE
+		CALL ADD_HISTORY(DAY, CHARA_ID, ARG:3, 2, ARG:2)
+	ENDIF
+ENDIF
+
+
+;処女喪失の条件を満たすかどうかだけ確認する
+;ARG:0	対象キャラ
+;ARG:1	EPダメージがある場合、ダメージを指定
+@LOST_VIRGIN_CHECK(CHARA_ID, EP_DAMAGE = 0)
+#FUNCTION
+#DIM CHARA_ID
+#DIM EP_DAMAGE
+
+SIF CHARA_ID == 0
+	RETURNF 0
+
+SIF TALENT:CHARA_ID:0 == 0
+	RETURNF 0
+
+SIF (CFLAG:CHARA_ID:50 == 53 || CFLAG:CHARA_ID:20 == 0) && !CFLAG:CHARA_ID:35 && BASE:CHARA_ID:EP > EP_DAMAGE
+	RETURNF 0
+
+RETURNF 1
+
+
+;子孫の処女喪失
+;ARG:0	チェック対象キャラ
+;ARG:1	キャラNO
+;ARG:2	喪失キャラが何代目か
+@LOST_VIRGIN_OFFSPRING(ARG:0, ARG:1, ARG:2)
+
+IF ARG:0 == 0
+	RETURN
+ENDIF
+
+IF NO:(ARG:0) != ARG:1
+	;他所の子は気にならない（ということにしておく）
+	RETURN
+ENDIF
+
+IF CFLAG:(ARG:0):104 >= ARG:2
+	;自分、またはおかーさんの処女喪失は計算しない
+	RETURN
+ENDIF
+
+;MPダメージ計算
+;100を基準にし、１世代離れるごとに減少
+LOCAL:1 = 100 / (ARG:2 - CFLAG:(ARG:0):104)
+
+CALL DAMAGE_COMMON(ARG:0, 1, LOCAL:1)
+

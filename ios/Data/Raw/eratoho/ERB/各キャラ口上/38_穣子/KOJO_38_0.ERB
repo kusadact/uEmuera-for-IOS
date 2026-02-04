@@ -1,0 +1,1650 @@
+﻿;*********************************************************
+;　東方触手宮　穣子口上　　　★スーパー静葉口上の改変  プリントDLだと白かな。
+;		2020 11/1
+;*********************************************************
+
+;	CFLAG
+;	800	スーパーモード　１オン　２オフ
+;	801	トラウマ値	エンディング分岐につかおうかなー
+;	802	相棒関連　０そもそも迷宮内にいない　１迷宮内にいる　２目撃情報あり　３であった　４遺品発見済み　５穣子生還せず(エンディングで使用)　６穣子がいないといわれた
+;	803 相棒のキャラID
+;	804 雑多な判定
+
+;口上選択時のタイトル
+@KOJO_TITLE_38_0
+RESULTS = 東方触手宮　スーパー穣子口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_38_0
+PRINTFORML 静葉姉さんの秋モードに合わせる。
+PRINTFORML では、よい触手ライフを…
+
+;文字色　山吹色、娘は赤朽ち葉
+@KOJO_DEFAULT_COLOR_38_0
+IF CFLAG:104
+	RETURN RGBCOLOR(236, 124, 79)
+ELSE
+	RETURN RGBCOLOR(228, 162, 11)
+ENDIF
+
+;口上本体
+@KOJO_38_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+;OP、EDスキップの為にシステムメッセージとばす
+CALL KOJO_38_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;文字色設定
+SETCOLOR CFLAG:700
+
+	SELECTCASE ARG:0
+		;オープニング
+		CASE 203
+
+
+			PRINTFORMDL 【幻想郷に触手宮の魔の手、迫る】
+			PRINTFORMDL 
+			PRINTFORMDL ～衝撃のスーパー秋姉妹登場～
+			PRINTFORMDL 
+
+			WAIT
+
+			PRINTFORMDL 
+			PRINTFORMDL 続発する神隠し。
+			PRINTFORMDL 
+			PRINTFORMDL 戦いが人を動かし、別れを生み、
+			PRINTFORMDL そして出会いが、次の悲劇を呼ぶ。
+			PRINTFORMDL 
+			PRINTFORMDL 
+
+			WAIT
+
+			PRINTFORMDL 寂しさと終焉の象徴　秋　静葉
+			PRINTFORMDL 豊かさと稔りの象徴　秋　穣子
+			PRINTFORMDL 
+			PRINTFORMDL 秋を背負った宿命の二人に、今、紅色の戦いの時来たる。
+			PRINTFORMDL 
+			PRINTFORMDL 迷宮に秘められた人妖総苗床化計画の謎とは！？
+			PRINTFORMDL 
+
+			WAIT
+
+			PRINTFORMDL 運命が姉妹を導き、秋の神話は今、蘇る。
+			PRINTFORMDL 
+			PRINTFORMDL あなたはまだ本当の秋を知らない
+			PRINTFORMDL 
+
+
+			WAIT
+
+
+
+		;キャラ選択
+		CASE 159
+
+
+			DRAWLINE
+
+			PRINTL 
+
+			PRINTFORMDL 【穣子口上からのお知らせ】
+			PRINTL 
+			PRINTFORMDL 今の季節？
+			PRINTFORMDL もちろん秋姉妹のテンションが荒ぶり狂気に満ちる秋ですよねー！
+	
+			;スーパーモードオン
+			CFLAG:800 = 1
+
+
+			PRINTFORML 
+			PRINTFORML 
+
+			DRAWLINE
+
+			WAIT
+			
+			
+		ENDSELECT
+
+
+
+
+;スーパーモード口上
+IF CFLAG:800 == 1
+
+	;寝てる
+	IF CFLAG:25 && CFLAG:29 != 1
+
+	SELECTCASE ARG:0
+		;HPダメージ
+		CASE 12
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「冬は…休業……」
+				CASE 1
+					PRINTFORML 「もぅ……収穫の時期ぃ？」
+				CASEELSE
+					PRINTFORML 「……まだ生育中ぅ」
+			ENDSELECT
+		;寄生、性攻撃
+		CASE 14 ,16
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「その種は、撒かないで…zzz」
+				CASE 1
+					PRINTFORML 「そういう農法を教えた覚えは……むにゃ」
+				CASE 2
+					PRINTFORML 「わたしぃ……ふぃ～……ムギムギ……ふゃ～……」
+				CASEELSE
+					PRINTFORML 「豊かで柔らかいって……すぅ……」
+			ENDSELECT
+	ENDSELECT
+
+;*****************************************************
+	
+;通常時
+ELSE
+	SELECTCASE ARG:0
+		
+		CASE 1
+
+			IF ARG:1 > 9 && ARG:1 < 35 && CFLAG:28 > 0
+				SELECTCASE RAND:21
+					CASE 0
+						PRINTFORML 「こ、この成分はぁ♥」
+					CASE 1
+						PRINTFORML 「こ、こんな状態じゃ♥」
+					CASE 2
+						PRINTFORML 「ひ、ひきょうものッ♥」
+					CASE 3
+						PRINTFORML 「はぁ♥はぁ♥はぁ♥」
+					CASE 4
+						PRINTFORML 「ふぅーっ♥ふぅーっ♥」
+					CASE 5
+						PRINTFORML 「火照ってるのにッ♥」
+					CASE 6
+						PRINTFORML 「ゆるさないんだからぁ♥」
+					CASE 7
+						PRINTFORML 「よくもこんなマネをッ♥」
+					CASE 8
+						PRINTFORML （濡れてきちゃう♥）
+					CASE 9
+						PRINTFORML （静葉お姉ちゃん、助けて♥）
+					CASE 10
+						PRINTFORML （どうしよう♥）
+					CASE 11
+						PRINTFORML （疼いちゃうよぉ♥）
+					CASE 12
+						PRINTFORML （ア、アソコが♥）
+					CASE 13
+						PRINTFORML （えっちな気分にされてる♥）
+					CASE 14
+						PRINTFORML （ク、クリが♥）
+					CASE 15
+						PRINTFORML （む、胸ぇ♥乳首が♥）
+					CASE 16
+						PRINTFORML （あっ♥いま、ジワって♥）
+					CASE 17
+						PRINTFORML （敏感にされたッ♥）
+					CASE 18
+						PRINTFORML （無理っ♥今は無理♥）
+					CASE 19
+						PRINTFORML （これじゃ、漏れちゃう♥）
+					CASE 20
+						PRINTFORML （えっちな香りになってたらどうしよう……♥）
+				ENDSELECT
+
+				GOTO KOJO_38_END_LOOP
+			ENDIF
+
+
+			SELECTCASE ARG:1
+				;防御
+				CASE 1
+					;発情
+					IF CFLAG:28 > 0
+						PRINTFORML 「な、なんなの、この農薬の効果は……♥」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「この先は行き止まり！」
+							CASE 1
+								PRINTFORML 「これ以上はさせない！」
+							CASE 2
+								PRINTFORML 「無謀な連作はダメ！違う畑にしなさい！」
+						ENDSELECT
+	;				;全裸
+	;				ELSEIF !BASE:CP
+	;					SELECTCASE RAND:3
+	;						CASE 0
+	;							PRINTFORML 
+	;						CASE 1
+	;							PRINTFORML 
+	;						CASE 2
+	;							PRINTFORML 
+	;					ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「この防御を崩せたカラスは、一羽たりともいないわ！」
+							CASE 1
+								PRINTFORML 「秋のカーテン！」
+							CASE 2
+								PRINTFORML 「春の眠さも、夏の暑さも、冬の寒さも、全部耐えてきたんだから！」
+						ENDSELECT
+					ENDIF
+				;アイテム
+				CASE 2
+					PRINTFORML 「五穀豊穣ファイブハンド！」
+				;前進
+				CASE 3
+					PRINTFORML 「一歩も退かないんだから！」
+				;後退
+				CASE 4
+					PRINTFORML 「次はこっちを整地！」
+				;逃走
+				CASE 5
+					;発情
+					IF CFLAG:28 > 0
+						PRINTFORML 「桃色果実が溢れちゃう♥ ど、どこかで間引きしないとぉ♥」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「くっ！秋の力が足りないの！？」
+							CASE 1
+								PRINTFORML 「覚えてなさい！次は負けないんだから！」
+							CASE 2
+								PRINTFORML 「焦らないで！まだちゃんと焼けてないわ！」
+							CASE 3
+								PRINTFORML 「疾き事、秋風の如く！」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「足には自信があるのよ！」
+							CASE 1
+								PRINTFORML 「秋はね、状況の移り変わりが早い物なのよ！」
+							CASE 2
+								PRINTFORML 「安心なさい！秋は逃げない。また巡ってくるものよ！」
+						ENDSELECT
+					ENDIF
+				
+				;弾幕攻撃
+				;弱弾幕
+				CASE 10
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						PRINTFORML 「はぁ……はぁ……あ、秋パワーが品切れ寸前ね…」
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ライスシャワー！」
+							CASE 1
+								PRINTFORML 「グレープシードマシンガン！」
+
+						ENDSELECT
+					;その他
+					ELSE
+						PRINTFORML 「私の秋から、簡単に逃げられると思わないで！」
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ライスシャワー！」
+							CASE 1
+								PRINTFORML 「グレープシードマシンガン！」
+
+						ENDSELECT
+
+					ENDIF
+				;中弾幕
+				CASE 11
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						PRINTFORML 「はぁ…はぁ……」
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「最後の悪あがきになるかもね……。いけ！技の木枯らし１号！」
+							CASE 1
+								PRINTFORML 「もう後がないかもね……。いけ！力の木枯らし２号！」
+							CASE 2
+								PRINTFORML 「こうなったら逆転の八つ裂きを狙うしか……。スイートポテトォ、スライサァァァァッ！」
+
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「大人しく脱穀されなさい！」
+							CASE 1
+								PRINTFORML 「実りのウニをくらいなさい！」
+							CASE 2
+								PRINTFORML 「さあ、ありがたく踏まれなさい！敵性農家の農作物のようにね！」
+							CASE 3
+								PRINTFORML 「笑止千万、不届き千万！」
+							CASE 4
+								PRINTFORML 「静葉姉さんと私、どちらに叱られたいの？」
+						ENDSELECT
+					ENDIF
+				;強弾幕
+				CASE 12
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						PRINTFORML 「はぁ…はぁ……まだおかわりする気？」
+					;その他
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「侵略すること芋焼火の如し！」
+							CASE 1
+								PRINTFORML 「アンタ達の根っこ、すべて刈り取る！」
+							CASE 2
+								PRINTFORML 「アンタ達の農作業は今期で廃業よ！」
+							CASE 3
+								PRINTFORML 「焼き芋ファイアー！」
+						ENDSELECT
+
+
+					ENDIF
+				;溜め撃ち
+				CASE 13
+					;溜め
+					IF CFLAG:31 == 2
+						PRINTFORML 「そろそろ収穫タイムよ！！」
+					;発射
+					ELSE
+						PRINTFORML 「あたり一面、整地してみせる！」
+						PRINTFORML 「オータムパワァァ！エキストリームマックスーーーッ！！」
+					ENDIF
+				;ばら撒き弾
+				CASE 14
+					PRINTFORML 「くっ！持ちきれない秋パワーが溢れ出しちゃう！」
+				;貫通弾
+				CASE 15
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「これがッ！ノンストップ秋メドレー！」
+						CASE 1
+							PRINTFORML 「貫け！農符『千石どおし』！」
+
+					ENDSELECT
+
+				;消耗武器
+				CASE 20 TO 25
+					SELECTCASE RAND:6
+						CASE 0
+							PRINTFORML 「ズタズタにされて、体中から液漏れ放水を始めるといいわ！」
+						CASE 1
+							PRINTFORML 「農機具の性能、甘く見ないでよ！」
+						CASE 2
+							PRINTFORML 「さあ、存分に見るがいいわ！秋に似合う農具の活躍を！」
+						CASE 3
+							PRINTFORML 「ああっ、全自動ってこんなにも素晴らしいのね！」
+						CASE 4
+							PRINTFORML 「千の刃よ、邪悪を切り裂け！農符『千刃コキコキ』！」
+						CASE 5
+							PRINTFORML 「武器の扱い方？収穫祭の流鏑馬で覚えたわ！ハイヤァーッ！」
+
+					ENDSELECT
+				
+				;非消耗武器
+				CASE 30 TO 34
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「さあ、地ならしの時間ね！」
+						CASE 1
+							PRINTFORML 「次に耕されたい奴から、前に出なさい！」
+						CASE 2
+							PRINTFORML 「ひゃーん！一揆の力が私にも宿るわー！」
+						CASE 3
+							PRINTFORML 「秋の魅力、存分に味わうがいいわ！」
+						CASE 4
+							PRINTFORML 「ハメ技ってのはこうやってやるのよ！マッハふみふみ！」
+					ENDSELECT
+				
+				;拘束離脱
+				CASE 42
+					IF ARG:3 == 0
+						;丸呑み
+						IF CFLAG:21
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「あ、秋がこなくなっちゃってもいいの！？」
+								CASE 1
+									PRINTFORML 「果実を持ち歩きすぎたかも……」
+								CASE 2
+									PRINTFORML 「食欲の秋だからって、これは駄目！」
+								CASE 3
+									PRINTFORML 「そろそろお腹いっぱいでしょ？」
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:5
+								CASE 0
+									PRINTFORML 「もうっ！変な匂いがついちゃうじゃない！」
+								CASE 1
+									PRINTFORML 「せっかくの香水が台無し！」
+								CASE 2
+									PRINTFORML 「溶けちゃう！果物とけちゃう！」
+								CASE 3
+									PRINTFORML 「とりあえずウニで刺してみよう……」
+								CASE 4
+									PRINTFORML 「ダメよ！そんな包装じゃ、果物が痛むでしょ！」
+							ENDSELECT
+							ENDIF
+						;拘束
+						ELSE
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「稲穂じゃらしの要領で……」
+								CASE 1
+									PRINTFORML 「悔しい…こうも日干しにされるなんて…」
+								CASE 2
+									PRINTFORML 「私よりも、赤とんぼでも捕まえたほうが楽しいんじゃない！？」
+								CASE 3
+									PRINTFORML 「秋はみんなのものでしょ！？」
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「そんなに私の香りをスンスンしないでよ！」
+								CASE 1
+									PRINTFORML 「こうしている間にも貴重な秋タイムが……」
+								CASE 2
+									PRINTFORML 「いたずらが趣旨のお祭りもあるにはあるけど……」
+								CASE 3
+									PRINTFORML 「葡萄ならわけてあげるから、離してってば！」
+							ENDSELECT
+							ENDIF
+						ENDIF
+					ENDIF
+				;力溜め
+				CASE 43
+					;発情
+					IF CFLAG:28 > 0
+						PRINTFORML 「農薬の効果が残っているけど♥ やってみるしか♥」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「落ち着いて小さい秋の数を数えれば、次でどうにかなるはず」
+							CASE 1
+								PRINTFORML 「連作を避ければ大丈夫のはず……！」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「収穫はタイミング勝負。早すぎても遅すぎても駄目……」
+							CASE 1
+								PRINTFORML 「まずは土壌の改善を図らないと……」
+						ENDSELECT
+					ENDIF
+				
+				;諦め
+				CASE 44
+					
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ああ…秋パワーがもう……」
+						CASE 1
+							PRINTFORML 「姉さん……ごめんなさい…」
+						CASEELSE
+							PRINTFORML 「わ、私は秋のテンションにやられてなんて事を……」
+					ENDSELECT
+				;動けない●ひるみ関係なく出る　正直つかいにくいきがする
+				CASE 45
+
+				
+				;Ａを守る
+				CASE 50
+					PRINTFORML 「絶対に嫌……！」
+				;Ｂを守るなんてとんでもない！
+				CASE 51
+					PRINTFORML 「味見されるなんて絶対に嫌……！」
+				;Ｃを守る
+				CASE 52
+					PRINTFORML 「剥かれるなんて絶対に嫌……！」
+
+				;Ｖを守る
+				CASE 53
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「種をまかれるなんて絶対に嫌……！」
+						CASE 1
+							PRINTFORML 「もう種まきの季節は終わり……！」
+						CASE 2
+							PRINTFORML 「無理矢理、耕されるなんて絶対に嫌……！」
+					ENDSELECT
+			ENDSELECT
+
+			
+
+				
+		;HPダメージ
+		CASE 12
+
+			;HPがないまたは喪失
+			IF BASE:HP == 0 || CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「げほっ……」
+					CASE 1
+						PRINTFORML 「暴力の秋……」
+					CASEELSE
+						PRINTFORML 「……ぅぅ」
+				ENDSELECT
+			;少し痛い
+			ELSEIF ARG:2 >= 400
+
+
+
+				;通常攻撃の属性による追加口上
+				SELECTCASE TFLAG:89
+				; 鞭
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「痛っ…」
+						CASE 1
+							PRINTFORML 「きゃぁぁぁ！」
+						CASEELSE
+							PRINTFORML 「げほっげほっ……」
+					ENDSELECT
+				;吸収
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「力がっ…」
+						CASE 1
+							PRINTFORML 「何よこれぇ……」
+						CASEELSE
+							PRINTFORML 「あああぁ……」
+					ENDSELECT
+				;毒
+				CASE 2
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「げほっげほっ…」
+						CASE 1
+							PRINTFORML 「新型の除草剤！？」
+						CASEELSE
+							PRINTFORML 「く、苦しい……」
+					ENDSELECT
+				;関節技
+				CASE 3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「痛っ…」
+						CASE 1
+							PRINTFORML 「きゃぁぁぁ！」
+						CASEELSE
+							PRINTFORML 「や、やめっ……」
+					ENDSELECT
+				;首絞め
+				CASE 4
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「げほっげほっ…」
+						CASE 1
+							PRINTFORML 「かはっ……」
+						CASEELSE
+							PRINTFORML 「く、苦しい……」
+					ENDSELECT
+				;電撃
+				CASE 5
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ああああああっ！」
+						CASE 1
+							PRINTFORML 「きゃぁぁぁ！」
+						CASEELSE
+							PRINTFORML 「やっ、やめてぇぇ！」
+					ENDSELECT
+				;打撃
+				CASE 6
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「痛っ…」
+						CASE 1
+							PRINTFORML 「きゃぁぁぁ！」
+						CASEELSE
+							PRINTFORML 「げほっげほっ……」
+					ENDSELECT
+				;斬撃
+				CASE 7
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「痛っ…」
+						CASE 1
+							PRINTFORML 「きゃぁぁぁ！」
+						CASEELSE
+							PRINTFORML 「やっ、やめっ！」
+					ENDSELECT
+				;疲労
+				CASE 8
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「力がっ…」
+						CASE 1
+							PRINTFORML 「何よこれぇ……」
+						CASEELSE
+							PRINTFORML 「あああぁ……」
+					ENDSELECT
+
+				ENDSELECT
+
+
+
+
+			;あんまり痛くない
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「この程度の攻撃くらいで！」
+					CASE 1
+						PRINTFORML 「よくもやったわね！」
+					CASEELSE
+						PRINTFORML 「これくらいなら！」
+				ENDSELECT
+			ENDIF
+		;衣服攻撃
+		CASE 13
+			;喪失　触手服
+			IF CFLAG:29 || CFLAG:40
+
+			ELSEIF BASE:3 > 0
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「良くも秋の魅力あふれる私の衣装を！」
+					CASE 1
+						PRINTFORML 「セオリー通りに皮を剥いてきたわね！」
+					CASE 2
+						PRINTFORML 「め、めくっていいのは秋へのカウントダウンカレンダーだけよ！」
+					CASE 3
+						PRINTFORML 「いつまでもそうやってムギムギできるとは思わないことね！」
+					CASEELSE
+						PRINTFORML 「……どうやら擦りっ擦りの触手おろしで反撃されたいようね」
+				ENDSELECT
+
+
+			ENDIF
+
+
+		;EPダメージ
+		CASE 14
+
+			IF CFLAG:29
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「あーっ♥ あーっ♥♥ あーっ♥♥♥」
+						CASE 1
+							PRINTFORML 「いっちゃう♥ イっちゃう♥♥ イッちゃう♥♥♥」
+						CASEELSE
+							PRINTFORMDL 穣子は言葉にならない声をあげ全身を痙攣させている……
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「もう…このまま…」
+						CASE 1
+							PRINTFORML 「あひぃ…」
+						CASE 2
+							PRINTFORML 「許してぇ…」
+						CASE 3
+							PRINTFORML 「それだめぇ…」
+						CASEELSE
+							PRINTFORML 「気持ちいい……」
+					ENDSELECT
+				ENDIF
+			ELSE
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「くるっ♥ なにかくるっ♥♥ あーッ♥♥♥」
+						CASE 1
+							PRINTFORML 「ダメっ♥ これダメっ♥♥ ダメなのぉ♥♥♥」
+						CASEELSE
+							PRINTFORMDL 穣子はだらしなく顔をゆるませ甘えるような声をあげた
+					ENDSELECT
+				;EPダメージ3000以上
+				ELSEIF ARG:3 >= 3000
+					SELECTCASE RAND:6
+						CASE 0
+							PRINTFORML （このままじゃこんなやつらに……！）
+						CASE 1
+							PRINTFORML 「んんんッ……！」
+						CASE 2
+							PRINTFORML （た、耐えないとぉ……！）
+						CASE 3
+							PRINTFORML 「くぅぅぅ……んッ！」
+						CASE 4
+							PRINTFORML （あ、喘ぐわけには……！）
+						CASEELSE
+							PRINTFORML 「あ、危ない……平常心、平常心…」
+					ENDSELECT
+				;EPダメージ3000未満
+				ELSE
+					SELECTCASE RAND:7
+						CASE 0
+							PRINTFORML 「私の香りをスンスンしないで！」
+						CASE 1
+							PRINTFORML 「動かざる事、妖怪の山の如し！」
+						CASE 2
+							PRINTFORML 「豊穣ってこういうことじゃないのに！」
+						CASE 3
+							PRINTFORML 「わ、わたしよりスレンダーな静葉姉さんの方が良くない？」
+						CASE 4
+							PRINTFORML 「ムギムギもモギモギも駄目だってばぁ！」
+						CASE 5
+							PRINTFORML 「やめてよしてさわらないで発芽しちゃう！」
+
+						CASEELSE
+							PRINTFORML 「きょ、許可なくモギモギしないでよ！」
+					ENDSELECT
+				ENDIF
+			ENDIF
+
+		;拘束攻撃 5は発動時。１５が命中時
+		CASE 15
+			IF CFLAG:29
+			
+			ELSE
+			SELECTCASE ARG:3
+				;拘束
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「きゃっ…離れろ！」
+						CASE 1
+							PRINTFORML 「力づくってわけね……」
+						CASE 2
+							PRINTFORML 「押さえつければ神に勝てるとでも？」
+					ENDSELECT
+				;丸呑み
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「くっ、甘い匂いで誘いすぎた？」
+						CASE 1
+							PRINTFORML 「まさかの食べ放題コースってわけ？」
+						CASE 2
+							PRINTFORML 「た、食べる前にお供え物しよ？ね？」
+					ENDSELECT
+			ENDSELECT
+			ENDIF
+
+
+		;寄生攻撃命中  6:発動時
+		;だけどV防御中に矛盾でちゃったから一旦封印。そのうちいじろう
+		CASE 16
+			;喪失
+			IF CFLAG:29
+			
+			;中古
+			ELSEIF TALENT:0 == 0
+
+					SELECTCASE RAND:8
+					CASE 0
+						PRINTFORML 「た、種植えを……！？」
+					CASE 1
+						PRINTFORML 「手遅れだとしても、このまま収穫なんてさせるわけには……」
+					CASE 2
+						PRINTFORML 「わ、私の畑を荒らさないでぇ……」
+					CASE 3
+						PRINTFORML 「ひっ、肥料ごとぶちまけられた！？」
+					CASE 4
+						PRINTFORML 「そ、そこはあんたの畑じゃないでしょうに……」
+					CASE 5
+						PRINTFORML 「ふ、不作にしてやるんだから……」
+					CASE 6
+						PRINTFORML 「愛が花咲く麦ばーたーけー……って、そんなわけあるかバカー！」
+
+					CASEELSE
+						PRINTFORML 「こ、こんな農法は絶対に認めないんだからぁ……」
+					ENDSELECT
+			ENDIF
+		;攻撃回避
+		CASE 22 TO 25, 27
+			;発情
+			IF CFLAG:28 > 0
+				PRINTFORML （これ以上触らないで♥ もう完熟してるからぁ♥）
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「秋スウェー！秋スウェー！」
+					CASE 1
+						PRINTFORML 「あんたには違う畑がお似合いよ！」
+					CASEELSE
+						PRINTFORML (……どうしよう静葉お姉ちゃん)
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ちょ、ちょっと目立つ色かも！？」
+					CASE 1
+						PRINTFORML 「秋ステルスのはずが、香りで位置がばれちゃってる！？」
+					CASEELSE
+						PRINTFORML 「焼き芋用スモーク！」
+				ENDSELECT
+			ENDIF
+		;寄生攻撃回避
+		;つまり防御したとき？
+		CASE 26
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「ぜーはー…間一髪ってところ…」
+				CASE 1
+					PRINTFORML 「見え見えなんだから！」
+
+			ENDSELECT
+		;敵を撃破
+		CASE 31
+			SELECTCASE RAND:6
+				CASE 0
+					PRINTFORML 「これが秋の力！見たか神の力！」
+				CASE 1
+					PRINTFORML 「美味しい栗には棘があるんだから！」
+				CASE 2
+					PRINTFORML 「肥料に転生できるなんて、思わないことね！」
+				CASE 3
+					PRINTFORML 「秋のターンはめぐりが早いわ！次っ！」
+				CASE 4
+					PRINTFORML 「溢れる秋の力！秋の使者オータム穣子！」
+				CASE 5
+					PRINTFORML 「みなぎる秋の力！秋の使者オータム穣子！」
+			ENDSELECT
+		;戦意喪失
+		CASE 33
+			;発情
+			IF CFLAG:28 > 0
+				PRINTFORML 「もう…気持ちいいことしか考えられない……」
+			;その他
+			ELSE
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「……静葉お姉ちゃん、ごめんね」
+					CASE 1
+						PRINTFORML 「夢の終わり…」
+					CASE 2
+						PRINTFORML 「……静葉お姉……ちゃん、離れたく……ないよ……」
+					CASEELSE
+						PRINTFORML 「ぁぁ……なんか目の前がかすんで…」
+				ENDSELECT
+			ENDIF
+		;服の破れ強度
+		CASE 35
+			IF CFLAG:29
+			
+			ELSE
+			SELECTCASE ARG:1
+			;全裸
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「……見られて恥ずかしい体はしてないつもりだけど」
+					CASE 1
+						PRINTFORML 「信者以外の人は、あんまりじろじろ見ないで！！」
+					CASEELSE
+						PRINTFORML 「……こんな奴らに肌を晒すことになるなんて！」
+				ENDSELECT
+			;半裸
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「もうここまで脱穀が進んできてる！？」
+					CASE 1
+						PRINTFORML 「中身の味は落ちないとはいえ……」
+					CASEELSE
+						PRINTFORML 「姉さんの方が裁縫は得意だけど……」
+				ENDSELECT
+			;破れ始め
+			CASE 2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「衣服につけておいた非常食が落ちてるっ！？」
+					CASE 1
+						PRINTFORML 「つまみ食いされたみたいに……」
+					CASEELSE
+						PRINTFORML 「な、夏服にされちゃう！？」
+				ENDSELECT
+			ENDSELECT
+			ENDIF
+		;寄生された
+		CASE 40
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「秋の栄養の塊である私を利用しようというのね！賢明な作戦だけど最低よ！」
+				CASE 1
+					PRINTFORML 「どうして種まきと同時に実ってるのよ！こんなのズルっこでしょ！？」
+				CASEELSE
+					PRINTFORML 「えっ？ウソでしょ、もう実り始めたの！？神の私の許可も得ずに？」
+			ENDSELECT
+			
+		;戦闘開始
+		CASE 54
+			IF CFLAG:20 || CFLAG:29
+				;
+			;発情
+			ELSEIF CFLAG:28 > 0
+				PRINTFORML 「えっ♥ちょっとまって♥今はだめぇ♥」
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+
+			;その他
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「秋！力！転！心！了！オータムチェンジャー！」
+				CASE 1
+					PRINTFORML 「秋チュートリアルの受講者が来たようね！」
+				CASEELSE
+					PRINTFORML 「オータムファイッ！」
+			ENDSELECT
+			ENDIF
+
+
+
+		;逃走成功
+		CASE 55
+			IF CFLAG:20 || CFLAG:29
+				;
+			;発情
+			ELSEIF CFLAG:28 > 0
+				PRINTFORML 「は、早くどこかで果樹園の手入れをしないと♥」
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぜーはー…つまみ食いなんて冗談じゃないわ…」
+					CASE 1
+						PRINTFORML 「産地直送ダッシュがなければ危なかったかも…」
+					CASEELSE
+						PRINTFORML 「ぜーはー……秋モードじゃなかったら逃げきれたかどうか…」
+				ENDSELECT
+			;その他
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「神様だって怯えるに決まってるでしょ。なんなのよ、あいつらは！」
+				CASE 1
+					PRINTFORML 「全裸のまま畑で野晒しなんて、まっぴらごめんだもの！」
+				CASEELSE
+					PRINTFORML 「簡単に食べられてたまるもんですか！」
+			ENDSELECT
+			ENDIF
+
+
+		;戦闘勝利
+		CASE 57
+			;喪失中は静かにしようねえ
+			IF CFLAG:29
+			;
+			ELSE
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「これでも神様なんだぞ！」
+				CASE 1
+					PRINTFORML 「悪い害虫を駆除！」
+				;
+				CASE 2
+					PRINTFORML 「まだまだ秋は終わらせないわ！」
+				CASE 3
+					PRINTFORML 「……ごめんなさい。私が許しても、秋の秩序があなたたちの存在を許さなかったの」
+
+				CASEELSE
+					PRINTFORML 「私の能力を言ってみなさい！この植物崩れどもが！」
+			ENDSELECT
+			ENDIF
+
+
+		;初回遭遇
+		CASE 61
+
+ 
+
+		;!!! v0.05.3で逃走口上の仕様が変わったため、勝手に改変
+		CASE 62
+			PRINTFORML 「……ごめんなさい！」
+		CASE 63
+			IF TARGET == 1
+				IF CFLAG:21
+					PRINTFORML 「稲穂でくすぐったら吐き出してくれないかな……」
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ここは私が引き受けるわ！でも、賞味期限が切れるまでに助けに来てね！」
+						CASE 1
+							PRINTFORML 「さあ、今のうちに私ごとチェーンソーで！……あー、痛そうだから他の手でお願い！」
+						CASEELSE
+
+					ENDSELECT
+
+				ENDIF
+			ELSE
+				IF CFLAG:21
+
+					PRINTFORML 「稲穂でくすぐったら吐き出してくれないかな……」
+
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ここは私が引き受けるわ！でも、賞味期限が切れるまでに助けに来てね！」
+						CASE 1
+							PRINTFORML 「さあ、今のうちに私ごとチェーンソーで！……あー、痛そうだから他の手でお願い！」
+						CASEELSE
+
+					ENDSELECT
+
+
+				ENDIF
+			ENDIF
+
+		;誰かに会う
+		CASE 101
+			IF ARG:2
+				PRINTFORMDL …？
+				PRINTFORMDL 誰かの弱々しい息遣いが聞えた気がした。
+			ELSEIF CFLAG:29 != 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「秋センサーに反応アリ！」
+					CASE 1
+						PRINTFORML 「対人友好度トップクラスの私が来たからにはもう安心！」
+					CASEELSE
+						PRINTFORML 「もしもし、そこにだれかいるの？」
+				ENDSELECT
+			ENDIF
+
+		;別れる
+		CASE 102
+			;喪失キャラ
+			IF CFLAG:29
+			
+			ELSEIF ARG:2
+				PRINTFORML 「うーん、私が様子を見てくるわ。あなたはここでじっとしてて」
+			ELSE
+				PRINTFORML 「ここは秋リーサルツインで二手に分かれるべきみたい！」
+			ENDIF
+		;雑談
+		CASE 103
+			IF CFLAG:29
+			
+			ELSE
+				SELECTCASE NO:(ARG:1)
+
+					;静葉
+					CASE 37
+						SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「姉さんと一緒なら……！」
+						CASE 1
+							PRINTFORML 「無理はしないでね」
+						ENDSELECT
+
+					CASEELSE
+						SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「こんな場所だけど、いい秋してる？」
+						CASE 1 
+							PRINTFORML 「さあ！秋について！素晴らしい秋について！！」
+						CASE 2
+							PRINTFORML 「私は秋の神。さあ、迷える子羊よ！これまでの秋に関する行いを思う存分告白していいのよ！」
+						ENDSELECT
+				ENDSELECT
+			ENDIF
+		;パーティー勧誘成功
+		CASE 107
+			IF CFLAG:29
+				PRINTFORMDL 冬が…冬が…と虚ろな瞳で呟く穣子を放置することはできない
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「あなたの判断は正しいわ！これからが秋のチュートリアルよ！」
+					CASE 1
+						PRINTFORML 「ふふっ…また信者が増えたわ」
+					CASEELSE
+						PRINTFORML 「収穫量増加。サバイバリティ溢れる私の秋パワーは魅力的だものね！」
+				ENDSELECT
+			ENDIF
+
+
+		;パーティ加入
+		CASE 109
+			IF CFLAG:29
+				PRINTFORMDL 目を覚ましたらめんどくさそうだと思いながらも%CALLNAME:1%は穣子の手を取った
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「秋属性の敵は木っ端みじんにデストロイよ！！」
+					CASE 1
+						PRINTFORML 「こちらこそ助かるわ！これからよろしくね！」
+					CASEELSE
+						PRINTFORML 「さあ、これからの土壌の浄化なら私に任せて！」
+				ENDSELECT
+			ENDIF
+		CASE 110
+			;PTメンバーと別れる
+			IF CFLAG:29
+			
+			ELSEIF ARG:2
+				IF TARGET == 1
+					;主人公として表示する場合、ARG:1のキャラを見送る
+					PRINTFORML 「ここは秋リーサルツインで二手に分かれるべきみたい！」
+				ELSE
+					;それ以外の場合、自分が抜ける
+					;喪失中
+					IF CFLAG:29
+						PRINTFORMDL 完全に燃え尽きて力尽きた穣子を守りながら探索は出来そうにない
+						PRINTFORMDL そう判断した%CALLNAME:1%は静かになるし穣子をおいていくことにした……
+					ELSE
+						PRINTFORML 「まあ、あなたなら私がいなくても大丈夫でしょう」
+						PRINTFORML 「秋チュートリアルはこれでいったんおしまい。またね！」
+					ENDIF
+				ENDIF
+			ENDIF
+
+		CASE 125
+			;寄生が進行
+			IF CFLAG:29
+				PRINTFORML 「ぅ…ぁぁ……」
+			ELSE
+				PRINTFORML 「おなかの中の実りの気配が強まっていく……」
+			ENDIF
+
+		CASE 126
+			;妊娠が進行
+			IF CFLAG:29
+				PRINTFORML 「ぅ…ぁぁ……」
+
+			ELSE
+				PRINTFORML 「おなかの中の実りの気配が強まっていく……」
+
+			ENDIF
+			
+		CASE 127
+			;寄生出産
+			SELECTCASE ARG:1
+				CASE 0
+					;
+				CASE 1
+					;
+				CASE 2
+					;
+				ENDSELECT
+				
+
+		CASE 130
+			;浄化
+			IF CFLAG:29
+
+			ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「リン・ビョウ・トウ・シャ・ハン・デン・シュウ・ジュ！……はぁっ！」
+						CASE 1
+							PRINTFORML 「リン・ビョウ・トウ・シャ・コン・デン・エイ・ネン・シ・ザイｌ！……はぁっ！」
+						CASEELSE
+							PRINTFORML 「秋の作物しか育たない土地にしてあげるわ！」
+					ENDSELECT
+			ENDIF
+
+		CASE 132
+			;部屋を移動（突撃）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「さ、作物を見つけないと……」
+						CASE 1
+							PRINTFORML 「このままじゃ遭難しそう……」
+						CASEELSE
+							PRINTFORML 「この場所から早く離れないと……」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「秋ですよー！」
+						CASE 1
+							PRINTFORML 「ぱんぱかぱーん！秋の登場よ！！」
+						CASEELSE
+							PRINTFORML 「秋の速達便よー！！」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 133
+			;部屋を移動（慎重）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「香水のせいで敵に気づかれたらどうしようかしら…」
+						CASE 1
+							PRINTFORML (とにかく見つからないように…)
+						CASEELSE
+							PRINTFORML (この手の迷宮は、歩くたびに秋パワーがチャージされるんでしょ……。緑の巫女が言ってた)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「罠なんて無駄よ！はぁっ！秋忍び足！！」
+						CASE 1
+							PRINTFORML 「静葉姉さんの方が得意そう……」
+						CASEELSE
+							PRINTFORML 「迷宮ローラー作戦でいくわ！」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 134
+			;部屋を移動（待ち伏せ）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「動けないときには……動かない勇気を！」
+						CASE 1
+							PRINTFORML 「今はこの地を整地するのが先決よ…」
+						CASEELSE
+							PRINTFORML 「ぜーはー…ぜーはー」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「静かなること紅葉林の如し」
+						CASE 1
+							PRINTFORML 「香りにつられてのこのこやってきたところを……ふふっ」
+						CASEELSE
+							PRINTFORML 「お芋を焼いたら、誰か来てくれないかなぁ」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 135
+			;部屋を移動（探索）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+			;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「秋ストーンはないの…？」
+						CASE 1
+							PRINTFORML 「何か…何か役に立つものは」
+						CASEELSE
+							PRINTFORML 「農具の一つでも見つかるといいけど！」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「秋の七草はどこ！？」
+						CASE 1
+							PRINTFORML 「耳を澄ませば聞こえるはずよ。そう！秋の音が！」
+						CASEELSE
+							PRINTFORML 「さあ！小さな秋を見つけるわよ！」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;処女喪失
+		CASE 136
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE ARG:3
+						CASE 1
+							PRINTFORML 「や、やめてよ！」
+						CASE 2
+							PRINTFORML 「お願いだから、それだけは許して！」
+						CASEELSE
+							PRINTFORML 「痛ッ、こんなのいやぁぁぁっ！」
+					ENDSELECT
+			ENDSELECT
+			
+			;おふろ
+			CASE 149
+			;死に風呂
+			IF CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「温泉の秋！健康の秋！フルーツ牛乳も準備おっけーよ！」
+					CASE 1
+						PRINTFORML 「はぁぁ…美容の秘訣は秋風呂よね」
+					CASE 2
+						PRINTFORML 「んー、お風呂に浮かべたい果実はあったかしら……」
+					CASE 3
+						PRINTFORML 「よきかなよきかな。はぁ…幸せ…」
+					CASEELSE
+						PRINTFORMDL 穣子は幸せそうに湯船に浸かっている
+				ENDSELECT
+			ENDIF
+		;完全捕食
+		CASE 152
+			IF FLAG:AUTOMODE
+				PRINTFORML 「もう一度……収穫祭を……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「もう一度……収穫祭を……」
+			ENDIF
+		;復活！
+		CASE 158
+			SELECTCASE ARG:1
+				;助けてもらった
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「う、うぅぅ…秋だからって、調子に乗りすぎだったのかな…」
+						CASE 1
+							PRINTFORMDL 穣子は濁った瞳でふらふらと立ち上がった…
+						CASEELSE
+							PRINTFORML 「秋リザレクション！」
+							PRINTFORMDL そう突如叫び立ち上がった穣子だがすぐにバタリと倒れてしまった…
+					ENDSELECT
+				;捨てられた
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「人里で約束したのよ……次の収穫……」
+						CASE 1
+							PRINTFORMDL 穣子はふらつく足取りで必死に逃げ出した……
+						CASEELSE
+							PRINTFORML 「神様は……約束を守るんだから……」
+					ENDSELECT
+			ENDSELECT
+
+		;好感度でPT離脱
+		CASE 161
+			PRINTFORML 「……秋パワーが切れてきた今の私じゃ、役に立てそうにないから」
+
+
+		;好感度でPT離脱される
+		CASE 162
+		IF CFLAG:29
+		
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「私じゃ足手まといだものね……」
+				CASE 1
+					PRINTFORML 「今までありがとう。またお互い無事であいたいわね」
+
+				CASEELSE
+					PRINTFORML 「秋もまた、別れの季節ね…」
+		ENDSELECT
+		ENDIF
+		
+	;遺品
+	CASE 202
+
+		PRINTFORML 「そ、そんな……」
+
+
+	;MAP表示時に一言
+	CASE 160
+		;開始時
+		IF DAY == 1 && TIME:0 == 0
+			PRINTFORML 「え、えーと。ここはどこ！？地底？それとも季節の狭間？」
+		;睡眠中は静かにしようね
+		ELSEIF CFLAG:25
+		;
+		;喪失時
+		ELSEIF CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「………ぁきぃ」
+				CASE 1
+					PRINTFORML 「………………」
+				CASE 2
+					PRINTFORMDL 穣子は口を何度もパクパクさせている…
+			ENDSELECT
+		;汎用メッセージ、元気があればあれこれ喋るよ！
+		ELSEIF RAND:3 == 0 && (MAXBASE:MP/4 < BASE:MP || BASE:HP != 0)
+			SELECTCASE RAND:11
+				CASE 0
+					PRINTFORML 「実りの秋！最★高！」
+				CASE 1
+					PRINTFORML 「出口はどこなの！？」
+				CASE 2
+					PRINTFORML 「神様を拉致った事を後悔させてやるわ」
+				CASE 3
+					PRINTFORML 「みなぎるわー。あふれるわー。」
+				CASE 4
+					PRINTFORML 「もう少し私に力があればなぁ」
+				CASE 5
+					PRINTFORML 「さすがに普段の仕事の方がマシよー！」
+				CASE 6
+					PRINTFORML 「新たな信者の予感！　あ、気のせいだったわ！」
+				CASE 7
+					PRINTFORML 「外に出たら秋が終わっていたら、どうしよう！」
+				CASE 8
+					PRINTFORML 「よーし！栄養チャージ完了よ！」
+				CASE 9
+					PRINTFORML 「秋…それは時たま情熱的に神をも狂わせる魔性の季節」
+				CASEELSE
+					PRINTFORML 「うーん、整地をつづければ外に出れるとおもったのだけど」
+			ENDSELECT
+		
+		;MPが1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「秋パワーが減少ちゅう…」
+				CASE 1
+					PRINTFORML 「神様が…ここまで追い詰められるなんて…」
+				CASE 2
+					PRINTFORML 「……奴らは神の力をも越えているというの！？」
+			ENDSELECT
+		;朦朧
+		ELSEIF FLAG:7 >= 11
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやー。寝ると冬が近づくのいやー」
+				CASE 1
+					PRINTFORML 「早く寝ないと肌が痛むよー…」
+				CASE 2
+					PRINTFORML 「ふぁあ…ねーむーいーぞー」
+			ENDSELECT
+		;要睡眠
+		ELSEIF FLAG:7 >= 7
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「早く寝たい…」
+				CASE 1
+					PRINTFORML （休憩したい……）
+				CASE 2
+					PRINTFORML 「秋の夜は寝やすいはずよ！ね、寝よ？！」
+			ENDSELECT
+		
+		ELSEIF CFLAG:22
+		;寄生時
+			IF CFLAG:23 == 12
+				PRINTFORML 「私の秋パワーを吸い取ろうなんて罰当たりな化物ね！」
+			ELSEIF CFLAG:23 == 8
+				PRINTFORML 「……育つのがはやい」
+			ELSEIF CFLAG:23 == 4
+				PRINTFORML 「枯れてくれないのね……」
+			ELSEIF CFLAG:23 == 2
+				PRINTFORML 「無理矢理収穫することも無理のようね……」
+			ELSEIF CFLAG:23 > 12 && TIME:0 == 2
+				PRINTFORML 「秋パワーがすーわーれーるー」
+			ENDIF
+		ELSEIF CFLAG:36
+		;妊娠時
+			IF CFLAG:23 == 11
+				PRINTFORML 「悪い予感がする……」
+			ELSEIF CFLAG:23 == 9
+				PRINTFORML 「うまく秋モードに入れない……」
+			ELSEIF CFLAG:23 == 5
+				PRINTFORML 「も、もしかしてこのお腹……」
+			ELSEIF CFLAG:23 == 3
+				PRINTFORML 「ちょっと…シャレになってないよ…」
+			ELSEIF CFLAG:23 == 1
+				PRINTFORML 「うぅ……」
+			ELSEIF CFLAG:23 > 11 && TIME:0 == 2
+				PRINTFORML 「んー、少し調子が……」
+			ENDIF
+		ELSEIF BASE:EP <= 1000 || CFLAG:28 > 0
+		;絶頂間際or発情
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML (うう、こんなに熟してるのにぃ♥)
+				CASE 1
+					PRINTFORML (どこかで落ち着いて果樹園耕作したいよぉ…♥)
+				CASE 2
+					PRINTFORML (どこかで……フルーツポンチつくろ……♥)
+			ENDSELECT
+		ELSEIF BASE:CP <= 0
+		;全裸
+			IF ITEM:54
+			;着替えセット所持
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「私の豊穣なる肢体をいつまでも晒しているわけにもいかないのだけど」
+					CASE 1
+						PRINTFORML 「着替えとっとと使ってパーフェクト秋穣子に！」
+					CASE 2
+						PRINTFORML 「視線を感じるけど……」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「全裸はさすがに抵抗あるわー」
+					CASE 1
+						PRINTFORML 「いっそ果物で隠したら……だめよ、そんな盛り方！迷宮がいかがわしいお店になってしまうわ！」
+					CASE 2
+						PRINTFORML 「ゴールド秋ドレスが破壊されるとは…」
+				ENDSELECT
+			ENDIF
+		ELSEIF BASE:CP <= MAXBASE:CP / 3
+		;半裸
+			IF ITEM:54
+			;着替えセット所持
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「そろそろマジカルオータムチェンジをしたいわ」
+					CASE 1
+						PRINTFORML 「早めに着替えたほうがいいと思うけど……」
+					CASE 2
+						PRINTFORML 「自分で修繕できる人はいいなぁ」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「私に似合う替えの服がない…」
+					CASE 1
+						PRINTFORML 「そろそろ着替えを探したいけど」
+					CASE 2
+						PRINTFORML 「秋スコープ！着替えセットはどこなの！？」
+				ENDSELECT
+			ENDIF
+		;きちゃない
+		ELSEIF BASE:DP >= 90
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「白が似合うのは冬よー……」
+				CASE 1
+					PRINTFORML 「何で落ちないの、この汚れ……」
+				CASE 2
+					PRINTFORML 「湯汲みでさっぱりしたいわ」
+			ENDSELECT
+		ELSEIF BASE:DP >= 60
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「とほほ。私の甘い匂いがだいなし…」
+				CASE 1
+					PRINTFORML 「うう、べったべたのぐっちょぐちょ」
+				CASE 2
+					PRINTFORML 「甘酒でべたべたならまだマシかなぁ」
+			ENDSELECT
+		ELSEIF BASE:DP >= 30
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ！？果物はつぶれてないのに変なベタベタが」
+				CASE 1
+					PRINTFORML 「香水の効果がイマイチに…」
+				CASE 2
+					PRINTFORML 「いつのまにか変なジャムが……」
+			ENDSELECT
+		;全部ぬけたら(服着ていて元気があって清潔で眠くない)
+		;汎用一言２
+		ELSE
+			SELECTCASE RAND:8
+				CASE 0
+					PRINTFORML 「次のエリアは～」
+				CASE 1
+					PRINTFORML 「新鮮な果実を仕入れたいなー」
+				CASE 2
+					PRINTFORML 「戦闘と罠ばっかりー……」
+				CASE 3
+					PRINTFORML 「段々とこの迷宮にも慣れてきたかなぁ」
+				CASE 4
+					PRINTFORML 「ふぅぅ…さすがに疲れるぅ」
+				CASE 5
+					PRINTFORML 「この根性が腐り切った迷宮を、土壌から秋改築してやるんだから…」
+				CASE 6
+					PRINTFORML 「招待は収穫祭だけでいいのになぁ」
+				CASEELSE
+					PRINTFORML 「足裏の感触が―……」
+			ENDSELECT
+		ENDIF
+		
+	CASE 204, 206, 208, 212
+		;CALL KOJO_37_0_ENDING_SUPERSIZUHA
+
+		RETURN 0
+		;クイーン撃破
+	CASE 210
+		;CALL KOJO_37_0_ENDING_SUPERSIZUHA_2
+
+		RETURN 0
+		
+	CASEELSE
+		;汎用
+
+	ENDSELECT
+	ENDIF
+
+;**********************************************************
+;	通常モード
+;**********************************************************
+;通常口上
+ELSE
+
+
+
+ENDIF
+
+
+
+$KOJO_38_END_LOOP
+
+
+
+;CALL KOJO_38_0_TORAUMA(ARG:0, ARG:1, ARG:2, ARG:3, ARG:4)
+
+
+RESETCOLOR
+
+;口上記入済み
+RETURN 1
+

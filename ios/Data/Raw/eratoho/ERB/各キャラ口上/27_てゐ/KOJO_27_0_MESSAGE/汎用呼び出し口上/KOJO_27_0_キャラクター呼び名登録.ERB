@@ -1,0 +1,520 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ キャラクタの呼び名を登録
+; ------------------------------------------------------------------------------
+; 特に指定の無いキャラは、常時その名前でしか呼ばない為未指定
+; 巫女・魔法使い・メイド等、特定個人を指さない名称は口上側で記述する事
+
+; 仲良くなると愛称で呼んだり、自分より大きい相手に平然とちゃん付けしたりする
+; 第三者がいる場ではTPOに応じて呼び分ける、恥ずかしい呼称を許している相手への弱みも握る
+; 肉体・精神的両面で手を出してはいけない相手には一歩引いた対応
+
+; □ 004 大妖精
+@KOJO_27_0_CALLNAME_4(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(4) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(4)))) && CFLAG:(GET_ID_FROM_NO(4)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 4, "大ちゃん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 4, "大妖精"
+	ENDIF
+RETURN 1
+
+; □ 008 パチュリー・ノーレッジ
+@KOJO_27_0_CALLNAME_8(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(8) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(8)))) && CFLAG:(GET_ID_FROM_NO(8)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 8, "パチェ"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 8, "パチュリー"
+	ENDIF
+RETURN 1
+
+; □ 010 レミリア・スカーレット
+@KOJO_27_0_CALLNAME_10(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(10) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(10)))) && CFLAG:(GET_ID_FROM_NO(10)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 10, "レミィ"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 10, "レミリア"
+	ENDIF
+RETURN 1
+
+; □ 015 リリーホワイト
+@KOJO_27_0_CALLNAME_15(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; リリーブラックがPTに居るなら呼び方を区別する
+	IF GET_ID_FROM_NO(56) && IN_PT(GET_ID_FROM_NO(56))
+		CALL KOJO_27_0_ADD_CALLNAME, 15, "白リリー"
+		
+	; 白だの黒だの区別しない
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 15, "リリー"
+	ENDIF
+RETURN 1
+
+; □ 022 八雲紫
+@KOJO_27_0_CALLNAME_22(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(22) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(22)))) && CFLAG:(GET_ID_FROM_NO(22)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 22, "ゆかりん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 22, "紫"
+	ENDIF
+RETURN 1
+
+; □ 025 ミスティア・ローレライ
+@KOJO_27_0_CALLNAME_25(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 好感度によって呼称が変化
+	IF GET_ID_FROM_NO(25) && CFLAG:(GET_ID_FROM_NO(25)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 25, "みすちー"
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 25, "ミスティア"
+	ENDIF
+RETURN 1
+
+; □ 028 鈴仙・優曇華院・イナバ
+@KOJO_27_0_CALLNAME_28(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL KOJO_27_0_ADD_CALLNAME, 28, "鈴仙"
+	CALL KOJO_27_0_ADD_CALLNAME, 28, "れーせん"
+RETURN 1
+
+; □ 029 八意永琳
+@KOJO_27_0_CALLNAME_29(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きりの場合、てゐは永琳の事を名前で呼ぶ
+	IF GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(29)))
+		CALL KOJO_27_0_ADD_CALLNAME, 29, "えーりん"
+		CALL KOJO_27_0_ADD_CALLNAME, 29, "永琳"
+		
+	; 人の目がある時は目上のように扱う
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 29, "師匠"
+		CALL KOJO_27_0_ADD_CALLNAME, 29, "お師匠様"
+	ENDIF
+RETURN 1
+
+; □ 030 蓬莱山輝夜
+@KOJO_27_0_CALLNAME_30(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(30) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(30)))) && CFLAG:(GET_ID_FROM_NO(30)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 30, "輝夜"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 30, "姫様"
+	ENDIF
+RETURN 1
+
+; □ 033 メディスン・メランコリー
+@KOJO_27_0_CALLNAME_33(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 好感度によって呼称が変化
+	IF GET_ID_FROM_NO(33) && CFLAG:(GET_ID_FROM_NO(33)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 33, "メディ"
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 33, "メディスン"
+	ENDIF
+RETURN 1
+
+; □ 034 風見幽香
+@KOJO_27_0_CALLNAME_34(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(34) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(34)))) && CFLAG:(GET_ID_FROM_NO(34)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 34, "幽香ちゃん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		; 好感度が警戒以下状態
+		IF CFLAG:(GET_ID_FROM_NO(34)):5 < 50
+			CALL KOJO_27_0_ADD_CALLNAME, 34, "風見さん"
+			
+		; 好感度問題なし
+		ELSE
+			CALL KOJO_27_0_ADD_CALLNAME, 34, "幽香"
+		ENDIF
+	ENDIF
+RETURN 1
+
+; □ 035 小野塚小町
+@KOJO_27_0_CALLNAME_35(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(35) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(35)))) && CFLAG:(GET_ID_FROM_NO(35)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 35, "こまっちゃん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		; 好感度が警戒以下状態
+		IF CFLAG:(GET_ID_FROM_NO(35)):5 < 50
+			CALL KOJO_27_0_ADD_CALLNAME, 35, "死神"
+			
+		; 好感度問題なし
+		ELSE
+			CALL KOJO_27_0_ADD_CALLNAME, 35, "小町"
+		ENDIF
+	ENDIF
+RETURN 1
+
+; □ 036 四季映姫・ヤマザナドゥ
+@KOJO_27_0_CALLNAME_36(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(36) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(36)))) && CFLAG:(GET_ID_FROM_NO(36)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 36, "映姫"
+		
+	; 人の目があっても好感度が一定以上なら二人称変化
+	ELSEIF GET_ID_FROM_NO(36) && CFLAG:(GET_ID_FROM_NO(36)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 36, "四季様"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 36, "閻魔様"
+	ENDIF
+RETURN 1
+
+; □ 040 河城にとり
+@KOJO_27_0_CALLNAME_40(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(40) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(40)))) && CFLAG:(GET_ID_FROM_NO(40)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 40, "にとりん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		; 好感度が警戒以下状態
+		IF CFLAG:(GET_ID_FROM_NO(40)):5 < 50
+			CALL KOJO_27_0_ADD_CALLNAME, 40, "河童"
+			
+		; 好感度問題なし
+		ELSE
+			CALL KOJO_27_0_ADD_CALLNAME, 40, "にとり"
+		ENDIF
+	ENDIF
+RETURN 1
+
+; □ 042 東風谷早苗
+@KOJO_27_0_CALLNAME_42(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(42) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(42)))) && CFLAG:(GET_ID_FROM_NO(42)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 42, "早苗ちゃん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		; 好感度が警戒以下状態
+		IF CFLAG:(GET_ID_FROM_NO(42)):5 < 50
+			CALL KOJO_27_0_ADD_CALLNAME, 42, "東風谷さん"
+			; 霊夢がPTにいるかどうかで分岐
+			IF IN_PT(GET_ID_FROM_NO(1))
+				CALL KOJO_27_0_ADD_CALLNAME, 42, "青巫女"
+			ELSE
+				CALL KOJO_27_0_ADD_CALLNAME, 42, "巫女"
+			ENDIF
+			
+		; 好感度問題なし
+		ELSE
+			CALL KOJO_27_0_ADD_CALLNAME, 42, "早苗"
+		ENDIF
+	ENDIF
+RETURN 1
+
+; □ 043 八坂神奈子
+@KOJO_27_0_CALLNAME_43(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(43) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(43)))) && CFLAG:(GET_ID_FROM_NO(43)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 43, "カナちゃん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		; 好感度が警戒以下状態
+		IF CFLAG:(GET_ID_FROM_NO(43)):5 < 50
+			CALL KOJO_27_0_ADD_CALLNAME, 43, "八坂様"
+			
+		; 好感度問題なし
+		ELSE
+			CALL KOJO_27_0_ADD_CALLNAME, 43, "神奈子"
+		ENDIF
+	ENDIF
+RETURN 1
+
+; □ 044 洩矢諏訪子
+@KOJO_27_0_CALLNAME_44(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(44) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(44)))) && CFLAG:(GET_ID_FROM_NO(44)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 44, "ケロちゃん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		; 好感度が警戒以下状態
+		IF CFLAG:(GET_ID_FROM_NO(44)):5 < 50
+			CALL KOJO_27_0_ADD_CALLNAME, 44, "洩矢様"
+			
+		; 好感度問題なし
+		ELSE
+			CALL KOJO_27_0_ADD_CALLNAME, 44, "諏訪子"
+		ENDIF
+	ENDIF
+RETURN 1
+
+; □ 048 稗田阿求
+@KOJO_27_0_CALLNAME_48(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(48) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(48)))) && CFLAG:(GET_ID_FROM_NO(48)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 48, "あっきゅん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 48, "阿求"
+	ENDIF
+RETURN 1
+
+; □ 053 綿月豊姫
+@KOJO_27_0_CALLNAME_53(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(53) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(53)))) && CFLAG:(GET_ID_FROM_NO(53)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 53, "とよちゃん"
+		
+	; 人の目があっても好感度が一定以上なら二人称変化
+	ELSEIF GET_ID_FROM_NO(53) && CFLAG:(GET_ID_FROM_NO(53)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 53, "豊姫"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 53, "豊姫様"
+	ENDIF
+RETURN 1
+
+; □ 054 綿月依姫
+@KOJO_27_0_CALLNAME_54(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(54) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(54)))) && CFLAG:(GET_ID_FROM_NO(54)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 54, "よっちゃん"
+		
+	; 人の目があっても好感度が一定以上なら二人称変化
+	ELSEIF GET_ID_FROM_NO(54) && CFLAG:(GET_ID_FROM_NO(54)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 54, "依姫"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 54, "依姫様"
+	ENDIF
+RETURN 1
+
+; □ 056 リリーブラック
+@KOJO_27_0_CALLNAME_56(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; リリーホワイトがPTに居るなら呼び方を区別する
+	IF GET_ID_FROM_NO(15) && IN_PT(GET_ID_FROM_NO(15))
+		CALL KOJO_27_0_ADD_CALLNAME, 56, "黒リリー"
+		
+	; 白だの黒だの区別しない
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 56, "リリー"
+	ENDIF
+RETURN 1
+
+; □ 078 黒谷ヤマメ
+@KOJO_27_0_CALLNAME_78(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 好感度によって呼称が変化
+	IF GET_ID_FROM_NO(78) && CFLAG:(GET_ID_FROM_NO(78)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 78, "ヤマメちゃん"
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 78, "ヤマメ"
+	ENDIF
+RETURN 1
+
+; □ 079 水橋パルスィ
+@KOJO_27_0_CALLNAME_79(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 好感度によって呼称が変化
+	IF GET_ID_FROM_NO(79) && CFLAG:(GET_ID_FROM_NO(79)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 79, "パルっち"
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 79, "パルスィ"
+	ENDIF
+RETURN 1
+
+; □ 080 星熊勇儀
+@KOJO_27_0_CALLNAME_80(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 好感度によって呼称が変化
+	IF GET_ID_FROM_NO(80) && CFLAG:(GET_ID_FROM_NO(80)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 80, "勇儀"
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 80, "勇儀さん"
+	ENDIF
+RETURN 1
+
+; □ 085 茨木華扇
+@KOJO_27_0_CALLNAME_85(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 好感度によって呼称が変化
+	IF GET_ID_FROM_NO(85) && CFLAG:(GET_ID_FROM_NO(85)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 85, "華扇"
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 85, "仙人様"
+	ENDIF
+RETURN 1
+
+; □ 087 半霊
+@KOJO_27_0_CALLNAME_87(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 半人側がPTに居るなら呼び方を区別する
+	IF GET_ID_FROM_NO(19) && IN_PT(GET_ID_FROM_NO(19))
+		CALL KOJO_27_0_ADD_CALLNAME, 87, "霊妖夢"
+		
+	; 人か霊かで呼び方を変えるのは違和感があるので、普通に名前で呼ぶ
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 87, "妖夢"
+	ENDIF
+RETURN 1
+
+; □ 102 霍青娥
+@KOJO_27_0_CALLNAME_102(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 好感度によって呼称が変化
+	IF GET_ID_FROM_NO(102) && CFLAG:(GET_ID_FROM_NO(102)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 102, "青娥"
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 102, "仙人様"
+	ENDIF
+RETURN 1
+
+; □ 106 二ッ岩マミゾウ
+@KOJO_27_0_CALLNAME_106(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(106) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(106)))) && CFLAG:(GET_ID_FROM_NO(106)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 106, "マミゾウちゃん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		; 好感度が警戒以下状態
+		IF CFLAG:(GET_ID_FROM_NO(106)):5 < 50
+			CALL KOJO_27_0_ADD_CALLNAME, 106, "タヌキ"
+			
+		; 好感度問題なし
+		ELSE
+			CALL KOJO_27_0_ADD_CALLNAME, 106, "マミゾウ"
+		ENDIF
+	ENDIF
+RETURN 1
+
+; □ 108 秦こころ
+@KOJO_27_0_CALLNAME_108(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 好感度によって呼称が変化
+	IF GET_ID_FROM_NO(108) && CFLAG:(GET_ID_FROM_NO(108)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 108, "こころちゃん"
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 108, "こころ"
+	ENDIF
+RETURN 1
+
+; □ 111 今泉影狼
+@KOJO_27_0_CALLNAME_111(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(111) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(111)))) && CFLAG:(GET_ID_FROM_NO(111)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 111, "かげろん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 111, "影狼"
+	ENDIF
+RETURN 1
+
+; □ 123 純狐
+@KOJO_27_0_CALLNAME_123(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 好感度によって呼称が変化
+	IF GET_ID_FROM_NO(123) && CFLAG:(GET_ID_FROM_NO(123)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 123, "純狐"
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 123, "純狐さん"
+	ENDIF
+RETURN 1
+
+; □ 124 ヘカーティア・ラピスラズリ
+@KOJO_27_0_CALLNAME_124(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(124) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(124)))) && CFLAG:(GET_ID_FROM_NO(124)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 124, "ヘカちん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 124, "へカーティア"
+	ENDIF
+RETURN 1
+
+; □ 126 坂田ネムノ
+@KOJO_27_0_CALLNAME_126(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(126) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(126)))) && CFLAG:(GET_ID_FROM_NO(126)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 126, "ネムのん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 126, "ネムノ"
+	ENDIF
+RETURN 1
+
+; □ 128 矢田寺成美
+@KOJO_27_0_CALLNAME_128(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(128) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(128)))) && CFLAG:(GET_ID_FROM_NO(128)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 128, "なるみん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		; 好感度が警戒以下状態
+		IF CFLAG:(GET_ID_FROM_NO(128)):5 < 50
+			CALL KOJO_27_0_ADD_CALLNAME, 128, "地蔵"
+			
+		; 好感度問題なし
+		ELSE
+			CALL KOJO_27_0_ADD_CALLNAME, 128, "成美"
+		ENDIF
+	ENDIF
+RETURN 1
+
+; □ 131 摩多羅隠岐奈
+@KOJO_27_0_CALLNAME_131(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(131) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(131)))) && CFLAG:(GET_ID_FROM_NO(131)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 131, "おっきー"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		CALL KOJO_27_0_ADD_CALLNAME, 131, "隠岐奈"
+	ENDIF
+RETURN 1
+
+; □ 135 牛崎潤美
+@KOJO_27_0_CALLNAME_135(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(135) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(135)))) && CFLAG:(GET_ID_FROM_NO(135)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 135, "うるみん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		; 好感度が警戒以下状態
+		IF CFLAG:(GET_ID_FROM_NO(135)):5 < 50
+			CALL KOJO_27_0_ADD_CALLNAME, 135, "牛崎さん"
+			
+		; 好感度問題なし
+		ELSE
+			CALL KOJO_27_0_ADD_CALLNAME, 135, "潤美"
+		ENDIF
+	ENDIF
+RETURN 1
+
+; □ 136 庭渡久侘歌
+@KOJO_27_0_CALLNAME_136(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 人の目がないか2人きり、そして好感度が高い場合二人称が変化
+	IF GET_ID_FROM_NO(136) && (GET_MEMBER_SUM() == 1 || (GET_MEMBER_SUM() == 2 && IN_PT(GET_ID_FROM_NO(136)))) && CFLAG:(GET_ID_FROM_NO(136)):5 >= KOJO_27_0_LIKABILITY_BORDER
+		CALL KOJO_27_0_ADD_CALLNAME, 136, "くーちゃん"
+		
+	; 人の目がある時は普段通り
+	ELSE
+		; 好感度が警戒以下状態
+		IF CFLAG:(GET_ID_FROM_NO(136)):5 < 50
+			CALL KOJO_27_0_ADD_CALLNAME, 136, "庭渡"
+			
+		; 好感度問題なし
+		ELSE
+			CALL KOJO_27_0_ADD_CALLNAME, 136, "久侘歌"
+		ENDIF
+	ENDIF
+RETURN 1

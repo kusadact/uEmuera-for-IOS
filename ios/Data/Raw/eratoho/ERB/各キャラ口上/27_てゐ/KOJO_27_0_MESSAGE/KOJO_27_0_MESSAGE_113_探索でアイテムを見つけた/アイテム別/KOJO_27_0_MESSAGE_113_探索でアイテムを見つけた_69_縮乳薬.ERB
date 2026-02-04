@@ -1,0 +1,46 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 113 探索でアイテムを見つけた - 69 縮乳薬
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_113_69(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中は何もしないで帰る
+	SIF CFLAG:29
+		RETURN 0
+	
+	; 出来るだけ専用メッセージを見せたいので、優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	SELECTCASE GET_BUST(TARGET)
+	; 絶壁 or 貧乳
+	CASE -2, -1
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱいのでかい奴に使う薬よね！間違いない！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんな状況でなければ悪戯に使うんだけどね、面白そうだし」\n"
+		ENDSELECT
+	
+	; 普乳
+	CASE 0
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「なんだか莫迦にされてる気がするわ……」\n"
+		ENDSELECT
+		
+	; 爆乳 or 巨乳
+	CASE 1, 2
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「これがあれば、オバケおっぱいとオサラバ！\n　大きいおっぱいは嫌いじゃないけど、大きすぎるのはちょっとね……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「これを飲めば、おっぱいが縮むのね……　ちょっと迷うわ……」\n"
+		ENDSELECT
+	
+	; 超乳以上
+	CASEELSE
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「バカみたいに大きい胸がこれで少しでも小さく……」\n"
+		ENDSELECT
+	ENDSELECT
+RETURN 1

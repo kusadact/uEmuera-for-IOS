@@ -1,0 +1,69 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 48 ターン終了時自慰発生
+; ------------------------------------------------------------------------------
+
+; 詳細な描写は実際に自慰を行う側で
+; ここではフレーバー程度の文を追加する
+@KOJO_27_0_SYSTEM_MESSAGE_48(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 連続自慰フラグONの場合、このターン2度目以降のオナニー
+	IF GETBIT(CFLAG:900, 3)
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「あはぁ……♥　次のオナニーは、どこ気持ちよくなろうかなぁ……♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「えへ♥　えへへぇ……♥　連続オナニー、最ッ高ぉぉ♥♥」\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「はぁ……っ♥　はあぁぁ……っ♥♥　コーフンが、とまんないよぉ♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あああぁぁっ♥　もっかいっ♥　もっかいオナニーするぅ……っ♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あと一回、一回だけすれば……っ♥　絶対落ち着くハズ……っ♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「オナニーばっか、してたらっ……♥　バカになるっ、絶対バカになるうぅっ……♥♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「はあぁ……っ……　もっかい……　もっかいだけ……っ……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「した、ばっかなのに……っ！　全然足りないぃ……っ！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（早く……っ！　早く興奮落ち着かせないとぉ……っ！！）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（うずうずする……っ！　まだうずうずするぅ……っ！！）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あたしの頭、バカになってるっ！　オナニーしたいっ！　まだオナニーしたいっ！）\n"
+		ENDSELECT
+		
+	; このターン既に絶頂している
+	ELSEIF CFLAG:35
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「はあぁ……♥　あたしオナニー狂いになってるぅ……♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「もっとぉ……♥　もっとイキたいよぉ♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「気持ちいいの、足りないよお♥♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ああぁぁ……っ♥　したい、まだオナニーしたいよぉ……っ♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（だめ……　イッたばかりなのに……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（なんでまだ疼くのよ……っ　たった今イッたばかりなの……にっ）\n"
+		ENDSELECT
+	
+	; 通常のオナニー
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ああんっ♥　ガマンできないっ♥♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ううっ……　情けないっ、情けないっっ！！）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（戦闘中に、自分からこんな事するハメになるなんて）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ううっ……　身体、疼きすぎ……っ……）\n"
+		ENDSELECT
+	ENDIF
+RETURN 1

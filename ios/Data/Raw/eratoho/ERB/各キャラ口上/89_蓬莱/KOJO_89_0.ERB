@@ -1,0 +1,323 @@
+﻿;東方触手宮　蓬莱人形　口上練習用
+;
+;
+;口上基礎知識
+;　口上を書く時は基本的に ARG:0 と ARG:1 の中に「シチュエーション」が入っているので、
+;　それに応じて分岐を行い、適切なメッセージを表示する……というのが基本方針になります
+;　
+;　なお、TARGET に口上を表示するキャラが指定された状態になっているので、
+;　自分の名前や自分のCFLAGを見たい時などは CALLNAME:TARGET とか CFLAG:1 とかで参照できます
+;
+;口上選択時のタイトル
+@KOJO_TITLE_89_0
+RESULTS = 東方触手宮　蓬莱人形　口上練習用
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_89_0
+PRINTFORML 蓬莱口上は練習用の超単純口上なので、口上手始めのコピペにでも使ってやってくださいな。
+PRINTFORML サンプル上海と共にアリスの仲間にしてあげると（気分的に）きっと喜びます。
+
+
+;文字色　桃色
+@KOJO_DEFAULT_COLOR_89_0
+RETURN RGBCOLOR(255, 100, 255)
+
+
+;口上本体
+@KOJO_89_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;デフォルトの地の文を表示するコマンドです
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;そのキャラの口上の文字色を反映します
+SETCOLOR CFLAG:700
+
+
+
+;↓↓↓　　ここから口上のメイン処理　　↓↓↓
+
+;ARG:0 や ARG:1 の内容で分岐をかけます
+;それぞれの値の意味は「資料とか\PRINT_MESSAGE(口上)フラグ一覧.txt」を参照してください
+SELECTCASE ARG:0
+	CASE 1
+		;自分が攻撃する時
+		IF ARG:1 >= 10 && ARG:1 <= 40
+			;ダメージを与えるコマンドの場合
+			;色んなコマンドで共通の処理をする場合、↓こんな感じでランダム分岐をかけると良いかも
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML ﾏｯｽｸﾞｳｯﾃ　ﾌﾞｯﾄﾊﾞｽｰ
+				CASE 1
+					PRINTFORML ｸﾗｲﾔｶﾞﾚｰ
+				CASEELSE
+					PRINTFORML ｺﾚﾃﾞﾄﾞｳﾀﾞｰ
+			ENDSELECT
+		ELSEIF ARG:1 == 2
+			;防御の場合
+			PRINTFORML ｻﾜﾝﾅﾖｰｰ
+		ENDIF
+	CASE 12
+		;敵の通常攻撃(HP攻撃)が当たった
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML ｳﾜｰ
+			CASE 1
+				PRINTFORML ﾔｰﾗﾚｰﾀｰ
+			CASEELSE
+				PRINTFORML ﾆﾝｷﾞｮｳ　ｷﾞｬｸﾀｲ
+		ENDSELECT
+	CASE 14
+		;敵の性攻撃(EP攻撃)が当たった
+		;性攻撃などの場合、ARG:2に属性（0＝A攻撃　1＝B攻撃　2＝C攻撃　3＝V攻撃）が入っています
+		IF ARG:2 == 3
+			;V攻撃された
+			PRINTFORML ｺﾜﾚﾁｬｳﾖｰｰ
+		ELSE
+			;それ以外
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML ｲﾔｰ　ｹﾀﾞﾓﾉｰ
+			CASE 1
+				PRINTFORML ｱﾝｱﾝ　ｱｱﾝ
+			CASEELSE
+				PRINTFORML ﾍﾝﾀｲﾀﾞｰ!
+		ENDSELECT
+		ENDIF
+	CASE 22 TO 27
+		;敵の攻撃を避けた（22～27が避けた時の処理なので、全部まとめて処理）
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML ｸﾗｳｶﾖｰ
+			CASE 1
+				PRINTFORML ﾄﾞｺｦﾐﾃｲﾙｰ
+			CASEELSE
+				PRINTFORML ｺｯﾁｸﾝﾅｰ
+		ENDSELECT
+	CASE 32
+		;HPが0になった
+		PRINTFORML ｳｺﾞｹﾅｲﾖｰ
+	CASE 33
+		;MPが0（戦意喪失）になった
+		PRINTFORML ﾓｳﾀﾞﾒ…
+	CASE 35
+		;CPが減少した　（ARG:1が　0：全裸になった　1：半裸になった　2：破れ始めた）
+		IF ARG:1 == 0
+			PRINTFORML ﾊﾀﾞｶﾀﾞﾖｰ
+		ELSEIF ARG:1 == 1
+			PRINTFORML ｵﾚﾉﾌｸｳﾞｧﾓｳ　ﾎﾞﾛﾎﾞﾛﾀﾞｰ
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML ﾔﾌﾞｸﾅﾖｰ
+				CASE 1
+					PRINTFORML ｽｹﾍﾞﾔﾛｰ
+				CASEELSE
+					PRINTFORML ﾋﾞﾘﾋﾞﾘﾀﾞｰ
+			ENDSELECT
+		ENDIF
+	CASE 40
+		;寄生された
+		PRINTFORML ﾅﾝｶﾀﾞｻﾚﾀｰ
+	CASE 55
+		;敵から逃げた
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML ﾃｯﾀｲﾀﾞｰ
+				CASE 1
+					PRINTFORML ｻﾗﾊﾞﾀﾞｰ
+				CASEELSE
+					PRINTFORML ｵﾎﾞｴﾃﾛﾖ-
+			ENDSELECT
+	CASE 57
+		;敵に勝った
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML ﾔｯﾀｰ
+				CASE 1
+					PRINTFORML ﾆﾄﾞﾄｸﾝﾅｰ
+				CASEELSE
+					PRINTFORML ｱｯｹﾈｴｾﾞｰ
+			ENDSELECT
+	CASE 101
+		;迷宮内で誰かに会った
+		IF NO:(ARG:1) == 14
+			;アリスに会った
+			PRINTFORML ﾏｲｽﾀｰ!!!
+		ELSEIF NO:(ARG:1) == 88
+			;蓬莱に会った
+			PRINTFORML ｼｬﾝﾊｰｲ!!
+		ELSE
+			;その他
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML ｺﾝﾆﾁﾊｰ
+				CASE 1
+					PRINTFORML ﾐｶﾀｶﾅｰ?
+				CASEELSE
+					PRINTFORML ﾎﾗｰｲ
+			ENDSELECT
+		ENDIF
+	CASE 109
+		;PTに加入した
+		PRINTFORML ﾎﾗｰｲ!
+	CASE 113
+		;探索でアイテムを拾った
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML ﾐﾂｹﾀｰ
+				CASE 1
+					PRINTFORML ﾅﾝﾀﾞｺﾚｰ
+				CASE 2
+					PRINTFORML ﾊｹｰﾝ
+				CASE 3
+					PRINTFORML ｲｲﾓﾉｶｰ?
+				CASEELSE
+					PRINTFORML 
+			ENDSELECT
+	CASE 125
+		;寄生が進行
+		IF ARG:1 >= 12
+			PRINTFORML ﾍﾝﾅﾉ　ｲﾚﾗﾚﾀｰ
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 8
+			PRINTFORML ﾑｽﾞﾑｽﾞｽﾙﾖｰ
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 4
+			PRINTFORML ﾅﾝｶｸﾙｼｲﾖｰ
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 2
+			PRINTFORML ﾅﾝｶﾔﾊﾞｲﾖｰ
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 1
+			PRINTFORML ﾓｳ　ﾃﾞｿｳﾀﾞﾖｰ
+			CALL MSG_WAIT(1)
+		ENDIF
+	CASE 126
+		;妊娠が進行
+		IF ARG:1 >= 11
+			PRINTFORML ﾅﾝｶﾍﾝﾀﾞﾖｰ
+		ELSEIF ARG:1 >= 9
+			PRINTFORML ｷﾓﾁﾜﾙｲﾖｰ
+		ELSEIF ARG:1 >= 8
+			IF CFLAG:36 == 1
+				PRINTFORML ﾅｵｯﾀｰ
+			ELSE
+				PRINTFORML ﾃﾞｷﾁｬｯﾀｰ
+			ENDIF
+		ELSEIF ARG:1 >= 5
+			PRINTFORML ｵﾅｶ　ﾍﾝﾀﾞﾖｰ
+		ELSEIF ARG:1 >= 3
+			PRINTFORML ｵﾅｶ　ｵﾓｲﾖｰ
+		ELSEIF ARG:1 >= 1
+			IF TALENT:130
+				PRINTFORML ｵﾅｶ　ｲﾀｲﾖｰ
+				CALL MSG_WAIT(1)
+			ELSE
+				PRINTFORML ｵｯﾊﾟｲ　ﾃﾞﾀﾖｰ
+			ENDIF
+		ENDIF
+	CASE 127
+		;寄生・出産イベント
+		IF ARG:1  == 0
+			;最初
+			PRINTFORML ﾅﾝｶﾃﾞﾃｸﾙｰ
+		ELSEIF ARG:1  == 1
+			;産まれた
+			PRINTFORML ｽﾜﾚﾙﾖｰ
+		ELSE
+			PRINTFORML ｲｯﾁｬｯﾀﾖｰ
+		ENDIF
+	CASE 129
+		;妊娠・出産イベント
+		IF ARG:1  == 0
+			;最初
+			PRINTFORML ｳﾏﾚｿｳﾀﾞﾖｰ
+		ELSEIF ARG:1  == 1
+			;産まれた
+			PRINTFORML ｱｶﾁｬﾝﾀﾞｰ
+		ELSE
+			PRINTFORML ﾏｯﾃｰ
+			CALL MSG_WAIT(1)
+		ENDIF
+	CASE 130
+		;浄化した
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML ﾋｬｯﾊｰ!
+				CASE 1
+					PRINTFORML ｵﾌﾞﾂﾊ　ｼｮｳﾄﾞｸﾀﾞｰ!
+				CASE 2
+					PRINTFORML ｵｿｳｼﾞ　ｶﾝﾘｮｳ
+				CASE 3
+					PRINTFORML ｼﾞｮｳｶｼﾃ　ｱｹﾞﾙﾜｰ
+				CASEELSE
+					PRINTFORML 
+			ENDSELECT
+	CASE 132
+		;部屋を移動（突撃）
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML ﾄﾂｹﾞｷﾀﾞｰ
+				CASE 1
+					PRINTFORML ﾉﾘｺﾒｰ
+				CASEELSE
+					PRINTFORML 
+			ENDSELECT
+	CASE 133
+		;部屋を移動（慎重）
+			;主人公の時だけメッセージを表示
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML ｼﾝﾁｮｳﾆ　ｲｸﾖｰ
+				CASE 1
+					PRINTFORML ｱﾝｾﾞﾝ　ﾀﾞｲｲﾁ
+				CASEELSE
+					PRINTFORML 
+			ENDSELECT
+	CASE 135
+		;探索開始
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML ｻｶﾞｾｰ
+				CASE 1
+					PRINTFORML ｻｰﾁﾓｰﾄﾞ
+				CASE 2
+					PRINTFORML ﾅﾆｶﾞｱﾙｶﾅｰ
+				CASE 3
+					PRINTFORML ﾀﾝｻｸｰ
+				CASEELSE
+					PRINTFORML 
+			ENDSELECT
+	CASE 136
+		;処女喪失
+		IF ARG:3 == 1
+			;ARG:3が1の場合は「処女を喪失しそうなとき」
+			;V防御などで処女喪失を防げる場合も表示されます
+			;本当に喪失するかどうかチェックしたい場合は、上級編でやっているように LOST_VIRGIN_CHECK を使います
+			PRINTFORML ｿｺﾊ　ﾀﾞﾒｰ!
+		ELSEIF ARG:3 == 0
+			PRINTFORML ｴ……
+		ELSE
+			;ARG:3が0の場合が本当の処女喪失時なので注意
+			PRINTFORML ｱﾌﾞﾅｶｯﾀﾖ-
+		ENDIF
+	CASE 152
+		;捕食されきった（リタイア）
+		PRINTFORML ｺﾜﾚ…ﾁｬｯﾀ……ﾖ…
+	CASEELSE
+		;特に処理しない口上は全部ここに飛んできます
+		;ここでは別に何もしなくてもOKです
+ENDSELECT
+
+;↑↑↑　　ここまで口上のメイン処理　　↑↑↑
+
+
+
+;表示が終わったら文字の色をリセットしておきましょう
+RESETCOLOR
+
+;自分で口上を書いた場合は RETURN 1 になります　　基本的にこのままにしておいてください
+RETURN 1
+

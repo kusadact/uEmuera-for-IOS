@@ -1,0 +1,45 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 3 発情
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_3(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 発情してない
+	SIF !CFLAG:28
+		RETURN 0
+		
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 通常時
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（歩くだけで……おまた擦れて、感じちゃうよぉ♥）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（カラダ……すっごい火照ってる……　誰でもいいから……あたしを……♥）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（うぅっ♥　ああぁっ♥　ほしぃ……っ♥　きもちいいの、ほしいよぉ♥）\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（誰かに襲われる前に……　この火照り、なんとかしないと……）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（なんだか……むずむずする……）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（うあぁ……　カラダ……　あついよぅ……）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（ううっ……　カラダが……っ、欲しがっちゃってるっ！　ダメなの……にぃっ！）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（気を抜いたらぁっ、えっちな声漏れちゃう……っ♥）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（疼きが、消えないよぉっ♥　だれか……助けてええぇ♥♥）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（ダメなの……っ♥　えっちなことされて、喜びたくないの……っ♥♥）\n"
+	CASEELSE
+		; 発情以上の口上しか呼ばれないので普通口上なし
+	ENDSELECT
+RETURN 1

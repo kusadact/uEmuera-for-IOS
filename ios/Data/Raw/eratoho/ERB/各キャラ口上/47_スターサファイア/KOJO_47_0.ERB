@@ -1,0 +1,1359 @@
+﻿;*********************************************************
+;　東方触手宮　スターサファイア口上
+;	サニーミルク口上をそのまんまひっぱってきてちょこちょこ中身替えただけ
+;		2012/07/04	ver 0.01
+;*********************************************************
+
+
+;口上選択時のタイトル
+@KOJO_TITLE_47_0
+RESULTS = 東方触手宮　スターサファイア口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_47_0
+PRINTFORML いつでもどこでも余裕のあるスターちゃん
+PRINTFORML 仲間が妊娠すると気配を感じる能力であっさりと妊娠していることを教えてくれるすごい奴だよ！
+
+
+;文字色　ディープスカイブルーとかなにこれカッコイイ
+@KOJO_DEFAULT_COLOR_47_0
+RETURN RGBCOLOR(0, 191, 255)
+
+;口上本体
+@KOJO_47_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;地の文はデフォルトのものを使用します
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;文字色設定
+SETCOLOR CFLAG:700
+
+;睡姦中…じゃなくて睡眠中限定口上、喪失中は通常口上へ
+;スターちゃんどうしたの真っ青な顔して？
+;え？おなかの中から気配を感じる？はははそんなバカな身に覚えなんてないんでしょう？
+;それとも寝ている間にだれかがこっそり襲ってたとでも？なんでこっちみるの？
+
+IF CFLAG:25 && CFLAG:29 != 1
+
+SELECTCASE ARG:0
+	;拘束攻撃
+	CASE 12
+		;痛い
+		IF ARG:2 >= 1500
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「！？」
+				CASE 1
+					PRINTFORML 「けほっ…オシオキするなら……ルナかサニーに…くぅ……」
+				CASEELSE
+					PRINTFORML 「……きゅう」
+			ENDSELECT
+		;少し痛い
+		ELSEIF ARG:2 >= 500
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「やだぁ……」
+				CASE 1
+					PRINTFORML 「……痛い…すぅ」
+				CASEELSE
+					PRINTFORML 「むにゃ…悪いのはサニーなのに……」
+			ENDSELECT
+		;あんまり痛くない
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「………むにゃ」
+				CASE 1
+					PRINTFORML 「……すぅ……すぅ」
+				CASEELSE
+					PRINTFORML 「んー…まだだぁめ♪」
+			ENDSELECT
+		ENDIF
+	;EPダメージ
+	CASE 14
+		;絶頂時
+		IF BASE:EP < ARG:3
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「んんんーーーッ」
+				CASE 1
+					PRINTFORML 「ひゃあぁああ！……ん……ぁぁ……」
+				CASEELSE
+					PRINTFORMDL スターはビクビクしながらいやいやと頭を大きく振っている、が目を醒まさない。
+			ENDSELECT
+		;EPダメージ3000以上
+		ELSEIF ARG:3 >= 3000
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「ふふっ……えっちぃ……」
+				CASEELSE
+					PRINTFORML 「むにゃむにゃ……おまわりさんこの人…よ」
+			ENDSELECT
+		;EPダメージ3000未満
+		ELSE
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「んんっ…」
+				CASE 1
+					PRINTFORML 「あんっ……」
+				CASE 2
+					PRINTFORML 「……きゃんっ」
+				CASEELSE
+					PRINTFORML 「すぅ……？」
+			ENDSELECT
+		ENDIF
+	;拘束
+	CASE 15
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「……ん～？ん？」
+			CASE 1
+				PRINTFORML 「捕まえるならー……私より二人を…」
+			CASE 2
+				PRINTFORML 「ごめんなさーーい！……くぅ……くぅ」
+		ENDSELECT
+	;寄生攻撃
+	CASE 16
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「んんっ……暑い…」
+			CASE 1
+				PRINTFORML 「……生ぬるいわ…すぅ」
+			CASE 2
+				PRINTFORML 「ぁぁんっ……ふふっ…今日は危ない日なのよ……くぅくぅ…」
+		ENDSELECT
+
+	;喪失
+	;死に口上になっちゃうかな…？
+	CASE 33
+	;
+	;処女喪失
+	CASE 136
+		SELECTCASE ARG:1
+			CASE 0
+				SELECTCASE ARG:3
+					;喪失直前
+					CASE 1
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「…二人には…内緒よ♪」
+							CASE 1
+								PRINTFORML 「へ、変態！変態！……ぅぅぅ…」
+							CASE 2
+								PRINTFORML 「ねばねばー…」
+						ENDSELECT
+							PRINTFORMDL スターは自身に近づく危機になど少しも気づく様子はない
+					;喪失を防ぐ！のは寝てたらできない
+					CASE 2
+					;
+					;スターちゃんが寝てる間に上下の口だけでなく髪の毛にも睡姦したくなるのは仕方ないこと
+					CASEELSE
+						PRINTFORML 「っ……！？」
+						PRINTFORMDL 下半身を貫かれスターは眉間に皺を寄せた。
+						PRINTFORML 「……酷い人」
+						PRINTFORMDL スターはしばらくの間苦しそうに身悶えたが、そのささやかな抵抗すらも触手に押さえつけられてしまう…
+						PRINTFORMDL 人形のようになすがままの彼女の体を触手が貪るたびに苦しそうな小さな嬌声が漏れる
+						PRINTFORMDL スターはどんな夢を見ているのか、きつく拳を握り、時々下唇を噛んで苦しげにしている……
+				ENDSELECT
+		ENDSELECT
+	
+ENDSELECT
+
+;通常時
+ELSE
+
+SELECTCASE ARG:0
+	
+	CASE 1
+		SELECTCASE ARG:1
+			;防御
+			CASE 1
+				;発情
+				IF CFLAG:28
+					PRINTFORML 「うふふ、おあずけよ」
+				;MP1/4以下またはHP0
+				ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML (だ、誰か盾にできそうなものや人は…)
+						CASE 1
+							PRINTFORML 「ほ、ほら！こんなにしっかり身を守ってる私なんて狙っても疲れるだけよ？」
+						CASE 2
+							PRINTFORMDL 身体を必死に庇うスターは目に涙を浮かべている
+					ENDSELECT
+				;全裸
+				ELSEIF !BASE:CP
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「視線が痛いわ…」
+						CASE 1
+							PRINTFORML 「もー！こんな格好で動き回るなんて信じられない！」
+						CASE 2
+							PRINTFORML 「私のぺったんこな身体なんて見たって楽しくないわよ？」
+							PRINTFORMDL 余裕のある口調とは違い顔は耳まで真っ赤に染まっている
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML (やっぱり自分が一番よね)
+						CASE 1
+							PRINTFORMDL スターは真剣な面持ちで身体を庇っている
+						CASE 2
+							PRINTFORML 「攻撃もしないとダメなのは分かってはいるけど……」
+					ENDSELECT
+				ENDIF
+			;アイテム
+			CASE 2
+				PRINTFORML 「うふふ、ついにこれの出番ね！」
+			;前進
+			CASE 3
+				IF FLAG:10 || FLAG:11 || FLAG:15 || FLAG:16
+					PRINTFORML 「目立つのはサニーに任せたいかなーって…」
+					PRINTFORML 「うう……ちょっとだけよ？」
+				ENDIF
+			;後退
+			CASE 4
+				IF FLAG:10 || FLAG:11 || FLAG:15 || FLAG:16
+					PRINTFORML 「わー！！やっぱり私は後ろがいいわ！！」」
+				ENDIF
+			;逃走
+			CASE 5
+				;発情
+				IF CFLAG:28
+					PRINTFORML 「ごめんなさい、ちょっと用事が出来ちゃった♪」
+					PRINTFORMDL 　スターは火照る身体で駆け出した
+				;MP1/4以下またはHP0
+				ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「わーー！撤収よ撤収！」
+						CASE 1
+							PRINTFORML 「追いかけてこないでよー！」
+						CASE 2
+							PRINTFORML 「私なんかよりもっと襲い甲斐のある人おいかけてー！」
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「ぎゃーー！」
+						CASE 1
+							PRINTFORML 「ふふ、また後であいましょう」
+						CASE 2
+							PRINTFORML 「残念、逃げ足は3人の中で一番なのよ」
+						CASE 3
+							PRINTFORML 「そうねえ、こんな時は……」
+							PRINTFORML 「逃げろーーー！！」
+					ENDSELECT
+				ENDIF
+			
+			;弾幕攻撃
+			;弱弾幕～強弾幕、ばらまき、貫通
+			CASE 10 TO 12 ,14 ,15
+				;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「ほら！こんな弾幕しか撃てない雑魚を相手にしてもつまんないわよ！」
+						CASE 1
+							PRINTFORML 「あっち行ってってばー！」
+						CASE 2
+							PRINTFORML 「もう……見逃して」
+						CASEELSE
+							PRINTFORMDL スターは涙目で弾幕を展開させている
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「波紋のように広がる星の煌きをごらんあれ」
+						CASE 1
+							PRINTFORML 「ふふふっ、どんどんいくわよ」
+						CASE 2
+							PRINTFORML 「これはどうかしら？」
+						CASEELSE
+							PRINTFORML 「さあ弾幕ごっこよ♪」
+					ENDSELECT
+				ENDIF
+			;溜め撃ち
+			CASE 13
+				;溜め
+				IF CFLAG:31 == 2
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「集中…なんて柄じゃないわ♪」
+						CASE 1
+							PRINTFORML 「スペルカードはどこにしまったかしら？」
+						CASEELSE
+							PRINTFORML 「私の全力を…と思ったけど疲れるしやーめた☆」
+					ENDSELECT
+				;発射
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「それっ！スペルカード♪」
+						CASE 1
+							PRINTFORML 「綺麗でしょう？スターピースシャワー！」
+						CASEELSE
+							PRINTFORML 「降り注げ輝く星々！プチコメット！なんてね」
+					ENDSELECT
+				ENDIF
+
+				;消耗武器
+				CASE 20 TO 25
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「こういう武器って面白いわね。この戦いが終わったら記念に持って帰ろうかしら」
+						CASE 1
+							PRINTFORML 「ルナがみたら気に入りそうねー」
+						CASE 2
+							PRINTFORML 「これを使って何か楽しいイタズラができないかしら？」
+					ENDSELECT
+				
+				;非消耗武器
+				CASE 30 TO 34
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「こんな重いものを振り回さなくちゃいけないなんて…」
+						CASE 1
+							PRINTFORML 「こういう力仕事は二人の役目なのに…」
+						CASE 2
+							PRINTFORML 「ふふっ、この戦いが終わったら妖夢さんに弟子入りして真面目に武器の練習してみようかしら」
+					ENDSELECT
+			
+			;拘束離脱
+			CASE 42
+				IF ARG:3 == 0
+					;丸呑み
+					IF CFLAG:21
+						;MP1/4以下またはHP0
+						IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「出して！出してって言ってるでしょ！」
+							CASE 1
+								PRINTFORML 「なんで誰も助けてくれないの！？ほんとに一回休みになっちゃう！」
+							CASE 2
+								PRINTFORMDL スターは泣きじゃくりながら力なくもがいている
+							CASE 3
+								PRINTFORML 「吐き出して！お願いだから！」
+						ENDSELECT
+						;発情
+						ELSEIF CFLAG:28
+							PRINTFORML (気持ちいいしもうこのまま食べられちゃってもいいかしら……)
+							PRINTFORML (ん～…でもやっぱり一回休みはイヤだわ)
+						;その他
+						ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「早く出してー！」
+							CASE 1
+								PRINTFORML 「私なんて食べたらお腹こわすわよ」
+							CASE 2
+								PRINTFORMDL スターは必死に押したり引っ張ったり逃げようと抵抗している
+							CASE 3
+								PRINTFORMDL スターは蠢く肉壁から這い出そうとつかめそうな場所を必死に探している
+						ENDSELECT
+						ENDIF
+					;拘束
+					ELSE
+						;MP1/4以下またはHP0
+						IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「これ以上は……本当に……」
+							CASE 1
+								PRINTFORML (早く逃げなくちゃ…)
+							CASE 2
+								PRINTFORMDL 抵抗するスターの表情には全くいつもの余裕がない
+							CASE 3
+								PRINTFORML 「そろそろ離してくれてもいいでしょう？」
+						ENDSELECT
+						;発情
+						ELSEIF CFLAG:28
+							PRINTFORML (離して欲しいような欲しくないような)
+							PRINTFORML (逃げれたらそれでよし、ダメならその時はその時ね)
+						;その他
+						ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「はなしてー」
+							CASE 1
+								PRINTFORML 「もうっ！気持ち悪いわねえ！」
+							CASE 2
+								PRINTFORMDL スターは必死に手足をばたつかせている
+							CASE 3
+								PRINTFORMDL 絡みついた触手を一本一本スターは丁寧に解こうとしている
+						ENDSELECT
+						ENDIF
+					ENDIF
+				ENDIF
+			;力溜め
+			CASE 43
+				;発情
+				IF CFLAG:28
+					PRINTFORML (チャンスを見つけて…あんっ♪でも気持ちいい)
+				;MP1/4以下またはHP0
+				ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML (こんなサボってる場合じゃないのは分かってるけど……)
+					CASE 1
+						PRINTFORML (どこかでチャンスを見つけないと危ないわね)
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「早く誰かたすけてー」
+					CASE 1
+						PRINTFORML 「サボってるわけじゃないわよ？」
+					ENDSELECT
+				ENDIF
+			
+			;諦め
+			CASE 44
+				
+				SELECTCASE RAND:6
+					CASE 0
+						PRINTFORML 「あいやこれまで……」
+					CASE 1
+						PRINTFORML 「はぁ…早く一回休みにしてくれたほうが楽だわ…」
+					CASE 2
+						PRINTFORML 「もう降参、煮るなり焼くなり食べるなりどうぞ」
+					CASE 3
+						PRINTFORMDL スターはぐったりと身を投げ出している
+					CASE 4
+						PRINTFORMDL スターは時々逃げ出そうと身をよじるが結局は無駄そうなのですぐに諦めてしまった
+					CASE 5
+						PRINTFORMDL 完全に抵抗を諦めたスターは特大のため息をついた
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「復活したら外でした、なんて都合のいい事はないわよねえ…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「復活したら外でした、なんて都合のいい事はないわよねえ…」
+						ENDIF
+				ENDSELECT
+			;動けない
+			CASE 45
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「きゅう…」
+					CASE 1
+						PRINTFORML 「えーと、どうしようかしら？」
+				ENDSELECT
+			
+			;Ａを守る
+			CASE 50
+				PRINTFORML 「もうっ、マニアックね」
+				PRINTFORMDL スターはおしりを振って触手を振りほどこうとしている
+			;Ｂを守る
+			CASE 51
+				PRINTFORML 「もっと大きい人を狙ったほうが絶対楽しいってば」
+				PRINTFORMDL スターは胸に迫る触手を一生懸命引っ張っている
+			;Ｃを守る
+			CASE 52
+				PRINTFORML 「そっちはめっ、よ？」
+				PRINTFORMDL スターは大慌てで前を隠そうと触手の絡んだ腕に力を入れた
+			;Ｖを守る
+			;スターちゃんはビッチ
+			CASE 53
+				IF TALENT:0
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「さすがに冗談になってないわよ！」
+					CASE 1
+						PRINTFORML 「それはさすがに絶対だめー！」
+					CASE 2
+						PRINTFORML 「こんな体型だしまだ赤ちゃんなんて作れないって！」
+					CASE 3
+						PRINTFORML 「絶対にそんな大きいのはいらないから！」
+					CASEELSE
+						PRINTFORML 「もっとボンキュッボンな人に挿入れたほうが絶対に楽しいから、だから、ね？」
+				ENDSELECT
+						PRINTFORMDL 初めてを死守しようとスターは必死だ
+				ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「誰かー！ここにロリコンさんがいますよー！お助けー！」
+					CASE 1
+						PRINTFORML 「うふふ、挿入れたいの？まだダーメ♪」
+					CASE 2
+						PRINTFORML 「もう、先っちょだけよ？なんていうわけないでしょ！」
+				ENDSELECT
+						PRINTFORMDL スターはじたばたしながら必死に挿入されまいと抵抗している
+				ENDIF
+		ENDSELECT
+	;拘束攻撃
+	CASE 5
+		IF CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「……」
+				CASE 1
+					PRINTFORMDL スターは呆然と身体に絡み付いていく触手を見つめている…
+				CASE 2
+					PRINTFORML 「あ……またするの……？」
+			ENDSELECT
+		ELSE
+		SELECTCASE ARG:3
+			;拘束
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「できれば見逃してほしいなーって…ダメ？……ひゃあっ！？」
+					CASE 1
+						PRINTFORML 「やんっ、ぬるぬるしてる……」
+					CASE 2
+						PRINTFORML 「いやーー！離してーー！」
+				ENDSELECT
+			;丸呑み
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「私よりルナの方が捕まえやすいし美味しいってばー！」
+					CASE 1
+						PRINTFORML 「あなたまでお腹真っ黒になっちゃうけどいいの？話を聞いてー！はーなーしーてー！」
+					CASE 2
+						PRINTFORML 「た、食べられちゃう！？ぎゃーーー！」
+				ENDSELECT
+		ENDSELECT
+		ENDIF
+		
+	;寄生攻撃
+	;下のお口からいっぱいいっぱいミルクごくごくしようねー
+	CASE 6
+		;処女はどんどん妊娠させちゃおうねー
+		IF TALENT:0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ちょっとふざけないで！」
+				CASE 1
+					PRINTFORMDL スターは自分の股間目指して這い上がる触手を追い払おうと必死だ
+				CASE 2
+					PRINTFORML 「責任とらせるわよ？…やめて！責任とってもダメなものはダメよ！」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もうっ、ちゃんとゴムつけてくれなくちゃ…」
+				CASE 1
+					PRINTFORML 「ナカはダメだってばー！」
+				CASE 2
+					PRINTFORML 「家族計画はちゃんと立てないといけないのよ？…私の話をきいてー！ぎゃーー！」
+			ENDSELECT
+		ENDIF
+		
+			
+	;HPダメージ
+	CASE 12
+		;HPがないor喪失中
+		IF BASE:HP == 0 || CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「……」
+				CASE 1
+					PRINTFORML 「ゲホッ…………かはっ…」
+				CASEELSE
+					PRINTFORML 「……いじめないで」
+			ENDSELECT
+		;痛い
+		ELSEIF ARG:2 >= 1500
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ぎゃっ！」
+				CASE 1
+					PRINTFORML 「いやっ！？」
+				CASEELSE
+					PRINTFORML 「！？」
+			ENDSELECT
+		;少し痛い
+		ELSEIF ARG:2 >= 500
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「痛いわね！」
+				CASE 1
+					PRINTFORML 「もう、なんて乱暴なえーと……なんて生き物なのかしら？」
+				CASEELSE
+					PRINTFORML 「うう…暴力は何も解決しないものなのよ？」
+			ENDSELECT
+		;あんまり痛くない
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いたたた」
+				CASE 1
+					PRINTFORML 「グレイズ…って失敗しちゃった」
+				CASEELSE
+					PRINTFORML 「あら？擦り切れちゃってる」
+			ENDSELECT
+		ENDIF
+	;EPダメージ
+	CASE 14
+	;喪失時
+		IF CFLAG:29
+			;絶頂時
+			;スターちゃんはビッチ
+		IF BASE:EP < ARG:3
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「クセになっちゃいそうぉおぅぅ」
+				CASE 1
+					PRINTFORML 「もっ…もっ……らめえぇぇええぇぇ！」
+				CASEELSE
+					PRINTFORMDL スターは何度も絶叫しながら全身を跳ねさせている
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「あはっ…気持ちいい……」
+				CASE 1
+					PRINTFORML 「……」
+				CASEELSE
+					PRINTFORML 「もう……えっちなんだから……ふふっ……」
+				ENDSELECT
+			ENDIF
+		ELSE
+		;絶頂時
+		;スターちゃんは悪戯した後わざと捕まってえっちなお仕置きをおねだりするような子
+		IF BASE:EP < ARG:3
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ダメっ！これ以上されたら！」
+				CASE 1
+					PRINTFORML 「イっちゃう！イっちゃうからぁああんっっ！」
+				CASEELSE
+					PRINTFORML 「うふふ…きたきたきたぁぁああぁーーーーーーっ！」
+				ENDSELECT
+			;EPダメージ3000以上
+			ELSEIF ARG:3 >= 3000
+				SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「しゅごいのぉお」
+				CASEELSE
+					PRINTFORML 「ひゃぁぁぁぁ！」
+				ENDSELECT
+			;EPダメージ3000未満
+			ELSE
+				;小ダメージを焦らしと取る感性は発情中
+				IF ( BASE:EP - ARG:3 ) < 3000 && CFLAG:28
+					PRINTFORML 「やぁん、いけずぅ♪」
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「やんっ…」
+						CASE 1
+							PRINTFORML 「あんっ…おいたはダメだってば」
+						CASE 2
+							PRINTFORML 「もうっ、私の体なんて触って楽しい？」
+						CASEELSE
+							PRINTFORML 「あんまりエッチなとこばっかり触っちゃダメよ！」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		ENDIF
+	;寄生攻撃命中
+	CASE 16
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML 「お腹が破裂しちゃう！ダメっ！そんなにいっぱいっ……」
+			CASE 1
+				PRINTFORML 「……はぁ、こうなる気はしてたのよね」
+			CASE 2
+				PRINTFORML 「ナカに注ぎ込まれてるって意外とわかるものねえ…」
+			CASEELSE
+				PRINTFORML 「おなかの中にいっぱい気配があって気持ち悪い…」
+		ENDSELECT
+	;攻撃回避
+	CASE 22 TO 25, 27
+		;発情
+		IF CFLAG:28
+			PRINTFORML 「気持ちよさそうだけど、遠慮しておくわ」
+		;MP1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃあっ！？」
+				CASE 1
+					PRINTFORML 「狙うなら私以外にして！」
+				CASEELSE
+					PRINTFORML (よ、よかった……)
+			ENDSELECT
+		;その他
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「うふふ、ハズレ♪」
+				CASE 1
+					PRINTFORML 「あらあら、こっちこっち」
+				CASEELSE
+					PRINTFORML 「ほらほら捕まえてごらん」
+			ENDSELECT
+		ENDIF
+	;寄生攻撃回避
+	;つまり防御したとき？
+	CASE 26
+		;スターちゃんはビッチ
+		IF TALENT:0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「なんとかナカだけはかわしたけど…」
+				CASE 1
+					PRINTFORML 「残念でした、早漏触手さん♪」
+				CASE 2
+					PRINTFORML 「そんなに安い妖精じゃないのよ♪」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「悪いけれど赤ちゃんが欲しいならほかをあたって頂戴。ルナとか」
+				CASE 1
+					PRINTFORML 「ナカに出されるのは遠慮するわ」
+				CASE 2
+					PRINTFORML 「もっとエッチな体をした人にこういうことはするべきよ？」
+			ENDSELECT
+		ENDIF
+	;戦意喪失
+	CASE 33
+		;発情
+		IF CFLAG:28
+			PRINTFORML 「うふふふ……折角だもの、めいいっぱい楽しまなくっちゃね」
+			PRINTFORMDL 緩みきった表情のスターの瞳は明後日のほうをむいていた……
+		;その他
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「降参よ……」
+				CASE 1
+					PRINTFORML 「ふふっ……うふふふふふふふふ……」
+				CASEELSE
+					PRINTFORML 「これまで……かしら」
+			ENDSELECT
+		ENDIF
+	;服の破れ強度
+	CASE 35
+		SELECTCASE ARG:1
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ぎゃああああ！」
+				CASE 1
+					PRINTFORML 「は、裸！？やだっ…どうしたものかしら……」
+				CASEELSE
+					PRINTFORML 「さすがに恥ずかしいわ……」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もうっ！どうしてこうエッチな化物ばかりなの…」
+				CASE 1
+					PRINTFORML 「ああん！これじゃあんまり服の意味ないじゃない！」
+				CASEELSE
+					PRINTFORML 「下着までボロボロじゃない…」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「この事後みたいな感じが興奮するんでしょう？」
+				CASE 1
+					PRINTFORML 「あーあ、早く帰って直さなくちゃ……」
+				CASEELSE
+					PRINTFORML 「あら…こんな場所にまで穴が…」
+			ENDSELECT
+		ENDSELECT
+		
+	;逃走成功
+	CASE 55
+		;拘束中は静かにね
+		IF CFLAG:20
+			;
+		;発情
+		ELSEIF CFLAG:28
+				PRINTFORML 「ふう、これで落ち着いて…ふふっ」
+		;MP1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「はーはー、もう、冗談じゃないわ」
+				CASE 1
+					PRINTFORML 「逃げ回っていればいつかはなんとかなる…わよね？」
+				CASEELSE
+					PRINTFORML 「ほっ……気配はもうないみたい」
+			ENDSELECT
+		;その他
+		ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「くすくす、探してる探してる」
+			CASE 1
+				PRINTFORML 「ふふふっ、逃げるのは得意中の得意よ」
+			CASEELSE
+				PRINTFORML 「うん、気配は感じないわ」
+		ENDSELECT
+		ENDIF
+	;!!! v0.05.3で逃走口上の仕様が変わったため、勝手に改変
+	CASE 62
+		PRINTFORML 「ごめんなさーい、ちゃんと助けに行くからもうちょっとだけまっててね」
+		PRINTFORMDL やたらいい笑顔でスターは去っていった…
+	CASE 63
+		IF TARGET == 1
+			IF CFLAG:21
+				PRINTFORMDL 肉壁の向こうの気配がどんどん遠のいていくのを感じる
+				PRINTFORMDL 見捨てられたととっさに悟ったスターはなんとか自力で這い出そうと必死にもがいた
+				PRINTFORMDL しかし、スターの細い手足ではぬめった肉壁の激しい動きに翻弄されるだけでむしろ奥へ奥へと押し込まれているように感じた
+				PRINTFORML 「お願い助けて！一人じゃ逃げれないわ！」
+				PRINTFORMDL 悲痛な声でスターは叫ぶも、無慈悲にも気配はどんどん遠くへと去っていく
+				IF BASE:CP
+					IF FLAG:AUTOMODE
+						PRINTFORMDL スターがもがけばもがくほど肉壁と服とが擦れ、そこから服がドロリと溶ける……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW スターがもがけばもがくほど肉壁と服とが擦れ、そこから服がドロリと溶ける……
+					ENDIF
+				ENDIF
+				PRINTFORML 「一回休みになっちゃう！ねえ！ねえってば！」
+				PRINTFORMDL 肉壁で蠢いていた何本もの触手がスターを完全に捕食しようと全身にまとわりつきはじめた……！
+				PRINTFORML 「……一回休みなの？食べられて嬲られて？」
+				IF FLAG:AUTOMODE
+					PRINTFORML 「いやよ……そんなのいや……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「いやよ……そんなのいや……」
+				ENDIF
+			ELSE
+				PRINTFORML 「待って！見捨てるなんて酷いわ！」
+				PRINTFORML 「一人じゃ逃げられないの！助けてよー！」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 獲物が完全に逃げられない、助けるものがいないと気づいた触手がスターを捕食しようと一斉に迫る
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 獲物が完全に逃げられない、助けるものがいないと気づいた触手がスターを捕食しようと一斉に迫る
+				ENDIF
+				PRINTFORML 「やめて……私なんて襲っても…」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL スターの哀願などもちろん聞き入られるわけもなく、部屋にスターの悲鳴が響き渡った……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW スターの哀願などもちろん聞き入られるわけもなく、部屋にスターの悲鳴が響き渡った……
+				ENDIF
+			ENDIF
+		ELSE
+			IF CFLAG:21
+				PRINTFORMDL 呑み込まれているスターの救出を諦めた%CALLNAME:1%はこの場を離れることにした…
+				PRINTFORMDL スターはすぐに見捨てられたことに気づきくぐもった抗議の声を上げるがどうすることもできない…
+			ELSE
+				PRINTFORML 「待って！見捨てるなんて酷いわ！」
+				PRINTFORML 「一人じゃ逃げられないの！助けてよー！」
+				PRINTFORML 「やめて……私なんて襲っても…」
+				IF FLAG:AUTOMODE
+					PRINTFORML 「きゃぁああぁぁぁあ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「きゃぁああぁぁぁあ！！」
+				ENDIF
+			ENDIF
+		ENDIF
+	;戦闘勝利
+	CASE 57
+		;喪失中は静かにしようねえ
+		IF CFLAG:29
+		;戦闘が終わったみたいだけどもうどうでもいいや早く帰りたいこれ以上動けない的な気持ち
+		ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「あらあら、だらしないわね」
+			CASE 1
+				PRINTFORML 「戦闘終了ね♪」
+			CASEELSE
+				PRINTFORML (手を抜いてもなんとかなるものね)
+		ENDSELECT
+		ENDIF
+	;誰かに会う
+	CASE 101
+		IF ARG:2
+			PRINTFORMDL 弱々しい気配を感じる
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「この気配は…化物じゃなさそうね」
+				CASE 1
+					PRINTFORML （怖くなさそうな人ならいいけど）
+				CASEELSE
+					PRINTFORML （んー、どうしようかしら？）
+			ENDSELECT
+		ENDIF
+
+	;別れる
+	CASE 102
+		;喪失キャラ
+		IF ARG:2
+			SELECTCASE NO:(ARG:1)
+			CASE 46
+				PRINTFORML 「ルナったらすっかりやつれちゃって…」
+			CASE 45
+				PRINTFORML 「サニーったらこんな場所でもぐっすり寝れるのね…目が死んでたけど」
+			CASEELSE
+				PRINTFORML （みなかったことにしましょ）
+			ENDSELECT
+		ELSE
+			PRINTFORML （別に関わらなくてもいいわね）
+		ENDIF
+	;雑談
+	CASE 103
+			SELECTCASE NO:(ARG:1)
+				;アリス
+				CASE 14
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「アリスさんもさすがに疲れてるみたいですね」
+						CASE 1
+							PRINTFORML 「ここにいる化物は人形に……しないってことは分かったから睨まないでください…」
+					ENDSELECT
+				;ルナ
+				CASE 46
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「ルナが生き延びてるなんて意外だわ♪」
+					CASE 1
+						PRINTFORML 「ふふっ、音を消す能力は逃げ回るのには便利そうね」
+					ENDSELECT
+				;サニー
+				CASE 45
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「サニーもさすがにやつれてるわね」
+						CASE 1
+							PRINTFORML 「え？楽しそうですって？全然そんなことないわ♪」
+							PRINTFORMDL サニーはニコニコとしているスターに訝しげな視線を投げかけた。
+					ENDSELECT
+				CASEELSE
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「いろんな気配が増えたり消えたり…なんだか疲れちゃうの」
+					CASE 1 
+						PRINTFORML 「こんな不思議な場所誰が作ったのかしら？」
+					CASE 2
+						PRINTFORML 「レーダー全体に超巨大な気配があって変な感じなの」
+						PRINTFORML 「この場所自体が一匹の大きな生き物だったりして」
+					ENDSELECT
+			ENDSELECT
+
+	;パーティ加入
+	CASE 109
+		IF CFLAG:29
+			PRINTFORMDL 虚ろな瞳で横たわっているスターを放っておけない
+			PRINTFORMDL そう思った%CALLNAME:1%はスターを連れて行くことにした
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「私のレーダー能力は探索ではきっと役に立つわ」
+					PRINTFORML 「でもそれ以外は全部任せるわ♪」
+				CASE 1
+					PRINTFORML (これで楽ができるわ♪)
+					PRINTFORML 「うふふっ、よろしくお願いします☆」
+				CASEELSE
+					PRINTFORML 「しんがりはまかせてください！」
+					PRINTFORML （だって一番後ろならサボっても誰もみないもの）
+			ENDSELECT
+		ENDIF
+	CASE 110
+		;PTメンバーと別れる
+		IF ARG:2
+			IF TARGET == 1
+				;主人公として表示する場合、ARG:1のキャラを見送る
+				PRINTFORML 「二手に分かれたほうがいいんじゃないかしら？」
+				PRINTFORMDL （もっと強い人さがしましょ）
+			ELSE
+				;それ以外の場合、自分が抜ける
+				;喪失中
+				IF CFLAG:29
+					PRINTFORMDL ぐったりと力なく床に横たわるスターをこれ以上連れてはいけない
+					PRINTFORMDL そう判断した%CALLNAME:1%はスターを置いていくことにした
+				ELSE
+					PRINTFORML 「こんなか弱い妖精を一人にするって言うの！？」
+					PRINTFORML 「確かに一人のほうが見つかり辛いですけど…わかりました」
+					PRINTFORML 「何かあったら助けてくださいよ？」
+				ENDIF
+			ENDIF
+		ENDIF
+	CASE 125
+		;寄生が進行
+		IF ARG:1 == 8
+			PRINTFORML (おなかの中に気配が…そんな…)
+		ELSEIF ARG:1 == 4
+			PRINTFORML (どんどん元気になってるのがわかっちゃう…)
+			PRINTFORML (自分の能力がイヤだって思う日がくるとはおもわなかったわ)
+		ELSEIF ARG:1 == 1
+			PRINTFORML 「ぅぅぅぅ…」
+			PRINTFORML (お腹痛い…外に出たいのはわかったから早くしてー…)
+		ENDIF
+	
+	;妊娠が進行
+	CASE 126
+		;喪失中
+		IF CFLAG:29
+			IF ARG:1 == 11
+				;セーフ
+				IF CFLAG:36 == 1
+					PRINTFORML 「……このまま一回休みになるのかしら」
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+				ELSE
+					PRINTFORML 「赤ちゃん出来たのね…まだ小さい気配なのに…わかるの」
+				ENDIF
+			ELSEIF ARG:1 == 8
+				;セーフ
+				IF CFLAG:36 == 1
+					PRINTFORML 「……」
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+				ELSE
+					PRINTFORML 「どんどん育ってる……」
+				ENDIF
+			ELSEIF ARG:1 == 3
+				PRINTFORML 「返して…私の体……」
+			ELSEIF ARG:1 == 1
+				PRINTFORMDL スターは虚ろな目でお腹をさすっている…
+			ENDIF
+		;平常時
+		ELSE
+			IF ARG:1 == 11
+				;セーフ
+				IF CFLAG:36 == 1
+					PRINTFORML 「うぅぅ…ストレス？風邪？体が重いわ…」
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+				ELSE
+					PRINTFORML 「…お腹の中に気配が」
+					PRINTFORML 「まさか何か産み付けられたの…？」
+				ENDIF
+			ELSEIF ARG:1 == 8
+					;セーフ
+					IF CFLAG:36 == 1
+						PRINTFORML 「んー？いつのまにか随分と体の調子もよくなったわね」
+					;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+					ELSE
+						PRINTFORML 「お腹の中に間違いなく何かがいるわ…」
+						PRINTFORML 「どうしよう…」
+					ENDIF
+			ELSEIF ARG:1 == 3
+				PRINTFORML 「外の世界では生まれたての子供を使った料理があるそうね」
+				PRINTFORML 「……さすがの私でもそんな料理は作らないわよ？」
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…………たぶん」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…………たぶん」
+				ENDIF
+			ELSEIF ARG:1 == 1
+				PRINTFORML 「赤ちゃんを産むのってこんなに痛いのね……」
+				PRINTFORML 「どうして私がこんな目に……ぅぅ…」
+			ENDIF
+		ENDIF
+
+	CASE 127
+		;寄生出産
+		SELECTCASE ARG:1
+			CASE 0
+				;
+			CASE 1
+				;
+			CASE 2
+				;
+			ENDSELECT
+			
+	CASE 132
+		;部屋を移動（突撃）
+		IF TARGET == 1
+			IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぎゃーー！」
+					CASE 1
+						PRINTFORML (急いでこの場を離れないと)
+					CASEELSE
+						PRINTFORML (心が折れる前に逃げるのよ！)
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「それっ！いくわよ！」
+					CASE 1
+						PRINTFORML 「おじゃましまーす☆」
+					CASEELSE
+						;今最高の　奇跡に
+						PRINTFORML 「のりこめー☆」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 133
+		;部屋を移動（慎重）
+		IF TARGET == 1
+			IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「私に気づきませんように…」
+					CASE 1
+						PRINTFORML (ここだと時々レーダー能力が役に立たないから怖いわ…)
+					CASEELSE
+						PRINTFORML (今見つかったら…うぅ)
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「お邪魔しまーす……」
+					CASE 1
+						PRINTFORML 「静かにね、静かに……」
+					CASEELSE
+						PRINTFORML (抜き足差し足…)
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 134
+		;部屋を移動（待ち伏せ）
+		IF TARGET == 1
+			IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「あまり移動はしないほうがよさそうね…」
+					CASE 1
+						PRINTFORML (じっとしていられる状態じゃないのに…)
+					CASEELSE
+						PRINTFORML (早く外にでたいなあ)
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ふふっ、のこのこきたところをえいっ！って寸法よ☆」
+					CASE 1
+						PRINTFORML 「んー…早くこないかしら……」
+					CASEELSE
+						PRINTFORMDL スターは気合充分といった様子で身構えている
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 135
+		;部屋を移動（探索）
+		IF TARGET == 1
+		;MP1/4以下またはHP0
+			IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「身を守るものはないの…？」
+					CASE 1
+						PRINTFORML (早くこの状況をなんとかしないとダメね…)
+					CASEELSE
+						PRINTFORML (もし罠を見つけたら大変だけど何もしないわけにもいかないわ)
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「面白そうなものはないかしら？」
+					CASE 1
+						PRINTFORML 「こっちはまだ調べてなかったわね」
+					CASEELSE
+						PRINTFORML 「さあ宝探しよ♪」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;処女喪失
+	CASE 136
+		SELECTCASE ARG:1
+			CASE 0
+				SELECTCASE ARG:3
+					CASE 1
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「待って待って！落ち着きましょうよ！」
+							CASE 1
+								PRINTFORML 「ちょ、ちょっと！？」
+							CASE 2
+								PRINTFORML 「いやああ！それはダメェ！」
+							CASE 3
+								PRINTFORML 「ほ、ほらおっぱいとかおしりならもっと触ってもいいから！」
+							CASEELSE
+								PRINTFORML 「私より犯し甲斐のある相手を選んだほうが…話を聞いてえ！」
+						ENDSELECT
+					CASE 2
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「もう！はいっちゃったらどうするつもりよ！」
+							CASE 1
+								PRINTFORML 「本当にえっちな化物ね！」
+							CASEELSE
+								PRINTFORML 「はぁ…あぶなかった…」
+						ENDSELECT
+					CASEELSE
+						PRINTFORML 「あ……」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL スターは痛みよりも自身を貫かれる初めての感覚に恐怖と驚きと戸惑いの声を漏らした
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW スターは痛みよりも自身を貫かれる初めての感覚に恐怖と驚きと戸惑いの声を漏らした
+						ENDIF
+						PRINTFORML 「いやあああああ！！」
+						PRINTFORMDL 青ざめた顔はすぐさま恐怖と苦痛で歪み手足をメチャクチャに振り回して必死に痛みに抵抗する
+						PRINTFORMDL 普段は見せないような必死な様子で暴れていたものの、次第に諦めたのか大人しく陵辱を受け入れ始めた
+						IF CFLAG:29
+							IF FLAG:AUTOMODE
+								PRINTFORMDL スターの瞳の光が消え次第に失われていき、やがてピクリとも動かなくなった……
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW スターの瞳の光が消え次第に失われていき、やがてピクリとも動かなくなった……
+							ENDIF
+						ENDIF
+				ENDSELECT
+		ENDSELECT
+	
+	;妊娠してる仲間へ
+	CASE 146
+		;妊娠していたら教えてくれる
+		IF CFLAG:(ARG:2):36 == 2 && ARG:1 == 10
+			;妖精は呼び捨て
+			IF TALENT:(ARG:2):150
+				PRINTFORML 「あら？%CALLNAME:(ARG:2)%、妊娠しちゃってるみたいよ」
+				PRINTFORML 「おなかの中から気配を感じるもの」
+			ELSE
+				PRINTFORML 「あのー%CALLNAME:(ARG:2)%さん。妊娠してるみたいですよ」
+				PRINTFORML 「おなかの中から気配を感じるんです」
+			ENDIF
+		ENDIF
+	CASE 149
+	;死に風呂
+	IF CFLAG:29
+	;
+	ELSE
+		SELECTCASE RAND:5
+			CASE 0
+				PRINTFORML 「ふぅぅ…まるで天国ね」
+			CASE 1
+				PRINTFORML 「髪の毛のお手入れができるのはありがたいわね」
+			CASE 2
+				PRINTFORML 「さっぱりして気持ちいいわね」
+			CASE 3
+				PRINTFORML 「このままずっと浸かっていたいわ」
+			CASEELSE
+				PRINTFORMDL スターは時々幸せそうな息を漏らしのんびりと入浴を楽しんでいる。
+		ENDSELECT
+	ENDIF
+	
+	;完全捕食
+	CASE 152
+		IF FLAG:AUTOMODE
+			PRINTFORML （あ……意識が……）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （あ……意識が……）
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML （私…気持ちよすぎて壊れちゃうのかしら？）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （私…気持ちよすぎて壊れちゃうのかしら？）
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML （……）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （……）
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML （どうでもいっか。気持ちいいんだもの……）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （どうでもいっか。気持ちいいんだもの……）
+		ENDIF
+	
+	;一回休み
+	CASE 154
+		IF FLAG:AUTOMODE
+			PRINTFORML （あら…この感じ……）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （あら…この感じ……）
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML （一回休み…なのね）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （一回休み…なのね）
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML （残念、おやすみなさい……）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （残念、おやすみなさい……）
+		ENDIF
+	
+	;復活！
+	CASE 158
+		SELECTCASE ARG:1
+			;助けてもらった
+			CASE 0
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「本当に酷い目にあったわ」
+					CASE 1
+						PRINTFORMDL スターは地面に座り込んで呆然としている…
+					CASE 2
+						PRINTFORML 「本当にエッチな怪物だったわ」
+					CASE 3
+						PRINTFORML 「あら？もう気持ちいいことおしまい？」
+					CASEELSE
+						PRINTFORML 「今回の一回休みは随分と早く終わったわね」
+				ENDSELECT
+			;捨てられた
+			CASE 1
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「お助けー！」
+					CASE 1
+						PRINTFORMDL スターは地面を這いずるようにして必死に逃げようとしている
+					CASE 2
+						PRINTFORML (あら？もしかして逃がしてくれるの？)
+					CASE 3
+						PRINTFORML 「逃げなきゃ…すこしでも遠くに…」
+					CASEELSE
+						PRINTFORML 「助かったの…？」
+				ENDSELECT
+		ENDSELECT
+	
+	;好感度でPT離脱
+	CASE 161
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORMDL いつの間にかスターの姿がない！
+				PRINTFORMDL どこかでどさくさに紛れてどこかへいってしまったのだろうか？
+			CASE 1
+				PRINTFORML 「ちょっとお花を積みに☆」
+				PRINTFORMDL そう言ってどこかへ行ったきりスターが帰ってこない…
+			CASEELSE
+				PRINTFORML 「ごめんなさい、私はやっぱり一人で」
+		ENDSELECT
+
+	;好感度でPT離脱される
+	CASE 162
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「気の短い人ねえ」
+			CASE 1
+				PRINTFORML 「ちょっと露骨に利用しすぎちゃったかしら？」
+			CASEELSE
+				PRINTFORML 「うーん、しょうがないわ。代わりを探しましょ」
+		ENDSELECT
+	
+	CASEELSE
+		;汎用
+ENDSELECT
+ENDIF
+
+RESETCOLOR
+
+;口上記入済み
+RETURN 1
+

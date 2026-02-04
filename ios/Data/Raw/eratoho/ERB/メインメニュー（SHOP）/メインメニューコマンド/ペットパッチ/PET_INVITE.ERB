@@ -1,0 +1,200 @@
+﻿@PET_INVITE
+#DIM LCOUNT
+#DIM 対象
+VARSET LOCAL
+;LOCAL　仲間になる確率
+;LOCAL:1 - 10 仲間になる候補確定用
+
+;すでにいる場合はﾅｰｼ
+SIF PET:0
+	RETURN
+
+;-----------------
+;起き上がり候補確定
+;-----------------
+FOR LCOUNT, 1, TFLAG:15 + 1
+	SIF TFLAG:LCOUNT > 0
+		LOCAL:LCOUNT = RAND:100
+NEXT
+MAX LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10
+FOR LCOUNT, 1 , TFLAG:15 + 1
+	SIF RESULT == LOCAL:LCOUNT
+		対象 = TFLAG:LCOUNT
+NEXT
+;-----------------
+;起き上がり候補確定おわり
+;-----------------
+
+
+;-----------------
+;起き上がり確率判定おわり
+;敵人図鑑の人のおかげでここの処理がめっちゃ簡単になったよ！！
+;-----------------
+SELECTCASE DA:対象:86
+	CASE 6, 7
+		LOCAL = 10
+	CASE 4, 5
+		LOCAL = 15
+	CASE 1, 2, 3
+		LOCAL = 20
+	CASE 0
+		LOCAL = 15
+ENDSELECT
+
+;触手使役術
+SIF TALENT:1:触手使役術 && CFLAG:1:29 == 0
+	LOCAL += 15
+
+SIF FLAG:10 && TALENT:(FLAG:10):触手使役術 && CFLAG:(FLAG:10):29 == 0
+	LOCAL += 15
+
+SIF FLAG:11 && TALENT:(FLAG:11):触手使役術 && CFLAG:(FLAG:11):29 == 0
+	LOCAL += 15
+
+;特別な処理
+SELECTCASE DA:対象:0
+	;催眠獣、マンボウは倒すの大変なので確定で起き上がる
+	;というか、マンボウは倒せるものなのだろうか……？
+	CASE 51, 98
+		LOCAL = 100
+	;追加、寵物専用敵の確率は100固定
+	CASE 70
+		LOCAL = 100
+	;悪堕的角色は高い確率で寵物に
+	CASE 101, 102
+		LOCAL = 50
+	;転生悪堕的角色は必ず寵物に
+	CASE 103, 104, 105
+		LOCAL = 100
+	CASEELSE
+		;簡易転生悪堕ちキャラも必ずペットに
+		IF DA:対象:99>0
+			LOCAL = 100
+		ENDIF
+ENDSELECT
+
+;デバッグなら必ず仲間に
+SIF FLAG:9
+	LOCAL = 100000000
+
+SIF DA:対象:88
+	LOCAL = -1
+;-----------------
+;起き上がり確率判定おわり
+;-----------------
+
+
+;-----------------
+;条件満たさなければ戻す
+;-----------------
+IF LOCAL < RAND:100
+	;悪落ちの場合メッセージ
+	IF DA:対象:99 >0
+		PRINTFORML 總算是成功的讓%SAVESTR:(対象)%昏迷了、
+		PRINTFORML 但是那倒下的身体被肉質的地面呑了進去不知道藏到哪裡去了。
+		IF FLAG:AUTOMODE
+			PRINTFORML 不讓這個迷宮更加衰弱的話好像就無法成功救出…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 不讓這個迷宮更加衰弱的話好像就無法成功救出…
+		ENDIF
+	ENDIF
+	RETURN
+ENDIF
+;-----------------
+;条件満たさなければ戻す処理終わり
+;-----------------
+
+
+;-----------------
+;入力及び分岐
+;-----------------
+IF DA:対象:99 >0
+	PRINTFORML 終於老実了下来的%SAVESTR:対象%爬起来看着這辺。
+	SELECTCASE DA:対象:99
+		CASE 3
+		PRINTFORML 好像已経沒有了敵意、但那模糊的眼瞳看着不像是清醒过来的样子……
+		CASE 2
+		PRINTFORML 好像已経沒有了敵意、通過観察眼睛感覚已経恢復了清醒……
+		CASEELSE
+		PRINTFORML 空虚的眼睛里什么也看不出、不确定敌意是否消失了……
+	ENDSELECT
+	PRINTFORML 連れて行きますか？
+ELSE
+
+	IF !TALENT:1:寵物
+		PRINTFORML %SAVESTR:対象%爬起来之後看着這辺！
+		PRINTFORML 好像是洗心革面了……
+		PRINTFORML 要当做同伴麼？
+	ELSE
+		PRINTFORML %SAVESTR:対象%被頑強的%CALLNAME:1%吸引住了……
+		PRINTFORML 認為有這樣的主人或許不坏
+		PRINTFORML 要答応下来麼？
+	ENDIF
+ENDIF
+PRINTFORML [1] - 是
+PRINTFORML [0] - 不
+$INPUT_LOOP
+IF FLAG:AUTOMODE
+	TINPUT FLAG:AUTOMODE * 400, MAX(RAND:30 - 28 ,0), 0, ""
+ELSE
+	INPUT
+ENDIF
+
+IF RESULT == 0
+	IF FLAG:AUTOMODE
+		PRINTFORML %SAVESTR:対象%悲傷的離開了……
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		IF FLAG:AUTOMODE
+			PRINTFORML %SAVESTR:対象%悲傷的離開了……
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW %SAVESTR:対象%悲傷的離開了……
+		ENDIF
+	ENDIF
+	RETURN
+ELSEIF RESULT != 1
+	GOTO INPUT_LOOP
+ENDIF
+PRINTFORML %SAVESTR:対象%成為了同伴！
+PRINTFORML 要起什麼名字？
+PRINTFORML 什麼都不輸入的話名字就是種族名
+IF FLAG:AUTOMODE
+	TINPUTS FLAG:AUTOMODE * 3000, "", 0, ""
+ELSE
+	INPUTS
+ENDIF
+IF RESULTS == ""
+	PETNAME = %SAVESTR:対象%
+ELSE
+	PETNAME = %RESULTS%
+ENDIF
+IF FLAG:AUTOMODE
+	PRINTFORML %PETNAME%成為了同伴！
+	TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+	PRINTFORMW %PETNAME%成為了同伴！
+ENDIF
+;悪堕ちキャラの場合元キャラを記憶
+;入れるタイミングは地味にここしかない
+IF DA:対象:99 >0
+	PET:9 = DA:対象:46
+ELSE
+	PET:9 = 0
+ENDIF
+
+
+CALLFORM PRINT_MESSAGE(1, 514, 3, CALLNAME:1, PETNAME)
+IF DA:対象:99 >0
+	CALLFORM PRINT_MESSAGE(PET:9, 1514, 3, CALLNAME:1, PETNAME)
+ENDIF
+CALL PET_INVITE_2(DA:対象:0)
+
+;悪堕ちキャラなど名前が可変な場合の対策
+SAVESTR:0 = %PETNAME%
+
+;-----------------
+;入力終わり
+;-----------------
+

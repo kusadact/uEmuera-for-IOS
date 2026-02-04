@@ -1,0 +1,1957 @@
+﻿;206ガーディアン　208転移門　210クイーンのみ飛ばしているので注意
+@ENDING_2_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SETCOLOR CFLAG:700
+	;トラウマ値が低い状態でクイーンかガーディアン撃破でクリア
+	IF CFLAG:803 < 200 && (ARG:0 == 206 || ARG:0 == 210)
+		;味方に戦意喪失じゃない霊夢がいる
+		IF (NO:(FLAG:10) == 1 && CFLAG:(FLAG:10):29 == 0 && CFLAG:(FLAG:10):104 == 0) || (NO:(FLAG:11) == 1 && CFLAG:(FLAG:11):29 == 0 && CFLAG:(FLAG:11):104 == 0)
+			;クイーン撃破
+			IF ARG:0 == 210
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 触手の殆どを弾幕によって焼き払われた迷宮の主は、苦しそうに呻いている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 触手の殆どを弾幕によって焼き払われた迷宮の主は、苦しそうに呻いている……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 好機と見た%ARGS:0%は残りの力を振り絞り、霊夢と共に体勢を整えながら構えた！
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 好機と見た%ARGS:0%は残りの力を振り絞り、霊夢と共に体勢を整えながら構えた！
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「いよっし、決めるぜ霊夢！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「いよっし、決めるぜ霊夢！」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あんたに言われなくてもそのつもりよ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あんたに言われなくてもそのつもりよ」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 放たれた魔砲は相手の身体を覆い尽くし、断末魔の悲鳴と共にクイーンを跡形もなく消滅させた……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 放たれた魔砲は相手の身体を覆い尽くし、断末魔の悲鳴と共にクイーンを跡形もなく消滅させた……
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ………
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ………
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL …
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW …
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL やがて魔物達は完全に殲滅され、出口もあっけなく見つかった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW やがて魔物達は完全に殲滅され、出口もあっけなく見つかった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL こうして異変は終わり、今は迷宮から脱出した記念に開かれた宴会の真っ最中だ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW こうして異変は終わり、今は迷宮から脱出した記念に開かれた宴会の真っ最中だ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 他の参加者が騒いでいる横で霊夢が酒を飲んでいると、魔理沙が自慢げな顔をしながら隣に座った。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 他の参加者が騒いでいる横で霊夢が酒を飲んでいると、魔理沙が自慢げな顔をしながら隣に座った。
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「それにしても、私は大活躍だったよな？　少しは霊夢も見直したんじゃないか？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「それにしても、私は大活躍だったよな？　少しは霊夢も見直したんじゃないか？」
+				ENDIF
+				PRINTFORMD ふふん、と得意げに
+				SIF TALENT:109
+					PRINTFORMD 無い
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 胸を張る魔理沙。あんな相手だったからだろう、いつも以上に自信満々だ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 胸を張る魔理沙。あんな相手だったからだろう、いつも以上に自信満々だ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL だが霊夢はというと、それを横目で見やりながら眉一つ動かずに言い返す。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW だが霊夢はというと、それを横目で見やりながら眉一つ動かずに言い返す。
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「余計な手間が増えただけよ。私一人でもなんとかなったわ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「余計な手間が増えただけよ。私一人でもなんとかなったわ」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL その台詞に魔理沙はヒビが入りそうな勢いで固まったが、霊夢はお構いなしだ。更に続けていく。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW その台詞に魔理沙はヒビが入りそうな勢いで固まったが、霊夢はお構いなしだ。更に続けていく。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「そもそも分かってないみたいだけど、今回のはいつものと違うのよ。だから仮に活躍しててもノーカン」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「そもそも分かってないみたいだけど、今回のはいつものと違うのよ。だから仮に活躍しててもノーカン」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「い、言い訳すんなよ。どうせ私の活躍を認めたくないからって適当言ってるんだろ？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「い、言い訳すんなよ。どうせ私の活躍を認めたくないからって適当言ってるんだろ？」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「言ってませんー。だいたい私のほうがちゃんと活躍してたんだから、認めたくもないも何もないわ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「言ってませんー。だいたい私のほうがちゃんと活躍してたんだから、認めたくもないも何もないわ」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ようやく立ち直った魔理沙の反論にも、霊夢は涼しげな表情だ。もっとも、それが気に食わないのだが。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ようやく立ち直った魔理沙の反論にも、霊夢は涼しげな表情だ。もっとも、それが気に食わないのだが。
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ？　私の方がいっぱい倒したけどな。そもそも私が先頭に立ってたんだから、今回は私が主役だぜ？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ？　私の方がいっぱい倒したけどな。そもそも私が先頭に立ってたんだから、今回は私が主役だぜ？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL バチバチと火花を散らす二人の視線。止めるどころか、面白い見世物とばかりに注目する他の面々。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW バチバチと火花を散らす二人の視線。止めるどころか、面白い見世物とばかりに注目する他の面々。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 故に、魔理沙と霊夢がそれぞれの得物を構えるのは道理だった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 故に、魔理沙と霊夢がそれぞれの得物を構えるのは道理だった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「構えろ霊夢！　私とお前のどっちが強いのか、ここで実証してやるぜ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「構えろ霊夢！　私とお前のどっちが強いのか、ここで実証してやるぜ！」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こっちの台詞よ、あんたの異変解決なんてお遊びだって教えてあげる！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こっちの台詞よ、あんたの異変解決なんてお遊びだって教えてあげる！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 飛び交い始める弾幕、やんややんやと騒ぎ立てる観客たち。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 飛び交い始める弾幕、やんややんやと騒ぎ立てる観客たち。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それは幻想郷ではよくある風景で――――いつも通りの日常が戻ってきた証だった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それは幻想郷ではよくある風景で――――いつも通りの日常が戻ってきた証だった。
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %ARGS:0%%TACHI()%の攻撃が、ついにガーディアンの巨大な目玉を貫いた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %ARGS:0%%TACHI()%の攻撃が、ついにガーディアンの巨大な目玉を貫いた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 地面に倒れ、断末魔の悲鳴をあげながら悶えていたガーディアンは、やがて完全に動きを止める。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 地面に倒れ、断末魔の悲鳴をあげながら悶えていたガーディアンは、やがて完全に動きを止める。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL しかしその途端、まるで迷宮自体が意思を持っているかのように、出口が音を立てて閉じ始めた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW しかしその途端、まるで迷宮自体が意思を持っているかのように、出口が音を立てて閉じ始めた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL このままでは自分達も脱出ができなくなってしまう。　まずは先に脱出して、後から応援を呼んで来よう──
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW このままでは自分達も脱出ができなくなってしまう。　まずは先に脱出して、後から応援を呼んで来よう──
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そう決心した魔理沙だったが、ふとガーディアンの遺体が縮んでいく様子に気付き、ついでに拾おうとして、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そう決心した魔理沙だったが、ふとガーディアンの遺体が縮んでいく様子に気付き、ついでに拾おうとして、
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「さっさと逃げなさいよバカ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「さっさと逃げなさいよバカ！」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「いったぁ！？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「いったぁ！？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 霊夢に叩かれた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 霊夢に叩かれた。
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ………
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ………
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL …
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW …
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL あれから、数日。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW あれから、数日。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あーあ、結局手がかりなしか」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あーあ、結局手がかりなしか」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 無事に脱出した魔理沙は、博麗神社の縁側でむくれていた。理由は簡単、彼女はやる気を持て余している。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 無事に脱出した魔理沙は、博麗神社の縁側でむくれていた。理由は簡単、彼女はやる気を持て余している。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL なにぜ外へ出た途端に出入り口どころか迷宮の痕跡すら跡形もなく消え、再突入できなくなってしまったのだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW なにぜ外へ出た途端に出入り口どころか迷宮の痕跡すら跡形もなく消え、再突入できなくなってしまったのだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL もちろん、霊夢や魔理沙が入ってきた入り口も既に無い。これでは他の少女を救出する以前の問題だ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW もちろん、霊夢や魔理沙が入ってきた入り口も既に無い。これでは他の少女を救出する以前の問題だ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 霊夢と一緒に突入する手段を探してはいるが、魔理沙の言うとおり手がかりすら掴めない有様である。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 霊夢と一緒に突入する手段を探してはいるが、魔理沙の言うとおり手がかりすら掴めない有様である。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「せめてあいつを回収してれば、変わったかもしれないのになー」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「せめてあいつを回収してれば、変わったかもしれないのになー」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あんなの回収して何になるのよ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あんなの回収して何になるのよ」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「何かにはなったかもしれないじゃないか」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「何かにはなったかもしれないじゃないか」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 露骨な嫌味に屁理屈を追加され、横に座っていた霊夢はそっぽを向いてしまう。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 露骨な嫌味に屁理屈を追加され、横に座っていた霊夢はそっぽを向いてしまう。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL もっとも魔理沙のほうも反論してこない霊夢にバツが悪くなったらしく、微妙な表情を浮かべて話題を変えた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW もっとも魔理沙のほうも反論してこない霊夢にバツが悪くなったらしく、微妙な表情を浮かべて話題を変えた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「この様子だと、今まで攫われた奴の情報は全て役に立たないと見ていいだろうな。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「この様子だと、今まで攫われた奴の情報は全て役に立たないと見ていいだろうな。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 　はぁ、もしかすると新しく異変が起こるまで待つしかないのか……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　はぁ、もしかすると新しく異変が起こるまで待つしかないのか……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 所在無さげに足をばたつかせながら、魔理沙はため息をつく。そのまま空を見上げながら、一言。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 所在無さげに足をばたつかせながら、魔理沙はため息をつく。そのまま空を見上げながら、一言。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「早く神隠しが起こらないかなぁ……やっ、痛いって霊夢！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「早く神隠しが起こらないかなぁ……やっ、痛いって霊夢！」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「犠牲者が出るのを期待してどうすんのよ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「犠牲者が出るのを期待してどうすんのよ」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そして殴られる魔理沙だった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そして殴られる魔理沙だった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL この状況でもいつもの調子でつるむ魔理沙は……そんな自分に霊夢が不安を覚えていることに気付かない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW この状況でもいつもの調子でつるむ魔理沙は……そんな自分に霊夢が不安を覚えていることに気付かない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML （あれを持ち帰ろうとしたことといい……これがいつもの異変とは違うこと、分かってるのかしら？
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （あれを持ち帰ろうとしたことといい……これがいつもの異変とは違うこと、分かってるのかしら？
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 　変なことされてからじゃ手遅れなのに。なんとか次までに自覚させないと……）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　変なことされてからじゃ手遅れなのに。なんとか次までに自覚させないと……）
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 新たな神隠しの犠牲者が出たのは、その翌日のことだった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 新たな神隠しの犠牲者が出たのは、その翌日のことだった。
+				ENDIF
+			ENDIF
+		ELSE
+			;クイーン
+			IF ARG:0 == 210
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 触手の殆どを弾幕によって焼き払われた迷宮の主は、苦しそうに呻いている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 触手の殆どを弾幕によって焼き払われた迷宮の主は、苦しそうに呻いている…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %ARGS:0%は残りの力を振り絞り、満身創痍のクイーンへ向け、極大の魔砲を放った！
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %ARGS:0%は残りの力を振り絞り、満身創痍のクイーンへ向け、極大の魔砲を放った！
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それは真っ直ぐにクイーンの身体を貫き、断末魔の悲鳴と共に、全ての触手を打ち砕いた……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それは真っ直ぐにクイーンの身体を貫き、断末魔の悲鳴と共に、全ての触手を打ち砕いた……
+				ENDIF
+				PRINTFORMDL 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 迷宮の主の死と時を同じくして、にわかに迷宮全体が震え始める。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 迷宮の主の死と時を同じくして、にわかに迷宮全体が震え始める。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 迷宮が崩壊しているのかと焦る%ARGS:0%だったが、耳を澄ませるとそこら中から少女達の雄叫びと魔物の悲鳴が聞こえてくる。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 迷宮が崩壊しているのかと焦る%ARGS:0%だったが、耳を澄ませるとそこら中から少女達の雄叫びと魔物の悲鳴が聞こえてくる。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL どうやらクイーンの死によって封印されていた能力が使えるようになったのか、他の少女達が大暴れしているだけのようだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW どうやらクイーンの死によって封印されていた能力が使えるようになったのか、他の少女達が大暴れしているだけのようだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 安心した%ARGS:0%は、ふとクイーンの遺体に目を向けた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 安心した%ARGS:0%は、ふとクイーンの遺体に目を向けた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こんな生き物――何もわからないのにこのまま放っておくなんて、もったいないよな」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こんな生き物――何もわからないのにこのまま放っておくなんて、もったいないよな」
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ………
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ………
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL …
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW …
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL こうして異変は終わり、迷宮から脱出した記念の宴会を最後にこの話は風化していった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW こうして異変は終わり、迷宮から脱出した記念の宴会を最後にこの話は風化していった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL みないつも通りの生活に戻る中、魔理沙一人だけは家に篭りがちになっていた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW みないつも通りの生活に戻る中、魔理沙一人だけは家に篭りがちになっていた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL その理由は、彼女が見つめる存在が示している。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW その理由は、彼女が見つめる存在が示している。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「すごいな、はっきり分かるくらい再生し始めてる」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「すごいな、はっきり分かるくらい再生し始めてる」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 魔法薬に満ちたフラスコの中。不気味に浮かぶ残骸に、魔理沙の視線は注がれていた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 魔法薬に満ちたフラスコの中。不気味に浮かぶ残骸に、魔理沙の視線は注がれていた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それはクイーンの欠片。脱出する際に、密かに彼女が研究材料として回収したものだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それはクイーンの欠片。脱出する際に、密かに彼女が研究材料として回収したものだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 完全に死に絶えただの破片になっていたはずのそれは、いつの間にか少しずつ生気を取り戻しつつある。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 完全に死に絶えただの破片になっていたはずのそれは、いつの間にか少しずつ生気を取り戻しつつある。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あ、動いた」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あ、動いた」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 反面、フラスコを愛おしげになぞる魔理沙の顔はどこか理性が抜け落ちていた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 反面、フラスコを愛おしげになぞる魔理沙の顔はどこか理性が抜け落ちていた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 蕩けきり、熱っぽくなったその瞳は魅入られたかのようにフラスコ以外のものを見ない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 蕩けきり、熱っぽくなったその瞳は魅入られたかのようにフラスコ以外のものを見ない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 絡ませるように指を動かし蓋を少し開けると、その表情は更に恍惚としたそれへと変わっていく。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 絡ませるように指を動かし蓋を少し開けると、その表情は更に恍惚としたそれへと変わっていく。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「いい匂い……こいつの体液を利用したら、きっと凄い魔法薬が出来るに違いない……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「いい匂い……こいつの体液を利用したら、きっと凄い魔法薬が出来るに違いない……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL はぁ、と湿った吐息を漏らす魔理沙。始めは単なる興味からだったが、今やこの行為は日課となっていた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW はぁ、と湿った吐息を漏らす魔理沙。始めは単なる興味からだったが、今やこの行為は日課となっていた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 自慰にも似た、甘美な秘め事。体が疼くのか、魔理沙は下着だけつけた体をむず痒そうにくねらせている。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 自慰にも似た、甘美な秘め事。体が疼くのか、魔理沙は下着だけつけた体をむず痒そうにくねらせている。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「育ったら、もっと嗅げるのかな……気持ちよくなれるのかな……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「育ったら、もっと嗅げるのかな……気持ちよくなれるのかな……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 完全に女王の虜になった魔理沙は、顔を紅潮させて呟くのだった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 完全に女王の虜になった魔理沙は、顔を紅潮させて呟くのだった。
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL クイーンの再生は、遠くはない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW クイーンの再生は、遠くはない。
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %ARGS:0%%TACHI()%の攻撃が、ついにガーディアンの巨大な目玉を貫いた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %ARGS:0%%TACHI()%の攻撃が、ついにガーディアンの巨大な目玉を貫いた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 地面に倒れ、断末魔の悲鳴をあげながら悶えていたガーディアンは、やがて完全に動きを止める。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 地面に倒れ、断末魔の悲鳴をあげながら悶えていたガーディアンは、やがて完全に動きを止める。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL しかしその途端、まるで迷宮自体が意思を持っているかのように、出口が音を立てて閉じ始めた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW しかしその途端、まるで迷宮自体が意思を持っているかのように、出口が音を立てて閉じ始めた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL このままでは自分達も脱出ができなくなってしまう。　まずは先に脱出して、後から応援を呼んで来よう──
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW このままでは自分達も脱出ができなくなってしまう。　まずは先に脱出して、後から応援を呼んで来よう──
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そう決心した魔理沙だったが、ふとガーディアンの遺体が縮んでいく様子に気付き……少しだけ寄り道をした。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そう決心した魔理沙だったが、ふとガーディアンの遺体が縮んでいく様子に気付き……少しだけ寄り道をした。
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ………
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ………
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL …
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW …
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL こうして脱出できた魔理沙だったが、彼女が再び迷宮に潜ることはなかった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW こうして脱出できた魔理沙だったが、彼女が再び迷宮に潜ることはなかった。
+				ENDIF
+				PRINTFORMDL 脱出後、出入り口は愚か迷宮の痕跡すら跡形もなく消えてしまい、
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 潜ろうにも潜れないのが理由の一つではある。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 潜ろうにも潜れないのが理由の一つではある。
+				ENDIF
+				IF FLAG:10
+					IF FLAG:AUTOMODE
+						PRINTFORMDL だが仲間が他の者と迷宮の出入り口を探す中、魔理沙一人だけは手伝わずに家に篭っていた。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW だが仲間が他の者と迷宮の出入り口を探す中、魔理沙一人だけは手伝わずに家に篭っていた。
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORMDL だが魔理沙は迷宮の出入り口を探そうとすらせず、一人だけで家に篭っていた。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW だが魔理沙は迷宮の出入り口を探そうとすらせず、一人だけで家に篭っていた。
+					ENDIF
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL その理由は、彼女が見つめる存在が示している。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW その理由は、彼女が見つめる存在が示している。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「すごいな、はっきり分かるくらい再生し始めてる」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「すごいな、はっきり分かるくらい再生し始めてる」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 魔法薬に満ちたフラスコの中。不気味に浮かぶ球体に、魔理沙の視線は注がれていた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 魔法薬に満ちたフラスコの中。不気味に浮かぶ球体に、魔理沙の視線は注がれていた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それはガーディアンの遺体。脱出する際に、密かに彼女が研究材料として回収したものだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それはガーディアンの遺体。脱出する際に、密かに彼女が研究材料として回収したものだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 完全に死に絶えリュックサックほどに縮んでいたそれは、いつの間にか少しずつ膨らみつつある。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 完全に死に絶えリュックサックほどに縮んでいたそれは、いつの間にか少しずつ膨らみつつある。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あ、動いた」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あ、動いた」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 反面、フラスコを愛おしげになぞる魔理沙の顔はどこか理性が抜け落ちていた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 反面、フラスコを愛おしげになぞる魔理沙の顔はどこか理性が抜け落ちていた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 蕩けきり、熱っぽくなったその瞳は魅入られたかのようにフラスコ以外のものを見ない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 蕩けきり、熱っぽくなったその瞳は魅入られたかのようにフラスコ以外のものを見ない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 絡ませるように指を動かし顔を近づけると、その表情は更に恍惚としたそれへと変わっていく。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 絡ませるように指を動かし顔を近づけると、その表情は更に恍惚としたそれへと変わっていく。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こっち見てる……なんだかこうして見つめられると、いい気分になってくるな……可愛いからかな？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こっち見てる……なんだかこうして見つめられると、いい気分になってくるな……可愛いからかな？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL はぁ、と湿った吐息を漏らす魔理沙。始めは単なる興味からだったが、今やこの行為は日課となっていた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW はぁ、と湿った吐息を漏らす魔理沙。始めは単なる興味からだったが、今やこの行為は日課となっていた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 自慰にも似た、甘美な秘め事。体が疼くのか、魔理沙は下着だけつけた体をむず痒そうにくねらせている。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 自慰にも似た、甘美な秘め事。体が疼くのか、魔理沙は下着だけつけた体をむず痒そうにくねらせている。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「育ったら、もっと見てもらえるのかな……気持ちよくなれるのかな……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「育ったら、もっと見てもらえるのかな……気持ちよくなれるのかな……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 完全に魔眼の虜になった魔理沙は、顔を紅潮させて呟くのだった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 完全に魔眼の虜になった魔理沙は、顔を紅潮させて呟くのだった。
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 新たな迷宮の誕生は、近い。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 新たな迷宮の誕生は、近い。
+				ENDIF
+			ENDIF
+		ENDIF
+	;トラウマ値中でクイーン撃破or転移エンド
+	ELSEIF CFLAG:803 >= 200 && CFLAG:803 < 1000 && (ARG:0 == 208 || ARG:0 == 210)
+		;クイーン撃破
+		IF ARG:0 == 210
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 触手の殆どを弾幕によって焼き払われた迷宮の主は、苦しそうに呻いている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 触手の殆どを弾幕によって焼き払われた迷宮の主は、苦しそうに呻いている…
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %ARGS:0%は残りの力を振り絞り、満身創痍のクイーンへ向け、極大の魔砲を放った！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %ARGS:0%は残りの力を振り絞り、満身創痍のクイーンへ向け、極大の魔砲を放った！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 撃ち貫かれ、崩れ落ちていくクイーンの巨体。この様子ならば、放っておいても死ぬだろう。だが。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 撃ち貫かれ、崩れ落ちていくクイーンの巨体。この様子ならば、放っておいても死ぬだろう。だが。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……死んじまえ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……死んじまえ！」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 魔理沙は冷たい表情を浮かべ更に魔砲を叩きこみ、その身体を跡形もなく消滅させた……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 魔理沙は冷たい表情を浮かべ更に魔砲を叩きこみ、その身体を跡形もなく消滅させた……
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL やがて魔物達は完全に殲滅され、出口もあっけなく見つかった。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW やがて魔物達は完全に殲滅され、出口もあっけなく見つかった。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL こうして異変は終わり、今は迷宮から脱出した記念に開かれた宴会の真っ最中だ。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW こうして異変は終わり、今は迷宮から脱出した記念に開かれた宴会の真っ最中だ。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 他の参加者が騒いでいる中で、しかし、魔理沙だけはそれに参加せず、迷宮に残っていた。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 他の参加者が騒いでいる中で、しかし、魔理沙だけはそれに参加せず、迷宮に残っていた。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「はぁ、はぁっ……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「はぁ、はぁっ……」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 閃光が走る。未だに残る迷宮の残骸に、特大の魔砲を打ち込み続ける。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 閃光が走る。未だに残る迷宮の残骸に、特大の魔砲を打ち込み続ける。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 肉壁は轟音を立てながら零れ落ち、浄化された大気に耐え切れず溶けていく。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 肉壁は轟音を立てながら零れ落ち、浄化された大気に耐え切れず溶けていく。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「はぁ、はあぁっ……！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「はぁ、はあぁっ……！」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL それでも、魔理沙は攻撃をやめない。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW それでも、魔理沙は攻撃をやめない。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 何度も何度も、目に付くものに魔砲を撃って、何もなくなったら違う場所で同じ事を始める。その繰り返し。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 何度も何度も、目に付くものに魔砲を撃って、何もなくなったら違う場所で同じ事を始める。その繰り返し。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「消してやる、全部！　絶対に蘇れないように、世界から消し去ってやる……！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「消してやる、全部！　絶対に蘇れないように、世界から消し去ってやる……！」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 汗にまみれたその表情は、鬼気迫るものだった。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 汗にまみれたその表情は、鬼気迫るものだった。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL クイーンを殺しただけでは気が済まない。焼き尽くさねば収まらない。全て消し去らないと安心できない。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW クイーンを殺しただけでは気が済まない。焼き尽くさねば収まらない。全て消し去らないと安心できない。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 心中に溜まった澱みを吐き出すように、魔理沙は来る日も来る日も魔砲を撃ち続ける。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 心中に溜まった澱みを吐き出すように、魔理沙は来る日も来る日も魔砲を撃ち続ける。
+			ENDIF
+			PRINTL 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL いつかは、迷宮が跡形もなく消える日も来るだろう。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW いつかは、迷宮が跡形もなく消える日も来るだろう。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL だが――彼女の心に宿った闇は、当分の間、消えそうになかった。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW だが――彼女の心に宿った闇は、当分の間、消えそうになかった。
+			ENDIF
+		;転移脱出
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 果たしてあの石碑に書かれていた内容は真実なのか……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 果たしてあの石碑に書かれていた内容は真実なのか……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう疑問に思いつつも、ここまで来たのだからと意を決して%ARGS:0%%TACHI()%は光の渦に飛び込んだ。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう疑問に思いつつも、ここまで来たのだからと意を決して%ARGS:0%%TACHI()%は光の渦に飛び込んだ。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 光の奔流に翻弄されてから数秒後、うっすらと目を開けると、見知った魔法の森の風景が広がっていた……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 光の奔流に翻弄されてから数秒後、うっすらと目を開けると、見知った魔法の森の風景が広がっていた……
+			ENDIF
+			PRINTL 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			PRINTL 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL こうして、異変はあっけなく終わった。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW こうして、異変はあっけなく終わった。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 神隠しに遭っていた者達が徐々に帰ってくるようになり、時期を同じくして神隠しもパタリと止んだからだ。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 神隠しに遭っていた者達が徐々に帰ってくるようになり、時期を同じくして神隠しもパタリと止んだからだ。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 脱出については光の渦が開きっぱなしになっていたからだが、神隠しが止んだ理由はわからない。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 脱出については光の渦が開きっぱなしになっていたからだが、神隠しが止んだ理由はわからない。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 生還した者たちは口々に異変の元凶を懲らしめてやれなかったのが残念だと言っていたが、
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 生還した者たちは口々に異変の元凶を懲らしめてやれなかったのが残念だと言っていたが、
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 月日が経つにつれこの異変は忘れ去られてゆく事となった……一部の例外を除いて。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 月日が経つにつれこの異変は忘れ去られてゆく事となった……一部の例外を除いて。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ここにも、ない……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ここにも、ない……」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL その例外が、魔理沙だった。彼女はあれからずっと、迷宮の入り口を探し続けている。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW その例外が、魔理沙だった。彼女はあれからずっと、迷宮の入り口を探し続けている。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 当初は賛同者もいたが、成果が上がらない探索にみな飽きてしまい、今やこれに拘るのは魔理沙一人。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 当初は賛同者もいたが、成果が上がらない探索にみな飽きてしまい、今やこれに拘るのは魔理沙一人。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL それでも、彼女は迷宮を探し続けている。理由は簡単だ。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW それでも、彼女は迷宮を探し続けている。理由は簡単だ。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「いなくなったなら、いいだと……この異変は終わっただと……！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「いなくなったなら、いいだと……この異変は終わっただと……！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 　あんな目に遭って、あんな事されてっ、逃げ切れたからいいだなんて終わりで納得できるわけ、ないだろ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　あんな目に遭って、あんな事されてっ、逃げ切れたからいいだなんて終わりで納得できるわけ、ないだろ！」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 以前言われたことを思い出し、魔理沙はギリギリと歯を噛み締めていた。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 以前言われたことを思い出し、魔理沙はギリギリと歯を噛み締めていた。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 憎悪か、不安か、或いは両方か。今まで縁遠いものだった感情が、彼女を復讐に走らせている。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 憎悪か、不安か、或いは両方か。今まで縁遠いものだった感情が、彼女を復讐に走らせている。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 既に果たせる見込みが無いという現実から、目を背かせるほどに。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 既に果たせる見込みが無いという現実から、目を背かせるほどに。
+			ENDIF
+			PRINTL 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 迷宮は既に幻想郷から消えた。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 迷宮は既に幻想郷から消えた。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL だが――魔理沙の心に宿った闇は、当分の間、消えそうになかった。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW だが――魔理沙の心に宿った闇は、当分の間、消えそうになかった。
+			ENDIF
+		ENDIF
+	;トラウマ値が高い状態でクイーン撃破か転移かガーディアン撃破でクリア
+	ELSEIF CFLAG:803 >= 1000 && (ARG:0 == 210 || ARG:0 == 208 || ARG:0 == 206)
+		;クイーン撃破
+		IF ARG:0 == 210
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 触手の殆どを弾幕によって焼き払われた迷宮の主は、苦しそうに呻いている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 触手の殆どを弾幕によって焼き払われた迷宮の主は、苦しそうに呻いている…
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %ARGS:0%は残りの力を振り絞り、満身創痍のクイーンへ向け、極大の魔砲を放った！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %ARGS:0%は残りの力を振り絞り、満身創痍のクイーンへ向け、極大の魔砲を放った！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 撃ち貫かれ、崩れ落ちていくクイーンの巨体。この様子ならば、放っておいても死ぬだろう。だが。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 撃ち貫かれ、崩れ落ちていくクイーンの巨体。この様子ならば、放っておいても死ぬだろう。だが。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……死んじまえ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……死んじまえ！」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 魔理沙は冷たい表情を浮かべ更に魔砲を叩きこみ、その身体を跡形もなく消滅させた……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 魔理沙は冷たい表情を浮かべ更に魔砲を叩きこみ、その身体を跡形もなく消滅させた……
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL やがて魔物達は完全に殲滅され、出口もあっけなく見つかった。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW やがて魔物達は完全に殲滅され、出口もあっけなく見つかった。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL こうして異変は終わり、今は迷宮から脱出した記念に開かれた宴会の真っ最中だ。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW こうして異変は終わり、今は迷宮から脱出した記念に開かれた宴会の真っ最中だ。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 他の参加者が騒いでいる中で、しかし、魔理沙だけは境内裏で一人静かに酒を飲んでいた。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 他の参加者が騒いでいる中で、しかし、魔理沙だけは境内裏で一人静かに酒を飲んでいた。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL まるで、人目を避けるように。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW まるで、人目を避けるように。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あんな事があったのに、馬鹿騒ぎするとか頭おかしいんじゃないのか……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あんな事があったのに、馬鹿騒ぎするとか頭おかしいんじゃないのか……」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 吐き捨てるように呟く。今の彼女には、皆が繰り広げている騒ぎが遠いものに思えた。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 吐き捨てるように呟く。今の彼女には、皆が繰り広げている騒ぎが遠いものに思えた。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ふと、魔理沙の耳に誰かが迷宮内の自分の活躍を大声で語っている様子が響いてきた。それが好評なことも。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ふと、魔理沙の耳に誰かが迷宮内の自分の活躍を大声で語っている様子が響いてきた。それが好評なことも。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL もし自分があそこにいたら話をせがまれて、話せば大受けするのだろうか？
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW もし自分があそこにいたら話をせがまれて、話せば大受けするのだろうか？
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう思い浮かべただけで、魔理沙は吐きそうになった。迷宮内で味わった、悪夢のような体験のせいで。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう思い浮かべただけで、魔理沙は吐きそうになった。迷宮内で味わった、悪夢のような体験のせいで。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML （もう、終わったんだ……早く風化して。忘れさせてよ……）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW （もう、終わったんだ……早く風化して。忘れさせてよ……）
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 走りはじめた悪寒に立っていることすらできず、魔理沙は自分の身体を押さえつけながら座り込む。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 走りはじめた悪寒に立っていることすらできず、魔理沙は自分の身体を押さえつけながら座り込む。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そこにいるのは生意気で活発な魔法使いの姿ではなく……ただ怯え惑うだけの、純真な少女だった。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そこにいるのは生意気で活発な魔法使いの姿ではなく……ただ怯え惑うだけの、純真な少女だった。
+			ENDIF
+			PRINTL 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――例え事態が終わっても、その事態があったことを消す力は魔理沙にはない。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――例え事態が終わっても、その事態があったことを消す力は魔理沙にはない。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 例え少女たちの話題に上がらなくなっても、この異変については彼女自身が強く覚えている。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 例え少女たちの話題に上がらなくなっても、この異変については彼女自身が強く覚えている。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 魔理沙の心に刻まれた疵は、あまりにも大きなものだった……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 魔理沙の心に刻まれた疵は、あまりにも大きなものだった……
+			ENDIF
+		;ガーディアン撃破
+		ELSEIF ARG:0 == 206
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %ARGS:0%%TACHI()%の前に立ち塞がるガーディアンが崩れ落ち、ついに出口への障害は消えた。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %ARGS:0%%TACHI()%の前に立ち塞がるガーディアンが崩れ落ち、ついに出口への障害は消えた。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――しかし。守護者の死が引き金となったのか、その出口が閉じられるかのように崩れ始める。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――しかし。守護者の死が引き金となったのか、その出口が閉じられるかのように崩れ始める。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「逃げるしか……ない、よな。ここにいない奴には、悪いけど……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「逃げるしか……ない、よな。ここにいない奴には、悪いけど……」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 脱出の好機は今しかないと判断した魔理沙は、詫びるように呟きながら出口へと走りだした。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 脱出の好機は今しかないと判断した魔理沙は、詫びるように呟きながら出口へと走りだした。
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			PRINTFORML 
+			;味方に霊夢がいる　　バ　ッ　ド　エ　ン　ド　症　候　群　発　症
+			IF (NO:(FLAG:10) == 1 && CFLAG:(FLAG:10):104 == 0) || (NO:(FLAG:11) == 1 && CFLAG:(FLAG:11):104 == 0)
+				IF FLAG:AUTOMODE
+					PRINTFORMDL あれから、数週間が経った。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW あれから、数週間が経った。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ごめん、霊夢……また何も見つからなかった」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ごめん、霊夢……また何も見つからなかった」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 無事に脱出した魔理沙は、博麗神社の境内で霊夢に頭を下げていた。その両手はカラだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 無事に脱出した魔理沙は、博麗神社の境内で霊夢に頭を下げていた。その両手はカラだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 二人は今、迷宮に再突入する方法を探している。未だ止まらない神隠しを解決するために。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 二人は今、迷宮に再突入する方法を探している。未だ止まらない神隠しを解決するために。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 外へ出た途端に出入り口どころか迷宮の痕跡すら跡形もなく消え、再突入できなくなってしまったのだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 外へ出た途端に出入り口どころか迷宮の痕跡すら跡形もなく消え、再突入できなくなってしまったのだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL もちろん、霊夢や魔理沙が入ってきた入り口も既に無い。他の少女を救出する以前の問題である。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW もちろん、霊夢や魔理沙が入ってきた入り口も既に無い。他の少女を救出する以前の問題である。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 霊夢と一緒に突入する手段を探してはいるが、魔理沙の調査は全く成果が上がっていない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 霊夢と一緒に突入する手段を探してはいるが、魔理沙の調査は全く成果が上がっていない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 既に新たな神隠しの犠牲者も出て、霊夢はある程度手がかりを発見しているのにも関わらず。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 既に新たな神隠しの犠牲者も出て、霊夢はある程度手がかりを発見しているのにも関わらず。
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ねぇ、魔理沙。これ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ねぇ、魔理沙。これ」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ん……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ん……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 霊夢は何の前置きもなく、手に持ったものをゆっくりと放り投げた。とっさに魔理沙はキャッチし、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 霊夢は何の前置きもなく、手に持ったものをゆっくりと放り投げた。とっさに魔理沙はキャッチし、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「きゃああああああああああああああああああああああああああああ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「きゃああああああああああああああああああああああああああああ！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 投げ捨てた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 投げ捨てた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それは、乾いた触手の死体だったから……もっとも、あまりにも過敏に過ぎる反応だったが。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それは、乾いた触手の死体だったから……もっとも、あまりにも過敏に過ぎる反応だったが。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こ、こんなもの投げつけるなよぉ！　だいたい、なんでこんなもの持って」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こ、こんなもの投げつけるなよぉ！　だいたい、なんでこんなもの持って」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「なんでって、あいつらの足取りを掴むためのれっきとした証拠よ？　見つけなきゃいけないものでしょ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「なんでって、あいつらの足取りを掴むためのれっきとした証拠よ？　見つけなきゃいけないものでしょ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 　――ねぇ、魔理沙。今の貴方、そんな調子で本当にあいつらと戦えるの？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　――ねぇ、魔理沙。今の貴方、そんな調子で本当にあいつらと戦えるの？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 霊夢は死体を拾い直すと、それを突きつけながら問いかける。魔理沙は、魚のように口を開閉させるだけだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 霊夢は死体を拾い直すと、それを突きつけながら問いかける。魔理沙は、魚のように口を開閉させるだけだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 反論しようとしても、できない。遺体を見るだけで迷宮で味わった悪夢が脳裏に走り、足が震えてくる。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 反論しようとしても、できない。遺体を見るだけで迷宮で味わった悪夢が脳裏に走り、足が震えてくる。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL なぜ手がかりを見つけられないのか。なぜあんな反応をしたのか。それは……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW なぜ手がかりを見つけられないのか。なぜあんな反応をしたのか。それは……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はっきり言うわ。意地を張るのは、もうやめなさい。私の真似はしなくていい。もう……戦わなくていい。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はっきり言うわ。意地を張るのは、もうやめなさい。私の真似はしなくていい。もう……戦わなくていい。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 　――怖いんでしょう？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　――怖いんでしょう？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 真っ向から突きつけられた言葉に、魔理沙は何も言い返せなかった。いつものような強がりすら言えない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 真っ向から突きつけられた言葉に、魔理沙は何も言い返せなかった。いつものような強がりすら言えない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 十秒近くかけてやっと絞り出した答えは……自分に染み付いた恐怖を肯定する言葉だった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 十秒近くかけてやっと絞り出した答えは……自分に染み付いた恐怖を肯定する言葉だった。
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「れ、霊夢は……怖く、ないの？　あんなことされたのに！？　なんで戦うんだよ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「れ、霊夢は……怖く、ないの？　あんなことされたのに！？　なんで戦うんだよ！」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「異変を解決するのが、私の役目だから。私がやらなきゃいけない。でも、あんたは違うでしょ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「異変を解決するのが、私の役目だから。私がやらなきゃいけない。でも、あんたは違うでしょ」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「一人より、二人のほうが――！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「一人より、二人のほうが――！」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「私一人のほうが戦える。分からない？　あんたじゃ、足を引っ張るだけなのよ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「私一人のほうが戦える。分からない？　あんたじゃ、足を引っ張るだけなのよ」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それは、魔理沙にとって最悪の一言だった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それは、魔理沙にとって最悪の一言だった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 彼女が異変を解決するのは霊夢に負けたくないからで、張り合いたいからで、肩を並べたいからだった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 彼女が異変を解決するのは霊夢に負けたくないからで、張り合いたいからで、肩を並べたいからだった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 邪魔者扱いされるならいい、無視して戦うだけだ。最悪なのは、今の霊夢は泣きそうな顔をしていて……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 邪魔者扱いされるならいい、無視して戦うだけだ。最悪なのは、今の霊夢は泣きそうな顔をしていて……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 本当に自分を心配して、自分を守るために突き放したのだと、魔理沙は気付いてしまった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 本当に自分を心配して、自分を守るために突き放したのだと、魔理沙は気付いてしまった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「さよなら。もう帰って、休んでなさい」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「さよなら。もう帰って、休んでなさい」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL その場に崩れ落ちた魔理沙に、背を向けて霊夢は歩き出す。なんとか止めようと、声を絞り出した。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW その場に崩れ落ちた魔理沙に、背を向けて霊夢は歩き出す。なんとか止めようと、声を絞り出した。
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「私に……できることは」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「私に……できることは」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そんな問いかけをしても意味は無い。だって、霊夢は振り向くことすらしなかったのだから。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そんな問いかけをしても意味は無い。だって、霊夢は振り向くことすらしなかったのだから。
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ないわ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ないわ」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そう言い残して、霊夢はどこかへ飛んでいく。魔理沙に、それを追うことはできない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そう言い残して、霊夢はどこかへ飛んでいく。魔理沙に、それを追うことはできない。
+				ENDIF
+				PRINTL 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 霊夢は――帰って来なかった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 霊夢は――帰って来なかった。
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORMDL あれから、数週間が経った。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW あれから、数週間が経った。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 人里を――どこか縮こまりながら――訪れた魔理沙は、ふと聞こえた噂話で更に顔を曇らせた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 人里を――どこか縮こまりながら――訪れた魔理沙は、ふと聞こえた噂話で更に顔を曇らせた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「また、出たんだ……犠牲者」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「また、出たんだ……犠牲者」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 何の犠牲者かは言うまでもない。魔理沙も経験した、あの迷宮への拉致である。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 何の犠牲者かは言うまでもない。魔理沙も経験した、あの迷宮への拉致である。
+				ENDIF
+				PRINTL 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL あの時……外へ出た途端に出入り口どころか迷宮の痕跡すら跡形もなく消え、再突入はできなくなった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW あの時……外へ出た途端に出入り口どころか迷宮の痕跡すら跡形もなく消え、再突入はできなくなった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL もちろん、魔理沙が入ってきた入り口も既に無い。これでは他の少女を救出する以前の問題だ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW もちろん、魔理沙が入ってきた入り口も既に無い。これでは他の少女を救出する以前の問題だ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それでも手がかりを探すことくらい魔理沙にはできたのかもしれない。……けれど。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それでも手がかりを探すことくらい魔理沙にはできたのかもしれない。……けれど。
+				ENDIF
+				PRINTL 
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…………」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…………」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 話を聞かなかったことにして、魔理沙は歩いて行く。顔を俯かせて、逃げるように。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 話を聞かなかったことにして、魔理沙は歩いて行く。顔を俯かせて、逃げるように。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL あの迷宮について、彼女は誰にも話そうとしなかった。話せるわけがなかった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW あの迷宮について、彼女は誰にも話そうとしなかった。話せるわけがなかった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL あんな体験を思い起こすだけでも泣きたくなるのに、口に出して言うなどできるわけがない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW あんな体験を思い起こすだけでも泣きたくなるのに、口に出して言うなどできるわけがない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「もう……嫌だよ、異変を解決するなんて……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「もう……嫌だよ、異変を解決するなんて……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL かすれ切った小さな声は、今の魔理沙にとって偽らざる本心だった……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW かすれ切った小さな声は、今の魔理沙にとって偽らざる本心だった……
+				ENDIF
+			ENDIF
+		;転移
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 果たしてあの石碑に書かれていた内容は真実なのか……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 果たしてあの石碑に書かれていた内容は真実なのか……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう疑問に思いつつも、ここまで来たのだからと意を決して%ARGS:0%%TACHI()%は光の渦に飛び込んだ。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう疑問に思いつつも、ここまで来たのだからと意を決して%ARGS:0%%TACHI()%は光の渦に飛び込んだ。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 光の奔流に翻弄されてから数秒後、うっすらと目を開けると、見知った魔法の森の風景が広がっていた……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 光の奔流に翻弄されてから数秒後、うっすらと目を開けると、見知った魔法の森の風景が広がっていた……
+			ENDIF
+			PRINTL 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			PRINTL 
+			;味方に霊夢がいる
+			IF (NO:(FLAG:10) == 1 && CFLAG:(FLAG:10):104 == 0) || (NO:(FLAG:11) == 1 && CFLAG:(FLAG:11):104 == 0)
+				IF FLAG:AUTOMODE
+					PRINTFORMDL こうして、異変はあっけなく終わった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW こうして、異変はあっけなく終わった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 神隠しに遭っていた者達が徐々に帰ってくるようになり、時期を同じくして神隠しもパタリと止んだからだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 神隠しに遭っていた者達が徐々に帰ってくるようになり、時期を同じくして神隠しもパタリと止んだからだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 脱出については光の渦が開きっぱなしになっていたからだが、神隠しが止んだ理由はわからない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 脱出については光の渦が開きっぱなしになっていたからだが、神隠しが止んだ理由はわからない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL とはいえ、それで終わりというわけにもいかない。魔理沙と霊夢は、事態を究明するべく探索を続けていた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW とはいえ、それで終わりというわけにもいかない。魔理沙と霊夢は、事態を究明するべく探索を続けていた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ごめん、霊夢……また何も見つからなかった」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ごめん、霊夢……また何も見つからなかった」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 今日も魔理沙は、博麗神社の境内で霊夢に頭を下げていた。その両手はカラだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 今日も魔理沙は、博麗神社の境内で霊夢に頭を下げていた。その両手はカラだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL あれから数週間、魔理沙の調査は成果が上がっていない。霊夢は僅かとはいえ発見しているのにも関わらず。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW あれから数週間、魔理沙の調査は成果が上がっていない。霊夢は僅かとはいえ発見しているのにも関わらず。
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ねぇ、魔理沙。これ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ねぇ、魔理沙。これ」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ん……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ん……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 霊夢は何の前置きもなく、手に持ったものをゆっくりと放り投げた。とっさに魔理沙はキャッチし、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 霊夢は何の前置きもなく、手に持ったものをゆっくりと放り投げた。とっさに魔理沙はキャッチし、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「きゃああああああああああああああああああああああああああああ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「きゃああああああああああああああああああああああああああああ！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 投げ捨てた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 投げ捨てた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それは、乾いた触手の死体だったから……もっとも、あまりにも過敏に過ぎる反応だったが。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それは、乾いた触手の死体だったから……もっとも、あまりにも過敏に過ぎる反応だったが。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こ、こんなもの投げつけるなよぉ！　だいたい、なんでこんなもの持って」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こ、こんなもの投げつけるなよぉ！　だいたい、なんでこんなもの持って」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「なんでって、あいつらの足取りを掴むためのれっきとした証拠よ？　見つけなきゃいけないものでしょ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「なんでって、あいつらの足取りを掴むためのれっきとした証拠よ？　見つけなきゃいけないものでしょ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 　――ねぇ、魔理沙。今の貴方、そんな調子で本当にあいつらと戦えるの？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　――ねぇ、魔理沙。今の貴方、そんな調子で本当にあいつらと戦えるの？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 霊夢は死体を拾い直すと、それを突きつけながら問いかける。魔理沙は、魚のように口を開閉させるだけだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 霊夢は死体を拾い直すと、それを突きつけながら問いかける。魔理沙は、魚のように口を開閉させるだけだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 反論しようとしても、できない。遺体を見るだけで迷宮で味わった悪夢が脳裏に走り、足が震えてくる。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 反論しようとしても、できない。遺体を見るだけで迷宮で味わった悪夢が脳裏に走り、足が震えてくる。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そんな魔理沙を、霊夢はじっと見つめた後……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そんな魔理沙を、霊夢はじっと見つめた後……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「……もう、やめよっか」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「……もう、やめよっか」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 背を向けると、遺体をどこかへぽい、と投げ捨てた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 背を向けると、遺体をどこかへぽい、と投げ捨てた。
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「やめるって……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「やめるって……」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「いいじゃない。もう神隠しは起こらないんだし、全員帰ってきたし。拘る必要はないと思うわ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「いいじゃない。もう神隠しは起こらないんだし、全員帰ってきたし。拘る必要はないと思うわ」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「そ、そんなの！　異変の元凶を懲らしめてないじゃないか……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「そ、そんなの！　異変の元凶を懲らしめてないじゃないか……」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「なら、聞くけど。魔理沙は、本当に元凶と戦いたいの？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「なら、聞くけど。魔理沙は、本当に元凶と戦いたいの？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 再度振り返ってきた霊夢の視線が突き刺さる。魔理沙は何も言い返せなかった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 再度振り返ってきた霊夢の視線が突き刺さる。魔理沙は何も言い返せなかった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それでも何か強がりを言おうと、声を絞り出そうとして……それより先に、霊夢がごまかした。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それでも何か強がりを言おうと、声を絞り出そうとして……それより先に、霊夢がごまかした。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「異変は解決しているのに変に長引かせるなんて、面倒でしょ。だから戦わなくても、文句は言われないわ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「異変は解決しているのに変に長引かせるなんて、面倒でしょ。だから戦わなくても、文句は言われないわ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 　ね？　だからもう、魔理沙は戦わなくていい。無理に私に張り合おうとしなくてもいい」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　ね？　だからもう、魔理沙は戦わなくていい。無理に私に張り合おうとしなくてもいい」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「れい、む……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「れい、む……」
+				ENDIF
+				SETCOLOR 245, 160, 199
+				IF FLAG:AUTOMODE
+					PRINTFORML 「バカにしたりしないから。魔理沙が戦わなくても私は気にしないから……そんな顔で、頑張ろうとしないで」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「バカにしたりしないから。魔理沙が戦わなくても私は気にしないから……そんな顔で、頑張ろうとしないで」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それは、魔理沙にとって最悪の一言だった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それは、魔理沙にとって最悪の一言だった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 彼女が異変を解決するのは霊夢に負けたくないからで、張り合いたいからで、肩を並べたいからだった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 彼女が異変を解決するのは霊夢に負けたくないからで、張り合いたいからで、肩を並べたいからだった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 邪魔者扱いされるならいい、無視して戦うだけだから。けれど、今の霊夢は本当に自分を心配していて……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 邪魔者扱いされるならいい、無視して戦うだけだから。けれど、今の霊夢は本当に自分を心配していて……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 死ぬよりも恐ろしい目に遭うような異変を知った心に、その優しさを振り払って進める余力はなかった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 死ぬよりも恐ろしい目に遭うような異変を知った心に、その優しさを振り払って進める余力はなかった。
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「う……え、ぇ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「う……え、ぇ……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL その場に崩れ落ちた魔理沙は、泣いていた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW その場に崩れ落ちた魔理沙は、泣いていた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 情けなさか、辛いからか、安心したのか、嬉しかったのか、自身にも分からない。ただ泣くしかできない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 情けなさか、辛いからか、安心したのか、嬉しかったのか、自身にも分からない。ただ泣くしかできない。
+				ENDIF
+				PRINTL 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ただ一つだけ――自分はもう二度と、異変解決なんて真似はできないだろうということだけ、分かった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ただ一つだけ――自分はもう二度と、異変解決なんて真似はできないだろうということだけ、分かった。
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORMDL こうして、異変はあっけなく終わった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW こうして、異変はあっけなく終わった。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 神隠しに遭っていた者達が徐々に帰ってくるようになり、時期を同じくして神隠しもパタリと止んだからだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 神隠しに遭っていた者達が徐々に帰ってくるようになり、時期を同じくして神隠しもパタリと止んだからだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 脱出については光の渦が開きっぱなしになっていたからだが、神隠しが止んだ理由はわからない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 脱出については光の渦が開きっぱなしになっていたからだが、神隠しが止んだ理由はわからない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 生還した者たちは口々に異変の元凶を懲らしめてやれなかったのが残念だと言っていたが、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 生還した者たちは口々に異変の元凶を懲らしめてやれなかったのが残念だと言っていたが、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 月日が経つにつれこの異変は忘れ去られてゆく事となった……一部の例外を除いて。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 月日が経つにつれこの異変は忘れ去られてゆく事となった……一部の例外を除いて。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…………くそ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…………くそ」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL その例外が、魔理沙だった。彼女は今日も、ベッドの上で枕を抱えて座り込んでいる。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW その例外が、魔理沙だった。彼女は今日も、ベッドの上で枕を抱えて座り込んでいる。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 時間は朝四時、眠るにも起きるにも中途半端な時間。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 時間は朝四時、眠るにも起きるにも中途半端な時間。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そんな時間にこんな事をしているのは、眠りが浅いから以外の何ものでもない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そんな時間にこんな事をしているのは、眠りが浅いから以外の何ものでもない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「また……あの夢」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「また……あの夢」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そう言って、魔理沙は枕を壁に投げつけた。その目に涙が浮かんでいるのは、眠気からではないだろう。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そう言って、魔理沙は枕を壁に投げつけた。その目に涙が浮かんでいるのは、眠気からではないだろう。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL あれからずっと、毎日のように悪夢を見ていた。苦しんだこと。犯されたこと。泣き叫んだこと。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW あれからずっと、毎日のように悪夢を見ていた。苦しんだこと。犯されたこと。泣き叫んだこと。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL いつもの異変が解決された時のような達成感も、敵に打ち勝った爽快感もない。ただ逃げてきただけ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW いつもの異変が解決された時のような達成感も、敵に打ち勝った爽快感もない。ただ逃げてきただけ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL おまけに、彼女が居を構えるのは魔法の森。数々の茸が持つ幻覚作用は、今の彼女にとって最悪の効果だ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW おまけに、彼女が居を構えるのは魔法の森。数々の茸が持つ幻覚作用は、今の彼女にとって最悪の効果だ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「忘れたい……忘れたいのに……あんなひどいコト、忘れられるわけ、ないよぉ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「忘れたい……忘れたいのに……あんなひどいコト、忘れられるわけ、ないよぉ……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 走りはじめた悪寒に顔を上げることすらできず、魔理沙は自分の目元を布団で覆う。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 走りはじめた悪寒に顔を上げることすらできず、魔理沙は自分の目元を布団で覆う。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そこにいるのは生意気で活発な魔法使いの姿ではなく……ただ怯え惑うだけの、純真な少女だった。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そこにいるのは生意気で活発な魔法使いの姿ではなく……ただ怯え惑うだけの、純真な少女だった。
+				ENDIF
+				PRINTL 
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ――例え事態が終わっても、その事態があったことを消す力は魔理沙にはない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ――例え事態が終わっても、その事態があったことを消す力は魔理沙にはない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 例え少女たちの話題に上がらなくなっても、この異変については彼女自身が強く覚えている。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 例え少女たちの話題に上がらなくなっても、この異変については彼女自身が強く覚えている。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 魔理沙の心に刻まれた疵は、あまりにも大きなものだった……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 魔理沙の心に刻まれた疵は、あまりにも大きなものだった……
+				ENDIF
+			ENDIF
+		ENDIF
+
+	ELSE
+		RESETCOLOR
+		CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		RETURN
+	ENDIF
+	
+PRINTFORML 
+PRINTFORML 
+PRINTFORML 
+
+RETURN

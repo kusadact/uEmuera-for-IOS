@@ -1,0 +1,68 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 14 敵の性攻撃 (命中) - 攻撃種類別 1872 プロトクリーナー C
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_14_1872(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 追加地の文関数(前)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_BEFORE("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_BEFORE")
+	
+	; 追加地の文関数(後)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_AFTER("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_AFTER")
+	
+	; 睡眠・喪失・諦め
+	SIF CFLAG:25 || TFLAG:16 == 2
+		RETURN 0
+
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 他の触手系攻撃とは表現が大きく違うので優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; C絶頂中、前回値参照出来ないりばーすでは絶頂フラグと敵の性攻撃部位を参照
+	IF GETBIT(CFLAG:35, 3) || (KOJO_27_0_IS_REVERSE() && CFLAG:35 && TFLAG:63 == 2)
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あたしのおまんこっ、だらしないっ♥　イったまま腰振ってぇ♥　エロ汁まき散らしてるぅ♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「んひいぃぃっ♥　とまんにゃいっ♥　絶頂クリこすりつけるの、とまんにゃいよぉぉっ♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ああぁぁっ♥♥　そんにゃにしたらぁっ、絶頂クリがっ♥　イキながらイッちゃうよぉぉッ♥♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「やめて……っ♥　まだイッてるっ、イッてるのぉ……っ♥　腰とけちゃうぅぅっ♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ひぃぃっ♥　イカされたとこ……ぉッ、またっ虐められるぅっ♥　こするなあぁっ♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「あああぁぁっ♥　イッてるのっ、今おまめイッたままなのぉぉっ♥　動かさないでぇぇっ♥♥」\n"
+		ENDSELECT
+		
+	; C非絶頂
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんな紐相手なの……にっ♥　腰動いちゃうよぉ♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「おまたとっ、おまめっ♥　延々とコリコリされるぅっ♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「これぇっ♥　次から次に気持ちいいのがクるぅっ♥♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ううぅっ……　おまた、擦れてぇ……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ああぁっ……　おまたに食い込むぅ……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「いやぁ……　そんな……にっ、こすらないでぇ……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「はぁっ……　はぁっ……　どんどん、速くなってく……っ……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「う、動かさないでっ！　だめぇっ、それ速すぎぃっ……！！」\n"
+		ENDSELECT
+	ENDIF
+	CALL KOJO_27_0_PARAGRAPH_MESSAGE
+	
+	; 地の文側で\nするので口上側は\nで終わること
+RETURN 1

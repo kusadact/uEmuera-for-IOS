@@ -1,0 +1,227 @@
+﻿;敵のその他行動
+@SYSTEM_MESSAGE_7(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SETCOLOR 0xEE1010
+
+SELECTCASE ARG:1
+	CASE 0
+		PRINTFORML %ARGS:1%一动也不动…
+	CASE 1
+		PRINTFORML %ARGS:1%抛弃了%ARGS:0%！
+	CASE 3
+		PRINTFORML %ARGS:1%は、挥舞着失去战斗气力无法动弹的%CALLNAME:(TFLAG:97)%的身体、如同炮弹般向%ARGS:0%投了过去！
+	CASE 4
+		PRINTFORML %ARGS:1%将在巨大的睾丸中被奸淫殆尽的た%CALLNAME:(TFLAG:97)%与大量的精液一起、向%ARGS:0%射了过去！
+	CASE 10
+		PRINTFORML %ARGS:1%的身体突然开始颤抖起来！
+	CASE 11
+		PRINTFORML %ARGS:1%从口中喷出黑烟幕，企图隐身！
+	CASE 12
+		PRINTFORML 从%ARGS:1%的身体喷出蓝色闪耀的花粉，包裹住%ARGS:0%！
+	CASE 13
+		PRINTFORML 从%ARGS:1%的身体喷出红色光芒的花粉，包裹了%ARGS:0%！
+	CASE 14
+		PRINTFORML 从%ARGS:1%的身体大量喷出发着蓝色光芒的花粉，包裹着%ARGS:0%%TACHI()%！
+	CASE 15
+		PRINTFORML 从%ARGS:1%的身体里喷出了大量红色发光的花粉，包裹了%ARGS:0%%TACHI()%！
+	CASE 16
+		PRINTFORML %ARGS:1%用注入了庞大的魔力的视线射穿了%ARGS:0%！
+	CASE 17
+		PRINTFORML 凝视%ARGS:0%的%ARGS:1%的瞳孔发出奇怪的光芒！
+	CASE 21
+		PRINTFORML %ARGS:1%温柔地抚摸着%ARGS:0%的全身！
+	CASE 22
+		;全員が催眠中だった場合文章が変化
+		IF CFLAG:1:43 && (!FLAG:10 || (FLAG:10 && CFLAG:(FLAG:10):43)) && (!FLAG:11 || (FLAG:11 && CFLAG:(FLAG:11):43))
+			PRINTFORML %ARGS:1%的瞳孔映照着被催眠术玩弄的%ARGS:0%%TACHI()%、更加庞大的魔力加强了支配！
+		ELSE
+			PRINTFORML %ARGS:1%从触手中吐出甜蜜气息的烟雾、又从中心的瞳孔中注入庞大的魔力、射穿了%ARGS:0%%TACHI()%！
+		ENDIF
+	CASE 23
+		PRINTFORML %ARGS:1%的角状触手发出不可思议的光芒！
+	CASE 24
+		PRINTFORML %ARGS:1%把过去发生的被触手责备的影像投影到房间里！
+	CASE 25
+		;対象が催眠中だった場合文章が変化
+		IF CFLAG:TARGET:43
+			PRINTFORML %ARGS:1%的瞳孔映照着被催眠术玩弄的%ARGS:0%、更加庞大的魔力加强了支配！
+		ELSE
+			PRINTFORML %ARGS:1%从触手中吐出散发甜美气息的烟雾、又从中心的瞳孔中注入庞大的魔力射穿了%ARGS:0%！
+		ENDIF
+	CASE 26
+		PRINTFORML %ARGS:1%变成个假小子后、尾巴充分发挥作用，开始激烈地安慰自己！
+	CASE 27
+		PRINTFORML %ARGS:1%全身一震、开始产卵！
+	CASE 28
+		PRINTFORML %ARGS:1%轻轻漂浮在空中、什么也没做…
+	CASE 29
+		PRINTFORML %ARGS:1%躺下身子、为了晾干触手开始晒起太阳…
+	CASE 30
+		PRINTFORML %ARGS:1%轻轻漂浮着、像乘着海流一样不知流向何处了…
+	CASE 31
+		PRINTFORML %ARGS:1%将%ARGS:0%包围！
+	CASE 32,33
+		PRINTFORML %ARGS:1%使电流流经%ARGS:0%的大脑、改变了她的行动！
+	CASE 34
+		PRINTFORML %ARGS:1%开始自我繁殖了！
+	CASE 35
+		PRINTFORML %ARGS:1%的体积正在渐渐恢复原状……！
+	CASE 36
+		PRINTFORML %ARGS:1%向%ARGS:0%吐出了带有毒性的恶臭气息！
+	CASE 37
+		PRINTFORML %ARGS:1%在%ARGS:0%%TACHI()%面前进行自慰！
+		PRINTFORML %ARGS:0%%TACHI()%痛苦地看着因自慰行为而情绪高涨的%ARGS:1%、
+		PRINTL 身体内的强烈情欲已经掩盖不住了…！
+	CASE 38
+		IF FLAG:AUTOMODE
+			PRINTFORML %ARGS:1%自己做了料理！
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW  %ARGS:1%は自分で料理を作った！
+		ENDIF
+
+		PRINTL 那么……难得做的菜。
+		IF FLAG:AUTOMODE
+			PRINTL 是按计划在触手宫出售呢、还是在这里一个人吃掉呢……
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTW  是按计划在触手宫出售呢、还是在这里一个人吃掉呢……
+		ENDIF
+
+		PRINTL （怎么办？）
+		DRAWLINE
+		PRINTL [0] - 难得做的菜、自己吃了吧
+		PRINTFORML [1] - 总之让%ARGS:0%%TACHI()%吃
+		PRINTL [2] - 卖掉
+		DRAWLINE
+		PRINTL 0
+		IF FLAG:AUTOMODE
+		    PRINTFORML %ARGS:1%的体力回复了！
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  %ARGS:1%的体力回复了！
+		ENDIF
+
+	CASE 39
+		PRINTFORML 缠绕在%ARGS:1%全身的绷带一起袭击过来了！
+	CASE 40
+		PRINTFORML %ARGS:1%从手中的水晶球中释放出充满魔力的虹色光芒、迷惑了%ARGS:0%！
+	CASE 41
+		PRINTFORML %ARGS:1%从手中的水晶球中释放出清澈的蓝色光芒、包裹住了%ARGS:0%！
+	CASE 42
+		PRINTFORML %ARGS:1%从背后抱起了已经丧失战意、身体也无法动弹的%ARGS:0%的身体
+		PRINTFORML 像是要给剩下的同伴看到一样扬起了下巴、露出挑衅的表情、舔着她的脖子！
+	CASE 43
+		PRINTFORML %ARGS:1%身体上的伤口、肉眼可见的正在复原！
+	CASE 44
+		PRINTFORML %ARGS:1%的角状触手发出了不可思议的光芒！
+		PRINTFORML %ARGS:1%强制再生了背上的%ARGS:0%的处女膜后、就这样跳了起来！
+	CASE 45
+		PRINTFORML %ARGS:1%散播着奇怪的孢子！
+	CASE 46
+		PRINTFORML %ARGS:1%散播着奇怪的孢子！
+	CASE 47
+		PRINTFORML %ARGS:1%散播着奇怪的孢子！
+	CASE 950
+		PRINTFORML %ARGS:1%的触手膨胀着、向%ARGS:0%吐出了大量粘液！
+	CASE 951
+		PRINTFORML %ARGS:1%的触手尖端向后仰起、吐出大量粘液洒在了%ARGS:0%身上！
+	CASE 952
+		PRINTFORML %ARGS:1%趁%ARGS:0%重心不稳、向她脸上吐出了大量粘液！
+	CASE 955
+		PRINTFORML %ARGS:1%全身都散发出被污染的气体！
+	CASE 957
+		PRINTFORML 从%ARGS:1%的触手的尖端伸出了更加细的触手、接近了%ARGS:0%的乳头！
+	CASE 965
+		PRINTFORML %ARGS:1%手臂上的触手缠住了%ARGS:0%！
+	CASE 968
+		PRINTFORML %ARGS:1%用触手尖端抚摸着%ARGS:0%的全身！
+	CASE 1004
+		PRINTFORML %ARGS:1%开始进入%ARGS:0%的阴道内！
+	
+	CASE 1020
+		PRINTFORML %ARGS:1%的男根在%ARGS:0%的阴道内膨胀！
+	
+	CASE 1029
+		PRINTFORML %ARGS:1%的触手逼近了%ARGS:0%的太阳穴！
+	
+	CASE 1037
+		PRINTFORML %ARGS:1%的嘴里吐出了神秘的液体！
+	CASE 1038
+		PRINTFORML %ARGS:1%瞄准了%ARGS:0%的头顶！
+	
+	CASE 1051
+		PRINTFORML %ARGS:1%瞄准了%ARGS:0%的头顶！
+	
+	CASE 1080
+		PRINTFORML %ARGS:1%对%ARGS:0%施了魔法！
+	
+	CASE 1314
+		PRINTFORML 从%ARGS:1%体内、有很多触手向%ARGS:0%伸过来了！
+	CASE 1315
+		PRINTFORML 从%ARGS:1%体内、有很多触手向%ARGS:0%伸过来了！
+	CASE 1900
+		PRINTFORML %ARGS:1%产生的像有粘性的丝线一样的东西、瞄准了%ARGS:0%%TACHI()%的脚部！
+	CASE 1901
+		PRINTFORML %ARGS:1%产生黑暗、包围了%ARGS:0%%TACHI()%！
+	CASE 1902
+		PRINTFORML %ARGS:1%使用幻术、使%ARGS:0%%TACHI()%回忆起了心理创伤！
+	CASE 1903
+		PRINTFORML %ARGS:1%引起了让人冻僵的暴风雪、限制了%ARGS:0%%TACHI()%的活动！
+	CASE 1904
+		PRINTFORML %ARGS:1%发出耀眼的光芒、包围了%ARGS:0%%TACHI()%！
+	CASE 1905
+		PRINTFORML %ARGS:0%%TACHI()%注视着的%ARGS:1%的瞳孔发出了奇怪的光芒！
+	CASE 1912
+		PRINTFORML %ARGS:1%激烈地摇动着大地、试图限制%ARGS:0%%TACHI()%的行动！
+	CASE 1913
+		PRINTFORML %ARGS:1%温柔地包裹住了%ARGS:0%%TACHI()%！
+	CASE 1914
+		PRINTFORML %ARGS:1%发出了悲鸣……
+	CASE 1915
+		PRINTFORML %ARGS:1%用平静的声音开始歌唱……
+	CASE 1916
+		SELECTCASE DA:(TFLAG:52):87
+			CASE 0
+				PRINTFORML %ARGS:1%们把阴茎塞进は%ARGS:0%的口中、让她奉仕！
+			CASE 1
+				PRINTFORML %ARGS:1%们开始敲打は%ARGS:0%的屁股！
+			CASE 2
+				PRINTFORML %ARGS:1%们命令%ARGS:0%开始舔尻穴！
+			CASE 3
+				PRINTFORML %ARGS:1%们命令%ARGS:0%喝下大量的精液……！
+		ENDSELECT
+		
+	CASE 1917
+		PRINTFORML %ARGS:1%散发出飘散着甜香的、能引起幻觉的粉末！
+	CASE 1918
+		PRINTFORML %ARGS:1%散发着甜香、发出令人厌恶的娇声！
+	CASE 1919
+		PRINTFORML %ARGS:1%开始从多个喷射口向周围喷洒大量的液体！
+	CASE 1920
+		PRINTFORML %ARGS:1%展开了激烈的战斗……！
+	CASE 2951
+		PRINTFORML %ARGS:1%向着%ARGS:0%开始缓缓伸出散发着浓郁香气的触手……
+	CASE 2952
+		PRINTFORML %ARGS:1%观察着%ARGS:0%的情况……
+	CASE 2953
+		PRINTFORML %ARGS:1%的嘴唇开始妖冶的低语着什么……
+	CASE 2954
+		PRINTFORML %ARGS:1%像是在捉弄人一样、轻轻触碰着%ARGS:0%的身体！
+	CASE 2955
+		PRINTFORML %ARGS:1%瞄准着%ARGS:0%的脸、吐出了一个大水袋！
+	CASE 2956
+		PRINTFORML %ARGS:1%拿出小针、悄悄瞄准了%ARGS:0%！
+	CASE 2959
+		PRINTFORML %ARGS:1%用龙宫的烟雾包围了%ARGS:0%！
+	CASE 2961
+		PRINTFORML %ARGS:1%操纵的丝线、向%ARGS:0%放射过去！
+	CASEELSE
+		PRINTFORMW  (SYSTEM_MESSAGE_7)指令ID不正确 ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+
+
+ENDSELECT
+
+RESETCOLOR
+
+

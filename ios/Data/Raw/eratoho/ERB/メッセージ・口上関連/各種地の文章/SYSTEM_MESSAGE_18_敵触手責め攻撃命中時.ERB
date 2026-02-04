@@ -1,0 +1,58 @@
+﻿;性攻撃命中時の描写
+@SYSTEM_MESSAGE_18(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;敵のコマンドごとに命中時の描写したり
+
+SELECTCASE ARG:1
+	CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML (SYSTEM_MESSAGE_18)指令ID不正确 ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  (SYSTEM_MESSAGE_18)コマンドIDが不正です ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+ENDIF
+
+
+	CASE 414
+		PRINTFORML %ARGS:1%的花瓣包裹着%ARGS:0%的嘴唇、一边发出吱吱水声一边吸吮着嘴里的蜜汁……
+	CASE 415
+		PRINTFORML 包裹着%ARGS:0%的嘴唇的%ARGS:1%的花朵里深处了几根纤细的触手、像是舔着口腔里一样开始了侵犯
+		PRINTFORML 触手和%ARGS:0%的舌头相互缠绕、伴随着不断的水声从口中吸取了蜜和魔力…
+	CASE 953
+		PRINTFORML 触手进入了口中、开始肆意喷洒着体液！
+		PRINTFORML 虽然量实在太大、但触手还是不断将白色液体灌进嘴里！%ARGS:0%嘴巴内外都被弄得黏糊糊的！
+	CASE 982
+		;IF RAND:3 == 0
+			PRINTFORML %ARGS:1%用触手舔遍了%ARGS:0%的口腔内部！
+		;ELSE
+		;	PRINTFORML %ARGS:1%好像很美味似的吮吸着%ARGS:0%的嘴唇！
+		;ENDIF
+	CASE 983
+		;IF RAND:3 == 0
+		;	PRINTFORML %ARGS:1%分泌的带有清凉感的液体使%ARGS:0%的口腔内变得敏感起来！
+		;ELSE
+			PRINTFORML %ARGS:1%的触手和%ARGS:0%的舌头交织在一起！
+		;ENDIF
+
+	CASE 984
+		IF FLAG:507 > 0
+			PRINTFORML %ARGS:1%用触手在%ARGS:0%的喉咙里活塞运动起来！
+		ELSE
+			PRINTFORML %ARGS:0%的舌头与触手激烈摩擦着、发出咕嘟咕嘟的声音！
+		ENDIF
+	CASE 1016
+		PRINTFORM %ARGS:0%别无选择、只能将%ARGS:1%的
+		IF FLAG:520 == 1 || FLAG:520 == 3
+			PRINTFORM 硬物
+		ELSE
+			PRINTFORM 触手
+		ENDIF
+		PRINTFORML 吸入口中……
+
+		
+		
+	CASEELSE
+		;何もなし
+ENDSELECT
+
+

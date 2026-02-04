@@ -1,0 +1,157 @@
+﻿;=================================================
+;絶頂の瞬間
+;ARG:0 メッセージID
+;ARG:1 部位(0:A 1:B 2:C 3:V 5:肌 9:M)
+;ARGS:0 対象キャラのCALLNAME（TARGET）
+;ARGS:1 未定義
+;ARG:2 MPダメージ量(負数で回復)
+;ARG:3 ビット桁 1:A 2:B 3:C 4:V 5:肌 6:M にそれぞれ絶頂済み部位フラグ
+;ARG:4 未定義
+;ARG:5 未定義
+;ARG:6 未定義
+;=================================================
+@SYSTEM_MESSAGE_120(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIMS CALLWORD, 2
+
+	VARSET CALLWORD
+
+	;絶頂部位の呼び方を設定
+	SELECTCASE ARG:1
+	CASE 0
+		CALLWORD:0 = 尻穴
+	CASE 1
+		CALLWORD:0 = 胸
+	CASE 2
+		IF GET_PENIS(TARGET) & 4
+			CALLWORD:0 = 肉棒
+		ELSEIF GET_PENIS(TARGET)
+			CALLWORD:0 = 扶她肉棒
+		ELSE
+			CALLWORD:0 = 阴蒂
+		ENDIF
+	CASE 3
+		CALLWORD:0 = 牝穴
+	CASE 5
+		CALLWORD:0 = 肌
+	CASE 9
+		CALLWORD:0 = 口
+	ENDSELECT
+	
+	;絶頂済み部位の呼び方を設定
+	SIF GETBIT(ARG:3, 1)
+		CALLWORD:1 = %CALLWORD:1%尻穴・
+	SIF GETBIT(ARG:3, 2)
+		CALLWORD:1 = %CALLWORD:1%胸・
+	IF GETBIT(ARG:3, 3)
+		IF GET_PENIS(TARGET) & 4
+			CALLWORD:1 = %CALLWORD:1%肉棒・
+		ELSEIF GET_PENIS(TARGET)
+			CALLWORD:1 = %CALLWORD:1%扶她肉棒・
+		ELSE
+			CALLWORD:1 = %CALLWORD:1%阴蒂・
+		ENDIF
+	ENDIF
+	SIF GETBIT(ARG:3, 4)
+		CALLWORD:1 = %CALLWORD:1%牝穴・
+	SIF GETBIT(ARG:3, 5)
+		CALLWORD:1 = %CALLWORD:1%肌・
+	SIF GETBIT(ARG:3, 6)
+		CALLWORD:1 = %CALLWORD:1%口・
+	STRLENSU CALLWORD:1
+	SUBSTRINGU CALLWORD:1, 0, RESULT - 1
+	CALLWORD:1 = %RESULTS%
+	
+	;連続絶頂
+	{
+	IF (ARG:1 == 0 && GETBIT(ARG:3, 1)) ||
+	   (ARG:1 == 1 && GETBIT(ARG:3, 2)) ||
+	   (ARG:1 == 2 && GETBIT(ARG:3, 3)) ||
+	   (ARG:1 == 3 && GETBIT(ARG:3, 4)) ||
+	   (ARG:1 == 5 && GETBIT(ARG:3, 5)) ||
+	   (ARG:1 == 9 && GETBIT(ARG:3, 6))
+	}
+		PRINTDATA
+			DATAFORM 达到高潮的%CALLWORD:0%に、
+			DATAFORM 因高潮而抽搐着的%CALLWORD:0%に、
+			DATAFORM 因为高潮而变得敏感的%CALLWORD:0%に、
+		ENDDATA
+		PRINTDATAL
+			DATAFORM 没有间断的受到了下一次快感的冲击！
+			DATAFORM 被毫不留情地灌输进了快感！
+			DATAFORM 被更强烈的快感冲刷着！
+		ENDDATA
+		
+	;多重絶頂
+	ELSEIF ARG:3 && CFLAG:99 != 0
+		PRINTDATA
+			DATAFORM 在%CALLWORD:1%的高潮消退前、
+			DATAFORM %CALLWORD:1%一直保持着高潮、
+			DATAFORM 被快感支配的%CALLWORD:1%一直维持着高潮、
+		ENDDATA
+		PRINTFORMD %CALLNAME:TARGET%的%CALLWORD:0%
+		PRINTDATAL
+			DATAFORM 被一种甜蜜的麻痹感所支配了！
+			DATAFORM 屈服于快感！
+			DATAFORM 达到了极限！
+		ENDDATA
+	ENDIF
+	
+	;絶頂部位に対応した淫乱素質持ちの場合装飾文
+	IF TALENT:(75 + ARG:1) && (ARG:1 >= 0 && ARG:1 <= 3)
+		;感覚LV別地の文
+		IF ABL:(6 + ARG:1) <= 1
+			PRINTFORM 被毫不留情地改造了的
+		ELSEIF ABL:(6 + ARG:1) == 2
+			PRINTFORM 不停地淫乱作痛的
+		ELSE
+			PRINTFORM 被开发殆尽的
+		ENDIF
+		
+		;部位別地の文
+		SELECTCASE ARG:1
+		CASE 0
+			PRINTFORM 尻穴传来的快感让眼前一片空白
+		CASE 1
+			PRINTFORM 胸部激烈地抖动着
+		CASE 2
+			IF GET_PENIS(TARGET) & 4
+				PRINTFORM 无法承受阴茎带来的刺激
+			ELSEIF GET_PENIS(TARGET)
+				PRINTFORM 扶她的身体疯狂地跳动着
+			ELSE
+				PRINTFORM 无法承受阴蒂带来的刺激
+			ENDIF
+		CASE 3
+			PRINTFORM 沉溺于雌穴带来的快感
+		ENDSELECT
+	ENDIF
+	
+	;◆淫乱系素質補正によるMP回復文
+	IF ARG:2 < 0
+		LOCAL:12 = ARG:2 * -1
+		PRINTFORM %ARGS:0%高潮了！ (MP 
+		SETCOLOR 0x70FF70
+		PRINTFORM +{LOCAL:12}
+		RESETCOLOR
+		PRINTFORML )
+		
+		;感覚LV別地の文
+		IF ABL:(6 + ARG:1) <= 1
+			PRINTFORML %ARGS:0%因自己屈服于快乐的身体而震惊、不断发出着甜美的声音…
+		ELSEIF ABL:(6 + ARG:1) == 2
+			PRINTFORML 几乎要陷入高潮中毒的%ARGS:0%は、为了追求快乐而大声浪叫着…
+		ELSE
+			PRINTFORML %ARGS:0%完全接受了快乐，发出了喜悦的声音…
+		ENDIF
+		PRINTFORML %ARGS:0%的精神恢复了！
+	ELSE
+		PRINTFORM %ARGS:0%高潮了！ (MP 
+		SETCOLOR 0x70FF70
+		PRINTFORM -{ARG:2}
+		RESETCOLOR
+		PRINTFORML )
+	ENDIF
+
+
+;=================================================
+

@@ -1,0 +1,502 @@
+﻿;　東方触手宮　魔理沙口上
+
+;口上基礎知識
+;　口上を書く時は基本的に ARG:0 と ARG:1 の中に「シチュエーション」が入っているので、
+;　それに応じて分岐を行い、適切なメッセージを表示する……というのが基本方針になります
+;　
+;　なお、TARGET に口上を表示するキャラが指定された状態になっているので、
+;　自分の名前や自分のCFLAGを見たい時などは CALLNAME:TARGET とか CFLAG:1 とかで参照できます
+;===========================================================================================================
+;この口上のCFLAG活用
+;ビット演算に１が開いてるのは単なる趣味、個人的に２の倍数で覚えたほうがわかりやすいので
+;CFLAG:801　戦闘回数
+;CFLAG:802　ビット演算　2 出産経験　4 娘出産経験　8 幼体出産経験　16 寄生経験
+;CFLAG:803　トラウマフラグ
+;CFLAG:804　仲間入り経験（主人公以外専用）　0で仲間になったことなし、1で共闘止まり、2で正式に仲間　システムで管理
+;CFLAG:805　口上非表示管理　1で探索時、2で出産時、3で自慰、4で戦闘開始、6でリロード二刀流
+;CFLAG:806　連続絶頂管理　絶頂するたびに+1、他のところいくと０に　こっちの構文は霊夢口上と違って娘の連続絶頂管理を兼ねない
+;CFLAG:807　素質変化の管理
+;CFLAG:898　ビット演算　会ったキャラ　1 霊夢　2 パチュリー　4 フラン　8 アリス
+;CFLAG:899　ビット演算　死亡確認したキャラ　1 霊夢　2 パチュリー　4 フラン　8 アリス
+;===========================================================================================================
+;ここは口上のシステム中枢
+;===========================================================================================================
+
+
+;修正、加筆、転載、再配布はご自由に
+;改変は元の内容をあまり削除しないレベルでお願いします
+
+;口上選択時のタイトル
+@KOJO_TITLE_2_0
+RESULTS = 東方触手宮　魔理沙を泣かせ隊口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_2_0
+	PRINTFORML いつもの異変と同じだと思っている魔理沙の心がへし折れていく様子に力を入れた口上です。
+	PRINTFORML 素の魔理沙は乙女という拘りがあるので、特に貞操絡みと妊娠絡みはダイレクトヒットします。
+	PRINTFORML ただし追い込まれている場面では女性口調になることも多いため、抵抗のある方は使用をお控え下さい。
+
+;ダークグレイ　最初はライトグレイだったがほとんど白と変わらなかった
+@KOJO_DEFAULT_COLOR_2_0
+	RETURN RGBCOLOR(169, 169, 169)
+
+;口上本体
+@KOJO_2_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;子供をさよならする
+IF CFLAG:104 >= 1
+	RESETCOLOR
+	RETURN 0
+ENDIF
+
+;PTに勧誘された時、仲間入り前までトラウマ値自動変動
+;累積せず逐一計算し直す
+IF (ARG:0 == 140 || ARG:0 == 109) && (CFLAG:804 == 0 || CFLAG:804 == 1)
+	;日数
+	CFLAG:803 = DAY * 8
+
+	;能力
+	CFLAG:803 += ABL:6 * ABL:6 * 10
+	CFLAG:803 += ABL:7 * ABL:7 * 10
+	CFLAG:803 += ABL:8 * ABL:8 * 10
+	CFLAG:803 += ABL:9 * ABL:9 * 20
+	CFLAG:803 += ABL:10 * ABL:10 * 5
+	CFLAG:803 += ABL:11 * ABL:11 * 20
+
+	;処女モードで処女が消えている
+	SIF TALENT:0:0 && TALENT:0 == 0
+		CFLAG:803 += 200
+
+	;出産経験
+	SIF EXP:22
+		CFLAG:803 += 500
+
+	;発情時・MP1/4時・HP0時・妊娠時以外は900でとどまる
+	SIF (CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3) && CFLAG:803 > 900
+		CFLAG:803 = 900
+
+	;通常正式加入で計算終了
+	SIF (ARG:0 == 140 && ARG:2 == 1 && ARG:1 == 0) || ARG:0 == 109
+		CFLAG:804 = 2
+
+ENDIF
+
+;連続絶頂の管理
+IF ARG:0 == 120 || ARG:0 == 122
+	CFLAG:806 += 1
+;EPダメージ・MP0になった・EPが0になった・自慰全般・自慰でイけなかった・発情が収まった・
+;母乳を吸われる・射精関連・触手スーツ以外の時にフラグをウォッシュ（回数蓄積の無効化）
+ELSEIF ARG:0 != 14 && ARG:0 != 33  && ARG:0 != 34 && ARG:0 != 118 && ARG:0 != 119 && ARG:0 != 121 && ARG:0 != 123 && ARG:0 != 440 && ARG:0 != 441 && ARG:0 != 442 && ARG:0 != 451 && ARG:0 != 452 && ARG:0 != 454 && ARG:0
+	CFLAG:806 = 0
+ENDIF
+
+;オープニング（任意ではないほう）
+IF ARG:0 == 159
+	PRINTFORMDL ※魔理沙口上初期設定
+	PRINTFORMDL 口上の内容と魔理沙の開発具合に合わせて素質などが変わるようにしますか？
+	PRINTFORMDL [0] はい
+	PRINTFORMDL [1] いいえ
+	$INPUT_LOOP_OP2_0
+	INPUT
+	IF RESULT == 0
+		PRINTFORMDL 設定しました
+		;恥じらい＋貞操観念追加、快楽に素直消滅
+		TALENT:35 = 1
+		TALENT:30 = 1
+		TALENT:70 = 0
+		CFLAG:807 = 1
+	ELSEIF RESULT == 1
+		PRINTFORMDL 設定しませんでした
+	ELSE
+		GOTO INPUT_LOOP_OP2_0
+	ENDIF
+
+	;EXモード時トラウマ値加算
+	SIF FLAG:999
+		CFLAG:803 += 300
+;オープニング（主人公時の任意オープニング）
+ELSEIF ARG:0 == 203
+		DRAWLINE 
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「霊夢！　霊夢！　異変だぜ！　異変！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「霊夢！　霊夢！　異変だぜ！　異変！」
+		ENDIF
+		SETCOLOR 245, 160, 199
+		IF FLAG:AUTOMODE
+			PRINTFORML 「…………（ずずず）」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「…………（ずずず）」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 博麗神社の縁側。曇天の微妙な明るさの下で、二人の少女が言い争っている。
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 博麗神社の縁側。曇天の微妙な明るさの下で、二人の少女が言い争っている。
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL いや、争っているという表現は正しくない。
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW いや、争っているという表現は正しくない。
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 一方がのんびりとお茶を飲んでいるもう一方に、食ってかかっているだけだから。
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 一方がのんびりとお茶を飲んでいるもう一方に、食ってかかっているだけだから。
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「人も妖怪も妖精も神隠しって噂だぞ！　しかも女だけ！　私の予測じゃあ紫が何か……」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「人も妖怪も妖精も神隠しって噂だぞ！　しかも女だけ！　私の予測じゃあ紫が何か……」
+		ENDIF
+		SETCOLOR 245, 160, 199
+		IF FLAG:AUTOMODE
+			PRINTFORML 「それはないんじゃない」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「それはないんじゃない」
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「なんだよ、何か知ってるのか？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「なんだよ、何か知ってるのか？」
+		ENDIF
+		SETCOLOR 245, 160, 199
+		IF FLAG:AUTOMODE
+			PRINTFORML 「勘」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「勘」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL お茶を飲み干して立ち上がった霊夢は、外に出ようとする様子もなく二杯目を取ろうとしている。
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW お茶を飲み干して立ち上がった霊夢は、外に出ようとする様子もなく二杯目を取ろうとしている。
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 不満気にそれを見る魔理沙だったが、思い直すように胸を張った。
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 不満気にそれを見る魔理沙だったが、思い直すように胸を張った。
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「じゃ、私が一人で解決しちゃっていいよな？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「じゃ、私が一人で解決しちゃっていいよな？」
+		ENDIF
+		SETCOLOR 245, 160, 199
+		IF FLAG:AUTOMODE
+			PRINTFORML 「……やめといたほうがいいと思うけど。確証もないし、面倒くさそうだし」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「……やめといたほうがいいと思うけど。確証もないし、面倒くさそうだし」
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「面倒くさくない異変なんてあるもんか！　というわけで、来ないならお前の出番はないぜ！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「面倒くさくない異変なんてあるもんか！　というわけで、来ないならお前の出番はないぜ！」
+		ENDIF
+		PRINTFORMDL 
+		IF FLAG:AUTOMODE
+			PRINTFORMDL ……
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW ……
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL ………
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW ………
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL …………数日後。
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW …………数日後。
+		ENDIF
+		PRINTFORMDL 
+		IF FLAG:AUTOMODE
+			PRINTFORML 「……ようやく見つかった。私の調べによると、異変の原因はここで間違いない」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「……ようやく見つかった。私の調べによると、異変の原因はここで間違いない」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 洞窟の前で箒を片手に、魔理沙はえへんと胸を張る。その足元の草は、不自然に凹んでいた。
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 洞窟の前で箒を片手に、魔理沙はえへんと胸を張る。その足元の草は、不自然に凹んでいた。
+		ENDIF
+		PRINTFORML 「何かが這って行った後が、露骨に残っているしな！
+		IF FLAG:AUTOMODE
+			PRINTFORML 　……それにしてもなんだろう、これ。一部の茸の分泌物に似てないこともないが」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　……それにしてもなんだろう、これ。一部の茸の分泌物に似てないこともないが」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 草に残る粘液に触れながら首をひねる魔理沙は、視線に気付かない。
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 草に残る粘液に触れながら首をひねる魔理沙は、視線に気付かない。
+		ENDIF
+		PRINTFORML 
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 粘液をまき散らして自分の存在を誇示しながら動きまわった物体が、
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 粘液をまき散らして自分の存在を誇示しながら動きまわった物体が、
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 暗い洞窟の中で手ぐすね引いて待ち受けている――
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 暗い洞窟の中で手ぐすね引いて待ち受けている――
+		ENDIF
+		RESETCOLOR
+		DRAWLINE 
+;エンディングへ
+ELSEIF ARG:0 == 206 || ARG:0 == 208 || ARG:0 == 210
+	CALL ENDING_2_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+ELSEIF CFLAG:803 < 200
+	CALL KOJO_2_0_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+ELSEIF CFLAG:803 < 1000
+	CALL KOJO_2_0_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+ELSE
+	CALL KOJO_2_0_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+ENDIF
+
+
+;戦闘回数の管理
+IF ARG:0 == 54
+	CFLAG:801 += 1
+;出会いのフラグ管理
+ELSEIF ARG:0 == 101 && CFLAG:(ARG:1):104 == 0
+	;CFLAG:898　ビット演算　会ったキャラ　1 霊夢　2 パチュリー　4 フラン　8 アリス
+	;初対面じゃないフラグ
+	SELECTCASE NO:(ARG:1)
+		;霊夢
+		CASE 1
+			CFLAG:898 |= 1
+		;パチュリー
+		CASE 8
+			CFLAG:898 |= 2
+		;フラン
+		CASE 11
+			CFLAG:898 |= 4
+		;アリス
+		CASE 14
+			CFLAG:898 |= 8
+	ENDSELECT
+;遺品回収のフラグ管理
+ELSEIF ARG:0 == 202 && CFLAG:(ARG:1):104 == 0
+	SELECTCASE NO:(ARG:1)
+		;霊夢
+		CASE 1
+			CFLAG:899 |= 1
+		;パチュリー
+		CASE 8
+			CFLAG:899 |= 2
+		;フラン
+		CASE 11
+			CFLAG:899 |= 4
+		;アリス
+		CASE 14
+			CFLAG:899 |= 8
+	ENDSELECT
+ENDIF
+
+CALL KOJO_2_0_TORAUMA_CHANGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;トラウマによる能力変化
+IF CFLAG:807
+	;現状、200以上になった後200未満に復帰する可能性はないが……まぁ念のため
+	IF CFLAG:807 != 1 && CFLAG:803 < 200
+		;好奇心復帰、貞操観念＋恥じらい追加、快楽に素直消滅、性格は強気なねっけつかん
+		TALENT:23 = 1
+		TALENT:30 = 1
+		TALENT:35 = 1
+		TALENT:70 = 0
+		CFLAG:807 = 1
+		CFLAG:12 = 20
+		CFLAG:100 = 10
+	;こちらには1000以上になった後から復帰する場合あり
+	ELSEIF CFLAG:807 != 2 && CFLAG:803 < 1000 && CFLAG:803 >= 200
+		;貞操観念と抵抗と快楽の否定追加、好奇心と恥じらいと快楽に素直消滅、性格は強気なねっけつかん
+		TALENT:30 = 1
+		TALENT:34 = 1
+		TALENT:71 = 1
+		TALENT:23 = 0
+		TALENT:35 = 0
+		TALENT:70 = 0
+		CFLAG:807 = 2
+		CFLAG:12 = 20
+		CFLAG:100 = 10
+	ELSEIF CFLAG:807 != 3 && CFLAG:803 > 999
+		;好奇心、貞操観念、抵抗、恥じらい、快楽の否定消滅、快楽に素直追加、性格は弱気なひっこみじあん
+		TALENT:23 = 0
+		TALENT:30 = 0
+		TALENT:34 = 0
+		TALENT:35 = 0
+		TALENT:71 = 0
+		TALENT:70 = 1
+		CFLAG:807 = 3
+		CFLAG:12 = -20
+		CFLAG:100 = 12
+	ENDIF
+ENDIF
+
+
+RESETCOLOR
+RETURN 1
+
+;===========================================================================================================
+;トラウマ値の増減
+;～200　「お前に足りないものがある……危機感だ」
+;～999　 キレ魔理沙
+;1000～　心が折れた
+;===========================================================================================================
+;並び順は口上書いてるERBの順
+@KOJO_2_0_TORAUMA_CHANGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SELECTCASE ARG:0
+	;ターン終了時自慰
+	CASE 48
+		CFLAG:803 += 1
+	;EPダメージ
+	CASE 14
+		CFLAG:803 += 1
+	;寄生攻撃
+	CASE 16
+		IF CFLAG:803 < 200
+			CFLAG:803 += 10
+		ELSE
+			CFLAG:803 += 2
+		ENDIF
+	;戦意喪失
+	CASE 33
+		CFLAG:803 += 5
+	;服が破ける
+	CASE 35
+		;全裸
+		SIF ARG:1 == 0
+			CFLAG:803 += 2
+	;ARG:1 の種族と初遭遇
+	CASE 61
+		;娘
+		SIF ARG:1 == 19 && TFLAG:14 != 3
+			CFLAG:803 += 10
+
+	;見捨てて逃げた
+	CASE 62
+		;霊夢はクリティカル
+		IF NO:(ARG:2) == 1 || NO:(ARG:3) == 1
+			CFLAG:803 += 10
+		ELSE
+			CFLAG:803 += 1
+		ENDIF
+
+	;見捨てられた
+	CASE 63
+		;霊夢はクリティカル
+		IF NO:(ARG:2) == 1 || NO:(ARG:3) == 1
+			CFLAG:803 += 10
+		ELSE
+			CFLAG:803 += 5
+		ENDIF
+	;絶頂
+	CASE 120
+		CFLAG:803 += 2
+	;喪失中絶頂
+	CASE 122
+		CFLAG:803 += 3
+	;母乳を吸われる
+	CASE 123
+		CFLAG:803 += 3
+
+	;処女喪失
+	CASE 136
+		SELECTCASE ARG:1
+			;敵の攻撃で
+			CASE 0
+				SELECTCASE ARG:3
+				;喪失直前
+				CASE 1
+					CFLAG:803 += 5
+				;守れた
+				CASE 2
+					CFLAG:803 += 3
+				CASEELSE
+					CFLAG:803 += 195
+				ENDSELECT
+			;自慰で
+			CASE 1
+				CFLAG:803 += 100
+			;出産
+			CASE 2
+				CFLAG:803 += 250
+		ENDSELECT
+	;寄生・出産イベント
+	;ARG:1はイベント進行
+	CASE 127
+		;最後
+		SIF ARG:1 == 2
+				CFLAG:803 += 300
+	;妊娠・出産イベント
+	CASE 129
+		;最後
+		SIF ARG:1 == 2
+				CFLAG:803 += 400
+;	;捕食中
+	CASE 151
+		IF CFLAG:805 < 200
+			CFLAG:803 += 60
+		ELSE
+			CFLAG:803 += 25
+		ENDIF
+	;遺品発見
+	CASE 202
+		;娘か不死身モードは弾く
+		SIF CFLAG:(ARG:1):104 || FLAG:503 > 1
+			RETURN
+
+			SELECTCASE NO:(ARG:1)
+				;霊夢
+				CASE 1
+					IF CFLAG:803 < 600
+						CFLAG:803 += 200
+					;霊夢の仇！
+					ELSE
+						CFLAG:803 = 250
+					ENDIF
+				;その他
+				CASEELSE
+					IF CFLAG:803 < 200
+						CFLAG:803 += 20
+					ELSEIF CFLAG:803 < 900
+						CFLAG:803 += 50
+					;もうだめだーみたいな感じ
+					ELSE
+						CFLAG:803 += 100
+					ENDIF
+			ENDSELECT
+	ENDSELECT
+
+RETURN

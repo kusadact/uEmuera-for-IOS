@@ -1,0 +1,72 @@
+﻿
+
+; ////////////////////////////
+; / ARG:0   18    敵の触手責め攻撃(命中)
+; / ARG:1 1017    コマンドID(汎用 イラマチオ)
+; / ARG:2         部位
+; / ARG:3         MPダメージ
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_18_1017(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+
+
+
+
+	
+	; important属性付与
+	; 口を封じられた専用口上となる為、他の口上が呼び出されると困る
+	CALL SET_IMPORTANT_FLAG
+	
+	; M感覚LVで分岐
+	SELECTCASE ABL:15
+	; LV0
+	CASE 0
+		CALL ADD_RAND_MESSAGE, @"「呜……！？ 呜呜……！？ 呜呜呜……！？」"
+		CALL ADD_RAND_MESSAGE, @"「嗯～～啊！！ 嗯嗯～～啊！！」"
+		CALL ADD_RAND_MESSAGE, @"「不要脏……！ 呜……呜呜……！？ 嗯嗯嗯～～啊！？」"
+		CALL ADD_RAND_MESSAGE, @"「不要靠近那种东西……！ 呀……呜……！？ 呜呜！？」"
+		
+	; LV1
+	CASE 1
+		CALL ADD_RAND_MESSAGE, @"「不行了……！ 呜呜…… 不要……拔出来……」"
+		CALL ADD_RAND_MESSAGE, @"「嗯呜！ 嗯！ 嗯嗯嗯嗯！？」"
+		CALL ADD_RAND_MESSAGE, @"（不、不可能！？ 进到喉咙深处了！？）"
+		CALL ADD_RAND_MESSAGE, @"「呜…… 呜呜…… 臭…… 呀呜呜……」"
+		
+	; LV2
+	CASE 2
+		CALL ADD_RAND_MESSAGE, @"「吸吮♪ 舔舐♪ 唧唧……♪ 唧唧唧唧……♪」"
+		CALL ADD_RAND_MESSAGE, @"「呜呜呜♥ 呜呜呜呜♥ 嘴巴被侵犯感到舒服！？ 怎么了！？」"
+
+	; LV3以上
+	CASEELSE
+		CALL ADD_RAND_MESSAGE, @"（被刺激到喉咙深处♥ 被当成口交奴隶感到快感……♥）"
+		CALL ADD_RAND_MESSAGE, @"「好刺激♥ 唧唧…… 嘴巴…… 唧唧唧…… 很舒服♥」"
+		CALL ADD_RAND_MESSAGE, @"「吸吮♥ 舔舐♥ 唧唧唧……♥」"
+		CALL ADD_RAND_MESSAGE, @"「唧唧唧♥ 唧唧唧唧♥ 嗯呼～♥ 真恶心♥」"
+	ENDSELECT
+
+RETURN 1
+

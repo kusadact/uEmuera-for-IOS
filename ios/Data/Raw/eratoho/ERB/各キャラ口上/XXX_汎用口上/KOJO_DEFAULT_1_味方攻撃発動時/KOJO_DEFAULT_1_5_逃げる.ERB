@@ -1,0 +1,205 @@
+﻿; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1    5    コマンドID(逃げる)
+; / ARG:2    0    逃走成功フラグ 0:失敗
+; / ARGS:0        自分の名前
+
+;逃走失敗時
+@KOJO_DEFAULT_1_5_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「这样就逃不掉了……！」"
+	CALL ADD_RAND_MESSAGE, @"「咕、被包围了！」"
+	CALL ADD_RAND_MESSAGE, @"「被包围了……！！」"
+
+	CALL ADD_RAND_MESSAGE, @"「地形变了！？」"
+
+	CALL ADD_RAND_MESSAGE, @"「瞄准脚了！？」"
+	CALL ADD_RAND_MESSAGE, @"「呃，脚已经！？」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「哇……脚好快啊！」"
+	CASE 性格_おせっかい
+		CALL ADD_RAND_MESSAGE, @"（如果逃跑袭击其他人的话……）"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「为了不让猎物逃跑而进行的动作真是迅速啊」"
+		CALL ADD_RAND_MESSAGE, @"「什么时候退路被堵住了！？」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「……如果分别的时候时间能停止就好了」"
+		CALL ADD_RAND_MESSAGE, @"「……对方还有很多余裕呢」"
+		CALL ADD_RAND_MESSAGE, @"「被这样带进来的话，恐怕不能白白回去了吧」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「这么容易就不让逃跑啊」"
+		CALL ADD_RAND_MESSAGE, @"「什么时候退路被堵住了！？」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「呃，被包围了！」"
+		CALL ADD_RAND_MESSAGE, @"「能不能轻易地放我逃走呢……但是！」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（不，不要……这样下去的话……）"
+		CALL ADD_RAND_MESSAGE, @"（呜呜……逃不掉了……）"
+		CALL ADD_RAND_MESSAGE, @"「呀，呀！？　放我逃走啊！？」"
+		CALL ADD_RAND_MESSAGE, @"「请，请放过我～」"
+		
+	ENDSELECT
+	
+	; 煙幕・砂煙時 追加口上
+	IF CFLAG:26 || CFLAG:27
+		CALL ADD_RAND_MESSAGE, @"「这，这样什么都看不见……」"
+		CALL ADD_RAND_MESSAGE, @"「咳咳」"
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「看不到周围也很难逃跑啊」"
+		CASE 性格_ぬけめがない
+			CALL ADD_RAND_MESSAGE, @"（攻击不容易，逃跑也很困难，真是个麻烦的蒙眼）"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「不要……不知道该往哪边走……」"
+		ENDSELECT
+	ENDIF
+	
+	; 包囲中 追加口上
+	IF CFLAG:200
+		CALL ADD_RAND_MESSAGE, @"「完全被包围了！」"
+		CALL ADD_RAND_MESSAGE, @"「被包围了……不会是假的吧！？」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「呃呃，真的吗」"
+			CALL ADD_RAND_MESSAGE, @"「包围歼灭阵吗……！」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"（迟早会有机会的……）"
+			CALL ADD_RAND_MESSAGE, @"（冷静观察的话……一定会有突破口的……！）"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「我会教你什么叫狮子身中的虫……！」"
+			CALL ADD_RAND_MESSAGE, @"「咦……这样一来……！　能够突破一点……但是……！」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"（被包围了，没有逃跑的地方了……）"
+		ENDSELECT
+	ENDIF
+	
+	; 逃走成功率25%以下なら追加口上
+	IF GET_ESCAPE_RATE(TARGET) <= 25
+		CALL ADD_RAND_MESSAGE, @"「果然很困难啊……」"
+		CALL ADD_RAND_MESSAGE, @"「虽然知道的……」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「本以为可以成功的」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「虽然知道是不切实际的尝试……」"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「只凭斗志也无法改变什么……」"
+			CALL ADD_RAND_MESSAGE, @"「进退两难了吗……」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「果然还是不行呢……」"
+		ENDSELECT
+	ENDIF
+	
+	; 逃走成功率75%以上なら追加口上
+	IF GET_ESCAPE_RATE(TARGET) >= 75
+		CALL ADD_RAND_MESSAGE, @"「本以为可以轻易逃脱的……」"
+		CALL ADD_RAND_MESSAGE, @"（现在这样还不行吗……？）"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「哇～你做得很好嘛！」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「没想到会失败呢」"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「阻止了现在的攻击……做得很不错」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「唔，因为我太笨拙了……」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1    5    コマンドID(逃げる)
+; / ARG:2    1    逃走成功フラグ 1:成功
+; / ARGS:0        自分の名前
+
+;逃走成功時
+@KOJO_DEFAULT_1_5_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「就让我从这里逃走吧」"
+	CALL ADD_RAND_MESSAGE, @"「暂时撤退！」"
+
+	CALL ADD_RAND_MESSAGE, @"「只能退后了！」"
+	CALL ADD_RAND_MESSAGE, @"「这样下去可能不行！」"
+	CALL ADD_RAND_MESSAGE, @"「必须重新开始！」"
+	CALL ADD_RAND_MESSAGE, @"「必须整顿一下！」"
+	CALL ADD_RAND_MESSAGE, @"「无法击倒！」"
+	CALL ADD_RAND_MESSAGE, @"「没法好好对付对手！」"
+	CALL ADD_RAND_MESSAGE, @"「稍微有点不利！」"
+	CALL ADD_RAND_MESSAGE, @"「过于谨慎反而不好！」"
+	CALL ADD_RAND_MESSAGE, @"「如果还有剩下的运气的话！」"
+	CALL ADD_RAND_MESSAGE, @"「已经没有能够击倒的手段了……！」"
+	CALL ADD_RAND_MESSAGE, @"「逃跑的话只有这个时机！」"
+
+	CALL ADD_RAND_MESSAGE, @"「接近我们的新敌人！？……必须后退！」"
+
+	CALL ADD_RAND_MESSAGE, @"「！……护符的效力！？……看来时间到了！」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「我才不管呢！」"
+			CALL ADD_RAND_MESSAGE, @"「别以为这样就赢了！」"
+
+
+	CASE 性格_きれもの
+
+			CALL ADD_RAND_MESSAGE, @"「……气流好像不太好。这个迷宫的雨很危险，得先退一下……」"
+			CALL ADD_RAND_MESSAGE, @"「敌人有增援的迹象！？……不好！」"
+			CALL ADD_RAND_MESSAGE, @"「剩下的子弹可能打不完了……」"
+			CALL ADD_RAND_MESSAGE, @"「这样下去被打倒也只是时间问题吧……」"
+	CASE 性格_くろうにん
+			CALL ADD_RAND_MESSAGE, @"（希望以后不要变得麻烦……！）"
+			CALL ADD_RAND_MESSAGE, @"「果然我这种人……」"
+
+	CASE 性格_ぬけめがない
+
+			CALL ADD_RAND_MESSAGE, @"「……气流好像不太好。这个迷宫的雨很危险，得先退一下……」"
+			CALL ADD_RAND_MESSAGE, @"「敌人有增援的迹象！？……不好！」"
+			CALL ADD_RAND_MESSAGE, @"「剩下的子弹可能打不完了……」"
+			CALL ADD_RAND_MESSAGE, @"「『还能继续』这种时候最危险」"
+			CALL ADD_RAND_MESSAGE, @"「这样下去被打倒也只是时间问题吧……」"
+
+	CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「希望转身的时候不要有人在那里……」"
+			CALL ADD_RAND_MESSAGE, @"「果然我这种人……」"
+
+	CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「看来我力量不足……」"
+
+	CASE 性格_わがまま
+			CALL ADD_RAND_MESSAGE, @"「竟然被逼到这个地步……」"
+
+	ENDSELECT
+	; 煙幕・砂煙時 追加口上
+	IF CFLAG:26 || CFLAG:27
+		CALL ADD_RAND_MESSAGE, @"「视野太差，无法好好战斗」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「总之去那边应该会有好转！大概！」"
+		CASE 性格_くろうにん
+			CALL ADD_RAND_MESSAGE, @"（希望以后不要变得麻烦……！）"
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"「被从看不见的地方袭击也不讨厌呢」"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「不想和使用卑鄙手段的家伙战斗」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+

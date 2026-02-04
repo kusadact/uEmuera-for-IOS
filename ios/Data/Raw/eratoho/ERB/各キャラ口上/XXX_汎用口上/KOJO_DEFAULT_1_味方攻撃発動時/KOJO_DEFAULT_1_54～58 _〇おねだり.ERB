@@ -1,0 +1,89 @@
+﻿
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   54    コマンドID(Aおねだり)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_54(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL ADD_RAND_MESSAGE, @"「请随意对待我的屁股♥」"
+	CALL ADD_RAND_MESSAGE, @"「这边的洞，你可以随便喜欢♥」"
+	CALL ADD_RAND_MESSAGE, @"「这边的洞，用触手好好清理一下♥　拜托了♥」"
+	CALL ADD_RAND_MESSAGE, @"「用后面的洞感到舒服，我是变态♥　请使用吧♥」"
+	CALL ADD_RAND_MESSAGE, @"「这边的洞也试试吧♥　我已经准备好了♥」"
+
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   55    コマンドID(Bおねだり)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_55(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 母乳体質
+	IF TALENT:130
+		CALL ADD_RAND_MESSAGE, @"「吸我的奶♥　请好好吸我的奶♥」"
+
+		CALL ADD_RAND_MESSAGE, @"「请好好挤我的奶♥」"
+		CALL ADD_RAND_MESSAGE, @"「请好好享受我的柔软奶♥」"
+	ELSE
+		CALL ADD_RAND_MESSAGE, @"「想要像对待婴儿一样吸吮我的奶♥」"
+
+		CALL ADD_RAND_MESSAGE, @"「请随意揉我的奶♥」"
+		CALL ADD_RAND_MESSAGE, @"「请好好享受我的柔软奶♥」"
+		CALL ADD_RAND_MESSAGE, @"「我的奶的形状怎么样♥　现在可以随意喜欢了♥」"
+
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   56    コマンドID(Cおねだり)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_56(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL ADD_RAND_MESSAGE, @"「大了的阴蒂♥　请尽情玩弄♥」"
+	CALL ADD_RAND_MESSAGE, @"「这里是最喜欢的地方♥　把淫乱的阴蒂弄得乱七八糟♥♥」"
+
+	CALL ADD_RAND_MESSAGE, @"「已经等不及了♥　请给我淫荡的豆子作为奖励♥」"
+	CALL ADD_RAND_MESSAGE, @"「好好看着♥　我的阴蒂，看起来好像很想被摆弄♥」"
+
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   57    コマンドID(Vおねだり)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_57(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 触手中毒LV3以上 or V感覚LV3以上or [淫壷]所持
+	IF ABL:11 >= 3 || ABL:9 >= 3 || TALENT:77
+		CALL ADD_RAND_MESSAGE, @"「阴道♥　我喜欢阴道♥♥　请尽情使用%CALLNAME:TARGET%的淫乱阴道♥♥」"
+		CALL ADD_RAND_MESSAGE, @"「看着♥　看着♥♥　已经准备好受精了♥♥　所以♥　所以关于，关于……♥♥♥」"
+	ELSE
+		CALL ADD_RAND_MESSAGE, @"「请把大的东西放进阴道里♥」"
+		CALL ADD_RAND_MESSAGE, @"「请使用阴道♥」"
+
+		CALL ADD_RAND_MESSAGE, @"「阴道，直到成为你专属的洞穴，请好好教育♥」"
+		CALL ADD_RAND_MESSAGE, @"「请充分搅拌我的阴道♥」"
+		CALL ADD_RAND_MESSAGE, @"「请把阴道弄得湿湿的♥」"
+		CALL ADD_RAND_MESSAGE, @"「请按照你的喜好，好好调教我的阴道♥」"
+		CALL ADD_RAND_MESSAGE, @"「请用阴道感到舒服♥」"
+		CALL ADD_RAND_MESSAGE, @"「来吧，试试在这里插入♥　感觉很舒服♥」"
+		CALL ADD_RAND_MESSAGE, @"「软绵绵的发情阴道，渴望着强壮的东西♥」"
+
+
+	ENDIF
+	; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「%CALLNAME:TARGET%的……阿、阴道……请随意使用……♥」"
+		ENDSELECT
+
+RETURN 1
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   58    コマンドID(その他おねだり)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_58(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL ADD_RAND_MESSAGE, @"「快点♥　快点♥　快点♥　过来♥」"
+	CALL ADD_RAND_MESSAGE, @"「请疯狂地侵犯我♥」"
+	
+	
+		
+RETURN 1

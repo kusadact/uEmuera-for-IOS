@@ -1,0 +1,400 @@
+﻿;固定イベント
+;RETURN	0:失敗した　1:成功した　2:以後のイベントスキップ
+@CHECK_FIXED_EVENT_178
+;LOCAL
+;0	LOOP
+;1	目標値
+;2	達成値
+;3	戻り値
+
+LOCAL:3 = 0
+
+;目標値（イベント難易度）決定
+LOCAL:1 = 40
+
+
+;達成値決定
+CALL GET_SEARCH_RATE
+LOCAL:2 = RESULT
+
+
+IF LOCAL:2 >= LOCAL:1
+	IF FLAG:11
+		IF CFLAG:(FLAG:11):28 >= 1 && CFLAG:(FLAG:10):28 >= 1 && CFLAG:1:28 <= 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:11)%看着%CALLNAME:1%的目光很奇怪…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:11)%看着%CALLNAME:1%的目光很奇怪…
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然瞬間推倒了%CALLNAME:1%、瘋狂的親着臉！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  突然瞬間推倒了%CALLNAME:1%、瘋狂的親着臉！
+			ENDIF
+
+			PRINTFORML 看来是在発情状態下在找不到出口的迷宮内呆了太長時間、変得有些奇怪了
+			IF FLAG:AUTOMODE
+			    PRINTFORML 被按倒在地的%CALLNAME:1%讓%CALLNAME:(FLAG:10)%来幇助自己！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  被按倒在地的%CALLNAME:1%讓%CALLNAME:(FLAG:10)%来幇助自己！
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:10)%看着%CALLNAME:1%的目光很奇怪…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:10)%看着%CALLNAME:1%的目光很奇怪…
+			ENDIF
+
+			PRINTFORML 完全発情的%CALLNAME:(FLAG:10)%好像也像加入進去…
+			PRINTFORML %CALLNAME:1%完全放棄了抵抗、任憑%CALLNAME:(FLAG:11)%們擺佈…
+				CALL PRINT_MESSAGE(1, 200, 161, CALLNAME:1, "", 0, 0)
+				CALL PRINT_MESSAGE(FLAG:10, 200, 161, CALLNAME:1, "", 1, 0)
+				CALL PRINT_MESSAGE(FLAG:11, 200, 161, CALLNAME:1, "", 1, 0)
+				CALL EXTASY(1, RAND:4, RAND:30, 100)
+				CALL EXTASY((FLAG:10), RAND:4, RAND:40, 100)
+				CALL EXTASY((FLAG:11), RAND:4, RAND:40, 100)
+				CALL ADD_ABL_EXP_PT(13, 20 + RAND:20)
+				CFLAG:(FLAG:10):5 += 2 + RAND:10
+				CFLAG:(FLAG:11):5 += 2 + RAND:10
+			PRINTFORML 
+			PRINTFORML 拉着恢復了正気拼命道着歉的%CALLNAME:(FLAG:10)%和%CALLNAME:(FLAG:11)%的手、%CALLNAME:1%們再次開始了探索
+		ELSEIF CFLAG:(FLAG:10):28 >= 1 && CFLAG:(FLAG:11):28 <= 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:10)%看着%CALLNAME:1%的目光很奇怪…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:10)%看着%CALLNAME:1%的目光很奇怪…
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然瞬間推倒了%CALLNAME:1%、瘋狂的親着臉！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  突然瞬間推倒了%CALLNAME:1%、瘋狂的親着臉！
+			ENDIF
+
+						PRINTFORML 看来是在発情状態下在找不到出口的迷宮内呆了太長時間、変得有些奇怪了
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:11)%強行架開了因情欲而発狂的%CALLNAME:(FLAG:10)%！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:11)%強行架開了因情欲而発狂的%CALLNAME:(FLAG:10)%！
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:11)%推開了還在%CALLNAME:1%身上扭着腰的%CALLNAME:(FLAG:10)%、斬釘截鐵的説道忍不住的話就一個人做吧…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:11)%推開了還在%CALLNAME:1%身上扭着腰的%CALLNAME:(FLAG:10)%、斬釘截鐵的説道忍不住的話就一個人做吧…
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:10)%無法抵抗性欲、紅着臉開始了自慰…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:10)%無法抵抗性欲、紅着臉開始了自慰…
+			ENDIF
+
+				CALL PRINT_MESSAGE(1, 200, 161, CALLNAME:1, "", 0, 1)
+				CALL PRINT_MESSAGE(FLAG:10, 200, 161, CALLNAME:1, "", 1 ,1)
+				CALL PRINT_MESSAGE(FLAG:11, 200, 161, CALLNAME:1, "", 0 ,2)
+				CALL MASTURBATION(FLAG:10, 1, 100)
+				CALL ADD_ABL_EXP_PT(13, 20 + RAND:20)
+				CFLAG:(FLAG:10):5 -= 2 + RAND:5
+				CFLAG:(FLAG:11):5 += 5
+			PRINTFORML 
+			PRINTFORML 終於結束了自慰的%CALLNAME:(FLAG:10)%們、帯着尷尬的表情重新開始了探索…
+		ELSEIF CFLAG:(FLAG:10):28 <= 0 && CFLAG:(FLAG:11):28 >= 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:11)%の%CALLNAME:1%を見る目がおかしい…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:11)%の%CALLNAME:1%を見る目がおかしい…
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 一瞬の隙を突いて%CALLNAME:1%を押し倒すと、顔中にキスの雨を降らせ始めた！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  一瞬の隙を突いて%CALLNAME:1%を押し倒すと、顔中にキスの雨を降らせ始めた！
+			ENDIF
+
+			PRINTFORML どうやら発情状態で出口の見えない迷宮を連れまわされすぎて、少しおかしくなってしまったようだ
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:10)%が情欲に狂った%CALLNAME:(FLAG:11)%を強引に引き剥がした！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:10)%が情欲に狂った%CALLNAME:(FLAG:11)%を強引に引き剥がした！
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:10)%は腰をもじもじさせて%CALLNAME:1%にすがりつこうとする%CALLNAME:(FLAG:11)%を突き放すと、一人でするように言い放った…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:10)%は腰をもじもじさせて%CALLNAME:1%にすがりつこうとする%CALLNAME:(FLAG:11)%を突き放すと、一人でするように言い放った…
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:11)%は性欲に逆らえず、顔を真っ赤にして自慰を始めた…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:11)%は性欲に逆らえず、顔を真っ赤にして自慰を始めた…
+ENDIF
+
+				CALL PRINT_MESSAGE(1, 200, 161, CALLNAME:1, "", 0, 1)
+				CALL PRINT_MESSAGE(FLAG:10, 200, 161, CALLNAME:1, "", 0, 2)
+				CALL PRINT_MESSAGE(FLAG:11, 200, 161, CALLNAME:1, "", 1, 1)
+				CALL MASTURBATION(FLAG:11, 1, 100)
+				CALL ADD_ABL_EXP_PT(13, 20 + RAND:20)
+				CFLAG:(FLAG:10):5 += 5
+				CFLAG:(FLAG:11):5 -= 2 + RAND:5
+			PRINTFORML 
+			PRINTFORML 終於結束了自慰的%CALLNAME:(FLAG:11)%們、帯着尷尬的表情重新開始了探索…
+		ELSEIF CFLAG:(FLAG:10):28 >= 1 && CFLAG:(FLAG:11):28 >= 1 && CFLAG:1:28 >= 1 
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:11)%の%CALLNAME:1%を見る目がおかしい…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:11)%の%CALLNAME:1%を見る目がおかしい…
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 一瞬の隙を突いて%CALLNAME:1%を押し倒すと、顔中にキスの雨を降らせ始めた！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  一瞬の隙を突いて%CALLNAME:1%を押し倒すと、顔中にキスの雨を降らせ始めた！
+			ENDIF
+
+			PRINTFORML どうやら発情状態で出口の見えない迷宮を連れまわされすぎて、少しおかしくなってしまったようだ
+			IF FLAG:AUTOMODE
+			    PRINTFORML 組み敷かれた%CALLNAME:1%も発情した身体に突き動かされ、%CALLNAME:(FLAG:11)%の唇を貪り始めた
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  組み敷かれた%CALLNAME:1%も発情した身体に突き動かされ、%CALLNAME:(FLAG:11)%の唇を貪り始めた
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 発情のあまり既におかしくなっていた%CALLNAME:(FLAG:10)%も情欲に身を任せて身体を割り込ませていく…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  発情のあまり既におかしくなっていた%CALLNAME:(FLAG:10)%も情欲に身を任せて身体を割り込ませていく…
+			ENDIF
+
+						PRINTFORML 
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:1%們就像是野獣一樣交合着！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:1%們就像是野獣一樣交合着！
+			ENDIF
+
+				CALL PRINT_MESSAGE(1, 200, 161, CALLNAME:1, "", 1, 2)
+				CALL PRINT_MESSAGE(FLAG:10, 200, 161, CALLNAME:1, "", 1, 2)
+				CALL PRINT_MESSAGE(FLAG:11, 200, 161, CALLNAME:1, "", 1, 2)
+				CALL EXTASY(1, RAND:4, RAND:40, 100)
+				CALL EXTASY((FLAG:10), RAND:4, RAND:40, 100)
+				CALL EXTASY((FLAG:11), RAND:4, RAND:40, 100)
+				CALL ADD_ABL_EXP_PT(13, 20 + RAND:20)
+				CFLAG:(FLAG:10):5 += 2 + RAND:10
+				CFLAG:(FLAG:11):5 += 2 + RAND:10
+			PRINTFORML 
+			PRINTFORML 取回了正気的%CALLNAME:1%們、帯着尷尬的表情重新開始了探索…
+		ENDIF
+	ENDIF
+
+	IF FLAG:10 && FLAG:11 == 0
+		IF CFLAG:(FLAG:10):28 >= 1 && CFLAG:1:28 <= 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:(FLAG:10)%看着%CALLNAME:1%的目光很奇怪…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:(FLAG:10)%看着%CALLNAME:1%的目光很奇怪…
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然瞬間推倒了%CALLNAME:1%、瘋狂的親着臉！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  突然瞬間推倒了%CALLNAME:1%、瘋狂的親着臉！
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 看来是在発情状態下在找不到出口的迷宮内呆了太長時間、変得有些奇怪了
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  看来是在発情状態下在找不到出口的迷宮内呆了太長時間、変得有些奇怪了
+			ENDIF
+
+			IF ABL:(FLAG:10):98 >= ABL:1:98
+				PRINTFORML 從口中発出的悲鳴被対方用嘴堵住、被推倒在地的%CALLNAME:1%的抵抗、因為撫遍全身的指尖漸漸変弱了
+				PRINTFORML %CALLNAME:1%完全放棄了抵抗、任憑%CALLNAME:(FLAG:10)%擺佈…
+					CALL PRINT_MESSAGE(1, 200, 161, CALLNAME:1, "", 0, 0)
+					CALL PRINT_MESSAGE(FLAG:10, 200, 161, CALLNAME:1, "", 1, 0)
+					CALL EXTASY(1, RAND:4, RAND:30, 100)
+					CALL EXTASY((FLAG:10), RAND:4, RAND:40, 100)
+					CALL ADD_ABL_EXP_PT(13, 20 + RAND:20)
+					CFLAG:(FLAG:10):5 += RAND:10
+				PRINTFORML 
+				PRINTFORML 拉着恢復了正気拼命道着歉的%CALLNAME:(FLAG:10)%的手、%CALLNAME:1%們再次開始了探索
+			ELSE
+				IF FLAG:AUTOMODE
+				    PRINTFORML 被推倒在地的%CALLNAME:1%強行架開了因情欲而発狂的%CALLNAME:(FLAG:10)%！
+				    TWAIT FLAG:AUTOMODE * 200, 0
+				ELSE
+				    PRINTFORMW  被推倒在地的%CALLNAME:1%強行架開了因情欲而発狂的%CALLNAME:(FLAG:10)%！
+				ENDIF
+
+				IF FLAG:AUTOMODE
+				    PRINTFORML %CALLNAME:1%推開了還在自己身上扭着腰的%CALLNAME:(FLAG:10)%、斬釘截鐵的説道忍不住的話就一個人做吧…
+				    TWAIT FLAG:AUTOMODE * 200, 0
+				ELSE
+				    PRINTFORMW  %CALLNAME:1%推開了還在自己身上扭着腰的%CALLNAME:(FLAG:10)%、斬釘截鐵的説道忍不住的話就一個人做吧…
+				ENDIF
+
+				IF FLAG:AUTOMODE
+				    PRINTFORML %CALLNAME:(FLAG:10)%無法抵抗性欲、紅着臉開始了自慰…
+				    TWAIT FLAG:AUTOMODE * 200, 0
+				ELSE
+				    PRINTFORMW  %CALLNAME:(FLAG:10)%無法抵抗性欲、紅着臉開始了自慰…
+				ENDIF
+
+					CALL PRINT_MESSAGE(1, 200, 161, CALLNAME:1, "", 0, 2)
+					CALL PRINT_MESSAGE(FLAG:10, 200, 161, CALLNAME:1, "", 1 ,1)
+					CALL MASTURBATION(FLAG:10, 1, 100)
+					CFLAG:(FLAG:10):5 -= 2 + RAND:5
+				PRINTFORML 
+				PRINTFORML 終於結束了自慰的%CALLNAME:(FLAG:10)%們、帯着尷尬的表情重新開始了探索…
+			ENDIF
+		ELSEIF CFLAG:(FLAG:10):28 >= 1 && CFLAG:1:28 >= 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML 被按倒在地的%CALLNAME:1%被発情的身体所驅使、回吻起%CALLNAME:(FLAG:10)%
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  被按倒在地的%CALLNAME:1%被発情的身体所驅使、回吻起%CALLNAME:(FLAG:10)%
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML %CALLNAME:1%們就像是野獣一樣交合着！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %CALLNAME:1%們就像是野獣一樣交合着！
+			ENDIF
+
+				CALL PRINT_MESSAGE(1, 200, 161, CALLNAME:1, "", 1, 2)
+				CALL PRINT_MESSAGE(FLAG:10, 200, 161, CALLNAME:1, "", 1, 2)
+				CALL EXTASY(1, RAND:4, RAND:40, 100)
+				CALL EXTASY((FLAG:10), RAND:4, RAND:40, 100)
+				CALL ADD_ABL_EXP_PT(13, 20 + RAND:20)
+				CFLAG:(FLAG:10):5 += 2 + RAND:10
+			PRINTFORML 
+			PRINTFORML 取回了正気的%CALLNAME:1%們、帯着尷尬的表情重新開始了探索…
+		ENDIF
+	ENDIF
+	
+	IF PET:0 && (DA:0:85 & 1)
+			IF FLAG:AUTOMODE
+			    PRINTFORML %PETNAME%看着%CALLNAME:1%的目光很奇怪…
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  %PETNAME%看着%CALLNAME:1%的目光很奇怪…
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然瞬間推倒了%CALLNAME:1%、瘋狂的親着臉！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  突然瞬間推倒了%CALLNAME:1%、瘋狂的親着臉！
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 大概還処于発情状態
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  大概還処于発情状態
+			ENDIF
+
+		IF CFLAG:1:28 == 0
+			IF TALENT:1:140
+				PRINTFORML 被按倒在地的%CALLNAME:1%、沒有抵抗、任憑%PETNAME%擺佈…
+					CALL PRINT_MESSAGE(1, 200, 161, CALLNAME:1, "", 0, 0)
+					CALL EXTASY(1, RAND:4, RAND:30, 100)
+					CALL ADD_ABL_EXP_PT(13, 20 + RAND:20)
+					CFLAG:(FLAG:10):5 += RAND:10
+					PET:20 += 2
+					PET:22 += 3
+				PRINTFORML 
+				PRINTFORML 看来%CALLNAME:1%、總算是満足了%PETNAME%
+			ELSE
+			IF FLAG:AUTOMODE
+			    PRINTFORML 被推倒在地的%CALLNAME:1%強行架開了因情欲而発狂的%PETNAME%！
+			    TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+			    PRINTFORMW  被推倒在地的%CALLNAME:1%強行架開了因情欲而発狂的%PETNAME%！
+			ENDIF
+
+			ENDIF
+		ELSEIF CFLAG:(FLAG:11):28 >= 1 && CFLAG:(FLAG:10):28 >= 1 && CFLAG:1:28 >= 1
+				IF FLAG:AUTOMODE
+				    PRINTFORML 被按倒在地的%CALLNAME:1%被発情的身体所驅使、回吻起%PETNAME%
+				    TWAIT FLAG:AUTOMODE * 200, 0
+				ELSE
+				    PRINTFORMW  被按倒在地的%CALLNAME:1%被発情的身体所驅使、回吻起%PETNAME%
+				ENDIF
+
+				IF FLAG:AUTOMODE
+				    PRINTFORML %CALLNAME:(FLAG:10)%和%CALLNAME:(FLAG:11)%用湿潤的眼光看向了%CALLNAME:1%的胸部和陰蒂
+				    TWAIT FLAG:AUTOMODE * 200, 0
+				ELSE
+				    PRINTFORMW  %CALLNAME:(FLAG:10)%和%CALLNAME:(FLAG:11)%用湿潤的眼光看向了%CALLNAME:1%的胸部和陰蒂
+				ENDIF
+
+				IF FLAG:AUTOMODE
+				    PRINTFORML 
+				    TWAIT FLAG:AUTOMODE * 200, 0
+				ELSE
+				    PRINTFORMW  
+				ENDIF
+
+				IF FLAG:AUTOMODE
+				    PRINTFORML %CALLNAME:1%們就像是野獣一樣交合着！
+				    TWAIT FLAG:AUTOMODE * 200, 0
+				ELSE
+				    PRINTFORMW  %CALLNAME:1%們就像是野獣一樣交合着！
+				ENDIF
+
+				CALL PRINT_MESSAGE(1, 200, 161, CALLNAME:1, "", 1, 2)
+				CALL PRINT_MESSAGE(FLAG:10, 200, 161, CALLNAME:1, "", 1, 2)
+				CALL PRINT_MESSAGE(FLAG:11, 200, 161, CALLNAME:1, "", 1, 2)
+				CALL EXTASY(1, RAND:4, RAND:40, 100)
+				CALL EXTASY((FLAG:10), RAND:4, RAND:40, 100)
+				CALL EXTASY((FLAG:11), RAND:4, RAND:40, 100)
+				CALL ADD_ABL_EXP_PT(13, 20 + RAND:20)
+				CFLAG:(FLAG:10):5 += 2 + RAND:10
+				CFLAG:(FLAG:11):5 += 2 + RAND:10
+				PET:20 += 6
+				PET:22 += 9
+			PRINTFORML 
+			PRINTFORML 取回了正気的%CALLNAME:1%們、帯着尷尬的表情重新開始了探索…
+		ENDIF
+	ENDIF
+	
+	;同じ場所に残す
+	LOCAL:3 = 1
+ELSE
+	;見つからなかった場合（通常は何もしない）
+ENDIF
+
+RETURN LOCAL:3
+

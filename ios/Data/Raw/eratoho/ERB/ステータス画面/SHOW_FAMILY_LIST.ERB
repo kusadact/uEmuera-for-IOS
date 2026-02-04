@@ -1,0 +1,99 @@
+﻿;現在の素質を表示
+;ARG:0	対象キャラID
+@SHOW_FAMILY_LIST(ARG:0)
+
+PRINTFORM 　種族：
+
+SELECTCASE CFLAG:(ARG:0):107
+	CASE 1, 2
+		PRINTFORML プリンセス　女王に近い能力を持つ強力な娘
+	CASE 5
+		PRINTFORML 活蔓藤　操縱蔓藤的触手娘
+	CASE 6
+		PRINTFORML 猩紅蔓藤　能快速操縱蔓藤的触手娘
+	CASE 7
+		PRINTFORML スケーター蠕蟲　有着蟲一般的生物血統之娘
+	CASE 8
+		PRINTFORML 沙蝴蝶　有着蟲一般的生物血統之娘
+	CASE 9
+		PRINTFORML 烏賊娘　有着海産生物血統之娘
+	CASE 10
+		PRINTFORML ヘレシーマーメル　和邪悪的海洋生物関係很好之娘
+	CASE 11
+		PRINTFORML 磯女　海之娘
+	CASE 12
+		PRINTFORML 紅海葵　珊瑚之娘
+	CASE 13
+		PRINTFORML 史莱姆娘　化作人形的史莱姆娘
+	CASE 14
+		PRINTFORML 修格斯細胞　化作人形的進化過的粘液生物之娘
+	CASE 15
+		PRINTFORML 曼陀羅花精　植物妖怪、不僅能操縱連自身也是植物
+	CASE 16
+		PRINTFORML 樹精　植物妖怪、不僅能操縱連自身也是植物
+	CASE 17
+		PRINTFORML 変形獣　可以変成自己喜歡的樣子之娘
+	CASE 18
+		PRINTFORML 幻影怪　変換自己的姿態并玩弄他人的命運的魔物
+	CASE 20
+		PRINTFORML 博麗之女　流着強力的霊夢血液之娘
+	CASE 21
+		PRINTFORML 触手妖精　被異界的生物所侵食的自然的具現
+	CASE 22
+		PRINTFORML 雪女　帯着強烈的寒意
+	CASE 23
+		PRINTFORML 魅魔　性欲很強的淫魔
+	CASE 24
+		PRINTFORML 原始魔法少女　将来的魔女候補生
+	CASE 25
+		PRINTFORML 吸血鬼　隨意吸取人類血液的任性妖怪
+	CASE 26
+		PRINTFORML 半妖半霊　部分是妖怪部分是幽霊的複雜存在
+	CASE 27
+		PRINTFORML 天使之女　擁有天界之力的女妖怪
+	CASE 28
+		PRINTFORML スキマ妖怪　操縱境界的妖怪
+	CASE 29
+		PRINTFORML 夜雀　在夜晩起鳴的歌姫
+	CASE 30
+		PRINTFORML 因幡　即所謂的地上之兎們
+	CASE 31
+		PRINTFORML 玉兎　居住在月亮上的兎子們
+	CASE 32
+		PRINTFORML 蓬莱人　与死亡無縁的存在
+	CASE 33
+		PRINTFORML 天狗　構成幻想郷的社会的妖怪娘
+	CASE 34
+		PRINTFORML 半神　流着強力的神血之娘
+	CASE 35
+		PRINTFORML 半月之姫　流着月之住人血液之娘
+	CASE 36
+		PRINTFORML 神之末裔　流着神血之娘
+	CASE 37
+		PRINTFORML 鬼　喜歡闘酒的妖怪娘
+	CASE 38
+		PRINTFORML 覚　能読心之娘
+	CASE 39
+		PRINTFORML 猫又　長着猫耳的妖怪娘
+	CASE 45
+		PRINTFORML 鸛　執掌子宝的妖怪
+	CASE 50
+		PRINTFORML 機械娘 操縱機械的機械娘
+	CASE 51
+		PRINTFORML 宇宙馬蹄蓮　星光所具現化的存在
+	CASE 52
+		PRINTFORML ダムドラック　某個異界的湖中的貴婦人妖精
+	CASE 53
+		PRINTFORML 正統妖精　遙遠的星球上、其他自然的具現
+	CASE 54
+		PRINTFORML 莉莉姆母蟲　操縱電波的特殊蟲妖怪
+	CASE 55
+		PRINTFORML 狐狗狸　こっくり　用法術変為人形特征是帯着尾巴的種族
+	CASE 56
+		PRINTFORML 聖獣　神之使者之獣
+	CASE 56
+		PRINTFORML 拉米亜　下半身是蛇的魔物
+	CASEELSE
+		PRINTFORML 測試娘　調試：番号{CFLAG:(ARG:0):107}
+ENDSELECT
+

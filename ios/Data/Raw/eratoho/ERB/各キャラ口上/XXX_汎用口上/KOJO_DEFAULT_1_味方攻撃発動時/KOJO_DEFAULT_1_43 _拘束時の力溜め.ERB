@@ -1,0 +1,134 @@
+﻿
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   43    コマンドID(力貯め)
+; / ARG:2    0    0:ふつう的　1:絶頂
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL ADD_RAND_MESSAGE, @"「为了逃脱，必须积攒力量……！」"
+	CALL ADD_RAND_MESSAGE, @"「积攒力量，一口气逃出去……！」"
+	CALL ADD_RAND_MESSAGE, @"「束缚力很强。必须先观察情况……」"
+	CALL ADD_RAND_MESSAGE, @"「还需要稍微准备一下……！」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+
+		CASE 性格_おせっかい
+
+			CALL ADD_RAND_MESSAGE, @"「现在不能有丝毫大意……」"
+			CALL ADD_RAND_MESSAGE, @"「并不是完全被动了。还有一些办法……」"
+			CALL ADD_RAND_MESSAGE, @"「冷静下来，需要观察对方的动作……」"
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「虽然很焦急，但好像只能这样了……！」"
+			CALL ADD_RAND_MESSAGE, @"「这种程度的束缚……啊啊啊！」"
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「现在不能有丝毫大意……」"
+			CALL ADD_RAND_MESSAGE, @"「并不是完全被动了。还有一些办法……」"
+			CALL ADD_RAND_MESSAGE, @"「冷静下来，需要观察对方的动作……」"
+		CASE 性格_がんばりや
+			CALL ADD_RAND_MESSAGE, @"「不要放弃，必须积攒力量……」"
+			CALL ADD_RAND_MESSAGE, @"「无论处于什么样的情况……！」"
+			CALL ADD_RAND_MESSAGE, @"「相信自己……相信自己！」"
+		CASE 性格_きれもの
+
+			CALL ADD_RAND_MESSAGE, @"「现在不能有丝毫大意……」"
+			CALL ADD_RAND_MESSAGE, @"「并不是完全被动了。还有一些办法……」"
+			CALL ADD_RAND_MESSAGE, @"「冷静下来，需要观察对方的动作……」"
+			CALL ADD_RAND_MESSAGE, @"「关于松弛的部分……」"
+
+		CASE 性格_くろうにん
+
+			CALL ADD_RAND_MESSAGE, @"「安静地不刺激对方……」"
+			CALL ADD_RAND_MESSAGE, @"「趁现在净化的力量……」"
+		CASE 性格_しあわせもの
+
+
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"「就算是我，也不是随便找个人就行的……」"
+			CALL ADD_RAND_MESSAGE, @"「今天是关于不行的日子……」"
+
+		CASE 性格_ぬけめがない
+
+			CALL ADD_RAND_MESSAGE, @"「现在不能有丝毫大意……」"
+			CALL ADD_RAND_MESSAGE, @"「并不是完全被动了。还有一些办法……」"
+			CALL ADD_RAND_MESSAGE, @"「对方放松警惕之前……安静地……」"
+			CALL ADD_RAND_MESSAGE, @"「逃脱的机会很重要……」"
+			CALL ADD_RAND_MESSAGE, @"「关于松弛的部分……」"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「让你见识一下……关于啊啊啊！」"
+			CALL ADD_RAND_MESSAGE, @"「这种程度的束缚……啊啊啊！」"
+			CALL ADD_RAND_MESSAGE, @"「无论处于什么样的情况……！」"
+		CASE 性格_のんきもの
+			CALL ADD_RAND_MESSAGE, @"「对方放松警惕之前……安静地……」"
+			CALL ADD_RAND_MESSAGE, @"「逃脱的机会很重要……」"
+			CALL ADD_RAND_MESSAGE, @"「这次又拖了好久……」"
+
+		CASE 性格_ひっこみじあん
+
+			CALL ADD_RAND_MESSAGE, @"「安静地不刺激对方……」"
+			CALL ADD_RAND_MESSAGE, @"「趁现在净化的力量……」"
+		CASE 性格_やさしいひと
+
+			CALL ADD_RAND_MESSAGE, @"「安静地不刺激对方……」"
+			CALL ADD_RAND_MESSAGE, @"「趁现在净化的力量……」"
+		CASE 性格_わがまま
+
+			CALL ADD_RAND_MESSAGE, @"「虽然很焦急，但好像只能这样了……！」"
+	ENDSELECT
+RETURN 1
+
+
+
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   43    コマンドID(力貯め)
+; / ARG:2    1    0:ふつう的　1:絶頂
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_43_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL ADD_RAND_MESSAGE, @"「力量……消失了……啊」"
+	CALL ADD_RAND_MESSAGE, @"「等、等一下，现在是……不行……」"
+	CALL ADD_RAND_MESSAGE, @"「关于……呜……这样……」"
+	CALL ADD_RAND_MESSAGE, @"「别、别停，现在是……不行……」"
+	CALL ADD_RAND_MESSAGE, @"「不、不会吧……噢……这个时候……」"
+	CALL ADD_RAND_MESSAGE, @"「感、感觉……混乱了……疼！？」"
+	CALL ADD_RAND_MESSAGE, @"「这、这样……啊……力量……疼」"
+	CALL ADD_RAND_MESSAGE, @"「什、什么……啊……别、别停……」"
+	CALL ADD_RAND_MESSAGE, @"「那、那样……现在是……别停……」"
+	CALL ADD_RAND_MESSAGE, @"「不、不行……这样……」"
+	CALL ADD_RAND_MESSAGE, @"「忍、忍住……这样……啊」"
+
+	CALL ADD_RAND_MESSAGE, @"「还、还差一点……别、别停……噫」"
+	CALL ADD_RAND_MESSAGE, @"「关于，关于安静下来……我的，身体啊」"
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+
+		CASE 性格_おせっかい
+
+			CALL ADD_RAND_MESSAGE, @"「不行……在这种情况下无法思考……」"
+		CASE 性格_おてんば
+
+		CASE 性格_がんこもの
+
+			CALL ADD_RAND_MESSAGE, @"「不行……在这种情况下无法思考……」"
+		CASE 性格_がんばりや
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「不行……在这种情况下无法思考……」"
+		CASE 性格_しあわせもの
+		CASE 性格_ぬけめがない
+			CALL ADD_RAND_MESSAGE, @"「不行……在这种情况下无法思考……」"
+		CASE 性格_ねっけつかん
+		CASE 性格_のんきもの
+		CASE 性格_ひっこみじあん
+
+		CASE 性格_やさしいひと
+
+		CASE 性格_わがまま
+
+	ENDSELECT
+RETURN 1
+
+

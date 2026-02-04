@@ -1,0 +1,866 @@
+﻿;戦闘関連
+
+@INM_BTL_P_ACT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;味方の行動発動
+
+RESULT = 0
+
+	SELECTCASE ARG:1
+	;基本コマンド
+;	CASE 1 TO 9
+;		CALL INM_BTL_P_ACT_ETC<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	;射撃
+	CASE 10 TO 15
+		;発情（ランダム）
+		IF RAND:3 == 0 && CFLAG:28
+			PRINTFORM 「んふふ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　さぁ撃っちゃいますぉ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　よぉく狙って…んんぅ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　やぁん
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 手元がぶれちゃう
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+		CALL BTL_SAVEATTACK_7_0()
+		
+		CALL INM_BTL_P_ACT_SHOT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	;弾丸
+	CASE 20 TO 25
+		CALL BTL_SAVEATTACK_7_0()
+		
+		CALL INM_BTL_P_ACT_BULLET_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		;発情（ランダム）
+		IF RAND:3 == 0 && CFLAG:28
+			PRINTFORM 「しっかり狙って…あぁん
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　照準が定まらない…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+		
+	;打撃
+	CASE 30 TO 34
+		;発情（ランダム）
+		IF RAND:3 == 0 && CFLAG:28
+			PRINTFORM 「んぅ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　どうです…これ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　こうして擦り擦りするだけでも…結構イイんですよ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+		CALL BTL_SAVEATTACK_7_0()
+		
+		CALL INM_BTL_P_ACT_WEAPON_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	;拘束時
+;	CASE 42 TO 53
+;		CALL INM_BTL_P_ACT_BIND<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	;おねだり
+;	CASE 54 TO 58
+;		CALL INM_BTL_P_ACT_ONEDARI<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	;催眠中
+	CASE 71 TO 86
+		CALL INM_BTL_P_ACT_HYPNO_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	ENDSELECT
+
+
+RETURN RESULT
+
+;	@INCLUDE INM_BTL_E_ATK_START<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_HIT<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_SWAY<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_END<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+@INM_BTL_ETC_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;その他
+
+	SELECTCASE ARG:0
+;		;拘束攻撃が当たったが、先客が居たので何とかなった
+;		CASE 58
+;			CALL INM_BTL_ETC_SWALLOW_FULL<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;		
+;		;戦闘中に捕食されている
+;		CASE 59
+;			CALL INM_BTL_ETC_PREY<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;		
+;		;先制攻撃・不意打ち発生
+;		CASE 60
+;			CALL INM_BTL_ETC_SURPRISE_ATTACK<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;		
+		;ARG:1 の種族と初遭遇
+		CASE 61
+			CALL INM_BTL_ETC_FIRST_ENCOUNT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+		;見捨てて逃げた
+;		CASE 62
+;			CALL INM_BTL_ETC_AWAY<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+		;見捨てられた
+;		CASE 63
+;			CALL INM_BTL_ETC_AWAYED<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+	ENDSELECT
+
+RETURN RESULT
+
+;	@INCLUDE INM_BTL_UMEKI<#>(ARG:0, ARGS:0)
+;	@INCLUDE INM_BTL_SAVEATTACK<#>()
+
+
+;味方の行動発動
+;-----------------------------------------------------------------------------------------------------------------------------------------
+;	@INCLUDE INM_BTL_P_ACT_ETC<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+@INM_BTL_P_ACT_SHOT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;味方の行動発動（弾幕攻撃）
+
+	;弾幕攻撃
+	SELECTCASE ARG:1
+	;弱・中弾幕
+	CASE 10,11
+		SELECTCASE RAND:5
+		CASE 0
+			PRINTFORM 「えいっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 1
+			PRINTFORM 「それっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 2
+			PRINTFORM 「くすくす…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　やられちゃって下さい
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 3
+			PRINTFORM 「当たって…お願い
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「やぁぁっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+		
+	;強弾幕
+	CASE 12
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORM 「これ…当たっちゃうと…うふふ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　大変ですよ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 1
+			PRINTFORM 「威力重視で…くすっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「少し強くしちゃいます…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+	
+	;溜め撃ち
+	CASE 13
+		;溜め
+		IF CFLAG:31 == 2
+			;発情
+			IF CFLAG:28
+				SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「魔力を集中させて…んんぅ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM …感覚も過敏になっちゃいます…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				CASE 1
+					PRINTFORM 「魔理沙さんを…んぅ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM …大人しくさせて…んっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM …開発……あぁん
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　吐息が…漏れちゃう
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				CASEELSE
+					PRINTFORM 「準備が要る技は…んんっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM …ちゃんと集中できるか…わかりません…が…ヤっちゃいます
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「私の淫魔の力…攻撃のために魔力集中させるコトも…できちゃうんですよ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				CASE 1
+					PRINTFORM 「魔理沙さんを大人しくさせて…うふふ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　色々しちゃうために開発した秘密の技…使っちゃいます」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 　色々しちゃうために開発した秘密の技…使っちゃいます」
+					ENDIF
+				CASEELSE
+					PRINTFORM 「少し…集中して…魔力を溜めますね
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　漏れない様に…我慢して…くすくすっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDSELECT
+			ENDIF
+		;発射
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORM 「ほら…魔弾がこんなに…大きく
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　是非とも味わって下さい
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASE 1
+				PRINTFORM 「あぁぁぁ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　凄いの…イキ…ますッッッッッ
+				CALL HEARTCB(0xD02830, 5)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「うふふ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　魔導書で囲んじゃいました♪　じゃあ一斉に…びゅびゅーーってしちゃいましょう
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		ENDIF
+	;ばら撒き弾
+	CASE 14
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORM 「くすくす…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　まず…動きを制限させて頂きますね
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 1
+			PRINTFORM 「あぁっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM こんなにいっぱい
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　下手に動くと…うん
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　これは困っちゃいますよね
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			CALL GET_PT_CHAR_NO_7_0(8, 1)
+			;パチュリーが健在（ランダム）
+			IF RESULT && RAND:2
+				PRINTFORM 「さぁパチュリー様
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　これでよろしいでしょうか？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　これでよろしいでしょうか？」
+				ENDIF
+			ELSE
+				PRINTFORM 「パチュリー様
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　大きい…のを、プレゼントしてあげて下さい
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		ENDSELECT
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:(TARGET)%は多数のクナイ型の弾幕を広範囲に撒き散らした
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:(TARGET)%は多数のクナイ型の弾幕を広範囲に撒き散らした
+			ENDIF
+	;貫通弾
+	CASE 15
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORM 「それでは…んん
+			CALL HEARTCB(0xD02830)
+			PRINTFORM …皆さん一緒に…天国にイっちゃって下さい
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			;パーティ
+			IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+				CALL GET_PT_CHAR_NO_7_0(8, 1)
+				;パチュリーが健在
+				IF RESULT
+					PRINTFORM 「パチュリー様、あんまり前に出てると…危ないですよ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「皆さん、少ぉし…下がっていて下さいね
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			ELSE
+				PRINTFORM 「さーて…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　まとめて…お相手しちゃいますよ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		ENDSELECT
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 掛け声と共に%CALLNAME:(TARGET)%は大きな光弾を次々と周囲に撃ち出した
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 掛け声と共に%CALLNAME:(TARGET)%は大きな光弾を次々と周囲に撃ち出した
+			ENDIF
+	ENDSELECT
+RETURN 1
+
+@INM_BTL_P_ACT_BULLET_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;味方の行動発動（消耗武器）
+
+	;消耗武器
+	SELECTCASE ARG:1
+	;弱・中攻撃
+	CASE 20,21
+		PRINTFORM 「ほぉら
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;強攻撃
+	CASE 22
+		PRINTFORM 「当たってぇ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　お願い
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;節約攻撃
+	CASE 23
+		PRINTFORM 「ちょっとだけ…ね
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;みだれうち
+	CASE 24
+		;パーティ
+		IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+			CALL GET_PT_CHAR_NO_7_0(8, 1)
+			;パチュリーが健在
+			IF RESULT
+				PRINTFORM 「パチュリー様ぁ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORMDL ハートマークを撒き散らして駆け寄る%CALLNAME:(TARGET)%からパチュリーは即座に距離を取った。
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 退避を確認すると%CALLNAME:(TARGET)%は周囲に弾幕を展開する！！
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 退避を確認すると%CALLNAME:(TARGET)%は周囲に弾幕を展開する！！
+				ENDIF
+			ELSE
+				PRINTFORM 「さぁ…私の出番ですね
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　皆さんは下がっていて下さい、ふふっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		;ぼっち
+		ELSE
+			PRINTFORM 「面倒ですし…一気にヤっちゃいましょう
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+	;一点集中
+	CASE 25
+		PRINTFORM 「くすくすくす…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　い～～っぱい、ご馳走しちゃいます
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDSELECT
+
+RETURN 1
+
+@INM_BTL_P_ACT_WEAPON_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;味方の行動発動（非消耗武器）
+
+	;非消耗武器
+	SELECTCASE ARG:1
+	;弱攻撃・中攻撃
+	CASE 30,31
+		PRINTFORM 「うふふ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちょっと…物足りないかもしれませんけど
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;強攻撃
+	CASE 32
+		PRINTFORM 「では…ふふっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　少しづつ…強くしてあげます
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;下段狙い
+	CASE 33
+		PRINTFORM 「えぇ、イニシアチブを渡すのは…あまり好きじゃないので
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;急所狙い
+	CASE 34
+		PRINTFORM 「ここ…責められると…くすくす
+		CALL HEARTCB(0xD02830)
+		PRINTFORM …弱いんですよね？　分かってますよ…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDSELECT
+RETURN 1
+
+;	@INCLUDE INM_BTL_P_ACT_BIND<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_P_ACT_ONEDARI<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+@INM_BTL_P_ACT_HYPNO_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;味方の行動発動（催眠時）
+
+	SELECTCASE ARG:1
+	;キス
+	CASE 83
+		;ベース威力は話術経験依存（地道に上げると最終的には結構強い）
+		TFLAG:57 = 50 + (EXP:2 / 400)
+		IF TFLAG:57 > 850
+			TFLAG:57 = 850
+		ENDIF
+		
+		TFLAG:58 = 100
+		
+	;手淫
+	CASE 84
+		;ベース威力は話術＆自慰経験依存（上げやすいけど頭打ちが早い＆リスキー）
+		TFLAG:57 = 50 + ((EXP:2+EXP:10) / 400)
+		IF TFLAG:57 > 300
+			TFLAG:57 = 300
+		ENDIF
+		TFLAG:58 = 130
+		
+	;フェラチオ
+	CASE 85
+		;ベース威力は話術＆精液経験依存（自然に上がって熟練で最強）
+		TFLAG:57 = 40 + ((EXP:2+EXP:14) / 900)
+		IF TFLAG:57 > 650
+			TFLAG:57 = 650
+		ENDIF
+		TFLAG:58 = 140
+		
+	;パイズリ
+	CASE 86
+		;ベース威力は話術＆Ｂ感覚＆精液経験経験依存（自然に上がる安定した強さ）
+		TFLAG:57 = 50 + ((EXP:2+EXP:7+EXP:14) / 1200)
+		IF TFLAG:57 > 450
+			TFLAG:57 = 450
+		ENDIF
+		TFLAG:58 = 150
+		
+	ENDSELECT
+
+
+;ここはこのまま通常口上へ
+RETURN
+
+
+;敵の攻撃が発動
+;-----------------------------------------------------------------------------------------------------------------------------------------
+;	@INCLUDE INM_BTL_E_ATK_START_EP<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;敵の攻撃が当たった
+;-----------------------------------------------------------------------------------------------------------------------------------------
+;	@INCLUDE INM_BTL_E_ATK_HIT_HP<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_HIT_CP<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_HIT_EP<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_HIT_BIND<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_HIT_PARASITE<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_HIT_ETC<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;敵の攻撃を回避した
+;-----------------------------------------------------------------------------------------------------------------------------------------
+;	@INCLUDE INM_BTL_E_ATK_SWAY_HP<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_SWAY_CP<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_SWAY_EP<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_SWAY_BIND<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_SWAY_PARASITE<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_E_ATK_SWAY_ETC<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;攻撃等を食らった結果
+;-----------------------------------------------------------------------------------------------------------------------------------------
+;	@INCLUDE INM_BTL_OCCUR_HP0<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_MP0<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_CP<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_ITEM<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_SWALLOW1<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_SWALLOW2<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_STAN<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_PARASITE<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_WAKEUP<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_FREE<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_ROOMSLIP<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_072<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_BIND<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_OCCUR_BINDMAX<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;戦闘終了
+;-----------------------------------------------------------------------------------------------------------------------------------------
+;	@INCLUDE INM_BTL_END_ESCAPE<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_END_LOSE<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_END_WIN<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;その他
+;-----------------------------------------------------------------------------------------------------------------------------------------
+;	@INCLUDE INM_BTL_ETC_SWALLOW_FULL<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_ETC_PREY<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_ETC_SURPRISE_ATTACK<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+@INM_BTL_ETC_FIRST_ENCOUNT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;ARG:1 の種族と初遭遇
+
+	;戦意喪失or寝てる時に会った
+	IF CFLAG:29 || TFLAG:14 == 3
+		RETURN
+	ENDIF
+
+	SELECTCASE ARG:1
+	;クイーン
+	CASE 1
+		IF FLAG:AUTOMODE
+			PRINTFORML 「この押し潰される様な雰囲気…覚醒した私とはいえ荷が重そうですよ…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「この押し潰される様な雰囲気…覚醒した私とはいえ荷が重そうですよ…」
+		ENDIF
+	;ガーディアン
+	CASE 3
+		CALL GET_PT_CHAR_NO_7_0(8, 1)
+		;パーティにパチュリーが健在
+		IF RESULT
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ、パチュリー様！　見て下さい、出口らしきものが！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ、パチュリー様！　見て下さい、出口らしきものが！」
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あの光は…出口？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あの光は…出口？」
+			ENDIF
+		ENDIF
+			PRINTFORM 「…でもどうやら、ここから出るにはあのゴツいのを…んふ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM …イかさないとイけない様ですね
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+	;バイオプラント
+	CASE 4
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あれは…この辺りの怪物を産み出しているんですね。」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あれは…この辺りの怪物を産み出しているんですね。」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「動けもせず産むだけの存在…快楽ではなく生殖が存在意義とは…間違いなく私の敵です！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「動けもせず産むだけの存在…快楽ではなく生殖が存在意義とは…間違いなく私の敵です！」
+		ENDIF
+	
+	;サキュバス
+	CASE 41
+		PRINTFORM 「私と勝負するつもりですか…いいですよ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「どちらの技が優れているか…ふふ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM …決着を付けましょうか
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	
+	;小悪魔
+	CASE 70
+		IF FLAG:AUTOMODE
+			PRINTFORML 「はぁ……これくらいの瘴気で理性を失うとは情けないですね……」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「はぁ……これくらいの瘴気で理性を失うとは情けないですね……」
+		ENDIF
+		PRINTFORM 「少し刺激を与えてあげれば…思い出すでしょう
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	
+	ENDSELECT
+
+RETURN 1
+
+;	@INCLUDE INM_BTL_ETC_AWAY<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;	@INCLUDE INM_BTL_ETC_AWAYED<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+

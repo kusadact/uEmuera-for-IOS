@@ -1,0 +1,1500 @@
+﻿;□　　　　　　　　　　　　　　　　　　　　　　　　　□
+;■　　　　　era東方触手宮･宮古芳香口上　　　　　　　■
+;■　　　　　　　　　　　　　　　12/7/14　ver.0.3　　■
+;■　　　　　　　　　　　　　　　　　　　　　　　　　■
+;■・使用フラグ　CFLAG:881 お札フラグ　　　　　　　　■
+;■　　　　　　　　　　　　　　　　　　　　　　　　　■
+;■　　　　　　　　　　　　　　つくったひと・コルッカ■
+;□　　　　　　　　　　　　　　　　　　　　　　　　　□
+@KOJO_TITLE_101_0
+RESULTS = 宮古芳香　歌人的キョンシー口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_101_0
+PRINTFORML 触手宮　宮古芳香の口上です。う、おおぉ。
+PRINTFORML 緊張感がねえので嫌な人はOFF推奨。
+PRINTFORML 柔軟体操に触手が付き合ってくれるよ！やったねよしかちゃん！
+PRINTFORML 関節が回らない腐女子は好きですか？
+
+
+;文字色　古代紫
+;(元ネタのイメージ的に)
+@KOJO_DEFAULT_COLOR_101_0
+RETURN 0x895b8a
+
+@KOJO_101_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;SETCOLOR CFLAG:700 でそのキャラの口上色を反映できる
+SETCOLOR CFLAG:700
+
+;地の文呼び出し
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;CALL KOJO_101_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;喪失時の処理。霊夢口上の方のを流用、改変。以下自分用メモ
+;33(MP0になった時)、42(敵から開放)、63(仲間に見捨てられた)111(遭遇時逆襲アイテム)、122(喪失時絶頂)、127(寄生出産)、129(妊娠出産)以外は無言で返す
+IF CFLAG:29 && ARG:0 != 33 && ARG:0 != 42 && ARG:0 != 63 && ARG:0 != 111 && ARG:0 != 122 && ARG:0 != 127 && ARG:0 != 129
+	RESETCOLOR
+	RETURN 1
+
+;ELSEIF BASE:CP == 0 && CFLAG:881 == 1
+;TRYCALL KOJO_101_0_TOSHIMONZYU
+
+ELSE
+SELECTCASE ARG:0
+	CASE 1
+		SELECTCASE ARG:1
+			CASE 1
+			;防御
+				IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「うおー。守るぞー」
+						CASE 1
+							PRINTFORML 「私より後ろには行かせない！……あれ？」
+						CASE 2
+							PRINTFORML 「それだけはいかんのじゃ…」
+						CASE 3
+							PRINTFORML 「腐肉のカーテンだぞ！」
+							PRINTFORMDL とても柔らかそうだ
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「効かぬ！　避けぬ！　痛覚など感じぬ！」
+						CASE 1
+							PRINTFORML 「目的の為、守るぞー」
+						CASE 2
+							PRINTFORML 「ゾンビはタフなんだぞぅ！」
+						CASE 3
+							PRINTFORML 「痒いけど痛くは無い！」
+					ENDSELECT
+				ENDIF
+			CASE 2
+			;アイテム使用
+			;(多分敵と思って攻撃アイテムを使ったつもりなんです)
+				SELECTCASE RAND:6
+					CASE 0
+						PRINTFORML 「これでどうだ～！！　え、これ回復アイテム？」
+					CASE 1
+						PRINTFORML 「さあ苦しめー！　あれ？　なんで元気になるんだ？」
+					CASE 2
+						PRINTFORML 「死ぬのだけはいかんのじゃ」
+					CASE 3
+						PRINTFORML 「皆を助けるために作られたアイテムである！」
+					CASE 4
+						PRINTFORML 「ほいよ」
+					CASE 5
+						PRINTFORML 「は～い」
+				ENDSELECT
+			CASE 3
+			;前に出る
+				IF FLAG:10 != 0 || FLAG:15 != 0
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「ちーかよーるぞー！」
+						CASE 1
+							PRINTFORML 「これだけ近いと食えそうだー……」
+							PRINTFORML 「駄目なの？」
+						CASE 2
+							PRINTFORML 「うおー。ぶつかるーー！！」
+							PRINTFORML 「ん？　止まっていいのか？」
+						CASE 3
+							PRINTFORML 「腐ってもタイタンだー！！　え、違う？」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「ううう…お、おおぉ…………！」
+						CASE 1
+							PRINTFORML 「はーい、私が出まーす」
+						CASE 2
+							PRINTFORML 「脱出するなら進まないといけない……？」
+						CASE 3
+							PRINTFORML 「ん…？　うおぉ！！　お前は何だぁー！　あれ？　私は誰だぁ！？」
+					ENDSELECT
+				ENDIF
+			CASE 4
+			;後退
+				IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+					PRINTFORML 「戻って来たよー」
+				ELSE
+					PRINTFORML 「う、おぉ……後ろが空いている…」
+				ENDIF
+			CASE 5
+			;逃走
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「ん？　何で私は走っているのだ？」
+					CASE 1
+						PRINTFORML 「全力疾走だぞー！」
+						PRINTFORMDL 凄く遅い
+					CASE 2
+						PRINTFORML 「こいつらはまともに相手できない……何故だ？」
+					CASE 3
+						PRINTFORML 「うおぉー！！　にぃげろぉーーー！！！」
+					CASE 4
+						PRINTFORML 「崇高なる目的のためなら逃走も辞さないぞ！」
+				ENDSELECT
+			CASE 6
+				IF CFLAG:50 == 54
+					;◆Aおねだり
+					IF CFLAG:28
+						PRINTFORM 
+					ELSE
+						SELECTCASE RAND:8
+							CASE 0
+								PRINTFORML 「ここならいいよー？」
+							CASE 1
+								PRINTFORML 「な、何が始まるんだ？」
+								PRINTFORMDL 芳香は敵に尻を向けているが、振り向いて状況を確認できない！
+							CASE 2
+								PRINTFORML 「こ、ここだぞぅ……あ、腕折れた」
+								PRINTFORMDL 後ろ手に回そうとしたらしい
+							CASE 3
+								PRINTFORML 「多分ここは生者よりも綺麗だぞー」
+							CASEELSE
+								PRINTFORML 「はっ?!　声が聞こえるぞ！」
+								CALL PRINTCOLORW(0xa2d7dd, "尻穴を囮になさい…")
+						ENDSELECT
+					ENDIF
+				ELSEIF CFLAG:50 == 55
+					;◆Bおねだり
+					IF CFLAG:28
+						PRINTFORM 
+					ELSE
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「じ…自慢の胸なんだぞぅ」
+							CASE 1
+								PRINTFORML 「体は固いけどここは柔らかいよー？」
+							CASE 2
+								PRINTFORML 「腐ってるけど垂れてないぞ」
+							CASE 3
+								PRINTFORML 「どうだー？　ここは」
+							CASE 4
+								PRINTFORML 「はっ?!　声が聞こえるぞ！」
+								CALL PRINTCOLORW(0xa2d7dd, "胸を囮になさい…")
+						ENDSELECT
+					ENDIF
+				ELSEIF CFLAG:50 == 56
+					;◆Cおねだり
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「ここがいいのー？」
+							CASE 1
+								PRINTFORML 「どう？　変じゃないかー？」
+							CASE 2
+								PRINTFORML 「こんな所弄るの？」
+							CASE 3
+								PRINTFORML 「クリを弄られると動きにくいんだけどな……」
+							CASE 4
+								PRINTFORML 「はっ?!　声が聞こえるぞ！」
+								CALL PRINTCOLORW(0xa2d7dd, "淫核を囮になさい…")
+						ENDSELECT
+				ELSEIF CFLAG:50 == 57
+					;◆Vおねだり
+					IF CFLAG:28
+						PRINTFORM 
+					ELSE
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「おいしいよー」
+							CASE 1
+								PRINTFORML 「好きにしていいのだぞー？」
+							CASE 2
+								PRINTFORML 「黒いわけがないだろー！」
+							CASE 3
+								PRINTFORML 「ほらー、綺麗だろー？」
+							CASE 4
+								PRINTFORML 「はっ?!　声が聞こえるぞ！」
+								CALL PRINTCOLORW(0xa2d7dd, "秘所を囮になさい…")
+						ENDSELECT
+					ENDIF
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「はっ?!　声が聞こえるぞ！」
+							CALL PRINTCOLORW(0xa2d7dd, "自らを囮になさい…")
+						CASE 1
+							PRINTFORML 「やるなら私をやれえぇー！」
+						CASE 2
+							PRINTFORML 「こっちだぞー」
+					ENDSELECT
+				ENDIF
+			;弾幕
+			CASE 10
+			;弱弾幕
+				SELECTCASE RAND:6
+					CASE 0
+						PRINTFORML 「う、おぉ」
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「どうだぁ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「どうだぁ！」
+						ENDIF
+					CASE 2
+						PRINTFORML 「くらえー」
+					CASE 3
+						PRINTFORML 「命続く限り撃ーつ！」
+					CASE 4
+						PRINTFORML 「どくんだぞぅ」
+					CASE 5
+						PRINTFORML 「ほいよ」
+				ENDSELECT
+			;中弾幕
+			CASE 11
+				;発情
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「うおお！」
+					CASE 1
+						PRINTFORML 「どおぅだぁ！！」
+					CASE 2
+						PRINTFORML 「くぅらえーー！」
+					CASE 3
+						PRINTFORML 「お前もキョンシーにしてやるぞー！！」
+					CASEELSE
+						PRINTFORML 「どけぇー！」
+				ENDSELECT
+			;強弾幕
+			CASE 12
+				;発情
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「うぅ、おおぉーー！！」
+					CASE 1
+						PRINTFORML 「これでもかぁ、うおぉ！」
+					CASE 2
+					;初めから腐っている！　そういうのもあるのか！
+						PRINTFORML 「うおォン！！　私はまるで死体火力発電所なんだぞう！！」
+					CASE 3
+						PRINTFORML 「弾幕美？　それっておいしいー？」
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「私は帰らなければならぬのだぁーー！！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「私は帰らなければならぬのだぁーー！！！」
+						ENDIF
+				ENDSELECT
+			;溜め撃ち
+			CASE 13
+				;溜め
+				IF CFLAG:31 == 2
+					IF MAXBASE:MP/4 >= BASE:MP
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ヒールバイデザイアー」
+							CASE 1
+								PRINTFORML 「……もぐもぐもぐ、意外といけるぞー？」
+						ENDSELECT
+						PRINTFORMDL 近くの触手を食べて力を溜めているようだ
+					ENDIF
+				;発射
+				ELSE
+					IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP
+						PRINTFORML 「」
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「死なない弾幕の恐怖を味わえーー！」
+							CASE 1
+								PRINTFORML 「ゾンビは永遠に不滅です！」
+							CASE 2
+								PRINTFORML 「お腹いっぱいで弾幕も捗るぞぅー！」
+						ENDSELECT
+					ENDIF
+				ENDIF
+			;ばら撒き弾
+			CASE 14
+				IF CFLAG:28
+				ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「たくさん撃てばいいのか？　得意だぞー！」
+					CASE 1
+						PRINTFORML 「どんどん仲間を増やすのだぁ！！」
+					CASE 2
+						PRINTFORML 「お前達が近づいて良いはずがない！」
+				ENDSELECT
+				ENDIF
+			;貫通弾
+			;(芳香が貫通弾なんて使えるのか？　愛だよ！)
+			CASE 15					
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「キョンシーに好き嫌いはない！　全部食べてやるー！」
+					CASE 1
+						PRINTFORML 「キョンシーが学習しないと言ったなぁ？！　あれは嘘だぁー！」
+					CASE 2
+						PRINTFORML 「食べ放題だぞぅー！！」
+				ENDSELECT
+			CASE 20, 21, 22
+			;飛び道具弱中攻撃
+				IF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORML 
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「かゆ…うまー」
+						CASE 1
+							PRINTFORML 「撃つのだぁ！　あぁ！　関節が曲がらないぞ！」
+						CASE 2
+							PRINTFORML 「撃つ！　ようにして殴るんです！！」
+					ENDSELECT
+				ENDIF
+;			CASE 23
+			;節約攻撃
+			CASE 24
+			;みだれ撃ち
+				PRINTFORML 「袖の中から色々出てくるよー、しまった！　袖がないぞ！」
+;			CASE 25
+			;一点集中
+				IF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORML 
+				ELSEIF CFLAG:28
+					PRINTFORML 
+				ELSE
+					PRINTFORML 
+				ENDIF
+			CASE 30,31,32
+			;武器弱中強攻撃
+				IF CFLAG:28
+					PRINTFORML 
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「殴ったほうが早いぞ」
+						CASE 1
+							PRINTFORML 「武器を扱う！　ようにして殴る！！」
+						CASE 2
+							PRINTFORML 「暗器……？　使えないぞ？」
+						CASE 3
+							PRINTFORML 「てんらいはぁーー！！」
+					ENDSELECT
+				ENDIF
+			CASE 33
+			;下段狙い
+			CASE 34
+			;急所狙い
+				PRINTFORML 「ここが一番うまそうだー……」
+			CASE 42
+			;拘束離脱
+				IF ARG:3 == 0
+					IF CFLAG:35 != 0
+					;絶頂中
+						IF CFLAG:28
+							PRINTFORML 
+						ELSE
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 「か、体が上手く動かな…い…?!」
+								CASE 1
+									PRINTFORML 「うぅーー……あ、あぁーー…」
+									PRINTFORMDL 芳香は硬直させた体を跳ねさせている…
+							ENDSELECT
+						ENDIF
+					ELSE
+						IF CFLAG:21 != 0
+						;丸呑み
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML (せっかくケアしたお肌が台無しだぞ……)
+								CASE 1
+									PRINTFORML (きぃーさまぁー！)
+								CASE 2
+									PRINTFORML (とぉけるぅーーー！！　あれ、無事だ)
+							ENDSELECT
+						ELSE
+							IF CFLAG:28
+								PRINTFORM 
+							ELSE
+								SELECTCASE RAND:3
+									CASE 0
+										PRINTFORML 「はなせー、はなせー」
+									CASE 1
+										PRINTFORMDL 芳香は硬い体をじたばたさせている
+									CASE 2
+										PRINTFORML 「うお、ぉ！　危うく手が取れる所だぞ」
+								ENDSELECT
+							ENDIF
+						ENDIF
+					ENDIF
+				ENDIF
+			CASE 43
+			;力溜め
+			IF ARG:2 == 0
+				IF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORM
+				ELSE
+					PRINTFORML 「むぐ……意外と食えるぞぅ、これ」
+				ENDIF
+			ENDIF
+			CASE 44
+			;諦める
+				IF ARG:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 芳香は抵抗をやめた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 芳香は抵抗をやめた
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL それが果たして触手の責めに屈したからか、単に術式の限界なのかは分からない
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW それが果たして触手の責めに屈したからか、単に術式の限界なのかは分からない
+					ENDIF
+				ENDIF
+			CASE 45
+				;何もしない
+				IF CFLAG:20 != 0
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 芳香はビジー状態のMeのように静止している
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 芳香はビジー状態のMeのように静止している
+					ENDIF
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「…………………………………？」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 芳香は事態を飲み込めていないようだ
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 芳香は事態を飲み込めていないようだ
+							ENDIF
+					ENDSELECT
+				ENDIF
+			CASE 46
+				;強制自慰
+				IF CFLAG:21 != 0
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「……操られてるよー」
+						CASE 1
+							PRINTFORML 「う……あぁ」
+						CASE 2
+							PRINTFORML 「体が勝手にいぃーー」
+					ENDSELECT
+				ENDIF
+			CASE 50
+				;A防御
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「あまり直しにくいところを弄らないで欲しいぞぅ」
+					CASE 1
+						PRINTFORML 「はっ?!　声が聞こえる！」
+						CALL PRINTCOLORW(0xa2d7dd, "尻を守りなさい…")
+				ENDSELECT
+			CASE 51
+				;B防御
+					PRINTFORML 「はっ?!　声が聞こえる！」
+					CALL PRINTCOLORW(0xa2d7dd, "胸を守りなさい…")
+			CASE 52
+				;C防御
+					PRINTFORML 「はっ?!　声が聞こえる！」
+					CALL PRINTCOLORW(0xa2d7dd, "クリトリスを守りなさい…")
+			CASE 53
+				;V防御
+				IF TALENT:TARGET:0
+					;処女
+					PRINTFORML 「ッ！　…………？」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 本能で守っているのか、芳香は行動の意味を理解していないようだ…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 本能で守っているのか、芳香は行動の意味を理解していないようだ…
+					ENDIF
+				ELSE
+					PRINTFORML 「はっ?!　声が聞こえる！」
+					CALL PRINTCOLORW(0xa2d7dd, "秘所を守りなさい…")
+				ENDIF
+		ENDSELECT
+	CASE 11
+		;味方の攻撃（命中）
+		;ARG:1にコマンドID　ARG:2にダメージ
+	CASE 12
+		;敵の通常攻撃（命中）
+		;ARG:1にコマンドID　ARG:2にHPダメージ　ARG:3にCPダメージ
+		IF CFLAG:28
+			PRINTFORML 
+		ELSEIF BASE:0 <= ((MAXBASE:0) / 4)
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「壊すなぁー！」
+				CASE 1
+					PRINTFORML 「やーらーれーたぁー！」
+				CASE 2
+					PRINTFORML 「ぐうああぁぁーー」
+			ENDSELECT
+		ELSEIF BASE:TARGET:0 <= (((MAXBASE:TARGET:0)/3)*2)
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「生ある限りゾンビは不滅です！」
+				CASE 1
+					PRINTFORML 「な、泣いてないぞぅ！」
+				CASE 2
+					PRINTFORML 「後で直さなきゃだぁー……」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「何かしたか？」
+				CASE 1
+					PRINTFORML 「損傷はひどくないぞ」
+				CASE 2
+					PRINTFORML 「平気だー」
+			ENDSELECT
+		ENDIF
+	CASE 13
+		;敵の衣服攻撃（命中）
+		;ARG:1にコマンドID ARG:2に部位　ARG:3にCPダメージ　ARG:4にEPダメージ
+		IF BASE:TARGET:3 <= 0
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「死体の皮剥なんてお勧めしなーい！！」
+				CASE 1
+					PRINTFORML 「い、一応肌には気を遣ってるのにー」
+			ENDSELECT				
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「どこを狙っているー！」
+				CASE 1
+					PRINTFORML 「掠りもしないぞぅ！　え、掠った？」
+			ENDSELECT
+		ENDIF
+	CASE 14
+		;敵の性攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に部位(0:A　1:B　2:C　3:V)　ARG:3にEPダメージ
+		;(まずは汎用を埋める。あとは地の文に応じてちょくちょく変更できりゃいいかな)
+		SELECTCASE ARG:1
+			CASEELSE
+				SELECTCASE ARG:2
+					CASE 0
+					;A
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「そんな所触るなぁー！」
+							CASE 1
+								PRINTFORML 「お前変態だなー！」							
+							CASE 2
+								PRINTFORML 「やぁめろぅー」
+							CASE 3
+								PRINTFORML 「なぜこっちなんだー？」
+							CASE 4
+								PRINTFORML 「変態！　へんたぁ--い！！」
+						ENDSELECT
+					CASE 1
+						;B
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「くすぐったいぞー」
+							CASE 1
+								PRINTFORML 「なんだー？」
+							CASE 2
+								PRINTFORML 「母性にでも飢えているのかー？」
+							CASE 3
+								PRINTFORML 「よく分からないぞー」
+							CASE 4
+								PRINTFORML 「弄っても何もないぞー」
+						ENDSELECT
+					CASE 2
+						;C
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「面白いかー？　それ」
+							CASE 1
+								PRINTFORML 「何がしたいんだー？」
+							CASE 2
+								PRINTFORML 「おまえ器用だなー」
+							CASE 3
+								PRINTFORML 「いーじーるーなー」
+							CASE 4
+								PRINTFORML 「やめてくれー」
+						ENDSELECT
+					CASE 3
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「なんだお前ー！」
+							CASE 1
+								PRINTFORML 「よく分からないがここは駄目だぞぅー！」
+							CASE 2
+								PRINTFORML 「やーめろぉーー！！」
+							CASE 3
+								PRINTFORML 「ばかぁーー！！」
+							CASE 4
+								PRINTFORML 「うわー！　うわーーー！！」
+						ENDSELECT
+				ENDSELECT
+	ENDSELECT
+	CASE 15
+		;敵の拘束攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に丸呑みフラグ
+		IF ARG:2 != 0
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「ぎゃあーー！！　くぅわれるぅーー！！！」
+				CASE 1
+					PRINTFORML 「私は美味しくないよーー！」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「つかまったぞぅー！！」
+				CASE 1
+					PRINTFORML 「乱暴にすると取れちゃうよー」
+				CASE 2
+					PRINTFORML 「動けーーん！！」
+			ENDSELECT
+		ENDIF
+	CASE 16
+		;敵の寄生攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に妊娠フラグ　ARG:3にMPダメージ
+		IF ARG:2 != 0
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「……なんかドクドクしてるぞぅ」
+				CASE 1
+					PRINTFORML 「入ってこないで欲しいぞー」
+				CASE 2
+					PRINTFORML 「やぁめろぉぅーー！！」
+			ENDSELECT
+		ENDIF
+	CASE 17
+		;敵のその他攻撃（命中）
+		;ARG:1にコマンドID
+		;(個別性攻撃を書く気力も語彙力も無いのでせめてここだけでも)
+			SELECTCASE ARG:1
+				CASE 10, 11
+					PRINTFORML 「何も見えないぞーー」
+				CASE 12, 14
+					PRINTFORML 「十時には起こしてねー…………すかー……
+				CASE 13, 15
+					PRINTFORML 「何がしたいんだー？」
+				CASE 16
+					PRINTFORML 「か、勝手に体が動くんだぞー……
+				CASE 17
+					PRINTFORML 「……あぅーー」
+				CASE 18, 19
+					PRINTFORML 「なんなんだお前はぁーー！！」
+				CASE 20
+					PRINTFORML 「う、おお！　何が起こっているんだぁー！！」
+				CASE 21
+					PRINTFORML 「くすぐったいぞ……」
+			ENDSELECT
+	CASE 21
+		;味方の攻撃（回避）
+		;ARG:1にコマンドID
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML 「なぁんだとぅーーーー！！！」
+			CASE 1
+				PRINTFORML 「何で当たらないんだー」
+			CASE 2
+				PRINTFORML 「届けぇー！」
+			CASE 3
+				PRINTFORML 「逃げたら食えないぞぅ……」
+		ENDSELECT
+	CASE 22, 23, 24, 25, 26, 27
+		SELECTCASE RAND:6
+			CASE 0
+				PRINTFORML 「あぁたるかぁーーー！！」
+			CASE 1
+				PRINTFORML 「させぬぁーーい！！」
+			CASE 2
+				PRINTFORML 「嫌だー」
+			CASE 3
+				PRINTFORML 「効かないぞぅ」
+			CASE 4
+				PRINTFORML 「無ぅ駄だあぁーー！！」
+		ENDSELECT
+;	CASE 31
+		;敵を撃破
+		;ARG:1に敵ID
+;	CASE 32
+		;HPが0になった
+	CASE 33
+		;MPが0になった
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「え……？　…………ぁ……」
+			CASE 1
+				PRINTFORML 「………………？」
+		ENDSELECT
+;	CASE 34
+		;EPが0になった
+		;ARG:1に絶頂部位　ARG:2で細かい状況を分岐させる予定　※絶頂の瞬間とはまた別 絶頂メッセージは120
+;	CASE 35
+		;CPが減少した
+		;ARG:1に破れ強度　（ARG:1が　0：全裸になった　1：半裸になった　2：破れ始めた）
+	CASE 36
+		;戦闘中にアイテムを使って貰った
+		;ARG:1にアイテムID　ARG:2にアイテム使用キャラID
+		IF ARG:2 == 102
+			PRINTFORML 「いつもありがとうなんだぞご主人ー」
+		ELSEIF ARG:2 == 101
+		ELSE
+			PRINTFORML 「お前が直してくれるのか？」
+		ENDIF
+;	CASE 37
+		;敵IDに丸呑みされていて届かない（呑まれている側口上）
+		;ARG:1に敵ID
+;		PRINTFORML
+;	CASE 38
+		;敵IDに丸呑みされていて届かない（行動した側口上）
+		;ARG:1に敵ID
+;		PRINTFORML
+	CASE 39
+		;通常攻撃を受けてひるんだ
+		PRINTFORML 「動け！　動けぇ、私の身体ぁー！」
+	CASE 40
+		;寄生された
+		;ARG:1に敵ID
+		PRINTFORML 「お……？　何かされたのか？」
+	CASE 41
+		;攻撃されて起きた
+		;ARG:1に敵ID　ARG:2に攻撃の種類　ARG:3に部位
+		PRINTFORML 「ぬぁんだとぅーーー！」
+	CASE 42
+		;敵から解放された
+		;ARG:1に敵ID
+		IF CFLAG:29
+		ELSE
+			PRINTFORML 「死体は丁重に扱わなきゃ壊れるんだぞぅ！」
+		ENDIF
+	CASE 43
+		;時間経過で起きた
+		PRINTFORML 「我の眠りを妨げるのは誰じゃ……」
+;	CASE 44, 45
+		;煙幕・砂煙が治った
+;	CASE 46
+		;裸で時間経過
+		;ARG:1に羞恥フラグ（ARG:1が　0：恥薄い　1：通常　2：恥じらい）　ARG:2にMPダメージ
+	CASE 47
+		;重度汚染部屋で時間経過
+		;ARG:1に部位　ARG:2にEPダメージ
+		SELECTCASE RAND:10
+			CASE 0
+				PRINTFORML 「蠢いてるぞー」
+			CASEELSE
+		ENDSELECT
+	CASE 48
+		;ターン終了時自慰発生
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「からだが勝手に動く……」
+				CASE 1
+					PRINTFORML 「私は一体何をしているんだー！」
+				CASE 2
+					PRINTFORML 「？」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 自らの行動をよく理解していないようだ…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 自らの行動をよく理解していないようだ…
+					ENDIF
+			ENDSELECT
+	CASE 49
+		;眠り継続
+		SELECTCASE RAND:10
+			CASE 0
+				PRINTFORML 「…………にゅう…」
+			CASE 1
+				PRINTFORML 「もっと食えるぞぅ……」
+			CASE 2
+				PRINTFORML 「ぐー……」
+			CASE 3
+				PRINTFORML 「寝てるぞー……」
+		ENDSELECT
+	CASE 50
+		;カウンター中
+		PRINTFORML 「来てもいいぞー、……来ないの？」
+	CASE 51
+		;カウンター発動
+		PRINTFORML 「いっただきまーす！」
+	CASE 52
+		;拘束レベルアップ
+		;ARG:1に拘束レベル　ARG:2に丸呑みフラグ
+		IF ARG:2 == 1
+			PRINTFORML 「…………」
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「やぁーめろぉーー！！」
+				CASE 1
+					PRINTFORML 「取れるー」
+			ENDSELECT
+		ENDIF
+;	CASE 53
+	CASE 54
+		;戦闘開始時
+		;ARG:1にイベントID（ARG:1が　0：通常戦闘　1～：ボスなどの特殊戦闘 詳細はTBD）
+		IF TARGET == 1
+			IF ARG:1 == 0
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「邪魔するなー」
+					CASE 1
+						PRINTFORML 「ちーかよーるなーー！！」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 55
+		;戦闘から普通に逃げた
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「にーげーたーぞーー！」
+			CASE 1
+				PRINTFORML 「あいつら遅いなー」
+			CASE 2
+				PRINTFORML 「急に走ったから足が折れかけたぞぅ」
+		ENDSELECT
+	CASE 56
+		;戦闘で敗北　※ゲームオーバーは157
+		;ARG:1にイベントID
+		PRINTFORML 
+	;戦闘勝利
+	CASE 57
+		IF MAXBASE:MP / 4 >= BASE:MP
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「お腹、減ったー……」
+				CASE 1
+					PRINTFORML 「ちょっと動きが悪かった、反省だぞー」
+			ENDSELECT
+		;睡眠
+		ELSEIF TFLAG:14 == 3
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……ぐー、すかぴー」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……ぐー、すかぴー」
+			ENDIF
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「さあお前も仲間になれー！」
+				CASE 1
+					PRINTFORML 「むしゃむしゃ、うーまーいぞー」
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「もう動かないー？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「もう動かないー？」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	CASE 58
+		;拘束攻撃が当たったが、先客が居たので何とかなった
+		PRINTFORML 「ん？」
+	CASE 59
+		;戦闘中に捕食されている
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「はぁぬあせぇーーー！！！」
+			CASE 1
+				PRINTFORML 「出ーられなーいーー」
+		ENDSELECT 
+	CASE 60
+		;先制攻撃・不意打ち発生　ARG:2に先制状況
+		;ARG:1にイベントID
+		IF TARGET == 1
+			IF ARG:2 == 1
+				SELECTCASE RAND:4
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「これ攻撃していいのー？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「これ攻撃していいのー？」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「いーーくぞぉーーーーー！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「いーーくぞぉーーーーー！！」
+						ENDIF
+					CASE 2
+						IF FLAG:AUTOMODE
+							PRINTFORML (私たちに気づいてないようだなー)
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW (私たちに気づいてないようだなー)
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「攻撃するなら今の内だぞー！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「攻撃するなら今の内だぞー！！」
+						ENDIF
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「ぎゃああぁーー！！」
+					CASE 1
+						PRINTFORML 「それだけはまずいのじゃ」
+					CASE 2
+						PRINTFORML 「う、おおぉ……」
+				ENDSELECT
+			ENDIF
+		ENDIF
+;	CASE 61
+	;敵初遭遇時
+	CASE 62
+	;仲間を見捨てて逃げた　ARG:2に見捨てたキャラ１　ARG:3に見捨てたキャラ２
+		IF TARGET == 1
+			PRINTFORML 「うおぉ！　こんな事をしている場合じゃなかったーー！！」
+			PRINTFORML 突然何かを思い出したのか芳香はどこかへ行ってしまった…
+		ELSE
+		ENDIF
+	CASE 63
+	;仲間に見捨てられた(仲間に逃げられた)　ARG:2に見捨てられたキャラ１　ARG:3に見捨てられたキャラ２
+		IF TFLAG:16 == 2 || CFLAG:29
+		;戦意喪失もしくは諦め
+			PRINTFORML %CALLNAME:1%%TACHI()%は瞼一つ動かさないで触手の玩具と化している芳香を後目にその場を去った…
+		ELSEIF CFLAG:21 != 0
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「どっか行くのか？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「どっか行くのか？」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「またなー」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「またなー」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 芳香は無邪気に手を振っている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 芳香は無邪気に手を振っている…
+			ENDIF
+		ENDIF
+	;誰かに会う
+	CASE 101
+		;迷宮内で誰かに会った
+		IF CFLAG:(ARG:1):29
+		;喪失状態
+			PRINTFORML 「こいつキョンシーにしていいのかー？」
+				SIF FLAG:10 != 0 && (FLAG:10 != 102 && FLAG:11 != 102)
+					PRINTFORML 「……駄目かー」
+				SIF FLAG:10 == 102 || FLAG:11 == 102
+					PRINTFORML 「いいのかご主人?!　ガブといっとくぞー」
+		ELSEIF NO:(ARG:1) == 102
+		;にゃんにゃんに会った
+			IF CFLAG:(ARG:1):22 || CFLAG:(ARG:1):36 >= 3
+				PRINTFORML 「ご主人太ったかー？」
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「あれ？　ご主人もいたのかー」
+					CASE 1
+						PRINTFORML 「ちゃんと調べてるよー」
+				ENDSELECT
+			ENDIF
+		;睡眠
+		ELSEIF TFLAG:14 == 3 && TARGET != 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ぐー」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ぐー」
+			ENDIF
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「お前は……誰だ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「お前は……誰だ？」
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「敵じゃない？　そっかー」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「敵じゃない？　そっかー」
+					ENDIF
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「食べ物じゃない？　しゅーん…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「食べ物じゃない？　しゅーん…」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	CASE 102
+		;遭遇時会話：別れた
+		;ARG:1に遭遇キャラ
+		IF NO:(ARG:1) == 102
+			PRINTFORML 「はーい、了かーい」
+		ELSE
+			PRINTFORML 「またなー」
+		ENDIF
+	;遭遇時会話：雑談
+	CASE 103
+	;ARG:1に遭遇キャラ　ARG:2にMP回復量
+		;主人公
+		IF CFLAG:36 >= 3
+			PRINTFORML 「んあ？　どうして目を合わせてくれないんだー？」
+		ELSEIF TARGET == 1
+			SELECTCASE ARG:1
+				CASEELSE
+					PRINTFORML 「話は聞いてるぞー。理解はしてないけど」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:5
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私は崇高な目的によって迷宮に送り込まれたキョンシーである！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私は崇高な目的によって迷宮に送り込まれたキョンシーである！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「目的？　……食えるのかそれ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「目的？　……食えるのかそれ？」
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おまえ……誰なんだー？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おまえ……誰なんだー？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほうほう、ふむふむ…………。で、おまえは誰だ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほうほう、ふむふむ…………。で、おまえは誰だ？」
+					ENDIF
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「腐っていても気持ち悪いのは嫌だぁー……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「腐っていても気持ち悪いのは嫌だぁー……」
+					ENDIF
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私の名前は……えー、と私の名前はなんだっけ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私の名前は……えー、と私の名前はなんだっけ？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「は?!　ここはどこなんだーー?!?　暗くて薄気味悪いぞー！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「は?!　ここはどこなんだーー?!?　暗くて薄気味悪いぞー！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 芳香は一人で楽しそうだ…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 芳香は一人で楽しそうだ…
+					ENDIF
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うん？　あー……。うん？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うん？　あー……。うん？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL キョンシーと意志疎通しようとするのが間違いだったのかもしれない
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW キョンシーと意志疎通しようとするのが間違いだったのかもしれない
+					ENDIF
+			ENDSELECT
+		ENDIF
+	;情報
+	CASE 104
+		IF NO:(FLAG:10) != 103 && NO:(FLAG:11) != 103
+			SELECTCASE RAND:3
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「気配はいっぱいだぞー」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「気配はいっぱいだぞー」
+					ENDIF
+				CASE 1
+					PRINTFORML 「ここらで縄張りを荒らす奴がいたぞ」
+				CASE 2
+					PRINTFORML 「なるほどー。なるほどー」
+					PRINTFORMDL 芳香はコクコク頷きながら聞き流している
+			ENDSELECT
+		ENDIF
+	CASE 105
+		;遭遇時会話：アイテム強請り成功
+		;ARG:1に遭遇キャラ　ARG:2にアイテムID
+		IF FLAG:10 != 103 && FLAG:11 != 103
+			IF ARG:3 == 1
+				PRINTFORML 「肉よりこっちのがよさそうかー？」
+			ELSE
+				PRINTFORML 「うーまーいーぞー」
+			ENDIF
+		ENDIF
+	CASE 106
+		;遭遇時会話：アイテム強請り失敗
+		;ARG:1に遭遇キャラ	
+		IF FLAG:10 != 103 && FLAG:11 != 103
+			IF ARG:2 == 1
+				PRINTFORML 「それじゃあ代わりに、いただきまーす」
+			ELSE
+				PRINTFORML 「そうかー、じゃあ適当になんか食うぞー」
+			ENDIF
+		ENDIF
+	CASE 107		
+		;遭遇時会話：勧誘成功
+		;ARG:1に遭遇キャラ	
+		IF TARGET == 1
+			IF ARG:2 == 1
+				PRINTFORML 「非常食だぞー」
+			ELSE
+				PRINTFORML 「私が言うのもおかしいが……」
+				PRINTFORML 「脳味噌が腐ってる奴についてきてくれるなんてお前正気か？」
+			ENDIF
+		ELSE
+		ENDIF
+	CASE 108
+		;遭遇時会話：勧誘失敗
+		;ARG:1に遭遇キャラ	
+		IF TARGET == 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ならば私の仲間になれー！、……無理かー」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ならば私の仲間になれー！、……無理かー」
+			ENDIF
+		ENDIF
+	;パーティ加入
+	CASE 109
+		PRINTFORML 「はっ?!　声が聞こえる！」
+		CALL PRINTCOLORW(0x7572fe, "暫くはこの人の命令に従いなさい……")
+		PRINTFORML 「わかったぞぅ！　ご主人！」 
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 一体誰と話しているのだろうか
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 一体誰と話しているのだろうか
+		ENDIF
+	CASE 110
+		;離脱時　ARG:2が　0：確認　1：別れた  ※主人公の方も呼ばれる点に注意
+		;好感度200以上で分岐アリ？
+		IF ARG:2 == 1
+			PRINTFORML 「それじゃあ一旦別行動という事ね」
+			PRINTFORML 「縁があれば、また会いましょう」
+		ENDIF
+	CASE 114
+		;睡眠開始　（ARG:1が　0：見張り無し　1：PTで見張り　2：ARG:2のキャラが見張り）　ARG:2に見張りNPC
+		IF TARGET == 1
+			PRINTFORML 「おやすみー」
+		ENDIF
+;	CASE 115
+		;重度汚染部屋で睡眠開始
+	CASE 116
+		;重度汚染部屋で睡眠　ARG:2にEPダメージ
+		PRINTFORML 「寝にくいぞー」
+	CASE 117
+		;睡眠時自慰発生
+			PRINTFORML (寝付けないぞ……)
+			CALL PRINTCOLORW(0xa2d7dd, "自らを慰めなさい…")
+			PRINTFORML 「わかったぞー……」
+;	CASE 118
+		;自慰メッセージ　ARG:2に道具ありフラグ
+	CASE 119
+		;自慰で絶頂失敗
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「……なんだかモヤモヤするぞ」
+			CASE 1
+				PRINTFORML 「んー、なんだぁー……？」
+			CASE 2
+		ENDSELECT
+	CASE 120
+	;絶頂の瞬間　ARG:2にMPダメージ
+		IF CFLAG:25
+		ELSEIF FLAG:97 == 1
+		ELSE
+			SELECTCASE RAND:10
+				CASE 0
+					PRINTFORML 「うう、おぉぉ……！」
+				CASE 1
+					PRINTFORML 「あぅ……あ！」
+				CASE 2
+					PRINTFORML 芳香は体をガクガク震えさせている
+			ENDSELECT
+		ENDIF
+	CASE 121
+		;発情がおさまった
+	CASE 122
+		;戦意喪失中に絶頂
+	CASE 123
+		;母乳を吸われる　ARG:2に回復量
+			PRINTFORML 「やぁーめろぉーー！！」
+	CASE 130
+		;部屋の浄化実行
+		IF TARGET == 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ぐおおぉー、とぉけるぅーーー！！」
+				CASE 1
+					PRINTFORML 「ゾンビは永久に不滅です！」
+				CASE 2
+					PRINTFORML 「私は浄化しないでー」
+			ENDSELECT
+		ELSE
+		ENDIF
+;	CASE 131
+		;眠気が進行
+	CASE 132
+		;部屋を移動：突撃
+		IF TARGET == 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いーくーぞぉーー！！」
+				CASE 1
+					PRINTFORML 「私に任せろー！」
+				CASE 2
+					PRINTFORML 「どけーー！」
+			ENDSELECT
+		ENDIF
+	CASE 133
+		;部屋を移動：慎重
+		IF TARGET == 1
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「きょろ…きょろ……」
+				CASE 1
+					PRINTFORML 「誰かいるかー？」
+				CASE 2
+					PRINTFORML 「夜目はきくぞ…」
+			ENDSELECT
+		ENDIF
+	CASE 134
+		;部屋を移動：待ち伏せ
+		IF TARGET == 1
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「さぁ来い！」
+				CASE 1
+					PRINTFORML 「ここから先は一歩も通さぁん！」
+				CASE 2
+					PRINTFORML 「準備はばっちりだー」
+			ENDSELECT
+		ENDIF
+	CASE 135
+		;探索開始
+		IF TARGET == 1
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「食えるもんおちてないかー？」
+				CASE 1
+					PRINTFORML 「なんかあるー？」
+				CASE 2
+					PRINTFORML 「さーがーすぞーー」
+			ENDSELECT
+		ELSE
+		ENDIF
+;	CASE 136
+		;処女喪失　（ARG:1は喪失原因　0：敵の攻撃　1：自慰　2：出産）　
+		;ARG:2にMP減少量　ARG:3が1の場合、喪失の直前　2の場合、喪失を防いだ
+;	CASE 137
+		;遭遇時会話：固定イベント情報取得　ARG:2にイベントID
+	CASE 138
+		;遭遇時会話：アイテム強請り開始　ARG:2に喪失キャラフラグ
+		IF FLAG:10 != 103 && FLAG:11 != 103
+			IF ARG:2 == 1
+				PRINTFORML 「これ食っていいのー？」
+			ELSE
+				PRINTFORML 「なんかくれー！」
+			ENDIF
+		ENDIF
+;	CASE 139
+		;遭遇時会話：アイテムを強請られた　（ARG:1は渡したアイテム。0なら失敗）　※主人公ではなく、強請られた側のキャラの口上　喪失中のアイテム盗難はCFLAG:29をチェック
+	CASE 140
+		;PTに勧誘された　（ARG:1が0：通常　1：共闘）　ARG:2が0：失敗　1：成功　※主人公ではなく、誘われた側のキャラの口上
+		IF ARG:1 ==1
+			IF ARG:2 == 0
+				PRINTFORML 「うおぉ！　にげなきゃだぁーー！！」
+			ELSEIF ARG:2 == 1
+				PRINTFORML 「私も頑張るぞー！」
+				PRINTFORML 「盾に囮に大活躍だぁーー！！」
+			ELSE
+			ENDIF
+		ELSE
+			IF ARG:2 == 0
+				PRINTFORML 「お前も敵だろー、騙されないぞーー！」
+			ELSEIF ARG:2 == 1
+				PRINTFORML 「一緒に行きたいぞー」
+				PRINTFORML 「盾に囮に大活躍するよー」
+			ELSE
+			ENDIF
+		ENDIF
+	CASE 141
+		;遭遇時逆襲：襲い掛かられた　ARG:2が1なら実はドッペル
+		PRINTFORML 「な、んだぁーー?!!」
+	CASE 142
+		;遭遇時逆襲：襲い掛かった　ARG:2が1なら実はドッペル　※主人公ではなく、襲った側のキャラの口上
+		PRINTFORML 「いーただーきまーす！」
+	CASE 143
+		;遭遇時会話：喪失キャラに気付け薬を使った　ARG:2が0：使った時　1：仲間にした　2：仲間入りを断った
+		IF TARGET == 1
+			IF ARG:2 == 0
+				PRINTFORML 「お前も私の仲間に……なんないのー？」
+			ELSEIF ARG:2 == 1
+				PRINTFORML 「仲間になるんだな！　じゃあがぶっと……え？　付いてくるだけ？　そっかー」
+			ELSE
+				PRINTFORML 「受けた恩は忘れないようになー？　あれ、恩って何だー？」
+			ENDIF
+		ENDIF
+	CASE 144
+		;遭遇時会話：喪失中に気付け薬を使われた　（ARG:1が0：そのまま立ち去る　1：仲間に入りたい　2：仲間に入った　3：断られた）　※主人公ではなく、助けられた側のキャラの口上
+			IF ARG:1 == 0
+				PRINTFORML 「う、おぉ……おはよー」
+			ELSEIF ARG:1 == 1
+				IF NO:1 == 102
+					PRINTFORML 「う、おぉ……おはよー」
+					PRINTFORML 「ご主人ー一緒に行きたいぞー」
+				ELSE
+					PRINTFORML 「う、おぉ……おはよー」
+					PRINTFORML 「お前に付いて行ったほうがよさそうだー」
+				ENDIF
+			ELSEIF ARG:1 == 2
+				PRINTFORML 「お願いしまーす」
+			ELSEIF ARG:1 == 3
+				PRINTFORML 「しゅーん……」
+			ELSEIF ARG:1 == 4
+			ELSE
+			ENDIF
+;	CASE 145
+		;寄生が進行　ARG:2に寄生されているキャラ　※寄生された本人以外の口上 (ARG:1に残り時間)
+;	CASE 146
+		;妊娠が進行　ARG:2に妊娠しているキャラ　※妊娠した本人以外の口上 (ARG:1に残り時間)
+;	CASE 147
+		;寄生・出産イベント　（ARG:1が　0：最初　1：産まれた　2：吸われた）　ARG:2に寄生されているキャラ　※寄生された本人以外の口上
+;	CASE 148
+		;妊娠・出産イベント　（ARG:1が　0：最初　1：産まれた　2：吸われた）　ARG:2に妊娠しているキャラ　ARG:3に子供の種類　※妊娠した本人以外の口上
+	CASE 149
+		;部屋に結界を張った＋入浴
+		IF TARGET == 1
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「お肌のケアは欠かせないぞー」
+				CASE 1
+					PRINTFORML 「きもちいー」
+			ENDSELECT
+		ELSE
+		ENDIF
+	CASE 150
+		;捕食開始
+;	CASE 151
+		;捕食されている　ARG:2に丸呑みフラグ
+;	CASE 152
+		;捕食された　ARG:2に丸呑みフラグ
+;	CASE 153
+		;リザレクション発生
+;	CASE 154
+		;一回休み発生
+;	CASE 155
+		;不死身発生
+;	CASE 156
+		;敵ランクアップ
+;	CASE 157
+		;ゲームオーバー
+	CASE 158
+		;主人公復活　（ARG:1が　0：助けてもらって復活　1：打ち捨てられて復活）
+		PRINTFORML 「さい！　きどぉーーー！！！　だー！」
+;	CASE 159
+		;(オープニング仕立てで選択。ちなみに青娥の口上色は瓶覗色(0xa2d7dd)。もうちょっと青いのがいいかな、どなたかが口上書かれたら準拠します)
+		;このシステムは次回実装を目標としてます
+;		PRINTFORMW 
+;		RESETCOLOR
+;		SETCOLOR 0xa2d7dd
+;		PRINTFORMDW ――その幾日か前、唐人屋敷。 
+;		PRINTFORML 「ここを、こうして……こうかしらね♪」
+;		PRINTFORMDL 鼻歌を歌いながら幻想郷の新参邪仙、霍 青娥が上機嫌で作業をしていた。
+;		PRINTFORMDW 寝台には彼女のキョンシーである芳香が横たわっている。
+;		PRINTFORML 
+;		PRINTFORMDL 神霊廟の一件の後、土に戻されていた芳香であったが、今はこうして修理を受けている。
+;		PRINTFORMDW 再び、彼女が必要になる事態が起こっているのだろうか。
+;		PRINTFORMW 「さ、仕上げに札を貼って……」
+;		PRINTFORML 
+;		PRINTFORMDL ――キョンシーの額の札は非常に重要だ。
+;		PRINTFORMDW お札は術者の指令を伝える管制塔のようなものであり、また、キョンシーを縛る封印でもある。
+;		PRINTFORMDL お札が剥がれると術者の命令に従わなくなるばかりでなく、
+;		PRINTFORMDW たちまちの内にキョンシーは狂暴化すると言われている。
+;		PRINTFORML 
+;		PRINTFORMDL 青娥は平時の接着に用いる薬の入った容器の蓋を開けた。
+;		PRINTFORMW 「あら、しまった。空だわ……」
+;		PRINTFORMW 「まぁいいわ、また布都ちゃんに修行とでも言って調達して来てもらいましょう」
+;		PRINTFORML 「うーん、そうなるといつもの薬が無いのね……。どうしましょう……」
+;		$INPUT_LOOP
+;		PRINTFORML 
+;		PRINTFORML [0] 「そう言えば…お櫃にご飯が余っていたような……」
+;		PRINTFORML [1] 「香霖堂で貰った『あろんあるふぁ』とか言う物があったような……」
+;		PRINTFORML 
+;		INPUT
+;		IF RESULT < 0 || RESULT >= 2
+;		GOTO INPUT_LOOP
+;		ELSEIF RESULT == 0
+;				CFLAG:881 = 1
+;				PRINTFORML 「まぁ、剥がれても土に戻せばいいだけだし、これでいいわね♪」
+;		ELSEIF RESULT == 1
+;				PRINTFORML 「よく分からないけれども、これで貼っておきましょう♪」
+;		ENDIF
+;		PRINTFORMDW ぺたっ 
+;		PRINTFORMDW ・　・　・　・　・　・　・　・　・　・
+;		PRINTFORMW 「……しか、芳香。起きなさい」
+;		CALL PRINTCOLORW(0x895b8a, "「う…おぉ……我の眠りを妨げるのは誰じゃ…………おー、ご主人」")
+;		PRINTFORMW 「はい、おはよう芳香。早速だけれども、頼まれてくれないかしら？」
+;		CALL PRINTCOLORW(0x895b8a, "「何がだー？」")
+;		PRINTFORML 
+;		PRINTFORMDW 青娥は幻想郷で起こっている失踪事件について説明した。
+;		PRINTFORMDW 幻想郷の大妖怪のものとは違う、異質な神隠しを。
+;		PRINTFORMDW もっとも、芳香がどれほど理解したのかは怪しいが。
+;		PRINTFORMW 「――だから、今からあなたを調査のためにその場所に送り込むわ」
+;		CALL PRINTCOLORW(0x895b8a, "「うおー！　わかったー」")
+;		PRINTFORMW 「いい？　芳香。"必ず帰ってくること"。これがあなたへの命令よ」
+;		CALL PRINTCOLORW(0x895b8a, "「かならず…帰る」")
+;		PRINTFORMW 「そうよ、帰ってくる為ならばどんな方法を使ってもいいわ。必ず帰ってきて頂戴」
+;		CALL PRINTCOLORW(0x895b8a, "「了解したぞー！」")
+;		PRINTFORMDW 芳香はふらふらとした足取りで、不気味に空いた洞穴へ向けて歩いていった……
+;		PRINTFORML 
+;		PRINTFORML 
+;		IF CFLAG:881 == 1
+;			PRINTFORMDW お札が剥がれるモードで開始します(CPが０の時口上が変化します)
+;		ELSE
+;			PRINTFORMDW お札が剥がれないモードで開始します(口上は変わりません)
+;		ENDIF
+ENDSELECT
+ENDIF
+
+RESETCOLOR
+
+RETURN 1
+

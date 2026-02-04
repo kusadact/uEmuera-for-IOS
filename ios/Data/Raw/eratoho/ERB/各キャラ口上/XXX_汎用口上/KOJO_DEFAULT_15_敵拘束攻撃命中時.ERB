@@ -1,0 +1,218 @@
+﻿
+
+
+;拘束と丸呑みの二種類ある点に注意
+
+
+
+; ////////////////////////////
+; / ARG:0   15    敵の拘束攻撃(命中)
+; / ARG:1         コマンドID
+; / ARG:2         0:拘束 1:丸呑み
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_15(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(0)
+
+
+	RETURN 1
+ENDIF
+
+
+	
+	; 催眠中
+	IF CFLAG:43
+		SELECTCASE CFLAG:43
+		; 催眠強度1
+		CASE 1
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				CALL ADD_RAND_MESSAGE, @"「必须逃跑……但是动不了……！」"
+				CALL ADD_RAND_MESSAGE, @"「这样下去会被抓住……为什么动不了……！？」"
+				
+			; 発情・感情操作系
+			CASE 1
+				CALL ADD_RAND_MESSAGE, @"（啊啊……　已经逃不掉了……♥）"
+				CALL ADD_RAND_MESSAGE, @"「被那个抓住的话……会怎样呢♥」"
+				
+			; 無意識・認識操作系
+			CASE 2
+				CALL ADD_RAND_MESSAGE, @"「请温柔一点……」"
+			ENDSELECT
+
+		; 催眠強度2
+		CASE 2
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				CALL ADD_RAND_MESSAGE, @"「动一下……身体动一下……明明要逃跑的……」"
+				
+			; 発情・感情操作系
+			CASE 1
+				CALL ADD_RAND_MESSAGE, @"「特地抓住我，是期待激烈的事情吧♥」"
+				
+			; 無意識・認識操作系
+			CASE 2
+				CALL ADD_RAND_MESSAGE, @"「请……尽情享受%CALLNAME:TARGET%的身体……」"
+			ENDSELECT
+			
+		; 催眠強度最大、又关于レッサーヒュプノの減衰あり催眠
+		CASEELSE
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				CALL ADD_RAND_MESSAGE, @"（明明想逃，身体却自己抱住……真是够了……）"
+				CALL ADD_RAND_MESSAGE, @"「救命……有人救救我！！　不要啊啊啊啊！！！！」"
+				
+			; 発情・感情操作系
+			CASE 1
+				CALL ADD_RAND_MESSAGE, @"（被抓住被当作性欲处理♥　逃不掉了♥　已经无法逃离那种快感♥）"
+				CALL ADD_RAND_MESSAGE, @"（啊……　期待了那么多，子宫咚咚地跳动♥♥　淫荡的汁液止不住地流出来♥♥）"
+				
+			; 無意識・認識操作系
+			CASE 2
+				CALL ADD_RAND_MESSAGE, @"「好的……　从现在开始%CALLNAME:TARGET%是成人专用肉便器……」"
+			ENDSELECT
+		ENDSELECT
+		RETURN 1
+	ENDIF
+	
+	CALL ADD_RAND_MESSAGE, @"「放开我！！」"
+	CALL ADD_RAND_MESSAGE, @"「啊啊！！」"
+
+
+	CALL ADD_RAND_MESSAGE, @"「什么！？被抓住了！？」"
+	CALL ADD_RAND_MESSAGE, @"「不好！」"
+	CALL ADD_RAND_MESSAGE, @"「怎么会！？」"
+	CALL ADD_RAND_MESSAGE, @"「难道！？」"
+
+	CALL ADD_RAND_MESSAGE, @"「身体的自由！？」"
+	CALL ADD_RAND_MESSAGE, @"「躲不开了！？」"
+	CALL ADD_RAND_MESSAGE, @"「反应迟钝了！？」"
+
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+
+	CASE 性格_おせっかい
+
+		CALL ADD_RAND_MESSAGE, @"「比以前更快！？嗯，我的身体变得迟钝了……」"
+
+	CASE 性格_がんばりや
+
+		CALL ADD_RAND_MESSAGE, @"「比以前更快！？嗯，我的身体变得迟钝了……」"
+
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「糟了！？」"
+
+
+	CASE 性格_セクシーギャル
+
+		CALL ADD_RAND_MESSAGE, @"「躲不开了？……是不是有点胖了」"
+		CALL ADD_RAND_MESSAGE, @"「躲不开了？……是不是该减肥了」"
+		CALL ADD_RAND_MESSAGE, @"「……嗯。你这么想听我的声音吗？」"
+		CALL ADD_RAND_MESSAGE, @"「能让我忘记过去的伤痛吗？」"
+
+		CALL ADD_RAND_MESSAGE, @"「不知不觉中，陷入了嫉妒的漩涡呢」"
+
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「咕噜，大意了！！」"
+		CALL ADD_RAND_MESSAGE, @"「糟糕！」"
+		CALL ADD_RAND_MESSAGE, @"「什么！？」"
+		CALL ADD_RAND_MESSAGE, @"「搞砸了！？」"
+
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「嘛，这样就动不了了吧？」"
+		CALL ADD_RAND_MESSAGE, @"「哎呀？」"
+		CALL ADD_RAND_MESSAGE, @"「……麻烦了」"
+		CALL ADD_RAND_MESSAGE, @"「搞砸了吗！？」"
+
+		CALL ADD_RAND_MESSAGE, @"「……既然知道出口在哪，比起某个迷宫来说更轻松呢」"
+
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「嘿……放开我……」"
+	ENDSELECT
+RETURN 1
+
+
+
+
+
+; ////////////////////////////
+; / ARG:0   15    敵の丸呑み攻撃(命中)
+; / ARG:1         コマンドID
+; / ARG:2    1    0:拘束 1:丸呑み
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_15_X_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(0)
+
+	RETURN 1
+ENDIF
+
+	
+	CALL ADD_RAND_MESSAGE, @"「不、不要！？要吃掉我！？」"
+	CALL ADD_RAND_MESSAGE, @"「被、被吞噬……！」"
+
+	CALL ADD_RAND_MESSAGE, @"「什么！？被吞噬……！」"
+	CALL ADD_RAND_MESSAGE, @"「糟糕！？被吞噬……！」"
+	CALL ADD_RAND_MESSAGE, @"「怎么会！？被吞噬……！」"
+	CALL ADD_RAND_MESSAGE, @"「糟了！被吞噬……！」"
+
+	CALL ADD_RAND_MESSAGE, @"「竟然想吃掉我！？」"
+
+	CALL ADD_RAND_MESSAGE, @"「被……被吞进去了……！」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「不要……不要吃掉我！」"
+		CALL ADD_RAND_MESSAGE, @"「就算吃了也不好吃啊！？」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「咕……被吃掉了！？」"
+		CALL ADD_RAND_MESSAGE, @"「糟糕，被吃掉了！？」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「只有麻烦事……！」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「…………咿！！」"
+		CALL ADD_RAND_MESSAGE, @"「――――呃！？」"
+	ENDSELECT
+RETURN 1
+

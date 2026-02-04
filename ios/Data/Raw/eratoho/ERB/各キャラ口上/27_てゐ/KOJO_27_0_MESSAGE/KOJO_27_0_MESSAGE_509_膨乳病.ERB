@@ -1,0 +1,108 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 509 膨乳病
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_509(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 表示頻度が高いので、バストサイズ変化寸前以外は一定確率で非表示
+	SIF CFLAG:506 < 100 && RAND:3
+		RETURN 0
+		
+	SELECTCASE GET_BUST(TARGET)
+	
+	; 絶壁
+	CASE IS <= -2
+		SELECTCASE CFLAG:506
+		CASE IS >= 100
+			CALL KOJO_27_0_ADD_MESSAGE, @"「強く触ると、ちょっと痛いかも……」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「あー、おっぱいが変な感じ　多分普段より小さくなってるのが悪いんだと思うわ」\n"
+		ENDSELECT
+		
+	; 貧乳 てゐちゃんのデフォルトはここ
+	CASE -1
+		SELECTCASE CFLAG:506
+		CASE IS >= 100
+			CALL KOJO_27_0_ADD_MESSAGE, @"「遅れてきた成長期、なワケないか」\n"
+		CASE IS > 50
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ん……はぁ……　何かおっぱいが変だよぉ……」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱいがムズムズする……」\n"
+		ENDSELECT
+		
+	; 並乳
+	CASE 0
+		SELECTCASE CFLAG:506
+		CASE IS >= 100
+			CALL KOJO_27_0_ADD_MESSAGE, @"「だっ……めぇぇっ……！？　絶対におっぱい変になってるぅっ！？」\n"
+		CASE IS > 50
+			; 全裸状態
+			IF BASE:CP <= 0
+				CALL KOJO_27_0_ADD_MESSAGE, @"（あたしの胸、どうしちゃったのよぉ！？）\n"
+			; 着衣状態
+			ELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「ああ……っ、おっぱいが服に擦れるぅ……」\n"
+			ENDIF
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「普段よりちょっとおっきい胸って、変な感じするわね……」\n"
+		ENDSELECT
+		
+	; 巨乳
+	CASE 1
+		SELECTCASE CFLAG:506
+		CASE IS >= 100
+			CALL KOJO_27_0_ADD_MESSAGE, @"「止まってっ！　止まってよぉぉっ！！」\n"
+		CASE IS > 75
+			CALL KOJO_27_0_ADD_MESSAGE, @"「コレぇっ、いつになったら止まるのよぉっ！？」\n"
+		CASE IS > 50
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ううぅっ……、絶対おっぱいに変なコトされたぁぁ……」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（嘘……、まだ終わらないの……！？）\n"
+		ENDSELECT
+		
+	; 爆乳
+	CASE 2
+		SELECTCASE CFLAG:506
+		CASE IS >= 100
+			CALL KOJO_27_0_ADD_MESSAGE, @"「やだ……、やだぁ……っ……　もう、うまく立てない……っ」\n"
+		CASE IS > 90
+			CALL KOJO_27_0_ADD_MESSAGE, @"「このままじゃ、おっぱいお化けになっちゃう……」\n"
+		CASE IS > 70
+			CALL KOJO_27_0_ADD_MESSAGE, @"「強く押さえてるのに……っ、全然とまんない……っ」\n"
+		CASE IS > 50
+			CALL KOJO_27_0_ADD_MESSAGE, @"「またっ！？　またこの感じっ！？　もうおっきくなるの嫌あぁ！！」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ふ～っ……　ふ～っ……　おっぱい……っ……」\n"
+		ENDSELECT
+		
+	; 超乳
+	CASE 3
+		SELECTCASE CFLAG:506
+		CASE IS >= 100
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ひいぃぃっ！？　まだ大きくなるぅぅっ！？」\n"
+		CASE IS > 50
+			CALL KOJO_27_0_ADD_MESSAGE, @"（おっきい胸欲しいなんて二度と思いません、だから誰か助けて……）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「何とかして、小さくする方法探さないと……」\n"
+		ENDSELECT
+		
+	; 超々乳
+	CASE 4
+		SELECTCASE CFLAG:506
+		CASE IS >= 100
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ゆるして……　もうゆるしてよぉ……」\n"
+		CASE IS > 50
+			CALL KOJO_27_0_ADD_MESSAGE, @"「もうダメ……　ほとんど動けない……」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「足下見えなくて、歩くの怖いよぉ……」\n"
+		ENDSELECT
+		
+	; 接地乳房
+	CASE IS >= 5
+		IF CFLAG:506 > 0
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんな身体で兎のリーダーなんて、笑っちゃう……」\n"
+		ENDIF
+	ENDSELECT
+	
+RETURN 1

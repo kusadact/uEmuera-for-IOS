@@ -1,0 +1,62 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 14 敵の性攻撃 (命中) - 攻撃種類別 0318 バイオプラント B
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_14_318(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 追加地の文関数(前)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_BEFORE("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_BEFORE")
+
+	; 追加地の文関数(後)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_AFTER("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_AFTER")
+	
+	; 睡眠・喪失・諦め
+	SIF CFLAG:25 || CFLAG:29 || TFLAG:16 == 2
+		RETURN 0
+
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 全裸時は地の文が変化する為、合わせる形で口上も変化
+	; 全裸時
+	IF BASE:CP <= 0
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「揉まれてるっ♥　こねられてるっ♥　引っ張られてっ、舐め回されてるぅぅっ♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「いっぱいありすぎて……ぇッ♥　気持ちいいのから、逃げらんないッ♥♥」\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ひぃぃぃッ♥　おっぱいに気持ちいいが集まってくるぅぅッ♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「んぃぃ～～っ♥　んひぃぃ～～ッ♥♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（おおぉぉっ！？　おっぱいっ、とけるうぅぅっ！？）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「絡みつくなぁっ！　こねまわすなぁぁっ！　うぁっ、先っぽもぉぉっ！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「うあああぁぁっ！　こんなムチャクチャな責め方でぇ……っ！」\n"
+		ENDSELECT
+	
+	; 着衣時
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ああっ♥　痛いのと気持ちいいのギリギリを付いてくる感じ♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（こんな荒っぽいのに、何で……！？）\n"
+		ENDSELECT
+	ENDIF
+	CALL KOJO_27_0_PARAGRAPH_MESSAGE
+	
+	; 地の文側で\nするので口上側は\nで終わること
+RETURN 1

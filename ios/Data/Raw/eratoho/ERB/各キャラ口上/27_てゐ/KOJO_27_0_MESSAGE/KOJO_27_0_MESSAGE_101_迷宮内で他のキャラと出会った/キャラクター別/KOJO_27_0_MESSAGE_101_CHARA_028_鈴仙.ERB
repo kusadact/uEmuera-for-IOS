@@ -1,0 +1,51 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 101 迷宮内で他のキャラと会った - キャラクター別 028 鈴仙
+; ------------------------------------------------------------------------------
+
+; □ 0 通常
+@KOJO_27_0_SYSTEM_MESSAGE_101_X_0_CHARA_28(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 遭遇キャラは拘束されている
+	IF CFLAG:(ARG:1):504
+	
+	; 催眠行動中
+	ELSEIF CFLAG:(ARG:1):43 == 1
+	
+	; 遭遇キャラと寸前まで共闘していた
+	ELSEIF ARG:1 == PARTY_NO:1 || ARG:1 == PARTY_NO:2
+		SELECTCASE KOJO_MODE
+		CASE "強気"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「なんか今日の%KOJO_27_0_CALLNAME_FROM_ID(ARG:1)%、戦い方がすごい直線的って感じ\n　目に頼りすぎじゃない？」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「何だかんだで%KOJO_27_0_CALLNAME_FROM_ID(ARG:1)%って強いわよねえ\n　さすが普段からこき使われてる事だけはある」\n"
+		ENDSELECT
+		
+	; 通常行動中
+	ELSE
+		; 対象のキャラとは初遭遇
+		; 表示タイミングが一度しかない口上、優先口上として処理する
+		IF KOJO_27_0_GET_ENCOUNTER_COUNT(ARG:1) == 0
+			CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+			CALL KOJO_27_0_ADD_MESSAGE, @"「あら%KOJO_27_0_CALLNAME_FROM_ID(ARG:1)%　なにやってんの、こんなトコで？」\n"
+			RETURN 1
+		ENDIF
+		
+		CALL KOJO_27_0_ADD_MESSAGE, @"「どう%KOJO_27_0_CALLNAME_FROM_ID(ARG:1)%？　出口の手がかりとか見つかった？」\n"
+	ENDIF
+RETURN 1
+
+
+; □ 1 喪失中
+@KOJO_27_0_SYSTEM_MESSAGE_101_X_1_CHARA_28(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 遭遇キャラは拘束されている
+	IF CFLAG:(ARG:1):504
+	
+	; 遭遇キャラと寸前まで共闘していた
+	ELSEIF ARG:1 == PARTY_NO:1 || ARG:1 == PARTY_NO:2
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ほんっと%KOJO_27_0_CALLNAME_FROM_ID(ARG:1)%って運が悪いわよね……」\n"
+		
+	; 通常行動中
+	ELSE
+
+	ENDIF
+RETURN 1

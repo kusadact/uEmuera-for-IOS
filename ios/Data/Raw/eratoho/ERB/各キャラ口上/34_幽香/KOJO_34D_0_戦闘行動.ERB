@@ -1,0 +1,571 @@
+﻿;ARG:0 == 1の管理
+@BATTLE_MIKATA_KOUDOU_HATUDOU_KOJO_YUUKAdaughter(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	IF ARG:1 < 10
+		CALL BATTLE_MIKATA_KOUDOU_SONOTA_KOJO_YUUKAdaughter(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 26
+		CALL BATTLE_MIKATA_KOUDOU_DANMAKUandSYOUMOUBUKI_KOJO_YUUKAdaughter(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 35
+		CALL BATTLE_MIKATA_KOUDOU_NO_SYOUMOUBUKI_KOJO_YUUKAdaughter(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 54
+		CALL BATTLE_MIKATA_KOUDOU_KOUSOKU_NOW_KOJO_YUUKAdaughter(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ENDIF
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_SONOTA_KOJO_YUUKAdaughter(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;防御
+		CASE 1
+			;身を守る
+			IF ARG:2 == 0
+				;MP1/4以下か拘束中か朦朧
+				IF MAXBASE:MP/4 >= BASE:MP || CFLAG:20 || FLAG:7 >= 11
+					IF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「守らないと……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「守らないと……」
+ENDIF
+
+					ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「……これじゃあね」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……これじゃあね」
+ENDIF
+
+					ENDIF
+				;HP1/4以下か妊娠中か要睡眠
+				ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3 || FLAG:7 >= 7
+IF FLAG:AUTOMODE
+    PRINTFORML 「……ちょっと休むわ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……ちょっと休むわ」
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「通らせないわよ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「通らせないわよ」
+ENDIF
+
+				ENDIF
+
+				SIF CFLAG:805 == 5
+					CFLAG:805 = 0
+
+			ELSEIF ARG:2 == 1
+				IF CFLAG:805 == 5
+					CFLAG:805 = 0
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「早く片付けないと……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「早く片付けないと……」
+ENDIF
+
+					CFLAG:805 = 5
+				ENDIF
+			ENDIF
+;		;アイテム
+;		CASE 2
+		;前進
+		CASE 3
+			;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+			IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+IF FLAG:AUTOMODE
+    PRINTFORML 「すぐ終わらせれば……！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「すぐ終わらせれば……！」
+ENDIF
+
+			;その他の場合で味方がいる
+			ELSEIF FLAG:10
+IF FLAG:AUTOMODE
+    PRINTFORML 「任せて」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「任せて」
+ENDIF
+
+			ENDIF
+		;後退
+		CASE 4
+			;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+			IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+IF FLAG:AUTOMODE
+    PRINTFORML 「今は下がらないと……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「今は下がらないと……」
+ENDIF
+
+			;その他の場合で味方がいる
+			ELSEIF FLAG:10
+IF FLAG:AUTOMODE
+    PRINTFORML 「任せるね」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「任せるね」
+ENDIF
+
+			ENDIF
+;		;逃走
+;		CASE 5
+	ENDSELECT
+RETURN
+
+
+@BATTLE_MIKATA_KOUDOU_DANMAKUandSYOUMOUBUKI_KOJO_YUUKAdaughter(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+	IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+		;溜め撃ち
+		IF ARG:1 == 13
+				;溜め
+				IF CFLAG:31 == 2
+IF FLAG:AUTOMODE
+    PRINTFORML 「……余裕はないけど」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……余裕はないけど」
+ENDIF
+
+				;発射
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「はたき落すわ、ここでっ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「はたき落すわ、ここでっ！」
+ENDIF
+
+				ENDIF
+		;弱弾幕、弱攻撃、節約攻撃
+		ELSEIF ARG:1 == 10 ||  ARG:1 == 20 ||  ARG:1 == 23
+			SELECTCASE RAND:3
+				CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「少しずつ払って……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「少しずつ払って……」
+ENDIF
+
+				CASE 1
+IF FLAG:AUTOMODE
+    PRINTFORML 「まだっ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「まだっ！」
+ENDIF
+
+				CASE 2
+IF FLAG:AUTOMODE
+    PRINTFORML 「力をセーブして……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「力をセーブして……」
+ENDIF
+
+			ENDSELECT
+		;貫通弾、乱れ打ち
+		ELSEIF ARG:1 == 15 || ARG:1 == 24
+			SELECTCASE RAND:2
+				CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「さっさと殺すわ……！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「さっさと殺すわ……！」
+ENDIF
+
+				CASE 1
+IF FLAG:AUTOMODE
+    PRINTFORML 「消え去りなさい！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「消え去りなさい！」
+ENDIF
+
+			ENDSELECT
+		;その他共通
+		ELSE
+			SELECTCASE RAND:4
+				CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「……しつこいわね！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……しつこいわね！」
+ENDIF
+
+				CASE 1
+IF FLAG:AUTOMODE
+    PRINTFORML 「動かないでよ？　わたし疲れてるの」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「動かないでよ？　わたし疲れてるの」
+ENDIF
+
+				CASE 2
+IF FLAG:AUTOMODE
+    PRINTFORML 「はぁ、面倒ね」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「はぁ、面倒ね」
+ENDIF
+
+				CASE 3
+IF FLAG:AUTOMODE
+    PRINTFORML 「感覚がしっくり来ない……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「感覚がしっくり来ない……」
+ENDIF
+
+			ENDSELECT
+		ENDIF
+	;幽香が捕まっている時
+	ELSEIF NO:(DA:(CFLAG:51):20) == 34 && CFLAG:(DA:(CFLAG:51):20):104 == 0
+		;溜め撃ちの溜め
+		IF ARG:1 == 13 && CFLAG:31 == 2
+IF FLAG:AUTOMODE
+    PRINTFORML 「少し待ってなさい、風見幽香！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「少し待ってなさい、風見幽香！」
+ENDIF
+
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「私の前で無様を晒さないで、風見幽香」
+					DATAFORM 「私のママがその程度だなんて認めない」
+					DATAFORM 「そいつを離して、今すぐに！」
+					DATAFORM 「風見幽香を……助ける！」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「私の前で無様を晒さないで、風見幽香」
+					DATAFORM 「私のママがその程度だなんて認めない」
+					DATAFORM 「そいつを離して、今すぐに！」
+					DATAFORM 「風見幽香を……助ける！」
+				ENDDATA
+			ENDIF
+		ENDIF
+	ELSE
+		SELECTCASE ARG:1
+			;弾幕攻撃＆消耗武器
+			;弱弾幕・弱攻撃・節約攻撃
+			CASE 10, 20, 23
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「確実に当てましょう」
+						DATAFORM 「軽くても痛いわよ？」
+						DATAFORM 「悲鳴を上げる余裕はある威力よ」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「確実に当てましょう」
+						DATAFORM 「軽くても痛いわよ？」
+						DATAFORM 「悲鳴を上げる余裕はある威力よ」
+					ENDDATA
+				ENDIF
+			;中弾幕・中攻撃
+			CASE 11, 21
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「……うかつね」
+						DATAFORM 「迎撃するわ」
+						DATAFORM 「遊びはないわ」
+						DATAFORM 「撃つわよ？」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「……うかつね」
+						DATAFORM 「迎撃するわ」
+						DATAFORM 「遊びはないわ」
+						DATAFORM 「撃つわよ？」
+					ENDDATA
+				ENDIF
+			;強弾幕・強攻撃
+			CASE 12, 22
+				;拘束状態で強弾幕。つまり、霊撃
+				IF (CFLAG:10 || CFLAG:20) && ARG:1 == 12
+IF FLAG:AUTOMODE
+    PRINTFORML 「悪いけど私……諦めが悪いの」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「悪いけど私……諦めが悪いの」
+ENDIF
+
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTDATAL
+							DATAFORM 「覚悟して」
+							DATAFORM 「やらせてもらうわ」
+							DATAFORM 「哭きなさい」
+						ENDDATA
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTDATAW
+							DATAFORM 「覚悟して」
+							DATAFORM 「やらせてもらうわ」
+							DATAFORM 「哭きなさい」
+						ENDDATA
+					ENDIF
+				ENDIF
+			;溜め撃ち
+			CASE 13
+				;溜め
+				IF CFLAG:31 == 2
+IF FLAG:AUTOMODE
+    PRINTFORML 「フィニッシュまで時間をあげるわ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「フィニッシュまで時間をあげるわ」
+ENDIF
+
+				;発射
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「じゃあ、消えてもらおうかしら？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「じゃあ、消えてもらおうかしら？」
+ENDIF
+
+				ENDIF
+			;ばら撒き弾
+			CASE 14
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「流れ弾にご注意」
+						DATAFORM 「この程度じゃ死なないわよね？」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「流れ弾にご注意」
+						DATAFORM 「この程度じゃ死なないわよね？」
+					ENDDATA
+				ENDIF
+			;貫通弾
+			CASE 15
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「まとめて撃ち抜くわよ」
+						DATAFORM 「とっておきよ」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「まとめて撃ち抜くわよ」
+						DATAFORM 「とっておきよ」
+					ENDDATA
+				ENDIF
+
+			;みだれうち
+			CASE 24
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「弾切れを気にしなくていいなら楽だろうけれどね」
+						DATAFORM 「まとめて片付けられるなら、簡単ね」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「弾切れを気にしなくていいなら楽だろうけれどね」
+						DATAFORM 「まとめて片付けられるなら、簡単ね」
+					ENDDATA
+				ENDIF
+			;一点集中
+			CASE 25
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「悲鳴はあげられるのかしら？」
+						DATAFORM 「怖がってもいいのよ？　結果は変わらないだろうけれど」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「悲鳴はあげられるのかしら？」
+						DATAFORM 「怖がってもいいのよ？　結果は変わらないだろうけれど」
+					ENDDATA
+				ENDIF
+		ENDSELECT
+	ENDIF
+RETURN
+
+;非消耗武器
+@BATTLE_MIKATA_KOUDOU_NO_SYOUMOUBUKI_KOJO_YUUKAdaughter(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;発情時・MP1/4時・HP0時・妊娠時・朦朧時・視界が塞がっている
+	IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11 || CFLAG:26 || CFLAG:27
+			SELECTCASE RAND:3
+				CASE 1
+IF FLAG:AUTOMODE
+    PRINTFORML 「動かないでよ？　わたし疲れてるの」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「動かないでよ？　わたし疲れてるの」
+ENDIF
+
+				CASE 2
+IF FLAG:AUTOMODE
+    PRINTFORML 「体を動かしたくないとか言ってられる状況じゃないか……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「体を動かしたくないとか言ってられる状況じゃないか……」
+ENDIF
+
+				CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「しつこい相手は嫌いよ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「しつこい相手は嫌いよ！」
+ENDIF
+
+			ENDSELECT
+	;幽香が捕まっている時
+	ELSEIF NO:(DA:(CFLAG:51):20) == 34 && CFLAG:(DA:(CFLAG:51):20):104 == 0
+		IF FLAG:AUTOMODE
+			PRINTDATAL
+				DATAFORM 「私の前で無様を晒さないで、風見幽香」
+				DATAFORM 「私のママがその程度だなんて認めない」
+				DATAFORM 「そいつを離さないというなら、実力で取り返す！」
+			ENDDATA
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTDATAW
+				DATAFORM 「私の前で無様を晒さないで、風見幽香」
+				DATAFORM 「私のママがその程度だなんて認めない」
+				DATAFORM 「そいつを離さないというなら、実力で取り返す！」
+			ENDDATA
+		ENDIF
+	ELSE
+		;非消耗武器
+		SELECTCASE ARG:1
+			;弱攻撃
+			CASE 30
+				SELECTCASE RAND:2
+					CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「接近戦はリスクがつきもの……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「接近戦はリスクがつきもの……」
+ENDIF
+
+					CASE 1
+IF FLAG:AUTOMODE
+    PRINTFORML 「ここは牽制したほうがいいかしら？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ここは牽制したほうがいいかしら？」
+ENDIF
+
+					ENDSELECT
+			;中攻撃
+			CASE 31
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「これくらいかしら？」
+						DATAFORM 「よいしょっと……」
+						DATAFORM 「髪は汚さないでくれると助かるわ」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「これくらいかしら？」
+						DATAFORM 「よいしょっと……」
+						DATAFORM 「髪は汚さないでくれると助かるわ」
+					ENDDATA
+				ENDIF
+			;強攻撃
+			CASE 32
+				SELECTCASE RAND:2
+					CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「そろそろ終わってほしいものね」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「そろそろ終わってほしいものね」
+ENDIF
+
+					CASE 1
+IF FLAG:AUTOMODE
+    PRINTFORML 「貴方達相手に、無闇な長期戦は避けるべきね」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「貴方達相手に、無闇な長期戦は避けるべきね」
+ENDIF
+
+					ENDSELECT
+			;下段狙い、急所狙い
+			CASE 33, 34
+				SELECTCASE RAND:2
+					CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「その足を止めるわ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「その足を止めるわ」
+ENDIF
+
+					CASE 1
+IF FLAG:AUTOMODE
+    PRINTFORML 「じゃま！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「じゃま！」
+ENDIF
+
+					ENDSELECT
+			ENDSELECT
+	ENDIF
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_KOUSOKU_NOW_KOJO_YUUKAdaughter(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE ARG:1
+		;拘束離脱
+		CASE 42
+
+		;力溜め
+;		CASE 43
+;				IF ARG:2 == 0
+;				ENDIF
+		;諦め
+		CASE 44
+
+;		;何もしない
+;		CASE 45
+		;強制自慰
+		CASE 46
+;		;お尻ガード
+;		CASE 50
+;		;胸ガード
+;		CASE 51
+;		;Cガード
+;		CASE 52
+		;挿入ガード
+		CASE 53
+IF FLAG:AUTOMODE
+    PRINTFORML 「一番危険なのは、ここ……！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「一番危険なのは、ここ……！」
+ENDIF
+
+	ENDSELECT
+RETURN

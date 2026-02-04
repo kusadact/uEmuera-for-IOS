@@ -1,0 +1,62 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 14 敵の性攻撃 (命中) - 攻撃種類別 0712 アグー V
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_14_712(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 追加地の文関数(前)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_BEFORE("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_BEFORE")
+
+	; 追加地の文関数(後)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_AFTER("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_AFTER")
+	
+	; 睡眠・喪失・諦め
+	SIF CFLAG:25 || CFLAG:29 || TFLAG:16 == 2
+		RETURN 0
+	
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+
+	; 通常時
+	SELECTCASE KOJO_MODE
+	CASE "淫乱", "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「んﾞいﾞいﾞぃっ♥　これスゴ…っ♥　おまんこぉっ…いじめ…られてるぅっ♥♥」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あぁっ♥　あたしのナカぁっ♥　豚ちんぽのニオイでいっぱいになっちゃぅっ♥♥」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ゴリゴリすごいっ♥　ゴリゴリすごいぃっ♥　コレぇっ、癖になっちゃうよぉっ♥♥」\n"
+	CASEELSE
+	ENDSELECT
+	CALL KOJO_27_0_PARAGRAPH_MESSAGE
+	
+	; ペットに身体を捧げているなら追加口上
+	IF TEMP_FLAG:1
+		; [ペット]所持時 追加口上
+		IF TALENT:140 == 1
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ああぁっ♥　ご主人様の豚ちんぽ凄いですっ♥　うあああっ、擦れるぅっ♥」\n"
+		
+		; [花嫁]所持時 追加口上
+		ELSEIF TALENT:140 == 2
+			CALL KOJO_27_0_ADD_MESSAGE, @"「好きぃっ♥　これ好きいぃっ♥♥　あたしっ、豚のお嫁さんで本当に幸せぇぇっ♥♥」\n"
+
+		; [しもべ]所持時 追加口上
+		ELSEIF TALENT:140 == 3
+			CALL KOJO_27_0_ADD_MESSAGE, @"「うああぁぁっ♥　コーフンしたご主人様の豚チンポが、出たり入ったりしてるうぅぅっ♥♥」\n"
+		ENDIF
+	ENDIF
+	CALL KOJO_27_0_PARAGRAPH_MESSAGE
+	
+	; 地の文側で\nするので口上側は\nで終わること
+RETURN 1

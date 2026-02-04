@@ -1,0 +1,62 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 113 探索でアイテムを見つけた - 14 ドリル
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_113_14(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+
+	; 喪失中は何もしないで帰る
+	SIF CFLAG:29
+		RETURN 0
+	
+	; 出来るだけ専用メッセージを見せたいので、優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 初発見
+	IF KOJO_27_0_GET_ITEMGET_COUNT(ARG:1) == 0
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「強そうだけど、コレ……危なくない？」\n"
+		ENDSELECT
+	
+	; 2つめ以降
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「う～ん、ドリルなんて一本あれば足りてるんだけどね\n　頭にかぶったりしろっての？」\n"
+		ENDSELECT
+	ENDIF
+	CALL KOJO_27_0_FIX_MESSAGE
+	
+	; キャラクター対応 追加口上
+	FOR LCOUNT, 1, CHARANUM
+		; 自分と娘は除外
+		IF !(NO:LCOUNT == NO:(TARGET) || CFLAG:LCOUNT:104 != 0)
+			
+			; PTに居る
+			IF IN_PT(NO:LCOUNT)
+			
+				SELECTCASE NO:LCOUNT
+				; 鈴仙
+				CASE 28
+					; 喪失中
+					IF CFLAG:(GET_ID_FROM_NO(NO:LCOUNT)):29
+						CALL KOJO_27_0_ADD_MESSAGE, @"\d力尽きている%CALLNAME:(GET_ID_FROM_NO(NO:LCOUNT))%と拾ったばかりのドリルを見て、%CALLNAME:TARGET%は小さく溜息をついた…\d\n"
+					; 通常
+					ELSE
+						CALL KOJO_27_0_ADD_MESSAGE, @"「おー！ドリルだ、ドリル！\n　%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(NO:LCOUNT))%ってドリル似合いそうよね！　ほら%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(NO:LCOUNT))%、早く！腕に！」\n"
+					ENDIF
+				ENDSELECT
+				
+			; PTに居ない
+			ELSE
+				SELECTCASE NO:LCOUNT
+				; 鈴仙
+				CASE 28
+					CALL KOJO_27_0_ADD_MESSAGE, @"「ドリルかぁ、%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(NO:LCOUNT))%なら似合いそうなのに残念だわー」\n"
+				ENDSELECT
+			ENDIF
+		ENDIF
+	NEXT
+RETURN 1

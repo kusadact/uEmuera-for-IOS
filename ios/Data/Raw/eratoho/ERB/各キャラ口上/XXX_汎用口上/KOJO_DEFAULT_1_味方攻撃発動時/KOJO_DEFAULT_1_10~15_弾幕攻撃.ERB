@@ -1,0 +1,356 @@
+﻿
+;基本行動なる弾幕攻撃の口上
+;弱、中、強、溜め(溜めターンと撃つターンの二つ)、ばらまき、貫通の７種類
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   10    コマンドID(弾幕攻撃 弱攻撃)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_10(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「稍微轻一点」"
+	CALL ADD_RAND_MESSAGE, @"「瞄准准确……」"
+	CALL ADD_RAND_MESSAGE, @"「轻轻地牵制……！」"
+		
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「多射击就能命中！」"
+		CALL ADD_RAND_MESSAGE, @"「稍微扭一下！」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「即使是弱攻击也能确保命中」"
+		CALL ADD_RAND_MESSAGE, @"「同时也是阻止行动的准确攻击」"
+		CALL ADD_RAND_MESSAGE, @"「看着看着，过来吧，能躲开吗」"
+		CALL ADD_RAND_MESSAGE, @"「即使是细小的攻击也会慢慢起作用」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「让你感到刺痛」"
+		CALL ADD_RAND_MESSAGE, @"「这个攻击怎么样，很难躲避吧」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（即使是弱攻击，如果命中就会畏缩……）"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「不要因为这种程度就倒下来，会让人失望的」"
+		CALL ADD_RAND_MESSAGE, @"「可以说是威慑吧」"
+	ENDSELECT
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   11    コマンドID(弾幕攻撃 中攻撃)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_11(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 汎用口上
+	CALL ADD_RAND_MESSAGE, @"「虽然威力不是很强……」"
+	CALL ADD_RAND_MESSAGE, @"「试试我的弹幕吧！」"
+	CALL ADD_RAND_MESSAGE, @"「不做的话，就会被做掉……！」"
+	
+	; 性格別追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「别躲开啊！」"
+		CALL ADD_RAND_MESSAGE, @"「来吧！」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「攻击和命中，平衡很重要」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「嘿！！」"
+		CALL ADD_RAND_MESSAGE, @"「啊，打中了！」"
+		CALL ADD_RAND_MESSAGE, @"「这种弹幕我也能……！」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「就这样吧」"
+	ENDSELECT
+	
+	
+	
+	
+	
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   12    コマンドID(弾幕攻撃 強攻撃)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_12(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 霊撃も強攻撃口上が呼び出される　●りばーす关于霊撃の登録番号が違うので、ここ关于通らない。ここ关于触手宮用
+	IF CFLAG:50 == 19
+		CALL ADD_RAND_MESSAGE, @"「有点累……！！」"
+		
+	; 通常の強攻撃
+	ELSE
+		CALL ADD_RAND_MESSAGE, @"「就这样吧！！」"
+		CALL ADD_RAND_MESSAGE, @"「相当……强劲！」"
+		CALL ADD_RAND_MESSAGE, @"「就这个……！」"
+			
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「来吧！！」"
+			CALL ADD_RAND_MESSAGE, @"「这家伙很痛的啊！」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「威力很大但很难命中，是个难点呢」"
+		CASE 性格_ぬけめがない
+			CALL ADD_RAND_MESSAGE, @"「被打中会很痛的！」"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「全力以赴！做好准备！」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「用力地攻击！」"
+			CALL ADD_RAND_MESSAGE, @"「就这样……怎么样……！」"
+			CALL ADD_RAND_MESSAGE, @"「准、准确地打中！」"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「不打算长时间折磨你」"
+			CALL ADD_RAND_MESSAGE, @"「如果疼的话，对不起！」"
+		CASE 性格_わがまま
+			CALL ADD_RAND_MESSAGE, @"「给你点痛苦，准确地打中来吧」"
+			CALL ADD_RAND_MESSAGE, @"「被打中会很痛的哦！」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   13    コマンドID(弾幕攻撃 溜め撃ち)
+; / ARG:2    0    0:溜め 1:撃ち
+; / ARGS:0        自分の名前
+
+;溜めターンの口上と、撃ったターンの口上がある
+
+;溜めターン
+@KOJO_DEFAULT_1_13_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「积蓄力量……」"
+	CALL ADD_RAND_MESSAGE, @"「呼……好累……」"
+
+	CALL ADD_RAND_MESSAGE, @"「有点危险但是……」"
+	CALL ADD_RAND_MESSAGE, @"「为了一口气解决……」"
+	CALL ADD_RAND_MESSAGE, @"「连障碍物一起……」"
+
+	CALL ADD_RAND_MESSAGE, @"「连地形都粉碎……」"
+	CALL ADD_RAND_MESSAGE, @"「这种攻击，就算躲在物影中也无法躲开啊……」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「让你见识一下我的绝招！！」"
+		CALL ADD_RAND_MESSAGE, @"「因为我无法控制力量的大小！！」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊啊啊啊……！」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「与其细小的攻击，还不如使用大招更好呢」"
+
+
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「啊啊啊啊啊……！」"
+	CASE 性格_ねっけつかん
+
+		CALL ADD_RAND_MESSAGE, @"「啊啊啊啊啊……！」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「稍等一下，我马上就把你吹飞」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（悄悄地……秘密地蓄力……）"
+	ENDSELECT
+RETURN 1
+
+
+;撃つターン
+@KOJO_DEFAULT_1_13_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「吃我一击！」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「砰飞飞飞飞飞！！！」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「我要全力以赴，做好准备！」"
+		CALL ADD_RAND_MESSAGE, @"「你能承受住这一击吗？」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「尽情地……！！」"
+		CALL ADD_RAND_MESSAGE, @"「用尽全力……！」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「全力一击，无论结果如何我都不在乎！」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（希望不要失手……！）"
+	ENDSELECT
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   14    コマンドID(弾幕　回避率低下　ばらまき)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_14(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+		CALL ADD_RAND_MESSAGE, @"「不会这么轻易就被打败……」"
+		CALL ADD_RAND_MESSAGE, @"「希望你能被我成功欺骗……」"
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+
+
+		CASE 性格_おせっかい
+
+			CALL ADD_RAND_MESSAGE, @"「不会按你的意思来的！」"
+			CALL ADD_RAND_MESSAGE, @"「如果能阻止敌人的动作，然后……！」"
+			CALL ADD_RAND_MESSAGE, @"「现在安静一会儿！」"
+
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「不会让你随心所欲！」"
+
+
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「不会按照你的意愿来！」"
+			CALL ADD_RAND_MESSAGE, @"「现在安静一会儿！」"
+			CALL ADD_RAND_MESSAGE, @"「让你见识一下经验的差距！」"
+
+		CASE 性格_がんばりや
+
+			CALL ADD_RAND_MESSAGE, @"「不会按你的意思来的！」"
+			CALL ADD_RAND_MESSAGE, @"「如果能阻止敌人的动作，然后……！」"
+		CASE 性格_きれもの
+
+			CALL ADD_RAND_MESSAGE, @"「现在安静一会儿！」"
+			CALL ADD_RAND_MESSAGE, @"「考虑两步、三步的先手……」"
+			CALL ADD_RAND_MESSAGE, @"「对方的生命力无法预测，必须考虑长期战斗……」"
+			CALL ADD_RAND_MESSAGE, @"「如果没有机会，就创造机会……」"
+			CALL ADD_RAND_MESSAGE, @"「不要过于急躁，等待好机会……」"
+			CALL ADD_RAND_MESSAGE, @"「这里是假弹幕……」"
+			CALL ADD_RAND_MESSAGE, @"「通过净化符浮游机雷。」"
+			CALL ADD_RAND_MESSAGE, @"「通过低速弹和高速弹制造时间差……」"
+			CALL ADD_RAND_MESSAGE, @"「不只是你们能使用毒素。」"
+			CALL ADD_RAND_MESSAGE, @"「原来如此。那么，让我们改变进攻方式吧」"
+
+		CASE 性格_くろうにん
+
+			CALL ADD_RAND_MESSAGE, @"「如果能阻止敌人的动作，然后……！」"
+			CALL ADD_RAND_MESSAGE, @"「要追逐得好……」"
+			CALL ADD_RAND_MESSAGE, @"「虽然觉得自己知道方法……」"
+
+		CASE 性格_しあわせもの
+
+			CALL ADD_RAND_MESSAGE, @"「只要设下这么多陷阱，总会有办法的！」"
+
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"「请不要躲避我这么多！」"
+			CALL ADD_RAND_MESSAGE, @"「这样下去，下次会更有趣的！」"
+			CALL ADD_RAND_MESSAGE, @"「给你标记一下吧」"
+			CALL ADD_RAND_MESSAGE, @"「这样就固定住了」"
+
+		CASE 性格_ぬけめがない
+
+			CALL ADD_RAND_MESSAGE, @"「现在安静一会儿！」"
+			CALL ADD_RAND_MESSAGE, @"「考虑两步、三步的先手……」"
+			CALL ADD_RAND_MESSAGE, @"「对方的生命力无法预测，必须考虑长期战斗……」"
+			CALL ADD_RAND_MESSAGE, @"「如果没有机会，就创造机会……」"
+			CALL ADD_RAND_MESSAGE, @"「不要过于急躁，等待好机会……」"
+			CALL ADD_RAND_MESSAGE, @"「这里是假弹幕……」"
+			CALL ADD_RAND_MESSAGE, @"「通过净化符浮游机雷。」"
+			CALL ADD_RAND_MESSAGE, @"「通过低速弹和高速弹制造时间差……」"
+			CALL ADD_RAND_MESSAGE, @"「不只是你们能使用毒素。」"
+
+			CALL ADD_RAND_MESSAGE, @"「原来如此。那么，让我们改变进攻方式吧」"
+		CASE 性格_ねっけつかん
+
+			CALL ADD_RAND_MESSAGE, @"「不会让你随心所欲！」"
+			CALL ADD_RAND_MESSAGE, @"「现在安静一会儿！」"
+		CASE 性格_のんきもの
+
+			CALL ADD_RAND_MESSAGE, @"「不要过于急躁，等待好机会……」"
+		CASE 性格_ひっこみじあん
+
+			CALL ADD_RAND_MESSAGE, @"「请不要再动了！」"
+			CALL ADD_RAND_MESSAGE, @"「要追逐得好……」"
+			CALL ADD_RAND_MESSAGE, @"「虽然觉得自己知道方法……」"
+
+		CASE 性格_やさしいひと
+
+			CALL ADD_RAND_MESSAGE, @"「请不要再动了！」"
+			CALL ADD_RAND_MESSAGE, @"「虽然觉得自己知道方法……」"
+			CALL ADD_RAND_MESSAGE, @"「要追逐得好……」"
+		CASE 性格_わがまま
+
+			CALL ADD_RAND_MESSAGE, @"「你这么烦人！就吃这个！」"
+			CALL ADD_RAND_MESSAGE, @"「你这么烦人！就吃这个！」"
+
+		ENDSELECT
+
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   15    コマンドID(弾幕　全体攻撃　貫通)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_15(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+		CALL ADD_RAND_MESSAGE, @"「不放更多弹幕的话……」"
+		CALL ADD_RAND_MESSAGE, @"「全力以赴！」"
+		CALL ADD_RAND_MESSAGE, @"「现在要改变局势！」"
+		CALL ADD_RAND_MESSAGE, @"「不能再让你继续下去了！」"
+
+		CALL ADD_RAND_MESSAGE, @"「如果能一下子打倒敌人……！」"
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+
+			CALL ADD_RAND_MESSAGE, @"「别再拖延了……！」"
+			CALL ADD_RAND_MESSAGE, @"「被……击败了！」"
+			CALL ADD_RAND_MESSAGE, @"「吹飞吧！」"
+			CALL ADD_RAND_MESSAGE, @"「贯穿吧！」"
+			CALL ADD_RAND_MESSAGE, @"「冲过去！」"
+
+			CALL ADD_RAND_MESSAGE, @"「吼叫吧！我的弹幕！」"
+		CASE 性格_がんばりや
+			CALL ADD_RAND_MESSAGE, @"「也许无法取胜……但我不会放弃！」"
+			CALL ADD_RAND_MESSAGE, @"「如果有缺口，就填补上。无论有多少漏洞，我都不会放弃！」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「激光……现在的我能射中吗」"
+
+		CASE 性格_くろうにん
+			CALL ADD_RAND_MESSAGE, @"「虽然不知道会不会成功……」"
+
+		CASE 性格_しあわせもの
+
+
+		CASE 性格_セクシーギャル
+
+			CALL ADD_RAND_MESSAGE, @"「呵呵。无论何时看到这种攻击，都会陶醉呢」"
+			CALL ADD_RAND_MESSAGE, @"「看，出来好多呢」"
+			CALL ADD_RAND_MESSAGE, @"「怎么办呢？放出来停不下来了」"
+			CALL ADD_RAND_MESSAGE, @"「贯穿到底！」"
+
+		CASE 性格_ぬけめがない
+			CALL ADD_RAND_MESSAGE, @"「激光……现在的我能射中吗」"
+
+		CASE 性格_ねっけつかん
+
+			CALL ADD_RAND_MESSAGE, @"「别再拖延了……！」"
+			CALL ADD_RAND_MESSAGE, @"「被……击败了！」"
+			CALL ADD_RAND_MESSAGE, @"「吹飞吧！」"
+			CALL ADD_RAND_MESSAGE, @"「一刀斩断！」"
+			CALL ADD_RAND_MESSAGE, @"「贯穿吧！」"
+
+			CALL ADD_RAND_MESSAGE, @"「冲过去！」"
+
+			CALL ADD_RAND_MESSAGE, @"「吼叫吧！我的弹幕！」"
+
+
+		CASE 性格_のんきもの
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「虽然不知道会不会成功……」"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「虽然不知道会不会成功……」"
+		CASE 性格_わがまま
+			CALL ADD_RAND_MESSAGE, @"「希望这个迷宫能消失！」"
+			CALL ADD_RAND_MESSAGE, @"「一刀斩断！」"
+			CALL ADD_RAND_MESSAGE, @"「我要把你串起来！」"
+		ENDSELECT
+
+RETURN 1
+
+
+
+
+

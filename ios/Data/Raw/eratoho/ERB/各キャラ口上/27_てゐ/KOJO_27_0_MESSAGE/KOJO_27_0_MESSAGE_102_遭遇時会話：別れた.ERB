@@ -1,0 +1,100 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 102 遭遇時会話：別れた
+; ------------------------------------------------------------------------------
+
+; □ 通常
+@KOJO_27_0_SYSTEM_MESSAGE_102_X_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あたしが好きそうな子がいたら、次会った時に教えてねえ♥」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「大丈夫だとは思うけどさ、万が一って事もあるし　気をつけなさいよ」\n"
+	ENDSELECT
+	
+	; キャラクター対応 追加口上
+	SELECTCASE NO:(ARG:1)
+	; 永琳
+	CASE 29
+		CALL KOJO_27_0_ADD_MESSAGE, @"（姫様が見てないところだと怖いんだよね、師匠……）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（一人にしておくと、それはそれで怖い気がするのよね……）\n"
+	; 輝夜
+	CASE 30
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ある程度死なないように頑張ってくださいよ～、多分死ぬと面倒なことになるんで」\n"
+	; 妹紅
+	CASE 31
+		CALL KOJO_27_0_ADD_MESSAGE, @"「死なない人間ってのは、こういう時気楽なもんねえ」\n"
+	; メディスン
+	CASE 33
+		CALL KOJO_27_0_ADD_MESSAGE, @"「よさげな毒があったら教えてね\n　同じように迷い込んだ人に売れば大儲け出来るから」\n"
+	ENDSELECT
+RETURN 1
+
+
+; □ 喪失中
+@KOJO_27_0_SYSTEM_MESSAGE_102_X_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「全部諦めちゃえば楽になれると思うわよ、あたしみたいに\n　じゃ、がんばってね♥」\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（あたしもそのうち……　ああなっちゃうかもしれない……）\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「悪いけど、今は連れてく余裕ないのよね」\n"
+	ENDSELECT
+	
+	
+	; 好感度別、追加口上
+	; 好感度:低
+	IF CFLAG:(ARG:1):5 < 0
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「そのまま倒れてれば犯され放題ね♪　囮やってる方が役に立つわよ♪」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「まあいいか、%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(NO:(ARG:1)))%なんて役立たずだし」\n"
+		ENDSELECT
+		
+	; 好感度:警戒
+	ELSEIF CFLAG:(ARG:1):5 < 50
+		SELECTCASE KOJO_MODE
+		CASEELSE
+		ENDSELECT
+		
+	; 好感度:通常
+	ELSEIF CFLAG:(ARG:1):5 < 200
+		SELECTCASE KOJO_MODE
+		CASEELSE
+		ENDSELECT
+		
+	; 好感度:高
+	ELSEIF CFLAG:(ARG:1):5 >= 200
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「うう……　連れてってあげたいなあ、%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(NO:(ARG:1)))%……」\n"
+		ENDSELECT
+	ENDIF
+	
+	; キャラクター対応 追加口上
+	SELECTCASE NO:(ARG:1)
+	; 鈴仙
+	CASE 28
+		CALL KOJO_27_0_ADD_MESSAGE, @"（何とかして連れて帰ってあげたいけど、余裕ないしなあ……　%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(NO:(ARG:1)))%……）\n"
+	; 永琳
+	CASE 29
+		CALL KOJO_27_0_ADD_MESSAGE, @"「さ、さすがに師匠が倒れてるのは想定外だったわ……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「まあそのうち元気に復活するでしょ、死なないし、師匠だし」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「連れて行かないと後が怖いけど、余裕ないし……」\n"
+	; 輝夜
+	CASE 30
+		CALL KOJO_27_0_ADD_MESSAGE, @"（まあ姫様なら大丈夫でしょ、死なないし…）\n"
+	; 妹紅
+	CASE 31
+		CALL KOJO_27_0_ADD_MESSAGE, @"「こ、こういうのは慣れてるわよね……　じゃあまたあとで……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「うーん、ほっといてもそのうち回復するよね？　多分……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「姫様とやりあった後でこうなってるのよく見るし、まあ大丈夫でしょ……」\n"
+	; メディスン
+	CASE 33
+		CALL KOJO_27_0_ADD_MESSAGE, @"（毒切れかしら？　でも毒の補充方法とか知らないし、どうしようもないわ……）\n"
+	ENDSELECT
+RETURN 1

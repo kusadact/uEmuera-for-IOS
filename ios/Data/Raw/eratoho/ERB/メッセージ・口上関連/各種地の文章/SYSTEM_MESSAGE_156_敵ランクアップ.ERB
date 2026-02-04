@@ -1,0 +1,333 @@
+﻿;捕食された後の描写
+@SYSTEM_MESSAGE_156(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SELECTCASE ARG:1
+	CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML (SYSTEM_MESSAGE_156)敌人的种类不正确 ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  (SYSTEM_MESSAGE_156)敵の種類が不正です ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+ENDIF
+
+	CASE 4
+IF FLAG:AUTOMODE
+    PRINTFORML 亲手捕获了新的祭品的%ARGS:1%以新的猎物的生命力为食粮不祥地成长着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  亲手捕获了新的祭品的%ARGS:1%以新的猎物的生命力为食粮不祥地成长着…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 成为%ARGS:1%的新器官的一部分的%ARGS:0%的脑袋已经什么也思考不了了
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  成为%ARGS:1%的新器官的一部分的%ARGS:0%的脑袋已经什么也思考不了了
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 只能在无尽的噩梦中按照%ARGS:1%的意思继续生下魔物
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  只能在无尽的噩梦中按照%ARGS:1%的意思继续生下魔物
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 在看似永恒的时间里、所能做的事只有继续沉浸在身体所带来的快感洪流中…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在看似永恒的时间里、所能做的事只有继续沉浸在身体所带来的快感洪流中…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 品味到新鲜饵食味道的%ARGS:1%为了捕获更多的猎物、进化的更加凶恶了
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  品味到新鲜饵食味道的%ARGS:1%为了捕获更多的猎物、进化的更加凶恶了
+ENDIF
+
+	CASE 5
+IF FLAG:AUTOMODE
+    PRINTFORML 眼前蠢动着的红色藤蔓状触手团的根部……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  眼前蠢动着的红色藤蔓状触手团的根部……
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 是瘫软在地一动不动、用浑浊的眼睛瞪着虚空的%ARGS:0%
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  是瘫软在地一动不动、用浑浊的眼睛瞪着虚空的%ARGS:0%
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 在%ARGS:0%身上延伸的根状触手不断搏动、吸取着什么东西
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在%ARGS:0%身上延伸的根状触手不断搏动、吸取着什么东西
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 当搏动完全停止、释放出%ARGS:0%的时候、那株植物的身体已经染上了鲜艳的红色……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  当搏动完全停止、释放出%ARGS:0%的时候、那株植物的身体已经染上了鲜艳的红色……
+ENDIF
+
+	CASE 7
+IF FLAG:AUTOMODE
+    PRINTFORML 大大膨胀起的腹部搏动着、比以往任何时候都更加狰狞的蠕虫抬起了镰刀状的头颅
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  大大膨胀起的腹部搏动着、比以往任何时候都更加狰狞的蠕虫抬起了镰刀状的头颅
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 突然、腹部里发出了又长又细的悲鸣、眼看着渐渐萎缩下去了……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  突然、腹部里发出了又长又细的悲鸣、眼看着渐渐萎缩下去了……
+ENDIF
+
+	CASE 9
+		;表現難易度的にも似たような感じかなーと思ったのでRAND分岐に
+		IF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 巨大的章鱼一样的生物伫立在那里、像是在守护黏液的牢笼
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  巨大的章鱼一样的生物伫立在那里、像是在守护黏液的牢笼
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 在那个笼子里、%ARGS:0% 被囚禁着、墙壁和地板上粘满了粘液
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在那个笼子里、%ARGS:0% 被囚禁着、墙壁和地板上粘满了粘液
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的腹部和手脚上都被产下了大量细长的卵
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的腹部和手脚上都被产下了大量细长的卵
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 全身抽搐了一下的%ARGS:0%、把卵伴着唾液一起喷出来、之后就一动不动了……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  全身抽搐了一下的%ARGS:0%、把卵伴着唾液一起喷出来、之后就一动不动了……
+ENDIF
+
+		ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 章鱼确认了%ARGS:0%已经失去力量后、用自己吐出的粘液把她钉在了墙上
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  章鱼确认了%ARGS:0%已经失去力量后、用自己吐出的粘液把她钉在了墙上
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 像人偶一样任其摆布%ARGS:0%的身体不知何时被关进了黏液的笼子里…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  像人偶一样任其摆布%ARGS:0%的身体不知何时被关进了黏液的笼子里…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 当它把无吸盘的触手插入到%ARGS:0%的阴道底部时、便开始颤抖着产卵，直到%ARGS:0%的腹部隆起为止
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  当它把无吸盘的触手插入到%ARGS:0%的阴道底部时、便开始颤抖着产卵，直到%ARGS:0%的腹部隆起为止
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 然后触手又被塞进嘴里和屁股里产卵。当它们完成任务后、这些触手就会被扯断，又从身体里面长出了更多狰狞的触手！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  然后触手又被塞进嘴里和屁股里产卵。当它们完成任务后、这些触手就会被扯断，又从身体里面长出了更多狰狞的触手！
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 在它旁边的有气无力的%ARGS:0%咳嗽了一声、一团带着粘液的卵从嘴里拉着线被咳了出来、慢慢落到了地面上…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在它旁边的有气无力的%ARGS:0%咳嗽了一声、一团带着粘液的卵从嘴里拉着线被咳了出来、慢慢落到了地面上…
+ENDIF
+
+		ENDIF
+	CASE 11
+IF FLAG:AUTOMODE
+    PRINTFORML 比以前更加巨大化、并且增加了不祥之感的海葵一样的生物静静地摇曳着
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  比以前更加巨大化、并且增加了不祥之感的海葵一样的生物静静地摇曳着
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 从那片触手之海中伸出一只纤弱的手、仿佛在求救一般
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从那片触手之海中伸出一只纤弱的手、仿佛在求救一般
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 就是在炫耀似的哧溜一声把它吞了下去、那个生物心满意足地抖动着身体……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  就是在炫耀似的哧溜一声把它吞了下去、那个生物心满意足地抖动着身体……
+ENDIF
+
+	CASE 13
+IF FLAG:AUTOMODE
+    PRINTFORML 在那半透明的身体中、连手指都不动一根的%ARGS:0%浸没在里面
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在那半透明的身体中、连手指都不动一根的%ARGS:0%浸没在里面
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 两穴被扩张地越来越大、从冒出的气泡和污秽的运动中很容易想象%ARGS:0%正在不断地被陵辱
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  两穴被扩张地越来越大、从冒出的气泡和污秽的运动中很容易想象%ARGS:0%正在不断地被陵辱
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的身体每次颤抖、史莱姆的体积就会增加、动作也会变得有力
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的身体每次颤抖、史莱姆的体积就会增加、动作也会变得有力
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 被凌辱过后连手指都活动不了的%ARGS:0%被吐出后、史莱姆强有力的蠕动着！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被凌辱过后连手指都活动不了的%ARGS:0%被吐出后、史莱姆强有力的蠕动着！
+ENDIF
+
+	CASE 15
+IF FLAG:AUTOMODE
+    PRINTFORML 随着被捕获的%ARGS:0%的反应逐渐减弱、曼陀罗花精用巨大的花瓣将自己和猎物包裹起来
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  随着被捕获的%ARGS:0%的反应逐渐减弱、曼陀罗花精用巨大的花瓣将自己和猎物包裹起来
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 曼陀罗花精和%ARGS:0%……化身为鲜红葆蕾的姿态……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  曼陀罗花精和%ARGS:0%……化身为鲜红葆蕾的姿态……
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 从花蕾中不断传来黏黏的水声，从缝隙中不时伸出的触手来看、不难想象里面的样子……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从花蕾中不断传来黏黏的水声，从缝隙中不时伸出的触手来看、不难想象里面的样子……
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 突然、房间里那些淫靡的声音停止下来、变得更加妖艳的曼陀罗花精绽放开来！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  突然、房间里那些淫靡的声音停止下来、变得更加妖艳的曼陀罗花精绽放开来！
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  
+ENDIF
+
+	CASE 17
+		;ドッペルは何も表示しない
+		;人妖に化ける瞬間が分かるとアレなので、何も表示しない方が良さそう
+	CASE 62
+IF FLAG:AUTOMODE
+    PRINTFORML 在眼前蠕动着互相缠绕的像藤蔓一样的触手牢笼中……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在眼前蠕动着互相缠绕的像藤蔓一样的触手牢笼中……
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 触手缠绕着全身、用阴暗的眼睛无力地凝视着虚空的%ARGS:0%被悬吊着
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手缠绕着全身、用阴暗的眼睛无力地凝视着虚空的%ARGS:0%被悬吊着
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 遍布%ARGS:0%全身的根须不停地搏动着、吮吸着什么东西
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  遍布%ARGS:0%全身的根须不停地搏动着、吮吸着什么东西
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 当搏动完全停止%ARGS:0%也被解放时、它长出了新的藤蔓、在顶端开出了鲜艳的花朵！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  当搏动完全停止%ARGS:0%也被解放时、它长出了新的藤蔓、在顶端开出了鲜艳的花朵！
+ENDIF
+
+	CASE 65
+IF FLAG:AUTOMODE
+    PRINTFORML 巨大的阴茎形态的异样的触手……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  巨大的阴茎形态的异样的触手……
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 蠕动的阴囊表面有时会浮现出人的手和脸的形状
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  蠕动的阴囊表面有时会浮现出人的手和脸的形状
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 那无疑是成为怪物的饵食的%ARGS:0%
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  那无疑是成为怪物的饵食的%ARGS:0%
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 怪物为了从吞下的%ARGS:0%中榨取全部的力量、如字面意思一样、像濒临绝顶的阴茎一样颤抖
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  怪物为了从吞下的%ARGS:0%中榨取全部的力量、如字面意思一样、像濒临绝顶的阴茎一样颤抖
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 不久、兴奋迎来了最高潮、从怪物的龟头的部分吐出了大量的白浊、以及被吞噬的%ARGS:0%
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  不久、兴奋迎来了最高潮、从怪物的龟头的部分吐出了大量的白浊、以及被吞噬的%ARGS:0%
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 在沉入白浊的海洋中、身体一动不动的%ARGS:0%面前气势汹汹的站立着的怪物、龟头和以前相比黑红色加深了
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在沉入白浊的海洋中、身体一动不动的%ARGS:0%面前气势汹汹的站立着的怪物、龟头和以前相比黑红色加深了
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 挺立的阴茎、也获得了更强的力量！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  挺立的阴茎、也获得了更强的力量！
+ENDIF
+
+	CASEELSE
+		;特に何も表示しない
+ENDSELECT
+

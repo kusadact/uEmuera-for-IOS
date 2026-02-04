@@ -1,0 +1,2341 @@
+﻿;こっちも9をキャラのNoに置き換えること。777は口上のキャラと絡ませたいキャラのNoを入れる
+;ふたなりの管理。趣味じゃない人は9と777を置き換えたら後は放置でおk        YYはとりあえず777に置き換えて放置しています。そのうち分岐作りたい
+;ちなみにデフォルトだとふたなり系は戦意喪失時は458を除いて来ない
+@FUTANARI_9_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+SELECTCASE ARG:0
+	;射精　CFLAG:805 == 3で自慰の判別可能　ARG:1はHP減少量
+	CASE 451
+		;射精中毒３
+		IF ABL:12 >= 3 
+			IF RAND:2 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「だ、だめ♪またはしたなくイっちゃう♪」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「だ、だめ♪またはしたなくイっちゃう♪」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「びゅるってチンポから精子出る！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「びゅるってチンポから精子出る！」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あ、イク！イク！あ、ぁああ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あ、イク！イク！あ、ぁああ！」
+				ENDIF
+			ENDIF
+		;射精中毒２
+		ELSEIF ABL:12 == 2
+			IF FLAG:AUTOMODE
+				PRINTFORML 「また、気持ちいいのが！だめなのに！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「また、気持ちいいのが！だめなのに！」
+			ENDIF
+		;射精中毒１以下
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「また、この変な感じ…止まって！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「また、この変な感じ…止まって！」
+			ENDIF
+		ENDIF
+		;HP0にいかない時はここで自慰フラグ洗浄、6/10版はここに欠陥があった
+		SIF (BASE:HP <= 0 || BASE:HP > ARG:1) && CFLAG:805 == 3
+			CFLAG:805 = 0
+
+	;ふたなり終了
+	CASE 452
+		;射精中毒２以上
+		IF ABL:12 > 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ、やっととれた……よかった」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ、やっととれた……よかった」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML （とれてよかったのに、ちょっと寂しい。やだ私、何言ってるの）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW （とれてよかったのに、ちょっと寂しい。やだ私、何言ってるの）
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ、やっと取れましたね。よかった」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ、やっと取れましたね。よかった」
+			ENDIF
+		ENDIF
+	;ふたなり時、戦闘中に発情　発情確率は射精中毒×５％
+	CASE 453
+		IF ABL:12 >= 3 ;射精中毒
+			IF RAND:2 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ああ、切ないの！もう戦いなんてどうでもいいから、誰かにナカダシさせて！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ああ、切ないの！もう戦いなんてどうでもいいから、誰かにナカダシさせて！」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こんな場所なんですからずっと正気でいなさいって方が無茶ですよね♪」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こんな場所なんですからずっと正気でいなさいって方が無茶ですよね♪」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「だから私がこのチンポの欲望に負けちゃうのも当たり前なんです♪」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「だから私がこのチンポの欲望に負けちゃうのも当たり前なんです♪」
+				ENDIF
+			ENDIF
+		ELSEIF ABL:12 == 2
+			IF FLAG:AUTOMODE
+				PRINTFORML 「いけない…、いけないのに…、皆の期待を裏切ることになるのに…。このままじゃイケないの！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「いけない…、いけないのに…、皆の期待を裏切ることになるのに…。このままじゃイケないの！」
+			ENDIF
+		ELSEIF ABL:12 == 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「この高ぶりは一体…！？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「この高ぶりは一体…！？」
+			ENDIF
+		ELSE			
+		ENDIF
+	;ふたなり永久化　必ず射精中毒３
+	CASE 454
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あら、どうやらわたしのカラダの一部になってしまったようですね」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あら、どうやらわたしのカラダの一部になってしまったようですね」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ちょうどよかったですわ♪これぐらいのおちんちんがちょうど欲しかったところですの」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ちょうどよかったですわ♪これぐらいのおちんちんがちょうど欲しかったところですの」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「これでお嬢様を喜ばせることができると思うと………あら、大きくなってきちゃいました♪」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「これでお嬢様を喜ばせることができると思うと………あら、大きくなってきちゃいました♪」
+		ENDIF
+		CALL GET_PT_CHAR_NO_9_0(10)
+		IF RESULT > 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ちょうどいいですね、お嬢様。力を抜いてください、私がとっても良くして差し上げますから♪」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ちょうどいいですね、お嬢様。力を抜いてください、私がとっても良くして差し上げますから♪」
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「早くお嬢様を見つけませんと♪」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「早くお嬢様を見つけませんと♪」
+			ENDIF
+		ENDIF
+	;性欲発散（最初に襲った）
+	CASE 455
+		IF ABL:12 >= 3 ;射精中毒
+			SELECTCASE NO:(ARG:3)
+				;レミリアを襲う
+				CASE 10
+					;面倒な人は分岐を削ってまとめましょう
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0, 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ああ♪お嬢様♪お嬢様のこのぷにまんはどうしてこんなにも濡れているんですか？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ああ♪お嬢様♪お嬢様のこのぷにまんはどうしてこんなにも濡れているんですか？」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「こんなにも私のおちんぽを待ちわびているのなら期待に答えないといけませんね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「こんなにも私のおちんぽを待ちわびているのなら期待に答えないといけませんね♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「先っちょ、入り口、さあ、入れますよ♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「先っちょ、入り口、さあ、入れますよ♪」
+							ENDIF
+						;胸で
+						CASE 5, 6
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のこのスベスベ肌、本当にきれいですわ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のこのスベスベ肌、本当にきれいですわ」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「この肌がザーメンでどろどろになったらと思うと、それだけでもうおちんちんが大きくなってしまって♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「この肌がザーメンでどろどろになったらと思うと、それだけでもうおちんちんが大きくなってしまって♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ねえ、じっとしていてくださいまし」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ねえ、じっとしていてくださいまし」
+							ENDIF
+						;巨乳で
+						CASE 7, 8
+							IF FLAG:AUTOMODE
+								PRINTFORML 「すっかり大きくなってしまいましたね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「すっかり大きくなってしまいましたね♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ここの魔物に可愛がられて、たくさんザーメンで汚されて…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ここの魔物に可愛がられて、たくさんザーメンで汚されて…」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「でも私はただ汚すだけじゃなく気持ちよくして差し上げますから♪安心してください。」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「でも私はただ汚すだけじゃなく気持ちよくして差し上げますから♪安心してください。」
+							ENDIF
+							IF RAND:2 == 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「さ、両手で持ち上げてください♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「さ、両手で持ち上げてください♪」
+								ENDIF
+							ENDIF
+						;尻で
+						CASE 10, 11
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ふふふ…♪お嬢様のアナルはエッチですね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ふふふ…♪お嬢様のアナルはエッチですね♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「私がこうやっておちんちんで縁をぬりぬりするとパクパク口を開くんですから♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「私がこうやっておちんちんで縁をぬりぬりするとパクパク口を開くんですから♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「そんなにお尻でエッチするのがいいなら今度からずっとこっちでしましょうか？前は玩具でも入れておきましょう」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「そんなにお尻でエッチするのがいいなら今度からずっとこっちでしましょうか？前は玩具でも入れておきましょう」
+							ENDIF
+						;口で
+						CASE 15, 16
+							IF FLAG:AUTOMODE
+								PRINTFORML 「はいお嬢様、おくちあーんですよ♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「はいお嬢様、おくちあーんですよ♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のアツアツトロトロのお口はもうおまんこと同じくらい名器なんですから♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のアツアツトロトロのお口はもうおまんこと同じくらい名器なんですから♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「牙に触れないようにズコズコする緊張感もまたたまりませんわ～♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「牙に触れないようにズコズコする緊張感もまたたまりませんわ～♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あ、安心してください♪喉の奥に直接こってりザーメン流し込んで差し上げますから♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あ、安心してください♪喉の奥に直接こってりザーメン流し込んで差し上げますから♪」
+							ENDIF
+					ENDSELECT
+				CASEELSE
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0, 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「こんなにトロトロになってるんじゃ、犯されても文句はいえませんね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「こんなにトロトロになってるんじゃ、犯されても文句はいえませんね♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「気持ちよくして差し上げますから、気持ちよくしてください♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「気持ちよくして差し上げますから、気持ちよくしてください♪」
+							ENDIF
+						;巨乳で
+						CASE 7, 8
+							IF FLAG:AUTOMODE
+								PRINTFORML 「たぷたぷのおっぱい、前から使ってみたかったんです♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「たぷたぷのおっぱい、前から使ってみたかったんです♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「こうして寄せて…、あっ♪本当におっぱがおまんこみたいになりました♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「こうして寄せて…、あっ♪本当におっぱがおまんこみたいになりました♪」
+							ENDIF
+						;尻で
+						CASE 10, 11
+							IF FLAG:AUTOMODE
+								PRINTFORML 「私がこのおちんちんであなたのお尻を開発して差し上げます♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「私がこのおちんちんであなたのお尻を開発して差し上げます♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「大丈夫ですよすぐに気持ちよくなれますから♪とどめはもちろんナカダシ♪癖になるまで離してあげませんから」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「大丈夫ですよすぐに気持ちよくなれますから♪とどめはもちろんナカダシ♪癖になるまで離してあげませんから」
+							ENDIF
+						;口で
+						CASE 15, 16
+							IF FLAG:AUTOMODE
+								PRINTFORML 「はい、あーんしてください。」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「はい、あーんしてください。」
+							ENDIF
+					ENDSELECT
+				ENDSELECT
+		ELSEIF ABL:12 == 2
+			SELECTCASE NO:(ARG:3)
+				;レミリアを襲う
+				CASE 10
+					;面倒な人は分岐を削ってまとめましょう
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0, 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様、その、すみません…。咲夜はおちんちんの誘惑に勝てませんでした…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様、その、すみません…。咲夜はおちんちんの誘惑に勝てませんでした…」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のソコを見ているとどうしても、これを入れたくなってしまって」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のソコを見ているとどうしても、これを入れたくなってしまって」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「膣中にだけは出しませんから！射精するときはちゃんと抜きますから！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「膣中にだけは出しませんから！射精するときはちゃんと抜きますから！」
+							ENDIF
+						;胸で
+						CASE 5, 6
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のおっぱい…薄くてかわいらしい…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のおっぱい…薄くてかわいらしい…」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「時々これを汚せたらどれだけ幸せだろうかって思っちゃうんです」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「時々これを汚せたらどれだけ幸せだろうかって思っちゃうんです」
+							ENDIF
+						;巨乳で
+						CASE 7, 8
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のおっぱいこんなにも膨らんで風船みたいです……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のおっぱいこんなにも膨らんで風船みたいです……」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ちょっと嫉妬してしまいました。だからそう、これはお仕置き、お仕置きなんです」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ちょっと嫉妬してしまいました。だからそう、これはお仕置き、お仕置きなんです」
+							ENDIF
+						;尻で
+						CASE 10, 11
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様…、今度はお尻の穴を使わせてくださいませ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様…、今度はお尻の穴を使わせてくださいませ！」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のちいさなお腹の中を私のザーメンでパンパンにしたいって、そう思ってしまうんです」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のちいさなお腹の中を私のザーメンでパンパンにしたいって、そう思ってしまうんです」
+							ENDIF
+						;口で
+						CASE 15, 16
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のお口、使わせてくださいね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のお口、使わせてくださいね」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「小さなお口を私のおちんちんでこじ開けてしゃぶりついてもらったらと最近そんな想像ばかりですの」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「小さなお口を私のおちんちんでこじ開けてしゃぶりついてもらったらと最近そんな想像ばかりですの」
+							ENDIF
+					ENDSELECT
+				CASEELSE
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0, 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「こんなにいやらしいカラダなら仕方ないわ、そう仕方のないことなの…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「こんなにいやらしいカラダなら仕方ないわ、そう仕方のないことなの…」
+							ENDIF
+						;巨乳で
+						CASE 7, 8
+							IF FLAG:AUTOMODE
+								PRINTFORML 「なによ、このタユンタユンの胸は！許さないわ、こんなおっぱいは私のオナホールにしてどろどろにしたあげるんだから！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「なによ、このタユンタユンの胸は！許さないわ、こんなおっぱいは私のオナホールにしてどろどろにしたあげるんだから！」
+							ENDIF
+						;尻で
+						CASE 10, 11
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ああ、私、お尻に挿入れるの癖になったかもしれないわ…。」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ああ、私、お尻に挿入れるの癖になったかもしれないわ…。」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「このままごしごしして中にびゅってするのがもう、止められないかも♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「このままごしごしして中にびゅってするのがもう、止められないかも♪」
+							ENDIF
+						;口で
+						CASE 15, 16
+							IF FLAG:AUTOMODE
+								PRINTFORML 「その、使わせてもらうわよ。こんな名器な口が悪いのよ…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「その、使わせてもらうわよ。こんな名器な口が悪いのよ…」
+							ENDIF
+					ENDSELECT
+				ENDSELECT			
+		ELSE
+		ENDIF
+	;性欲発散（便乗して襲いかかった）
+	CASE 456
+		IF ABL:12 == 3
+			SELECTCASE NO:(ARG:3)
+				;レミリアを襲う
+				CASE 10
+					;面倒な人は分岐を削ってまとめましょう
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0, 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のおまんこ、もうぐちょぐちょ♪でも咲夜はどんなお嬢様でもお支えします♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のおまんこ、もうぐちょぐちょ♪でも咲夜はどんなお嬢様でもお支えします♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ああ♪どろどろがぬめって！いつもよりイイ♪あ、お嬢様？気持ちいいですか？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ああ♪どろどろがぬめって！いつもよりイイ♪あ、お嬢様？気持ちいいですか？」
+							ENDIF
+						;胸で
+						CASE 5, 6,7,8
+							IF FLAG:AUTOMODE
+								PRINTFORML 「エッチなにおいがすごいですよお嬢様」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「エッチなにおいがすごいですよお嬢様」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「これなら今更ちょっとやそっと増えたところで変わらないですね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「これなら今更ちょっとやそっと増えたところで変わらないですね♪」
+							ENDIF
+						;尻で
+						CASE 10, 11
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ふふ♪お嬢様のアナルからだらだらザーメン零れちゃって、まるでしっぽですね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ふふ♪お嬢様のアナルからだらだらザーメン零れちゃって、まるでしっぽですね♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「そのザーメンしっぽ、もっと太くして上げます♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「そのザーメンしっぽ、もっと太くして上げます♪」
+							ENDIF
+						;口で
+						CASE 15, 16
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ああ♪素敵です♪お嬢様♪お嬢様のお口はいつだって一番の名器です♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ああ♪素敵です♪お嬢様♪お嬢様のお口はいつだって一番の名器です♪」
+							ENDIF
+					ENDSELECT
+				CASEELSE
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0, 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「おまんこ開くとさっきのザーメン零れてきちゃいますね♪このザーメンは誰のですか？それとも触手のですか？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「おまんこ開くとさっきのザーメン零れてきちゃいますね♪このザーメンは誰のですか？それとも触手のですか？」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「乱れるあなたを見ていたら私も我慢できなくなってしまいまして、責任、とってくださいね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「乱れるあなたを見ていたら私も我慢できなくなってしまいまして、責任、とってくださいね♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あは♪やっぱり精液濡れになったおまんこのぬめりは最高ですわ♪もっと突いてあげる♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あは♪やっぱり精液濡れになったおまんこのぬめりは最高ですわ♪もっと突いてあげる♪」
+							ENDIF
+						;胸で
+						CASE 5, 6
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ふふ、胸と言わず体中白く染めてあげるわ♪カラダのナカもそともね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ふふ、胸と言わず体中白く染めてあげるわ♪カラダのナカもそともね♪」
+							ENDIF
+						;尻で
+						CASE 10, 11
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もう最近では定期的に誰かのお尻を犯さないとどうにかなりそうなんです♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もう最近では定期的に誰かのお尻を犯さないとどうにかなりそうなんです♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ちょうどいいザーメンケツマンコがあったので使わせてくださいね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ちょうどいいザーメンケツマンコがあったので使わせてくださいね♪」
+							ENDIF
+						;口で
+						CASE 15, 16
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もう少し大きく開いてもらえます？そうしないと喉の奥が突けなくて♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もう少し大きく開いてもらえます？そうしないと喉の奥が突けなくて♪」
+							ENDIF
+					ENDSELECT
+				ENDSELECT
+		ELSEIF ABL:12 == 2
+			SELECTCASE NO:(ARG:3)
+				;777のキャラを襲う
+				CASE 777
+					;面倒な人は分岐を削ってまとめましょう
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0, 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様…私もご一緒していいですか？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様…私もご一緒していいですか？」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「………いいんですね♪はい、では遠慮なく♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「………いいんですね♪はい、では遠慮なく♪」
+							ENDIF
+						;尻で
+						CASE 10, 11
+							IF FLAG:AUTOMODE
+								PRINTFORML 「こんなものを見せられて私だけ蚊帳の外はないですよね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「こんなものを見せられて私だけ蚊帳の外はないですよね♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もうずいぶんナカダシされているようですので私もナカに射精させてもらいますね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もうずいぶんナカダシされているようですので私もナカに射精させてもらいますね♪」
+							ENDIF
+						;口で
+						CASE 15, 16
+							IF FLAG:AUTOMODE
+								PRINTFORML 「亀頭のエラは精液を掻きだすためにあるそうなんです」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「亀頭のエラは精液を掻きだすためにあるそうなんです」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のザーメンまみれになったお口を綺麗にして差し上げます。はい、あーん」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のザーメンまみれになったお口を綺麗にして差し上げます。はい、あーん」
+							ENDIF
+					ENDSELECT
+				CASEELSE
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0, 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「その、私も…使わせてもらうわよ。これだけ汚れてるんですから…ちょっと汚れるくらい…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「その、私も…使わせてもらうわよ。これだけ汚れてるんですから…ちょっと汚れるくらい…」
+							ENDIF
+						;胸で
+						CASE 5, 6
+							IF FLAG:AUTOMODE
+								PRINTFORML 「その、私も…使わせてもらうわよ。これだけ汚れてるんですから…ちょっと汚れるくらい…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「その、私も…使わせてもらうわよ。これだけ汚れてるんですから…ちょっと汚れるくらい…」
+							ENDIF
+						;尻で
+						CASE 10, 11
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お尻犯すのが癖になっちゃったみたいなんです。使わせてくださいね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お尻犯すのが癖になっちゃったみたいなんです。使わせてくださいね」
+							ENDIF
+						;口で
+						CASE 15, 16
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もう少し大きく開いてもらえます？そうしないと喉の奥が突けなくて♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もう少し大きく開いてもらえます？そうしないと喉の奥が突けなくて♪」
+							ENDIF
+					ENDSELECT
+				ENDSELECT
+		ELSE
+		ENDIF
+	;性欲発散（相手が催眠状態）
+	CASE 457
+		IF ABL:12 >= 3 ;射精中毒
+			SELECTCASE NO:(ARG:3)
+				;レミリアを襲う
+				CASE 10
+					;面倒な人は分岐を削ってまとめましょう
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ごくっ…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ごくっ…」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML （今ならお嬢様食べ放題……どんな変態的なプレイでも…）
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW （今ならお嬢様食べ放題……どんな変態的なプレイでも…）
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様、お体綺麗にさせていただきますね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様、お体綺麗にさせていただきますね」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML （お嬢様のぷにまんパンパンしてこってりザーメンで子宮風船みたいにしても！）
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW （お嬢様のぷにまんパンパンしてこってりザーメンで子宮風船みたいにしても！）
+							ENDIF
+						;胸で
+						CASE 5
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のおっぱいは流石吸血鬼のおっぱいですわ♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のおっぱいは流石吸血鬼のおっぱいですわ♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「どれだけザーメンで汚してもまだ汚したりない気がします」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「どれだけザーメンで汚してもまだ汚したりない気がします」
+							ENDIF
+						;尻で
+						CASE 10
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様！お嬢様！腰が、もう止まりません！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様！お嬢様！腰が、もう止まりません！」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ああ！イク♪もう、あ、あ！お嬢様の！アナル、ザーメンタンクにしますぅぅぅぅ～！！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ああ！イク♪もう、あ、あ！お嬢様の！アナル、ザーメンタンクにしますぅぅぅぅ～！！」
+							ENDIF
+						;口で
+						CASE 15
+							IF FLAG:AUTOMODE
+								PRINTFORML 「根元まで押し込むと先端が完全に喉の中に入ってしまうんですね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「根元まで押し込むと先端が完全に喉の中に入ってしまうんですね♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「亀頭を喉で磨かれて♪もう、長く…持ちません♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「亀頭を喉で磨かれて♪もう、長く…持ちません♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「連続射精でお嬢様のお腹の中全部私のザーメンに置き換えて差し上げますから」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「連続射精でお嬢様のお腹の中全部私のザーメンに置き換えて差し上げますから」
+							ENDIF
+					ENDSELECT
+				CASEELSE
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ふふ…♪こんな環境で無防備を晒す方がいけないのよ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ふふ…♪こんな環境で無防備を晒す方がいけないのよ」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あなたのおまんこは私のもの、１発や２発じゃ済まさないんだから♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あなたのおまんこは私のもの、１発や２発じゃ済まさないんだから♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「そうね、あなたのお腹がぷっくり膨らむまではね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「そうね、あなたのお腹がぷっくり膨らむまではね」
+							ENDIF
+						;胸で
+						CASE 5
+							IF FLAG:AUTOMODE
+								PRINTFORML 「おっぱいでごしごし使われても私が見えていますか～？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「おっぱいでごしごし使われても私が見えていますか～？」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「見えていませんね♪好都合です♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「見えていませんね♪好都合です♪」
+							ENDIF
+						;尻で
+						CASE 10
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もう♪こんなに魅力的なお尻、犯したくなるのは当然と言いますか♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もう♪こんなに魅力的なお尻、犯したくなるのは当然と言いますか♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ほらもう！私も腰が！勝手に、止まらない！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ほらもう！私も腰が！勝手に、止まらない！」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もう！出る、出る！アナルにナカダシ～～！！んんぁ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もう！出る、出る！アナルにナカダシ～～！！んんぁ！」
+							ENDIF
+						;口で
+						CASE 15
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ほらもう少し大きく開けて、そうすると…私がきもちいいから♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ほらもう少し大きく開けて、そうすると…私がきもちいいから♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「気が付いたら自分の口がおマンコ並みの名器にされてたなんて♪なんて…ステキ♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「気が付いたら自分の口がおマンコ並みの名器にされてたなんて♪なんて…ステキ♪」
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+		ELSEIF ABL:12 == 2
+			SELECTCASE NO:(ARG:3)
+				;レミリアのキャラを襲う
+				CASE 10
+					;面倒な人は分岐を削ってまとめましょう
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様…ああ、もう我慢できません！挿入れますよ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様…ああ、もう我慢できません！挿入れますよ」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ああ♪お嬢様の小さいおまんこがわたしのおちんちんにぴったり吸い付いて♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ああ♪お嬢様の小さいおまんこがわたしのおちんちんにぴったり吸い付いて♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様？本当は起きてるんじゃありませんか？………そうですか、寝たふりのままがいいと」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様？本当は起きてるんじゃありませんか？………そうですか、寝たふりのままがいいと」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ではこのキュンキュンおねだりするおまんこにたっぷりと、奥の奥でナカダシさせてもらますね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ではこのキュンキュンおねだりするおまんこにたっぷりと、奥の奥でナカダシさせてもらますね」
+							ENDIF
+						;胸で
+						CASE 5
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢さまのきれいなお肌……ああ、駄目！汚したい！私のザーメン塗り広げて、私だけのものに……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢さまのきれいなお肌……ああ、駄目！汚したい！私のザーメン塗り広げて、私だけのものに……」
+							ENDIF
+						;尻で
+						CASE 10
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お、お嬢様…。前は遠慮しますから、せめて後ろを使わせて下さいませ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お、お嬢様…。前は遠慮しますから、せめて後ろを使わせて下さいませ」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ああ♪お嬢様のアナルがピストンするたびにひくひくって♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ああ♪お嬢様のアナルがピストンするたびにひくひくって♪」
+							ENDIF
+						;口で
+						CASE 15
+							IF FLAG:AUTOMODE
+								PRINTFORML 「その、キスするだけじゃ足りなくなってしまいました。使わせて、下さいね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「その、キスするだけじゃ足りなくなってしまいました。使わせて、下さいね♪」
+							ENDIF
+					ENDSELECT
+				CASEELSE
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もう、こんなとこで寝てるのがいけないのよ。おとなしく、使われなさい」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もう、こんなとこで寝てるのがいけないのよ。おとなしく、使われなさい」
+							ENDIF
+						;胸で
+						CASE 5
+							IF FLAG:AUTOMODE
+								PRINTFORML （大きなおっぱいのやつは皆汚す、小さなおっぱいのやつもそのうち大きくなるからやっぱり汚す）
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW （大きなおっぱいのやつは皆汚す、小さなおっぱいのやつもそのうち大きくなるからやっぱり汚す）
+							ENDIF
+						;尻で
+						CASE 10
+							IF FLAG:AUTOMODE
+								PRINTFORML 「その、使わせてよね…。無防備に寝てるのが悪いのよ、私の方だって我慢ってものが……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「その、使わせてよね…。無防備に寝てるのが悪いのよ、私の方だって我慢ってものが……」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ああ♪やっぱりいい♪アナルに生ハメ！このまま出すわよ♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ああ♪やっぱりいい♪アナルに生ハメ！このまま出すわよ♪」
+							ENDIF
+						;口で
+						CASE 15
+							IF FLAG:AUTOMODE
+								PRINTFORML 「やっぱり一番温かくなりたい時はここよね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「やっぱり一番温かくなりたい時はここよね♪」
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+		ELSE
+		ENDIF
+	;性欲発散される　全員からされ終わった時に一言だけ
+	CASE 458
+		;このキャラが主人公＝性欲発散しているのは仲間
+		;このIF構文は省略しないように
+		IF TARGET == 1
+			IF ABL:12 >= 3 ;射精中毒
+				SELECTCASE NO:(FLAG:10)
+					;レミリアに襲われた
+					CASE 10
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あふれてきちゃいました♪お嬢様あふれた分、またナカダシしてください♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あふれてきちゃいました♪お嬢様あふれた分、またナカダシしてください♪」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう♪胸と言いますか全身どろどろ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう♪胸と言いますか全身どろどろ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使いたくなったらいつでも言って下さいね♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使いたくなったらいつでも言って下さいね♪」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こぷっ…………じゅる♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こぷっ…………じゅる♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+								ENDIF
+							;手で
+							CASE 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+								ENDIF
+						ENDSELECT
+					;それ以外のキャラ
+					CASEELSE
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ♪だめって言ったのに♪ナカだけはダメって言ったのに♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ♪だめって言ったのに♪ナカだけはダメって言ったのに♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こんなにナカダシされたら、カラダが喜んじゃう♪ナカダシでないとイケないカラダになっちゃう♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こんなにナカダシされたら、カラダが喜んじゃう♪ナカダシでないとイケないカラダになっちゃう♪」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう！こんなにどろどろに汚して！きれいにする側のことも考えてほしいものね」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう！こんなにどろどろに汚して！きれいにする側のことも考えてほしいものね」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「今ここであなたに生ハメ生ナカダシさせてくれれば許すわ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「今ここであなたに生ハメ生ナカダシさせてくれれば許すわ♪」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「お尻の中がザーメンでいっぱい♪お尻の穴キュって締めてないと垂れてきちゃう♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「お尻の中がザーメンでいっぱい♪お尻の穴キュって締めてないと垂れてきちゃう♪」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ごくっ……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ごくっ……」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「…………こののど越し、熱さ、鼻腔に抜ける香り……合格ね♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「…………こののど越し、熱さ、鼻腔に抜ける香り……合格ね♪」
+								ENDIF
+						ENDSELECT
+				ENDSELECT				
+			ELSEIF ABL:12 == 2
+				SELECTCASE NO:(FLAG:10)
+					;レミリアに襲われた
+					CASE 777
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あふれてきちゃいました♪お嬢様、あふれた分…またナカダシしてください♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あふれてきちゃいました♪お嬢様、あふれた分…またナカダシしてください♪」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう♪胸と言いますか全身どろどろ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう♪胸と言いますか全身どろどろ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使いたくなったらいつでも言って下さいね♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使いたくなったらいつでも言って下さいね♪」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こぷっ…………じゅる♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こぷっ…………じゅる♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+								ENDIF
+							;手で
+							CASE 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+								ENDIF
+						ENDSELECT
+					;それ以外のキャラ
+					CASEELSE
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「中はダメって言ったのに……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「中はダメって言ったのに……」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もしものことがあったらどうするの」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もしものことがあったらどうするの」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こんなシャワーもないところなのになんてことするのよ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こんなシャワーもないところなのになんてことするのよ」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「そんな、私のお尻が…私の…酷い」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「そんな、私のお尻が…私の…酷い」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ごほっ、ごほっ、酷い味」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ごほっ、ごほっ、酷い味」
+								ENDIF
+							;手で
+							CASE 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「はい、これで満足？今度は自分でしてね」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「はい、これで満足？今度は自分でしてね」
+								ENDIF
+						ENDSELECT
+				ENDSELECT								
+			ELSE
+				SELECTCASE NO:(FLAG:10)
+					;レミリアに襲われた
+					CASE 777
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あふれてきちゃいました♪お嬢様あふれた分、またナカダシしてください♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あふれてきちゃいました♪お嬢様あふれた分、またナカダシしてください♪」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう♪胸と言いますか全身どろどろ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう♪胸と言いますか全身どろどろ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使いたくなったらいつでも言って下さいね♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使いたくなったらいつでも言って下さいね♪」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こぷっ…………じゅる♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こぷっ…………じゅる♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+								ENDIF
+							;手で
+							CASE 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+								ENDIF
+						ENDSELECT
+					;それ以外のキャラ
+					CASEELSE
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「時止めさえできれば……こんな屈辱……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「時止めさえできれば……こんな屈辱……」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「私のこの体はすべてお嬢様のためにあるの！汚さないでちょうだい！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「私のこの体はすべてお嬢様のためにあるの！汚さないでちょうだい！」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「そんな……あなた個々の触手たちと同じじゃない！お尻に、何考えてるのよ！！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「そんな……あなた個々の触手たちと同じじゃない！お尻に、何考えてるのよ！！」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう、気はすんだかしら？離してくださる」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう、気はすんだかしら？離してくださる」
+								ENDIF
+							;手で
+							CASE 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ふう、やれやれね」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ふう、やれやれね」
+								ENDIF
+						ENDSELECT
+				ENDSELECT				
+			ENDIF
+		;このキャラが主人公ではない＝性欲発散しているのは主人公（とその仲間）
+		;条件の関係上分けているだけなので上と同じ内容にしても問題ない　→そうしてある
+		ELSE
+			IF ABL:12 >= 3 ;射精中毒
+				SELECTCASE NO:(FLAG:10)
+					;レミリアに襲われた
+					CASE 10
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あふれてきちゃいました♪お嬢様あふれた分、またナカダシしてください♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あふれてきちゃいました♪お嬢様あふれた分、またナカダシしてください♪」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう♪胸と言いますか全身どろどろ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう♪胸と言いますか全身どろどろ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使いたくなったらいつでも言って下さいね♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使いたくなったらいつでも言って下さいね♪」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こぷっ…………じゅる♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こぷっ…………じゅる♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+								ENDIF
+							;手で
+							CASE 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+								ENDIF
+						ENDSELECT
+					;それ以外のキャラ
+					CASEELSE
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ♪だめって言ったのに♪ナカだけはダメって言ったのに♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ♪だめって言ったのに♪ナカだけはダメって言ったのに♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こんなにナカダシされたら、カラダが喜んじゃう♪ナカダシでないとイケないカラダになっちゃう♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こんなにナカダシされたら、カラダが喜んじゃう♪ナカダシでないとイケないカラダになっちゃう♪」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう！こんなにどろどろに汚して！きれいにする側のことも考えてほしいものね」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう！こんなにどろどろに汚して！きれいにする側のことも考えてほしいものね」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「今ここであなたに生ハメ生ナカダシさせてくれれば許すわ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「今ここであなたに生ハメ生ナカダシさせてくれれば許すわ♪」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「お尻の中がザーメンでいっぱい♪お尻の穴キュって締めてないと垂れてきちゃう♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「お尻の中がザーメンでいっぱい♪お尻の穴キュって締めてないと垂れてきちゃう♪」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ごくっ……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ごくっ……」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「…………こののど越し、熱さ、鼻腔に抜ける香り……合格ね♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「…………こののど越し、熱さ、鼻腔に抜ける香り……合格ね♪」
+								ENDIF
+						ENDSELECT
+				ENDSELECT				
+			ELSEIF ABL:12 == 2
+				SELECTCASE NO:(FLAG:10)
+					;レミリアに襲われた
+					CASE 777
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あふれてきちゃいました♪お嬢様あふれた分、またナカダシしてください♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あふれてきちゃいました♪お嬢様あふれた分、またナカダシしてください♪」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう♪胸と言いますか全身どろどろ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう♪胸と言いますか全身どろどろ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使いたくなったらいつでも言って下さいね♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使いたくなったらいつでも言って下さいね♪」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こぷっ…………じゅる♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こぷっ…………じゅる♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+								ENDIF
+							;手で
+							CASE 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+								ENDIF
+						ENDSELECT
+					;それ以外のキャラ
+					CASEELSE
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「中はダメって言ったのに……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「中はダメって言ったのに……」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もしものことがあったらどうするの」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もしものことがあったらどうするの」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こんなシャワーもないところなのになんてことするのよ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こんなシャワーもないところなのになんてことするのよ」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「そんな、私のお尻が…私の…酷い」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「そんな、私のお尻が…私の…酷い」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ごほっ、ごほっ、酷い味」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ごほっ、ごほっ、酷い味」
+								ENDIF
+							;手で
+							CASE 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「はい、これで満足？今度は自分でしてね」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「はい、これで満足？今度は自分でしてね」
+								ENDIF
+						ENDSELECT
+				ENDSELECT								
+			ELSE
+				SELECTCASE NO:(FLAG:10)
+					;レミリアに襲われた
+					CASE 777
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ…♪お嬢様のザーメンがこんなにたっぷり…♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あふれてきちゃいました♪お嬢様あふれた分、またナカダシしてください♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あふれてきちゃいました♪お嬢様あふれた分、またナカダシしてください♪」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう♪胸と言いますか全身どろどろ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう♪胸と言いますか全身どろどろ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使いたくなったらいつでも言って下さいね♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使いたくなったらいつでも言って下さいね♪」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ♪お腹の中がぐるぐる言ってます♪お嬢様のザーメンでわたしのカラダの中侵略されてしまったみたいです♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「このお腹の重い感じは全部お嬢様がナカダシしてくださったザーメンの重さだと考えると、それだけでイってしまいそうで♪」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こぷっ…………じゅる♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こぷっ…………じゅる♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ぷはぁ、お嬢様、満足いただけたでしょうか？」
+								ENDIF
+							;手で
+							CASE 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あは♪顔にまで飛んで髪にかかってしまいまいたわ♪」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「お嬢様のザーメンでカピカピに乾いたらと考えると♪ふふ♪」
+								ENDIF
+						ENDSELECT
+					;それ以外のキャラ
+					CASEELSE
+						;面倒な人は分岐を削ってまとめましょう
+						SELECTCASE ARG:1
+							;膣で
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「時止めさえできれば……こんな屈辱……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「時止めさえできれば……こんな屈辱……」
+								ENDIF
+							;胸で
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「私のこの体はすべてお嬢様のためにあるの！汚さないでちょうだい！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「私のこの体はすべてお嬢様のためにあるの！汚さないでちょうだい！」
+								ENDIF
+							;尻で
+							CASE 2
+								IF FLAG:AUTOMODE
+									PRINTFORML 「そんな……あなた個々の触手たちと同じじゃない！お尻に、何考えてるのよ！！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「そんな……あなた個々の触手たちと同じじゃない！お尻に、何考えてるのよ！！」
+								ENDIF
+							;口で
+							CASE 3
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう、気はすんだかしら？離してくださる」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう、気はすんだかしら？離してくださる」
+								ENDIF
+							;手で
+							CASE 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ふう、やれやれね」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ふう、やれやれね」
+								ENDIF
+						ENDSELECT
+				ENDSELECT				
+			ENDIF
+		ENDIF
+	;ふたなり治療される
+	CASE 459
+		IF ABL:12 >= 3
+			SELECTCASE NO:1
+				;レミリアに治療される
+				CASE 10
+					;面倒な人は分岐を削ってまとめましょう
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様♪気持ちいいですか♪私も突き上げましょうか♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様♪気持ちいいですか♪私も突き上げましょうか♪」
+							ENDIF
+						;胸で
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のお胸で扱いていただけるなんて夢のようです」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のお胸で扱いていただけるなんて夢のようです」
+							ENDIF
+						;尻で
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ああ♪もう、我慢できません！このまま！お嬢様のアナルにナカダシさせてください！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ああ♪もう、我慢できません！このまま！お嬢様のアナルにナカダシさせてください！」
+							ENDIF
+						;口で
+						CASE 3
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様……そんなに吸い付かれたら……もう♪出ちゃいます♪ああ……もう、出る♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様……そんなに吸い付かれたら……もう♪出ちゃいます♪ああ……もう、出る♪」
+							ENDIF
+						;手で
+						CASE 4
+							IF FLAG:AUTOMODE
+								PRINTFORML 「はっ♪はっ♪ああ♪お嬢様のお手は暖かいですね、まるでおまんこに包まれているみたいです♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「はっ♪はっ♪ああ♪お嬢様のお手は暖かいですね、まるでおまんこに包まれているみたいです♪」
+							ENDIF
+					ENDSELECT
+				CASEELSE
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ああ♪締め付け最高♪ねえ、次は締め付けたままピストンしてくださる？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ああ♪締め付け最高♪ねえ、次は締め付けたままピストンしてくださる？」
+							ENDIF
+						;胸で
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ふふ、大きなおちんちんが出たり入ったり♪あなたのおっぱいってんるでおマンコみたいね。見てるだけで犯したくなるのも一緒」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ふふ、大きなおちんちんが出たり入ったり♪あなたのおっぱいってんるでおマンコみたいね。見てるだけで犯したくなるのも一緒」
+							ENDIF
+						;尻で
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「いいわよ…♪このままナカに出してお腹タポタポにして上げるから♪もっと激しくしなさい♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「いいわよ…♪このままナカに出してお腹タポタポにして上げるから♪もっと激しくしなさい♪」
+							ENDIF
+						;口で
+						CASE 3
+							IF FLAG:AUTOMODE
+								PRINTFORML 「そうよ……頭おさえてるとまるであなたをオナホにしてるみたいね。ちょっとそそるわ♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「そうよ……頭おさえてるとまるであなたをオナホにしてるみたいね。ちょっとそそるわ♪」
+							ENDIF
+					ENDSELECT
+			ENDSELECT			
+		ELSE
+			SELECTCASE NO:1
+				;レミリアに治療される
+				CASE 10
+					;面倒な人は分岐を削ってまとめましょう
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様！私のこんなもののためにお嬢様にご負担をかけるわけには……ああ♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様！私のこんなもののためにお嬢様にご負担をかけるわけには……ああ♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「気持ちいいのが♪我慢できません♪だめです！抜いて！抜いてください！でないとお嬢様の……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「気持ちいいのが♪我慢できません♪だめです！抜いて！抜いてください！でないとお嬢様の……」
+							ENDIF
+							IF ABL:12 == 2
+								IF FLAG:AUTOMODE
+									PRINTFORML （ナカダシ！お嬢様の中にナカダシしたい！）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （ナカダシ！お嬢様の中にナカダシしたい！）
+								ENDIF
+							ENDIF
+						;胸で
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様、駄目ですよ。お嬢様が底までされることはありませんから」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様、駄目ですよ。お嬢様が底までされることはありませんから」
+							ENDIF
+						;尻で
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様！どこでこんなことを覚えてっ…んっ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様！どこでこんなことを覚えてっ…んっ！」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「とにかくもうやめ…んっ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「とにかくもうやめ…んっ！」
+							ENDIF
+						;口で
+						CASE 3
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様、お顔が汚れてしまいます。こんなことは門番にでもさせますからお嬢様がされることはありません」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様、お顔が汚れてしまいます。こんなことは門番にでもさせますからお嬢様がされることはありません」
+							ENDIF
+						;手で
+						CASE 4
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様、お手汚れてしまいます。こんなことは門番にでもさせますからお嬢様がされることはありません」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様、お手汚れてしまいます。こんなことは門番にでもさせますからお嬢様がされることはありません」
+							ENDIF
+					ENDSELECT
+				CASEELSE
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「や、駄目！なんか変！ああ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「や、駄目！なんか変！ああ！」
+							ENDIF
+						;胸で
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「や、駄目！なんか変！ああ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「や、駄目！なんか変！ああ！」
+							ENDIF
+						;尻で
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「や、駄目！お尻なんて！ああ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「や、駄目！お尻なんて！ああ！」
+							ENDIF
+						;口で
+						CASE 3
+							IF FLAG:AUTOMODE
+								PRINTFORML 「や、駄目！なんか変！ああ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「や、駄目！なんか変！ああ！」
+							ENDIF
+						;手で
+						CASE 4
+							IF FLAG:AUTOMODE
+								PRINTFORML 「や、駄目！なんか変！ああ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「や、駄目！なんか変！ああ！」
+							ENDIF
+					ENDSELECT
+			ENDSELECT			
+		ENDIF
+	;ふたなりで触手モンスターをおしおきする
+	CASE 460
+		IF ABL:12 >= 3
+			SELECTCASE ARG:1
+				;スルー
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 
+					ENDIF
+				;逃がさない
+				CASE -1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ごめんなさいね♪私はひどいことしたくないんだけどこの子がどうしてもっていうの♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ごめんなさいね♪私はひどいことしたくないんだけどこの子がどうしてもっていうの♪」
+					ENDIF
+				;膣で
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああ♪いい肉穴見つけちゃった♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああ♪いい肉穴見つけちゃった♪」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ねえ、あなたお屋敷で働きなさいな。私がシタイときは呼ぶからそうしたらあなたはどんな時でもお股を開くの♪素敵でしょ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ねえ、あなたお屋敷で働きなさいな。私がシタイときは呼ぶからそうしたらあなたはどんな時でもお股を開くの♪素敵でしょ」
+					ENDIF
+				;胸で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふふ♪魔物なのにとってもいやらしいのね♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふふ♪魔物なのにとってもいやらしいのね♪」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「これまでにもこうして使われちゃったことはあるのかしら？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「これまでにもこうして使われちゃったことはあるのかしら？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「抵抗も出来ないままなすがままに、オナホールみたいにされたことはあるかしら？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「抵抗も出来ないままなすがままに、オナホールみたいにされたことはあるかしら？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「今からそうなるのよ♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「今からそうなるのよ♪」
+					ENDIF
+				;尻
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああ♪何の遠慮もいらないっていうのはすごくいいわね♪いくらでも犯せるのよ♪この迷宮も案外悪くないかもしれないわね♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああ♪何の遠慮もいらないっていうのはすごくいいわね♪いくらでも犯せるのよ♪この迷宮も案外悪くないかもしれないわね♪」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「魔物を従えて後宮でも作ろうかしら」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「魔物を従えて後宮でも作ろうかしら」
+					ENDIF
+				;口で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いいこと、歯は立てちゃ駄目よ。そう……いい感じ♪喉お使いなさい♪もっとすぼめて吸い付くの♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いいこと、歯は立てちゃ駄目よ。そう……いい感じ♪喉お使いなさい♪もっとすぼめて吸い付くの♪」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら嫌がらない！あなたは負けたのよ♪じっとして言いように使われなさい♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら嫌がらない！あなたは負けたのよ♪じっとして言いように使われなさい♪」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「今のあなたの価値はこのお口マンコ位なんだから」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「今のあなたの価値はこのお口マンコ位なんだから」
+					ENDIF
+				;触手で
+				CASE 5
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら見てて♪私の太いのが入っていくわよ♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら見てて♪私の太いのが入っていくわよ♪」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「わかる？こうしてズコズコするとあなたも気持ちいいんでしょ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「わかる？こうしてズコズコするとあなたも気持ちいいんでしょ？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「これまでに人にしてきたことと同じことをあなたにもしてあげる♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「これまでに人にしてきたことと同じことをあなたにもしてあげる♪」
+					ENDIF
+			ENDSELECT
+		ELSE
+			SELECTCASE ARG:1
+				;スルー
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「さ、次、次」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「さ、次、次」
+					ENDIF
+				;逃がさない
+				CASE -1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「くっ、私の一部でしょ、何で…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「くっ、私の一部でしょ、何で…」
+					ENDIF
+				;膣で
+				CASE 1
+;					PRINTFORMW 
+				;胸で
+				CASE 2
+;					PRINTFORMW 
+				;尻で
+				CASE 3
+;					PRINTFORMW 
+				;口で
+				CASE 4
+;					PRINTFORMW 
+				;触手で
+				CASE 5
+;					PRINTFORMW 
+
+			ENDSELECT			
+		ENDIF
+
+	;ふたなり治療する
+	CASE 461
+		IF ABL:12 >= 3
+			SELECTCASE NO:(ARG:2)
+				;レミリアを治療
+				CASE 10
+					;面倒な人は分岐を削ってまとめましょう
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あ♪お嬢様のおちんちん、びくびくしてる♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あ♪お嬢様のおちんちん、びくびくしてる♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「私で感じて下さってるんですか？光栄です」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「私で感じて下さってるんですか？光栄です」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ぜいたくを言わせていただければこのまま私のナカで全部精液吐き出していただけると私最高に幸せになれる気がします」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ぜいたくを言わせていただければこのまま私のナカで全部精液吐き出していただけると私最高に幸せになれる気がします」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ふふ、熱くて太いのがヌリュッ、ヌリュッッて♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ふふ、熱くて太いのがヌリュッ、ヌリュッッて♪」
+							ENDIF
+						;胸で
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「どうですか？ちゃんと気持ちよくできていますか？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「どうですか？ちゃんと気持ちよくできていますか？」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ちょっと不安でしたがこの迷宮に落ちてから私のおっぱいも順当に発育しているようで♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ちょっと不安でしたがこの迷宮に落ちてから私のおっぱいも順当に発育しているようで♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様を気持ちよくできたのなら文句なしです」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様を気持ちよくできたのなら文句なしです」
+							ENDIF
+						;尻で
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「はい♪これなら妊娠してしまうこともありませんからいくらでも出来ますよ♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「はい♪これなら妊娠してしまうこともありませんからいくらでも出来ますよ♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お嬢様のそれ♪中身がすっからかんになるまで私のお尻に出してください♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お嬢様のそれ♪中身がすっからかんになるまで私のお尻に出してください♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「受け止めますから、いくらでも」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「受け止めますから、いくらでも」
+							ENDIF
+						;口で
+						CASE 3
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ほいええふう……ちゅぷ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ほいええふう……ちゅぷ」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「私、もうこれをしゃぶっていないとどうにかなってしまいそうなんです♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「私、もうこれをしゃぶっていないとどうにかなってしまいそうなんです♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もうしばらく続けさせてくださいね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もうしばらく続けさせてくださいね♪」
+							ENDIF
+						;手で
+						CASE 4
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もちろん手でもいいのですが、できればナカとかお尻とか……もっと他にもあるんですよ♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もちろん手でもいいのですが、できればナカとかお尻とか……もっと他にもあるんですよ♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「それらがご所望でしたらいつでも言って下さい♪お待ちしてますから」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「それらがご所望でしたらいつでも言って下さい♪お待ちしてますから」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あんまり使って下さらないと……私の方から襲ってしまうかも……なんて♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あんまり使って下さらないと……私の方から襲ってしまうかも……なんて♪」
+							ENDIF
+					ENDSELECT
+				CASEELSE
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ほら我慢しないで♪あなたのここもこんなにいやらしい音を立てて私のおまんこ出たり入ったりしてる♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ほら我慢しないで♪あなたのここもこんなにいやらしい音を立てて私のおまんこ出たり入ったりしてる♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あ♪震えてきた♪っ出る？出るの？良いわよ、このまま全部絞ってあげる♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あ♪震えてきた♪っ出る？出るの？良いわよ、このまま全部絞ってあげる♪」
+							ENDIF
+						;尻で
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「アナルで搾られたいの？好きね♪私も好きだけど♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「アナルで搾られたいの？好きね♪私も好きだけど♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「こうしてお尻のひくひくってすると……えっ？なにもういっちゃったの？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「こうしてお尻のひくひくってすると……えっ？なにもういっちゃったの？」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「イクならイクって言ってくれないと、せっかく全力で搾ってあげようと思ってたのに」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「イクならイクって言ってくれないと、せっかく全力で搾ってあげようと思ってたのに」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「じゃ♪もう一回ね♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「じゃ♪もう一回ね♪」
+							ENDIF
+						;口で
+						CASE 3
+							IF FLAG:AUTOMODE
+								PRINTFORML 「そそり立つおちんちん♪これは食べ甲斐がありそうです♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「そそり立つおちんちん♪これは食べ甲斐がありそうです♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「こうして先端の部分だけすっぽり咥えて……舌でごしごし～♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「こうして先端の部分だけすっぽり咥えて……舌でごしごし～♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あら？壊れちゃったような悲鳴あげちゃって♪いいわ、そのまま壊れちゃって♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あら？壊れちゃったような悲鳴あげちゃって♪いいわ、そのまま壊れちゃって♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ザーメンもお潮も全部飲んであげるから♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ザーメンもお潮も全部飲んであげるから♪」
+							ENDIF
+						;手で
+						CASE 4
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ほら♪しーこしこ、しーこしこ♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ほら♪しーこしこ、しーこしこ♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「いきたくなったらいつでもいいからね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「いきたくなったらいつでもいいからね」
+							ENDIF
+					ENDSELECT
+			ENDSELECT			
+		ELSE
+			SELECTCASE NO:(ARG:2)
+				;777のキャラを治療
+				CASE 777
+					;面倒な人は分岐を削ってまとめましょう
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+						;胸で
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+						;尻で
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+						;口で
+						CASE 3
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+						;手で
+						CASE 4
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+					ENDSELECT
+				CASEELSE
+					SELECTCASE ARG:1
+						;膣で
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+						;胸で
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+						;尻で
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+						;口で
+						CASE 3
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+						;手で
+						CASE 4
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+					ENDSELECT
+			ENDSELECT			
+		ENDIF
+ENDSELECT
+	
+RETURN

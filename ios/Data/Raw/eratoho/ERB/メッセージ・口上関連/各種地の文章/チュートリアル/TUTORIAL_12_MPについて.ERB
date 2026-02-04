@@ -1,0 +1,25 @@
+﻿
+@TUTORIAL_12
+
+PRINTFORMW 「...牺牲者终于出现了」
+PRINTFORMW 「MP……也就是说，精神力为0，精神已经屈服的角色是没办法自然恢复的」
+IF BASE:1:1 > 0
+	;主人公は生きている
+	PRINTFORMW 「早早放弃，寻找新的同伴也是一种办法...」
+	PRINTFORMW 「如果有“苏醒药”的话，MP变为0的角色也可以恢复」
+	PRINTFORMW 「“苏醒药”是很贵重的东西，所以初期也很难入手……」
+ELSEIF FLAG:10
+	;主人公がMP0＋仲間が居る
+	PRINTFORMW 「如果像现在这样有同伴在的状态下，就可以接着战斗探索」
+	PRINTFORMW 「另外，得到“苏醒药”的话，MP也可以从0的状态恢复」
+	PRINTFORMW 「“苏醒药”是很贵重的东西，所以初期也很难入手……」
+ELSE
+	;主人公がMP0＋一人旅
+	PRINTFORMW 「在这种状态下，%CALLNAME:1%可以得救的希望相当渺茫啊……」
+	PRINTFORMW 「战斗全灭之后，那个角色会被敌人不断吸取最大HP」
+	PRINTFORMW 「在最大HP变为0失去角色之前，祈祷有路过的人能提供帮助吧……」
+ENDIF
+PRINTFORMW 「MP从0的状态恢复的办法除了“苏醒药”以外……几乎没有」
+PRINTFORMW 「在哪里的清澈泉水中使用净化力……从MP0的人那边大量吸取母乳的话可以治好……」
+PRINTFORML  
+

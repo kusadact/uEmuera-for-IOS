@@ -1,0 +1,371 @@
+﻿;まだ206と208しか飛ばしてないので注意
+@ENDING_34_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SETCOLOR CFLAG:700
+	IF ARG:0 == 206
+		PRINTFORMDW %ARGS:0%%TACHI()%の前に立ち塞がるガーディアンが崩れ落ち、ついに出口への障害は消えた。
+		PRINTFORMDW ――しかし。守護者の死が引き金となったのか、その出口が閉じられるかのように崩れ始める。
+IF FLAG:AUTOMODE
+    PRINTFORML 「……まったく。どう考えても偶然じゃないわね」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……まったく。どう考えても偶然じゃないわね」
+ENDIF
+
+		PRINTFORMDW 脱出の好機は今しかないと判断した%ARGS:0%%TACHI()%は、ひとまず出口へと駈け出した……
+		PRINTFORML 
+		PRINTFORMDW ………
+		PRINTFORMDW ……
+		PRINTFORMDW …
+		PRINTL 
+IF FLAG:AUTOMODE
+    PRINTFORML 「……ふぅ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……ふぅ」
+ENDIF
+
+		PRINTFORMD あれから数週間後。無事に脱出した幽香は、
+		SIF FLAG:10
+			PRINTFORMD 仲間と別れ
+		PRINTFORMDW 太陽の畑で一息ついていた。
+		PRINTFORMDW しかし、その表情は重い。理由は、脱出できたというだけでそれ以上ではなかったこと。
+		PRINTFORMDW 外に出たはいいものの出入り口は閉じたどころか瓦礫すらも残らず消え、迷宮の痕跡すらもなかったのだ。
+		PRINTFORMDW ……もっとも、%ARGS:0%%TACHI()%に続く脱出者も現れるようになったのだから、そちらはいい。
+	ELSEIF ARG:0 == 208
+		PRINTFORMDW 果たしてあの石碑に書かれていた内容は真実なのか……
+		PRINTFORMDW そう疑問に思いつつも、ここまで来たのだからと意を決して%ARGS:0%%TACHI()%は光の渦に飛び込んだ。
+		PRINTFORMDW 光の奔流に翻弄されてから数秒後、うっすらと目を開けると、幽香の見知った向日葵畑が広がっていた……
+		PRINTFORML 
+		PRINTFORMDW ………
+		PRINTFORMDW ……
+		PRINTFORMDW …
+		PRINTL 
+IF FLAG:AUTOMODE
+    PRINTFORML 「……ふぅ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……ふぅ」
+ENDIF
+
+		PRINTFORMD あれから数週間後。無事に脱出した幽香は、
+		SIF FLAG:10
+			PRINTFORMD 仲間と別れ
+		PRINTFORMDW 太陽の畑で一息ついていた。
+		PRINTFORMDW しかし、その表情は重い。理由は、脱出できたというだけでそれ以上ではなかったこと。
+		PRINTFORMDW %ARGS:0%%TACHI()%の開いた光の渦のおかげで、神隠しに遭っていた者達が徐々に帰ってくるようになった。
+		PRINTFORMDW また、時期を同じくして神隠しがパタリと止んだ。そのためこの異変は終わりだと目されている。
+		PRINTFORMDW ……だが、幽香にとってはこのまま終わられては困るのだ。
+	ENDIF
+	;エンディング分岐。800のビット演算及び発情しているか、自慰中毒2以上、触手中毒2以上をポイント化
+	CFLAG:805 = (SIGN(CFLAG:28) + SIGN(CFLAG:800 & 1) + SIGN(CFLAG:800 & 2) + SIGN(CFLAG:800 & 4) + SIGN(CFLAG:800 & 8) + SIGN(CFLAG:800 & 16) + SIGN(CFLAG:800 & 32) + SIGN(CFLAG:800 & 64) + SIGN(CFLAG:800 & 128))
+	SIF ABL:10 > 1
+		CFLAG:805 += 1
+
+	SIF ABL:11 > 1
+		CFLAG:805 += 1
+
+	IF CFLAG:805 >= 7 && CFLAG:803 >= 20
+IF FLAG:AUTOMODE
+    PRINTFORML 「…………は、あ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「…………は、あ」
+ENDIF
+
+		PRINTFORMDW 虚ろな表情で髪をいじる幽香。そこには、依然として植え付けられた花が根付いている。
+		PRINTFORMDW これが本当の理由。確かに脱出はできたが、改造された彼女の体は全く戻っていない。
+		PRINTFORMDW 日常生活に支障がないなら受け入れてもいいかもしれないが、あいにく支障はあった。
+		PRINTFORM 「あ……あ……
+		CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+		PRINTFORMDW 何を探すように目を泳がせながら、幽香は熱い吐息を漏らす。その手は自分の股間へ伸びていた。
+		PRINTFORMDW 改造され、様々な快楽を植え付けられた体が疼いてしょうがない。
+		PRINTFORMDW 半ば理性を失っていたその表情が、通りすがりの妖精を見つけた途端、喜色に染まった。
+IF FLAG:AUTOMODE
+    PRINTFORML 「はぁ……はぁっ……！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「はぁ……はぁっ……！」
+ENDIF
+
+		PRINTFORMDW 抑えきれないとばかりに撃ち落とすと、悲鳴を意に介さずに組み伏せる。
+		PRINTFORMDW 怯えきった妖精の表情に怯まず、むしろ舌なめずりするように自らの服を脱ぎ、妖精の服を剥いだ。
+IF FLAG:AUTOMODE
+    PRINTFORML 「……あら、驚いたの？　どうでもいい、けどっ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……あら、驚いたの？　どうでもいい、けどっ！」
+ENDIF
+
+		PRINTFORMDW 幽香の体から生えた蔦が不気味に蠢く様子に、妖精は顔を息を呑んだが幽香は怯まない。
+		PRINTFORMDW 容赦なく蔦を膣へ、口へ、尻穴へと突き入れ陵辱する。蔦から伝わってくる感覚に、表情が蕩ける。
+		PRINTFORMDW 妖精のくぐもった悲鳴が、幽香の花が撒く発情花粉によって嬌声に変わるまで時間は掛からなかった。
+		PRINTFORMDW そのまま、幽香は体を痙攣させると思う存分蔦から精液の代わりとなる液体を射精した。
+		PRINTFORMDW 全身に種付けされ、無残な姿となった妖精。……しかし、蔦の動きは止まらない。止められない。
+IF FLAG:AUTOMODE
+    PRINTFORML （仕方、ないでしょう……こんな体にされたせいだし、それに、元々虐めるのは日課だし……）
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  （仕方、ないでしょう……こんな体にされたせいだし、それに、元々虐めるのは日課だし……）
+ENDIF
+
+		PRINTFORMDW 呟きながら、幽香は陵辱を続ける。これが初めてではない。彼女は既に、何匹か妖精を孕ませている。
+		PRINTFORMDW 自分の体を言い訳に幻想郷の住人を犯し続けるその姿は、アルラウネと変わりなかった……
+	;なげえ
+	ELSEIF CFLAG:805 >= 7 || CFLAG:803 >= 20 || (CFLAG:805 >= 5 && CFLAG:803 >= 10)
+IF FLAG:AUTOMODE
+    PRINTFORML 「…………ったく」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「…………ったく」
+ENDIF
+
+		PRINTFORMDW むっとした表情で髪をいじる幽香。そこには、依然として植え付けられた花が根付いている。
+		PRINTFORMDW これが本当の理由。確かに脱出はできたが、改造された彼女の体は全く戻っていない。
+		PRINTFORMDW 日常生活に支障がないなら受け入れてもいいかもしれないが、あいにく支障はあった。
+IF FLAG:AUTOMODE
+    PRINTFORML 「紛れもなく、清浄な空気だっていうのに……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「紛れもなく、清浄な空気だっていうのに……」
+ENDIF
+
+		PRINTFORMDW 太陽の畑を歩くその足取りは、どこかふらついている。まるで、毒に犯されているように。
+		PRINTFORMDW 今の幽香には迷宮の汚染された大気こそ慣れ親しんだもので、幻想郷のそれは受け付けられないのだ。
+		;味方に娘がいる
+		IF (NO:(FLAG:10) == 34 && CFLAG:(FLAG:10):104 == 1) || (NO:(FLAG:11) == 34 && CFLAG:(FLAG:11):104 == 1)
+			PRINTFORMDW そんな彼女に、後ろから声が投げかけられた。
+			SETCOLOR 0, 250, 154
+IF FLAG:AUTOMODE
+    PRINTFORML 「元々幻想郷に住んでいたとは思えない醜態ぶりね、風見幽香。私を見習ったら？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「元々幻想郷に住んでいたとは思えない醜態ぶりね、風見幽香。私を見習ったら？」
+ENDIF
+
+			SETCOLOR CFLAG:700
+IF FLAG:AUTOMODE
+    PRINTFORML 「…………」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「…………」
+ENDIF
+
+			PRINTFORMDW 半眼で睨みながら振り返れば、幽香をダウンサイジングしたような少女がいる。彼女の娘だ。
+			PRINTFORMDW 外に出た後から髪を伸ばして服も変えた辺りに、親に対する反骨心が見え見えだったが。
+			SETCOLOR 0, 250, 154
+IF FLAG:AUTOMODE
+    PRINTFORML 「困っているなら、私に頼ってもいいわよ？　私の周りは少しだけあの迷宮のような空気に近づくわ。
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「困っているなら、私に頼ってもいいわよ？　私の周りは少しだけあの迷宮のような空気に近づくわ。
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 　もちろん、娘に頼る情けない母親という体裁になるけれど」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　もちろん、娘に頼る情けない母親という体裁になるけれど」
+ENDIF
+
+			PRINTFORMDW ずい、と指を突きつける実子の笑みは得意げで、純真さからは程遠い。
+			PRINTFORMDW もっとも、幽香には彼女が何を考えているか分かった。何せ、自分の娘のことだから。
+			SETCOLOR CFLAG:700
+IF FLAG:AUTOMODE
+    PRINTFORML 「あらそう。ところで、額に珠のような汗が浮かんでいる貴方は平気なのかしら？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「あらそう。ところで、額に珠のような汗が浮かんでいる貴方は平気なのかしら？」
+ENDIF
+
+			SETCOLOR 0, 250, 154
+IF FLAG:AUTOMODE
+    PRINTFORML 「……バカ言わないで、気のせいよ。体調管理くらいできるわ。私は半分そっち側の生き物だし」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……バカ言わないで、気のせいよ。体調管理くらいできるわ。私は半分そっち側の生き物だし」
+ENDIF
+
+			SETCOLOR CFLAG:700
+IF FLAG:AUTOMODE
+    PRINTFORML 「私が幻想郷側の生き物のままだったら苦労はしていないでしょうね。
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「私が幻想郷側の生き物のままだったら苦労はしていないでしょうね。
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 　そうそう、貴方が生まれたのはいつだったかしら。作り変えられた後だと思うけど？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　そうそう、貴方が生まれたのはいつだったかしら。作り変えられた後だと思うけど？」
+ENDIF
+
+			PRINTFORMDW 黙りこむ幽香の娘。つまりは、そういうことである。母親に似て、プライドが高い性格だった。
+			SETCOLOR 0, 250, 154
+IF FLAG:AUTOMODE
+    PRINTFORML 「私の責任じゃないわ、そっちの責任よ風見幽香。貴方が捕まるからいけないの。
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「私の責任じゃないわ、そっちの責任よ風見幽香。貴方が捕まるからいけないの。
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 　私が本当にハーフだったら、しっかり適応できていたはずよ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　私が本当にハーフだったら、しっかり適応できていたはずよ」
+ENDIF
+
+			SETCOLOR CFLAG:700
+IF FLAG:AUTOMODE
+    PRINTFORML 「はいはい、いいからくっついてなさい。近くの空気が汚染されるから、お互いに楽でしょう？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「はいはい、いいからくっついてなさい。近くの空気が汚染されるから、お互いに楽でしょう？」
+ENDIF
+
+			SETCOLOR 0, 250, 154
+IF FLAG:AUTOMODE
+    PRINTFORML 「く、くっつかないで！？　これじゃ私が甘えてるみたいじゃない！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「く、くっつかないで！？　これじゃ私が甘えてるみたいじゃない！」
+ENDIF
+
+			PRINTFORMDW 未だに意地を張る娘の手を握って引き寄せると、口では嫌がりながらも離れない。
+			PRINTFORMDW 幽香たちが清浄な空気に苦しむのは毎日のことだから、これも日常茶飯事の会話だ。
+			PRINTFORMDW そんな日常に、なんだかんだで満足している幽香だった。
+		ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「昨日行ったばかりだけど……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「昨日行ったばかりだけど……」
+ENDIF
+
+			PRINTFORMDW 不機嫌そうな表情のまま、幽香はその場から移動し始めた。
+			PRINTL 
+			PRINTFORMDW 幽香がたどり着いたのは太陽の畑から離れた、人妖の通りが少ない場所にある小さな洞窟だった。
+			PRINTFORMDW 足を踏み入れた途端、生温かい生気と湿った気配が出迎え……ふぅ、と幽香は満足気に息を吐く。
+			PRINTFORMDW その奥に生い茂る、気配の源。それは紛れもない、植物状の触手たちだ。
+			IF CFLAG:22 && (CFLAG:36 == 0 || CFLAG:36 >= 3)
+				PRINTFORMDW 幻想郷の清浄な大気に耐え切れなかった幽香は孕んでいた触手を隠れて産み落とし、
+			ELSE
+				PRINTFORMDW 幻想郷の清浄な大気に耐え切れなかった幽香は持ちだした植物型触手の死骸を再生し、
+			ENDIF
+			PRINTFORMDW 誰も寄り付かない場所で育て澱んだ空気を作る源としていたのだった。
+IF FLAG:AUTOMODE
+    PRINTFORML 「うっ……やっぱり、するの？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「うっ……やっぱり、するの？」
+ENDIF
+
+			PRINTFORMDW 早々に出て行きたかった幽香だが、彼女以外の相手を知らない触手は逃がそうとしない。
+			PRINTFORMDW 死なれると困る関係上、やむを得ず服を脱いで股を開くや否や触手達は幽香の膣へと群がった。
+			PRINTFORM 「は……っ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　弱いとこ、知り尽くされてっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　だから、嫌だったのに、あっ、あ
+			CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+			PRINTFORMDW 既に濡れていた膣は子宮口まで及ぶ陵辱を受け入れ、幽香もまたあっさりと嬌声を上げ始める。
+			PRINTFORMDW 相手の体を理解している触手達が膣内を重点的に責めると、彼女自身も腰を揺らしていった。
+			PRINTFORM 「はやく、満足してぇ
+			CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 　おまんこズボズボして、中出しして終わらせてぇっ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　おまんこズボズボして、中出しして終わらせてぇっ！」
+ENDIF
+
+			PRINTFORMDW 満足したいのはどちらなのか、あやふやな幽香の言葉を受けて触手達は射精した。
+			PRINTFORMDW 嫌がっていた理性は快感に飲み込まれ、幽香は笑みを浮かべながら体を痙攣させる。
+			PRINTFORM 「そのままぁ、もっと出しきりなさぁいっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　はァあ、いぐぅう
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　中出しきもちいぃっ
+			CALL HEARTCB(0xD02830)
+			CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+			PRINTFORMDW 改造され、快楽を植え付けられた体では行為に及んでしまえば耐え切れない。
+			PRINTFORMDW 分かっていても……幽香にできる事は犯され、母乳を吹き上げながら絶頂し続けることだけだ。
+IF FLAG:AUTOMODE
+    PRINTFORML （あ……あぁ……わたし、明日も来てしまうの……？）
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  （あ……あぁ……わたし、明日も来てしまうの……？）
+ENDIF
+
+			PRINTFORMDW 射精された精液を零しながら、幽香は虚ろな目で天井を見上げていた……
+		ENDIF
+	ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「…………ったく」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「…………ったく」
+ENDIF
+
+		PRINTFORMDW むっとした表情で髪をいじる幽香。そこには、依然として植え付けられた花が根付いている。
+		PRINTFORMDW これが本当の理由。確かに脱出はできたが、改造された彼女の体は全く戻っていない。
+		PRINTFORMDW 幸い日常生活に支障はないし、蔦を服の中に隠して花は髪飾りということにすれば外見も大丈夫だ。
+		PRINTFORMDW しかし、服の下でしゅるしゅると蔦が動くのは色々と不快だった。
+IF FLAG:AUTOMODE
+    PRINTFORML 「やっぱり、元凶を倒さずに終わったままおしまい――なんて、性に合わないわね」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「やっぱり、元凶を倒さずに終わったままおしまい――なんて、性に合わないわね」
+ENDIF
+
+		PRINTFORMDL ピン、と花びらを弾く。
+		PRINTFORMDW そのまま大きく息を吐くと、幽香は遠い空を見やった。
+		IF ARG:0 == 206
+IF FLAG:AUTOMODE
+    PRINTFORML 「神隠しが続いている以上、まだ入れる可能性はある。それを探しましょう」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「神隠しが続いている以上、まだ入れる可能性はある。それを探しましょう」
+ENDIF
+
+		ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「あんな転移ができるのなら、あの迷宮へ転移することも可能でしょう」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「あんな転移ができるのなら、あの迷宮へ転移することも可能でしょう」
+ENDIF
+
+		ENDIF
+		PRINTFORMDL 幽香の戦いは終わらない。
+		PRINTFORMDW 自分に屈辱を味わわせた相手に、然るべき報いを与えるまでは。
+	ENDIF
+	
+PRINTFORML 
+PRINTFORML 
+PRINTFORML 
+	
+	
+RETURN

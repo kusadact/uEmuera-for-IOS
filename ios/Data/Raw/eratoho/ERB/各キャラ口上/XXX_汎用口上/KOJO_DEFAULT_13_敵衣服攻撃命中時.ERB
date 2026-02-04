@@ -1,0 +1,170 @@
+﻿
+
+; ////////////////////////////
+; / ARG:0   13    敵の衣服攻撃(命中)
+; / ARG:1         コマンドID
+; / ARG:2         部位
+; / ARG:3         CPダメージ
+; / ARG:4         EPダメージ
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_13(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(0)
+
+	CALL ADD_RAND_MESSAGE, @"「别……别看……」"
+
+	RETURN 1
+ENDIF
+
+
+;●衣服がない時
+IF BASE:3 < 1
+
+	CALL ADD_RAND_MESSAGE, @"「别、别、别……！」"
+	CALL ADD_RAND_MESSAGE, @"「啊、啊啊……！」"
+	CALL ADD_RAND_MESSAGE, @"「干、干什么！？」"
+
+	CALL ADD_RAND_MESSAGE, @"「那、那里！？」"
+
+	CALL ADD_RAND_MESSAGE, @"「因为没有衣服，所以才……！」"
+
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+
+			CALL ADD_RAND_MESSAGE, @"「这、这个！你敢！」"
+
+			CALL ADD_RAND_MESSAGE, @"「咕、咕、咕……这招！」"
+		CASE 性格_がんばりや
+
+			CALL ADD_RAND_MESSAGE, @"「这、这样！？」"
+			CALL ADD_RAND_MESSAGE, @"「不、不要！」"
+			CALL ADD_RAND_MESSAGE, @"「别、别这样」"
+		CASE 性格_きれもの
+
+			CALL ADD_RAND_MESSAGE, @"「这、这样！？」"
+			CALL ADD_RAND_MESSAGE, @"「别、别这样」"
+		CASE 性格_ぬけめがない
+
+			CALL ADD_RAND_MESSAGE, @"「这、这样！？」"
+			CALL ADD_RAND_MESSAGE, @"「别、别这样」"
+		CASE 性格_ねっけつかん
+
+			CALL ADD_RAND_MESSAGE, @"「咕、咕、咕……这招！」"
+			CALL ADD_RAND_MESSAGE, @"「这、这个！你敢！」"
+
+		CASE 性格_ひっこみじあん
+
+
+			CALL ADD_RAND_MESSAGE, @"「别、别做奇怪的事情啊……」"
+			CALL ADD_RAND_MESSAGE, @"「不、不要啊！？」"
+			CALL ADD_RAND_MESSAGE, @"「不、不要！」"
+			CALL ADD_RAND_MESSAGE, @"「咿、咿呀啊！？」"
+			CALL ADD_RAND_MESSAGE, @"「请、请停下！」"
+		CASE 性格_やさしいひと
+
+			CALL ADD_RAND_MESSAGE, @"「别、别做奇怪的事情啊……」"
+			CALL ADD_RAND_MESSAGE, @"「不、不要啊！？」"
+			CALL ADD_RAND_MESSAGE, @"「不、不要！」"
+			CALL ADD_RAND_MESSAGE, @"「咿、咿呀啊！？」"
+			CALL ADD_RAND_MESSAGE, @"「请、请停下！」"
+		CASE 性格_わがまま
+
+			CALL ADD_RAND_MESSAGE, @"「这、这样！？」"
+			CALL ADD_RAND_MESSAGE, @"「这、这个！你敢！」"
+
+			CALL ADD_RAND_MESSAGE, @"「别、别开这种玩笑！？」"
+			CALL ADD_RAND_MESSAGE, @"「咕、咕、咕……这招！」"
+			CALL ADD_RAND_MESSAGE, @"「别、别这样」"
+		ENDSELECT
+
+
+	RETURN 1
+
+ENDIF
+
+
+
+
+;触手服
+IF CFLAG:40
+
+	CALL ADD_RAND_MESSAGE, @"「这、这样的衣服……！」"
+	CALL ADD_RAND_MESSAGE, @"「连、连衣服里的触手也……！」"
+	CALL ADD_RAND_MESSAGE, @"「衣服里的触手在蠕动！」"
+
+	CALL ADD_RAND_MESSAGE, @"「这件衣服也得想办法……！」"
+
+
+	RETURN 1
+ENDIF
+
+
+
+
+	CALL ADD_RAND_MESSAGE, @"「为什么要瞄准衣服！？」"
+	CALL ADD_RAND_MESSAGE, @"「衣、衣服！？」"
+	CALL ADD_RAND_MESSAGE, @"「故、故意弄坏衣服……！？」"
+
+	CALL ADD_RAND_MESSAGE, @"「可、可见了！？」"
+	CALL ADD_RAND_MESSAGE, @"「这样下去会露出皮肤！？」"
+	CALL ADD_RAND_MESSAGE, @"「刚才那一下衣服！？」"
+	CALL ADD_RAND_MESSAGE, @"「这样下去，衣服撑不住了！？」"
+
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+
+		CASE 性格_くろうにん
+			CALL ADD_RAND_MESSAGE, @"「啊啊啊，要小心……」"
+			CALL ADD_RAND_MESSAGE, @"「要、要藏起来……」"
+			CALL ADD_RAND_MESSAGE, @"「这样一来，很快就无法战斗了……」"
+			CALL ADD_RAND_MESSAGE, @"「动一动就会被看到……」"
+
+		CASE 性格_しあわせもの
+			CALL ADD_RAND_MESSAGE, @"「偏偏不穿厚衣服的时候……」"
+		CASE 性格_ぬけめがない
+		CASE 性格_ねっけつかん
+		CASE 性格_のんきもの
+			CALL ADD_RAND_MESSAGE, @"「偏偏不穿厚衣服的时候……」"
+
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"「不用特意撕破吧」"
+			CALL ADD_RAND_MESSAGE, @"「这么想看吗？」"
+			CALL ADD_RAND_MESSAGE, @"「不要用这种方式把衣服弄坏啊」"
+			CALL ADD_RAND_MESSAGE, @"「这样对喜欢的女孩子捉弄？」"
+
+
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「不行啊！！会破掉的！！」"
+			CALL ADD_RAND_MESSAGE, @"「不行啊！！会被看到的！！」"
+			CALL ADD_RAND_MESSAGE, @"「啊啊啊，要小心……」"
+			CALL ADD_RAND_MESSAGE, @"「要、要藏起来……」"
+			CALL ADD_RAND_MESSAGE, @"「这样一来，很快就无法战斗了……」"
+			CALL ADD_RAND_MESSAGE, @"「别、别过来啊！」"
+
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「啊啊啊，要小心……」"
+			CALL ADD_RAND_MESSAGE, @"「要、要藏起来……」"
+			CALL ADD_RAND_MESSAGE, @"「这样一来，很快就无法战斗了……」"
+			CALL ADD_RAND_MESSAGE, @"「动一动就会被看到……」"
+			CALL ADD_RAND_MESSAGE, @"「别、别过来啊！」"
+	ENDSELECT
+RETURN 1
+

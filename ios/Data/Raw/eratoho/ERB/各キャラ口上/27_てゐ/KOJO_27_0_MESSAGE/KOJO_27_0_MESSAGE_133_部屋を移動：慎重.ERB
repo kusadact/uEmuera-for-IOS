@@ -1,0 +1,104 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 133 部屋を移動：慎重
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_133(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+#DIM ENEMY_COUNT
+	
+	VARSET ENEMY_COUNT
+	
+	; 同室に敵がいるかチェック
+	FOR LCOUNT, 1, FLAG:1
+		IF DA:LCOUNT:4 == FLAG:5 && DA:LCOUNT:1 > 0
+			IF DA:LCOUNT:0 == 18 && !DA:LCOUNT:45
+			ELSE
+				ENEMY_COUNT += 1
+			ENDIF
+		ENDIF
+	NEXT
+	
+	SELECTCASE KOJO_MODE
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（待ちぶせ……　罠……　悪いことばかり考えちゃうなあ……）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（大丈夫……　大丈夫……　落ち着いて動けば、怖い物なんてない……）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（ヘンなのが居ませんように……）\n"
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「変にビクついてるととっさに動けなくなるからね\n　いつも通り、いつも通り」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「次の部屋は何があるかな」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"（物音を立てないよう、気をつけて……）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（ゆっくり行って、何か居たらすぐに隠れるっ！）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「いくら耳を澄ましても嫌な音しか聞こえやしないんだもの、慎重にもなるわよ……」\n"
+	ENDSELECT
+	
+	; 移動前部屋の汚染度で追加口上
+	; 清浄
+	IF FLAG:(50 + FLAG:5) < 10
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「次の部屋も綺麗だといいなあ」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんな綺麗な部屋が続いてくれると嬉しいんだけどね」\n"
+		ENDSELECT
+		
+	; 通常
+	ELSEIF FLAG:(50 + FLAG:5) < 40
+		
+	; 軽度汚染
+	ELSEIF FLAG:(50 + FLAG:5) < 70
+		
+	; 中度汚染
+	ELSEIF FLAG:(50 + FLAG:5) < 100
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（出てく前に少し片しておいたほうが良かったかしら？　ヘンなもん湧きそうだし）\n"
+		ENDSELECT
+		
+	; 重度汚染
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「もうこの部屋来たくないなあ……」\n"
+		CASE "強気"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんな汚い部屋からは、とっととオサラバしましょ」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんな酷い部屋からは、さっさと出ないと病気になっちゃうわ」\n"
+		ENDSELECT
+	ENDIF
+	
+	; 眠気による追加口上
+	IF FLAG:7 <= 3
+		
+	ELSEIF FLAG:7 <= 7
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「用心深く行動したいなら、まず眠気どうにかしたほうが」\n"
+		ENDSELECT
+		
+	ELSEIF FLAG:7 <= 11
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（こんだけ眠いと、どんだけ警戒しても見落としが出るわ……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（どんだけ気を張っても、生理現象には勝てないよ……　眠い……）\n"
+		ENDSELECT
+		
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「慎重に……　慎重に……　ねむ……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「この眠気じゃ、慎重にって言ってもね」\n"
+		ENDSELECT
+	ENDIF
+	
+	; 同じ部屋に敵が居る
+	IF ENEMY_COUNT >= 1
+		SELECTCASE KOJO_MODE
+		CASE "強気"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（この部屋の奴らは鈍感ね、あたし%TACHI()%に気づかないんだもの）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（部屋の敵さんに気づかれないようゆっくりとね……）\n"
+		ENDSELECT
+	ENDIF
+	
+RETURN 1

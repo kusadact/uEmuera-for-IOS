@@ -1,0 +1,3584 @@
+﻿[SKIPSTART]
+東方触手宮　エロ妹紅口上
+
+口上基礎知識
+口上を書く時は基本的に ARG:0 と ARG:1 の中に「シチュエーション」が入っているので、
+それに応じて分岐を行い、適切なメッセージを表示する……というのが基本方針になります
+　
+なお、TARGET に口上を表示するキャラが指定された状態になっているので、
+自分の名前や自分のCFLAGを見たい時などは CALLNAME:TARGET とか CFLAG:1 とかで参照できます
+===========================================================================================================
+31をキャラNOに置き換えることで使用できます
+戦闘行動（別ファイル）のほうも置き換えましょう
+RGBCOLOR(0, 0, 0)もキャラにあった色を指定しておきましょう
+すべてを書く必要がありませんが、まだ書いていない部分のPRINTFORMW は「;」を左につけるか消すかしたほうがよいでしょう
+逆に口上を書いたPRINTFORMW はその行の左にある「;」を消しましょう
+===========================================================================================================
+この口上デフォルトのCFLAG活用
+ビット演算に１が開いてるのは単なる趣味、（テンプレートを作った人が）個人的に２の倍数で覚えたほうがわかりやすいので
+CFLAG:802　ビット演算　2 出産経験　4 娘出産経験　8 幼体出産経験　16 寄生経験
+CFLAG:805　口上非表示管理　1で探索時、2で出産時、3で自慰、4で戦闘開始、5でリロード二刀流
+===========================================================================================================
+[SKIPEND]
+
+;口上選択時のタイトル
+@KOJO_TITLE_31_0
+RESULTS = エロ妹紅口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_31_0
+PRINTFORML PTプレイ不向き、ねちょメイン口上
+PRINTFORML 妹紅がエロくヤられまくる所が見たい人向け
+
+
+;色付け
+@KOJO_DEFAULT_COLOR_31_0
+;名前から紅になるのは確定
+RETURN RGBCOLOR(190,0,63)
+
+;口上本体
+@KOJO_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;子供をさよならする
+IF CFLAG:104 >= 1
+	RESETCOLOR
+	RETURN 0
+ENDIF
+
+;地の文はデフォルトのものを使用します
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;輝夜が仲間にいるときの細かい判定
+IF ((NO == 30 && !CFLAG:1:25 && !CFLAG:1:29 && !CFLAG:1:20 && !CFLAG:1:21 && !CFLAG:1:104) || (NO:(FLAG:10) == 30 && !CFLAG:(FLAG:10):20 && !CFLAG:(FLAG:10):21 && !CFLAG:(FLAG:10):25 && !CFLAG:(FLAG:10):29 && !CFLAG:(FLAG:10):104) || (NO:(FLAG:11) == 30 && !CFLAG:(FLAG:11):20 && !CFLAG:(FLAG:11):21 && !CFLAG:(FLAG:11):25 && !CFLAG:(FLAG:11):29 && !CFLAG:(FLAG:11):104))
+	SETBIT CFLAG:800,1
+;慧音がいるときの判定
+ELSEIF ((NO == 26 && !CFLAG:1:25 && !CFLAG:1:29 && !CFLAG:1:20 && !CFLAG:1:21 && !CFLAG:1:104) || (NO:(FLAG:10) == 26 && !CFLAG:(FLAG:10):20 && !CFLAG:(FLAG:10):21 && !CFLAG:(FLAG:10):25 && !CFLAG:(FLAG:10):29 && !CFLAG:(FLAG:10):104) || (NO:(FLAG:11) == 26 && !CFLAG:(FLAG:11):20 && !CFLAG:(FLAG:11):21 && !CFLAG:(FLAG:11):25 && !CFLAG:(FLAG:11):29 && !CFLAG:(FLAG:11):104))
+	SETBIT CFLAG:800,2
+ELSE
+	CFLAG:800 = 0
+ENDIF
+
+;戦意喪失は21以上149以下か160以上なら一部を除いて逃がす
+;ここで逃がさないもの（＝除外してRETURN 1させないもの）
+;戦闘中（20以下）MP0(33)服が破ける(35)ターン終了時自慰(48)自慰メッセージ(118)自慰で絶頂失敗(119)
+;戦意喪失中に絶頂(122)母乳を吸われる(123)出産系イベント(127と129)喪失中に気付け薬を使われた(144)
+;捕食とか復活とかゲームオーバーとかオープニング（150～159)遺品発見(フラグのみ回収する・202)
+;エンディング(204、206、208、210)
+SIF CFLAG:29 && ARG:0 != 33 && ARG:0 != 48 && ARG:0 != 118 && ARG:0 != 119 && ARG:0 != 122 && ARG:0 != 123 && ARG:0 != 127 && ARG:0 != 129 && ARG:0 != 144 && ARG:0 != 202 && ARG:0 != 204 && ARG:0 != 206 && ARG:0 != 208 && ARG:0 != 210 && ((ARG:0 > 20 && ARG:0 < 150) || ARG:0 >= 160)
+	RETURN 1
+
+
+;文字色設定
+SETCOLOR CFLAG:700
+
+;睡眠　ここに来るのはほぼ間違いなく戦闘中に何か食らった時だけだろうし……多分
+;叩き起こされたときは除く
+IF CFLAG:25 && ARG:0 != 41
+	SELECTCASE ARG:0
+		CASE 12
+			IF GETBIT (CFLAG:800,1)
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORMDL 打撃を受けても眼を覚まさない妹紅に、輝夜が戸惑いを浮かべている
+					CASE 1
+						PRINTFORMDL 痛みに体を震わせ、それでも瞼を閉じている妹紅を横目に、輝夜が敵を睨み付ける
+					CASE 2
+						PRINTFORMDL 小さなうめき声を上げても眼を覚まさない妹紅に、輝夜がいらだった表情で睨んでくる
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORMDL 痛烈な打撃に、それでも深い眠りに身を委ねる妹紅は目を覚まさない
+					CASE 1
+						PRINTFORMDL 肌に跡が残る程の攻撃に、苦痛に表情を歪めるも、妹紅の眼は開こうとしない
+					CASE 2
+						PRINTFORMDL 眠りに落ちたままの妹紅は、痛みに苦鳴を漏らす
+				ENDSELECT
+			ENDIF
+		CASE 13,14
+			IF BASE:3 > 0 && ARG:0 == 13
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORMDL 眠りに陥っている妹紅は、服が破かれていくことに気付いていない
+					CASE 1
+						PRINTFORMDL 服が削られる衝撃に、眉を顰めつつも妹紅は眠り続けている
+				ENDSELECT
+			ELSE
+				SELECTCASE ARG:2
+					CASE 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORMDL ずるりと腸内を蹂躙される感触に、眠りながらも妹紅は尻穴をキュッと締めた
+							CASE 1
+								PRINTFORMDL 菊座をくにくにと弄られて、眠ったままの妹紅はそれでも腰をゆらして逃れようとする
+							CASE 2
+								PRINTFORMDL 眠る妹紅は、激しい肛虐に身を震わせて、甘い吐息を漏らしている
+						ENDSELECT
+					CASE 1
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORMDL ぐにゅむにゅと形を変えるほど激しく揉まれる感触に、眠る妹紅の頬が赤く色づく
+							CASE 1
+								PRINTFORMDL くにくりと乳房の先端を刺激され、眠る妹紅の息が激しさを増していく
+							CASE 2
+								PRINTFORMDL 体を震わせて、胸から這い上がってくる刺激に、妹紅は眠りながらも快楽に頬を緩ませる
+						ENDSELECT
+					CASE 2
+						IF (CFLAG:42 || TALENT:121)
+						ELSE
+						ENDIF
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORMDL 秘豆を擦り立てられて、眠りながらもかくかくと腰を前後に揺らし始めた
+								CASE 1
+									PRINTFORMDL クリを嬲られる感触に、内ももを痙攣させ快感を味わっている
+								CASE 2
+									PRINTFORMDL 最も敏感な場所を攻められ、眠る妹紅の口から渧泣と涎がこぼれ落ちた
+							ENDSELECT
+					CASE 3
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORMDL ずちゅぬちゅと膣内を擦り立てられ、眠る妹紅の眉間に皺がよった
+							CASE 1
+								PRINTFORMDL ぐりゅんと、最奥を突き上げられて、妹紅は眠りながらも息を荒げている
+							CASE 2
+								PRINTFORMDL 眠る妹紅は、肉の隘路を割り広げられる感覚に、軽く体を震わせている
+						ENDSELECT
+				ENDSELECT
+			ENDIF
+		CASE 15
+			IF ARG:2 == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORMDL 全身に絡んでくる触手に、それでも眠る妹紅は気付いていない
+					CASE 1
+						PRINTFORMDL 眠る妹紅の体に、ぎちぎちと触手が絡みついてくる
+					CASE 2
+						PRINTFORMDL 体中に巻き付いてくる触手に、眉を顰める妹紅の眠りは、まだ破れていない
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORMDL 眠りに落ちている妹紅の体が、ゆっくりと飲み込まれていく
+					CASE 1
+						PRINTFORMDL ぬめりとしたものに呑まれる感触に、眠りながらも苦しそうな声を上げる妹紅
+					CASE 2
+						PRINTFORMDL 足先から生暖かく湿った感覚に飲み込まれ、眠る妹紅は苦悶の表情を浮かべている
+				ENDSELECT
+			ENDIF
+		CASE 16
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL 胎に直接粘ついた物が注ぎ込まれる感触に、眠る妹紅の口から甘い啼き声が洩れた
+				CASE 1
+					PRINTFORMDL 体内に限界まで注がれた物に、眠りながらも苦悶を浮かべ荒い息を吐き出している
+				CASE 2
+					PRINTFORMDL びくびくと震える触手の感触に、瞼を閉ざした妹紅は全身を痙攣させている
+			ENDSELECT
+		CASE 17
+			SELECTCASE ARG:1
+				CASE 13,15,16,20,21
+					PRINTFORMDL 熱情に頬を緩ませ、眠る妹紅は激しく全身を痙攣させている
+				CASEELSE
+					PRINTFORMDL 眠っている妹紅に、その攻撃から身を守る術はない
+			ENDSELECT
+		CASE 32
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL 眠る妹紅の顔に、苦悶が色濃く浮かんでいる
+				CASE 1
+					PRINTFORMDL 妹紅の睡顔は、苦痛に青ざめている
+				CASE 2
+					PRINTFORMDL それまで以上に、妹紅の体から力が抜けた
+			ENDSELECT
+		CASE 33
+			PRINTFORMDL 眠っている妹紅の顔から、苦悶の表情さえ消え去った
+		CASE 34
+			PRINTFORMDL 眠る妹紅は、頬を紅潮させ全身を痙攣させている
+		CASE 35
+			SELECTCASE ARG:1
+				CASE 2
+					PRINTFORMDL 眠る妹紅は、手を伸ばして服の破れを隠そうとしている
+				CASE 1
+					PRINTFORMDL 妹紅は眠ったまま、垣間見える素肌を隠そうと腕を動かしている
+				CASE 0
+					PRINTFORMDL 妹紅の手は、纏う物を探すように動いている
+			ENDSELECT
+		CASE 40
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL 胎の中に入り込み、縦横に暴れる幼体に、眠る妹紅は苦悶している
+				CASE 1
+					PRINTFORMDL 眠っている妹紅の胎は蹂躙され、幼体の苗床と化した
+				CASE 2
+					PRINTFORMDL 胎を使われている事で、悪夢を見ているらしい妹紅の口から悲鳴が零れている
+			ENDSELECT
+		CASE 47,116
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORMDL 菊座を犯される感覚に、妹紅は眠りながら尻をきゅっとすぼめた
+						CASE 1
+							PRINTFORMDL 時折息をせわしくしながらも、妹紅は肛虐に目を覚ます様子はない
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORMDL 両の膨らみをこね回され、眠る妹紅の口元から甘い吐息が漏れる
+						CASE 1
+							PRINTFORMDL 乳房の頂きを嬲られ、妹紅の口の端から悦楽を示す唾液が零れた
+					ENDSELECT
+				CASE 2
+					IF (CFLAG:42 || TALENT:121)
+					ELSE
+					ENDIF
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORMDL 硬くしこった淫豆をこすられ、内ももを震わせながらも、妹紅は目を覚まさない
+						CASE 1
+							PRINTFORMDL クリに刺激を受ける度、淫夢に浸る妹紅は、痙攣しながら甘い啼き声を上げている
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORMDL くちゅくちゅと膣口を弄られる感触に、妹紅は眉根を寄せている
+						CASE 1
+							PRINTFORMDL くにゅくりゅと膣内をまさぐられ、眠りながらも不快そうな表情を浮かべている
+					ENDSELECT
+			ENDSELECT
+		CASE 53
+			IF ARG:2 != 0
+				PRINTFORMDL 眠る妹紅の体は触手にがんじがらめにされている
+			ELSE
+				PRINTFORMDL 深く眠る妹紅は、完全に飲み込まれてしまった
+			ENDIF
+		CASE 117
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORMDL 淫夢でも見ているのか、妹紅は眠りながら自らを慰め始めた
+				CASE 1
+					PRINTFORMDL 眠っている妹紅の手が、自然と己の敏感な場所へと伸びていく
+			ENDSELECT
+		CASE 120
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORMDL 眠りながらも、尻を左右に振り、尻穴をぎゅっと締め付けて妹紅は達した
+						CASE 1
+							PRINTFORMDL 直腸を嬲られる感触に、涎を垂らしながら、きゅっと尻たぶを締めて妹紅は達する
+						CASE 2
+							PRINTFORMDL 強烈な肛虐に、びくびくと全身を震わせ、妹紅は頂きに押し上げられた
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORMDL 根元から頂きまで乳房を覆い尽くされ、蹂躙される妹紅はそのまま絶頂する
+						CASE 1
+							PRINTFORMDL 自ら感じるように乳房を突き出しながら、眠る妹紅は体を震わせ達している
+						CASE 2
+							PRINTFORMDL 痛みを感じそうなほどの刺激に、涎と渧泣を漏らしながら妹紅はイッた
+					ENDSELECT
+				CASE 2
+					IF (CFLAG:42 || TALENT:121)
+					ELSE
+					ENDIF
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORMDL びくんっと、大きく全身を痙攣させ、妹紅が腰を前後にカクカクと振っている
+							PRINTFORMDL そして、眠りながらも大きな声を上げて、妹紅は潮吹きしながら絶頂した
+						CASE 1
+							PRINTFORMDL 触手が蠢く度、ぴくぴくと太ももを震わせ、自ら腰を突き出す妹紅
+							PRINTFORMDL クリトリスが締め上げられる感触に、妹紅は舌を突き出しながら頂きへと押し上げられた
+						CASE 2
+							PRINTFORMDL 腰を左右に振りながら、妹紅は秘豆を必死に押し付ける
+							PRINTFORMDL 一拍おいて、全身を痙攣させた妹紅は、口の端から涎を垂らし、舌を突き出しながら達した
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORMDL 膣を抉り嬲られる感触に、妹紅は身を震わせながらイッた
+						CASE 1
+							PRINTFORMDL 膣口を擦り立てられ、妹紅は達している
+						CASE 2
+							PRINTFORMDL 膣奥を叩かれる感覚に、妹紅は悦楽の悲鳴をあげて達した
+					ENDSELECT
+			ENDSELECT
+	ENDSELECT
+	;口上記入済み
+	IF FLAG:AUTOMODE
+		PRINTFORML 
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 
+	ENDIF
+	RESETCOLOR
+	RETURN 1
+;諦めか戦意喪失
+ELSEIF CFLAG:29 || TFLAG:16 == 2
+	IF GETBIT (CFLAG:800,1)
+		SELECTCASE ARG:0
+			CASE 12,13,14,47,116
+				IF (BASE:3 > 0 && ARG:0 == 13) || ARG:0 == 12
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「……痛……」
+							PRINTFORMDL 輝夜の心配そうな視線を受けて、妹紅は視線を逸らした
+						CASE 1
+							PRINTFORML 「――ぅ――」
+							PRINTFORMDL 輝夜がもの問いたげな表情を向けてくるが、妹紅は諦めを浮かべ身動きしない
+						CASE 2
+							PRINTFORML 「ぁ……っ――」
+							PRINTFORMDL 痛みに体を震わせ、それでも自ら動かない妹紅を、苛出しげな輝夜が見つめている
+					ENDSELECT
+				ELSE
+					SELECTCASE ARG:2
+						CASE 0
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORMDL 睨む輝夜から視線を逸らして、妹紅はみずからしりたぶを割り広げた
+								CASE 1
+									PRINTFORMDL 悔しげな輝夜の表情に気付かないふりをして、妹紅は尻穴を弄られる感触に悦楽の悲鳴を上げている
+							ENDSELECT
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORMDL 自ら乳房を突き出し、触手に喘がされる妹紅は、輝夜が視界に入らぬよう顔を背けた
+								CASE 1
+									PRINTFORMDL 乳首を弄られ、渧泣を上げる妹紅に、輝夜が沈痛そうな表情を浮かべている
+							ENDSELECT
+						CASE 2
+							;ふたなり
+							IF (CFLAG:42 || TALENT:121)
+								SELECTCASE RAND:2
+									CASE 0
+										PRINTFORMDL 触手が擬態した男性器を嬲られ、舌を突き出し喘ぐ妹紅
+										PRINTFORMDL 呆然とした表情を浮かべて、輝夜がその様を見つめている
+									CASE 1
+										PRINTFORMDL 妹紅は自ら腰を振って、疑似男根を触手に突き込む
+										PRINTFORMDL ……自分がされることを想像してか、輝夜が頬を赤らめている
+								ENDSELECT
+							ELSE
+								SELECTCASE RAND:2
+									CASE 0
+										PRINTFORMDL 自ら肉莢を剥いて秘豆を晒す妹紅に、輝夜が噛み付きそうな表情を浮かべる
+										PRINTFORMDL そんな様子に気付いてないふりをして、妹紅は腰を振って秘豆を擦りつけた
+									CASE 1
+										PRINTFORMDL 秘豆に吸い付かれ、妹紅が甘い啼き声を上げる
+										PRINTFORMDL 輝夜の怒りのこもった視線にも気付かず、ただひたすら妹紅は快楽に耽った
+								ENDSELECT
+							ENDIF
+						CASE 3
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORMDL 膣腔を抉られ不快感を表す妹紅に、輝夜が反撃しろと言い始めた
+								CASE 1
+									PRINTFORMDL 膣奧を叩かれる感触に、身を震わせる妹紅を、輝夜が怒りに身を震わせて見つめている
+							ENDSELECT
+					ENDSELECT
+				ENDIF
+		ENDSELECT
+	ELSE
+		SELECTCASE ARG:0
+			CASE 13 TO 14
+				IF BASE:3 > 0 && ARG:0 == 13
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORMDL 衣がはぎ取られるのを生気の無い瞳で見つめている
+						CASE 1
+							PRINTFORMDL 服がはじけ飛んでも、身じろぎもしない
+						CASE 2
+							PRINTFORMDL 肌が晒されようと妹紅は全く反応しない
+					ENDSELECT
+				ELSE
+					SELECTCASE ARG:2
+						CASE 0
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORMDL 諦めきった表情の妹紅は、みずから尻たぶをひろげ、尻穴に触手を受け入れている
+								CASE 1
+									PRINTFORMDL 全く抵抗しない妹紅に、菊座を攻める触手が喜々として貫いてくる
+							ENDSELECT
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORMDL 妹紅はみずから胸を突き出し、触手のなすがままになっている
+								CASE 1
+									PRINTFORMDL 欠片も抗う意志を見せない妹紅に、触手が激しさをまして乳房を嬲る
+							ENDSELECT
+						CASE 2
+							IF (CFLAG:42 || TALENT:121)
+								SELECTCASE RAND:2
+									CASE 0
+										PRINTFORMDL うっとりとした表情で、妹紅は触手の間に擬根を突き込み腰を振っている
+										PRINTFORMDL 根元から先端まで絡みついた触手が動く度、妹紅は甘い啼き声を上げる
+									CASE 1
+										PRINTFORMDL 擬根に絡みつく触手に、妹紅は愛おしげに指を這わせている
+										PRINTFORMDL その事に気付いたのか、触手の擬根を扱く動きが激しくなった
+								ENDSELECT
+							ELSE
+								SELECTCASE RAND:2
+									CASE 0
+										PRINTFORMDL 頬を緩ませ、自ら腰を振って触手に秘豆を擦り付ける妹紅
+										PRINTFORMDL それを察したのか、触手が激しく秘豆を嬲ってくる
+									CASE 1
+										PRINTFORMDL だらしなく口を開き、妹紅は涎をこぼしながら秘豆への愛撫を受け入れている
+										PRINTFORMDL 触手が激しく動く度、自ら腰を揺らし妹紅は悦楽の悲鳴を漏らした
+								ENDSELECT
+							ENDIF
+						CASE 3
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORMDL 無表情で自ら陰唇を割り開き、妹紅は体内に触手を受け入れた
+								CASE 1
+									PRINTFORMDL 触手が膣内を抉る度、腰を振りながら妹紅は快楽に耽っている
+							ENDSELECT
+					ENDSELECT
+				ENDIF
+			CASEELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「…………」
+					CASE 1
+						PRINTFORML 「――――」
+					CASE 2
+					PRINTFORML 「ぁ…………ん……」
+				ENDSELECT
+		ENDSELECT
+	;口上記入済み
+	IF FLAG:AUTOMODE
+		PRINTFORML 
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 
+	ENDIF
+	RESETCOLOR
+	RETURN 1
+	ENDIF
+ENDIF
+
+SELECTCASE ARG:0
+;-------------------------------------------------------------------------------------------------
+;戦闘行動
+;-------------------------------------------------------------------------------------------------
+	CASE 1
+		CALL BATTLE_MIKATA_KOUDOU_HATUDOU_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;ターン終了時自慰
+	CASE 48
+		SELECTCASE RAND:3
+			CASE 0
+				GETFONT
+				PRINTFORM 「……はぁはぁ
+				CALL HEARTCB(0xD02830, , RESULTS:0)
+				PRINTFORM 　……熱い、体、
+				CALL HEARTCB(0xD02830, , RESULTS:0)
+				PRINTFORM 　あつ、いよ……
+				CALL HEARTCB(0xD02830, , RESULTS:0)
+				PRINTFORM 　、指が、かって、に……
+				CALL HEARTCB(0xD02830, , RESULTS:0)
+				PRINTFORML 」
+			CASE 1
+				GETFONT
+				PRINTFORM 「ん、あふ、熱い……
+				CALL HEARTCB(0xD02830, , RESULTS:0)
+				PRINTFORM 　なのに、だめ、なのに、
+				CALL HEARTCB(0xD02830, , RESULTS:0)
+				PRINTFORM 　指とめられない……
+				CALL HEARTCB(0xD02830, , RESULTS:0)
+				PRINTFORML 」
+			CASE 2
+				GETFONT
+				PRINTFORM 「はふ、ん
+				CALL HEARTCB(0xD02830, , RESULTS:0)
+				PRINTFORM 　気持ちいい、気持ちいいの……
+				CALL HEARTCB(0xD02830, , RESULTS:0)
+				PRINTFORM 　だめ、なのに……
+				CALL HEARTCB(0xD02830, , RESULTS:0)
+				PRINTFORML 」
+		ENDSELECT
+;-------------------------------------------------------------------------------------------------
+;敵の攻撃
+;-------------------------------------------------------------------------------------------------
+	;HPダメージ
+	CASE 12
+		;味方に輝夜本人が居て、非昏睡かつ非喪失かつ、非捕食＆非拘束
+		IF GETBIT (CFLAG:800,1)
+			;MP1/4以下＆拘束中
+			IF MAXBASE:MP/4 >= BASE:MP && CFLAG:20
+				;異常なし
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やめろ、やめて！　この離して、離してよっ」
+						PRINTFORMDL 僅かに嗚咽の混じる妹紅の声に、輝夜が顔に怒りを浮かべた
+					CASE 1
+						PRINTFORML 「んくっ、あふっ……もう、やだぁ」
+						PRINTFORMDL 妹紅の弱々しい様子に、輝夜の罵詈雑言を装った励声が飛んでくる
+					CASE 2
+						PRINTFORML 「いたいよ、だれか、たすけてぇ」
+						PRINTFORMDL 輝夜が痛ましげな表情で、唇を噛んでいる
+				ENDSELECT
+			;HP1/4以下orMP1/4以下or拘束中
+			;HPはダメージ後の数値を見る
+			ELSEIF (BASE:HP - ARG:2 < MAXBASE:HP/4) || MAXBASE:MP/4 >= BASE:MP || CFLAG:20
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「痛ぅ……このぉ……」
+						PRINTFORMDL 弱々しい妹紅の声音に、輝夜が訝っている
+					CASE 1
+						PRINTFORML 「これくらい、馴れてるのに……」
+						PRINTFORMDL 荒い息を吐く妹紅に、心配そうな輝夜が見つめてくる
+					CASE 2
+						PRINTFORML 「くぅ、この、程度でぇ」
+						PRINTFORMDL 目尻に涙を溜める妹紅に、輝夜が顔色を変えた
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「くっ、この程度で、負けるかっっ！」
+						PRINTFORMDL 妹紅の言葉に、輝夜が楽しげな笑みを浮かべている
+					CASE 1
+						PRINTFORML 「ちっ！　これくらい、馴れてるっ！！」
+						PRINTFORMDL 妹紅の叫びに、納得の表情を浮かべて、輝夜が頷いている
+					CASE 2
+						PRINTFORML 「痛っ！！　だから、どうしたっ！」
+						PRINTFORMDL 輝夜が感心した表情を浮かべている
+				ENDSELECT
+			ENDIF
+		;異常なし
+		ELSE
+			;MP1/4以下＆拘束中
+			IF MAXBASE:MP/4 >= BASE:MP && CFLAG:20
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やめろ、やめて！　この離して、離してよっ」
+					CASE 1
+						PRINTFORML 「んくっ、あふっ……もう、やだぁ」
+					CASE 2
+						PRINTFORML 「いたいよ……、だれか、たすけてぇ……」
+				ENDSELECT
+			;HP1/4以下orMP1/4以下or拘束中
+			;HPはダメージ後の数値を見る
+			ELSEIF (BASE:HP - ARG:2 < MAXBASE:HP/4) || MAXBASE:MP/4 >= BASE:MP || CFLAG:20
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「痛ぅ……このぉ……」
+					CASE 1
+						PRINTFORML 「これくらい、馴れてるのに……」
+					CASE 2
+						PRINTFORML 「くぅ、この、程度でぇ」
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「痛っ！　でもこの程度、馴れてるっ！」
+					CASE 1
+						PRINTFORML 「痛いくらいが、どうだって言うのよ！」
+					CASE 2
+						PRINTFORML 「この程度の痛み、どうってことないっ！」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;敵の衣服攻撃（命中）(CP０時はエロモード)（0＝A攻撃　1＝B攻撃　2＝C攻撃　3＝V攻撃）
+	CASE 13
+		;味方に輝夜本人が居て、非昏睡かつ非喪失かつ、非捕食＆非拘束
+		IF GETBIT (CFLAG:800,1)
+			;異常なし
+			IF BASE:3 > 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「くっ！　服を破くな、この気持ち悪い化け物がっっ！！」
+						PRINTFORMDL 垣間見える妹紅の肌を見て、輝夜が綺麗と訳のわからないことを言っている
+					CASE 1
+						PRINTFORML 「この化け物っ！！　っ！？　お前もこっち見るなっっ！！」
+						PRINTFORMDL 薄く笑みを浮かべる輝夜に気付いて、隙間から覗く柔肌を隠す妹紅
+				ENDSELECT
+			ELSE
+				SELECTCASE ARG:2
+					CASE 0
+						;MP1/4以下or発情中
+						IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+							SELECTCASE RAND:2
+								CASE 0
+									GETFONT
+									PRINTFORM 「ふぁんっっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　やあ、お尻弄られるの、きもちいいっっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 輝夜に見せつけるように、尻穴を貫かれる愉悦に浸る
+								CASE 1
+									GETFONT
+									PRINTFORM 「あふんっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　ひあっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　バカになる、お尻バカになるよぉ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 」
+									PRINTFORMDL 痛ましげな輝夜に気付かぬように、妹紅は肛虐に喜悦を浮かべる
+							ENDSELECT
+						;EPダメージ4500以上ランダム
+						ELSEIF (RAND:2 == 0 && ARG:3 >= 4500) || ARG:3 > BASE:EP
+							SELECTCASE RAND:2
+								CASE 0
+									GETFONT
+									PRINTFORM 「んきゅっっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　だめぇっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　おしりこわれ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　こわれりゅ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL だらしない表情で悦楽を貪る妹紅に、輝夜が哀しげな表情を浮かべている
+								CASE 1
+									GETFONT
+									PRINTFORML 
+									PRINTFORM 「くぅんっっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　ふぁんっっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　かぐやぁ、みるなぁ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　ふぁああああんっっっっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 輝夜に見るなと懇願しようとした妹紅は、菊座から這い上がる刺激に悦楽の悲鳴を上げた
+							ENDSELECT
+						;EPダメージ1500以上or残りEP3000未満
+						ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 「あふんっ！　んきゅっ、や、こんなところで、気持ち良くなんてぇ」
+									PRINTFORMDL 菊座から這い上がる悦楽を噛み締め、妹紅は輝夜から視線を逸らす
+								CASE 1
+									PRINTFORML 「違う、ちがうからぁ、みるな、輝夜見るなぁ……」
+									PRINTFORMDL 
+							ENDSELECT
+						;その他
+						ELSE
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 「っ！　あふっ！！　くっ、見るな、輝夜！　見ないでっ、ふあぁあっっ！！」
+									PRINTFORMDL 尻穴をいじくられ、快楽に染まりながらも、妹紅は輝夜から身を隠そうとする
+								CASE 1
+									PRINTFORML 「ひぁんっ！　だめ、お尻やめてっ！　みな、ひんっっ！　んくっ！」
+									PRINTFORMDL 輝夜に見るなと懇願しようとした妹紅は、菊座から這い上がる刺激に悦楽の悲鳴を上げた
+							ENDSELECT
+						ENDIF
+					CASE 1
+						;MP1/4以下or発情中or戦意喪失or諦め
+						IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+							IF RAND:2 == 0
+							;	PRINTFORMW 
+							ELSE
+							;	PRINTFORMW 
+							ENDIF
+						;EPダメージ4500以上ランダム
+						ELSEIF RAND:2 == 0 && ARG:3 >= 4500
+						;	PRINTFORMW 
+						;EPダメージ＞残りEP
+						ELSEIF ARG:3 > BASE:EP
+						;	PRINTFORMW 
+						;EPダメージ1500以上or残りEP3000未満
+						ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+						;	PRINTFORMW 
+						;その他
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「あふっ！　んくっ！　この、胸ばっかり触るなっ！　くっ、見るなこのバカっ！！」
+								PRINTFORMDL 胸を揉みたくられて、悲鳴を上げながらも妹紅は輝夜の視界から逃れようとする
+							CASE 1
+								PRINTFORML 「ふぁっ！　ひんっ！　このっ！　先っぽばかりっ！　っ！　バカ見るな！」
+								PRINTFORMDL 乳首を刺激され渧泣を上げる妹紅は、笑みを浮かべる輝夜を睨み付ける
+						ENDSELECT
+					CASE 2
+							;MP1/4以下or発情中or戦意喪失or諦め
+							IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+								IF RAND:2 == 0
+								;	PRINTFORMW 
+								ELSE
+								;	PRINTFORMW 
+								ENDIF
+							;EPダメージ4500以上ランダム
+							ELSEIF RAND:2 == 0 && ARG:3 >= 4500
+							;	PRINTFORMW 
+							;EPダメージ＞残りEP
+							ELSEIF ARG:3 > BASE:EP
+							;	PRINTFORMW 
+							;EPダメージ1500以上or残りEP3000未満
+							ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+							;	PRINTFORMW 
+							;その他
+							ELSE
+							;	PRINTFORMW 
+							ENDIF
+						;ふたなり
+						IF (CFLAG:42 || TALENT:121)
+							SELECTCASE RAND:2
+								CASE 0
+									GETFONT
+									PRINTFORM 「ひあああっっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　だめぇっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM こんにゃのおかしくなりゅ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 疑似男根を擦られる感触に、悦楽の悲鳴を上げる妹紅
+									PRINTFORMDL 顔を赤らめて見つめてくる輝夜を、気にする余裕もなく渧泣を上げ続けた
+								CASE 1
+									GETFONT
+									PRINTFORML 「んきゅっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORML 　やああっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORML 　クリだめおちんちんだめぇっっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 泣き叫ぶ妹紅は、自ら腰を振り快楽を貪っている
+									PRINTFORMDL それに貫かれる事を思ってか、輝夜がほほを朱に染めて、それをじっと見つめている
+							ENDSELECT
+						ELSE
+							SELECTCASE RAND:2
+								CASE 0
+									GETFONT
+									PRINTFORM 「やあっっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　やめてぇっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　そこ、しょこぉっっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 敏感なクリトリスを攻められ、泣き叫ぶ妹紅
+									PRINTFORMDL 全く相手にされていない輝夜が、呆れたような表情を浮かべている
+								CASE 1
+									GETFONT
+									PRINTFORM 「んきゅっっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　や、やだ、やらっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　よわいの、よわいかりゃぁ
+									CALL HEARTCB(0xD02830, 3, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 秘豆から駆け上がるあまりにも強い快感に、妹紅は涎を垂らしながら泣き叫ぶ
+									PRINTFORMDL ゴクリと生唾を飲み込み、輝夜がじっとその様子を見つめている
+							ENDSELECT
+						ENDIF
+					CASE 3
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「くぅっ、このっ！　中で動くなぁっ！！」
+								PRINTFORMDL 肩を震わせながらもあまり表情を変えない妹紅を、羨ましそうに輝夜が見つめてくる
+							CASE 1
+								PRINTFORML 「んくっ！　あふっ！　ちっ！　鬱陶しいっっっ！！」
+								PRINTFORMDL 輝夜の目が、ずっぽりと触手をくわえ込んだ膣口に釘付けにされている
+						ENDSELECT
+				ENDSELECT
+			ENDIF
+		ELSE
+			IF BASE:3 > 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「このっ！　服なんて破いてどうする気っ！」
+					CASE 1
+						PRINTFORML 「くっ！　この化け物っっ！」
+				ENDSELECT
+			ELSE
+				SELECTCASE ARG:2
+					CASE 0
+						;MP1/4以下or発情中or戦意喪失or諦め
+						IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+							IF RAND:2 == 0
+							;	PRINTFORMW 
+							ELSE
+							;	PRINTFORMW 
+							ENDIF
+						;EPダメージ4500以上ランダム
+						ELSEIF RAND:2 == 0 && ARG:3 >= 4500
+						;	PRINTFORMW 
+						;EPダメージ＞残りEP
+						ELSEIF ARG:3 > BASE:EP
+						;	PRINTFORMW 
+						;EPダメージ1500以上or残りEP3000未満
+						ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+						;	PRINTFORMW 
+						;その他
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「ひんっ！？　や、お尻入ってっ！？　あふっ！　んくっっ！　止めろ、このっっ！」
+							CASE 1
+								PRINTFORML 「あふっ！？　そこは、違うっ！　やめ、んぅっっ！」
+							CASE 2
+								PRINTFORML 「や、お尻っ！？　んくっ！　なんでこんな、あひんっふぁぁあああっっ！！
+						ENDSELECT
+					CASE 1
+						;MP1/4以下or発情中or戦意喪失or諦め
+						IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+							IF RAND:2 == 0
+							;	PRINTFORMW 
+							ELSE
+							;	PRINTFORMW 
+							ENDIF
+						;EPダメージ4500以上ランダム
+						ELSEIF RAND:2 == 0 && ARG:3 >= 4500
+						;	PRINTFORMW 
+						;EPダメージ＞残りEP
+						ELSEIF ARG:3 > BASE:EP
+						;	PRINTFORMW 
+						;EPダメージ1500以上or残りEP3000未満
+						ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+						;	PRINTFORMW 
+						;その他
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「あふ、んくっっ胸触るなぁっっ！　ひぁっっ！　や、先っぽやめ、て」
+							CASE 1
+								PRINTFORML 「ひんっ！　気持ち悪っ！　離せ、離してよっっ！」
+							CASE 2
+								PRINTFORML 「くぅっっ！　この、そんなとこ、触るなっっ！　やめろ、やめ、あひんっ！」
+						ENDSELECT
+					CASE 2
+						;MP1/4以下or発情中or戦意喪失or諦め
+						IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+							IF RAND:2 == 0
+							;	PRINTFORMW 
+							ELSE
+							;	PRINTFORMW 
+							ENDIF
+						;EPダメージ4500以上ランダム
+						ELSEIF RAND:2 == 0 && ARG:3 >= 4500
+						;	PRINTFORMW 
+						;EPダメージ＞残りEP
+						ELSEIF ARG:3 > BASE:EP
+						;	PRINTFORMW 
+						;EPダメージ1500以上or残りEP3000未満
+						ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+						;	PRINTFORMW 
+						;その他
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+						SELECTCASE RAND:3
+							CASE 0
+								GETFONT
+								PRINTFORM 「あひんっっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　んくっっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　ひあああっっっっ
+								CALL HEARTCB(0xD02830, 2, RESULTS:0)
+								PRINTFORM 　や、そこいやぁああっっ
+								CALL HEARTCB(0xD02830, 3, RESULTS:0)
+								PRINTFORML 」
+							CASE 1
+								GETFONT
+								PRINTFORM 「や、そこ弱いのっっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　お願いやめてやめてやめ、んあああああっっっっ
+								CALL HEARTCB(0xD02830, 3, RESULTS:0)
+								PRINTFORML 」
+							CASE 2
+								GETFONT
+								PRINTFORM 「ひゃふっっ
+								CALL HEARTCB(0xD02830, 2, RESULTS:0)
+								PRINTFORM 　ひんっっ
+								CALL HEARTCB(0xD02830, 2, RESULTS:0)
+								PRINTFORM 　やめ、つよ、た、たしゅ、んきゅぅぅっっっっ
+								CALL HEARTCB(0xD02830, 3, RESULTS:0)
+								PRINTFORML 」
+						ENDSELECT
+					CASE 3
+						;MP1/4以下or発情中or戦意喪失or諦め
+						IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+							IF RAND:2 == 0
+							;	PRINTFORMW 
+							ELSE
+							;	PRINTFORMW 
+							ENDIF
+						;EPダメージ4500以上ランダム
+						ELSEIF RAND:2 == 0 && ARG:3 >= 4500
+						;	PRINTFORMW 
+						;EPダメージ＞残りEP
+						ELSEIF ARG:3 > BASE:EP
+						;	PRINTFORMW 
+						;EPダメージ1500以上or残りEP3000未満
+						ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+						;	PRINTFORMW 
+						;その他
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「くっ！　中、擦るなぁ……、このぉ……」
+							CASE 1
+								PRINTFORML 「ちっっ！　この、そんなとこ、嬲って、どうする気っっ！！」
+							CASE 2
+								PRINTFORML 「この程度で、参ったり、しないんだからっ！」
+						ENDSELECT
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;EPダメージ
+	CASE 14
+		IF ARG:2 == 0
+			;MP1/4以下or発情中or戦意喪失or諦め
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			;EPダメージ4500以上ランダム
+			ELSEIF RAND:2 == 0 && ARG:3 >= 4500
+			;	PRINTFORMW 
+			;EPダメージ＞残りEP
+			ELSEIF ARG:3 > BASE:EP
+			;	PRINTFORMW 
+			;EPダメージ1500以上or残りEP3000未満
+			ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+			;	PRINTFORMW 
+			;その他
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ひんっ！？　や、お尻入ってっ！？　あふっ！　んくっっ！　止めろ、このっっ！」
+				CASE 1
+					PRINTFORML 「あふっ！？　そこは、違うっ！　やめ、んぅっっ！」
+				CASE 2
+					PRINTFORML 「や、お尻っ！？　んくっ！　なんでこんな、あひんっふぁぁあああっっ！！
+			ENDSELECT
+		ELSEIF ARG:2 == 1
+			;MP1/4以下or発情中or戦意喪失or諦め
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			;EPダメージ4500以上ランダム
+			ELSEIF RAND:2 == 0 && ARG:3 >= 4500
+			;	PRINTFORMW 
+			;EPダメージ＞残りEP
+			ELSEIF ARG:3 > BASE:EP
+			;	PRINTFORMW 
+			;EPダメージ1500以上or残りEP3000未満
+			ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+			;	PRINTFORMW 
+			;その他
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「あふ、んくっっ胸触るなぁっっ！　ひぁっっ！　や、先っぽやめ、て」
+				CASE 1
+					PRINTFORML 「ひんっ！　気持ち悪っ！　離せ、離してよっっ！」
+				CASE 2
+					PRINTFORML 「くぅっっ！　この、そんなとこ、触るなっっ！　やめろ、やめ、あひんっ！」
+			ENDSELECT
+		ELSEIF ARG:2 == 2
+			;MP1/4以下or発情中or戦意喪失or諦め
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			;EPダメージ4500以上ランダム
+			ELSEIF RAND:2 == 0 && ARG:3 >= 4500
+			;	PRINTFORMW 
+			;EPダメージ＞残りEP
+			ELSEIF ARG:3 > BASE:EP
+			;	PRINTFORMW 
+			;EPダメージ1500以上or残りEP3000未満
+			ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+			;	PRINTFORMW 
+			;その他
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+			SELECTCASE RAND:3
+				CASE 0
+					GETFONT
+					PRINTFORM 「あひんっっ
+					CALL HEARTCB(0xD02830, , RESULTS:0)
+					PRINTFORM 　んくっっ
+					CALL HEARTCB(0xD02830, , RESULTS:0)
+					PRINTFORM 　ひあああっっっっ
+					CALL HEARTCB(0xD02830, 2, RESULTS:0)
+					PRINTFORM 　や、そこいやぁああっっ
+					CALL HEARTCB(0xD02830, 3, RESULTS:0)
+					PRINTFORML 」
+				CASE 1
+					GETFONT
+					PRINTFORM 「や、そこ弱いのっっ
+					CALL HEARTCB(0xD02830, , RESULTS:0)
+					PRINTFORM 　お願いやめてやめてやめ、んあああああっっっっ
+					CALL HEARTCB(0xD02830, 3, RESULTS:0)
+					PRINTFORML 」
+				CASE 2
+					GETFONT
+					PRINTFORM 「ひゃふっっ
+					CALL HEARTCB(0xD02830, 2, RESULTS:0)
+					PRINTFORM 　ひんっっ
+					CALL HEARTCB(0xD02830, 2, RESULTS:0)
+					PRINTFORM 　やめ、つよ、た、たしゅ、んきゅぅぅっっっっ
+					CALL HEARTCB(0xD02830, 3, RESULTS:0)
+					PRINTFORML 」
+			ENDSELECT
+		ELSE
+			;MP1/4以下or発情中or戦意喪失or諦め
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			;EPダメージ4500以上ランダム
+			ELSEIF RAND:2 == 0 && ARG:3 >= 4500
+			;	PRINTFORMW 
+			;EPダメージ＞残りEP
+			ELSEIF ARG:3 > BASE:EP
+			;	PRINTFORMW 
+			;EPダメージ1500以上or残りEP3000未満
+			ELSEIF ARG:3 >= 1500 || BASE:EP < 3000
+			;	PRINTFORMW 
+			;その他
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「くっ！　中、擦るなぁ……、このぉ……」
+				CASE 1
+					PRINTFORML 「ちっっ！　この、そんなとこ、嬲って、どうする気っっ！！」
+				CASE 2
+					PRINTFORML 「この程度で、参ったり、しないんだからっ！」
+			ENDSELECT
+		ENDIF
+	;拘束攻撃
+	CASE 15
+		;ARG:1にコマンドID　ARG:2に丸呑みフラグ
+		;蔦タコイカ木娘変化●
+		IF ARG:2 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「っ！？　この、離せっ！　離してっっ！！」
+				CASE 1
+					PRINTFORML 「や、絡みつく！？　やめ、んくっ！　このぉっっ！！」
+				CASE 2
+					PRINTFORML 「ちっっ、巻き付けるな、このっ！　くぅっ！！」
+			ENDSELECT
+		;それ以外（ドッペル含む）
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「っっ！？　食う気っ！？　この、やめろ、やめてって！！」
+				CASE 1
+					PRINTFORML 「やめろって！　私を食ったって不老不死になんて、なれないのにっっ！！」
+				CASE 2
+					PRINTFORML 「このっ！　離せ、離せ離せ離せぇえっっっっ！！」
+			ENDSELECT
+		;発情中
+		;ELSEIF CFLAG:28
+		;	PRINTFORMW 
+		;ELSE
+		;	PRINTFORMW 
+		ENDIF
+	;寄生攻撃
+	CASE 16
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			PRINTFORMDL 最奥に精を放たれ、びくりと肩を震わせた妹紅は、諦めの笑みを浮かべている
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「っっ！？　中で震え……じょうだんっっ！？　ひぁあっっ！　出すなぁああっっ！！」
+				CASE 1
+					PRINTFORML 「中で大きくっ！？　やめ、やめろ、中になんて、あひっ！　ん、くぁあああっっ！！」
+				CASE 2
+					PRINTFORML 「っく！　中で、出す気！？　や、こんなもののなんていやぁああああっっっっ！！」
+			ENDSELECT
+		ENDIF
+		;戦意喪失or諦めでランダムか、おねだり（ランダムではない）
+		IF (RAND:2 == 0 && (CFLAG:29 || TFLAG:16 == 2)) || (CFLAG:50 >= 54 && CFLAG:50 <= 58)
+		;	PRINTFORMW 　
+		;発情中or戦意喪失or諦め
+		ELSEIF CFLAG:28 || CFLAG:29 || TFLAG:16 == 2
+		;	PRINTFORMW 
+		ELSE
+			IF RAND:2 == 0
+			;	PRINTFORMW 
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+		ENDIF
+	;敵のその他攻撃（命中）
+	CASE 17
+		;その他攻撃の種類
+		SELECTCASE ARG:1
+			CASE 1
+				PRINTFORML 「……はぁ……はぁ…………ん…………」
+			CASE 10
+				PRINTFORML 「砂煙！？　くっ、前が見えない」
+			CASE 11
+				PRINTFORML 「煙幕っ！？　このっ！　見えなくてもっ！」
+			CASE 12,14
+				PRINTFORML 「くっ……、なんでこんな、ねむ、く……」
+			CASE 13,15
+				PRINTFORML 「は、んっ！　や、熱い、体、あつく、んきゅっ……」
+			CASE 16,20
+				PRINTFORML 「ひんっ！？　や、熱い熱い熱いぃぃっっ！！　体熱くて、止められない！！」
+			CASE 17
+				PRINTFORML 「……え？　なんえ、しかい、が、ゆが…………んぅ」
+			CASE 18
+				PRINTFORML 「なにこれ、力が……ぬける……」
+			CASE 19
+				PRINTFORML 「やっっ！？　力が、抜けるっっ！！」
+			CASE 21
+				PRINTFORML 「ひんっ！　な、なんで、こんな、半端に優しい、んだよぉ……」
+		ENDSELECT
+	;通常攻撃回避
+	CASE 22
+		;MP1/4以下or発情中
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+		;	PRINTFORMW 
+		ELSE
+		;	PRINTFORMW 
+		ENDIF
+	;衣服攻撃回避
+	CASE 23
+		;MP1/4以下or発情中
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+		;	PRINTFORMW 
+		ELSE
+		;	PRINTFORMW 
+		ENDIF
+	;性攻撃回避
+	CASE 24
+		;MP1/4以下or発情中
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+		;	PRINTFORMW 
+		ELSE
+		;	PRINTFORMW 
+		ENDIF
+	;拘束・寄生・その他攻撃回避
+	CASE 25 TO 27
+		;MP1/4以下or発情中
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+		;	PRINTFORMW 
+		ELSE
+		;	PRINTFORMW 
+		ENDIF
+	;HPが0になった
+	CASE 32
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「くぅっ……、体が……でも、まだまだ」
+			CASE 1
+				PRINTFORML 「けほけほっ……く、まだ、まだ行ける……」
+			CASE 2
+				PRINTFORML 「……まだ、この程度で、負けたり……」
+		ENDSELECT
+	;戦意喪失
+	CASE 33
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「……ぁ……、かて、な、い……もう、むり…………」
+			CASE 1
+				PRINTFORML 「こんなの……、どうしろって……いうのよ……」
+			CASE 2
+				PRINTFORML 「もう、いやぁ……」
+		ENDSELECT
+	;EPが0になった
+	;ARG:1に絶頂部位　ARG:2で細かい状況を分岐させる予定　※絶頂の瞬間とはまた別 絶頂メッセージは120
+	CASE 34
+		PRINTFORML 「……はぁはぁ……っく……は……ん……、く、こんな」
+	;服が破ける
+	CASE 35
+		SELECTCASE ARG:1
+			CASE 2
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「くっ！　人の服をおもちゃみたいに！」	
+					CASE 1
+						PRINTFORML 「っ！　こんな！」
+				ENDSELECT
+			CASE 1
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「っ！　このっっ！」
+					CASE 1
+						PRINTFORML 「私の肌は高く付くからな！」
+				ENDSELECT
+			CASE 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「きゃっ！　っ！！　このぉっっ！！」
+					CASE 1
+						PRINTFORML 「この、化け物の分際でっっ！！」
+				ENDSELECT
+		ENDSELECT
+		;全裸
+		IF ARG:1 == 0
+		;	PRINTFORMW 
+		;半裸
+		ELSEIF ARG:1 == 1
+		;	PRINTFORMW 「
+		;破れ始めた
+		ELSEIF ARG:1 == 2
+		;	PRINTFORMW 「
+		ENDIF
+	CASE 40
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「ひっ！？　な、何か入って来る！？」
+			CASE 1
+				PRINTFORML 「ぐっ！　や、中で暴れてる！？」
+			CASE 2
+				PRINTFORML 「いやぁっっ！　中で動くなぁっっ！！」
+		ENDSELECT
+	;攻撃されて起きた
+	CASE 41
+		SELECTCASE ARG:3
+			CASE 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「……ん、お尻、むずむずする……っ！？　な、なんでこんなっ！」
+					CASE 1
+						PRINTFORML 「や、やあ……おしり、……きもちい、い？　っっ！？　何してる！！」
+				ENDSELECT
+			CASE 1
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「く、ん……、はっ！　や、やめ、何してる！！」
+					CASE 1
+						PRINTFORML 「むね、やだ……って、っ！？　こ、このぉっっ！！」
+				ENDSELECT
+			CASE 2
+				SELECTCASE RAND:2
+					CASE 0
+						GETFONT
+						PRINTFORM 「や、ん、ふぁっ、んきゅ、あひっ
+						CALL HEARTCB(0xD02830, , RESULTS:0)
+						PRINTFORM 　や、どこ触ってっ
+						CALL HEARTCB(0xD02830, , RESULTS:0)
+						PRINTFORM 　ふぁあっっっ
+						CALL HEARTCB(0xD02830, 2, RESULTS:0)
+						PRINTFORML 」
+					CASE 1
+						GETFONT
+						PRINTFORM 「ひぅっっ
+						CALL HEARTCB(0xD02830, , RESULTS:0)
+						PRINTFORM 　そ、そこきもちいいっ
+						CALL HEARTCB(0xD02830, 2, RESULTS:0)
+						PRINTFORM 　や、やめあひんっ
+						CALL HEARTCB(0xD02830, , RESULTS:0)
+						PRINTFORM 　あひっっ
+						CALL HEARTCB(0xD02830, 2, RESULTS:0)
+						PRINTFORML 」
+				ENDSELECT
+			CASE 3
+				SELECTCASE RAND:2
+					CASE 0
+					PRINTFORML 「ん、やぁ……そこ、や……んっ……、っ！？　くっ、ふざけないでよ」
+					CASE 1
+						PRINTFORML 「く……、中きもち、いい……！？　こ、このっ！　離せはなれろっっ！！」
+				ENDSELECT
+		ENDSELECT
+	;裸で時間経過
+	;ARG:1に羞恥フラグ（ARG:1が　0：恥薄い　1：通常　2：恥じらい）　ARG:2にMPダメージ
+	CASE 46
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「くっ……、着替えさえ、あれば……」
+			CASE 1
+				PRINTFORML 「……空気が、ねとついて、……気持ち悪い」
+			CASE 2
+				PRINTFORML 「こんな格好……、いやなの、に……」
+		ENDSELECT
+	;重度汚染部屋で時間経過
+	;ARG:1に部位(0＝A　1＝B　2＝C　3＝V)　ARG:2にEPダメージ
+	CASE 47
+		SELECTCASE ARG:1
+			CASE 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「くっ！　このちょこまかと気持ち悪いっ」
+					CASE 1
+						PRINTFORML 「この、そこはやめてってば」
+				ENDSELECT
+			CASE 1
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「やんっ！　胸に、触るなっっ！」
+					CASE 1
+						PRINTFORML 「んっ、やめ、ろって、ば」
+				ENDSELECT
+			CASE 2
+				SELECTCASE RAND:2
+					CASE 0
+						GETFONT
+						PRINTFORM 「ひんっっ
+						CALL HEARTCB(0xD02830, 2, RESULTS:0)
+						PRINTFORM 　や、そこ、きゅって、ひゃふっ
+						CALL HEARTCB(0xD02830, 2, RESULTS:0)
+						PRINTFORM 　やめてってば
+						CALL HEARTCB(0xD02830, 2, RESULTS:0)
+						PRINTFORML 」
+					CASE 1
+						GETFONT
+						PRINTFORM 「や、そこ、だめっ
+						CALL HEARTCB(0xD02830, , RESULTS:0)
+						PRINTFORM 　ひん、んくっ
+						CALL HEARTCB(0xD02830, , RESULTS:0)
+						PRINTFORM 　さ、さわらないでっ
+						CALL HEARTCB(0xD02830, , RESULTS:0)
+						PRINTFORML 」
+				ENDSELECT
+			CASE 3
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「ちっ、そんなところ、触ってくるなぁ……」
+					CASE 1
+						PRINTFORML 「くっ、入り口、擦るな」
+				ENDSELECT
+		ENDSELECT
+	;拘束レベルアップ
+	;ARG:1に拘束レベル　ARG:2に丸呑みフラグ
+	CASE 52
+		IF ARG:2 != 0
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「くっ！　離せ！　離せってば！！　や、動けな」
+				CASE 1
+					PRINTFORML 「くぅ、こんな、こんなこと」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「や、やめろっ！　この！　まだ奧に！？」
+				CASE 1
+					PRINTFORML 「ひぅっっ！　くっ！　食われて、堪るかっ！？」
+			ENDSELECT
+		ENDIF
+	;拘束レベルMAX継続　ARG:2に丸呑みフラグ
+	CASE 53
+		IF ARG:2 != 0
+				PRINTFORML 「ぐっ……、この……、はな、して……」
+		ELSE
+				PRINTFORML 「く……こんな、ので、……くぅ……外に……」
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;戦闘開始or終了
+;-------------------------------------------------------------------------------------------------
+	;戦闘開始
+	CASE 54
+		;睡眠
+		IF TFLAG:14 == 3
+		;	PRINTFORMW 
+		;娘との初遭遇時、口上スキップ
+		ELSEIF CFLAG:805 == 4
+			CFLAG:805 = 0
+		;MP1/4以下or発情中or要睡眠以上or妊娠中
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 7 || CFLAG:36 >= 3
+			;敵先制
+			IF TFLAG:14 == 2
+			;	PRINTFORMW 
+			;ボス
+			ELSEIF ARG:1
+			;	PRINTFORMW 
+			;味方先制
+			ELSEIF TFLAG:14 == 1
+			;	PRINTFORMW 
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+		ELSE
+			;敵先制
+			IF TFLAG:14 == 2
+			;	PRINTFORMW 
+			;ボス
+			ELSEIF ARG:1
+				;一人PTか戦闘技能1以下か戦意喪失が二人いる
+				IF FLAG:10 == 0 || (ABL:3 < 2 && ABL:4 < 2) || (CFLAG:1:29 && CFLAG:(FLAG:10):29) || (CFLAG:1:29 && CFLAG:(FLAG:11):29) || (CFLAG:(FLAG:10):29 && CFLAG:(FLAG:11):29)
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			;味方先制でランダム
+			ELSEIF RAND:2 == 0 && TFLAG:14 == 1
+			;	PRINTFORMW 「
+			ELSE
+			;	PRINTFORMW 「
+			ENDIF
+		ENDIF
+	;ARG:1 の種族と初遭遇
+	CASE 61
+		;娘
+		IF ARG:1 == 19 && TFLAG:14 != 3
+			;自分の子（パッチなしだと無効）
+			IF ARG:2 == TARGET
+			;	PRINTFORMW 「
+			;その他
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+			CFLAG:805 = 4
+		ENDIF
+;	;戦闘敗北　なんか戦意喪失とかぶってしっくり来ない
+;	CASE 56
+;		;味方か助っ人がいる
+;		SIF FLAG:10 || FLAG:15
+;		;	PRINTFORMW 
+	;戦闘勝利
+	CASE 57
+		;MP1/4以下or発情中か要睡眠以上か妊娠中
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 7 || CFLAG:36 >= 3
+		;	PRINTFORMW 
+		ELSE
+			;HP最大・MP最大・EP半分以上・CP半分以上
+			IF BASE:MP >= MAXBASE:MP && BASE:HP >= MAXBASE:HP && BASE:EP >= MAXBASE:EP/2 && BASE:CP >= MAXBASE:CP/2
+			;	PRINTFORMW 「
+			ELSE
+			;	PRINTFORMW 「
+			ENDIF
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;逃亡成功後
+;-------------------------------------------------------------------------------------------------
+	;普通に成功
+	CASE 55
+		PRINTFORML 「ここまでくれば、大丈夫だね」
+		;発情
+		IF CFLAG:28
+		;	PRINTFORMW 「
+		;	PRINTFORMW 　
+		;MP1/4以下かHP1/4以下か妊娠中か要睡眠以上
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3 || FLAG:7 >= 7
+			;	PRINTFORMW 「
+		ELSE
+		;	PRINTFORMW 「
+		ENDIF
+	CASE 56
+		PRINTFORML 「……っ……、も……か……な」
+	;見捨てて逃げた
+	CASE 62
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「ごめん……、助け、られない」
+			CASE 1
+				PRINTFORML 「絶対、助けに、来るから……」
+		ENDSELECT
+	;見捨てられた
+	CASE 63
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「……私の事は良いから、行って……」
+			CASE 1
+				PRINTFORML 「くっ……、早く、逃げなよ」
+		ENDSELECT
+
+
+;-------------------------------------------------------------------------------------------------
+;エロス
+;-------------------------------------------------------------------------------------------------
+	CASE 114
+		IF CFLAG:29 == 0
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「……ふぁ……ん。眠っておかないと……」
+						CASE 1
+							PRINTFORML 「……あふ、そろそろ眠っておこうかな」
+						CASE 2
+							PRINTFORML 「眠って置いた方が、いいよね」
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ここらで、寝ておいた方がいいんじゃない？」
+						CASE 1
+							PRINTFORML 「いざというとき、寝ておかないとキツいよ」
+						CASE 2
+							PRINTFORML 「それじゃ、この辺で寝ておこうか」
+					ENDSELECT
+				CASE 2
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「……ごめん、無理言って」
+						CASE 1
+							PRINTFORML 「そっちが寝たいときは、こっちが見るから」
+						CASE 2
+							PRINTFORML 「勝手ばかり言って悪いね」
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	;重度汚染部屋で睡眠開始　主人公のみ口上発生
+	CASE 115
+		IF CFLAG:29 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「……こんな、気持ち悪い物があるのに、寝れるかな」
+				CASE 1
+					PRINTFORML 「これ、焼き払っても、多分無駄なんだろうね」
+				CASE 2
+					PRINTFORML 「……こんなところで寝て、大丈夫かな……」
+			ENDSELECT
+		ENDIF
+	;睡眠時自慰
+	CASE 117
+		;ランダムで仲間がいる
+		IF RAND:2 == 0 && FLAG:10
+		;	PRINTFORMW 
+		ELSE
+		;	PRINTFORMW 
+		ENDIF
+	;自慰発生時　フラグだけ回収するので戦意喪失でも来る
+	;いろんな自慰からここに来るのでフラグ関係はここだけ書いておけば大丈夫
+	;もしここの口上を書くときは色んな自慰から飛んでくるのを考慮して書かないといけない
+	CASE 118
+		IF CFLAG:29 != 0
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORMDL 虚ろな瞳の妹紅は、自身の菊座に指を突き入れている
+						CASE 1
+							PRINTFORMDL 感情の消えた表情で、アヌスを弄り始めた
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORMDL 呆然とした様子の妹紅は、それでも自身の乳房を揉んでいる
+						CASE 1
+							PRINTFORMDL 硬くいきりたつ乳首を軽く指で挟み、妹紅は虚ろな表情で身を震わせている
+					ENDSELECT
+				CASE 2
+					IF (CFLAG:42 || TALENT:121)
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORMDL 視線をあらぬ方にむけたまま、擬根をこしゅこしゅとこすりたてる妹紅
+							CASE 1
+								PRINTFORMDL ぼうっとした表情で、妹紅は静かに張り詰めた擬根を擦っている
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORMDL 秘処の上へと手を伸ばし、くにくにと弄り始める妹紅に、表情は見えない
+							CASE 1
+								PRINTFORMDL こりっとした秘豆を指で擦り、妹紅は無表情のまま時折荒い息を吐く
+						ENDSELECT
+					ENDIF
+				CASE 3
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORMDL 自身の秘処へ指を差し込み、妹紅は機械的に指を動かす
+						CASE 1
+							PRINTFORMDL 妹紅は虚空へ視線をむけ、膣腔を自身の指で犯していく
+					ENDSELECT
+			ENDSELECT
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE ARG:1
+				CASE 0
+					IF ARG:2
+						SELECTCASE RAND:2
+							CASE 0
+								GETFONT
+								PRINTFORM 「……こんなに大きいの、入るなん、て……ふぁっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　んくっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORML 」
+								PRINTFORMDL ずっぽりと菊座にくわえ込んだバイブが動きめた
+								IF ABL:10 >= 2
+									GETFONT
+									PRINTFORM 「ひぁっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　や、しび、れるぅ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　あひんっ、やっ、んくっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 淫らに腰を揺らし、妹紅は肛門の悦楽を貪っている
+								ENDIF
+							CASE 1
+								GETFONT
+								PRINTFORM 「ん……お尻広がって
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 、……んくっ、こんな、あふ……
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM おもちゃで、なんて……ふぁっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORML 」
+								PRINTFORMDL 震えるバイブを抜き差しし、アヌスを刺激する妹紅
+								IF ABL:10 >= 2
+									GETFONT
+									PRINTFORM 「んっんっんぅ……
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　これ、すご、い……
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 快楽に呑まれて、涎と愛液とを垂らしながら、妹紅はひたすらアナルを刺激している
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								GETFONT
+								PRINTFORM 「だめだから……
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　お尻になんて……ふぁっ……
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　んっ、や、指、きもち、いい……
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORML 」
+								PRINTFORMDL 自身の唾液で濡らした指で、くむくむと自身の菊座を弄る妹紅
+								IF ABL:10 >= 2
+									PRINTFORM 「ふあん
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　や、だめ、だめ、なのに……
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　んくっ、あふっんっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL つぷりと肛腔へと指を突き入れ、掻き回しながら妹紅は悦楽の悲鳴を上げた
+								ENDIF
+							CASE 1
+								GETFONT
+								PRINTFORM 「入れない、から……くすぐる、だけ、あんっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　ひんっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORML 　んく、我慢、しないと」
+								PRINTFORMDL 指でしゅにしゅにとアナルを、くすぐる度、妹紅は体を震わせる
+								IF ABL:10 >= 2
+									GETFONT
+									PRINTFORM 「……がまん、できないよ……
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　ひうっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　んくっ、あふっ、ふぁっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　やんっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL ずぷんと、アヌスへと指を突き込み、妹紅は快楽を貪っている
+								ENDIF
+						ENDSELECT
+					ENDIF
+				CASE 1
+					IF ARG:2
+						SELECTCASE RAND:2
+							CASE 0
+								GETFONT
+								PRINTFORM 「や、ぶるぶる震えて、んくっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　ひんっ！　乳首気持ちいい
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　あふんっ！　んく
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORML 」
+								PRINTFORMDL 乳首に貼り付けたローターの振動に、思わず悲鳴を漏らす
+								IF ABL:10 >= 2
+									GETFONT
+									PRINTFORM 「だめ、こんなの、だめなのにぃっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　ひぁっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　ふぁんっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　あんっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 妹紅は悦楽に濁った瞳で、敏感な先端と柔らかな膨らみを揉みしだく
+								ENDIF
+							CASE 1
+								GETFONT
+								PRINTFORM 「んくっっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　あふっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　ひんっっ
+								CALL HEARTCB(0xD02830, 2, RESULTS:0)
+								PRINTFORML 」
+								PRINTFORMDL ローターから乳首に押し付けられる快感と、自身の指が乳房から紡ぐ悦楽に妹紅は喘ぐ
+								IF ABL:10 >= 2
+									GETFONT
+									PRINTFORM 「あふっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　んくっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　もっと、もっとっっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　ひぁぁあああっっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL ローターへ指を伸ばし、深く強く押し付けた妹紅は、舌を突き出して悲鳴を上げた
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								GETFONT
+								PRINTFORM 「……ん
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　こんなこと、んくっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　してる場合じゃ、ないのに
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORML 」
+								PRINTFORMDL そう呟きながら、妹紅の手は己の乳房を揉みしだき始める
+								IF ABL:10 >= 2
+									GETFONT
+									PRINTFORM 「ふぁっ……
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　ん……あふ、んくっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　……きもち、いい
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 欲情に眼を潤ませて、むにむにと胸を揉みながら、瞳を蕩けさせた
+								ENDIF
+							CASE 1
+								GETFONT
+								PRINTFORM 「あふ、んぅ……
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　やめ、ないと……
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORM 　んく、ふぁっ
+								CALL HEARTCB(0xD02830, , RESULTS:0)
+								PRINTFORML 」
+								PRINTFORMDL 言葉とは裏腹に、妹紅の手の動きは速くなっていく
+								IF ABL:10 >= 2
+									GETFONT
+									PRINTFORM 「だめ、んっ、あふっ、ふぁっ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　あんっ、あふ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL くりっと、硬くしこる乳首をつまみ上げ、甘い啼き声を漏らした
+								ENDIF
+						ENDSELECT
+					ENDIF
+				CASE 2
+					IF ARG:2
+						IF (CFLAG:42 || TALENT:121)
+							SELECTCASE RAND:2
+								CASE 0
+									GETFONT
+									PRINTFORM 「やっ！　腰、腰が勝手に
+									CALL HEARTCB(0xD02830,2 , RESULTS:0)
+									PRINTFORM 　だめなのに、こんなの
+									CALL HEARTCB(0xD02830,2 , RESULTS:0)
+									PRINTFORM 　ふぁあっっ！！　おかしくなるっっ
+									CALL HEARTCB(0xD02830,2 , RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 舌を突き出し涎をこぼしながら、妹紅が激しく腰を振っている
+									IF ABL:10 >= 2
+										PRINTFORM 「や、来る
+										CALL HEARTCB(0xD02830,2 , RESULTS:0)
+										PRINTFORM 　何か上って
+										CALL HEARTCB(0xD02830,2 , RESULTS:0)
+										PRINTFORM 　ひうっっ
+										CALL HEARTCB(0xD02830,2 , RESULTS:0)
+										PRINTFORM 　ふぁっ
+										CALL HEARTCB(0xD02830,2 , RESULTS:0)
+										PRINTFORM 　んぅっっ
+										CALL HEARTCB(0xD02830,3 , RESULTS:0)
+										PRINTFORML 」
+										PRINTFORMDL 顔を真っ赤にして、妹紅はひたすら擬根を擦りたてている
+									ENDIF
+								CASE 1
+									GETFONT
+									PRINTFORM 「だめ
+									CALL HEARTCB(0xD02830,2 , RESULTS:0)
+									PRINTFORM 　これ、だめぇ
+									CALL HEARTCB(0xD02830,2 , RESULTS:0)
+									PRINTFORM 　あたま、バカになっちゃう
+									CALL HEARTCB(0xD02830,2 , RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 快楽に蕩けきった妹紅は、ひたすらオナホに擬根をツッコミ喘いでいる
+									IF ABL:10 >= 2
+										PRINTFORM 「んきゅぅ
+										CALL HEARTCB(0xD02830,2 , RESULTS:0)
+										PRINTFORM 　ひゅあっっ
+										CALL HEARTCB(0xD02830,2 , RESULTS:0)
+										PRINTFORM 　ひぃんっ
+										CALL HEARTCB(0xD02830,2 , RESULTS:0)
+										PRINTFORM 　ひ、ひぁっや、やらぁ
+										CALL HEARTCB(0xD02830,3 , RESULTS:0)
+										PRINTFORML 」
+										PRINTFORMDL 甘い啼き声を上げながら、全身を震わせ妹紅は快感に声を上げている
+									ENDIF
+							ENDSELECT
+						ELSE
+							SELECTCASE RAND:2
+								CASE 0
+									GETFONT
+									PRINTFORM 「あひんっっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　んきゅっっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　だめこれっ、ひぁあああっっっっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL ローターがクリトリスに触れると同時、妹紅は身も世もない悲鳴を上げた
+									IF ABL:10 >= 2
+										PRINTFORM 「ぶるぶるだめぇっっ
+										CALL HEARTCB(0xD02830, 3, RESULTS:0)
+										PRINTFORM 　こんなの、おかしくなるぅっっ
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORML 」
+										PRINTFORMDL 舌を突き出し涎と愛液をまき散らし、全身を痙攣させている
+									ENDIF
+								CASE 1
+									GETFONT
+									PRINTFORM 「や、だめぇ
+									CALL HEARTCB(0xD02830, , RESULTS:0)
+									PRINTFORM 　こんなのぉっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　気持ちいいよ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　気持ちいいのぉ……
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 秘豆に与えられる振動に、靄がかかった瞳で悦楽の声を上げる妹紅
+									IF ABL:10 >= 2
+										PRINTFORM 「だめなのぉ、おかしくなるのぉ……
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORM 　あふんっ……
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORM 　んくぅ、ふぁっひんっ
+										CALL HEARTCB(0xD02830, 3, RESULTS:0)
+										PRINTFORML 」
+										PRINTFORMDL びくびくと全身を震わせて、表情を甘く蕩けさせて、妹紅は更に秘豆にローターを押し付けた
+									ENDIF
+							ENDSELECT
+						ENDIF
+					ELSE
+						IF (CFLAG:42 || TALENT:121)
+							SELECTCASE RAND:2
+								CASE 0
+									GETFONT
+									PRINTFORM 「おちんちん、おちんちんっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　きもちいいよ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　きもちいいのぉっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL ごしゅごしゅと自身の手で、肉竿をこすりたてる妹紅
+									IF ABL:10 >= 2
+										PRINTFORM 「やあ
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORM 　あたま
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORM 　おかし
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORM 　ひぁあああっっっっ
+										CALL HEARTCB(0xD02830, 3, RESULTS:0)
+										PRINTFORML 」
+										PRINTFORMDL 妹紅が握り締める擬根は、固く張り詰めびくびくと震えている
+									ENDIF
+								CASE 1
+									GETFONT
+									PRINTFORM 「これだめ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　これだめ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　これだめええっっっ
+									CALL HEARTCB(0xD02830, 4, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL 甘い啼き声を上げながら、妹紅は必死に擬根をしごいている
+									IF ABL:10 >= 2
+										PRINTFORM 「よすぎるの
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORM 　こんなの、こんなのぉ
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORM 　こわれる
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORM 　こわれりゅぅっっ
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORML 」
+										PRINTFORMDL 涎と先走りをだらだらとこぼしながら、喜悦の表情を浮かべる妹紅
+									ENDIF
+							ENDSELECT
+						ELSE
+							SELECTCASE RAND:2
+								CASE 0
+									GETFONT
+									PRINTFORM 「……はぁ、こ、んな……んっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　あふっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　ひぁっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL そっと、肉莢からむき出した秘豆を軽く擦った瞬間、全身を大きく震わせる妹紅
+									IF ABL:10 >= 2
+										PRINTFORM 「んきゅっ、やぁ、きゅんっ
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORM 　おかしきゅ、にゃりゅ……
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORML 」
+										PRINTFORMDL 呂律がまわらない程の悦楽に、妹紅は身悶えし続けている
+									ENDIF
+								CASE 1
+									GETFONT
+									PRINTFORM 「ひゃふっっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　んきゅっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORM 　そこ、だめ、だめなのにぃっっ
+									CALL HEARTCB(0xD02830, 2, RESULTS:0)
+									PRINTFORML 」
+									PRINTFORMDL クリトリスを擦る妹紅は、強すぎる快感に口の端から涎をこぼしている
+									IF ABL:10 >= 2
+										PRINTFORM 「気持ちいいっ
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORM 　バカになりそうっ
+										CALL HEARTCB(0xD02830, 2, RESULTS:0)
+										PRINTFORML 」
+										PRINTFORMDL 頬を緩ませ、ぎゅっとクリトリスをつまむ妹紅は全身を震わせている
+									ENDIF
+							ENDSELECT
+						ENDIF
+					ENDIF
+				CASE 3
+					IF ARG:2
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「……ん、はぁ……、中で、震えてる」
+								PRINTFORMDL 振動する張り型を秘処にくわえ込み、妹紅は眉を顰めている
+								IF ABL:10 >= 2
+									PRINTFORML 「気持ち、いい……かな」
+									PRINTFORMDL ぬちゅぐちゅと抜き差ししながら、妹紅は快楽の吐息を漏らした
+								ENDIF
+							CASE 1
+								PRINTFORML 「ん、これ、いい、かも」
+								PRINTFORMDL 呟きながら、膣を抉るバイブの感触に、妹紅は僅かに頬を赤らめる
+								IF ABL:10 >= 2
+									PRINTFORML 「んぅ、気持ちいい……、でも……」
+									PRINTFORMDL バイブを動かす妹紅は、どことなく物足りなさそうだ
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「はぁ……、んくっ……ん、ふ」
+								PRINTFORMDL くちぬちと膣口を白魚のような指で嬲る妹紅
+								IF ABL:10 >= 2
+									PRINTFORML 「は、んっ！　ふぅ、ふぅ……んくっ」
+									PRINTFORMDL 指を動かし続けて、妹紅はぬるま湯のような快楽に耽っている
+								ENDIF
+							CASE 1
+								PRINTFORML 「んっ、ふぁっ……、はぁ、んく」
+								PRINTFORMDL ぬちゅりと、膣内を擦りながら妹紅は吐息を漏らす
+								IF ABL:10 >= 2
+									PRINTFORML 「はぁはぁ、んっ……あふ、んくっ……ふぁっ」
+									PRINTFORMDL 指を動かす妹紅は、ぴくぴくと体を小さく震わせている
+								ENDIF
+						ENDSELECT
+					ENDIF
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORMDL 淫夢でも見ているのか、妹紅は眠りながら自らを慰め始めた
+				CASE 1
+					PRINTFORMDL 眠っている妹紅の手が、自然と己の敏感な場所へと伸びていく
+			ENDSELECT
+		ENDIF
+		CFLAG:805 = 3
+		RESETCOLOR
+		;口上記入済み
+		RETURN 1
+	;自慰で絶頂失敗　フラグだけ消去するので戦意喪失でも来る
+	CASE 119
+		CFLAG:805 = 0
+		RESETCOLOR
+		;口上記入済み
+		RETURN 1
+	;絶頂
+	CASE 120
+		SELECTCASE ARG:1
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「っっ！？　や、お尻で！　お尻でイくっっ！！　イくぅっっ！！」
+					CASE 1
+						PRINTFORML 「違う、そこ違うのに！　なんで、こんな、ふぁあああああああああっっっっっ！！」
+					CASE 2
+						PRINTFORML 「ダメ！　ダメダメダメ！　お尻でなんてっ！　だめえええっっっっっ！！」
+				ENDSELECT
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「んっっ！　イくっ！　これ、胸でなんて、あひっっ！！」
+					CASE 1
+						PRINTFORML 「んくっ！　きもちいいっっ！　胸の先っぽ、あふっっ！　ひぁあああっっ！！」
+					CASE 2
+						PRINTFORML 「あひんっ！　んくっっ！　だめ、だめだめだめ、イく、イッちゃうぅぅぅっっ！！」
+				ENDSELECT
+			CASE 2
+				IF (CFLAG:42 || TALENT:121)
+					SELECTCASE RAND:3
+						CASE 0
+							GETFONT
+							PRINTFORM 「やっ！　おちんちんっ、おちんちんっっ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　でちゃうっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM 　精液でちゃうのっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORML 」
+						CASE 1
+							GETFONT
+							PRINTFORM 「やめてっ！　おちんちんよわいのっっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM 　ふぁっ、んきゅっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM 　や、でちゃうっ！　おちんちんでいっちゃうっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORML 」
+						CASE 2
+							GETFONT
+							PRINTFORM 「ふぁんっっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM 　だめぇ、おちんちんだめぇっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM 　でる、でちゃう、おちんちんでいっちゃうのぉっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORML 」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							GETFONT
+							PRINTFORM 「んきゅぅっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM 　ひゃふぅっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM 　や、やら、しょこ、やぁあああああっっっっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORML 」
+						CASE 1
+							GETFONT
+							PRINTFORM 「だめ、そこだめぇっっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM 　や、くる、きちゃうっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM 　んにゃああああっっっっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORML 」
+						CASE 2
+							GETFONT
+							PRINTFORM 「だめなのぉ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM 　そこ、しょこ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORM やあ、イく、イッちゃうのぉっっっ
+							CALL HEARTCB(0xD02830, 2, RESULTS:0)
+							PRINTFORML 」
+					ENDSELECT
+				ENDIF
+			CASE 3
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「んくっ、ふぁっ！　くっ、やめ、ろ。そこはダメっ！　んくぅっっ！！」
+					CASE 1
+						PRINTFORML 「くぁっ！　あふっ！　んぅっっ！　くっ、イくっっ！！」
+					CASE 2
+						PRINTFORML 「あひっ！　んっ！　くぅ、イくぅ……っっ！」
+				ENDSELECT
+		ENDSELECT
+		;出産絶頂は出さない
+		IF CFLAG:805 == 2
+			CFLAG:805 = 0
+		;諦め時orMP1/4以下or発情中
+		ELSEIF TFLAG:16 == 2 || MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+			;諦め時専用で自慰でない　自慰するかどうかはともかく……
+			IF RAND:3 == 0 && TFLAG:16 == 2 && CFLAG:805 != 3
+			;	PRINTFORMW 
+			ELSEIF RAND:2 == 0
+			;	PRINTFORMW 
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+		ELSE
+			;ランダムか自慰で絶頂した時
+			IF RAND:3 == 0 || CFLAG:805 == 3
+			;	PRINTFORMW 
+			ELSEIF RAND:2 == 0
+			;	PRINTFORMW 
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+		ENDIF
+		;自慰絶頂管理
+		IF CFLAG:805 == 3
+			CFLAG:805 = 0
+		ENDIF
+	;喪失中絶頂
+	CASE 122
+		SELECTCASE ARG:1
+			CASE 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORMDL 尻穴をほじくられる感覚に、全身を震わせて、妹紅は達している
+					CASE 1
+						PRINTFORMDL びくびくと体を震わせ、菊座で絶頂した妹紅の頬を涙が一筋伝い落ちている
+				ENDSELECT
+			CASE 1
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORMDL 両の乳房を揉みしだかれ、うつろな表情の妹紅は体を震わせている
+					CASE 1
+						PRINTFORMDL 硬くしこった乳首を刺激され、妹紅は達している
+				ENDSELECT
+			CASE 2
+				IF (CFLAG:42 || TALENT:121)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORMDL 触手の作り出した穴に、自ら腰を振って妹紅は肉棒を突き込んでいく
+							PRINTFORMDL そして、腰をぶるりと震わせ、精を放った
+						CASE 1
+							PRINTFORMDL 触手に竿から亀頭に至るまで、全てを同時に嬲られ、妹紅は涎をこぼし腰を揺らす
+							PRINTFORMDL ぎゅっと、つよく締め付けられて、痙攣しながら射精した
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORMDL 諦めに染まった妹紅は、自ら腰を揺らして秘豆を擦り付ける
+							PRINTFORMDL 一拍おいて、全身を痙攣させながら妹紅は達した
+						CASE 1
+							PRINTFORMDL クリトリスを嬲られる感覚に、妹紅の口の端から涎がこぼれ落ちる
+							PRINTFORMDL きゅっと締め上げられて、妹紅は声も出さずに絶頂した
+					ENDSELECT
+				ENDIF
+			CASE 3
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORMDL 膣腔を抉られ、妹紅は身を震わせた
+					CASE 1
+						PRINTFORMDL 膣内を擦り立てられ、妹紅は達した
+				ENDSELECT
+		ENDSELECT
+		;出ない時
+		IF CFLAG:805 == 2
+			CFLAG:805 = 0
+		;自慰のときはこっちでない
+		ELSEIF RAND:2 == 0 && CFLAG:805 != 3
+
+		ELSE
+		;	PRINTFORMW 
+			IF CFLAG:805 == 3	
+				CFLAG:805 = 0
+			ENDIF
+		ENDIF
+	;母乳を吸われる　戦意喪失でも来る
+	CASE 123
+		SELECTCASE ARG:1
+			;娘
+			CASE 19
+				;発情時・戦意喪失時・諦め時
+				IF CFLAG:28 || CFLAG:29 || TFLAG:16 == 2
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			CASEELSE
+				;発情時・戦意喪失時・諦め時・MP1/4以下でランダム
+				IF CFLAG:28 || CFLAG:29 || TFLAG:16 == 2 || (RAND:3 == 0 && MAXBASE:MP/4 >= BASE:MP)
+					;諦め時か戦意喪失時専用
+					IF RAND:2 == 0 && (TFLAG:16 == 2 || CFLAG:29)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ELSE
+					IF RAND:2 == 0
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ENDIF
+			ENDSELECT
+	;処女喪失
+	CASE 136
+		SELECTCASE ARG:1
+			;敵の攻撃で
+			CASE 0
+				SELECTCASE ARG:3
+				;喪失直前
+				CASE 1
+
+
+				;守れた
+				CASE 2
+
+				CASEELSE
+
+				ENDSELECT
+			;自慰で　確か絶頂しないと処女破らない……はず
+			CASE 1
+
+			;出産
+			CASE 2
+
+		ENDSELECT
+;----------------------------------------------------------------------------------------------
+;キャラに遭遇
+;---------------------------------------------------------------------------------------------
+	;誰かに会う
+	CASE 101
+		;喪失キャラ
+		IF ARG:2
+			SELECTCASE NO:(ARG:1)
+				;YYのキャラが相手
+				;CASE YY
+
+				CASEELSE
+
+			ENDSELECT
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;YYのキャラが相手
+				;CASE YY
+
+				CASEELSE
+
+			ENDSELECT
+		ENDIF
+	;別れる
+	CASE 102
+		;喪失キャラ
+		IF ARG:2
+			SELECTCASE NO:(ARG:1)
+				;YYのキャラが相手
+				;CASE YY
+
+				CASEELSE
+
+			ENDSELECT
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;YYのキャラが相手
+				;CASE YY
+
+				CASEELSE
+
+			ENDSELECT
+		ENDIF
+	;雑談
+	CASE 103
+			;HP1/2以下でMP1/8以下で味方がいないか味方が戦意喪失　たぶん救出されたて
+			IF MAXBASE:HP/2 > BASE:HP && MAXBASE:MP/8 >= BASE:MP && (FLAG:10 == 0 || CFLAG:(FLAG:10):29)
+
+			;妊娠時
+			ELSEIF CFLAG:22 && (CFLAG:36 == 0 || CFLAG:36 >= 3)
+				SELECTCASE NO:(ARG:1)
+					;YYのキャラが相手
+					;CASE YY
+
+					CASEELSE
+
+				ENDSELECT
+			ELSE
+				SELECTCASE NO:(ARG:1)
+					;YYのキャラが相手
+					;CASE YY
+
+					CASEELSE
+
+				ENDSELECT
+			ENDIF
+	;情報交換
+	CASE 104
+			IF ARG:2 == 0
+				;HP1/2以下でMP1/8以下で味方がいないか味方が戦意喪失　たぶん救出されたて
+				IF MAXBASE:HP/2 > BASE:HP && MAXBASE:MP/8 >= BASE:MP && (FLAG:10 == 0 || CFLAG:(FLAG:10):29)
+				;	PRINTFORMW 「
+				ELSE
+				SELECTCASE NO:(ARG:1)
+					;YYのキャラが相手
+					;CASE YY
+
+					CASEELSE
+
+				ENDSELECT
+				ENDIF
+			ENDIF
+	;アイテム強請り成功
+	CASE 105
+		;相手が喪失
+		IF ARG:3
+
+		ELSE
+			;HP1/2以下でMP1/8以下で味方がいないか味方が戦意喪失　たぶん救出されたて
+			IF MAXBASE:HP/2 > BASE:HP && MAXBASE:MP/8 >= BASE:MP && (FLAG:10 == 0 || CFLAG:(FLAG:10):29)
+			;	PRINTFORMW 
+			ELSE
+				SELECTCASE NO:(ARG:1)
+					;YYのキャラが相手
+					;CASE YY
+
+					CASEELSE
+
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;勧誘成功
+	CASE 107
+		;相手が喪失
+		IF ARG:2
+			SELECTCASE NO:(ARG:1)
+				;YYのキャラが相手
+				;CASE YY
+
+				CASEELSE
+
+			ENDSELECT
+		ELSE
+			;HP1/2以下でMP1/8以下で味方がいないか味方が戦意喪失　たぶん救出されたて
+			IF MAXBASE:HP/2 > BASE:HP && MAXBASE:MP/8 >= BASE:MP && (FLAG:10 == 0 || CFLAG:(FLAG:10):29)
+			;	PRINTFORMW 
+			ELSE
+				SELECTCASE NO:(ARG:1)
+					;YYのキャラが相手
+					;CASE YY
+
+					CASEELSE
+
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;遭遇時逆襲
+	CASE 112, 111
+	;	PRINTFORMW 
+	;PTに勧誘された
+	CASE 140
+		;成功
+		IF ARG:2 == 1
+			;通常
+			IF ARG:1 == 0
+
+			;共闘
+			ELSE
+
+			ENDIF
+		;失敗
+		ELSE
+			;主人公が捕まってる＝助けを求めた
+			IF CFLAG:1:10
+
+			ELSE
+			
+			ENDIF
+		ENDIF
+	;喪失キャラに気付け薬を使った
+	CASE 143
+		;使った時
+		IF ARG:2 == 0
+
+		ENDIF
+
+;-------------------------------------------------------------------------------------------------
+;寄生・妊娠
+;-------------------------------------------------------------------------------------------------
+	;寄生が進行 802の16で寄生経験があるかどうか確認する
+	;ARG;1は残り期間
+	CASE 125
+		;寄生出産経験済み
+		IF (CFLAG:802 & 16)
+			IF ARG:1 >= 8
+				IF RAND:3 == 0
+				;	PRINTFORMW 
+				ELSEIF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 4
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 2
+			;	PRINTFORMW 
+			ELSEIF ARG:1 >= 1
+			;	PRINTFORMW 
+			ENDIF
+		ELSE
+			IF ARG:1 >= 8
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+					;妊娠経験済み
+					IF (CFLAG:802 & 2)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ENDIF
+			ELSEIF ARG:1 >= 4
+			;	PRINTFORMW 
+			ELSEIF ARG:1 >= 2
+					;妊娠経験済み
+					IF (CFLAG:802 & 2)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+			ELSEIF ARG:1 >= 1
+			;	PRINTFORMW 
+			ENDIF
+		ENDIF
+;	;妊娠が進行
+	CASE 126
+		;妊娠出産経験済み　4で娘経験、8で幼体経験
+		IF (CFLAG:802 & 2)
+			IF ARG:1 >= 11
+				IF RAND:3 == 0
+				;	PRINTFORMW 
+				ELSEIF RAND:2 == 0
+					;戦意喪失じゃない味方がいる
+					IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 9
+				IF RAND:3 == 0
+				;	PRINTFORMW 
+				ELSEIF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 8
+				;実らず
+				IF CFLAG:36 == 1
+				;	PRINTFORMW 
+				;妊娠進行
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 5
+				IF RAND:3 == 0
+				;	PRINTFORMW 
+				ELSEIF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 3
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 1
+				IF RAND:2 == 0
+					;戦意喪失じゃない味方がいる
+					IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ENDIF
+		;妊娠出産経験なし
+		ELSE
+			IF ARG:1 >= 11
+				IF RAND:2 == 0
+					;戦意喪失じゃない味方がいる
+					IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 9
+				IF RAND:2 == 0
+					;戦意喪失じゃない味方がいる
+					IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 8
+				;実らず
+				IF CFLAG:36 == 1
+				;	PRINTFORMW 「
+				;妊娠進行
+				ELSE
+				;	PRINTFORMW 
+					;戦意喪失じゃない味方がいる
+					IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ENDIF
+			ELSEIF ARG:1 >= 5
+				IF RAND:2 == 0
+					PRINTFORML 
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 3
+			;	PRINTFORMW 
+			ELSEIF ARG:1 >= 1
+				;母乳体質取得済み
+				IF TALENT:130
+				;	PRINTFORMW 
+				;母乳体質取得
+				ELSE
+				;	PRINTFORMW 
+				;	PRINTFORMW 
+				ENDIF
+			ENDIF
+		ENDIF
+	;寄生・出産イベント　喪失中も出る
+	;ARG:1はイベント進行
+	CASE 127
+		;絶頂口上を出ないように管理する
+		CFLAG:805 = 2
+		;寄生出産経験済み
+		IF (CFLAG:802 & 16)
+			;生まれ始める
+			IF ARG:1  == 0
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			;生んだ後胸吸われる
+			ELSEIF ARG:1 == 1
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSE
+			;	PRINTFORMW 
+				;ここからは絶頂に行かないので
+				CFLAG:805 = 0
+			ENDIF
+		ELSE
+			;生まれ始める
+			IF ARG:1  == 0
+			;	PRINTFORMW 
+			;生んだ後胸吸われる
+			ELSEIF ARG:1 == 1
+				;母乳体質習得
+				IF TALENT:130 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			;寄生体が去る
+			ELSE
+			;	PRINTFORMW 
+				;寄生出産経験
+				CFLAG:802 |= 16
+				;ここからは絶頂に行かないので
+				CFLAG:805 = 0
+			ENDIF
+		ENDIF
+	;妊娠・出産イベント 喪失中でも出る
+	CASE 129
+		;絶頂口上を出ないように管理する
+		CFLAG:805 = 2
+		;妊娠出産経験済み　4で娘出産経験、8で幼体出産経験
+		IF (CFLAG:802 & 2)
+			;生まれ始める
+			IF ARG:1  == 0
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			;生んだ後胸吸われる
+			ELSEIF ARG:1 == 1
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			;子が去る
+			ELSEIF ARG:1 == 2
+			;	PRINTFORMW 
+				;ここからは絶頂に行かないので
+				CFLAG:805 = 0
+				;幼体出産経験
+				IF ARG:2 == 0 && (CFLAG:802 & 8) == 0
+					CFLAG:802 |= 8
+				;娘出産経験
+				ELSEIF ARG:2 == 1 && (CFLAG:802 & 4) == 0
+					CFLAG:802 |= 4
+				ENDIF
+			ENDIF
+		ELSE
+			;生まれ始める
+			IF ARG:1  == 0
+			;	PRINTFORMW 
+			;生んだ後胸吸われる
+			ELSEIF ARG:1 == 1
+			;	PRINTFORMW 
+			;子が去る
+			ELSEIF ARG:1 == 2
+			;	PRINTFORMW 
+				;ここからは絶頂に行かないので
+				CFLAG:805 = 0
+				;出産経験
+				CFLAG:802 |= 2
+				IF ARG:2 == 0 && (CFLAG:802 & 8) == 0
+					CFLAG:802 |= 8
+				ELSEIF ARG:2 == 1 && (CFLAG:802 & 4) == 0
+					CFLAG:802 |= 4
+				ENDIF
+			ENDIF
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;マップ行動
+;-------------------------------------------------------------------------------------------------
+	;睡眠開始
+	CASE 114
+		IF TARGET == 1
+			SELECTCASE ARG:1
+				;見張りなし
+				CASE 0
+					;朦朧
+					IF FLAG:7 >= 11
+					;	PRINTFORMW 
+					;妊娠中
+					ELSEIF CFLAG:36 >= 3
+						IF RAND:2 == 0
+						;	PRINTFORMW 
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+					;要睡眠
+					ELSEIF FLAG:7 >= 7
+						IF RAND:2 == 0
+						;	PRINTFORMW 
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+					;睡眠可
+					ELSE
+						IF RAND:2 == 0
+						;	PRINTFORMW 
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+					ENDIF
+				;PTで見張り
+				CASE 1
+					;朦朧
+					IF FLAG:7 >= 11
+						PRINTFORML 
+					;	PRINTFORMW 
+					;妊娠中
+					ELSEIF CFLAG:36 >= 3
+						IF RAND:2 == 0
+						;	PRINTFORMW 
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+					;要睡眠
+					ELSEIF FLAG:7 >= 7
+						IF RAND:2 == 0
+							PRINTFORML 
+						;	PRINTFORMW 
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+					;睡眠可
+					ELSE
+						IF RAND:2 == 0
+						;	PRINTFORMW 
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+					ENDIF
+				;NPCに見張り ARG:2で見張りキャラ
+				CASE 2
+					;朦朧
+					IF FLAG:7 >= 11
+					;	PRINTFORMW 
+					;妊娠中
+					ELSEIF CFLAG:36 >= 3
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+			ENDSELECT
+		ENDIF
+	;浄化開始
+	CASE 130
+		;MPが1/4以下か発情中か朦朧
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 11
+			SELECTCASE RAND:2
+				CASE 0
+				;	PRINTFORMW 
+				CASEELSE
+				;	PRINTFORMW 
+			ENDSELECT
+		;HPが1/4以下か妊娠中か要睡眠
+		ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3 || FLAG:7 >= 7
+			SELECTCASE RAND:2
+				CASE 0
+				;	PRINTFORMW 
+				CASEELSE
+				;	PRINTFORMW 
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+				;	PRINTFORMW 
+				CASE 1
+				;	PRINTFORMW 
+				CASEELSE
+				;	PRINTFORMW 
+			ENDSELECT
+		ENDIF
+	;部屋を移動（突撃）
+	CASE 132
+		;ランダム
+		IF RAND:2 == 0
+			;MPが1/4以下か朦朧　ここだけ移動系の中では条件違う
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 11
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;HPが1/4以下か妊娠中か発情中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3 || CFLAG:28
+				SELECTCASE RAND:2
+					CASE 0
+						;戦意喪失じゃない味方がいる
+						IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+						;	PRINTFORMW 
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;要睡眠
+			ELSEIF FLAG:7 >= 7
+			;	PRINTFORMW 
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;部屋を移動（慎重）
+	CASE 133
+		IF RAND:2 == 0
+			;MPが1/4以下か発情中か朦朧
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 11
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;HPが1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;要睡眠
+			ELSEIF FLAG:7 >= 7
+			;	PRINTFORMW 
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;部屋を移動（待ち伏せ）
+	CASE 134
+		IF RAND:2 == 0
+			;MPが1/4以下か発情中か朦朧
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 11
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;HPが1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;要睡眠
+			ELSEIF FLAG:7 >= 7
+			;	PRINTFORMW 
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;探索開始
+	CASE 135
+		IF RAND:2 == 0
+			;MPが1/4以下か発情中か朦朧
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 11
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;HPが1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;要睡眠
+			ELSEIF FLAG:7 >= 7
+			;	PRINTFORMW 
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;結界とお風呂
+	CASE 149
+		;MPが1/4以下か発情中か妊娠か朦朧
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:36 >= 3 || FLAG:7 >= 11
+		;	PRINTFORMW 「
+		ELSE
+			;戦意喪失じゃない味方がいる
+			IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+			;	PRINTFORMW 「
+			;味方はいるが壊滅状態
+			ELSEIF FLAG:10
+			;	PRINTFORMW 「
+			ELSE
+			;	PRINTFORMW 「
+			ENDIF
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;その他マップ
+;-------------------------------------------------------------------------------------------------
+	;離脱時
+	CASE 110
+		;このキャラが主人公でない＝別れる方
+		IF TARGET != 1
+			;離脱後
+			IF ARG:2 == 1
+				;好感度200以上
+				IF CFLAG:5 >= 200
+					PRINTFORML 
+				;	PRINTFORMW 　
+				;MP1/4以下か妊娠中かHPとCPが0
+				ELSEIF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || (BASE:HP <= 0 && BASE:CP <= 0)
+					PRINTFORML 
+				ELSE
+					PRINTFORML 
+				ENDIF
+			ENDIF
+		ENDIF
+	;完全捕食
+	CASE 152
+	;	PRINTFORMW 
+	;	PRINTFORMW 
+	;主人公復活
+	CASE 158
+		;助けてもらって復活
+		IF ARG:1 == 0
+		;	PRINTFORMW 
+		;	PRINTFORMW 
+		ENDIF
+	;PT離脱　このキャラが抜ける
+	CASE 161
+	;	PRINTFORMW 
+	;PT離脱　このキャラが残る
+	CASE 162
+	;	PRINTFORMW 
+;-------------------------------------------------------------------------------------------------
+;ランダムイベント
+;-------------------------------------------------------------------------------------------------
+
+	;ランダムイベント発生
+	CASE 200
+		;MPが1/4以下か発情中か妊娠か朦朧
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:36 >= 3 || FLAG:7 >= 11
+			SELECTCASE ARG:1
+				;澄んだ泉　0で飲む、1で入る、2で無視
+				CASE 133
+					SELECTCASE ARG:2
+						;MP回復
+						CASE 0
+						;	PRINTFORMW 「
+						;EP回復
+						CASE 1
+						;	PRINTFORMW 「」
+						;無視
+						CASE 2
+						;	PRINTFORMW 「
+						ENDSELECT
+				;不思議な泉　0で飲む、1で入る、2で無視
+				CASE 135
+					SELECTCASE ARG:2
+						;HP・MP・EP全快	;全状態異常治療
+						CASE 0, 1
+						;	PRINTFORMW 「
+						;無視
+						CASE 2
+						;	PRINTFORMW 「
+						ENDSELECT
+				;天井からスライム　1で回避失敗、2で回避成功
+				CASE 136
+					SELECTCASE ARG:2
+						CASE 1
+							IF BASE:CP <= 0
+							;	PRINTFORMW 「
+							ELSE
+							;	PRINTFORMW 「
+							ENDIF
+						CASE 2
+						;	PRINTFORMW 「
+					ENDSELECT
+				;壁から触手　1で回避失敗、2で回避成功
+				CASE 137
+					SELECTCASE ARG:2
+						CASE 1
+						;	PRINTFORMW 「
+						CASE 2
+						;	PRINTFORMW 「
+					ENDSELECT
+				;桃色ガス　1で回避失敗、2で回避成功
+				CASE 139
+					SELECTCASE ARG:2
+						CASE 1
+							;自慰中毒2以上
+							IF ABL:10 > 1
+							;	PRINTFORMW 
+							ELSE
+							;	PRINTFORMW 
+							ENDIF
+						CASE 2
+						;	PRINTFORMW 
+					ENDSELECT
+				;誰かの荷物
+				CASE 140
+				;	PRINTFORMW 
+				;喋れる触手
+				CASE 142
+					SELECTCASE ARG:2
+						;犯される
+						CASE 0, 1, 2, 3
+						;	PRINTFORMW 「
+						;絶対にノゥ！
+						CASE 4
+						;	PRINTFORMW 「
+					ENDSELECT
+				;落石　1で回避失敗、2で回避成功
+				CASE 150
+					SELECTCASE ARG:2
+						CASE 1
+						;	PRINTFORMW 
+						CASE 2
+						;	PRINTFORMW 
+					ENDSELECT
+			ENDSELECT
+		ELSE
+			SELECTCASE ARG:1
+				;澄んだ泉　0で飲む、1で入る、2で無視
+				CASE 133
+					SELECTCASE ARG:2
+						;MP回復
+						CASE 0
+						;	PRINTFORMW 「
+						;EP回復
+						CASE 1
+						;	PRINTFORMW 「」
+						;無視
+						CASE 2
+						;	PRINTFORMW 「
+						ENDSELECT
+				;不思議な泉　0で飲む、1で入る、2で無視
+				CASE 135
+					SELECTCASE ARG:2
+						;HP・MP・EP全快	;全状態異常治療
+						CASE 0, 1
+						;	PRINTFORMW 「
+						;無視
+						CASE 2
+						;	PRINTFORMW 「
+						ENDSELECT
+				;天井からスライム　1で回避失敗、2で回避成功
+				CASE 136
+					SELECTCASE ARG:2
+						CASE 1
+							IF BASE:CP <= 0
+							;	PRINTFORMW 「
+							ELSE
+							;	PRINTFORMW 「
+							ENDIF
+						CASE 2
+						;	PRINTFORMW 「
+					ENDSELECT
+				;壁から触手　1で回避失敗、2で回避成功
+				CASE 137
+					SELECTCASE ARG:2
+						CASE 1
+						;	PRINTFORMW 「
+						CASE 2
+						;	PRINTFORMW 「
+					ENDSELECT
+				;桃色ガス　1で回避失敗、2で回避成功
+				CASE 139
+					SELECTCASE ARG:2
+						CASE 1
+							;自慰中毒2以上
+							IF ABL:10 > 1
+							;	PRINTFORMW 
+							ELSE
+							;	PRINTFORMW 
+							ENDIF
+						CASE 2
+						;	PRINTFORMW 
+					ENDSELECT
+				;誰かの荷物
+				CASE 140
+				;	PRINTFORMW 
+				;喋れる触手
+				CASE 142
+					SELECTCASE ARG:2
+						CASE 0, 1, 2, 3
+						;	PRINTFORMW 「
+						CASE 4
+						;	PRINTFORMW 「
+					ENDSELECT
+				;落石　1で回避失敗、2で回避成功
+				CASE 150
+					SELECTCASE ARG:2
+						CASE 1
+						;	PRINTFORMW 
+						CASE 2
+						;	PRINTFORMW 
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;遺品　YYのキャラの遺品を発見した
+;-------------------------------------------------------------------------------------------------
+	;遺品回収
+	CASE 202
+		SELECTCASE NO:(ARG:1)
+			;CASE YY
+
+
+			ENDSELECT
+;-------------------------------------------------------------------------------------------------
+;オープニング＆エンディング
+;-------------------------------------------------------------------------------------------------
+	;オープニング
+	CASE 203
+		PRINTFORML 「ちっ、ややこしそうな場所だな」
+		PRINTFORMDL ぽつりと呟き、妹紅は周囲に視線を向けた。
+		PRINTFORMDL 全力を込めて巻き上がる炎は、弾幕ごっこでやる程度の威力のないもの
+		PRINTFORMDL 一瞬、輝夜の仕業かと思い、即座にそれはないなと否定する
+		PRINTFORMDL もし、輝夜がするのであれば、使いを寄こして存分に吹聴させるか
+		PRINTFORMDL 本人が現れてちょっかいをかけてくる筈
+		PRINTFORML 「……退屈しなくて済みそうだし、まあいいか」
+		PRINTFORMDL そう呟いて、妹紅は一歩を刻んだ
+		IF FLAG:AUTOMODE
+			PRINTFORML 
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 
+		ENDIF
+	;エンディング１・仲間を囮にして逃げる　※主人公側
+	CASE 204
+		IF NO:(FLAG:10) == 30 || NO:(FLAG:11) == 30
+			IF (CFLAG:(FLAG:10):5 + CFLAG:(FLAG:11):5) >= 500
+				PRINTFORML 「……はっ」
+				PRINTFORMDL \@ NO:(FLAG:10) != 30 ? %CALLNAME:(FLAG:10)% # %CALLNAME:(FLAG:11)% \@の傍に、仲間が駆けよるのを見ながら、妹紅はゆっくりと輝夜の傍に向かう
+				PRINTFORMDL うつろな表情で床に臥す輝夜……、その頭を軽く蹴った
+				IF FLAG:AUTOMODE
+					PRINTFORML 「おい、何してる？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「おい、何してる？」
+				ENDIF
+				PRINTFORMDL 仲間達は、こちらをちらりと見た後、少し離れた
+				PRINTFORML 「なあ、なんでこんなところで、こんな風に寝てるんだよ？」
+				PRINTFORMDL もう一度頭を蹴って、それでもピクリとも動かない輝夜の隣に腰を下ろす
+				IF FLAG:AUTOMODE
+					PRINTFORML 「お前、蓬莱人なんだろ？　この程度のことで、なんで簡単に壊れるんだよ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「お前、蓬莱人なんだろ？　この程度のことで、なんで簡単に壊れるんだよ」
+				ENDIF
+				PRINTFORMDL ぽつぽつと呟きながら、妹紅は輝夜の肩に手を置いた
+				PRINTFORMDL そして、強引に上体を起こさせる
+				PRINTFORML 「お前は……、お前を殺すのは私だろ……、お前だって私を殺すんだろ」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL なのに、どうして
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW なのに、どうして
+				ENDIF
+				PRINTFORMDL それ以上の言葉を続けることが出来なくて
+				PRINTFORML 「なんで、私を逃がして、なのに、お前は……お前はっっ！！」
+				PRINTFORMDL 熱い物が頬を伝い落ちるのを感じながら、妹紅は輝夜を抱き締めた
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+				PRINTFORMDL ……あれから、永遠亭に新たな住人が増えていた
+				PRINTFORMDL 壊れた少女を救うためにと
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 自身の罪を贖うためにと
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 自身の罪を贖うためにと
+				ENDIF
+				PRINTFORMDL ただ懸命に
+				PRINTFORMDL ただ必死に
+				PRINTFORMDL 妹紅は輝夜の隣にあり続けた
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+				PRINTFORML 
+			ELSE
+				PRINTFORML 「ちっ」
+				PRINTFORMDL ……あの異変から数十年が経って
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それでもまだ輝夜が帰ってこない
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それでもまだ輝夜が帰ってこない
+				ENDIF
+				PRINTFORMDL その苛立ちに妹紅は舌打ちを残す
+				PRINTFORMDL どんどん寂しくなっていく幻想郷、もはや住人もさほどの数が居ない状況
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それは、あの異変が、終わることなく続いているからで
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それは、あの異変が、終わることなく続いているからで
+				ENDIF
+				PRINTFORML 「なんで、だよ」
+				PRINTFORMDL 輝夜が居なくて、せいせいする
+				PRINTFORMDL そう思っていたのに、輝夜の帰りを待ちわびている己を、妹紅は一人あざ笑った
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+			ENDIF
+		ELSE
+			IF (CFLAG:(FLAG:10):5 + CFLAG:(FLAG:11):5) >= 500
+				PRINTFORML 「……なんで、私を逃がしたんだよ」
+				PRINTFORMDL ぐったりとした%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%の傍に寄りながら、妹紅は溜め息を吐く
+				PRINTFORMDL あの時、確かに妹紅は自分の意志で逃げた
+				IF FLAG:AUTOMODE
+					PRINTFORMDL けれど、本当なら蓬莱人である自分が残った方が良かったのに
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW けれど、本当なら蓬莱人である自分が残った方が良かったのに
+				ENDIF
+				PRINTFORMDL 仲間達が、奧に向かって行く
+				PRINTFORMDL 現状、この迷宮での経験がある重要な戦力の自分が、立ち止まるわけにはいかない
+				PRINTFORML 「最期まで……」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ぽつりと呟き、彼女達を外に運ぶよう頼んで、妹紅は仲間達と迷宮の奧に向かった
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ぽつりと呟き、彼女達を外に運ぶよう頼んで、妹紅は仲間達と迷宮の奧に向かった
+				ENDIF
+				PRINTFORML 
+				PRINTFORMDL その異変が終わりを告げて後、
+				PRINTFORMDL 深夜、迷いの竹林に訪れる者達は、
+				PRINTFORMDL 生気の無い二人の少女を傍らにおき、優しく語りかける妹紅を見かけるようになったという
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+			ELSE
+				PRINTFORMDL 妹紅は一人妖怪の山の頂に立っていた
+				PRINTFORMDL 以前なら近寄ることさえ憚られたそこは、けれどなにものも止めようとはしなくて
+				PRINTFORMDL 止められるほどのものは居なくなっていて、妹紅は小さく溜め息を吐いた
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+				PRINTFORMDL ……誰も救えない
+				PRINTFORMDL 馴れていたはずなのに、今まで感じたことのないほど深い悔恨に、妹紅は苛まされていた
+				PRINTFORMDL 消えたままの迷宮、なれど幾度となく取り込まれていく、消えていく少女達
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ……一度などは、目の前で消えて、救うことが出来なかった
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ……一度などは、目の前で消えて、救うことが出来なかった
+				ENDIF
+				PRINTFORML 「もう、いい……」
+				PRINTFORMDL ぽつりと呟いた妹紅は眼を閉じる
+				PRINTFORMDL 自身でも思わぬ程に、この幻想郷を愛していたらしい
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 今更そのことを思い知らされて、けれど、もはやそれを救う術など無くて
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 今更そのことを思い知らされて、けれど、もはやそれを救う術など無くて
+				ENDIF
+				PRINTFORMDL 不尽の煙を上げる火口を見下ろす
+				PRINTFORMDL 「蓬莱の薬」を焼き消す事が叶うなら、きっと蓬莱人をも焼き滅ぼすことが出来るはず
+				PRINTFORMDL その思いに一縷の望みを託して、妹紅は火口に身を投げた
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+			ENDIF
+		ENDIF
+	;エンディング１・仲間を囮にして逃げる　※仲間側の口上
+	CASE 205
+		IF NO:1 == 30
+			IF (CFLAG:(FLAG:10):5 + CFLAG:(FLAG:11):5) >= 500
+				PRINTFORML 「……」
+				SETCOLOR 229,152,197
+					IF FLAG:AUTOMODE
+						PRINTFORML 『妹紅、ほら月が綺麗よ』
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 『妹紅、ほら月が綺麗よ』
+					ENDIF
+				RESETCOLOR
+				PRINTFORML 「……」
+				SETCOLOR 229,152,197
+					IF FLAG:AUTOMODE
+						PRINTFORML 『ふふ、今日は趣向を変えて、こういう事をしてみようと思うの』
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 『ふふ、今日は趣向を変えて、こういう事をしてみようと思うの』
+					ENDIF
+				RESETCOLOR
+				PRINTFORML 「…………」
+				SETCOLOR 229,152,197
+					IF FLAG:AUTOMODE
+						PRINTFORML 『よく似合ってるわよ。今風の格好も結構似合うわね』
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 『よく似合ってるわよ。今風の格好も結構似合うわね』
+					ENDIF
+				RESETCOLOR
+				PRINTFORML 「…………」
+				SETCOLOR 229,152,197
+					IF FLAG:AUTOMODE
+						PRINTFORML 『ふふ、ふ、……く、うっ……、ばかもこー、いつまでもねてるんじゃ、ない、わよ』
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 『ふふ、ふ、……く、うっ……、ばかもこー、いつまでもねてるんじゃ、ない、わよ』
+					ENDIF
+				RESETCOLOR
+				PRINTFORML 「……」
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+			ENDIF
+		ENDIF
+	;エンディング２・ガーディアン撃破　※主人公側
+	CASE 206
+		IF NO:(FLAG:10) == 30 || NO:(FLAG:11) == 30
+			PRINTFORMDL 永遠亭の中にある一部屋
+			PRINTFORMDL 「てかまあ、なんでこうなるんだ？」
+			SETCOLOR 229,152,197
+				PRINTFORML 『あら、あの場所では散々嬲ってくれたじゃない』
+			RESETCOLOR
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 月光に裸身を晒す輝夜の姿に、妹紅は深々と溜め息を吐く
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 月光に裸身を晒す輝夜の姿に、妹紅は深々と溜め息を吐く
+			ENDIF
+			PRINTFORMDL あの迷宮の中では、まともな精神状態じゃなかっただけ
+			PRINTFORMDL そう言いたくても、反論は許さないと瞳で語る輝夜に、妹紅は視線を下ろす
+			PRINTFORMDL 同じように晒された裸身――輝夜にただ服をはぎ取られただけだけど――の下腹部
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 男のモノが、形を為していた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 男のモノが、形を為していた
+			ENDIF
+			SETCOLOR 229,152,197
+				PRINTFORML 『ね、殺し合いはあとでちゃんとしてあげるから』
+			RESETCOLOR
+			PRINTFORMDL そう言いながら、自身の陰唇を両手で開く輝夜
+			PRINTFORML 「はいはい、わかったよ、すればいいんだろうすれば」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 口では文句を言いつつ、輝夜を抱き寄せる
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 口では文句を言いつつ、輝夜を抱き寄せる
+			ENDIF
+			PRINTFORMDL そして、ただ互いの欲情を発散させるためだけの行為を始める
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……最近、輝夜の視線に媚びが浮かぶけれど、慕情などあり得ないと思い込んだ
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……最近、輝夜の視線に媚びが浮かぶけれど、慕情などあり得ないと思い込んだ
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ELSE
+			PRINTFORMDL 自身の庵で新聞を見ながら、溜め息を吐く
+			PRINTFORMDL 今日もまた、あの迷宮から帰ってきた者がいる
+			PRINTFORML 「……この分だと、全員戻ってくるかもね」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL その言葉に、庵に入り浸るようになった%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%が同時に頷く
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW その言葉に、庵に入り浸るようになった%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%が同時に頷く
+			ENDIF
+			PRINTFORML 「……ていうか、あんた達も、わざわざこんなところに入り浸って、何が楽しいんだか」
+			PRINTFORMDL その言葉に、二人がクスクス笑い、いきなり見せつけるようにキスを始める
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 深い溜め息をついた妹紅は、それでも抱き付いてくる二人に身を任せる
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 深い溜め息をついた妹紅は、それでも抱き付いてくる二人に身を任せる
+			ENDIF
+			PRINTFORML 「全く、不毛にも程があるよね」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう呟く妹紅の口元には嬉しげな笑みが浮かんでいた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう呟く妹紅の口元には嬉しげな笑みが浮かんでいた
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ENDIF
+	;エンディング４・クイーン撃破　※主人公側
+	CASE 210
+		IF NO:(FLAG:10) == 30 || NO:(FLAG:11) == 30
+			PRINTFORMDL 「はー、呑んだ呑んだ」
+			SETCOLOR 229,152,197
+				PRINTFORML 『そうよね』
+			RESETCOLOR
+			PRINTFORMDL 盛り上がりまくった宴会を終えて、庵へと向かう帰り道
+			IF FLAG:AUTOMODE
+				PRINTFORMDL なぜか輝夜が隣にいる
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW なぜか輝夜が隣にいる
+			ENDIF
+			PRINTFORMDL その上、腕を組んでくるのが、意味不明で鬱陶しい
+			PRINTFORML 「……で、どこまでついてくる気？」
+			SETCOLOR 229,152,197
+				PRINTFORML 『今日は妹紅ちゃんのおうちでおとまりー』
+			RESETCOLOR
+			IF FLAG:AUTOMODE
+				PRINTFORML 「やめろ、気持ち悪い」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「やめろ、気持ち悪い」
+			ENDIF
+			PRINTFORMDL 幼子のような声と言葉に文句をつけ、強引に腕を振り払おうとして、異常に気付いた
+			PRINTFORML 「輝夜？」
+			SETCOLOR 229,152,197
+				PRINTFORML 『ふふ、今日くらいはいいでしょ。あそこでの遊びを続けても』
+			RESETCOLOR
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう囁く輝夜の腕は、まるで接着でもされたようにこちらの腕に絡みついて振り払えない
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう囁く輝夜の腕は、まるで接着でもされたようにこちらの腕に絡みついて振り払えない
+			ENDIF
+			PRINTFORML 「ふぁんっっ！　ちょっ！　待てコラっっっ！！」
+			PRINTFORMDL さらに、妹紅の抵抗を阻むように、輝夜の手が秘処を撫で上げてきた
+			PRINTFORMDL 思わず腰を引こうとして、体が動かないことに気付かされる
+			IF FLAG:AUTOMODE
+				PRINTFORMDL おそらく、輝夜の力で体の周囲の時間を遅くでもされたのだろう
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW おそらく、輝夜の力で体の周囲の時間を遅くでもされたのだろう
+			ENDIF
+			SETCOLOR 229,152,197
+				PRINTFORML 『ふふ、可愛いわ妹紅。こう言う楽しみ方も覚えてはどうかしら？』
+			RESETCOLOR
+			PRINTFORML 「……はぁ」
+			PRINTFORMDL 深々と溜め息を吐いて、妹紅は輝夜を睨み付け、
+			PRINTFORML 「今日だけ、だからね」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ぽつりと呟いた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ぽつりと呟いた
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ELSE
+			PRINTFORMDL ……訳がわからない
+			PRINTFORMDL それくらいしか言えない妹紅は、呆然と思考を停止していた
+			PRINTFORMDL %CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%が、妹紅の左右に陣取って、酌から上げ膳据え膳までしてくるのだ
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あのさぁ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あのさぁ」
+			ENDIF
+			PRINTFORMDL 自分で出来ると言おうとした妹紅に、二人が泣き出しそうな眼で見つめてくる
+			PRINTFORML 「……よろしくおねがいします」
+			PRINTFORMDL どうやら、反論と抵抗の余地は欠片もないらしい
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 途端に嬉しそうに笑って、左右からしなだれかかってくる
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 途端に嬉しそうに笑って、左右からしなだれかかってくる
+			ENDIF
+			PRINTFORML 「はぁ……」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 深々と、溜め息を吐くことしか出来なかった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 深々と、溜め息を吐くことしか出来なかった
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ENDIF
+	;エンディング５・クイーンソロ撃破　※主人公
+	CASE 212
+		IF CHARANUM <= 2
+			PRINTFORML 「へへっ、燃えたろ」
+			PRINTFORMDL 手に残っていた炎の残滓を振り払い、
+			PRINTFORMDL にやりと笑った妹紅は迷宮を後にした
+			IF FLAG:AUTOMODE
+				PRINTFORML 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+		ELSE
+			PRINTFORMDL のろのろと、妹紅は立ち上がる
+			PRINTFORMDL 救いきれなかった、守ることが出来なかった
+			PRINTFORMDL ただ悔しくて、けれど、なすすべなど無くて、
+			PRINTFORMDL 感情のない表情で、妹紅は歩き出した
+			IF FLAG:AUTOMODE
+				PRINTFORML 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;ふたなり　別に飛ぶ
+;-------------------------------------------------------------------------------------------------
+	CASE 451, 452, 453, 454, 455, 456, 457
+		CALL FUTANARI_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CASEELSE
+		;汎用　行あけ区分のためこっちから戻す
+		RESETCOLOR
+		;口上記入済み
+		RETURN 1
+ENDSELECT
+
+RESETCOLOR
+
+;行あけ
+PRINTFORML 
+
+;口上記入済み
+RETURN 1
+

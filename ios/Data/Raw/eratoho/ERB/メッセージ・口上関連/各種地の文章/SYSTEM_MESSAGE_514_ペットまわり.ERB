@@ -1,0 +1,77 @@
+﻿;ペット関連
+@SYSTEM_MESSAGE_514(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+SETCOLOR 0xEE1010
+
+SELECTCASE ARG:1
+	CASE 0
+		;moge ここPET:51参照してたの明らかに頭おかしい
+		IF !TALENT:(ARG:2):寵物
+			PRINTDATAL
+				DATAFORM %ARGS:1%向%ARGS:0%袭击！
+				DATAFORM %ARGS:1%开始强奸%ARGS:0%！
+				DATAFORM 性欲高涨的%ARGS:1%、让%ARGS:0%开始了性处理！
+				DATAFORM %ARGS:1%推倒了%ARGS:0%！
+			ENDDATA
+		ELSE
+			PRINTDATAL
+				DATAFORM %ARGS:0%开始为作为主人的%ARGS:1%服务！
+				DATAFORM 性欲高涨的%ARGS:1%、让%ARGS:0%做性处理！
+				DATAFORM %ARGS:0%邀请了%ARGS:1%！
+				DATAFORM %ARGS:1%向宠物%ARGS:0%袭击！
+				DATAFORM %ARGS:1%开始使用%ARGS:0%！
+				DATAFORM 无法忍耐的%ARGS:0%、和%ARGS:1%开始交合了！
+			ENDDATA
+		ENDIF
+	CASE 1
+		IF !TALENT:(ARG:2):寵物
+			PRINTDATAL
+				DATAFORM %ARGS:0%向%ARGS:1%打开了身体……
+				DATAFORM %ARGS:0%将身体献给了%ARGS:1%……
+				DATAFORM %ARGS:0%决定给%ARGS:1%营养……
+				DATAFORM %ARGS:0%决定把自己的身体作为%ARGS:1%的饵料……
+				DATAFORM %ARGS:0%决定平息%ARGS:1%的性欲……
+			ENDDATA
+		ELSE
+			PRINTDATAL
+				DATAFORM %ARGS:0%很高兴地向%ARGS:1%打开了身体……
+				DATAFORM %ARGS:1%命令%ARGS:0%为他服务……
+				DATAFORM %ARGS:0%开始为%ARGS:1%服务……
+				DATAFORM %ARGS:0%得到了%ARGS:1%的疼爱……
+				DATAFORM %ARGS:0%用自己的身体给%ARGS:1%带来了快乐……
+				DATAFORM %ARGS:0%平息了%ARGS:1%的性欲……
+				DATAFORM %ARGS:1%开始使用%ARGS:0%……
+			ENDDATA
+		ENDIF
+
+	CASE 3
+	CASE 4
+		SELECTCASE ARG:2
+			CASE 0
+				
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM %CALLNAME:1%%TACHI()%和%PETNAME%分别了……
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM %CALLNAME:1%%TACHI()%和%PETNAME%分别了……
+					ENDDATA
+				ENDIF
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM %CALLNAME:1%%TACHI()%准备和%PETNAME%分别……
+						DATAFORM 但是，因为产生了感情，所以没能分开……
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM %CALLNAME:1%%TACHI()%准备和%PETNAME%分别……
+						DATAFORM 但是，因为产生了感情，所以没能分开……
+					ENDDATA
+				ENDIF
+		ENDSELECT
+ENDSELECT

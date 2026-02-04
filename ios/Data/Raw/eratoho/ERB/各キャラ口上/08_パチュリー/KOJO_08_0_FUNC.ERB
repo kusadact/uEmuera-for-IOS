@@ -1,0 +1,115 @@
+﻿;サブルーチン
+
+@GET_PT_CHAR_NO_8_0(ARG:0, ARG:1)
+;パーティに指定キャラが居ればそのキャラワーク番号を取得
+;ARG:0 キャラ種別
+;ARG:1 0:通常、1:健在チェック
+
+	IF NO:1 == ARG:0 && CFLAG:1:104 == 0
+		LOCAL:0 = 1
+	ELSEIF (FLAG:10 != 0) && (NO:(FLAG:10) == ARG:0) && (CFLAG:(FLAG:10):104 == 0)
+		LOCAL:0 = FLAG:10
+	ELSEIF (FLAG:11 != 0) && (NO:(FLAG:11) == ARG:0) && (CFLAG:(FLAG:11):104 == 0)
+		LOCAL:0 = FLAG:11
+	ELSE
+		RETURN 0
+	ENDIF
+	
+	;健在チェック
+	IF ARG:1
+		; 拘束か喪失してる
+		IF CFLAG:(LOCAL:0):10 || CFLAG:(LOCAL:0):20 || CFLAG:(LOCAL:0):21 || CFLAG:(LOCAL:0):29
+			LOCAL:0 = 0
+		ENDIF
+	ENDIF
+	
+	RETURN LOCAL:0
+
+
+@GET_ID_FROM_NAME_8_0(ARGS:0)
+;指定名称のキャラワーク番号を取得
+;ARGS:0 キャラ名称
+
+	FOR LOCAL:0, 1, CHARANUM
+		IF CFLAG:(LOCAL:0):104 == 0 && CALLNAME:(LOCAL:0) == ARGS:0
+			RETURN LOCAL:0
+		ENDIF
+	NEXT
+	
+	RETURN 0
+
+
+@GET_IDX_SAVESTR_8_0(ARGS:0)
+;指定名称の敵名称ワーク番号を取得
+;ARGS:0 キャラ名称
+
+	FOR LOCAL:0, 0, FLAG:1
+		IF SAVESTR:(LOCAL:0) == ARGS:0
+			RETURN LOCAL:0
+		ENDIF
+	NEXT
+	
+	RETURN 0
+	
+
+
+@SYASEI_SE_8_0(ARG:0)
+;とりあえず射精SE
+
+	SELECTCASE RAND:8
+	CASE 0
+		PRINTFORMDL びゅくっ！びゅっ！びゅびゅーーーーーーーっ！！！
+	CASE 1
+		PRINTFORMDL どぷっ！ぶびゅびゅびゅっ！びゅくっ！！びゅくっ！！
+	CASE 2
+		PRINTFORMDL ぴゅっ！びゅるっ！！びゅるるるるるっっ！
+	CASE 3
+		PRINTFORMDL ドビュッ！ビュッ！ビューーーーーーーっっ！！！
+	CASE 4
+		PRINTFORMDL どくんっ！ドクッ！ドクッ！！
+	CASE 5
+		PRINTFORMDL ぶびゅるっ！！！ぶびっ！！どびゅるるるるるっっっっ！！！！
+	CASE 6
+		PRINTFORMDL びゅくっ！びゅくるるッッ！！！びゅくっ！びゅくっ！！！
+	CASEELSE
+		PRINTFORMDL ブピュッ！！ピュッ！ブビュゥゥゥゥゥッッ！！！！
+	ENDSELECT
+
+	IF ARG:0 > 0
+		PRINTFORMD %CALLNAME:(ARG:0)%は
+		SELECTCASE RAND:4
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 身を震わせながら白濁液をぶちまけた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 身を震わせながら白濁液をぶちまけた…
+			ENDIF
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 何度も何度もペニスを激しく脈動させた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 何度も何度もペニスを激しく脈動させた…
+			ENDIF
+		CASE 2
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 口から涎を垂れ流し惚けた顔で、凄まじい勢いの射精を繰り返す…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 口から涎を垂れ流し惚けた顔で、凄まじい勢いの射精を繰り返す…
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 激しく己の欲望を吐き出した…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 激しく己の欲望を吐き出した…
+			ENDIF
+		ENDSELECT
+	ENDIF
+
+RETURN
+
+
+

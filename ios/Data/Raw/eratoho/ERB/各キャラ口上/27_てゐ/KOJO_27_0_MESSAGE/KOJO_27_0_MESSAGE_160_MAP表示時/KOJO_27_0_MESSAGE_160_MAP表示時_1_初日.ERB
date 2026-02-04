@@ -1,0 +1,57 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 1 初日
+; ------------------------------------------------------------------------------
+
+; 初日会話は必ず表示されるよう口上優先度を上げる
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; ゲーム開始直後だけ特別扱いで喋る
+	SIF !(DAY:0 == 1 && TIME:0 == 0)
+		RETURN 0
+		
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+
+	; コンフィグ設定によって初回メッセージを変化させる
+	; 爆乳 + 母乳体質 + ふたなり
+	IF GET_BUST(TARGET) == 2 && TALENT:130 && CFLAG:42
+		CALL KOJO_27_0_ADD_MESSAGE, @"\d肥大しきった胸は母乳で服を濡らし、反り返った男根はスカートの上からでもわかるほどビクビクと脈打っている\d\n"
+		CALL KOJO_27_0_PARAGRAPH_MESSAGE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「うう、悪趣味にも程があるわ……　あたしが何をしたってのよ……」\n"
+		CALL KOJO_27_0_PARAGRAPH_MESSAGE
+		CALL KOJO_27_0_ADD_MESSAGE, @"\d奇妙に作り替えられた自分の身体を見ながら、%CALLNAME:TARGET%はぶつぶつと文句を漏らしている…\d\n"
+	
+	; 爆乳 + ふたなり
+	ELSEIF GET_BUST(TARGET) == 2 && CFLAG:42
+		CALL KOJO_27_0_ADD_MESSAGE, @"\d%CALLNAME:TARGET%の胸は服から溢れんばかりに肥大し、下腹部にはグロテスクな男根がビクビクと脈打っている…\d\n"
+		CALL KOJO_27_0_PARAGRAPH_MESSAGE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「これは夢よ、バカげた夢！　こんな事ありえないもの……」\n"
+		CALL KOJO_27_0_PARAGRAPH_MESSAGE
+		CALL KOJO_27_0_ADD_MESSAGE, @"\d奇妙に作り替えられた自分の身体を見ながら、%CALLNAME:TARGET%はぶつぶつと文句を漏らしている…\d\n\n"
+		
+	; 爆乳 + 母乳体質
+	ELSEIF GET_BUST(TARGET) == 2 && TALENT:130
+		CALL KOJO_27_0_ADD_MESSAGE, @"\d%CALLNAME:TARGET%の小さな体躯に対して不釣り合いな大きさに肥大した胸から母乳が滴っている\d\n"
+		CALL KOJO_27_0_PARAGRAPH_MESSAGE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「何よこの胸、服がびちゃびちゃになっちゃうじゃない……」\n"
+		
+	; 爆乳
+	ELSEIF GET_BUST(TARGET) == 2
+		CALL KOJO_27_0_ADD_MESSAGE, @"「夢……じゃないわよね…？　これなら師匠に負けないかも……」\n"
+		CALL KOJO_27_0_PARAGRAPH_MESSAGE
+		CALL KOJO_27_0_ADD_MESSAGE, @"\d小さな体躯に対して不釣り合いな大きさに成長した胸を、揉んだり揺らしたりしながら%CALLNAME:TARGET%は感嘆の声を上げている\d\n"
+		CALL KOJO_27_0_PARAGRAPH_MESSAGE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「…………飽きた！　いざ大きくなると邪魔なだけだわ！」\n"
+		
+	; ふたなり寄生済
+	ELSEIF CFLAG:42
+		CALL KOJO_27_0_ADD_MESSAGE, @"\d下腹部に違和感を感じた%CALLNAME:TARGET%は慌ててスカートをまくり上げた！\n%CALLNAME:TARGET%の股間から屹立したグロテスクな男根が、下着を持ち上げビクビクと脈打っている…\d\n"
+		CALL KOJO_27_0_PARAGRAPH_MESSAGE
+		CALL KOJO_27_0_ADD_MESSAGE, @"（う、うそっ！？　何よこれぇっ！？）\n"
+		
+	; 通常時
+	ELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「周りを見渡してもタダのだだっぴろい部屋だし、耳をすませば変な音ばかりするし……\n　何でこんな目に遭うのかしら？　普段の行いは完璧なのに」\d\n"
+	ENDIF
+RETURN 1

@@ -1,0 +1,44 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 2 はいてない
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; はいてる！
+	SIF !CFLAG:44
+		RETURN 0
+		
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ぱんつ……）\n"
+			RETURN 1
+		ENDSELECT
+	ENDIF
+	
+	; 通常時
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「下着つけてないって、犯されたいアピールみたいなもんかしら♥」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（服の下に何もつけないで出歩くの、ちょっと興奮するかも♥）\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（下着もつけてない状態で襲われたら……あたし……）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「早いところ着替えないと……　下着……」\n"
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「新しい下着が欲しいけど、落ちてるのを履くのもねえ……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「どっかに下着の替えは無いかしら？　すーすーして心もとない……」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ウサギの身体だとどうでもいいのに……なんで人の身体の時って、はいてないと不安なのかしら」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（下着落ちてないかなぁ……　いや、下着だけ落ちてるのは怪しいか……）\n"
+	ENDSELECT
+RETURN 1

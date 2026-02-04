@@ -1,0 +1,48 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 10 眠気
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_10(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 通常時
+	; 眠気によって分岐
+	IF FLAG:7 <= 3
+		
+	ELSEIF FLAG:7 <= 7
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「蚊帳の触手避けバージョンみたいなの欲しいわ～、そうすればたっぷり眠れるし」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ふわぁぁ……　干したての布団が恋しいわ……」\n"
+		ENDSELECT
+		
+	ELSEIF FLAG:7 <= 11
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「目がしょぼしょぼする～　ねむい～」\n"
+		ENDSELECT
+		
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「眠すぎてふらふらするわよ～」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「うぅ～　眠すぎて倒れそうだわ……」\n"
+		ENDSELECT
+	ENDIF
+RETURN 1

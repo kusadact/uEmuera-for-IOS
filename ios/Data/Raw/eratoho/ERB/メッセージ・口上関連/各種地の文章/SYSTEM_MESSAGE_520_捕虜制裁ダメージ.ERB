@@ -1,0 +1,24 @@
+﻿;捕虜制裁ダメージ
+;肉盾時、自力で脱出しようとすると制裁され痛めつけられる
+@SYSTEM_MESSAGE_520(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	PRINTFORML 
+	PRINTFORML 对猛烈挣扎试图甩开触手的%ARGS:0%、%ARGS:1%给予了无情的制裁！
+	PRINTFORML %ARGS:0%的脖子上缠绕着触手、被勒紧骨头折断的前一刻、一边拼命地向后仰、一边喘息着寻求氧气
+IF FLAG:AUTOMODE
+    PRINTFORML 被鳞片覆盖的触手侵入嘴里、从外面被勒紧的气管、从里面也被狠狠地刮擦着！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被鳞片覆盖的触手侵入嘴里、从外面被勒紧的气管、从里面也被狠狠地刮擦着！
+ENDIF
+
+	;骨折していた場合更にエスカレート(テキストのみ、ダメージ自体は同じ)
+	IF CFLAG:201 > 0
+		PRINTFORML 此外、%ARGS:1%强行拉扯着缠绕住%ARGS:0%手臂上的触手、让骨折的患处肿胀疼痛起来
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%因为剧烈的疼痛而挣扎着、但是喉咙被压住、甚至发不出声来！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%因为剧烈的疼痛而挣扎着、但是喉咙被压住、甚至发不出声来！
+ENDIF
+
+	ENDIF

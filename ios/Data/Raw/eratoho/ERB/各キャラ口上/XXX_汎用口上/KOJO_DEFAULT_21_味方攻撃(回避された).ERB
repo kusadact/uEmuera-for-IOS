@@ -1,0 +1,150 @@
+﻿
+
+; ////////////////////////////
+; / ARG:0   21    味方の攻撃(回避)
+; / ARG:1         コマンドID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_21(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;絶頂、煙幕、砂煙中の攻撃关于、よけられて当然だろうから、リターンで。
+IF CFLAG:35 || CFLAG:26 || CFLAG:27
+
+	RETURN 0
+
+ENDIF
+
+;だんだんと喋らなくなる
+IF BASE:1 < 300 && RAND:3 > 0
+	RETURN 0
+ENDIF
+
+;余裕がない時
+IF BASE:1 < 500
+	CALL ADD_RAND_MESSAGE, @"「咕……竟然在这个时候！」"
+ENDIF
+
+
+	CALL ADD_RAND_MESSAGE, @"「嗯，躲在物体后面……」"
+	CALL ADD_RAND_MESSAGE, @"「地形成了阻碍……」"
+	CALL ADD_RAND_MESSAGE, @"「竟然会互相抵消！」"
+	CALL ADD_RAND_MESSAGE, @"「什么时候超出射程了！？」"
+
+	CALL ADD_RAND_MESSAGE, @"「速度相当快……」"
+
+	CALL ADD_RAND_MESSAGE, @"「可惜了！」"
+	CALL ADD_RAND_MESSAGE, @"「希望这样能让你放松警惕……」"
+
+;だんだんと喋らなくなる
+IF BASE:1 < 300
+	RETURN 1
+ENDIF
+
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おせっかい
+		CALL ADD_RAND_MESSAGE, @"「偏了！？……嗯，被躲过了」"
+		CALL ADD_RAND_MESSAGE, @"「咕，这样就多此一举了！」"
+		CALL ADD_RAND_MESSAGE, @"「那就下次再利用吧！」"
+		CALL ADD_RAND_MESSAGE, @"「这个迷宫，总感觉有些不对劲……」"
+		CALL ADD_RAND_MESSAGE, @"「躲开就不会被击中了！」"
+		CALL ADD_RAND_MESSAGE, @"「这也是迷宫的力量……」"
+		CALL ADD_RAND_MESSAGE, @"「……别得意！」"
+		CALL ADD_RAND_MESSAGE, @"「……难道是毒气的衣服！？」"
+
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「没必要逃跑，只是有点疼而已」"
+		CALL ADD_RAND_MESSAGE, @"「躲开就不会被击中了！」"
+		CALL ADD_RAND_MESSAGE, @"「……咦？」"
+		CALL ADD_RAND_MESSAGE, @"「……为什么！？」"
+		CALL ADD_RAND_MESSAGE, @"「……为什么！？」"
+		CALL ADD_RAND_MESSAGE, @"「……别得意！」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊～，真是让人烦躁！」"
+		CALL ADD_RAND_MESSAGE, @"「真是气死人了！」"
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「偏了！？……嗯，被躲过了」"
+		CALL ADD_RAND_MESSAGE, @"「那就下次再利用吧！」"
+		CALL ADD_RAND_MESSAGE, @"「这个迷宫，总感觉有些不对劲……」"
+		CALL ADD_RAND_MESSAGE, @"「这也是迷宫的力量……」"
+		CALL ADD_RAND_MESSAGE, @"「我还有很多进步空间呢……」"
+		CALL ADD_RAND_MESSAGE, @"「咕！锻炼还不够吗……」"
+	CASE 性格_がんばりや
+		CALL ADD_RAND_MESSAGE, @"「偏了！？……嗯，被躲过了」"
+		CALL ADD_RAND_MESSAGE, @"「那就下次再利用吧！」"
+		CALL ADD_RAND_MESSAGE, @"「这个迷宫，总感觉有些不对劲……」"
+		CALL ADD_RAND_MESSAGE, @"「这也是迷宫的力量……」"
+		CALL ADD_RAND_MESSAGE, @"「果然很强大……」"
+		CALL ADD_RAND_MESSAGE, @"「……别得意！」"
+		CALL ADD_RAND_MESSAGE, @"「咕！还需要更多锻炼……」"
+
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「偏了！？……嗯，被躲过了」"
+		CALL ADD_RAND_MESSAGE, @"「看来还是要更冷静地攻击才好……」"
+		CALL ADD_RAND_MESSAGE, @"「这个迷宫，总感觉有些不对劲……」"
+		CALL ADD_RAND_MESSAGE, @"「这也是迷宫的力量……」"
+		CALL ADD_RAND_MESSAGE, @"「……难道是毒气的衣服！？」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「偏了！？……嗯，被躲过了」"
+		CALL ADD_RAND_MESSAGE, @"「下次怎么办呢……」"
+		CALL ADD_RAND_MESSAGE, @"「怎么会这样！？」"
+		CALL ADD_RAND_MESSAGE, @"「这也是迷宫的力量……」"
+		CALL ADD_RAND_MESSAGE, @"「果然很强大……」"
+
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「躲开就不会被击中了！」"
+		CALL ADD_RAND_MESSAGE, @"「……咦？」"
+		CALL ADD_RAND_MESSAGE, @"「……为什么！？」"
+		CALL ADD_RAND_MESSAGE, @"「……为什么！？」"
+		CALL ADD_RAND_MESSAGE, @"「我还有很多进步空间呢……」"
+		CALL ADD_RAND_MESSAGE, @"「来吧！……但是，在危机之后，一定会有机会！」"
+
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「请不要逃跑啊～」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「偏了！？……嗯，被躲过了」"
+		CALL ADD_RAND_MESSAGE, @"「那就下次再利用吧！」"
+		CALL ADD_RAND_MESSAGE, @"「这个迷宫，总感觉有些不对劲……」"
+		CALL ADD_RAND_MESSAGE, @"「这也是迷宫的力量……」"
+		CALL ADD_RAND_MESSAGE, @"「……难道是毒气的衣服！？」"
+
+	CASE 性格_ねっけつかん
+
+		CALL ADD_RAND_MESSAGE, @"「那就下次再利用吧！」"
+		CALL ADD_RAND_MESSAGE, @"「咕，没打中……！！」"
+		CALL ADD_RAND_MESSAGE, @"「来吧！……但是，在危机之后，一定会有机会！」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「真是的，好好打中啊！！」"
+		CALL ADD_RAND_MESSAGE, @"「咕，这样就多此一举了！」"
+		CALL ADD_RAND_MESSAGE, @"「躲开就不会被击中了！」"
+		CALL ADD_RAND_MESSAGE, @"「偏了！？……嗯，被躲过了」"
+		CALL ADD_RAND_MESSAGE, @"「我还有很多进步空间呢……」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊，这是什么乱七八糟的动作……」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「偏了！？……嗯，被躲过了」"
+		CALL ADD_RAND_MESSAGE, @"「下次怎么办呢……」"
+		CALL ADD_RAND_MESSAGE, @"「怎么会这样！？」"
+		CALL ADD_RAND_MESSAGE, @"「果然很强大……」"
+
+	CASE 性格_やさしいひと
+
+		CALL ADD_RAND_MESSAGE, @"「果然很强大……」"
+		CALL ADD_RAND_MESSAGE, @"「偏了！？……嗯，被躲过了」"
+		CALL ADD_RAND_MESSAGE, @"「下次怎么办呢……」"
+		CALL ADD_RAND_MESSAGE, @"「怎么会这样！？」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「躲开就不会被击中了！」"
+		CALL ADD_RAND_MESSAGE, @"「咕，这样就多此一举了！」"
+		CALL ADD_RAND_MESSAGE, @"「下次一定……！」"
+		CALL ADD_RAND_MESSAGE, @"「……别得意！」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊，真是的，好烦躁啊！」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊，真是的，气死我了！」"
+		CALL ADD_RAND_MESSAGE, @"「在这种地方磨磨蹭蹭的！」"
+	ENDSELECT
+
+
+
+
+RETURN 1
+

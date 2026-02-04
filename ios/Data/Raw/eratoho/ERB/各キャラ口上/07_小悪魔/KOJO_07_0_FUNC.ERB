@@ -1,0 +1,441 @@
+﻿;サブルーチン
+
+@KOJO_GUS_7_0(ARG:0)
+;ガス噴出時の共通セリフ
+;ARG:0 パターン
+
+	SELECTCASE ARG:0
+	;発情ガス
+	CASE 0
+		PRINTFORM 「…ぁ…このガス…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	
+	;避ける
+	CASE 1
+		;パーティ
+		IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+			CALL GET_PT_CHAR_NO_7_0(8)
+			;パチュリーが居る
+			IF RESULT > 0
+				;淫魔
+				IF TALENT:156
+					PRINTFORM 「このガスは……パチュリー様、はい、深呼吸～
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL パチュリーは完全に無視して手で口と鼻を塞いでいる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW パチュリーは完全に無視して手で口と鼻を塞いでいる…
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「パチュリー様っ！　このガスっ！！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「パチュリー様っ！　このガスっ！！！」
+					ENDIF
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「皆さん、息を止めて下さいっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「皆さん、息を止めて下さいっ！」
+				ENDIF
+			ENDIF
+		;ぼっち
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…………（ふぅ…こんな場所のガス…何の効果があるか判りませんからね）」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…………（ふぅ…こんな場所のガス…何の効果があるか判りませんからね）」
+			ENDIF
+		ENDIF
+
+	ENDSELECT
+
+RETURN
+
+@KOJO_HEAT_7_0
+;発情の共通セリフ
+
+	;淫魔
+	IF TALENT:156
+		PRINTFORM 「……はぁぁぁぁ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ん…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　とても…いい気分です…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;パーティ
+	ELSEIF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+		CALL GET_PT_CHAR_NO_7_0(8)
+		;パチュリーが居る
+		IF RESULT > 0
+			PRINTFORM 「ぁ……はぁ…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　はぁー…パチュリー…さま……私…抑えられなかったら…ごめんなさい…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　はぁー…パチュリー…さま……私…抑えられなかったら…ごめんなさい…」
+			ENDIF
+		ELSE
+			PRINTFORM 「…ぁ……ふぁ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　皆さん…私から離れ…んんっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　…抑えられてる…うちに…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　…抑えられてる…うちに…」
+			ENDIF
+		ENDIF
+	ELSE
+		PRINTFORM 「…ぁ……ふぁ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　まずい…淫魔の血が……気を張らないと…んんっ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDIF
+
+RETURN
+
+@KOJO_072_7_0
+;強制自慰の共通セリフ
+
+	;パーティ
+	IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+		IF FLAG:AUTOMODE
+			PRINTFORML 「だめ…襲い掛からない内に…一人で…解消しないと…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「だめ…襲い掛からない内に…一人で…解消しないと…」
+		ENDIF
+	ELSE
+		IF FLAG:AUTOMODE
+			PRINTFORML 「身体が…求めちゃう……解消…しないと…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「身体が…求めちゃう……解消…しないと…」
+		ENDIF
+	ENDIF
+
+RETURN
+
+@KOJO_WANT_7_0(ARG:0)
+;おねだり失敗時の共通セリフ
+;ARG:0 パターン
+
+	SELECTCASE ARG:0
+	;Aおねだり
+	CASE 54
+		SELECTCASE RAND:2
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「お尻に…して欲しいのに…意地悪ですねぇ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「お尻に…して欲しいのに…意地悪ですねぇ…」
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「私のお尻…こんなにヒクヒクして待ち切れないのに…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「私のお尻…こんなにヒクヒクして待ち切れないのに…」
+			ENDIF
+		ENDSELECT
+	;Bおねだり
+	CASE 55
+		SELECTCASE RAND:2
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「おっぱい…弄って欲しいのに…意地悪です……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「おっぱい…弄って欲しいのに…意地悪です……」
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「おっぱい…揉みしだいて欲しくてドキドキしてるんですよ……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「おっぱい…揉みしだいて欲しくてドキドキしてるんですよ……」
+			ENDIF
+		ENDSELECT
+	;Cおねだり
+	CASE 56
+		;ふたなり
+		IF CFLAG:42 || TALENT:121
+			SELECTCASE RAND:2
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「おちんちん…こんなにしてるんだから弄ってくれたって……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「おちんちん…こんなにしてるんだから弄ってくれたって……」
+				ENDIF
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「私の…こんなに硬くはち切れそうになってるんですから…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「私の…こんなに硬くはち切れそうになってるんですから…」
+				ENDIF
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「クリちゃん…気持ちよくして欲しくてヒクヒクしてる…なのに……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「クリちゃん…気持ちよくして欲しくてヒクヒクしてる…なのに……」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「その…もっと気持ちいいところを責めてくれても…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		ENDIF
+	;Vおねだり
+	CASE 57
+		SELECTCASE RAND:2
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…おまんこ…欲しいんですよ…疼いて疼いて仕方ないのに……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…おまんこ…欲しいんですよ…疼いて疼いて仕方ないのに……」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「…あそこに…その太いのが…欲しくて…我慢…できないんです…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+	;その他おねだり
+	CASEELSE
+		SELECTCASE RAND:2
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…そう…じゃないの…今…私が一番欲しいのは……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…そう…じゃないの…今…私が一番欲しいのは……」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「あんまり焦らされると…私の方から襲っちゃいますよ？
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+	ENDSELECT
+
+RETURN
+
+@KOJO_FUTAKA_7_0
+;ふたなり化の共通セリフ
+
+	;射精中毒LV3
+	IF ABL:12 >= 3
+		PRINTFORM 「あ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　また…せーえきいっぱいびゅるるってできるぅ
+		CALL HEARTCB(0xD02830)
+		PRINTFORML 」
+		PRINTFORM 「もう…射精した時の気持ち良さを想像しただけで…先っぽから溢れて来ちゃう
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;射精中毒LV2
+	ELSEIF ABL:12 >= 2
+		PRINTFORML 「また…おちんちんが……射精って…結構体力消耗してしまうんですよね…」
+		PRINTFORM 「そうですね。すぐにでも、びゅくびゅく射精しきってしまわないと…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;射精経験あり
+	ELSEIF EXP:12 > 0
+		IF FLAG:AUTOMODE
+			PRINTFORML 「また…おちんちんが…搾取する側なのに精液を放出してしまうのは、ちょっと…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「また…おちんちんが…搾取する側なのに精液を放出してしまうのは、ちょっと…」
+		ENDIF
+		;射精中毒LV1
+		IF ABL:12 >= 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…でも……男性側の気持ち良さを身を持って知るのも大事かもしれませんね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…でも……男性側の気持ち良さを身を持って知るのも大事かもしれませんね」
+			ENDIF
+		ENDIF
+	ELSE
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ちょ…ちょっと？！　おちんちんそのものは嫌いではないというか…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ちょ…ちょっと？！　おちんちんそのものは嫌いではないというか…」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「でも、自分に生えるというのは…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「でも、自分に生えるというのは…」
+		ENDIF
+	ENDIF
+
+RETURN
+
+@CHECK_MD_7_0(ARG:0)
+;覚醒モードチェック
+;ARG:0 自キャラ番号（通常は省略）
+;RETURN 0:通常、1:強気
+	
+	;覚醒OFF
+	IF CFLAG:850 == 0
+		RETURN 0
+	ENDIF
+	
+	IF ARG:0 == 0
+		LOCAL:0 = CFLAG:12
+		LOCAL:1 = CFLAG:100
+	ELSE
+		LOCAL:0 = CFLAG:(ARG:0):12
+		LOCAL:1 = CFLAG:(ARG:0):100
+	ENDIF
+	
+	;超強気（一応分けておくけど口上は基本強気と一緒）
+	IF LOCAL:0 >= 40 && LOCAL:1 == 8
+		RETURN 2
+	;強気
+	ELSEIF LOCAL:0 >= 20 && LOCAL:1 == 8
+		RETURN 1
+	ELSE
+		RETURN 0
+	ENDIF
+
+
+@GET_PT_CHAR_NO_7_0(ARG:0, ARG:1)
+;パーティに指定キャラが居ればそのキャラワーク番号を取得
+;ARG:0 キャラ種別
+;ARG:1 0:通常、1:健在チェック
+
+	IF NO:1 == ARG:0 && CFLAG:1:104 == 0
+		LOCAL:0 = 1
+	ELSEIF (FLAG:10 != 0) && (NO:(FLAG:10) == ARG:0) && (CFLAG:(FLAG:10):104 == 0)
+		LOCAL:0 = FLAG:10
+	ELSEIF (FLAG:11 != 0) && (NO:(FLAG:11) == ARG:0) && (CFLAG:(FLAG:11):104 == 0)
+		LOCAL:0 = FLAG:11
+	ELSE
+		RETURN 0
+	ENDIF
+	
+	;健在チェック
+	IF ARG:1
+		; 拘束か喪失してる
+		IF CFLAG:(LOCAL:0):10 || CFLAG:(LOCAL:0):20 || CFLAG:(LOCAL:0):21 || CFLAG:(LOCAL:0):29
+			LOCAL:0 = 0
+		ENDIF
+	ENDIF
+	
+	RETURN LOCAL:0
+
+
+@GET_ID_FROM_NAME_7_0(ARGS:0)
+;指定名称のキャラワーク番号を取得
+;ARGS:0 キャラ名称
+
+	FOR LOCAL:0, 1, CHARANUM
+		IF CFLAG:(LOCAL:0):104 == 0 && CALLNAME:(LOCAL:0) == ARGS:0
+			RETURN LOCAL:0
+		ENDIF
+	NEXT
+	
+	RETURN 0
+
+
+@GET_IDX_SAVESTR_7_0(ARGS:0)
+;指定名称の敵名称ワーク番号を取得
+;ARGS:0 キャラ名称
+
+	FOR LOCAL:0, 0, FLAG:1
+		IF SAVESTR:(LOCAL:0) == ARGS:0
+			RETURN LOCAL:0
+		ENDIF
+	NEXT
+	
+	RETURN 0
+	
+
+
+
+
+@SET_INMA_7_0(ARG:0)
+;淫魔化パラメータセット
+
+	ABL:11 = 3			;触手中毒
+	ABL:14 = 3			;精液中毒
+	TALENT:31 = 1		;貞操無頓着
+	TALENT:33 = 1		;解放
+	TALENT:36 = 1		;恥薄い
+	TALENT:52 = 1		;舌使い
+	TALENT:70 = 1		;快感に素直
+	TALENT:74 = 1		;淫乱
+	TALENT:78 = 1		;淫壷
+	TALENT:110 = 1		;巨乳
+	TALENT:155 = 1		;異形耐性
+	TALENT:156 = 1		;淫魔
+	MAXBASE:MP = MAXBASE:MP * 2
+
+RETURN
+

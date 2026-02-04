@@ -1,0 +1,89 @@
+﻿; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1    3    コマンドID(前に出る)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_3(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「必须给予强力的攻击！」"
+	CALL ADD_RAND_MESSAGE, @"「与对手保持这个距离可能更好」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「直线冲过去！猛击！」"
+		CALL ADD_RAND_MESSAGE, @"「右直拳！猛击！」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「尽早结束战斗吧」"
+		CALL ADD_RAND_MESSAGE, @"「虽然有点危险……」"
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「无论身在何处，对手的攻击都会到达，既然如此！」"
+
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「奇妙的相遇交织在一起」"
+
+	CASE 性格_ぬけめがない
+
+		CALL ADD_RAND_MESSAGE, @"「这样任何攻击都容易命中……」"
+		CALL ADD_RAND_MESSAGE, @"「表达进攻意图很重要。对手也会考虑防守」"
+
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「现在更容易进行攻击了，做好准备！」"
+		CALL ADD_RAND_MESSAGE, @"「距离近的话伤害会更大吧！」"
+
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「这样的话就不会被单方面攻击了吧？」"
+
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「这、这样出去应该足够了吧」"
+
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「这样的话，就只会集中在前面乱来了吧」"
+
+	ENDSELECT
+
+
+	IF FLAG:10 > 0
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おせっかい
+			CALL ADD_RAND_MESSAGE, @"「尽量吸引敌人的注意力」"
+		CASE 性格_おてんば
+
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「尽量吸引敌人的注意力吧」"
+		CASE 性格_がんばりや
+			CALL ADD_RAND_MESSAGE, @"「如果不是我吸引敌人的话！」"
+		CASE 性格_きれもの
+
+		CASE 性格_くろうにん
+			CALL ADD_RAND_MESSAGE, @"「尽量吸引敌人的注意力……」"
+		CASE 性格_しあわせもの
+
+		CASE 性格_セクシーギャル
+
+		CASE 性格_ぬけめがない
+
+		CASE 性格_ねっけつかん
+		CASE 性格_のんきもの
+
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「只有拥有保护伙伴的勇气……」"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「尽量吸引敌人的注意力……」"
+		CASE 性格_わがまま
+
+		CASE 性格_ふつう
+
+			CALL ADD_RAND_MESSAGE, @"「这里是关于我……」"
+
+		ENDSELECT
+	ENDIF
+
+
+
+RETURN 1
+
+
+

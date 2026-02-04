@@ -1,0 +1,17 @@
+﻿;白蓮口上での相手の呼び方
+;ARG:0	対象キャラNO（入れるときに名前で判別しているので娘とか、あだ名がもりそばとかになっていると反応しないらしい）
+;ARG:1	主人公
+;ARG:2	対象キャラ名（入れるときに名前で判別しているので娘とか、あだ名がもりそばとかになっていると反応しないらしい）
+@CALLNAME_96_0(ARG:0, ARG:1, ARGS:1)
+#FUNCTIONS
+
+
+		SELECTCASE ARG:0
+			;あなた
+			CASE 0
+				RETURNF "貴方さま"
+			;通常
+			CASEELSE
+				RETURNF CALLNAME:(GET_ID_FROM_NO(NO:(ARG:0)))+"さん"
+		ENDSELECT
+

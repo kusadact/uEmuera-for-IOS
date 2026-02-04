@@ -1,0 +1,77 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 113 探索でアイテムを見つけた - 52 日本酒
+; ------------------------------------------------------------------------------
+
+; □ 日本酒
+@KOJO_27_0_SYSTEM_MESSAGE_113_52(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中は何もしないで帰る
+	SIF CFLAG:29
+		RETURN 0
+	
+	; 出来るだけ専用メッセージを見せたいので、優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	SELECTCASE KOJO_MODE
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「お酒があっても宴会ってワケにはいかないよねぇ」\n"
+	ENDSELECT
+	CALL KOJO_27_0_FIX_MESSAGE
+	
+	; 日本酒, 神酒共通口上 呼び出し
+	CALL KOJO_27_0_SYSTEM_MESSAGE_113_SAKE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+RETURN 1
+
+
+; □ 日本酒, 神酒共通口上
+@KOJO_27_0_SYSTEM_MESSAGE_113_SAKE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+	
+	; キャラクター対応 追加口上
+	FOR LCOUNT, 1, CHARANUM
+		; 自分と娘は除外
+		IF !(NO:LCOUNT == NO:(TARGET) || CFLAG:LCOUNT:104 != 0)
+			
+			; PTに居る
+			IF IN_PT(NO:LCOUNT)
+			
+				SELECTCASE NO:LCOUNT
+				; 萃香
+				CASE 23
+					; 喪失中
+					IF CFLAG:(GET_ID_FROM_NO(NO:LCOUNT)):29
+						CALL KOJO_27_0_ADD_MESSAGE, @"（酒呑みの鬼って、酒注ぎ込んだら復活しないかな……）\n"
+					; 通常
+					ELSE
+						CALL KOJO_27_0_ADD_MESSAGE, @"「これはあくまで貴重な回復アイテムですからね　絶対に飲んじゃダメですよ？」\n"
+						CALL KOJO_27_0_PARAGRAPH_MESSAGE
+						CALL KOJO_27_0_ADD_MESSAGE, @"\d%CALLNAME:(GET_ID_FROM_NO(NO:LCOUNT))%の目に触れる場所に置いておけば、気付く頃には空瓶がひとつ増えているだろう\d\n"
+						CALL KOJO_27_0_PARAGRAPH_MESSAGE
+						CALL KOJO_27_0_ADD_MESSAGE, @"\dそう思った%CALLNAME:TARGET%は急いで拾った酒をしまい込んだ\d\n"
+					ENDIF
+					
+				; サニーミルク, ルナチャイルド, スターサファイア
+				CASE 45, 46, 47
+					; 喪失中
+					IF CFLAG:(GET_ID_FROM_NO(NO:LCOUNT)):29
+					
+					; 通常
+					ELSE
+						CALL KOJO_27_0_ADD_MESSAGE, @"「妖精には目の毒だわ、気付かないうちに呑んでそうだもの」\n"
+						CALL KOJO_27_0_PARAGRAPH_MESSAGE
+						CALL KOJO_27_0_ADD_MESSAGE, @"\d%CALLNAME:TARGET%は急いで拾った酒をしまい込んだ\d\n"
+						CALL KOJO_27_0_PARAGRAPH_MESSAGE
+					ENDIF
+					
+				ENDSELECT
+				
+			; PTに居ない
+			ELSE
+
+			ENDIF
+		ENDIF
+		CALL KOJO_27_0_FIX_MESSAGE
+	NEXT
+RETURN 1

@@ -1,0 +1,884 @@
+﻿;固定イベント
+;ここからさらに分岐させた方が良いかも…
+;都合上ARGS:0やARGS:1にあまり意味がないので、キャラ名はTARGETなどを利用して直接参照することを推奨
+@SYSTEM_MESSAGE_200(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SELECTCASE ARG:1
+	CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML (SYSTEM_MESSAGE_200)活动ID不正确 ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  (SYSTEM_MESSAGE_200)活动ID不正确 ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+ENDIF
+
+	CASE 134
+		IF ARG:2 == 4 && CFLAG:22
+IF FLAG:AUTOMODE
+    PRINTFORML %CALLNAME:TARGET%体内的某样东西急剧地成长起来！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %CALLNAME:TARGET%体内的某样东西急剧地成长起来！
+ENDIF
+
+		ENDIF
+	CASE 136
+		IF FLAG:529 == 1
+			PRINTFORML %CALLNAME:TARGET%被史莱姆吞没、粘液把衣服和身体都弄得黏糊糊的！
+		ELSEIF ARG:2 == 1
+			PRINTFORML %CALLNAME:TARGET%被史莱姆吞没、衣服全都被融化了！
+		ELSEIF ARG:2 == 2
+			PRINTFORML %CALLNAME:TARGET%避开了史莱姆！
+		ENDIF
+	CASE 137
+		IF ARG:2 == 1
+			PRINTFORML 瞬间抓住了%CALLNAME:TARGET%的触手、玩弄着%CALLNAME:TARGET%的全身！
+		ELSEIF ARG:2 == 2
+			PRINTFORML %CALLNAME:TARGET%避开了触手！
+		ENDIF
+	CASE 138
+		IF ARG:2 == 1
+			PRINTFORML 掉进了陷阱的%CALLNAME:TARGET%、瞬间被等在里面的触手淹没了！
+		ELSEIF ARG:2 == 2
+			PRINTFORML %CALLNAME:TARGET%一下子避开了陷阱！
+		ELSEIF ARG:2 == 3
+			PRINTFORML %CALLNAME:TARGET%被什么东西【寄生】了！
+		ENDIF
+	CASE 139
+		IF ARG:2 == 1
+			PRINTFORML %CALLNAME:TARGET%输给了欲望、向着自己敏感的地方伸出了手…
+		ELSEIF ARG:2 == 2
+			PRINTFORML %CALLNAME:TARGET%虽然吸入了气体、但总算清醒过来了！
+		ENDIF
+	CASE 141
+		IF ARG:2 == 10
+			PRINTFORML %CALLNAME:TARGET%把肉棒放进行李袋、突然感觉痒丝丝的！
+		ELSEIF ARG:2 == 11
+			PRINTFORML %CALLNAME:TARGET%慌忙想要拔出、却因为被舔过的触感使不出力来…
+		ELSEIF ARG:2 == 12
+			PRINTFORML 就像在嘲笑%CALLNAME:TARGET%一般、袋子里响起了咕嘟咕嘟的讨厌的声音…
+		ELSEIF ARG:2 == 13
+			PRINTFORML %CALLNAME:TARGET%的龟头似乎被重点玩弄了…
+		ELSEIF ARG:2 == 14
+			PRINTFORML 每当%CALLNAME:TARGET%想要拔出来的时候就会被吸进去、
+			PRINTFORML 简直就像在自己扭着腰一样…
+		ELSEIF ARG:2 == 15
+			PRINTFORML 袋子里发出了咕噜咕噜咕噜的声音、仿佛要把%CALLNAME:TARGET%的精液全部吸干似的…
+		ELSEIF ARG:2 == 16
+			PRINTFORML 全身抽搐着无力抵抗的%CALLNAME:TARGET%继续被行李袋津津有味地吮吸着…
+		ENDIF
+	CASE 142
+		IF ARG:2 == 2
+			IF ARG:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%本想大声制止、但变得非常敏感的尻穴周围突然被抚摸着、
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%本想大声制止、但变得非常敏感的尻穴周围突然被抚摸着、
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 制止之声也被甜美的娇声所取代
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  制止之声也被甜美的娇声所取代
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 趁着%ARGS:0%什么都说不出来、触手肆意蹂躏着%ARGS:0%的尻穴
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  趁着%ARGS:0%什么都说不出来、触手肆意蹂躏着%ARGS:0%的尻穴
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 触手在尻穴中激烈地进进出出、搅动着整个肛门、冲击着直肠、肠壁也被不耐烦地抓挠着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手在尻穴中激烈地进进出出、搅动着整个肛门、冲击着直肠、肠壁也被不耐烦地抓挠着…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 以多样化的动作、触手开发了%ARGS:0%的尻穴
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  以多样化的动作、触手开发了%ARGS:0%的尻穴
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 起初触手们只是重复着杂七杂八的爱抚、但渐渐地它们发现了能让%ARGS:0%最有感觉的玩弄方式、
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  起初触手们只是重复着杂七杂八的爱抚、但渐渐地它们发现了能让%ARGS:0%最有感觉的玩弄方式、
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 把更强的快感刻印在%ARGS:0%的尻穴里
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  把更强的快感刻印在%ARGS:0%的尻穴里
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 在被快乐浸染的内心角落、%ARGS:0%感到自己体内的『雌性』的一面正在被调教着
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在被快乐浸染的内心角落、%ARGS:0%感到自己体内的『雌性』的一面正在被调教着
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML ――――堕落！！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ――――堕落！！
+ENDIF
+
+			ELSEIF ARG:3 == 1
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%本想大声制止、但变得非常敏感的乳房突然被抚摸着、
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%本想大声制止、但变得非常敏感的乳房突然被抚摸着、
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 制止之声也被甜美的娇声所取代
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  制止之声也被甜美的娇声所取代
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 趁着%ARGS:0%什么都说不出来、触手肆意蹂躏着%ARGS:0%的乳房
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  趁着%ARGS:0%什么都说不出来、触手肆意蹂躏着%ARGS:0%的乳房
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 猛烈地揉搓着整个乳房、吮吸、滚动着乳头、又用巧妙的手法抓挠着乳房根部…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  猛烈地揉搓着整个乳房、吮吸、滚动着乳头、又用巧妙的手法抓挠着乳房根部…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 以多样化的动作、触手开发了%ARGS:0%的乳房
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  以多样化的动作、触手开发了%ARGS:0%的乳房
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 起初触手们只是重复着杂七杂八的爱抚、但渐渐地它们发现了能让%ARGS:0%最有感觉的玩弄方式、
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  起初触手们只是重复着杂七杂八的爱抚、但渐渐地它们发现了能让%ARGS:0%最有感觉的玩弄方式、
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 把更强的快感刻印在%ARGS:0%的胸部上
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  把更强的快感刻印在%ARGS:0%的胸部上
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 在被快乐浸染的内心角落、%ARGS:0%感到自己体内的『雌性』的一面正在被调教着
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在被快乐浸染的内心角落、%ARGS:0%感到自己体内的『雌性』的一面正在被调教着
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML ――――堕落！！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ――――堕落！！
+ENDIF
+
+			ELSEIF ARG:3 == 2
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%本想大声制止、但变得非常敏感的\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@突然被抚摸着、
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%本想大声制止、但变得非常敏感的\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@突然被抚摸着、
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 制止之声也被甜美的娇声所取代
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  制止之声也被甜美的娇声所取代
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 趁着%ARGS:0%什么都说不出来、触手肆意蹂躏着%ARGS:0%的\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  趁着%ARGS:0%什么都说不出来、触手肆意蹂躏着%ARGS:0%的\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 被激烈地玩弄、\@GET_PENIS(TARGET) ? 整根肉棒 # 整个阴蒂\@被用力地吮吸、被触手拨弄着尖端、令人不耐烦地只急促地刺激着\@GET_PENIS(TARGET) ? 亀頭 # 阴蒂\@的周围…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被激烈地玩弄、\@GET_PENIS(TARGET) ? 整根肉棒 # 整个阴蒂\@被用力地吮吸、被触手拨弄着尖端、令人不耐烦地只急促地刺激着\@GET_PENIS(TARGET) ? 亀頭 # 阴蒂\@的周围…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 以多样化的动作、触手开发了%ARGS:0%的\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  以多样化的动作、触手开发了%ARGS:0%的\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 起初触手们只是重复着杂七杂八的爱抚、但渐渐地它们发现了能让%ARGS:0%最有感觉的玩弄方式、
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  起初触手们只是重复着杂七杂八的爱抚、但渐渐地它们发现了能让%ARGS:0%最有感觉的玩弄方式、
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 把更强的快感刻印在%ARGS:0%的\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@上
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  把更强的快感刻印在%ARGS:0%的\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@上
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 在被快乐浸染的内心角落、%ARGS:0%感到自己体内的『雌性』的一面正在被调教着
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在被快乐浸染的内心角落、%ARGS:0%感到自己体内的『雌性』的一面正在被调教着
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML ――――堕落！！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ――――堕落！！
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%本想大声制止、但变得非常敏感的阴道内突然被插入了、
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%本想大声制止、但变得非常敏感的阴道内突然被插入了、
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 制止之声也被甜美的娇声所取代
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  制止之声也被甜美的娇声所取代
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 趁着%ARGS:0%什么都说不出来、触手肆意蹂躏着%ARGS:0%的小穴
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  趁着%ARGS:0%什么都说不出来、触手肆意蹂躏着%ARGS:0%的小穴
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 触手激烈地抽插着、搅动着阴道内、顶进了子宫口、刺激着G点…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手激烈地抽插着、搅动着阴道内、顶进了子宫口、刺激着G点…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 以多样化的动作、触手开发了%ARGS:0%的阴道
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  以多样化的动作、触手开发了%ARGS:0%的阴道
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 起初触手们只是重复着杂七杂八的爱抚、但渐渐地它们发现了能让%ARGS:0%最有感觉的玩弄方式、
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  起初触手们只是重复着杂七杂八的爱抚、但渐渐地它们发现了能让%ARGS:0%最有感觉的玩弄方式、
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 把更强的快感刻印在%ARGS:0%的阴道内
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  把更强的快感刻印在%ARGS:0%的阴道内
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 在被快乐浸染的内心角落、%ARGS:0%感到自己体内的『雌性』的一面正在被调教着
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在被快乐浸染的内心角落、%ARGS:0%感到自己体内的『雌性』的一面正在被调教着
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML ――――堕落！！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ――――堕落！！
+ENDIF
+
+			ENDIF
+		ENDIF
+	CASE 147
+		IF ARG:2 == 1
+			PRINTFORML 吸附着胸部上的淫虫一个接一个的扩张进入了%CALLNAME:TARGET%\@TALENT:TARGET:162 >= 3 ? 被开发殆尽的 # \@乳头！
+			IF GET_BUST(TARGET) >= 3
+				PRINTFORML 淫虫们一边在乳腺中爬行一边吮吸母乳、巨大的乳肉表面渐渐扭曲变形……
+				PRINTFORML 当淫虫们试图钻进乳头时、从扩张着的乳头里粘稠的母乳就会从缝隙中流出…
+			ELSEIF GET_BUST(TARGET) >= 1
+				PRINTFORML 每当蠕虫在乳房中爬行时乳房表面就会就会凹凸不平地变形着、淫虫们吸不干净的粘稠乳汁从乳头上滴落下来…
+			ENDIF
+		ENDIF
+	CASE 149
+		IF ARG:2 == 2
+			PRINTFORML %CALLNAME:TARGET%被什么东西【寄生】了！
+		ENDIF
+	CASE 150
+		IF ARG:2 == 1
+			PRINTFORML %CALLNAME:TARGET%没能躲过落石！
+		ELSEIF ARG:2 == 2
+IF FLAG:AUTOMODE
+    PRINTFORML %CALLNAME:TARGET%避开了落石！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %CALLNAME:TARGET%避开了落石！
+ENDIF
+
+		ENDIF
+	CASE 152
+		IF ARG:2 == 1
+			PRINTFORML 淫虫中的一部分吸吮在%CALLNAME:TARGET%的阴蒂上后、开始了一体化的寄生……
+			PRINTFORML %CALLNAME:TARGET%变成了【扶她】！
+		ELSEIF ARG:2 == 2
+			PRINTFORML 淫虫中的一部分覆盖在%CALLNAME:TARGET%的模拟阴茎上、一口气吸吮了上去！
+			PRINTFORML %CALLNAME:TARGET%的肉棒上传来了强烈的快感…
+		ELSEIF ARG:2 == 3	
+			PRINTFORML %CALLNAME:TARGET%避开了淫虫！
+		ENDIF
+	CASE 160
+		IF ARG:2 == 1
+			IF ARG:3 == 0
+				PRINTFORML 周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+IF FLAG:AUTOMODE
+    PRINTFORML 即使想要把触手扯下来却被更多触手缠绕了好几层、脖子以下被无数触手吞噬、无法逃脱
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  即使想要把触手扯下来却被更多触手缠绕了好几层、脖子以下被无数触手吞噬、无法逃脱
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 吸附着皮肤上、开始来回舔舐起来的蠕动的触手、使得%CALLNAME:TARGET%的脸上渐渐泛起了红潮…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  吸附着皮肤上、开始来回舔舐起来的蠕动的触手、使得%CALLNAME:TARGET%的脸上渐渐泛起了红潮…
+ENDIF
+
+				PRINTFORML 连皮肤都看不到的被紧紧包裹住的%CALLNAME:TARGET%身上的触手激烈地搏动着、可以想象里面的凌辱究竟有多么激烈
+IF FLAG:AUTOMODE
+    PRINTFORML 被缠绕了数十层、连手指头都动弹不得的%CALLNAME:TARGET%只能拼命的摇着头、发出悲鸣…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被缠绕了数十层、连手指头都动弹不得的%CALLNAME:TARGET%只能拼命的摇着头、发出悲鸣…
+ENDIF
+
+			ELSEIF ARG:3 == 1
+IF FLAG:AUTOMODE
+    PRINTFORML 紧紧缠绕的触手拟态成紧贴在%CALLNAME:TARGET%身体上的紧身衣…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  紧紧缠绕的触手拟态成紧贴在%CALLNAME:TARGET%身体上的紧身衣…
+ENDIF
+
+				PRINTFORML 拘束着四肢的触手一松开、%CALLNAME:TARGET%便流着眼泪、口水和鼻涕瘫了下来
+IF FLAG:AUTOMODE
+    PRINTFORML 奄奄一息的%CALLNAME:TARGET%敏感的地方被新衣服缓缓地刺激着、在地板上痉挛着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  奄奄一息的%CALLNAME:TARGET%敏感的地方被新衣服缓缓地刺激着、在地板上痉挛着…
+ENDIF
+
+			ENDIF
+		ELSEIF ARG:2 == 2
+			IF ARG:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+ENDIF
+
+				PRINTFORML %CALLNAME:TARGET%双手双脚都被触手扯着大张开、拼命摇头悲鸣着
+				PRINTFORML 毫无防备地被暴露的秘部、被塞进了沾着黏稠恶臭体液的粗大触手!
+IF FLAG:AUTOMODE
+    PRINTFORML 在被插到最深处的%CALLNAME:TARGET%惨叫着的同时、搏动、起伏、前后抽插着的触手开始吐出令人毛骨悚然的浑浊液体…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在被插到最深处的%CALLNAME:TARGET%惨叫着的同时、搏动、起伏、前后抽插着的触手开始吐出令人毛骨悚然的浑浊液体…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 从含进了极粗的触手的%CALLNAME:TARGET%的私处中溢出了比填满子宫还要多的浑浊液体、但用力搏动着的触手毫不在意地继续把粘液灌了进去
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从含进了极粗的触手的%CALLNAME:TARGET%的私处中溢出了比填满子宫还要多的浑浊液体、但用力搏动着的触手毫不在意地继续把粘液灌了进去
+ENDIF
+
+			ELSEIF ARG:3 == 1
+IF FLAG:AUTOMODE
+    PRINTFORML 从触手中解放出来的%CALLNAME:TARGET%手脚瘫软、无力地颤抖着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从触手中解放出来的%CALLNAME:TARGET%手脚瘫软、无力地颤抖着…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML %CALLNAME:TARGET%的子宫被填满了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %CALLNAME:TARGET%的子宫被填满了…
+ENDIF
+
+			ENDIF
+		ELSEIF ARG:2 == 3
+			IF ARG:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+ENDIF
+
+				PRINTFORML 向着四肢被缠住呻吟着的%CALLNAME:TARGET%的嘴里、一根滴着黏糊糊散发出恶臭的液体的粗大触手插了进去
+IF FLAG:AUTOMODE
+    PRINTFORML %CALLNAME:TARGET%闭上嘴转过脸时、触手的顶端用力顶住了鼻子、吐出了大量粘液
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %CALLNAME:TARGET%闭上嘴转过脸时、触手的顶端用力顶住了鼻子、吐出了大量粘液
+ENDIF
+
+			ELSEIF ARG:3 == 1
+IF FLAG:AUTOMODE
+    PRINTFORML 轮廓分明的脸被扭曲成猪鼻子、鼻孔里还充满了可怕的浑浊液体…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  轮廓分明的脸被扭曲成猪鼻子、鼻孔里还充满了可怕的浑浊液体…
+ENDIF
+
+				PRINTFORML 因痛苦而松弛的嘴唇立刻被撬开、粗得几乎要让下巴脱臼的触手剧烈地搏动着、往嘴里灌满了浊液
+IF FLAG:AUTOMODE
+    PRINTFORML 由于黏度和量太大而无法咽下、%CALLNAME:TARGET%鼓起脸颊、从鼻子里逆流出白浊、流着眼泪发出含混不清的悲鸣……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  由于黏度和量太大而无法咽下、%CALLNAME:TARGET%鼓起脸颊、从鼻子里逆流出白浊、流着眼泪发出含混不清的悲鸣……
+ENDIF
+
+				PRINTFORML 无视了%CALLNAME:TARGET%的意愿继续注入可怕的触手液从口鼻喷涌而出、%CALLNAME:TARGET%的抵抗也逐渐减弱
+IF FLAG:AUTOMODE
+    PRINTFORML …………
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  …………
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 从触手中解放出来的%CALLNAME:TARGET%瘫倒在地、喉咙里流着黏糊糊的污浊液体、咳嗽得厉害
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从触手中解放出来的%CALLNAME:TARGET%瘫倒在地、喉咙里流着黏糊糊的污浊液体、咳嗽得厉害
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML %CALLNAME:TARGET%被提供了足以把人淹死的量的饮料…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %CALLNAME:TARGET%被提供了足以把人淹死的量的饮料…
+ENDIF
+
+			ENDIF
+		ELSEIF ARG:2 == 4
+			IF ARG:3 == 2
+				PRINTFORML %CALLNAME:1%一件件脱掉了衣服、一丝不挂的登上了祭坛
+IF FLAG:AUTOMODE
+    PRINTFORML 用高亢的声音说出愿望后、蠕动的触手将%CALLNAME:1%包裹起来…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  用高亢的声音说出愿望后、蠕动的触手将%CALLNAME:1%包裹起来…
+ENDIF
+
+			ENDIF
+		ELSEIF ARG:2 == 5
+			IF ARG:3 == 0
+				PRINTFORML 被大字形束缚的%CALLNAME:TARGET%的尻穴里有无数细小的触手在搔抓着…
+				PRINTFORML 试图屏住呼吸缩进肛门%CALLNAME:TARGET%的抵抗被沾满黏液的纤细触手贯穿而减弱
+				PRINTFORML 在里面横冲直撞、把不明黏液涂在粘膜上的触手一根又一根地增加、
+IF FLAG:AUTOMODE
+    PRINTFORML %CALLNAME:TARGET%的悲鸣中夹杂着欢喜的感觉…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %CALLNAME:TARGET%的悲鸣中夹杂着欢喜的感觉…
+ENDIF
+
+			ELSEIF ARG:3 == 1
+				PRINTFORML 被大字形束缚的%CALLNAME:TARGET%的胸部上有无数细小的触手在搔抓着…
+				PRINTFORML 执拗地扭动着乳房、缠住膨胀起来的乳晕、用吸盘一样的触手吸附在乳头上
+IF FLAG:AUTOMODE
+    PRINTFORML 挺着胸部发出悲鸣的%CALLNAME:TARGET%、不自觉地扭起腰来…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  挺着胸部发出悲鸣的%CALLNAME:TARGET%は、不自觉地扭起腰来…
+ENDIF
+
+			ELSEIF ARG:3 == 2
+				PRINTFORML 被大字形束缚的%CALLNAME:TARGET%的下腹部有无数细小的触手在爬行着…
+				PRINTFORML 揉搓着四周、钻入包皮、从根部开始撸动着\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@
+IF FLAG:AUTOMODE
+    PRINTFORML 发出悲鸣的%CALLNAME:TARGET%的被重点关照的\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@被筒状的触手吸附了上去！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  发出悲鸣的%CALLNAME:TARGET%的被重点关照的\@GET_PENIS(TARGET) ? 阴茎 # 阴蒂\@被筒状的触手吸附了上去！
+ENDIF
+
+			ELSEIF ARG:3 == 3
+				PRINTFORML 被大字束缚的%CALLNAME:TARGET%被触手蹂躏、断断续续地呻吟着…
+				PRINTFORML 毫无防备地暴露在那里、被无数纤细的触手钻入、雌穴被改造成了变成贪图快乐的性器官
+IF FLAG:AUTOMODE
+    PRINTFORML 粘膜上被涂上不知道是什么的黏液、里面的每一寸肌肤都受到刺激、感觉舒服的地方也越来越多…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  粘膜上被涂上不知道是什么的黏液、里面的每一寸肌肤都受到刺激、感觉舒服的地方也越来越多…
+ENDIF
+
+			ELSEIF ARG:3 == 4
+				PRINTFORML 被触手束缚住的%CALLNAME:TARGET%匍匐在地、张开大嘴的触手咬住了胸口开始剧烈地吮吸着!
+IF FLAG:AUTOMODE
+    PRINTFORML 象牛一样地被榨乳、咬着嘴唇呻吟着的%CALLNAME:TARGET%的脸上渐渐挂上了笑意…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  象牛一样地被榨乳、咬着嘴唇呻吟着的%CALLNAME:TARGET%的脸上渐渐挂上了笑意…
+ENDIF
+
+				PRINTFORML 在不断被用力吸吮后、%CALLNAME:TARGET%喷出了大量母乳！
+IF FLAG:AUTOMODE
+    PRINTFORML 但是触手的榨乳非但没有松动、而是加强了吸力…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  但是触手的榨乳非但没有松动、而是加强了吸力…
+ENDIF
+
+			ENDIF
+		ELSEIF ARG:2 == 6
+			IF ARG:3 == 0
+				PRINTFORML 构成祭坛的触手像墙一样包围着无法动弹的%CALLNAME:TARGET%！
+				PRINTFORML 皮肤被滴下发出恶臭的粘液的触手十重二十重的缠绕住、所有地方都被爬来爬去的触手覆盖
+				PRINTFORML 从一只极粗的几乎能让下巴脱臼的触手被塞进%CALLNAME:TARGET%的嘴里开始
+IF FLAG:AUTOMODE
+    PRINTFORML 雌穴、尻穴、尿道、像猪鼻子一样张开的鼻腔、耳朵、肚脐、一齐被触手钻了进去！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  雌穴、尻穴、尿道、像猪鼻子一样张开的鼻腔、耳朵、肚脐、一齐被触手钻了进去！
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 被触手的墙壁遮住、谁也听不到%CALLNAME:TARGET%的悲鸣声…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被触手的墙壁遮住、谁也听不到%CALLNAME:TARGET%的悲鸣声…
+ENDIF
+
+			ELSEIF ARG:3 == 1
+			ENDIF
+		ELSEIF ARG:2 == 7
+IF FLAG:AUTOMODE
+    PRINTFORML 即使被从触手中解放出来、咬住%CALLNAME:TARGET%的阴蒂的触手依然没有离开！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  即使被从触手中解放出来、咬住%CALLNAME:TARGET%的阴蒂的触手依然没有离开！
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 触手咬住%CALLNAME:TARGET%的阴蒂、丑陋突起的血管在表面浮现、拟态成了一根肉棒的形状…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手咬住%CALLNAME:TARGET%的阴蒂、丑陋突起的血管在表面浮现、拟态成了一根肉棒的形状…
+ENDIF
+
+		ELSEIF ARG:2 == 8
+		ELSEIF ARG:2 == 9
+			IF ARG:3 == 0
+				PRINTFORML 在被大字形束缚的%CALLNAME:TARGET%的股间、雄性的性器违背了她的意志痛苦地勃起着…
+IF FLAG:AUTOMODE
+    PRINTFORML 触手靠近了那溢出着浑浊液体的%CALLNAME:TARGET%的模拟阴茎、吮吸了起来
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手靠近了那溢出着浑浊液体的%CALLNAME:TARGET%的模拟阴茎、吮吸了起来
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 像是在嘲笑着那拼命扭动腰部抵抗着的%CALLNAME:TARGET%、一条触手大张着口吞下了%CALLNAME:TARGET%的模拟阴茎！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  像是在嘲笑着那拼命扭动腰部抵抗着的%CALLNAME:TARGET%、一条触手大张着口吞下了%CALLNAME:TARGET%的模拟阴茎！
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 因为那沾满了温热粘液的触手的触感、%CALLNAME:TARGET%的模拟阴茎更加挺立了起来…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  因为那沾满了温热粘液的触手的触感、%CALLNAME:TARGET%的模拟阴茎更加挺立了起来…
+ENDIF
+
+				PRINTFORML 向着那毫无防备的模拟阴茎的前端、数根比线还细的触手钻了进去!
+IF FLAG:AUTOMODE
+    PRINTFORML 触手不痛不痒地钻了进去、%CALLNAME:TARGET%只能大声尖叫着摇着脑袋
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手不痛不痒地钻了进去、%CALLNAME:TARGET%只能大声尖叫着摇着脑袋
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 蠕动的触手向深处吐出体液、由于那渗入的体液、模拟阴茎丑陋地隆起着、变得更加肥大…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  蠕动的触手向深处吐出体液、由于那渗入的体液、模拟阴茎丑陋地隆起着、变得更加肥大…
+ENDIF
+
+			ENDIF
+		ELSEIF ARG:2 == 10
+			IF ARG:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+ENDIF
+
+				PRINTFORML 被触手束缚住的%CALLNAME:TARGET%匍匐在地、张开大嘴的触手咬住了胸口开始剧烈地吮吸着!
+IF FLAG:AUTOMODE
+    PRINTFORML 触手咚咚地搏动着、仿佛要把她的母乳榨干、%CALLNAME:TARGET%不断发出着悲鸣般的娇声！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手咚咚地搏动着、仿佛要把她的母乳榨干、%CALLNAME:TARGET%不断发出着悲鸣般的娇声！
+ENDIF
+
+			ENDIF
+		ELSEIF ARG:2 == 11
+			IF ARG:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %CALLNAME:TARGET%说出自己的愿望后、祭坛的顶部下陷、露出了一个浴缸大小的洞…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %CALLNAME:TARGET%说出自己的愿望后、祭坛的顶部下陷、露出了一个浴缸大小的洞…
+ENDIF
+
+				PRINTFORML 脱下衣服的%CALLNAME:TARGET%坐在凹陷的地方、从墙壁上出现了大量的触手、开始向%CALLNAME:TARGET%喷出大量的白浊液!
+IF FLAG:AUTOMODE
+    PRINTFORML 散发着异臭的温热液体落在%CALLNAME:TARGET%的身上、填满了浴缸…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  散发着异臭的温热液体落在%CALLNAME:TARGET%的身上、填满了浴缸…
+ENDIF
+
+				PRINTFORML %CALLNAME:TARGET%慌忙想要跳出去、却被触手缠住了四肢、被强行沉入了白浊液中!
+IF FLAG:AUTOMODE
+    PRINTFORML %CALLNAME:TARGET%只能一边悲鸣着一边摇头、避开朝自己脸上射出的污浊液体…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %CALLNAME:TARGET%只能一边悲鸣着一边摇头、避开朝自己脸上射出的污浊液体…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 不久浴缸里装满了白浊液、取代了吐着白浊液的触手的是长有刷状前端的触手!
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  不久浴缸里装满了白浊液、取代了吐着白浊液的触手的是长有刷状前端的触手!
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 刷子般的触手在%CALLNAME:TARGET%的全身爬行按摩、在皮肤上涂满了污浊的液体…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  刷子般的触手在%CALLNAME:TARGET%的全身爬行按摩、在皮肤上涂满了污浊的液体…
+ENDIF
+
+			ELSEIF ARG:3 == 2
+				PRINTFORML 　
+IF FLAG:AUTOMODE
+    PRINTFORML 从头到脚都被白色液体覆盖的%CALLNAME:TARGET%从触手浴池中释放出来后、精疲力尽地瘫在地上、就像被颠倒过来了一样…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从头到脚都被白色液体覆盖的%CALLNAME:TARGET%从触手浴池中释放出来后、精疲力尽地瘫在地上、就像被颠倒过来了一样…
+ENDIF
+
+			ENDIF
+		ELSEIF ARG:2 == 12
+			IF ARG:3 == 0
+				PRINTFORML 周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+IF FLAG:AUTOMODE
+    PRINTFORML 触手涌向女性器后强行撑开子宫口进入着、吸出了%CALLNAME:TARGET%子宫中的异物！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手涌向女性器后强行撑开子宫口进入着、吸出了%CALLNAME:TARGET%子宫中的异物！
+ENDIF
+
+			ELSEIF ARG:3 == 1
+				PRINTFORML 被强行清除体内异物后精疲力竭的%CALLNAME:TARGET%的屁股上开始聚集着触手!
+IF FLAG:AUTOMODE
+    PRINTFORML 触手撑开尻穴钻了进去、发出着声响吸出了里面的异物！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手撑开尻穴钻了进去、发出着声响吸出了里面的异物！
+ENDIF
+
+			ELSEIF ARG:3 == 2
+				PRINTFORML 周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+IF FLAG:AUTOMODE
+    PRINTFORML 触手涌向女性器后强行撑开子宫口进入着、吸出了%CALLNAME:TARGET%子宫中的异物！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手涌向女性器后强行撑开子宫口进入着、吸出了%CALLNAME:TARGET%子宫中的异物！
+ENDIF
+
+			ELSEIF ARG:3 == 3
+				PRINTFORML 周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+IF FLAG:AUTOMODE
+    PRINTFORML 触手撑开尻穴钻了进去、发出着声响吸出了里面的异物！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  触手撑开尻穴钻了进去、发出着声响吸出了里面的异物！
+ENDIF
+
+			ELSEIF ARG:3 == 4
+				PRINTFORML %CALLNAME:TARGET%伸展着四肢、粗重地呼吸着……
+IF FLAG:AUTOMODE
+    PRINTFORML 
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  
+ENDIF
+
+			ENDIF
+		ELSEIF ARG:2 == 13
+			IF ARG:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  周围的触手一齐包围了登上祭坛的%CALLNAME:TARGET%！
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 被触手束缚的%CALLNAME:TARGET%的胯下的武器、被张开大嘴的触手温柔地包裹住……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被触手束缚的%CALLNAME:TARGET%的胯下的武器、被张开大嘴的触手温柔地包裹住……
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 温柔地、温柔地、%CALLNAME:TARGET%不耐烦地扭动着腰、黏糊糊的、黏糊糊的
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  温柔地、温柔地、%CALLNAME:TARGET%不耐烦地扭动着腰、黏糊糊的、黏糊糊的
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 就像一位认真工作的工匠一样、改造了%CALLNAME:TARGET%的武器……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  就像一位认真工作的工匠一样、改造了%CALLNAME:TARGET%的武器……
+ENDIF
+
+			ENDIF
+		ENDIF
+	CASE 171
+		IF ARG:2 == 10
+			PRINTFORML %CALLNAME:TARGET%把肉棒放进行李袋、突然感觉痒丝丝的！
+		ELSEIF ARG:2 == 11
+			PRINTFORML %CALLNAME:TARGET%慌忙想要拔出、却因为被舔过的触感使不出力来…
+		ELSEIF ARG:2 == 12
+			PRINTFORML 就像在嘲笑%CALLNAME:TARGET%一般、袋子里响起了咕嘟咕嘟的讨厌的声音…
+		ELSEIF ARG:2 == 13
+			PRINTFORML %CALLNAME:TARGET%的龟头似乎被重点玩弄了…
+		ELSEIF ARG:2 == 14
+			PRINTFORML 每当%CALLNAME:TARGET%想要拔出来的时候就会被吸进去、
+			PRINTFORML 简直就像在自己扭着腰一样…
+		ELSEIF ARG:2 == 15
+			PRINTFORML 袋子里发出了咕噜咕噜咕噜的声音、仿佛要把%CALLNAME:TARGET%的精液全部吸干似的…
+		ELSEIF ARG:2 == 16
+			PRINTFORML 全身抽搐着无力抵抗的%CALLNAME:TARGET%继续被行李袋津津有味地吮吸着…
+		ENDIF
+	CASE 173
+		IF ARG:2 == 1
+			PRINTFORML %CALLNAME:TARGET%开始发情了！
+		ELSEIF ARG:2 == 2
+			PRINTFORML %CALLNAME:TARGET%竟然长出了动物的耳朵！
+			PRINTFORML %CALLNAME:TARGET%得到了【动物耳朵】！
+		ELSEIF ARG:2 == 3
+			
+		ELSEIF ARG:2 == 4
+			PRINTFORML 长在%CALLNAME:TARGET%身上的耳朵竟然神奇地消失了！
+			PRINTFORML %CALLNAME:TARGET%失去了【动物耳朵】！
+		ELSEIF ARG:2 == 5
+			PRINTFORML 好像是很好吃的水果！
+			PRINTFORML %CALLNAME:TARGET%的HP回复了！
+		ELSEIF ARG:2 == 6
+			PRINTFORML なんと%CALLNAME:TARGET%竟然长出了耳朵和尾巴！
+			PRINTFORML %CALLNAME:TARGET%得到了【动物耳朵】！
+			PRINTFORML %CALLNAME:TARGET%得到了【尾巴】！
+		ELSEIF ARG:2 == 7
+			PRINTFORML %CALLNAME:TARGET%竟然长出了耳朵和蓬松的尾巴！
+			PRINTFORML %CALLNAME:TARGET%得到了【动物耳朵】！
+			PRINTFORML %CALLNAME:TARGET%得到了【蓬松尾巴】！
+		ELSEIF ARG:2 == 8
+			PRINTFORML %CALLNAME:TARGET%长出的尾巴竟然神奇地消失了！
+			PRINTFORML %CALLNAME:TARGET%失去了【尾巴】！
+		ELSEIF ARG:2 == 9
+			PRINTFORML %CALLNAME:TARGET%居然长出了蓬松的尾巴！
+			PRINTFORML %CALLNAME:TARGET%得到了【蓬松尾巴】！
+		ELSEIF ARG:2 == 10
+			PRINTFORML %CALLNAME:TARGET%居然长出了尾巴！
+			PRINTFORML %CALLNAME:TARGET%得到了【尾巴】！
+		ENDIF
+	CASE 174
+		IF ARG:2 == 1
+			PRINTFORML %CALLNAME:TARGET%掉了下去！
+			PRINTFORML 陷阱里充满了奇怪的液体！……%CALLNAME:TARGET%的身体变得敏感了起来！
+		ENDIF
+	CASE 175
+		IF ARG:2 == 1
+			PRINTFORML %CALLNAME:TARGET%掉了下去！
+			PRINTFORML 陷阱中充满了白色浑浊的液体！
+			PRINTFORML 对不由自主地表现出厌恶感的%CALLNAME:TARGET%、从周围的墙壁上也注入了白浊液!
+			PRINTFORML %CALLNAME:TARGET%急忙想要爬上去、却被坑底的触手缠住了四肢、
+IF FLAG:AUTOMODE
+    PRINTFORML 只能一边用脸接住白浊液一边发出悲鸣……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  只能一边用脸接住白浊液一边发出悲鸣……
+ENDIF
+
+			PRINTFORML 
+		ENDIF
+	CASE 176
+		IF ARG:2 == 0
+			PRINTFORML %CALLNAME:TARGET%被史莱姆毫不留情的榨着乳！
+		ELSEIF ARG:2 == 1
+			;なにもなし
+		ELSEIF ARG:2 == 2
+			PRINTFORML %CALLNAME:TARGET%抓住眼前的屁股、插入了模拟阴茎！
+		ELSEIF ARG:2 == 3
+			PRINTFORML %CALLNAME:TARGET%趁机插入了模拟阴茎！
+		ENDIF
+	CASE 179
+		
+	CASEELSE
+		;何もなし
+ENDSELECT
+

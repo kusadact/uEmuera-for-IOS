@@ -1,0 +1,258 @@
+﻿;アイテム一覧表示
+@SHOW_ITEM_WIKI
+;LOCAL
+;0	ループ用
+;1	表示回数
+;2	直前に選択した番号
+;3	アイテム詳細を見た
+;10	行削除用カウント1(計算用)
+;11	行削除用カウント2(計算用)
+;12	行削除用カウント3(項目の改行数)
+;13	行削除用カウント4(計算用)
+;14	行削除用カウント5(計算用)
+;15	行削除用カウント6(詳細の改行数)
+
+	$START
+	REDRAW 0
+	LOCAL:10 = LINECOUNT
+
+	LOCAL:1 = 0
+	DRAWLINE
+	PRINTFORML 要查看哪個道具？
+	FOR LOCAL:0, 1, 79
+		IF ITEMNAME:(LOCAL:0) != ""
+			;催眠獣的魔眼はハード以上のみ
+			IF LOCAL:0 == 40 && FLAG:4 > 1
+				CONTINUE
+			ENDIF
+			PRINTFORM [{LOCAL:0+1,3}] %ITEMNAME:(LOCAL:0),22,LEFT%
+			LOCAL:1 += 1
+			;3つ表示するごとに改行
+			SIF (LOCAL:1 % 3) == 0 && LOCAL:1 > 0
+				PRINTL
+		ENDIF
+	NEXT
+	PRINTL
+	PRINTL
+	PRINTL [  0] 取消
+
+
+	$INPUT_LOOP
+	INPUT
+
+	LOCAL:11 = LINECOUNT
+	;項目表示の改行数を記録
+	LOCAL:12 = LOCAL:11 - LOCAL:10
+
+	IF RESULT == 0
+		REDRAW 1
+		LOCAL:3 = 0
+		RETURN
+	ELSEIF ITEMNAME:(RESULT-1) != "" && RESULT > 0
+		;行削除(初回)
+		IF LOCAL:3 == 0
+			CLEARLINE LOCAL:12
+		;行削除(2回目～)
+		ELSEIF LOCAL:3 == 1 && LOCAL:2 != RESULT
+			CLEARLINE LOCAL:15 + LOCAL:12 + 3
+		;連打のログ流れ防止
+		ELSEIF LOCAL:2 == RESULT
+			CLEARLINE 1
+			GOTO INPUT_LOOP
+		ENDIF
+		LOCAL:2 = RESULT
+		DRAWLINE
+		SETCOLOR 0x60C0FF
+		PRINTFORML >> %ITEMNAME:(RESULT-1),15,LEFT%
+		RESETCOLOR
+		LOCAL:13 = LINECOUNT
+		CALL SHOW_ITEM_EXPLAIN_WIKI(RESULT-1)
+		LOCAL:14 = LINECOUNT
+		;説明表示の改行数を記録
+		LOCAL:15 = LOCAL:14 - LOCAL:13
+		PRINTL
+		LOCAL:3 = 1
+		GOTO START
+	ELSE
+		CLEARLINE 1
+		REUSELASTLINE 入力が不正です！
+		GOTO INPUT_LOOP
+	ENDIF
+
+;アイテムの詳細を表示
+;ARG:0	アイテムID
+@SHOW_ITEM_EXPLAIN_WIKI(ARG:0)
+
+;ステータスのコピペ
+IF ARG:0 == 1
+	PRINTFORML 威力35 弾数70 沒有什麼奇特的十字弓
+ELSEIF ARG:0 == 2
+	PRINTFORML 威力50 弾数60 注入了魔力的弓矢　真的很痛
+ELSEIF ARG:0 == 3
+	PRINTFORML 威力65 弾数50 可以消毒汚物的道具　炎属性固定
+	PRINTFORML 有減少部屋的汚染度効果
+ELSEIF ARG:0 == 4
+	PRINTFORML 威力80 弾数40 一個念頭就能射出魔法弾的方便的道具
+ELSEIF ARG:0 == 5
+	PRINTFORML 威力100 弾数30 不知何処的教授所持有的強力的道具
+ELSEIF ARG:0 == 6
+	PRINTFORML 威力140 弾数20 博麗精製的符紙　効果非常好！
+ELSEIF ARG:0 == 7
+	PRINTFORML 威力200 弾数10 能展開強力弾幕的符卡
+ELSEIF ARG:0 == 8
+	PRINTFORML 威力10 弾数10 能拘束住敵人并給予触手敵人電撃…… 
+	PRINTFORML 無法抵抗的NPC可以使用　有防止角色失蹤効果
+	PRINTFORML 擁有在拘束対象身体上張開一個半透明的力場用来代替衣服的機能
+ELSEIF ARG:0 == 9
+	PRINTFORML 威力100 弾数30 能釋放出高圧的触手能量的禁断的生体兵器 
+	PRINTFORML 充填管的前端有口一樣的插口
+	PRINTFORML 再装填必須擁有某種素質…
+ELSEIF ARG:0 == 10
+	PRINTFORML 威力25 雖然沒啥威力、但対於沒什麼力量的角色来説是貴重的武器
+ELSEIF ARG:0 == 11
+	PRINTFORML 威力40 女性也能軽鬆使用的長柄武器　比棍子更強
+ELSEIF ARG:0 == 12
+	PRINTFORML 威力55 椛使用的同樣型号的刀　有不錯的威力
+ELSEIF ARG:0 == 13
+	PRINTFORML 威力70 不知何処的魔法少女持有的手杖　莫名的強
+	PRINTFORML 可以変身為魔法少女
+ELSEIF ARG:0 == 14
+	PRINTFORML 威力80 羽衣纏在手臂上形成的鉆頭　ｷｬｰｲｸｻｰﾝ!
+ELSEIF ARG:0 == 15
+	PRINTFORML 威力90 博麗神社最大的秘宝…………的複製品
+ELSEIF ARG:0 == 16
+	PRINTFORML 威力100 用伝説中的金属、緋緋色金打造的剣　強靭！無敵！最強！
+ELSEIF ARG:0 == 17
+	PRINTFORML 威力50 為了支配触手宮、只能接受触手的力量！
+	PRINTFORML 使用者可通過触手服、把自身的神経和触手融合在一起
+ELSEIF ARG:0 == 18
+	PRINTFORML 威力60 控制了殺傷力很高的刃状触手的生物装置
+	PRINTFORML 使用者可通過触手服、把自身的神経和触手融合在一起
+ELSEIF ARG:0 == 20
+	PRINTFORML 弾幕攻撃的威力微増（戦闘素質+10換算）
+ELSEIF ARG:0 == 21
+	PRINTFORML 弾幕攻撃的威力小増（戦闘素質+20換算）
+ELSEIF ARG:0 == 22
+	PRINTFORML 弾幕攻撃的威力中増（戦闘素質+40換算）
+	PRINTFORML 可以在睡眠時負責警戒但是作為代替可能会在探索道具時発動陷穽或是在睡眠中被襲胸
+ELSEIF ARG:0 == 23
+	PRINTFORML 弾幕攻撃的威力大増（戦闘素質+60換算）
+ELSEIF ARG:0 == 24
+	PRINTFORML 速度+20
+	PRINTFORML 戦闘中使用的話可以直接逃走
+ELSEIF ARG:0 == 25
+	PRINTFORML 速度+50
+ELSEIF ARG:0 == 26
+	PRINTFORML 先制攻撃（速度+500）
+ELSEIF ARG:0 == 27
+	PRINTFORML 回避+15
+ELSEIF ARG:0 == 28
+	PRINTFORML HP傷害格擋33％
+	PRINTFORML 使用的話可以稍微減低部屋的汚染度
+ELSEIF ARG:0 == 29
+	PRINTFORML MP傷害格擋33％
+ELSEIF ARG:0 == 30
+	PRINTFORML EP傷害格擋33％
+ELSEIF ARG:0 == 31
+	PRINTFORML CP傷害格擋50％
+ELSEIF ARG:0 == 32
+	PRINTFORML 戦闘結束時HP回復20％
+ELSEIF ARG:0 == 33
+	PRINTFORML 戦闘結束時MP回復10％
+ELSEIF ARG:0 == 34
+	PRINTFORML 戦闘結束時EP回復20％
+ELSEIF ARG:0 == 35
+	PRINTFORML 戦闘結束時CP回復33％（全裸時無法回復）
+ELSEIF ARG:0 == 36
+	PRINTFORML 戦闘中逃脱拘束的幾率+15
+ELSEIF ARG:0 == 37
+	PRINTFORML 睡眠攻撃和睡意懲罰無効化
+	PRINTFORML （睡意減半、身体到們極限的話会陷入昏睡）
+ELSEIF ARG:0 == 38
+	PRINTFORML 防御煙幕・砂煙
+ELSEIF ARG:0 == 39
+	PRINTFORML 一直処於発情状態、攻撃的威力変為2倍
+ELSEIF ARG:0 == 40
+	PRINTFORML 似乎可以用来使用催眠術
+	PRINTFORML 戦闘中也可以使用
+ELSEIF ARG:0 == 41
+	PRINTFORML 有時能看到観測者所在的部屋的景象的眼睛
+ELSEIF ARG:0 == 50
+	PRINTFORML 回復50％HP
+ELSEIF ARG:0 == 51
+	PRINTFORML 回復100％HP
+ELSEIF ARG:0 == 52
+	PRINTFORML 回復25％MP
+	PRINTFORML 有可能是触手変化而成
+ELSEIF ARG:0 == 53
+	PRINTFORML 回復50％MP
+	PRINTFORML 有可能是触手変化而成
+ELSEIF ARG:0 == 54
+	PRINTFORML 回復100％CP
+	PRINTFORML 有可能是触手変化而成
+ELSEIF ARG:0 == 55
+	PRINTFORML 回復100％EP　在戦闘中的話、TP変為0
+	PRINTFORML 可以治療初期的扶他
+ELSEIF ARG:0 == 56
+	PRINTFORML 進入発情状態　在戦闘中的話、TP変為200
+	PRINTFORML 処于異常状態扶他時使用的話可以増加精力
+ELSEIF ARG:0 == 57
+	PRINTFORML 治療異常状態
+	PRINTFORML 可以治好寄生和抱卵
+	PRINTFORML 有可能是触手変化而成
+ELSEIF ARG:0 == 58
+	PRINTFORML 已経戦意喪失（MP為0）的同伴、以25％MP的状態復活
+ELSEIF ARG:0 == 59
+	PRINTFORML 必定可以從戦闘中逃脱
+ELSEIF ARG:0 == 60
+	PRINTFORML 只能在非戦闘中使用　通過自慰（＝絶頂）、可以回復EP和解除発情　唯一品　可以使用無数次
+ELSEIF ARG:0 == 61
+	PRINTFORML 最大HP+300
+ELSEIF ARG:0 == 62
+	PRINTFORML 戦闘素質+10
+ELSEIF ARG:0 == 63
+	PRINTFORML 速度+10
+ELSEIF ARG:0 == 64
+	PRINTFORML 全滅時全回復一次并且傳送到隨機部屋　唯一品但是是消耗品
+ELSEIF ARG:0 == 65
+	PRINTFORML 擁有的話在昏迷的時候会用回復HP代替昏迷　唯一品　可以使用無数次
+	PRINTFORML 和酒在一起的話可以給其他角色下薬
+ELSEIF ARG:0 == 66
+	PRINTFORML 只能在非戦闘中使用　上廁所讓NP降為0。 NP10以下時無法使用
+	PRINTFORML 有可能是触手変化而成
+ELSEIF ARG:0 == 67
+	PRINTFORML 稍微回復HP・CP・汚垢　治療骨折
+	PRINTFORML 有可能是触手変化而成
+ELSEIF ARG:0 == 69
+	PRINTFORML 讓胸部変小
+	PRINTFORML 胸部過大的時候還有消除母乳的效果
+ELSEIF ARG:0 == 70
+	PRINTFORML 非常好吃、寵物用的罐頭
+	PRINTFORML 吃掉的話会発情
+ELSEIF ARG:0 == 71
+	PRINTFORML 能浄化部屋的空気的便利商品
+ELSEIF ARG:0 == 72
+	PRINTFORML 河童特製盗撮用防風鏡
+	PRINTFORML 可以明白迷宮内部的様子
+ELSEIF ARG:0 == 73
+	PRINTFORML 浄化空気的話就必然能在清澈之泉発現的薬草　HP3000回復＋侵食治療
+ELSEIF ARG:0 == 74
+	PRINTFORML 被撕破之前無法被寄生
+	PRINTFORML 貼在股間使用
+	PRINTFORML 可以重複貼
+ELSEIF ARG:0 == 75
+	PRINTFORML 被撕破之前無法抱卵
+	PRINTFORML 貼在小腹使用
+	PRINTFORML 可以重複貼
+ELSEIF ARG:0 == 76
+	PRINTFORML 被撕破之前能止住母乳
+	PRINTFORML 貼在胸前使用
+	PRINTFORML 可以重複貼
+ELSEIF ARG:0 == 77
+	PRINTFORML 喝了的話下一天会変成危険日
+ELSEIF ARG:0 == 78
+	PRINTFORML 這個回合結束時産卵
+ELSE
+	PRINTFORML 這個道具的説明未実装
+ENDIF
+

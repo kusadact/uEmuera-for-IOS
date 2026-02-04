@@ -1,0 +1,335 @@
+﻿
+; ////////////////////////////
+; / ARG:0   22    敵の通常攻撃(回避)
+; / ARG:1         コマンドID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_22(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;喪失時
+IF CFLAG:29 > 0
+	RETURN 0
+ENDIF
+
+
+	CALL ADD_RAND_MESSAGE, @"「这种攻击根本打不中！」"
+	CALL ADD_RAND_MESSAGE, @"「好！躲开了！」"
+	CALL ADD_RAND_MESSAGE, @"「来吧！嘿！」"
+		
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「你以为这种大挥击能打中吗？」"
+		CALL ADD_RAND_MESSAGE, @"「能躲开的攻击真是帮大忙了」"
+		CALL ADD_RAND_MESSAGE, @"「真是的，好危险……」"
+		CALL ADD_RAND_MESSAGE, @"「如果想打中的话就更认真地瞄准」"
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「这种瞄准方式根本打不中任何东西」"
+		CALL ADD_RAND_MESSAGE, @"「当然打不中啦，这种攻击」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（没打中真是太好了……）"
+		CALL ADD_RAND_MESSAGE, @"「啊啊，好危险啊」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「你这是打算攻击吗？」"
+	ENDSELECT
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0   23    敵の衣服攻撃(回避)
+; / ARG:1         コマンドID
+; / ARG:2         部位
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_23(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;喪失時
+IF CFLAG:29 > 0
+	RETURN 0
+ENDIF
+
+IF BASE:3 < 1
+
+	CALL ADD_RAND_MESSAGE, @"「危险，危险」"
+	CALL ADD_RAND_MESSAGE, @"「太懒散了！」"
+	CALL ADD_RAND_MESSAGE, @"「打中有什么好处啊！」"
+	CALL ADD_RAND_MESSAGE, @"「乱动一气！」"
+	CALL ADD_RAND_MESSAGE, @"「给你点颜色瞧瞧！」"
+
+	CALL ADD_RAND_MESSAGE, @"「就这点程度！」"
+	CALL ADD_RAND_MESSAGE, @"「不会让你得逞！」"
+	CALL ADD_RAND_MESSAGE, @"「随你喜欢！」"
+	CALL ADD_RAND_MESSAGE, @"「不会这么简单！」"
+
+	CALL ADD_RAND_MESSAGE, @"「不会这么轻易！」"
+	CALL ADD_RAND_MESSAGE, @"「不会这么容易命中！」"
+	CALL ADD_RAND_MESSAGE, @"「就凭这点！」"
+	CALL ADD_RAND_MESSAGE, @"「用这种攻击！」"
+
+	CALL ADD_RAND_MESSAGE, @"「能奏效吗？」"
+	CALL ADD_RAND_MESSAGE, @"「接二连三！」"
+	CALL ADD_RAND_MESSAGE, @"「小菜一碟！」"
+
+	CALL ADD_RAND_MESSAGE, @"「瞄得太差了！」"
+
+	CALL ADD_RAND_MESSAGE, @"「显而易见！」"
+
+	CALL ADD_RAND_MESSAGE, @"「让我来看破你的招数！」"
+	CALL ADD_RAND_MESSAGE, @"「白费力气！」"
+	CALL ADD_RAND_MESSAGE, @"「差一点就危险了……」"
+	CALL ADD_RAND_MESSAGE, @"「不会让你得逞！」"
+	CALL ADD_RAND_MESSAGE, @"「让我躲开！」"
+	CALL ADD_RAND_MESSAGE, @"「一派胡言！」"
+
+
+	RETURN 1
+ENDIF
+
+	
+	; 汎用口上
+	CALL ADD_RAND_MESSAGE, @"「脱光了也不会让你得逞」"
+	CALL ADD_RAND_MESSAGE, @"「危险危险」"
+		
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「不会这么轻易脱掉♪」"
+		CALL ADD_RAND_MESSAGE, @"「事情是有顺序的吧？」"
+		CALL ADD_RAND_MESSAGE, @"「不要错过对方的细微变化，观察力很重要哦！」"
+		CALL ADD_RAND_MESSAGE, @"「不喜欢这套装吗？」"
+		CALL ADD_RAND_MESSAGE, @"「这样不行。对女孩子要更温柔一点」"
+		CALL ADD_RAND_MESSAGE, @"「２５分。不及格了，重新来过」"
+
+
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「不用专门瞄准衣服，直接瞄准本体不好吗？」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「脱掉就会乖乖的吗？」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（在这种地方被脱掉会怎么样啊！？）"
+		CALL ADD_RAND_MESSAGE, @"「差点就被撕破了」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   25    敵の拘束攻撃(回避)
+; / ARG:1         コマンドID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_25(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;喪失時
+IF CFLAG:29 > 0
+	RETURN 0
+ENDIF
+
+
+
+	CALL ADD_RAND_MESSAGE, @"「危险危险，逃不掉的」"
+	CALL ADD_RAND_MESSAGE, @"「不会轻易被捉住的！」"
+
+	CALL ADD_RAND_MESSAGE, @"「不会被捉住的！」"
+	CALL ADD_RAND_MESSAGE, @"「不会按你的意思来的！」"
+	CALL ADD_RAND_MESSAGE, @"「我会躲开的！」"
+	CALL ADD_RAND_MESSAGE, @"「要小心这个攻击……」"
+	CALL ADD_RAND_MESSAGE, @"「要注意这个技能……」"
+	CALL ADD_RAND_MESSAGE, @"「如果以为可以随心所欲就大错特错了！」"
+	CALL ADD_RAND_MESSAGE, @"「瞄准得太明显了！」"
+
+	CALL ADD_RAND_MESSAGE, @"「如果乱动的话就会成为那个技能的牺牲……！」"
+
+	CALL ADD_RAND_MESSAGE, @"「看准距离！」"
+	CALL ADD_RAND_MESSAGE, @"「差一点就危险了！」"
+
+
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「嘿嘿，想要捉住我还早了100年！」"
+		CALL ADD_RAND_MESSAGE, @"「前天来吧！」"
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「真是的，一点儿疏忽和漏洞都不能有」"
+		CALL ADD_RAND_MESSAGE, @"「如果想要捉住我，就要更认真地瞄准」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「危险啊，被捉住的话会遭遇不好的下场吧？」"
+		CALL ADD_RAND_MESSAGE, @"「如果想要捉住我，就要预测对手的动作」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「鬼在这里，呵呵」"
+
+		CALL ADD_RAND_MESSAGE, @"「你瞄准了哪里？」"
+		CALL ADD_RAND_MESSAGE, @"「先等一下？」"
+		CALL ADD_RAND_MESSAGE, @"「不要这么着急？」"
+		CALL ADD_RAND_MESSAGE, @"「现在还没有那种心情」"
+		CALL ADD_RAND_MESSAGE, @"「气氛太甜蜜了！」"
+		CALL ADD_RAND_MESSAGE, @"「虽然不喜欢积极的接触……」"
+		CALL ADD_RAND_MESSAGE, @"「更准确地瞄准一下？」"
+		CALL ADD_RAND_MESSAGE, @"「感觉不错。请继续保持」"
+
+		CALL ADD_RAND_MESSAGE, @"「在捉住身体之前，先捉住心吧」"
+
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「不会被这种攻击捉住的！」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「这样的动作谁都捉不住！」"
+		CALL ADD_RAND_MESSAGE, @"「能够迅速反应是正确的选择呢」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「啊……！？差点被抓住了……」"
+		CALL ADD_RAND_MESSAGE, @"「啊，好危险……！」"
+	ENDSELECT
+	
+	; 防御実行時 追加口上
+	IF CFLAG:50 == 1
+		CALL ADD_RAND_MESSAGE, @"「保护自己果然是正确的」"
+		CALL ADD_RAND_MESSAGE, @"「呃！好危险」"
+		CALL ADD_RAND_MESSAGE, @"「如果没有防御的话就危险了……」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「好险啊，如果没有保护自己就被抓住了」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「好在我能够准确地看到对方的动作」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「我、如果没有保护自己的话可能就被抓住了……」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   25    敵の拘束攻撃(回避)
+; / ARG:1  551    コマンドID:551 ヴォジャノーイ 丸呑み
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_25_551(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 睡眠時・喪失時・諦め時关于処理を行わない
+	SIF CFLAG:25 || CFLAG:29 || TFLAG:16 == 2
+		RETURN 0
+		
+	CALL ADD_RAND_MESSAGE, @"「难道我会被青蛙吃掉吗！」"
+	CALL ADD_RAND_MESSAGE, @"「嘴里不是青蛙，而是其他什么东西吗！？」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   27    敵のその他攻撃(回避)
+; / ARG:1  950    コマンドID:950 汚染攻撃
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_27_950(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 睡眠時・喪失時・諦め時关于処理を行わない
+	SIF CFLAG:25 || CFLAG:29 || TFLAG:16 == 2
+		RETURN 0
+		
+	CALL ADD_RAND_MESSAGE, @"「好脏啊，如果沾上了怎么办啊」"
+
+
+	CALL ADD_RAND_MESSAGE, @"「这种事情，绝对讨厌！」"
+	CALL ADD_RAND_MESSAGE, @"「别、别开玩笑了！」"
+	CALL ADD_RAND_MESSAGE, @"「就此告辞！」"
+	CALL ADD_RAND_MESSAGE, @"「太可怕了！」"
+	CALL ADD_RAND_MESSAGE, @"「感觉很恶心吧！」"
+	CALL ADD_RAND_MESSAGE, @"「你、你在干什么！」"
+	CALL ADD_RAND_MESSAGE, @"「再也不要了！」"
+	CALL ADD_RAND_MESSAGE, @"「真是最差劲！」"
+	CALL ADD_RAND_MESSAGE, @"「……让人毛骨悚然啊」"
+	CALL ADD_RAND_MESSAGE, @"「你、你不会做好事的吧！」"
+	CALL ADD_RAND_MESSAGE, @"「请、请停下！」"
+	CALL ADD_RAND_MESSAGE, @"「抱歉，我拒绝」"
+	CALL ADD_RAND_MESSAGE, @"「真是不知悔改！」"
+
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おせっかい
+			CALL ADD_RAND_MESSAGE, @"「你真是想第一个被打倒啊」"
+			CALL ADD_RAND_MESSAGE, @"「不会让你得逞！」"
+			CALL ADD_RAND_MESSAGE, @"「我可没时间陪你！」"
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「不要随心所欲！」"
+
+			CALL ADD_RAND_MESSAGE, @"「哇！好危险！这是什么脏东西！」"
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「呃，太不洁了！要知道羞耻！」"
+			CALL ADD_RAND_MESSAGE, @"「不会让你得逞！」"
+
+			CALL ADD_RAND_MESSAGE, @"「那招、这招你真是厉害！」"
+		CASE 性格_がんばりや
+			CALL ADD_RAND_MESSAGE, @"「不要随心所欲！」"
+			CALL ADD_RAND_MESSAGE, @"「不会让你得逞！」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「那招、这招你真是厉害！」"
+			CALL ADD_RAND_MESSAGE, @"「肯定加了些不好的成分吧？」"
+			CALL ADD_RAND_MESSAGE, @"「这招可不会让你吃到！」"
+		CASE 性格_くろうにん
+			CALL ADD_RAND_MESSAGE, @"「这、这是男人的东西！？」"
+			CALL ADD_RAND_MESSAGE, @"「不、不要动摇……」"
+			CALL ADD_RAND_MESSAGE, @"「对不起！这个是不行的！」"
+		CASE 性格_ぬけめがない
+			CALL ADD_RAND_MESSAGE, @"「那招、这招你真是厉害！」"
+			CALL ADD_RAND_MESSAGE, @"「我可不想想象！」"
+			CALL ADD_RAND_MESSAGE, @"「我可没时间陪你！」"
+			CALL ADD_RAND_MESSAGE, @"「肯定加了些不好的成分吧？」"
+
+			CALL ADD_RAND_MESSAGE, @"「这招可不会让你吃到！」"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「不要随心所欲！」"
+		CASE 性格_のんきもの
+			CALL ADD_RAND_MESSAGE, @"「我可没时间陪你！」"
+			CALL ADD_RAND_MESSAGE, @"「我可不想想象！」"
+			CALL ADD_RAND_MESSAGE, @"「很遗憾，我不是那种爱好！」"
+		CASE 性格_ひっこみじあん
+
+			CALL ADD_RAND_MESSAGE, @"「对不起！这个是不行的！」"
+			CALL ADD_RAND_MESSAGE, @"「这、这是男人的东西！？」"
+			CALL ADD_RAND_MESSAGE, @"「不、不要动摇……」"
+		CASE 性格_やさしいひと
+
+			CALL ADD_RAND_MESSAGE, @"「对不起！这个是不行的！」"
+			CALL ADD_RAND_MESSAGE, @"「这、这是男人的东西！？」"
+			CALL ADD_RAND_MESSAGE, @"「不、不要动摇……」"
+		CASE 性格_わがまま
+			CALL ADD_RAND_MESSAGE, @"「很遗憾，我不是那种爱好！」"
+			CALL ADD_RAND_MESSAGE, @"「不要随心所欲！」"
+			CALL ADD_RAND_MESSAGE, @"「你真是想第一个被打倒啊」"
+			CALL ADD_RAND_MESSAGE, @"「美人都要被毁了！」"
+		ENDSELECT
+
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   27    敵のその他攻撃(回避)
+; / ARG:1  951    コマンドID:951 汚染攻撃
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_27_951(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; ARG:0 == 27, ARG:1 == 950の汚染攻撃で処理
+	CALL KOJO_DEFAULT_27_950(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+; ////////////////////////////
+; / ARG:0   27    敵のその他攻撃(回避)
+; / ARG:1  952    コマンドID:952 汚染攻撃
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_27_952(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; ARG:0 == 27, ARG:1 == 950の汚染攻撃で処理
+	CALL KOJO_DEFAULT_27_950(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+; ////////////////////////////
+; / ARG:0   27    敵のその他攻撃(回避)
+; / ARG:1  953    コマンドID:953 汚染攻撃
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_27_953(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; ARG:0 == 27, ARG:1 == 950の汚染攻撃で処理
+	CALL KOJO_DEFAULT_27_950(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+
+

@@ -1,0 +1,2685 @@
+﻿;システムメッセージ
+;かなりの地の文がここに纏められることになるのでかなり長い
+;!!!　いずれ「表現の難易度」を実装して分岐かける予定
+;
+;大抵の地の文はこっちに持ってきて、その気になれば書き換え可能としたい
+;ダメージ表記とかを勝手に書き換えられるとプレイヤーの混乱の元になるので
+;その辺は固定かなぁ……
+
+
+
+;12/11/03 長くなるので分離の部分は全削除　一番下のCASEELSEで別ファイルのものに飛ぶ処理をしている
+;逆に言うとここに無いメッセージを追加する場合他のファイルを参考に新規ファイルを用意すればOK　ここを弄る必要はなし
+
+@SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;LOCAL
+;0	LOOP
+;1	色のバックアップ
+
+GETCOLOR
+LOCAL:1 = RESULT
+
+;システムメッセージ表示中はデフォルトカラーに戻す
+RESETCOLOR
+
+SELECTCASE ARG:0
+	CASE 0
+		;何も表示しない
+	CASE 9
+		;今の所何もなし
+	CASE 11
+		;今の所何もなし
+	CASE 21
+		PRINTFORML %ARGS:1%回避了攻撃！
+	CASE 22
+		PRINTFORML %ARGS:0%回避了攻撃！
+	CASE 23
+		PRINTFORML %ARGS:0%回避了攻撃！
+	CASE 24
+		PRINTFORML %ARGS:0%回避了攻撃！
+	CASE 26
+		PRINTFORML %ARGS:0%回避了攻撃！
+	CASE 31
+		PRINTFORML 打倒了%ARGS:1%！
+	CASE 32
+		SETCOLOR 0xEEEE10
+		PRINTFORML %ARGS:0%的体力耗尽了！！
+		RESETCOLOR
+	CASE 33
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%眼中的光芒消失了…
+				TWAIT FLAG:AUTOMODE * 600, 0
+			ELSE
+				PRINTFORMW %ARGS:0%眼中的光芒消失了…
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%的不屈意志、在極悪的高潮衝撃之前被彻底粉砕、惨遭蹂躙了！
+				PRINTFORML %ARGS:0%眼中的光芒消失了…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORML %ARGS:0%的不屈意志、在極悪的高潮衝撃之前被彻底粉砕、惨遭蹂躙了！
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+
+	CASE 34
+		;絶頂の寸前みたいな感じ
+		;システムメッセージは多分不要
+	CASE 35
+		IF ARG:1 == 0
+			SETCOLOR 0xF05080
+			PRINTFORML %ARGS:0%被剝光了！！
+			RESETCOLOR
+		ELSEIF ARG:1 == 1
+			SETCOLOR 0xF09000
+			PRINTFORML %ARGS:0%的衣服只剩下一点点了！！
+			RESETCOLOR
+		ELSE
+			SETCOLOR 0xEEEE10
+			PRINTFORML %ARGS:0%的衣服開始破洞了！！
+			RESETCOLOR
+		ENDIF
+	CASE 37
+		PRINTFORML 被%ARGS:1%呑入的%ARGS:0%無法出手！
+	CASE 38
+		;何もなし
+	CASE 39
+		PRINTFORML %ARGS:0%受到了激烈的攻撃眼前一黑！
+	CASE 40
+		IF TFLAG:63 == 0
+			PRINTFORML %ARGS:0%被%ARGS:1%産下的卵着床了！
+		ELSE
+			PRINTFORML %ARGS:0%被%ARGS:1%的幼体寄生了！
+		ENDIF
+	CASE 41
+		PRINTFORML %ARGS:0%醒了過来！
+		CALL MSG_WAIT(1)
+	CASE 42
+		PRINTFORML %ARGS:0%從%ARGS:1%那裡解放了！
+	CASE 43
+		PRINTFORML %ARGS:0%醒了過来！
+		CALL MSG_WAIT(1)
+	CASE 44
+		PRINTFORML %ARGS:0%放出了煙幕！
+		CALL MSG_WAIT(1)
+	CASE 45
+		PRINTFORML %ARGS:0%四周的砂煙消散了！
+		CALL MSG_WAIT(1)
+	CASE 46
+		IF ARG:1 == 0
+			;不知羞恥は何もなし
+		ELSEIF ARG:1 == 1
+			IF BASE:TARGET:3 > 0
+				PRINTFORM 沾満了体液而変得透明的衣服讓%ARGS:0%
+			ELSE
+				PRINTFORM %ARGS:0%因赤身裸体
+			ENDIF
+			PRINTFORM 有些害羞… (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM -{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ELSEIF ARG:1 == 2
+			IF BASE:TARGET:3 > 0
+				PRINTFORM 沾満了体液而変得透明的衣服讓%ARGS:0%
+			ELSE
+				PRINTFORM %ARGS:0%因赤身裸体
+			ENDIF
+			PRINTFORM 満臉通紅… (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM -{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ELSEIF ARG:1 == 3
+			;不知羞恥は何もなし
+		ELSEIF ARG:1 == 4
+			IF BASE:TARGET:3 > 0
+				PRINTFORM 沾満了体液而変得透明的衣服讓%ARGS:0%的身姿
+			ELSE
+				PRINTFORM %ARGS:0%赤裸的身姿
+			ENDIF
+			PRINTFORM 被観測者記録着… (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM -{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ELSEIF ARG:1 == 5
+			IF BASE:TARGET:3 > 0
+				PRINTFORM %ARGS:0%因為自己穿着沾満了体液而変得透明的衣服的身姿
+			ELSE
+				PRINTFORM %ARGS:0%因為自己赤裸的身姿
+			ENDIF
+			PRINTFORM 被観測者記録着而変得満臉通紅… (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM -{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ELSEIF ARG:1 == 6
+			;不知羞恥は何もなし
+		ELSEIF ARG:1 == 7
+			IF BASE:TARGET:3 > 0
+				PRINTFORM 為了洗澡而脱去了衣服的%ARGS:0%的身姿
+			ELSE
+				PRINTFORM 毫無防備洗着澡的%ARGS:0%的身姿
+			ENDIF
+			PRINTFORM 被観測者記録着… (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM -{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ELSEIF ARG:1 == 8
+			IF BASE:TARGET:3 > 0
+				PRINTFORM %ARGS:0%因為洗完澡後泛紅的裸体
+			ELSE
+				PRINTFORM %ARGS:0%因為毫無防備洗着自己身体的身姿
+			ENDIF
+			PRINTFORM 被観測者記録了而満臉通紅… (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM -{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ELSEIF ARG:1 == 9
+			;不知羞恥は何もなし
+		ELSEIF ARG:1 == 10
+			PRINTFORM %ARGS:0%埋頭自慰的身姿
+			PRINTFORM 被観測者記録着… (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM -{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ELSEIF ARG:1 == 11
+			PRINTFORM %ARGS:0%因為埋頭自慰的樣子
+			PRINTFORM 被観測者記録了而満臉通紅… (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM -{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ELSEIF ARG:1 == 12
+			IF BASE:TARGET:3 > 0
+				PRINTFORM 沾満了体液而変得透明的衣服讓%ARGS:0%
+			ELSE
+				PRINTFORM %ARGS:0%因赤身裸体
+			ENDIF
+			PRINTFORM 在満臉通紅的同時感到了舒爽 (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM +{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ELSEIF ARG:1 == 13
+			IF BASE:TARGET:3 > 0
+				PRINTFORM %ARGS:0%因為洗完澡後泛紅的裸体
+			ELSE
+				PRINTFORM %ARGS:0%因為毫無防備洗着自己身体的身姿
+			ENDIF
+			PRINTFORM 被観測者記録了在満臉通紅的同時感到了舒爽 (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM +{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ELSEIF ARG:1 == 14
+			PRINTFORM %ARGS:0%因為埋頭自慰的樣子
+			PRINTFORM 被観測者記録了而満臉通紅感覚舒爽 (MP 
+			SETCOLOR 0x70FF70
+			PRINTFORM +{ARG:2}
+			RESETCOLOR
+			PRINTFORML )
+		ENDIF
+	CASE 47
+		SETCOLOR 0xEE1010
+		IF !CFLAG:TARGET:35
+			PRINTFORML 部屋内蠕動着的微型触手玩弄着%ARGS:0%！
+		ELSE
+			PRINTFORML 部屋内蠕動着的微型触手進一歩玩弄着已経高潮的%ARGS:0%！
+		ENDIF
+		RESETCOLOR
+	CASE 48
+		;睡眠中
+		IF CFLAG:TARGET:25
+			
+			IF FLAG:AUTOMODE
+				PRINTFORML 不管是在睡着還是醒着的時候、%ARGS:0%的手都無意識地移向了自己敏感的地方…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 不管是在睡着還是醒着的時候、%ARGS:0%的手都無意識地移向了自己敏感的地方…
+			ENDIF
+		;催眠中
+		ELSEIF CFLAG:TARGET:43
+			;催眠強度で分岐 強度3以上は小型催眠獣の減衰あり催眠も兼ねる
+			SELECTCASE CFLAG:TARGET:43
+			CASE 1
+				SELECTCASE FLAG:526
+				CASE 0
+					PRINTFORML 陷入催眠的%ARGS:0%的手、被操縱着移到了自己敏感的地方…
+				CASE 1
+					PRINTFORML 被催眠的%ARGS:0%、現在也在発出淫蕩的声音刺激着自己充満快感的身体…
+				CASE 2
+					PRINTFORML 眼看就要高潮的%ARGS:0%、眼神空洞開始刺激着自己敏感的地方…
+				ENDSELECT
+			CASE 2
+				SELECTCASE FLAG:526
+				CASE 0
+					PRINTFORML 陷入催眠的%ARGS:0%的手、毫不留情地刺激着臨近高潮的部位…
+				CASE 1
+					PRINTFORML 因催眠之力成為了性欲的俘虜的%ARGS:0%、耐不住発情蠢動的身体開始自慰起来！
+				CASE 2
+					PRINTFORML 因為臨近高潮而興奮起来的%ARGS:0%的身体無意識的開始了自慰！
+					PRINTFORML 手越来越激烈的動作与空虚的表情形成了鮮明的対比！
+				ENDSELECT
+			CASEELSE
+				SELECTCASE FLAG:526
+				CASE 0
+					PRINTFORML 被催眠之力操縱了身体的%ARGS:0%、暴露出臨近決定的身体開始激烈的自慰起来！
+				CASE 1
+					PRINTFORML 因催眠之力而性欲暴漲的%ARGS:0%、在身体開始発疼之前就已経無法忍耐了…
+					PRINTFORML 思考完全被淫欲支配的%ARGS:0%、露出陶酔的表情沈浸在自慰之中！
+				CASE 2
+					PRINTFORML %ARGS:0%把手伸向了臨近高潮的身体、表情呆滯就這樣開始了激烈的自慰！
+				ENDSELECT
+			ENDSELECT
+		;通常時
+		ELSE
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML 快要高潮変得更加興奮的%ARGS:0%的手、自然而然的移向了自己敏感的地方…
+				TWAIT FLAG:AUTOMODE * 200, 0
+			ELSE
+				PRINTFORMW 快要高潮変得更加興奮的%ARGS:0%的手、自然而然的移向了自己敏感的地方…
+			ENDIF
+		ENDIF
+	CASE 49
+		SETCOLOR 0x10EEEE
+		PRINTFORML %ARGS:0%睡着了！
+		RESETCOLOR
+		CALL MSG_WAIT(1)
+	CASE 50
+		SETCOLOR 0x10EEEE
+		PRINTFORML %ARGS:0%窺視着反撃的機会！
+		RESETCOLOR
+		CALL MSG_WAIT(1)
+	CASE 51
+		SETCOLOR 0x10EEEE
+		PRINTFORML %ARGS:0%的反撃！
+		RESETCOLOR
+	CASE 52
+		IF ARG:2
+			PRINTFORML %ARGS:0%被拖入到了%ARGS:1%体内的更深処！
+			IF ARG:1 > 4
+				PRINTFORML 激烈蠕動着的肉閉完全不讓%ARGS:0%身体動弾！
+			ENDIF
+		ELSE
+			PRINTFORML %ARGS:0%的全身被触手進一歩纏緊了！
+			IF ARG:1 > 4
+				PRINTFORML %ARGS:0%被触手緊纏着幾乎完全無法動弾！
+			ENDIF
+		ENDIF
+	CASE 53
+		IF ARG:2
+			PRINTFORML %ARGS:0%已経完全被呑入了…
+		ELSE
+			PRINTFORML %ARGS:0%的全身已経被触手五花大綁！
+		ENDIF
+	CASE 54
+		;今の所何もなし
+	CASE 55
+		;今の所何もなし
+	CASE 56
+		;今の所何もなし
+	CASE 57
+		;今の所何もなし
+	CASE 58
+		PRINTFORML 但是無法同時抓住更多的猟物、%ARGS:0%被%ARGS:1%解放了！
+	CASE 59
+		PRINTFORML 被%ARGS:1%含住的%ARGS:0%的身心都漸漸溶化…
+	CASE 60
+		;今の所何もなし
+	CASE 62
+		;今の所何もなし
+	CASE 63
+		;今の所何もなし
+	CASE 64
+	
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%用強靭的精神力忍耐着！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW %ARGS:0%用強靭的精神力忍耐着！
+			ENDIF
+	CASE 70
+		PRINTFORML %ARGS:0%有什麼東西破碎了！
+		PRINTFORML %ARGS:0%得到了屈服刻印：%MARKNAME:(ARG:1)%！
+		
+	CASE 101
+		IF ARG:2
+			PRINTFORML %ARGS:1%躺在地面上、渾濁的眼睛凝視着虚空、好像還有呼吸…
+		ELSEIF CFLAG:1:25 == 0 && CFLAG:1:28 == 0 && CFLAG:1:29 == 0 && BASE:1:3 <= 0
+			;全裸だと資質で反応が少しだけ変わるように
+			IF CFLAG:(ARG:1):5 < 0
+				PRINTFORML 看到%ARGS:1%那悲慘的樣子的%ARGS:0%%TACHI()%露出了満是鄙夷的眼神…
+			ELSEIF CFLAG:(ARG:1):5 < 50
+				PRINTFORML %ARGS:1%那悲慘的樣子讓%ARGS:0%%TACHI()%皺起了眉頭…
+			ELSEIF CFLAG:(ARG:1):5 >= 200
+				PRINTFORM 発現%ARGS:1%那悲慘的樣子的%ARGS:0%%TACHI()%、
+				IF TALENT:(ARG:1):21 == 1 || TALENT:(ARG:1):22 == 1 
+					PRINTFORM 安静地
+				ELSEIF TALENT:(ARG:1):23 == 1 || TALENT:(ARG:1):25 == 1 || TALENT:(ARG:1):63 == 1 
+					PRINTFORM 満臉驚訝的
+				ELSEIF TALENT:(ARG:1):24 == 1 || TALENT:(ARG:1):30 == 1 || TALENT:(ARG:1):32 == 1 || TALENT:(ARG:1):34 == 1 || TALENT:(ARG:1):35 == 1 || TALENT:(ARG:1):71 == 1 
+					PRINTFORM 満臉通紅的
+				ELSEIF TALENT:(ARG:1):31 == 1 || TALENT:(ARG:1):33 == 1 || TALENT:(ARG:1):36 == 1 || TALENT:(ARG:1):70 == 1 || TALENT:(ARG:1):72 == 1 
+					PRINTFORM 笑着
+				ELSE
+					PRINTFORM 慌張地
+				ENDIF
+			PRINTFORML 靠近過去…
+			ENDIF
+		ELSE
+			IF CFLAG:(ARG:1):5 < 0
+				PRINTFORML %ARGS:1%用冰冷的眼神看着這辺…
+			ELSEIF CFLAG:(ARG:1):5 < 50
+				PRINTFORML %ARGS:1%警戒着這辺…
+			ELSEIF CFLAG:(ARG:1):5 >= 200
+				PRINTFORML %ARGS:1%発現了這辺、露出笑容靠近過来…
+			ENDIF
+		ENDIF
+	CASE 102
+		IF ARG:2
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%%TACHI()%留下了%ARGS:1%、離開了這個地方…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW %ARGS:0%%TACHI()%留下了%ARGS:1%、離開了這個地方…
+			ENDIF
+		ELSE
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%%TACHI()%在軽軽問候之後、和%ARGS:1%分別了
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW %ARGS:0%%TACHI()%在軽軽問候之後、和%ARGS:1%分別了
+			ENDIF
+		ENDIF
+	CASE 103
+		SIF BASE:1:5 >= 100
+			PRINTFORML 從%ARGS:0%那漂来的雌臭、讓%ARGS:1%臉色発紅…
+		IF CFLAG:1:22 && (CFLAG:1:36 == 0 || CFLAG:1:36 >= 3)
+			PRINTFORML %ARGS:0%稍微忘記了在腹中寄宿着的可怕的生命、聊得非常起勁…
+		ELSE
+			PRINTFORML %ARGS:0%們像是為了找回日常的感覚一樣、聊得非常起勁…
+		ENDIF
+		IF ARG:2
+			PRINTFORML %ARGS:0%%TACHI()%的MP回復了些許！
+		ENDIF
+	CASE 104
+			PRINTFORML %ARGS:0%們交換了彼此知道的関於迷宮的情報…
+		SIF BASE:1:5 >= 100
+			PRINTFORML 從%ARGS:0%那漂来的雌臭、讓%ARGS:1%臉色発紅…
+	CASE 105
+		IF ARG:3
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%%TACHI()%從%ARGS:1%的行李中竊取了１個%ITEMNAME:(ARG:2)%！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW %ARGS:0%%TACHI()%從%ARGS:1%的行李中竊取了１個%ITEMNAME:(ARG:2)%！
+			ENDIF
+		ELSE
+			PRINTFORM %ARGS:1%
+			IF CFLAG:1:25 == 0 && CFLAG:1:28 == 0 && CFLAG:1:29 == 0 && BASE:1:3 <= 0
+				PRINTFORM 用估價的眼神上下打量着%ARGS:0%的肢体
+			ENDIF
+			
+			IF FLAG:AUTOMODE
+				PRINTFORML 稍微考虑了一会後、递来了１個%ITEMNAME:(ARG:2)%！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 稍微考虑了一会後、递来了１個%ITEMNAME:(ARG:2)%！
+			ENDIF
+		ENDIF
+	CASE 106
+		IF ARG:2
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML 但是%ARGS:1%已経什麼東西都沒有了…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 但是%ARGS:1%已経什麼東西都沒有了…
+			ENDIF
+		ELSE
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML 但是什麼都沒有得到…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 但是什麼都沒有得到…
+			ENDIF
+		ENDIF
+	CASE 107
+		IF ARG:2
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%%TACHI()%抱起了%ARGS:1%、決定帯着一起走…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW %ARGS:0%%TACHI()%抱起了%ARGS:1%、決定帯着一起走…
+			ENDIF
+		ELSE
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%%TACHI()%試着邀請後、%ARGS:1%爽快地加入了隊伍
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW %ARGS:0%%TACHI()%試着邀請後、%ARGS:1%爽快地加入了隊伍
+			ENDIF
+		ENDIF
+	CASE 108
+		IF FLAG:10
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML 試着邀請%ARGS:1%、但是因為人数過多会更容易被敵人発現的理由而被拒絶了…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 試着邀請%ARGS:1%、但是因為人数過多会更容易被敵人発現的理由而被拒絶了…
+			ENDIF
+		ELSE
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML 試着邀請%ARGS:1%、被拒絶了…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 試着邀請%ARGS:1%、被拒絶了…
+			ENDIF
+		ENDIF
+	CASE 109
+		;何もなし
+	CASE 110
+		IF ARG:2 == 0
+			IF CFLAG:TARGET:29
+				PRINTFORML 已経無法自主行動的%ARGS:0%、説不定很快就会被敵人抓住了
+			ELSEIF CFLAG:TARGET:5 < 200
+			ELSE
+				PRINTFORML %ARGS:0%不願意和%CALLNAME:1%分開
+			ENDIF
+		ELSEIF TARGET != 1
+			IF CFLAG:TARGET:29
+			
+				IF FLAG:AUTOMODE
+					PRINTFORML 讓%ARGS:0%躺在部屋的角落、%CALLNAME:1%%TACHI()%離開了這個地方…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 讓%ARGS:0%躺在部屋的角落、%CALLNAME:1%%TACHI()%離開了這個地方…
+				ENDIF
+			ELSEIF CFLAG:TARGET:5 < 200
+				IF FLAG:AUTOMODE
+					PRINTFORML 決定和%ARGS:0%分開行動
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 決定和%ARGS:0%分開行動
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:0%帯着悲傷的表情、離開了這個地方…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW %ARGS:0%帯着悲傷的表情、離開了這個地方…
+				ENDIF
+			ENDIF
+		ENDIF
+	CASE 111
+	
+		IF FLAG:AUTOMODE
+			PRINTFORML 被奪走了１個%ITEMNAME:(ARG:2)%…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 被奪走了１個%ITEMNAME:(ARG:2)%…
+		ENDIF
+	CASE 112
+	
+		IF FLAG:AUTOMODE
+			PRINTFORML %ARGS:0%%TACHI()%被%ARGS:1%攻撃了、受到了傷害…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW %ARGS:0%%TACHI()%被%ARGS:1%攻撃了、受到了傷害…
+		ENDIF
+	CASE 113
+		;特に何も表示しない
+	CASE 114
+		IF TARGET == -1
+			IF ARG:1 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:0%%TACHI()%在迷宮的角落隠藏着身子就這樣睡着了…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW %ARGS:0%%TACHI()%在迷宮的角落隠藏着身子就這樣睡着了…
+				ENDIF
+			ELSEIF ARG:1 == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:0%%TACHI()%輪流負責警戒開始睡覚…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW %ARGS:0%%TACHI()%輪流負責警戒開始睡覚…
+				ENDIF
+			ELSEIF ARG:1 == 2
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:0%%TACHI()%拜託%ARGS:1%在敵人来的時候叫醒自己、然後睡着了…
+				ELSE
+					PRINTFORMW %ARGS:0%%TACHI()%拜託%ARGS:1%在敵人来的時候叫醒自己、然後睡着了…
+				ENDIF
+			ENDIF
+		ENDIF
+	CASE 115
+		PRINTFORML 部屋中蠢動的微型触手玩弄着%ARGS:0%的身体！
+	CASE 116
+		;特に何も表示しない
+	CASE 117
+		IF FLAG:10
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML 苦悶的無法睡着的%ARGS:0%、為了不讓其他同伴注意而放低了声音、開始了自慰…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 苦悶的無法睡着的%ARGS:0%、為了不讓其他同伴注意而放低了声音、開始了自慰…
+			ENDIF
+		ELSE
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML 苦悶的無法睡着的%ARGS:0%、発出了淫靡的声音、開始了自慰…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 苦悶的無法睡着的%ARGS:0%、発出了淫靡的声音、開始了自慰…
+			ENDIF
+		ENDIF
+	CASE 119
+	
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%沒能高潮的樣子…　苦悶不已的%ARGS:0%中断了自慰
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW %ARGS:0%沒能高潮的樣子…　苦悶不已的%ARGS:0%中断了自慰
+			ENDIF
+	CASE 121
+		IF CFLAG:TARGET:28 >= 1
+			PRINTFORML %ARGS:0%的発情有一些好転！
+		ELSE
+			PRINTFORML %ARGS:0%的発情治愈了！
+		ENDIF
+		CALL MSG_WAIT(1)
+	CASE 122
+		PRINTFORML %ARGS:0%露出了空虚的眼神、全身不住地顫抖着…
+	CASE 123
+		PRINTFORML %ARGS:1%更加用力的吸着%ARGS:0%的乳頭、回復了体力！
+	CASE 125
+		IF ARG:1 >= 12
+			PRINTFORML %ARGS:0%的子宮内寄生着的幼体還需要大量時間成長…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 8
+			PRINTFORML %ARGS:0%感覚身体有些違和感。子宮内寄生着的幼体慢慢地長大了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 4
+			PRINTFORML %ARGS:0%不是会呼吸困難。子宮内寄生着的幼体已経長得相当大了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 2
+			PRINTFORML %ARGS:0%露出了很辛苦的表情。子宮内寄生着的幼体快要出生了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 1
+			PRINTFORML %ARGS:0%的樣子很奇怪。看来已経一点猶豫的時間都沒有了…
+			CALL MSG_WAIT(1)
+		ENDIF
+	CASE 126
+		IF ARG:1 >= 11
+			PRINTFORML %ARGS:0%好像身体有点不舒服…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 9
+			PRINTFORML %ARGS:0%的臉色很差…是身体不好麼
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 8
+			IF CFLAG:TARGET:36 == 1
+				PRINTFORML %ARGS:0%的身体状況恢復了
+			ELSE
+				PRINTFORML %ARGS:0%的腹部開始膨脹
+				PRINTFORML 看来是以前被内射的時候懷孕了…
+			ENDIF
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 5
+			PRINTFORML %ARGS:0%的腹部大起来了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 3
+			PRINTFORML %ARGS:0%的腹部、已経大到非常明顕的地歩了
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 1
+			IF TALENT:130
+				PRINTFORML %ARGS:0%因為陣痛而十分痛苦…
+				CALL MSG_WAIT(1)
+			ELSE
+				PRINTFORML 苦於陣痛的%ARGS:0%的胸部、開始滲出了母乳…
+				
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:0%得到了【%TALENTNAME:130%】
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW %ARGS:0%得到了【%TALENTNAME:130%】
+				ENDIF
+			ENDIF
+		ENDIF
+	CASE 127
+		IF ARG:1 == 0
+			
+			IF FLAG:AUTOMODE
+				PRINTFORML 突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+				TWAIT FLAG:AUTOMODE * 400, 0
+				PRINTFORML 能看見、寄生在%ARGS:0%身上的幼体從%ARGS:0%体内一点点的爬了出来…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+				PRINTFORMW 能看見、寄生在%ARGS:0%身上的幼体從%ARGS:0%体内一点点的爬了出来…
+			ENDIF
+			
+		ELSEIF ARG:1 == 1
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW ………
+			ENDIF
+			IF TARGET != 1
+				;他の仲間から産まれる
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%、
+				ENDIF
+			ELSEIF FLAG:10
+				;主人公から産まれる＋仲間居る
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%、
+				ENDIF
+			ELSE
+				;主人公から産まれる＋誰も居ない
+				PRINTFORML 産下了幼体而耗尽精力的%ARGS:0%大喘着気…
+				TWAIT 500, 0
+				PRINTFORM 在那樣的地方、
+			ENDIF
+			PRINTFORML %ARGS:0%所産下的幼体正吸着%ARGS:0%的胸部
+			IF TALENT:130 == 0
+				
+				IF FLAG:AUTOMODE
+					PRINTFORML 大概是経過了疑似出産、%ARGS:0%変得可以産出母乳了…
+					TWAIT FLAG:AUTOMODE * 400, 0
+					PRINTFORML %ARGS:0%得到了【%TALENTNAME:130%】
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 大概是経過了疑似出産、%ARGS:0%変得可以産出母乳了…
+					PRINTFORMW %ARGS:0%得到了【%TALENTNAME:130%】
+				ENDIF
+				PRINTFORML  
+			ENDIF
+			
+			IF FLAG:AUTOMODE
+				PRINTFORML 就像是要吸尽%ARGS:0%的生命力一樣、幼体用力吸吮着%ARGS:0%的乳頭
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 就像是要吸尽%ARGS:0%的生命力一樣、幼体用力吸吮着%ARGS:0%的乳頭
+			ENDIF
+		ELSEIF ARG:1 == 2
+		
+			IF FLAG:AUTOMODE
+				PRINTFORML ……不久後是満足了麼、幼体把沾着白濁液的%ARGS:0%留在原地、消失在迷宮的深処…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW ……不久後是満足了麼、幼体把沾着白濁液的%ARGS:0%留在原地、消失在迷宮的深処…
+			ENDIF
+		ELSEIF ARG:1 == 3
+			PRINTFORML 部屋内的触手開始襲撃起出産中而無法動弾的%ARGS:0%！
+		ELSEIF ARG:1 == 4
+			PRINTFORML 
+			PRINTFORML 在空中映出了%ARGS:0%的樣子！
+		ELSEIF ARG:1 == 5
+			;母乳すすってた幼体に頭突っ込まれてNFされた
+			PRINTFORM 吸吮着乳頭的幼体突然把頭伸入了%ARGS:0%那鬆弛的乳腺、軽軽咬住内部那就像一串葡萄的乳分泌腺開始直接吸唆母乳！　
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%那潮湿糜爛的乳分泌腺在乳房中発出了爆裂似的波浪、粘糊糊的母乳從乳穴和幼体頭部之間的空隙中溢了出来…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW %ARGS:0%那潮湿糜爛的乳分泌腺在乳房中発出了爆裂似的波浪、粘糊糊的母乳從乳穴和幼体頭部之間的空隙中溢了出来…
+			ENDIF
+		ENDIF
+	CASE 129
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 突然%ARGS:0%発出呻吟蹲了下去、那脚下開始溢出了羊水…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 突然%ARGS:0%発出呻吟蹲了下去、那脚下開始溢出了羊水…
+			ENDIF
+			IF TALENT:130 == 0
+				;残り時間がスキップされた場合への対策
+				IF FLAG:AUTOMODE
+					PRINTFORML 苦於陣痛的%ARGS:0%的胸部、開始滲出了母乳…
+					PRINTFORML %ARGS:0%得到了【%TALENTNAME:130%】
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 苦於陣痛的%ARGS:0%的胸部、開始滲出了母乳…
+					PRINTFORMW %ARGS:0%得到了【%TALENTNAME:130%】
+				ENDIF
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 從喘着粗気的%ARGS:0%体内、孕育着的孩子慢慢地爬了出来…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 從喘着粗気的%ARGS:0%体内、孕育着的孩子慢慢地爬了出来…
+			ENDIF
+		ELSEIF ARG:1 == 1
+			PRINTFORML ………
+			TWAIT 500, 0
+			IF TARGET != 1
+				;他の仲間から産まれる
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%、
+				ENDIF
+			ELSEIF FLAG:10
+				;主人公から産まれる＋仲間居る
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%、
+				ENDIF
+			ELSE
+				;主人公から産まれる＋誰も居ない
+				PRINTFORM 一個人拼命的捂住了腹部、
+			ENDIF
+			IF ARG:2 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:0%産下了%ENEMY_NAME(CFLAG:TARGET:22)%的幼体
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW %ARGS:0%産下了%ENEMY_NAME(CFLAG:TARGET:22)%的幼体
+					PRINTFORMW 産下的孩子趴在筋疲力尽的%ARGS:0%的胸口、還連着臍帯就這樣開始吸起了母乳…
+				ENDIF
+			ELSE
+				;母親が人間＝半人半妖　　母親が妖怪＝半妖半触手　みたいな
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:0%生下了半妖女孩
+					PRINTFORML 産下的孩子趴在筋疲力尽的%ARGS:0%的胸口、還連着臍帯就這樣開始吸起了母乳…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW %ARGS:0%生下了半妖女孩
+					PRINTFORMW 産下的孩子趴在筋疲力尽的%ARGS:0%的胸口、還連着臍帯就這樣開始吸起了母乳…
+				ENDIF
+			ENDIF
+		ELSEIF ARG:1 == 2
+			;スライムとかの足は気にしてはいけない
+			IF FLAG:AUTOMODE
+				PRINTFORML ……不久之後離開了%ARGS:0%身上的孩子、很快就用自己的双腿站了起来、消失在迷宮的深処…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW ……不久之後離開了%ARGS:0%身上的孩子、很快就用自己的双腿站了起来、消失在迷宮的深処…
+			ENDIF
+		ELSEIF ARG:1 == 3
+			PRINTFORML 部屋内的触手開始襲撃起出産中而無法動弾的%ARGS:0%！
+		ELSEIF ARG:1 == 4
+			;母乳すすってた幼体に頭突っ込まれてNFされた
+			PRINTFORM 吸吮着乳頭的幼体突然把頭伸入了%ARGS:0%那鬆弛的乳腺、軽軽咬住内部那就像一串葡萄的乳分泌腺開始直接吸唆母乳！　
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%那潮湿糜爛的乳分泌腺在乳房中発出了爆裂似的波浪、粘糊糊的母乳從乳穴和幼体頭部之間的空隙中溢了出来…
+			ELSE
+				PRINTFORMW %ARGS:0%那潮湿糜爛的乳分泌腺在乳房中発出了爆裂似的波浪、粘糊糊的母乳從乳穴和幼体頭部之間的空隙中溢了出来…
+			ENDIF
+		ENDIF
+	CASE 130
+		IF TARGET == -1
+			IF FLAG:AUTOMODE
+				PRINTFORML 完全浄化了這個部屋！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 完全浄化了這個部屋！
+			ENDIF
+		ENDIF
+	CASE 131
+		IF TARGET == -1
+			IF FLAG:7 == 3
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:0%%TACHI()%有点睏了…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW %ARGS:0%%TACHI()%有点睏了…
+				ENDIF
+			ELSEIF FLAG:7 == 7
+				SETCOLOR 0xEEEE10
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:0%%TACHI()%因睡眠不足而有些搖搖晃晃…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW %ARGS:0%%TACHI()%因睡眠不足而有些搖搖晃晃…
+				ENDIF
+			ELSEIF FLAG:7 == 11
+				SETCOLOR 0xEE1010
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:0%%TACHI()%因睡眠不足意識開始朦朧起来…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW %ARGS:0%%TACHI()%因睡眠不足意識開始朦朧起来…
+				ENDIF
+			ENDIF
+			RESETCOLOR
+		ENDIF
+	CASE 132
+		;特に何も表示しない
+	CASE 133
+		;特に何も表示しない
+	CASE 134
+		;特に何も表示しない
+	CASE 135
+		;特に何も表示しない
+	CASE 136
+		IF ARG:3 == 0
+			IF CFLAG:TARGET:50 >= 54 && CFLAG:TARGET:50 <= 58
+				SETCOLOR 0xEE1010
+				PRINTFORM %ARGS:0%献出了【処女】… 
+				RESETCOLOR
+				PRINTFORM (MP 
+				SETCOLOR 0x70FF70
+				PRINTFORM -{ARG:2}
+				RESETCOLOR
+				PRINTFORML )
+			ELSE
+				SETCOLOR 0xEE1010
+				PRINTFORM %ARGS:0%失去了【処女】… 
+				RESETCOLOR
+				PRINTFORM (MP 
+				SETCOLOR 0x70FF70
+				PRINTFORM -{ARG:2}
+				RESETCOLOR
+				PRINTFORML )
+			ENDIF
+		ELSEIF ARG:3 == 2
+			SELECTCASE RAND:8
+				CASE 0
+					PRINTFORML %ARGS:0%雖然被触手插入了一点点、但總算是守住了処女！
+				CASE 1
+					PRINTFORML %ARGS:0%稍微扭过身体、總算是守住了処女！
+				CASE 2
+					PRINTFORML %ARGS:0%依靠浄化結界、總算是守住了処女！
+				CASE 3
+					PRINTFORML %ARGS:0%依靠秘部贴着的乙女護符、總算是守住了処女！
+				CASE 4
+					PRINTFORML %ARGS:0%凭借少女的倔强、總算是守住了処女！
+				CASE 5
+					PRINTFORML %ARGS:0%凭借少女的執念、總算是守住了処女！
+				CASE 6
+					PRINTFORML %ARGS:0%凭借少女的第六感、總算是守住了処女！
+				CASE 7
+					PRINTFORML %ARGS:0%凭借少女的闪避、總算是守住了処女！
+			ENDSELECT
+		ELSEIF ARG:3 == 3
+			PRINTFORML %ARGS:0%被明显弱于自己的杂鱼夺走了处女之身、呆呆地说不出话来…
+		ELSEIF ARG:3 == 4
+			PRINTFORML %ARGS:0%为了不被杂鱼夺走处女之身而拼命抵抗！
+		ELSE
+			IF CFLAG:TARGET:24 || CFLAG:TARGET:25 || CFLAG:TARGET:29
+				PRINTFORML %ARGS:0%完全無法抵抗、就這樣軽易的失去了純潔！
+				CALL MSG_WAIT(1)
+			ELSEIF CFLAG:TARGET:50 >= 54 && CFLAG:TARGET:50 <= 58
+				PRINTFORML %ARGS:0%完全沒有抵抗、接受了触手的插入！
+			ELSEIF (CFLAG:TARGET:50 == 53 || CFLAG:TARGET:20 == 0) && CFLAG:TARGET:35
+				PRINTFORML %ARGS:0%努力守護的処女、因為高潮而失去力気的那一瞬間被一口気貫穿了！
+				CALL MSG_WAIT(1)
+			ELSEIF CFLAG:TARGET:28 || CFLAG:TARGET:35
+				PRINTFORML 完全湿潤的%ARGS:0%的膣道、即使是処女也很軽鬆的就接受了触手的插入！
+				CALL MSG_WAIT(1)
+			ELSE
+				PRINTFORML 不顧因為苦痛而表情抽搐的%ARGS:0%、慢慢地触手漸漸地插了進去！
+				CALL MSG_WAIT(1)
+			ENDIF
+		ENDIF
+	CASE 138
+		IF ARG:2 == 0
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%%TACHI()%請求%ARGS:1%把什麼東西讓給自己…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW %ARGS:0%%TACHI()%請求%ARGS:1%把什麼東西讓給自己…
+			ENDIF
+		ENDIF
+	CASE 139
+		;特に何も表示しない
+	CASE 140
+		;特に何も表示しない
+	CASE 141
+		IF FLAG:AUTOMODE
+				PRINTFORML 和%ARGS:1%搭話的時候、%ARGS:0%%TACHI()%突然遭到了%ARGS:1%的襲撃！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 和%ARGS:1%搭話的時候、%ARGS:0%%TACHI()%突然遭到了%ARGS:1%的襲撃！
+			ENDIF
+	CASE 142
+		;特に何も表示しない
+	CASE 143
+		IF ARG:2 == 0
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%%TACHI()%給%ARGS:1%喝下了%ITEMNAME:58%…
+				PRINTFORML %ARGS:1%転眼之間就取回了生気、回復到了能站起来的程度！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW %ARGS:0%%TACHI()%給%ARGS:1%喝下了%ITEMNAME:58%…
+				PRINTFORMW %ARGS:1%転眼之間就取回了生気、回復到了能站起来的程度！
+			ENDIF
+			
+		ENDIF
+	CASE 144
+		IF ARG:1 == 0
+			IF CFLAG:TARGET:504 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML %ARGS:1%向%ARGS:0%%TACHI()%道謝之後、離開了這裡…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW %ARGS:1%向%ARGS:0%%TACHI()%道謝之後、離開了這裡…
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 但是%ARGS:1%因為拘束具的原因而無法動弾……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 但是%ARGS:1%因為拘束具的原因而無法動弾……
+				ENDIF
+			ENDIF
+		ELSEIF ARG:1 == 1
+			PRINTFORML  
+			PRINTFORML %ARGS:1%対救了自己的%ARGS:0%%TACHI()%説道想要幇忙
+			PRINTFORML 要讓她加入隊伍麼？
+		ELSEIF ARG:1 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:1%加入了隊伍！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:1%加入了隊伍！
+			ENDIF
+
+		ELSEIF ARG:1 == 3
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:1%有些可惜的樣子、重新答謝%ARGS:0%%TACHI()%後、離開了這裡…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:1%有些可惜的樣子、重新答謝%ARGS:0%%TACHI()%後、離開了這裡…
+			ENDIF
+
+
+;追加でお酒を渡す+母乳飲み
+		ELSEIF ARG:1 == 4
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:1%高興的答謝了%ARGS:0%%TACHI()%然後喝起了酒。
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:1%高興的答謝了%ARGS:0%%TACHI()%然後喝起了酒。
+			ENDIF
+
+		ELSEIF ARG:1 == 5
+			PRINTFORML 
+			PRINTFORML 突然從日本酒的容器伸出的触手拘束住了%ARGS:1%的双手、
+			PRINTFORML 極粗的触手靠近了唇辺。
+			IF FLAG:AUTOMODE
+			    PRINTFORML 流着泪看着這辺的%ARGS:1%搖着低垂的頭。
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  流着泪看着這辺的%ARGS:1%搖着低垂的頭。
+			ENDIF
+
+			PRINTFORML 
+			PRINTFORML ……… 
+			IF FLAG:AUTOMODE
+			    PRINTFORML 就這樣直到触手枯萎為止、一直在%ARGS:1%的喉嚨裡面強行灌入着体液。
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  就這樣直到触手枯萎為止、一直在%ARGS:1%的喉嚨裡面強行灌入着体液。
+			ENDIF
+
+			PRINTFORML 
+		ELSEIF ARG:1 == 6
+			IF RAND:4 == 0
+				PRINTFORML 有不好預感的%ARGS:1%想要爬着逃走、 
+				IF FLAG:AUTOMODE
+				    PRINTFORML 但是被%ARGS:0%%TACHI()%倒剪双臂強行玩弄着胸部。%ARGS:1%因為強力的刺激而開始顫動。
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  但是被%ARGS:0%%TACHI()%倒剪双臂強行玩弄着胸部。%ARGS:1%因為強力的刺激而開始顫動。
+				ENDIF
+
+				PRINTFORML 榨取着無法行動的%ARGS:1%的胸部尽情享受了母乳。
+			ELSE
+				PRINTFORML 雖然有着微弱的抵抗 
+				PRINTFORML %ARGS:0%%TACHI()%吸吮着%ARGS:1%的胸部、開始喝着因為刺激而湧現出来的母乳。
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:1%因為刺激身体不停顫抖。
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:1%因為刺激身体不停顫抖。
+				ENDIF
+
+			ENDIF
+		ELSEIF ARG:1 == 7
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:1%有些困惑的樣子満臉通紅点了点頭。
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:1%有些困惑的樣子満臉通紅点了点頭。
+				ENDIF
+
+			PRINTFORML %ARGS:0%%TACHI()%吸吮着%ARGS:1%的胸部、開始喝着因為刺激而湧現出来的母乳。
+			PRINTFORML %ARGS:1%用蔑視的眼神看着這辺。
+			IF FLAG:AUTOMODE
+				PRINTFORML
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+
+		ELSEIF ARG:1 == 9
+			PRINTFORML %ARGS:0%%TACHI()%用脚刺激着%ARGS:1%的男根到強烈的勃起。
+			PRINTFORML %ARGS:0%%TACHI()%抽起眉頭抬起腿対着下体用力的踩了下去！
+			IF FLAG:AUTOMODE
+			    PRINTFORML 有什麼柔軟的東西被折断了、有生動地被折断的声音静静回響着・・・ 
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  有什麼柔軟的東西被折断了、有生動地被折断的声音静静回響着・・・ 
+			ENDIF
+
+			PRINTFORML 受到猛烈攻撃的寄生触手顫抖着吐出了白色液体然後縮小了。
+			IF FLAG:AUTOMODE
+			    PRINTFORML 
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  
+			ENDIF
+
+			;キャン玉が付いている場合、折れた後にヴォッキ出現フラグが立つ
+			IF TALENT:180 > 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 這傢伙　到底在　開什麼　鬼玩笑？！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  這傢伙　到底在　開什麼　鬼玩笑？！
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 受到打撃、而掉落下来的%ARGS:1%的陰茎、好像還活着一樣一直動着！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  受到打撃、而掉落下来的%ARGS:1%的陰茎、好像還活着一樣一直動着！
+			ENDIF
+
+				PRINTFORML 在陷入呆立説不出話的%ARGS:0%%TACHI()%們的面前
+				PRINTFORML 活着的陰茎蠕動着爬走了、消失在迷宮深処！
+			IF FLAG:AUTOMODE
+			    PRINTFORML 
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  
+			ENDIF
+
+			ENDIF
+		ELSEIF ARG:1 == 10
+			PRINTFORML %ARGS:0%%TACHI()%用看着臓東西一樣的眼神注視着那勃起的擬似根。
+			IF FLAG:AUTOMODE
+			    PRINTFORML 即使本人無法動弾但是寄生的触手還一直在脈動着。
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  即使本人無法動弾但是寄生的触手還一直在脈動着。
+			ENDIF
+
+			PRINTFORML 之後露出了想到了什麼的表情開始用脚玩弄着那敏感的部分！
+			IF FLAG:AUTOMODE
+			    PRINTFORML 不顧%ARGS:1%還在顫抖的肢体一直用脚底那柔軟的肌膚按圧上去讓擬似根一次又一次的釋放了欲望。
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  不顧%ARGS:1%還在顫抖的肢体一直用脚底那柔軟的肌膚按圧上去讓擬似根一次又一次的釋放了欲望。
+			ENDIF
+
+		ELSEIF ARG:1 == 11
+			PRINTFORML 厭倦了射出的白色体液的%ARGS:0%%TACHI()%就這樣把%ARGS:1%丟在原地直接走了。
+			IF FLAG:AUTOMODE
+				PRINTFORML
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+
+		ELSEIF ARG:1 == 12
+			PRINTFORML %ARGS:0%%TACHI()%は回復した。
+			IF FLAG:AUTOMODE
+				PRINTFORML
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+
+		ELSEIF ARG:1 == 13
+			PRINTFORML 看来最低程度輸出的電撃讓%ARGS:1%回復了一点。
+			PRINTFORML 這下受到敵人的襲撃也不需要我們去救助了吧。
+			IF FLAG:AUTOMODE
+				PRINTFORML
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+
+		ELSEIF ARG:1 == 14
+			PRINTFORML %ARGS:0%擦拭着枕在自己大腿上的%ARGS:1%頭髮和臉上的汚漬。
+			IF FLAG:AUTOMODE
+				PRINTFORML
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+
+		ENDIF
+	CASE 145
+		;特に何も表示しない
+	CASE 146
+		;特に何も表示しない
+	CASE 147
+		;特に何も表示しない
+	CASE 148
+		;特に何も表示しない
+	CASE 149
+			IF CFLAG:TARGET:29
+				PRINTFORML %ARGS:0%通過得到的洗澡的機会出去了汚垢！
+			ELSE
+				PRINTFORML %ARGS:0%通過洗澡除去了汚垢！
+			ENDIF
+
+
+
+	CASE 154
+		IF FLAG:AUTOMODE
+		    PRINTFORML %ARGS:0%成為了休息一回的状態……
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  %ARGS:0%成為了休息一回的状態……
+		ENDIF
+
+	CASE 155
+		;今は表示なし
+
+	CASE 158
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 被救出来的%ARGS:0%的眼睛、亮起了微弱的光芒…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  被救出来的%ARGS:0%的眼睛、亮起了微弱的光芒…
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML 被触手釋放的%ARGS:0%的眼睛、亮起了微弱的光芒…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  被触手釋放的%ARGS:0%的眼睛、亮起了微弱的光芒…
+			ENDIF
+
+		ENDIF
+	CASE 159
+		;表示なし
+	CASE 160
+		;表示なし
+	CASE 161
+		IF FLAG:AUTOMODE
+		    PRINTFORML %ARGS:0%的樣子有些奇怪…
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  %ARGS:0%的樣子有些奇怪…
+		ENDIF
+
+		IF FLAG:AUTOMODE
+		    PRINTFORML %ARGS:0%説着討厭継續和%CALLNAME:1%一起行動、直接脱離的隊伍…
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  %ARGS:0%説着討厭継續和%CALLNAME:1%一起行動、直接脱離的隊伍…
+		ENDIF
+
+	CASE 162
+		;表示なし
+	CASE 163
+		IF FLAG:AUTOMODE
+		    PRINTFORML %ARGS:0%%TACHI()%把%ITEMNAME:(ARG:2)%交給了%ARGS:1%！
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  %ARGS:0%%TACHI()%把%ITEMNAME:(ARG:2)%交給了%ARGS:1%！
+		ENDIF
+
+	CASE 164
+		; 好感度で分岐
+		; 冷めた目でこちらを見ている…
+		IF CFLAG:5 < 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:1%從%CALLNAME:1%的手中奪取了道具！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:1%從%CALLNAME:1%的手中奪取了道具！
+			ENDIF
+
+			
+		; こちらを警戒している…
+		ELSEIF CFLAG:5 < 50
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:1%保持着警戒接過了道具
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:1%保持着警戒接過了道具
+			ENDIF
+
+			
+		; ふつう
+		ELSEIF CFLAG:5 < 200
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:1%好像很高興…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:1%好像很高興…
+			ENDIF
+
+			
+		; 笑顔で近づいてきた…
+		ELSE
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:1%笑着接過了禮物
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:1%笑着接過了禮物
+			ENDIF
+
+		ENDIF
+	CASE 165
+		;特に何も表示しない
+	CASE 168
+		IF ARG:2 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%感覚%ARGS:1%有種討厭的気息……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%感覚%ARGS:1%有種討厭的気息……
+			ENDIF
+
+		ELSEIF ARG:2 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%感覚%ARGS:1%有一些不太自然……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%感覚%ARGS:1%有一些不太自然……
+			ENDIF
+
+		ELSEIF ARG:2 == 2
+			PRINTFORML …………？
+			IF FLAG:AUTOMODE
+			    PRINTFORML 不知為何%CALLNAME:(FLAG:10)%戒備起了%ARGS:1%。
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  不知為何%CALLNAME:(FLAG:10)%戒備起了%ARGS:1%。
+			ENDIF
+
+		ELSEIF ARG:2 == 3
+			PRINTFORML …………？
+			IF FLAG:AUTOMODE
+			    PRINTFORML 不知為何%CALLNAME:(FLAG:11)%戒備起了%ARGS:1%。
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  不知為何%CALLNAME:(FLAG:11)%戒備起了%ARGS:1%。
+			ENDIF
+
+		;娘が勘付く　特に何も表示しない
+		ELSEIF ARG:2 == 4
+
+		;仲間が勘付く　特に何も表示しない
+		ELSEIF ARG:2 == 5
+
+		ENDIF
+	CASE 169
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%因為周囲的環境而心神不寧……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%因為周囲的環境而心神不寧……
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%好像接受不了周囲的環境……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%好像接受不了周囲的環境……
+			ENDIF
+
+		ENDIF
+	CASE 201
+		;表示なし
+	CASE 202
+		;表示なし
+
+	CASE 205
+		;表示なし
+
+	CASE 207
+		;表示なし
+
+	CASE 209
+		;表示なし
+
+	CASE 211
+		;表示なし
+
+	CASE 213
+		;表示なし
+	CASE 214
+		;表示なし
+	;ここから追加メッセージ
+	CASE 221
+		IF ARG:1 >= 12
+			PRINTFORML %ARGS:0%的臀部内寄生着的幼体還需要大量時間成長…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 8
+			PRINTFORML %ARGS:0%感覚身体有些違和感。臀部内寄生着的幼体慢慢地長大了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 4
+			PRINTFORML %ARGS:0%不是会呼吸困難。臀部内寄生着的幼体已経長得相当大了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 2
+			PRINTFORML %ARGS:0%露出了很辛苦的表情。臀部内寄生着的幼体快要出生了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 1
+			PRINTFORML %ARGS:0%的樣子很奇怪。看来已経一点猶豫的時間都沒有了…
+			CALL MSG_WAIT(1)
+		ENDIF
+	CASE 222
+		;表示なし
+	CASE 223
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 能看見、從四肢着地的%ARGS:0%的屁股那排出了沾満粘液的卵…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  能看見、從四肢着地的%ARGS:0%的屁股那排出了沾満粘液的卵…
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML ………
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ………
+			ENDIF
+
+			IF TARGET != 1
+				;他の仲間から産まれる
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%、
+				ENDIF
+			ELSEIF FLAG:10
+				;主人公から産まれる＋仲間居る
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%、
+				ENDIF
+			ELSE
+				;主人公から産まれる＋誰も居ない
+			ENDIF
+			PRINTFORML 発出産卵声音的%ARGS:0%只能一直痙攣着……
+				IF FLAG:AUTOMODE
+				    PRINTFORML 能看見裡面有生命在蠕動着的卵像水窪一樣拡散開来……
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  能看見裡面有生命在蠕動着的卵像水窪一樣拡散開来……
+				ENDIF
+
+		ELSEIF ARG:1 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML 生産到地面上的卵堆成了小山、把倒在地上的%ARGS:0%的埋掉了……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  生産到地面上的卵堆成了小山、把倒在地上的%ARGS:0%的埋掉了……
+			ENDIF
+
+		ELSEIF ARG:1 == 3
+			PRINTFORML 多次産卵的経歷改変了%ARGS:0%的身体……
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%得到了【産卵体質】
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%得到了【産卵体質】
+			ENDIF
+
+		ELSEIF ARG:1 == 4
+			PRINTFORML 部屋内的触手開始襲撃起産卵中而無法動弾的%ARGS:0%！
+		ENDIF
+	CASE 224
+		;表示なし
+	CASE 225
+		IF ARG:1 >= 12
+			PRINTFORML %ARGS:0%的臀部内寄生着的幼体還需要大量時間成長…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 8
+			PRINTFORML %ARGS:0%感覚身体有些違和感。臀部内寄生着的幼体慢慢地長大了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 4
+			PRINTFORML %ARGS:0%不是会呼吸困難。臀部内寄生着的幼体已経長得相当大了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 2
+			PRINTFORML %ARGS:0%露出了很辛苦的表情。臀部内寄生着的幼体快要出生了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 1
+			PRINTFORML %ARGS:0%的樣子很奇怪。看来已経一点猶豫的時間都沒有了…
+			CALL MSG_WAIT(1)
+		ENDIF
+	CASE 226
+		;表示なし
+	CASE 227
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 能看見、寄生在%ARGS:0%身上的幼体從%ARGS:0%的臀部那一点点的爬了出来…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  能看見、寄生在%ARGS:0%身上的幼体從%ARGS:0%的臀部那一点点的爬了出来…
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML ………
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ………
+			ENDIF
+
+			IF TARGET != 1
+				;他の仲間から産まれる
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%、
+				ENDIF
+			ELSEIF FLAG:10
+				;主人公から産まれる＋仲間居る
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%、
+				ENDIF
+			ELSE
+				;主人公から産まれる＋誰も居ない
+			ENDIF
+			IF FLAG:AUTOMODE
+			    PRINTFORML 産下了幼体而耗尽精力的%ARGS:0%大喘着気…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  産下了幼体而耗尽精力的%ARGS:0%大喘着気…
+			ENDIF
+
+		ELSEIF ARG:1 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML ……幼体把倒下的%ARGS:0%留在原地、消失在迷宮的深処…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ……幼体把倒下的%ARGS:0%留在原地、消失在迷宮的深処…
+			ENDIF
+
+		ELSEIF ARG:1 == 3
+			PRINTFORML 部屋内的触手開始襲撃起出産中而無法動弾的%ARGS:0%！
+		ENDIF
+	CASE 228
+		;表示なし
+	CASE 229
+		IF ARG:1 == 0
+			PRINTFORML %ARGS:0%向%ARGS:1%宣告了和%PETNAME%結婚的消息！
+		ELSEIF ARG:1 == 1
+			;表示なし
+		ENDIF
+	CASE 230
+		IF ARG:1 == 0
+			PRINTFORML 触手聚集在%ARGS:0%身边以堵住那致命的伤口！
+			PRINTFORML %ARGS:0%复活了……看来是不会死掉了……
+			PRINTFORML %ARGS:0%牢牢记住了死亡的痛苦和恐惧……
+		ELSEIF ARG:1 == 1
+			;表示なし
+		ENDIF
+	
+	CASE 401
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 敗北的%ARGS:0%被%PETNAME%襲撃了、在数小時内身心都被銘刻了敗北的痕跡……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  敗北的%ARGS:0%被%PETNAME%襲撃了、在数小時内身心都被銘刻了敗北的痕跡……
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 常識被修改的%ARGS:0%的自我意志消失了……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  常識被修改的%ARGS:0%的自我意志消失了……
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%一生都要作為%PETNAME%的【僕人】而活……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%一生都要作為%PETNAME%的【僕人】而活……
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			;何もなし
+			
+		ELSEIF ARG:1 == 2
+			PRINTFORML 看着忍耐住了的%ARGS:0%的%PETNAME%感到非常可惜……
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%捨棄了素質【寵物】！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%捨棄了素質【寵物】！
+			ENDIF
+
+		ELSEIF ARG:1 == 3
+			IF FLAG:AUTOMODE
+			    PRINTFORML
+			    PRINTFORML
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW 
+			    PRINTFORMW 
+			ENDIF
+
+			PRINTFORML 眼前的堕落的%ARGS:1%的様子有些奇怪。
+			PRINTFORML %ARGS:0%想要後退卻被%PETNAME%阻攔了……
+			PRINTFORML %ARGS:1%希望%ARGS:0%也和自己一樣堕入地獄、
+			PRINTFORML 和%PETNAME%一起襲撃了%ARGS:0%……
+		ELSEIF ARG:1 == 4
+			;何もなし
+		ELSEIF ARG:1 == 5
+			PRINTFORML 
+			PRINTFORML %ARGS:1%和%PETNAME%一起在貪図着%ARGS:0%…
+			PRINTFORML 
+		ELSEIF ARG:1 == 6
+			;何もなし
+		ENDIF
+	CASE 403
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 想要趕走寵物的%ARGS:0%発現%ARGS:1%把同伴摁住了！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  想要趕走寵物的%ARGS:0%発現%ARGS:1%把同伴摁住了！
+			ENDIF
+
+			PRINTFORML 想要去救助的時候被%PETNAME%阻止了、一起被抓住了……
+
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			;何もなし
+			
+		ELSEIF ARG:1 == 2
+			PRINTFORML 想要趕走寵物的%ARGS:0%被%ARGS:1%從後面箍住了脖子！
+			PRINTFORML 正想抵抗的時候%PETNAME%立即就沖了過来……
+			IF FLAG:AUTOMODE
+			    PRINTFORML 
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  
+			ENDIF
+
+		ELSEIF ARG:1 == 3
+			;何もなし
+		ELSEIF ARG:1 == 4
+			;何もなし
+		ELSEIF ARG:1 == 5
+			IF FLAG:AUTOMODE
+			    PRINTFORML 
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  
+			ENDIF
+
+			PRINTFORML %ARGS:1%帯着可疑的目光和%PETNAME%一起逼近過来……
+			PRINTFORML %ARGS:0%雖然拼命抵抗着但還是全員都被圧倒了……
+			PRINTFORML 求助的声音也完全傳們不到%ARGS:1%的心中……
+			IF FLAG:AUTOMODE
+			    PRINTFORML 
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  
+			ENDIF
+
+		ELSEIF ARG:1 == 6
+			;何もなし
+		ELSEIF ARG:1 == 7
+			;何もなし
+		ELSEIF ARG:1 == 8
+			;何もなし
+		ENDIF
+	CASE 414
+		PRINTFORML %ARGS:0%感覚到了不可能存在的女性器正被侵犯！
+	CASE 415
+		PRINTFORML %ARGS:0%明明是男人卻有一種妊娠的錯覚！
+	CASE 427
+		IF FLAG:507 < 1
+			IF ARG:1 == 0
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%的胸部被母乳所填満…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%的胸部被母乳所填満…
+				ENDIF
+
+			ELSEIF ARG:1 == 1
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%的胸部已経変成了怎麼榨都榨不乾浄母乳的樣子…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%的胸部已経変成了怎麼榨都榨不乾浄母乳的樣子…
+				ENDIF
+
+			ELSEIF ARG:1 == 2
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%的胸部更加発达了、最終怎麼也阻止不了母乳的生産了…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%的胸部更加発达了、最終怎麼也阻止不了母乳的生産了…
+				ENDIF
+
+			ELSEIF ARG:1 == 3
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%的胸部時常脈動并生産出大量的母乳…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%的胸部時常脈動并生産出大量的母乳…
+				ENDIF
+
+				IF FLAG:AUTOMODE
+				    PRINTFORML 無法忍耐住的急劇的噴乳、弄坏了%ARGS:0%的部分胸部…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  無法忍耐住的急劇的噴乳、弄坏了%ARGS:0%的部分胸部…
+				ENDIF
+
+			ELSEIF ARG:1 == 4
+				IF TALENT:130 == 0
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳体質】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳体質】
+					ENDIF
+
+				ELSEIF TALENT:130 == 1
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳分泌過多】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳分泌過多】
+					ENDIF
+
+				ELSEIF TALENT:130 == 2
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳異常分泌】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳異常分泌】
+					ENDIF
+
+				ELSEIF TALENT:130 == 3
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳製造装置】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳製造装置】
+					ENDIF
+
+				ELSEIF TALENT:130 == 4
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳間欠泉】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳間欠泉】
+					ENDIF
+
+				ELSEIF TALENT:130 == 5
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳活火山】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳活火山】
+					ENDIF
+
+				ENDIF
+			ELSEIF ARG:1 == 5
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%的胸部因為噴乳的速度不夠快、隨着母乳積攢開始慢慢地成長了…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%的胸部因為噴乳的速度不夠快、隨着母乳積攢開始慢慢地成長了…
+				ENDIF
+
+			;超乳
+			ELSEIF ARG:1 == 6
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%那超出認知極限的胸部還在継續肥大、不停地流出着粘稠的母乳…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%那超出認知極限的胸部還在継續肥大、不停地流出着粘稠的母乳…
+				ENDIF
+
+				IF FLAG:AUTOMODE
+				    PRINTFORML 無法忍耐住的異常急劇的噴乳、完全弄坏了%ARGS:0%的胸部…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  無法忍耐住的異常急劇的噴乳、完全弄坏了%ARGS:0%的胸部…
+				ENDIF
+
+			ENDIF
+		ELSE
+			IF ARG:1 == 0
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%的胸部因為粘稠的母乳而膨脹、已経変不回去了…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%的胸部因為粘稠的母乳而膨脹、已経変不回去了…
+				ENDIF
+
+			ELSEIF ARG:1 == 1
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%的胸部因為怎麼榨都榨不乾浄的母乳而劇烈膨脹…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%的胸部因為怎麼榨都榨不乾浄的母乳而劇烈膨脹…
+				ENDIF
+
+			ELSEIF ARG:1 == 2
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%的胸部更加発們了、最終膨脹到了身体極限的程度…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%的胸部更加発們了、最終膨脹到了身体極限的程度…
+				ENDIF
+
+			ELSEIF ARG:1 == 3
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%那超出認知極限的肥大胸部不停地流出着\@ FLAG:507 > 0 ? 腥臭膠状的 #  \@母乳…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%那超出認知極限的肥大胸部不停地流出着\@ FLAG:507 > 0 ? 腥臭膠状的 #  \@母乳…
+				ENDIF
+
+				IF FLAG:AUTOMODE
+				    PRINTFORML 無法承受住急劇的成長、%ARGS:0%的胸部完全崩坏了…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  無法承受住急劇的成長、%ARGS:0%的胸部完全崩坏了…
+				ENDIF
+
+			ELSEIF ARG:1 == 4
+				IF TALENT:130 == 0
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳体質】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳体質】
+					ENDIF
+
+				ELSEIF TALENT:130 == 1
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳分泌過多】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳分泌過多】
+					ENDIF
+
+				ELSEIF TALENT:130 == 2
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳異常分泌】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳異常分泌】
+					ENDIF
+
+				ELSEIF TALENT:130 == 3
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳製造装置】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳製造装置】
+					ENDIF
+
+				ELSEIF TALENT:130 == 4
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳間欠泉】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳間欠泉】
+					ENDIF
+
+				ELSEIF TALENT:130 == 5
+					IF FLAG:AUTOMODE
+					    PRINTFORML %ARGS:0%変成了【母乳活火山】
+					    TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+					    PRINTFORMW  %ARGS:0%変成了【母乳活火山】
+					ENDIF
+
+				ENDIF
+			ELSEIF ARG:1 == 5
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%謙虚的胸部積蓄着渾濁的母乳、開始謹慎的成長着…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%謙虚的胸部積蓄着渾濁的母乳、開始謹慎的成長着…
+				ENDIF
+
+			;超乳
+			ELSEIF ARG:1 == 6
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%那超出認知極限還在継續肥大的胸部不停地流出着\@ FLAG:507 > 0 ? 腥臭膠状的 #  \@母乳…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%那超出認知極限還在継續肥大的胸部不停地流出着\@ FLAG:507 > 0 ? 腥臭膠状的 #  \@母乳…
+				ENDIF
+
+				IF FLAG:AUTOMODE
+				    PRINTFORML 無法承受住急劇的成長、%ARGS:0%的胸部完全崩坏了…
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  無法承受住急劇的成長、%ARGS:0%的胸部完全崩坏了…
+				ENDIF
+
+			ENDIF
+		ENDIF
+	CASE 449
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%獲得了【%TALENTNAME:167%】
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%獲得了【%TALENTNAME:167%】
+			ENDIF
+
+	CASE 451
+		IF FLAG:AUTOMODE
+		    PRINTFORML %ARGS:0%無法忍受住刺激射精了！
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  %ARGS:0%無法忍受住刺激射精了！
+		ENDIF
+
+	CASE 452
+		IF FLAG:AUTOMODE
+		    PRINTFORML %ARGS:0%股間寄生的触手射尽了精液、萎靡并掉落了…
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  %ARGS:0%股間寄生的触手射尽了精液、萎靡并掉落了…
+		ENDIF
+
+	CASE 453
+		IF FLAG:AUTOMODE
+		    PRINTFORML %ARGS:0%股間那一体化的東西、在周囲的触手給予的刺激下有了反応…
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  %ARGS:0%股間那一体化的東西、在周囲的触手給予的刺激下有了反応…
+		ENDIF
+
+		IF FLAG:AUTOMODE
+		    PRINTFORML %ARGS:0%開始【発情】了！
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  %ARGS:0%開始【発情】了！
+		ENDIF
+
+	CASE 454
+		IF FLAG:AUTOMODE
+		    PRINTFORML 多次反復射精的結果、%ARGS:0%的身体完全接受了【扶他】状態…
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  多次反復射精的結果、%ARGS:0%的身体完全接受了【扶他】状態…
+		ENDIF
+
+		IF FLAG:AUTOMODE
+		    PRINTFORML 触手完全固化為了%ARGS:0%的淫茎！
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  触手完全固化為了%ARGS:0%的淫茎！
+		ENDIF
+
+;性欲発散される側口上呼び出し用 ARG:1が1でV、2でB、3でA、4で口
+	CASE 458
+		;表示なし
+;治療を行う側の口上呼び出し用 ARG:1が0でV、1でB、2でA、3で口、4で手
+	CASE 461
+		;表示なし
+;触手放置プレイされる側の口上
+	CASE 463
+		;表示なし
+	
+	
+	CASE 466
+		IF ARG:1 == 0
+			PRINTFORML 
+			PRINTFORML %ARGS:0%的乳頭勃起変硬了、僅僅是到空気的流動都会感覚到快感…
+			PRINTFORML 被玩弄的話毫無疑問的会流着口水不停嬌喘吧…
+			PRINTFORML 
+		ELSEIF ARG:1 == 1
+			PRINTFORML 
+			PRINTFORML %ARGS:0%的陰蒂異常肥大化了、僅僅是稍微活動一下都能感覚到快感…
+			PRINTFORML 被玩弄的話毫無疑問的失去意識露出不成体統的樣子吧…
+			PRINTFORML 
+		ELSEIF ARG:1 == 2
+			PRINTFORML 
+			PRINTFORML %ARGS:0%的扶他肉棒積蓄的精液現在很快就要爆発了…
+			PRINTFORML 看起来很痛苦的扶他肉棒正不断地跳動着…
+			PRINTFORML 
+		ELSEIF ARG:1 == 3
+			PRINTFORML 
+			PRINTFORML %ARGS:0%的扶他肉棒因為積攢的精液已経超過了極限而開始肥大化了…
+			PRINTFORML 只要軽軽一碰就毫無疑問的会爆射出裡面的精液…
+			PRINTFORML 
+		ENDIF
+	
+	CASE 467
+		;表示なし
+	CASE 468
+		IF GET_ERECTION_STATE_B(TARGET) <= 1
+			PRINTFORML 発情的%ARGS:0%的乳头开始勃起了…
+		ELSE
+			PRINTFORML 発情的%ARGS:0%的乳头勃起到了极限、等待着绝顶的瞬间…
+		ENDIF
+	CASE 469
+		PRINTFORML 
+		IF GET_PENIS(TARGET)
+			IF GET_ERECTION_STATE_C(TARGET) <= 1
+				PRINTFORML 発情的%ARGS:0%的\@GET_PENIS(TARGET) < 4 ? 扶他 # \@肉棒勃起了…
+			ELSEIF GET_ERECTION_STATE_C(TARGET) == 2
+				PRINTFORML 発情的%ARGS:0%的\@GET_PENIS(TARGET) < 4 ? 扶他 # \@肉棒的勃起达到了极限…
+			ELSE
+				PRINTFORML 発情的%ARGS:0%的\@GET_PENIS(TARGET) < 4 ? 扶他 # \@肉棒滴下大量的先走汁、等待着射精的瞬间…
+			ENDIF
+		ELSE
+			IF GET_ERECTION_STATE_C(TARGET) <= 1
+				PRINTFORML 発情的%ARGS:0%的阴蒂勃起了…
+			ELSE
+				PRINTFORML 発情的%ARGS:0%的阴蒂勃起到了极限、等待着绝顶的瞬间…
+			ENDIF
+		ENDIF
+	CASE 470
+		PRINTFORML 
+		SELECTCASE ARG:1
+			CASE 0
+				PRINTFORML %ARGS:0%的乳头完全平静下来了
+			CASE 1
+				PRINTFORML %ARGS:0%的乳头渐渐恢复了平静、勃起也停止了…
+			CASE 2
+				PRINTFORML %ARGS:0%的勃起乳头渐渐失去了硬度、只要忍耐住那甜美的麻痹感就能平安无事地消退下去…
+			CASEELSE
+				PRINTFORML 尽管稍微平静下来了、%ARGS:0%的乳头还是发情着继续勃起！
+		ENDSELECT
+	CASE 471
+		PRINTFORML 
+		IF GET_PENIS(TARGET)
+			SELECTCASE ARG:1
+				CASE 0
+					PRINTFORML %ARGS:0%的\@GET_PENIS(TARGET) < 4 ? 扶他 # \@肉棒完全平静下来了
+				CASE 1
+					PRINTFORML %ARGS:0%的\@GET_PENIS(TARGET) < 4 ? 扶他 # \@肉棒渐渐恢复了平静、勃起也停止了…
+				CASE 2
+					PRINTFORML %ARGS:0%的\@GET_PENIS(TARGET) < 4 ? 扶他 # \@肉棒渐渐失去了硬度、不去触碰的话、残留的疼痛感也能忍受吧…
+				CASE 3
+					PRINTFORML 积攒了很多精液的%ARGS:0%的\@GET_PENIS(TARGET) < 4 ? 扶他 # \@肉棒、强烈地搏动着、伴随着灼热的感觉！
+				CASE 4
+					PRINTFORML 尽管稍微平静下来了、肥大的%ARGS:0%的\@GET_PENIS(TARGET) < 4 ? 扶他 # \@肉棒的射精欲求依然没有消退！
+				CASEELSE
+					PRINTFORML %ARGS:0%的勃起的\@GET_PENIS(TARGET) < 4 ? 扶他 # \@肉棒虽然刚刚射了一次、但脑内依然不断涌现出继续射下去的愿望！
+			ENDSELECT
+		ELSE
+			SELECTCASE ARG:1
+				CASE 0
+					PRINTFORML %ARGS:0%的阴蒂完全平静下来了
+				CASE 1
+					PRINTFORML %ARGS:0%的阴蒂渐渐恢复了平静、勃起也停止了…
+				CASE 2
+					PRINTFORML %ARGS:0%的阴蒂渐渐失去了硬度、不去触碰的话、残留的疼痛感也能忍受吧…
+				CASEELSE
+					PRINTFORML 积攒了很多快感的%ARGS:0%的阴蒂、强烈地搏动着、伴随着灼热的感觉！
+			ENDSELECT
+		ENDIF
+		
+;精液ダメージ
+	CASE 500
+		IF RAND:3 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%因為被注入的白濁液而感到了奇怪的快感……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%因為被注入的白濁液而感到了奇怪的快感……
+			ENDIF
+
+		ELSE
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%感覚到就像是媚薬一般的精液讓膣内開始発燙……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%感覚到就像是媚薬一般的精液讓膣内開始発燙……
+			ENDIF
+
+		ENDIF
+	CASE 501
+		IF FLAG:AUTOMODE
+		    PRINTFORML %ARGS:0%陥没的乳頭勃起了！
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+		    PRINTFORMW  %ARGS:0%陥没的乳頭勃起了！
+		ENDIF
+
+	;B寄生ここから↓
+	;521～524　産卵プレイON
+	CASE 521
+		IF ARG:1 >= 12
+			PRINTFORML %ARGS:0%的乳腺内寄生着的幼体還需要大量時間成長…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 8
+			PRINTFORML %ARGS:0%感覚身体有些違和感。乳腺内寄生着的幼体慢慢地長大了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 4
+			PRINTFORML %ARGS:0%不是会呼吸困難。乳腺内寄生着的幼体已経長得相当大了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 2
+			PRINTFORML %ARGS:0%露出了很辛苦的表情。乳腺内寄生着的幼体快要出生了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 1
+			PRINTFORML %ARGS:0%的樣子很奇怪。看来已経一点猶豫的時間都沒有了…
+			CALL MSG_WAIT(1)
+		ENDIF
+	CASE 522
+		;表示なし
+	CASE 523
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 能看見、從%ARGS:0%乳頭中擠出了沾満了粘液\@ TALENT:130 >= 1 ? 和母乳 # \@的卵…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  能看見、從%ARGS:0%乳頭中擠出了沾満了粘液\@ TALENT:130 >= 1 ? 和母乳 # \@的卵…
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML ………
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ………
+			ENDIF
+
+			IF TARGET != 1
+				;他の仲間から産まれる
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%、
+				ENDIF
+			ELSEIF FLAG:10
+				;主人公から産まれる＋仲間居る
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%、
+				ENDIF
+			ELSE
+				;主人公から産まれる＋誰も居ない
+			ENDIF
+			PRINTFORML 発出産卵声音的%ARGS:0%只能一直痙攣着……
+			IF FLAG:AUTOMODE
+			    PRINTFORML 能看見裡面有生命在蠕動着的卵像水窪一樣拡散開来……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  能看見裡面有生命在蠕動着的卵像水窪一樣拡散開来……
+			ENDIF
+
+		ELSEIF ARG:1 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML 生産到地面上的卵堆成了小山、把倒在地上的%ARGS:0%的埋掉了……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  生産到地面上的卵堆成了小山、把倒在地上的%ARGS:0%的埋掉了……
+			ENDIF
+
+		ELSEIF ARG:1 == 3
+			PRINTFORML 多次産卵的経歷改変了%ARGS:0%的身体……
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%得到了【産卵体質】
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%得到了【産卵体質】
+			ENDIF
+
+		ELSEIF ARG:1 == 4
+			PRINTFORML 部屋内的触手開始襲撃起産卵中而無法動弾的%ARGS:0%！
+		ENDIF
+	CASE 524
+		;表示なし
+	;525～528　産卵プレイOFF
+	CASE 525
+		IF ARG:1 >= 12
+			PRINTFORML %ARGS:0%的乳腺内寄生着的幼体還需要大量時間成長…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 8
+			PRINTFORML %ARGS:0%感覚身体有些違和感。乳腺内寄生着的幼体慢慢地長大了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 4
+			PRINTFORML %ARGS:0%不是会呼吸困難。乳腺内寄生着的幼体已経長得相当大了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 2
+			PRINTFORML %ARGS:0%露出了很辛苦的表情。乳腺内寄生着的幼体快要出生了…
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 1
+			PRINTFORML %ARGS:0%的樣子很奇怪。看来已経一点猶豫的時間都沒有了…
+			CALL MSG_WAIT(1)
+		ENDIF
+	CASE 526
+		;表示なし
+	CASE 527
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 能看見、寄生在%ARGS:0%身上\@ TALENT:130 >= 1 ? 塗満了母乳 # \@的幼体從%ARGS:0%的乳頭一点点的爬了出来…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  能看見、寄生在%ARGS:0%身上\@ TALENT:130 >= 1 ? 塗満了母乳 # \@的幼体從%ARGS:0%的乳頭一点点的爬了出来…
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML ………
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ………
+			ENDIF
+
+			IF TARGET != 1
+				;他の仲間から産まれる
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%、
+				ENDIF
+			ELSEIF FLAG:10
+				;主人公から産まれる＋仲間居る
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%、
+				ENDIF
+			ELSE
+				;主人公から産まれる＋誰も居ない
+			ENDIF
+			IF FLAG:AUTOMODE
+			    PRINTFORML 産下了幼体而耗尽精力的%ARGS:0%大喘着気…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  産下了幼体而耗尽精力的%ARGS:0%大喘着気…
+			ENDIF
+
+		ELSEIF ARG:1 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML ……幼体把倒下的%ARGS:0%留在原地、消失在迷宮的深処…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ……幼体把倒下的%ARGS:0%留在原地、消失在迷宮的深処…
+			ENDIF
+
+		ELSEIF ARG:1 == 3
+			PRINTFORML 部屋内的触手開始襲撃起出産中而無法動弾的%ARGS:0%！
+		ENDIF
+	CASE 528
+		;表示なし
+	;B寄生ここまで↑
+	CASE 529
+		;N性欲発散　最中
+		IF ARG:1 == 0
+			;1人
+		ELSEIF ARG:1 == 1
+			;2人同時
+			IF GET_BUST(TARGET) >= 4
+				IF RAND:2
+					PRINTFORML 兩個乳頭被同時激烈的抽插着、%ARGS:0%的特大的乳頭多次変形、彎曲、搖晃着…
+				ELSE
+					PRINTFORML 兩個乳頭被同時激烈的抽插着、%ARGS:0%的特大的乳頭就像是其他生物一樣多次変形、彎曲、搖晃着…
+				ENDIF
+			ELSE
+				PRINTFORML 眼前同時被激烈抽插着的兩個乳頭、%ARGS:0%的兩個乳房多次変形、彎曲、搖晃着…
+			ENDIF
+		ENDIF
+	CASE 530
+		;N性欲発散　射精
+		IF ARG:1 == 0
+			;1人のみ
+;			PRINTFORMW 
+		ELSEIF ARG:1 == 1
+			;2人同時
+;			PRINTFORMW 
+		ELSEIF ARG:1 == 2
+			;1人のみ、1人継続
+;			PRINTFORMW 
+		ENDIF
+	CASE 531
+		;N性欲発散　事後
+		IF ARG:1 == 0
+			;1人のみ
+			PRINTFORML 擬似陰茎抜出去後從%ARGS:0%洞開的乳頭、流出了精液\@ TALENT:130 ? 和母乳 # \@…
+			IF FLAG:AUTOMODE
+				PRINTFORML
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			;2人同時
+			PRINTFORML 擬似陰茎抜出去後從%ARGS:0%洞開的兩個乳頭、流出了精液\@ TALENT:130 ? 和母乳 # \@…
+			IF FLAG:AUTOMODE
+				PRINTFORML
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+
+		ELSEIF ARG:1 == 2
+			;1人終了＋1人継続
+			IF FLAG:AUTOMODE
+			    PRINTFORML 擬似陰茎抜出去後從%ARGS:0%洞開的乳頭、慢慢溢出了精液\@ TALENT:130 ? 和母乳 # \@…流了下去…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  擬似陰茎抜出去後從%ARGS:0%洞開的乳頭、慢慢溢出了精液\@ TALENT:130 ? 和母乳 # \@…流了下去…
+			ENDIF
+
+			PRINTFORML 在一旁旁観的%ARGS:1%継續晃動着腰把另一半的乳房当做乳膣穴抽插…
+			IF FLAG:AUTOMODE
+				PRINTFORML
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+
+		ENDIF
+	CASE 532
+		PRINTFORML 被注入的大量白濁液的%ARGS:0%的腹部大幅隆起……
+		PRINTFORML 這個樣子恐怕会懷孕吧……
+	CASE 533
+		IF CFLAG:TARGET:29
+			PRINTFORML %ARGS:0%讓%ARGS:1%得到了進入準備好的精液風呂的機会！
+			PRINTFORML 触手和温暖的白濁液凌辱着全身……
+		ELSE
+			PRINTFORML %ARGS:0%讓%ARGS:1%進入準備好的精液風呂！
+			PRINTFORML 独特的香味覆蓋了身体、下半身的間隙被白濁液滲入……
+			PRINTFORML 触手和温暖的白濁液讓全身都好好放鬆了……
+		ENDIF
+		PRINTFORML 
+	
+	;触手通路
+	CASE 536
+		;表示なし
+
+	;C寄生はB寄生とCASE番号を似た感じにしておく
+	CASE 541
+		IF ARG:1 >= 12
+			PRINTFORML %ARGS:0%的睾丸内寄生着的幼体還需要大量時間成長…
+		ELSEIF ARG:1 >= 8
+			PRINTFORML %ARGS:0%感覚身体有些違和感。%ARGS:0%的睾丸内寄生着的幼体慢慢地長大了…
+		ELSEIF ARG:1 >= 4
+			PRINTFORML %ARGS:0%不是会呼吸困難。%ARGS:0%的睾丸内寄生着的幼体已経長得相当大了…
+		ELSEIF ARG:1 >= 2
+			PRINTFORML %ARGS:0%露出了很辛苦的表情。%ARGS:0%的睾丸内寄生着的幼体快要出生了…
+		ELSEIF ARG:1 >= 1
+			PRINTFORML %ARGS:0%的樣子很奇怪。看来已経一点猶豫的時間都沒有了…
+		ENDIF
+	CASE 542
+		;表示なし
+	CASE 543
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 能看見、從%ARGS:0%脈動的睾丸中擠出了沾満了精液的卵…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  能看見、從%ARGS:0%脈動的睾丸中擠出了沾満了精液的卵…
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML ………
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ………
+			ENDIF
+
+			IF TARGET != 1
+				;他の仲間から産まれる
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%、
+				ENDIF
+			ELSEIF FLAG:10
+				;主人公から産まれる＋仲間居る
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%、
+				ENDIF
+			ELSE
+				;主人公から産まれる＋誰も居ない
+			ENDIF
+			PRINTFORML 発出産卵声音的%ARGS:0%只能一直痙攣着……
+			IF FLAG:AUTOMODE
+			    PRINTFORML 能看見裡面有生命在蠕動着的卵像水窪一樣拡散開来……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  能看見裡面有生命在蠕動着的卵像水窪一樣拡散開来……
+			ENDIF
+
+		ELSEIF ARG:1 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML 生産到地面上的卵堆成了小山、把倒在地上的%ARGS:0%的埋掉了……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  生産到地面上的卵堆成了小山、把倒在地上的%ARGS:0%的埋掉了……
+			ENDIF
+
+		ELSEIF ARG:1 == 3
+			PRINTFORML 多次産卵的経歷改変了%ARGS:0%的身体……
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%得到了【産卵体質】
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%得到了【産卵体質】
+			ENDIF
+
+		ELSEIF ARG:1 == 4
+			PRINTFORML 部屋内的触手開始襲撃起産卵中而無法動弾的%ARGS:0%！
+		ENDIF
+	CASE 544
+		;表示なし
+	CASE 545
+		IF ARG:1 >= 12
+			PRINTFORML %ARGS:0%的睾丸内寄生着的幼体還需要大量時間成長…
+		ELSEIF ARG:1 >= 8
+			PRINTFORML %ARGS:0%感覚身体有些違和感。%ARGS:0%的睾丸内寄生着的幼体慢慢地長大了…
+		ELSEIF ARG:1 >= 4
+			PRINTFORML %ARGS:0%不是会呼吸困難。%ARGS:0%的睾丸内寄生着的幼体已経長得相当大了…
+		ELSEIF ARG:1 >= 2
+			PRINTFORML %ARGS:0%露出了很辛苦的表情。%ARGS:0%的睾丸内寄生着的幼体快要出生了…
+		ELSEIF ARG:1 >= 1
+			PRINTFORML %ARGS:0%的樣子很奇怪。看来已経一点猶豫的時間都沒有了…
+		ENDIF
+	CASE 546
+		;表示なし
+	CASE 547
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 能看見、寄生在%ARGS:0%身上的幼体一点点的爬了出来…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  能看見、寄生在%ARGS:0%身上的幼体一点点的爬了出来…
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML ………
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ………
+			ENDIF
+
+			IF TARGET != 1
+				;他の仲間から産まれる
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%、
+				ENDIF
+			ELSEIF FLAG:10
+				;主人公から産まれる＋仲間居る
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%、
+				ENDIF
+			ELSE
+				;主人公から産まれる＋誰も居ない
+			ENDIF
+			IF FLAG:AUTOMODE
+			    PRINTFORML 産下幼体之後沒有余力掩飾下垂的肉竿的%ARGS:0%大喘着気…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  産下幼体之後沒有余力掩飾下垂的肉竿的%ARGS:0%大喘着気…
+			ENDIF
+
+		ELSEIF ARG:1 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML ……幼体把倒下的%ARGS:0%留在原地、消失在迷宮的深処…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ……幼体把倒下的%ARGS:0%留在原地、消失在迷宮的深処…
+			ENDIF
+
+		ELSEIF ARG:1 == 3
+			PRINTFORML 部屋内的触手開始襲撃起出産中而無法動弾的%ARGS:0%！
+		ENDIF
+	CASE 548
+		;表示なし
+	CASE 549
+		PRINTFORML %ARGS:0%因為在睾丸内膨脹起来的寄生体的妨礙而無法射精！
+	CASE 550
+		PRINTFORML %ARGS:0%的睾丸吐出寄生体後保持着膨脹恢復不了原状的樣子……
+		PRINTFORM %ARGS:0%変成了
+		IF TALENT:180 == 1
+			PRINTFORM 【睾丸】
+		ELSEIF TALENT:180 == 2
+			PRINTFORM 【大睾丸】
+		ELSEIF TALENT:180 == 3
+			PRINTFORM 【巨睾丸】
+		ELSEIF TALENT:180 == 4
+			PRINTFORM 【超大睾丸】
+		ENDIF
+		PRINTFORML 
+	CASE 551
+		IF ARG:1 == 0
+			;主人公捕食時
+			IF !(CFLAG:1:10 == 0 && CFLAG:1:504 < 2)
+				IF CFLAG:TARGET:4 == FLAG:5
+					PRINTFORML 從同一部屋傳来了%ARGS:0%的悲鳴…
+				ELSE
+					PRINTFORML 從{ARG:2}号部屋傳来了%ARGS:0%的悲鳴…
+				ENDIF
+			;主人公非捕食時
+			ELSE
+				IF CFLAG:TARGET:4 == FLAG:5
+					PRINTFORML 聽到了從同一部屋的%ARGS:0%的悲鳴！
+				ELSE
+					PRINTFORML 聽到了{ARG:2}号部屋的%ARGS:0%的悲鳴！
+				ENDIF
+			ENDIF
+		ELSEIF ARG:1 == 1
+			;表示なし
+		ENDIF
+	CASE 552
+		IF ARG:1 >= 12
+			PRINTFORML %ARGS:0%的睾丸内懷着的幼体還需要大量時間成長
+		ELSEIF ARG:1 >= 8
+			PRINTFORML %ARGS:0%感覚身体有些違和感。%ARGS:0%的睾丸内懷着的幼体慢慢地長大了…
+		ELSEIF ARG:1 >= 4
+			PRINTFORML %ARGS:0%不是会呼吸困難。%ARGS:0%的睾丸内懷着的幼体已経長得相当大了…
+		ELSEIF ARG:1 >= 2
+			PRINTFORML %ARGS:0%露出了很辛苦的表情。%ARGS:0%的睾丸内懷着的幼体快要出生了…
+		ELSEIF ARG:1 >= 1
+			PRINTFORML %ARGS:0%的樣子很奇怪。看来已経一点猶豫的時間都沒有了…
+		ENDIF
+	CASE 553
+		;表示なし
+	CASE 554
+		IF ARG:1 == 0
+			IF FLAG:AUTOMODE
+			    PRINTFORML 突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  突然%ARGS:0%倒在地上、立刻就発出了激烈的悲鳴
+			ENDIF
+
+			IF FLAG:AUTOMODE
+			    PRINTFORML 能看見、%ARGS:0%的妊娠的睾丸正在脈動並讓肉竿膨脹了起来……
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  能看見、%ARGS:0%的妊娠的睾丸正在脈動並讓肉竿膨脹了起来……
+			ENDIF
+
+		ELSEIF ARG:1 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML ………
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ………
+			ENDIF
+
+			IF TARGET != 1
+				;他の仲間から産まれる
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:1%、
+				ENDIF
+			ELSEIF FLAG:10
+				;主人公から産まれる＋仲間居る
+				IF FLAG:11
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%們、
+				ELSE
+					PRINTFORM 不管因為這過分的景象而只能呆立在原処的%CALLNAME:(FLAG:10)%、
+				ENDIF
+			ELSE
+				;主人公から産まれる＋誰も居ない
+			ENDIF
+			IF FLAG:AUTOMODE
+			    PRINTFORML 産下幼体之後沒有余力掩飾下垂的肉竿的%ARGS:0%大喘着気…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  産下幼体之後沒有余力掩飾下垂的肉竿的%ARGS:0%大喘着気…
+			ENDIF
+
+		ELSEIF ARG:1 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML ……幼体把倒下的%ARGS:0%留在原地、消失在迷宮的深処…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  ……幼体把倒下的%ARGS:0%留在原地、消失在迷宮的深処…
+			ENDIF
+
+		ELSEIF ARG:1 == 3
+			PRINTFORML 部屋内的触手開始襲撃起出産中而無法動弾的%ARGS:0%！
+		ENDIF
+	CASE 555
+		;表示なし
+	;悪落ちキャラ用口上
+	;基本的に口上呼び出し専用なのでなにもしない
+	;通常攻撃
+	CASE 1012
+	
+	;衣服攻撃
+	CASE 1013
+	
+	;性攻撃
+	CASE 1014
+	
+	;拘束攻撃
+	CASE 1015
+	
+	;寄生攻撃
+	CASE 1016
+	
+	;結婚式
+	CASE 1200
+	
+	;下剋上失敗
+	CASE 1401
+	
+	;連鎖落ち
+	CASE 1403
+	
+	;ペット周り
+	CASE 1514
+	
+	
+	
+	
+	CASEELSE
+		TRYCCALLFORM SYSTEM_MESSAGE_{ARG:0}(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		CATCH
+			PRINTFORMW (SYSTEM_MESSAGE)未実装のメッセージID {ARG:0} が指定されました ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+		ENDCATCH
+ENDSELECT
+
+
+;終わったら色を戻す
+SETCOLOR LOCAL:1
+

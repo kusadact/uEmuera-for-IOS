@@ -1,0 +1,96 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 9 部屋汚染度
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_9(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 通常時
+	; 部屋の汚染度で分岐
+	; 清浄
+	IF FLAG:(50 + FLAG:5) < 10
+		SELECTCASE KOJO_MODE
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（今は綺麗な部屋だけど、多分すぐ触手でいっぱいになっちゃうんだろうな……）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんな感じに綺麗な場所ばっかりならいいのにね」\n"
+		ENDSELECT
+		
+	; 通常
+	ELSEIF FLAG:(50 + FLAG:5) < 40
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「見渡す限り普通の部屋ね、害が無いのはいいことだわ」\n"
+		ENDSELECT
+
+	; 軽度汚染
+	ELSEIF FLAG:(50 + FLAG:5) < 70
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ぅうん♥　この部屋、いやらしいニオイがするよぉ♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ちょっとしたゴミを片付けないと、あっというまに汚れるのよね　この部屋も不安だわ……」\n"
+		ENDSELECT
+		
+		; 部屋の浄化が可能
+		IF FLAG:6 >= 100
+			SELECTCASE KOJO_MODE
+			CASE "強気"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「掃除し甲斐いのありそうな部屋だこと」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「汚れなんて健康の敵以外の何者でもないし、誰か掃除しないかしら」\n"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「余り酷くなる前に、この辺り綺麗にした方がいいかもね」\n"
+			ENDSELECT
+		ENDIF
+		
+	; 中度汚染
+	ELSEIF FLAG:(50 + FLAG:5) < 100
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ひどい部屋♪　ちょっとでも気を抜いたら襲われちゃうんじゃない？）\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（この部屋やだぁ……　ちっちゃい触手がいっぱい……）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ひっどい部屋……　今後を考えて少しキレイにするか、さっさと別の部屋に行くか……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「なんでこんなに汚すかなー、そのうち病気になるわよ」\n"
+		ENDSELECT
+		
+		; 部屋の浄化が可能
+		IF FLAG:6 >= 100
+			SELECTCASE KOJO_MODE
+			CASE "強気"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「汚い部屋だなあ、辺り一面吹き飛ばしてやりたい」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「ひっどい部屋……　今後を考えて少しキレイにするか、さっさと別の部屋に行くか……」\n"
+			ENDSELECT
+		ENDIF
+		
+	; 重度汚染
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「部屋中から興奮したオスの気配がするよぉ♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（部屋中から狙われてる感じ♪　あたしの準備はいつでもいいわよ♪　……なんてね）\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（はやく他の部屋に行かないと……　この部屋の触手、あたし%TACHI()%の事狙ってる……）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「うえぇ……酷い部屋だなぁ……」\n"
+		ENDSELECT
+	ENDIF
+RETURN 1

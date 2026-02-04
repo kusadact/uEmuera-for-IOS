@@ -1,0 +1,3224 @@
+﻿;東方触手宮　射命丸文口上
+;製作者： コッペパン
+
+;東方触手宮 ver.0.071にて動作確認を行っています。
+
+;ローカルフラグ管理
+;CFLAG:800　娘遭遇回数
+;CFLAG:801　親子親睦度　主人公時以外は特に影響ない…はず
+
+
+;口上選択時のタイトル
+@KOJO_TITLE_32_0
+RESULTS = 東方触手宮　射命丸文口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_32_0
+PRINTFORML エロいことには免疫あって最初は余裕こいてますが、主導権を握られると意外と脆い、そんなイメージ。
+PRINTFORML 椛とは仲がよろしくない設定に一応は準拠していますが、会話などはさほど険悪ではないはず。
+PRINTFORML 
+PRINTFORML 娘（1代目のみ）に対応。
+PRINTFORML 口数少ないながらちょっと生意気系。お母さんのことは普通に慕っています。
+PRINTFORML 文の娘にしては大人しめかも。
+
+
+;文字色　グレー
+@KOJO_DEFAULT_COLOR_32_0
+IF CFLAG:104 == 0
+	RETURN 0x8C8C8C
+ELSE
+	RETURN 0xBCBDC2
+ENDIF
+
+
+;口上本体
+@KOJO_32_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;地の文はデフォルトのものを使用します
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;文字色設定
+SETCOLOR CFLAG:700
+
+
+;娘の場合、専用口上を呼び出す
+;孫以降の場合は口上適用なし
+IF CFLAG:104 != 0
+	IF CFLAG:104 == 1
+		CALL KOJO_32D_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSE
+		RESETCOLOR
+	ENDIF
+	
+	RETURN 1
+ENDIF
+
+
+;睡眠、かつ戦意喪失でない
+IF CFLAG:25 && CFLAG:29 != 1
+
+SELECTCASE ARG:0
+	;HPダメージ
+	CASE 12
+		;痛い
+		IF ARG:2 >= 1500
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「………っ、ごぷ、っ」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 脱力し切った身体を痛烈な一撃が抉り、文はびくりと大きく痙攣した
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 脱力し切った身体を痛烈な一撃が抉り、文はびくりと大きく痙攣した
+					ENDIF
+				CASE 1
+					PRINTFORML 「……………が、っ」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 眠ったままで衝撃に備えることもできない文を、痛恨の一打が襲う！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 眠ったままで衝撃に備えることもできない文を、痛恨の一打が襲う！
+					ENDIF
+				CASEELSE
+					PRINTFORML 「………げぅっ……ぅ」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 文はぐったりと全身を弛緩させ、攻撃を受け続けている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 文はぐったりと全身を弛緩させ、攻撃を受け続けている…
+					ENDIF
+			ENDSELECT
+		;あんまり痛くない
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「……うっぐ…」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 衝撃に文の身体がびくり、と跳ねるが、目を覚ます気配はない…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 衝撃に文の身体がびくり、と跳ねるが、目を覚ます気配はない…
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「かひゅ……っ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「かひゅ……っ」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 文は肺の中の空気を吐き出し短く喘ぐが、目を覚ます気配はない…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 文は肺の中の空気を吐き出し短く喘ぐが、目を覚ます気配はない…
+					ENDIF
+				CASEELSE
+					PRINTFORML 「ん……っく」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 痛みに呻いて眉を顰める文──だが、目を覚ます気配はない…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 痛みに呻いて眉を顰める文──だが、目を覚ます気配はない…
+					ENDIF
+			ENDSELECT
+		ENDIF
+	
+	;EPダメージ
+	CASE 14
+		;絶頂時
+		IF BASE:EP < ARG:3
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「──！？　……は、ぅ、……ぁ……」
+				CASEELSE
+					PRINTFORML 「ふっ……ん、ぅ！？　…………はぁ……は、っ……」
+			ENDSELECT
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 文は眠ったまま頤を大きく反らし、全身をびくびくと痙攣させた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 文は眠ったまま頤を大きく反らし、全身をびくびくと痙攣させた…
+			ENDIF
+		;EPダメージ3000以上
+		ELSEIF ARG:3 >= 3000
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……はぁ……あぁ、はぁ、は……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……はぁ……あぁ、はぁ、は……！」
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「！？　はぅ……ぁ……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「！？　はぅ……ぁ……」
+					ENDIF
+			ENDSELECT
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 意識のない文は全身を高潮させ、無防備に快感を受け入れてしまう…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 意識のない文は全身を高潮させ、無防備に快感を受け入れてしまう…
+			ENDIF
+		;EPダメージ3000未満
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ん……ぁ……？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ん……ぁ……？」
+					ENDIF
+				CASEELSE
+					PRINTFORML 「……は……ふぅ……っ」
+			ENDSELECT
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 眠っている文の肌に赤みが差し、僅かに息が荒げられる…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 眠っている文の肌に赤みが差し、僅かに息が荒げられる…
+			ENDIF
+		ENDIF
+	
+	;拘束
+	CASE 15
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「………ぅ…ん…？」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 全身に絡みつく触手の不快感に、文はわずかに眉を顰めた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 全身に絡みつく触手の不快感に、文はわずかに眉を顰めた…
+				ENDIF
+			CASEELSE
+				PRINTFORML 「………すぅ……んん…」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL これから我が身に起こる運命を知らず、文は安らかに寝息を立てている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW これから我が身に起こる運命を知らず、文は安らかに寝息を立てている…
+				ENDIF
+		ENDSELECT
+	
+	;寄生攻撃
+	CASE 16
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「…………うっ…ん」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 下腹へのえもいわれぬ圧迫感に、文は眠ったまま身を震わせた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 下腹へのえもいわれぬ圧迫感に、文は眠ったまま身を震わせた…
+				ENDIF
+			CASE 1
+				PRINTFORML 「…ひぅ……っ」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 異物感が下腹部を襲い、文は意識がないまま、息を呑むような悲鳴を上げた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 異物感が下腹部を襲い、文は意識がないまま、息を呑むような悲鳴を上げた…
+				ENDIF
+			CASE 2
+				PRINTFORML 「……ぉぁぁ……う…ぅ…」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ごぼごぼと無遠慮に送り込まれる異物のおぞましさに、文の寝息が苦しげに乱れる…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ごぼごぼと無遠慮に送り込まれる異物のおぞましさに、文の寝息が苦しげに乱れる…
+				ENDIF
+		ENDSELECT
+	
+	;戦意喪失
+	CASE 33
+	;
+	
+	;処女喪失
+	CASE 136
+		SELECTCASE ARG:1
+			CASE 0
+				SELECTCASE ARG:3
+					;喪失直前
+					CASE 1
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「……ん……んん、ぅ……？」
+							CASEELSE
+								PRINTFORML 「………ぅ…あ……？」
+						ENDSELECT
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 未知の圧迫感に眉を顰め、くぐもった呻きを漏らす…が、眠っている文に抵抗する術はない！
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 未知の圧迫感に眉を顰め、くぐもった呻きを漏らす…が、眠っている文に抵抗する術はない！
+						ENDIF
+					;喪失を防ぐ！のは寝てたらできない
+					CASE 2
+					;
+					CASEELSE
+						PRINTFORML 「……………ッ……あ」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 文の華奢な身体が、ひときわ大きく痙攣した──
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 文の華奢な身体が、ひときわ大きく痙攣した──
+						ENDIF
+				ENDSELECT
+		ENDSELECT
+ENDSELECT
+
+;通常時
+ELSE
+
+SELECTCASE ARG:0
+	
+	CASE 1
+		SELECTCASE ARG:1
+			;防御
+			CASE 1
+				;発情
+				IF CFLAG:28
+					PRINTFORML （まずい……身体が、思うように……）
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 文は火照る身体を抱きしめるようにして身を守っている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 文は火照る身体を抱きしめるようにして身を守っている…
+					ENDIF
+				;拘束・丸呑み時
+				ELSEIF CFLAG:20 || CFLAG:21
+					PRINTFORML 「ぐ……いい加減に…っ！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 文は身体の自由になるわずかな部分で、なんとか身を守ろうとする…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 文は身体の自由になるわずかな部分で、なんとか身を守ろうとする…
+					ENDIF
+				;MP1/4以下またはHP0
+				ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「く……調子付かせてしまいましたかね…！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「く……調子付かせてしまいましたかね…！」
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「攻めに転じないと…このままじゃジリ貧です」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「攻めに転じないと…このままじゃジリ貧です」
+							ENDIF
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「おっと…やらせはしませんよ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「おっと…やらせはしませんよ！」
+							ENDIF
+						CASEELSE
+							PRINTFORML 「ここは耐え時ですか──鎌風ベーリング！」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 文の周囲を風の鎧が取り巻く！
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 文の周囲を風の鎧が取り巻く！
+							ENDIF
+					ENDSELECT
+				ENDIF
+			
+			;アイテム
+;			CASE 2
+;				PRINTFORMW 
+			
+			;前進
+			CASE 3
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「ほら、これだけ近ければ当てられます？」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 文は挑発的な笑みを浮かべてみせる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 文は挑発的な笑みを浮かべてみせる…
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「さあ、密着取材です！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「さあ、密着取材です！」
+						ENDIF
+				ENDSELECT
+			
+			;後退
+			CASE 4
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…っとと、ちょっと深追いしすぎかしら…！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…っとと、ちょっと深追いしすぎかしら…！」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「引くべき時は引く、この潔さ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「引くべき時は引く、この潔さ！」
+						ENDIF
+				ENDSELECT
+			
+			;逃走
+			;逃走失敗時にどうしても不自然に…とりあえずコメントアウト
+;			CASE 5
+;				;発情
+;				IF CFLAG:28
+;					PRINTFORMW 「んく……っ、今はちょっと、立て込んでいまして…！」
+;				;MP1/4以下またはHP0
+;				ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+;					SELECTCASE RAND:3
+;						CASE 0
+;							PRINTFORMW 「三十六計、何とやら…です！」
+;						CASE 1
+;							PRINTFORMW 「…ちょっとばかり、分が悪いですね…っ」
+;						CASEELSE
+;							PRINTFORMW 「身体がまともに動くうちに……！」
+;					ENDSELECT
+;				;その他
+;				ELSE
+;					SELECTCASE RAND:3
+;						CASE 0
+;							PRINTFORMW 「取材の続きは、またの機会と言うことで…」
+;						CASE 1
+;							PRINTFORMW 「それでは、ごきげんよう♪」
+;						CASEELSE
+;							PRINTFORMW 「追いつけるものなら、追いかけてみてくださいな！」
+;					ENDSELECT
+;				ENDIF
+			
+			;弾幕攻撃
+			;弱弾幕
+			CASE 10
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「まずは軽ーく…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「まずは軽ーく…」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「小手調べです！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「小手調べです！」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「天狗の石礫、お味はいかがです？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「天狗の石礫、お味はいかがです？」
+						ENDIF
+				ENDSELECT
+			;中弾幕
+			CASE 11
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「さ、ペース上げていきますよ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「さ、ペース上げていきますよ！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ちょっと強めに……疾風扇！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ちょっと強めに……疾風扇！」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「よし、ここ！　──天狗烈風弾！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「よし、ここ！　──天狗烈風弾！」
+						ENDIF
+				ENDSELECT
+			;強弾幕
+			CASE 12
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「そこに天狗がいれば、平地でも山颪が吹くのです！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「そこに天狗がいれば、平地でも山颪が吹くのです！」
+						ENDIF
+					CASE 1
+						PRINTFORML 「──あやや。何かお探しで？」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL いとも容易く敵の背後を取った文は、その背へ会心の弾幕を浴びせかける！
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW いとも容易く敵の背後を取った文は、その背へ会心の弾幕を浴びせかける！
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ちょっと空気を入れ替えましょうか！　風符『風神一扇』！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ちょっと空気を入れ替えましょうか！　風符『風神一扇』！」
+						ENDIF
+				ENDSELECT
+			;溜め撃ち
+			CASE 13
+				;溜め
+				IF CFLAG:31 == 2
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ちょっと派手なの、いきましょうか？」
+						CASE 1
+							PRINTFORML 「…ちょーっと、痛いですよ？」
+						CASEELSE
+							PRINTFORML 「それでは、ここらで…大盤振る舞いです」
+					ENDSELECT
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 文の周囲の空気が、不自然に渦を巻き始める…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 文の周囲の空気が、不自然に渦を巻き始める…
+					ENDIF
+				;発射
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「これにて一巻の終わり！　──竜巻『天孫降臨の道しるべ』！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「これにて一巻の終わり！　──竜巻『天孫降臨の道しるべ』！」
+							ENDIF
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ついて来れますか？　──疾風『風神少女』！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ついて来れますか？　──疾風『風神少女』！」
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「全ては、我が──戯言なり！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「全ては、我が──戯言なり！」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			
+			;ばらまき弾
+			CASE 14
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「何事も、搦め手が重要なのです」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「何事も、搦め手が重要なのです」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「囲め！　風神『風神木の葉隠れ』！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「囲め！　風神『風神木の葉隠れ』！」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「直接狙って撃つだけが、弾幕ではないのです」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「直接狙って撃つだけが、弾幕ではないのです」
+						ENDIF
+				ENDSELECT
+			
+			;貫通弾
+			CASE 15
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「吹けよ突風！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「吹けよ突風！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「蹴散らしますよ！　──突風『猿田彦の先導』！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「蹴散らしますよ！　──突風『猿田彦の先導』！」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「受けてみますか？　一切合財、問答無用に吹き飛ばす天狗風を！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「受けてみますか？　一切合財、問答無用に吹き飛ばす天狗風を！」
+						ENDIF
+				ENDSELECT
+			
+			;消耗武器
+			CASE 20 TO 25
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「こんなのはどうです？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「こんなのはどうです？」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「いつもとは一風変わった弾幕も、また乙なものです」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「いつもとは一風変わった弾幕も、また乙なものです」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「どんどん撃っていきますよ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「どんどん撃っていきますよ！」
+						ENDIF
+				ENDSELECT
+			
+			;非消耗武器
+			CASE 30 TO 32
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「一撃離脱は得意ですよ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「一撃離脱は得意ですよ」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「天狗の体術、とくとご覧あれ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「天狗の体術、とくとご覧あれ！」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「──そこッ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「──そこッ！」
+						ENDIF
+				ENDSELECT
+			
+			;下段狙い
+			CASE 33
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「こちらがお留守ですよ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「こちらがお留守ですよ！」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「失礼！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「失礼！」
+						ENDIF
+				ENDSELECT
+			
+			;急所狙い
+			CASE 34
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「このへんですかね？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「このへんですかね？」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「これは効くんじゃないですか？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「これは効くんじゃないですか？」
+						ENDIF
+				ENDSELECT
+			
+			;拘束離脱
+			CASE 42
+				IF ARG:3 == 0
+					;絶頂中
+					IF CFLAG:35 != 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「……はぁっ……はぁ、……っ……」
+								IF FLAG:AUTOMODE
+									PRINTFORML （まずい、ですね……完全に…あちらのペースです…）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （まずい、ですね……完全に…あちらのペースです…）
+								ENDIF
+							CASEELSE
+								PRINTFORML 「……ぁ…う………この…ぉ……」
+								IF FLAG:AUTOMODE
+									PRINTFORML （だめ…力が、抜け……）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （だめ…力が、抜け……）
+								ENDIF
+						ENDSELECT
+					;丸呑み
+					ELSEIF CFLAG:21
+						;MP1/4以下またはHP0
+						IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 「う、ぅ……！　これ、ほんとにまずい…ですよ…！」
+									IF FLAG:AUTOMODE
+										PRINTFORMDL 文はぬめる肉壁に懸命に爪を立て、力を振り絞る！
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMDW 文はぬめる肉壁に懸命に爪を立て、力を振り絞る！
+									ENDIF
+								CASEELSE
+									PRINTFORML 「んくうぅ……う！」
+									IF FLAG:AUTOMODE
+										PRINTFORMDL 全身を汚す粘液を気にかける余裕もなく、文は身を捩って抜け出そうとする…
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMDW 全身を汚す粘液を気にかける余裕もなく、文は身を捩って抜け出そうとする…
+									ENDIF
+							ENDSELECT
+						;発情
+						ELSEIF CFLAG:28
+							PRINTFORML 「はぁ…あ、ぁ………く、んううぅ…っ！」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 粘液を肌にすり込まれ、快楽に打ち震えながらも、文はどうにか脱出しようと力を込める…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 粘液を肌にすり込まれ、快楽に打ち震えながらも、文はどうにか脱出しようと力を込める…
+							ENDIF
+						;その他
+						ELSE
+							SELECTCASE RAND:2
+								CASE 0
+									IF FLAG:AUTOMODE
+										PRINTFORML 「烏は悪食だなんて言いますけど、それを食べようという方がよっぽど、ですね…っ」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「烏は悪食だなんて言いますけど、それを食べようという方がよっぽど、ですね…っ」
+									ENDIF
+								CASEELSE
+									IF FLAG:AUTOMODE
+										PRINTFORML 「烏の踊り食いなんて、聞いたことありませんよ…！」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「烏の踊り食いなんて、聞いたことありませんよ…！」
+									ENDIF
+							ENDSELECT
+						ENDIF
+					;拘束
+					ELSE
+						;MP1/4以下またはHP0
+						IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「……っく……調子に、乗るんじゃ…っ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「……っく……調子に、乗るんじゃ…っ」
+								ENDIF
+							CASEELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あぐ……っ、かは……こ、の……！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あぐ……っ、かは……こ、の……！」
+								ENDIF
+						ENDSELECT
+						;発情
+						ELSEIF CFLAG:28
+							PRINTFORML （は、離れないと……でも──）
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 頬を高潮させた文の唇からは、いつもの軽口の代わりに熱い息が漏れる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 頬を高潮させた文の唇からは、いつもの軽口の代わりに熱い息が漏れる…
+							ENDIF
+						;その他
+						ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML （鎌鼬で…触手を切り落とせば…！）
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 締め付けに耐えながら、文はなんとか風を起こそうとする…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 締め付けに耐えながら、文はなんとか風を起こそうとする…
+								ENDIF
+							CASEELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「これしきの戒め…！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「これしきの戒め…！」
+								ENDIF
+						ENDSELECT
+						ENDIF
+					ENDIF
+				ENDIF
+			;力溜め
+			CASE 43
+				;絶頂中
+				IF CFLAG:35 != 0
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「……はぁっ……はぁ、……っ……」
+							IF FLAG:AUTOMODE
+								PRINTFORML （まずい、ですね……完全に…あちらのペースです…）
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW （まずい、ですね……完全に…あちらのペースです…）
+							ENDIF
+						CASEELSE
+							PRINTFORML 「……ぁ…う………この…ぉ……」
+							IF FLAG:AUTOMODE
+								PRINTFORML （だめ…力が、抜け……）
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW （だめ…力が、抜け……）
+							ENDIF
+					ENDSELECT
+				;発情
+				ELSEIF CFLAG:28
+					PRINTFORML （身体、熱い──いけない、流され、そう……）
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 肌を舐める肉壁のおぞましい感触すら快感に変わっていく中、文は必死に首を振って意識を保とうとする…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 肌を舐める肉壁のおぞましい感触すら快感に変わっていく中、文は必死に首を振って意識を保とうとする…
+					ENDIF
+				;MP1/4以下またはHP0
+				ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML （このまま、では……気をしっかり持たないと…！）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （このまま、では……気をしっかり持たないと…！）
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…愛されすぎるのも、困ったものですね…！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…愛されすぎるのも、困ったものですね…！」
+						ENDIF
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…自分から離すなら、今のうちですよ？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…自分から離すなら、今のうちですよ？」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 文は静かに眼を閉じ、妖力を高めている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 文は静かに眼を閉じ、妖力を高めている…
+						ENDIF
+					ENDSELECT
+				ENDIF
+			
+			;諦め
+			CASE 44
+				IF ARG:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML （……………あぁ）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （……………あぁ）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （……もう…ダメですね、これ）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （……もう…ダメですね、これ）
+					ENDIF
+					PRINTFORML 
+					PRINTFORMDL はっきりと受け入れてしまった文の全身から、かくり、と力が抜けた。
+					PRINTFORMDL 獲物が抵抗をなくしたと見るや、触手は一斉にその身体に群がっていく。
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 細い身体をぬらぬらと粘液で穢しながら、敗北の姿を嘲笑うかのように、ことさらにゆっくりと蹂躙していく…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 細い身体をぬらぬらと粘液で穢しながら、敗北の姿を嘲笑うかのように、ことさらにゆっくりと蹂躙していく…
+					ENDIF
+				ENDIF
+			
+			;Ａを守る
+			CASE 50
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML （…マニアックな趣味の奴が多いんですよね…こいつら）
+					CASEELSE
+						PRINTFORML 「…エロスは程々にしておきません？」
+					ENDSELECT
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文はお尻を引っ込めて身を守ろうとしている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文はお尻を引っ込めて身を守ろうとしている…
+				ENDIF
+			
+			;Ｂを守る
+			CASE 51
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「…エロスは程々にしておきません？」
+					CASEELSE
+						PRINTFORML 「無駄ですからね！」
+					ENDSELECT
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文は身を捩り、胸を隠すようにして身を守ろうとしている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文は身を捩り、胸を隠すようにして身を守ろうとしている…
+				ENDIF
+			
+			;Ｃを守る
+			CASE 52
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「…エロスは程々にしておきません？」
+					CASEELSE
+						PRINTFORML 「無駄ですからね！」
+					ENDSELECT
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文は太ももをすり合わせ、敏感な部分を守ろうとしている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文は太ももをすり合わせ、敏感な部分を守ろうとしている…
+				ENDIF
+			
+			;Ｖを守る
+			CASE 53
+				;処女
+				IF TALENT:0
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「………っ！」
+						CASEELSE
+							PRINTFORML 「…強引な殿方は、嫌いではないんですけど、ね…？」
+					ENDSELECT
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 文は反射的に腰を引き、何者も侵したことのない聖域を守ろうとしている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 文は反射的に腰を引き、何者も侵したことのない聖域を守ろうとしている…
+					ENDIF
+				ELSE
+					;発情
+					IF CFLAG:28
+						PRINTFORML （今……こんなもの、挿れられ、たら……っ）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 懸命に抵抗しながらも、文の瞳は焦燥と期待の入り混じった感覚と共に潤み始めている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 懸命に抵抗しながらも、文の瞳は焦燥と期待の入り混じった感覚と共に潤み始めている…
+						ENDIF
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「これ以上、好きには…！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「これ以上、好きには…！」
+								ENDIF
+							CASEELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「…エロスは程々にしておきません？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「…エロスは程々にしておきません？」
+								ENDIF
+						ENDSELECT
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 文は太ももに力を込め、侵入するものを拒もうとする…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 文は太ももに力を込め、侵入するものを拒もうとする…
+						ENDIF
+					ENDIF
+				ENDIF
+		ENDSELECT
+	
+	;HPダメージ
+	CASE 12
+		;喪失中
+		IF CFLAG:29 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ごぶッ………もう…や、め」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ごぶッ………もう…や、め」
+					ENDIF
+				CASE 1
+					PRINTFORML 「うあっ……ぁ、はうっ……！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 動かない体を次々と襲う攻撃に、文は抵抗することもできない…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 動かない体を次々と襲う攻撃に、文は抵抗することもできない…
+					ENDIF
+				CASEELSE
+					PRINTFORML 「ぐえっ…！　…………ぁ、ぅ」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL びくり、と身体を痙攣させると、文はまたぐったりと力を抜いてしまう…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW びくり、と身体を痙攣させると、文はまたぐったりと力を抜いてしまう…
+					ENDIF
+			ENDSELECT
+		ELSE
+			SELECTCASE ARG:1
+				;吸収攻撃は別腹
+				CASE 120, 122, 126
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「う……！　これ、何か…吸われ……はぅっ…！」
+						CASEELSE
+							PRINTFORML 「ぅ…ああぁ…ぁ、……こんなもの…！」
+					ENDSELECT
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 締め付けによる呼吸困難と妖力を吸収される脱力感に、文の膝がかくりと折れる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 締め付けによる呼吸困難と妖力を吸収される脱力感に、文の膝がかくりと折れる…
+					ENDIF
+				
+				CASEELSE
+					;HPがない
+					IF BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ぐあ、ぅ！　……ごほっ……こふっ……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ぐあ、ぅ！　……ごほっ……こふっ……」
+								ENDIF
+							CASE 1
+								PRINTFORML 「ぁ………っ、ぐ」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 文は飛びかけた意識をすんでのところで保ち、なんとか身を起こした…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 文は飛びかけた意識をすんでのところで保ち、なんとか身を起こした…
+								ENDIF
+							CASEELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「がは、ぁっ！　……こ、れ以上は…」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「がは、ぁっ！　……こ、れ以上は…」
+								ENDIF
+						ENDSELECT
+					;痛い
+					ELSEIF ARG:2 >= 1500
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「あぐっ…！　お、お手柔らかに…」
+							CASE 1
+								PRINTFORML 「ぐっ！？　……い、今のは…効きました…っ」
+							CASEELSE
+								PRINTFORML 「うっぐ…！　……けふっ、かはっ！」
+						ENDSELECT
+					;少し痛い
+					ELSEIF ARG:2 >= 500
+						SELECTCASE RAND:3
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「くっう…！　ああもう、もっと大きく飛び回れる場所なら…！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「くっう…！　ああもう、もっと大きく飛び回れる場所なら…！」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「かふっ…！　ゆ、油断しました…」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「かふっ…！　ゆ、油断しました…」
+								ENDIF
+							CASEELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「きゃっ！？　…ちょ、ちょっと甘く見ましたかね…！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「きゃっ！？　…ちょ、ちょっと甘く見ましたかね…！」
+								ENDIF
+						ENDSELECT
+					;あんまり痛くない
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「…やるじゃないですか。私に当てるとは」
+							CASEELSE
+								PRINTFORML 「つっ……！」
+						ENDSELECT
+					ENDIF
+			ENDSELECT
+		ENDIF
+	
+	;EPダメージ
+	CASE 14
+		;喪失時
+		IF CFLAG:29 || TFLAG:16 == 2
+			;絶頂時
+			IF BASE:EP < ARG:3
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「あっ……あ、ぁ、あう、ぅ……！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 強引に上り詰めさせられ、文は虚ろな目のままびくびくと身体を震わせる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 強引に上り詰めさせられ、文は虚ろな目のままびくびくと身体を震わせる…
+						ENDIF
+					CASE 1
+						PRINTFORML 「……ぃ、あ……もう、やぇて……イかさ…ない、れ…ぇ……」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL しなやかな身体を反らせて達する文の懇願を無視し、触手は暴力的な快楽を送り込み続ける…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW しなやかな身体を反らせて達する文の懇願を無視し、触手は暴力的な快楽を送り込み続ける…
+						ENDIF
+					CASEELSE
+						PRINTFORML 「……もう…ゆる、許し、て…」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「わたし、の、負け…ですからぁっ…！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「わたし、の、負け…ですからぁっ…！」
+						ENDIF
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「………ぃ、ぁ……あ……」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 文は力なく四肢を投げ出したまま、身を守ることもできずにされるがままになっている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 文は力なく四肢を投げ出したまま、身を守ることもできずにされるがままになっている…
+						ENDIF
+					CASE 1
+						PRINTFORML 「…………ぅ…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 粘液でてらてら光る身体をぐったりと投げ出し、文はおぞましい愛撫に身を任せている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 粘液でてらてら光る身体をぐったりと投げ出し、文はおぞましい愛撫に身を任せている…
+						ENDIF
+					CASEELSE
+						PRINTFORML 「…………は………ふ…っ……」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 時折聞こえる甘くかすれた吐息だけが、文にまだ息があることを伝えてくる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 時折聞こえる甘くかすれた吐息だけが、文にまだ息があることを伝えてくる…
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ELSE
+			;絶頂時
+			IF BASE:EP < ARG:3
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ぅ…く、ダメ……イきます、イくぅ……っ…！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ぅ…く、ダメ……イきます、イくぅ……っ…！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ふあ、ぁ──っ！　………っ…！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ふあ、ぁ──っ！　………っ…！！」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 文は白い喉をくぅっと反らせてびくびくと身をわななかせる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 文は白い喉をくぅっと反らせてびくびくと身をわななかせる…
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「く、ぅっ……もうダメ、もうっ……！　んくうううぅっ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「く、ぅっ……もうダメ、もうっ……！　んくうううぅっ！」
+						ENDIF
+					ENDSELECT
+			ELSE
+				;吸収攻撃は別腹
+				SELECTCASE ARG:1
+					;吸収攻撃（性的）
+					;オクトパス／クラーケン　B吸収
+					CASE 336, 340
+						PRINTFORML 「ぅく、うぅっ…！　赤ん坊じゃ…あるまいし…！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 胸を吸われる度に快感と脱力感を覚え、触手を引き剥がそうとする文の手から力が抜ける…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 胸を吸われる度に快感と脱力感を覚え、触手を引き剥がそうとする文の手から力が抜ける…
+						ENDIF
+					;オクトパス／クラーケン　C吸収
+					CASE 337, 341
+						PRINTFORML 「んううぅ…っ！　い、いい加減、に──ふあ、ぁ！？」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 力が抜け思うように抵抗できない文の姿を楽しむように、触手はじっくりと秘所をねぶり続ける…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 力が抜け思うように抵抗できない文の姿を楽しむように、触手はじっくりと秘所をねぶり続ける…
+						ENDIF
+					;アクティニア　A吸収
+					CASE 348
+						PRINTFORML 「！？　…い、いい趣味、を、お持ちで……くあ、ぁ！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 尻穴を吸われる馴染みのない感覚に、文は力の抜ける手で必死に触手を引き剥がそうとする…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 尻穴を吸われる馴染みのない感覚に、文は力の抜ける手で必死に触手を引き剥がそうとする…
+						ENDIF
+					;アクティニア　V吸収
+					CASE 349
+						PRINTFORML 「うああぁ…あ、ぁ、はあぁ…！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 触手が吸い上げるのに合わせて、文はびくびくと腰を震わせてしまう…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 触手が吸い上げるのに合わせて、文はびくびくと腰を震わせてしまう…
+						ENDIF
+					
+					;吸収攻撃（性的・強）
+					;オクトパス／クラーケン　B吸収
+					CASE 636, 640
+						PRINTFORML 「ふああああぁ…っ！　だ、ダメですっ…離し…っ！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL がっくりと膝をつき、背を反らせて喘ぐ文から、容赦なく妖力を吸収していく…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW がっくりと膝をつき、背を反らせて喘ぐ文から、容赦なく妖力を吸収していく…
+						ENDIF
+					;オクトパス／クラーケン　C吸収
+					CASE 637, 641
+						PRINTFORML 「うああああっ！　はぁ、ぁ…！　もう、やめ……音、立てちゃ…！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL とめどなく溢れる愛液を啜られ、文の抵抗が力を無くしていく…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW とめどなく溢れる愛液を啜られ、文の抵抗が力を無くしていく…
+						ENDIF
+					;アクティニア　A吸収
+					CASE 648
+						PRINTFORML 「ひっ！？　ぃあああぁぁ、ぁ、ぁ…！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 不浄の穴を犯され続ける快感と脱力感に襲われながら、文はどうすることもできない…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 不浄の穴を犯され続ける快感と脱力感に襲われながら、文はどうすることもできない…
+						ENDIF
+					;アクティニア　V吸収
+					CASE 649
+						PRINTFORML 「ひ…あ…ぁ……！　ぬ…抜い…っ、ふあああああぁ…っ！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 妖力をぐんぐん吸い上げられるのを感じながら、文は為すすべなく嬌声を上げてしまう…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 妖力をぐんぐん吸い上げられるのを感じながら、文は為すすべなく嬌声を上げてしまう…
+						ENDIF
+					
+					CASEELSE
+						;EPダメージ3000以上
+						IF ARG:3 >= 3000
+							SELECTCASE RAND:3
+								CASE 0
+									IF FLAG:AUTOMODE
+										PRINTFORML 「ふあぁっ！？　……み、見かけによらず…達者ですねぇ…っ」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「ふあぁっ！？　……み、見かけによらず…達者ですねぇ…っ」
+									ENDIF
+								CASE 1
+									IF FLAG:AUTOMODE
+										PRINTFORML 「うううぅっ！　…っく、はぁ……はぁ……」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「うううぅっ！　…っく、はぁ……はぁ……」
+									ENDIF
+								CASEELSE
+									IF FLAG:AUTOMODE
+										PRINTFORML （……まず、い……このままじゃ…イかされ──）
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW （……まず、い……このままじゃ…イかされ──）
+									ENDIF
+							ENDSELECT
+						;EPダメージ3000未満
+						ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									IF FLAG:AUTOMODE
+										PRINTFORML 「んっ……ちょっと、乱暴すぎます、よっ…！」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「んっ……ちょっと、乱暴すぎます、よっ…！」
+									ENDIF
+								CASE 1
+									IF FLAG:AUTOMODE
+										PRINTFORML 「ふぁ、う！　…………声なんて…出てませんよ？」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「ふぁ、う！　…………声なんて…出てませんよ？」
+									ENDIF
+								CASEELSE
+									IF FLAG:AUTOMODE
+										PRINTFORML 「んっく…！　…下手っぴですね…っ」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「んっく…！　…下手っぴですね…っ」
+									ENDIF
+							ENDSELECT
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+	
+	CASE 15
+	;拘束攻撃
+		;戦意喪失
+		IF CFLAG:29 || TFLAG:16 == 2
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「……………」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 触手に四肢を捕らわれても、文はぐったりとうなだれたままだ…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 触手に四肢を捕らわれても、文はぐったりとうなだれたままだ…
+					ENDIF
+				CASEELSE
+					PRINTFORML 「………ぁ…ぐ…」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 全身に絡みつく触手の感触に顔を顰めながら、しかし文に抵抗する力はもう残されていない…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 全身に絡みつく触手の感触に顔を顰めながら、しかし文に抵抗する力はもう残されていない…
+					ENDIF
+			ENDSELECT
+		;発情
+		ELSEIF CFLAG:28
+			PRINTFORML 「う………！」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 動きの鈍った文はあっさりと触手に捕らえられ、高潮した顔を隠すように俯いて息を荒げる…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 動きの鈍った文はあっさりと触手に捕らえられ、高潮した顔を隠すように俯いて息を荒げる…
+			ENDIF
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あやややや！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あやややや！？」
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ひゃ！？　しまっ──」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ひゃ！？　しまっ──」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	
+	;寄生攻撃命中
+	CASE 16
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「はぅ…っ！　なに、を……！」
+			CASEELSE
+				PRINTFORML 「うく、う、ううぅぅぅ…！」
+		ENDSELECT
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 言い知れない不快感と違和感に、文は眉を顰めて呻くことしかできない…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 言い知れない不快感と違和感に、文は眉を顰めて呻くことしかできない…
+		ENDIF
+	
+	;攻撃回避
+	CASE 22 TO 25, 27
+		;喪失
+		IF CFLAG:29 || TFLAG:16 == 2
+			;
+		;発情
+		ELSEIF CFLAG:28
+			PRINTFORML 「ん、くっ……！」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 攻撃が肌を掠めただけで、文の唇から甘い声が漏れ出る…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 攻撃が肌を掠めただけで、文の唇から甘い声が漏れ出る…
+			ENDIF
+		;MP1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「っ、と……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「っ、と……！」
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「くぅ……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「くぅ……！」
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いつまで避けきれるか…！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いつまで避けきれるか…！」
+					ENDIF
+			ENDSELECT
+		;その他
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほいっと」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほいっと」
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「見てくれ通りの鈍重さですねぇ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「見てくれ通りの鈍重さですねぇ」
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私に触れたいんですか？　…身の程知らずですねえ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私に触れたいんですか？　…身の程知らずですねえ」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	
+	;寄生攻撃回避
+	;つまり防御したとき？
+;	CASE 26
+;		IF TALENT:0
+;			SELECTCASE RAND:3
+;				CASE 0
+;					PRINTFORMW 
+;				CASE 1
+;					PRINTFORMW 
+;				CASE 2
+;					PRINTFORMW 
+;			ENDSELECT
+;		ELSE
+;			SELECTCASE RAND:3
+;				CASE 0
+;					PRINTFORMW 
+;				CASE 1
+;					PRINTFORMW 
+;				CASE 2
+;					PRINTFORMW 
+;			ENDSELECT
+;		ENDIF
+	
+	;戦意喪失
+	CASE 33
+		;発情
+		IF CFLAG:28
+			PRINTFORML 「……はぁー……はぁー……はぁー……ぁ、あ……」
+			PRINTFORMDL ぐったりと四肢を投げ出したまま、文は熱い吐息を繰り返す
+			PRINTFORMDL その瞳は濁りきり、半開きの口元からはだらしなく唾液の筋が伝い
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 彼女が暴力的な快楽の前に完全に屈服したことを示していた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 彼女が暴力的な快楽の前に完全に屈服したことを示していた…
+			ENDIF
+		;その他
+		ELSE
+			PRINTFORML 「………………」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL それまで抵抗を続けていた文の身体から、かくり、と力が抜けた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW それまで抵抗を続けていた文の身体から、かくり、と力が抜けた…
+			ENDIF
+		ENDIF
+	
+	;服の破れ強度
+	;裸くらいならあんまり恥ずかしがらない文ちゃん
+	CASE 35
+		;喪失
+		IF CFLAG:29 || TFLAG:16 == 2
+			;
+		ELSE
+			SELECTCASE ARG:1
+			;全裸
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「あちゃぁ…いやまぁ、見られて困る身体はしていないつもりですけど…」
+					CASE 1
+						PRINTFORML 「ひぇ……！　まったく、無駄に器用ですね…！」
+					CASEELSE
+						PRINTFORML 「あやや！？　流石にこれはちょっと…！」
+				ENDSELECT
+			;半裸
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「…これ、狙ってやってますよね？」
+					CASE 1
+						PRINTFORML 「えっちですね、もう…！」
+					CASEELSE
+						PRINTFORML 「…どちら様に請求すればいいんですかね、これ？」
+				ENDSELECT
+			;破れ始め
+			CASE 2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「あややや！　なんてことを…」
+					CASE 1
+						PRINTFORML 「あ！　……マスコミに狼藉を働くと、後が怖いですよ？」
+					CASEELSE
+						PRINTFORML 「もう！　おイタが過ぎますよ！」
+				ENDSELECT
+			ENDSELECT
+		ENDIF
+	
+	;逃走成功
+	CASE 55
+		;喪失中
+		IF CFLAG:29 || TFLAG:16 == 2
+			;
+		;発情
+		ELSEIF CFLAG:28
+			PRINTFORML 「……はぁっ……ふぅっ………まずかった……あのままだったら、私…」
+			PRINTFORMDL 文は高潮した顔で息を荒げながら、来た道を振り返る
+			IF FLAG:AUTOMODE
+				PRINTFORMDL その表情にはほんのわずかに、安堵とは別の色が浮かんでいた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW その表情にはほんのわずかに、安堵とは別の色が浮かんでいた…
+			ENDIF
+		;MP1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いやぁ…正直、今のはちょっと危なかったですね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いやぁ…正直、今のはちょっと危なかったですね」
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふぅ…この幻想郷一の足がなければどうなっていたやら…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふぅ…この幻想郷一の足がなければどうなっていたやら…」
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…命あっての物種、ってやつですね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…命あっての物種、ってやつですね」
+					ENDIF
+			ENDSELECT
+		;その他
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「流石に追いついてはきませんね」
+				CASE 1
+					PRINTFORML 「この足、鈍ってはいないようですね」
+				CASEELSE
+					PRINTFORML 「あんなのを相手に、無駄に消耗してられません」
+			ENDSELECT
+		ENDIF
+	;!!! v0.05.3で逃走口上の仕様が変わったため、勝手に改変
+	CASE 62
+		;娘を見捨てた
+		IF (NO:(ARG:2) == 32 && CFLAG:(ARG:2):104 == 1) || (NO:(ARG:3) == 32 && CFLAG:(ARG:3):104 == 1)
+			;親子親睦度20以上
+			IF CFLAG:801 >= 20
+				PRINTFORML 「…………っ」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文は歯を食いしばり、一度も後ろを振り返らずに通路を駆け抜けた──
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文は歯を食いしばり、一度も後ろを振り返らずに通路を駆け抜けた──
+				ENDIF
+			;親子親睦度5以上19以下
+			ELSEIF CFLAG:801 >= 5
+				PRINTFORML 「体勢を整えて必ず戻ってきますから。私の娘なら、それまで我慢なさい」
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…このまま本当に見捨てて逃げたりしたら、いい笑いものです…！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…このまま本当に見捨てて逃げたりしたら、いい笑いものです…！」
+				ENDIF
+			;親子親睦度5未満
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…半分、あいつらの仲間なんだし…案外、打ち解けたりするんじゃないでしょうかね」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…半分、あいつらの仲間なんだし…案外、打ち解けたりするんじゃないでしょうかね」
+				ENDIF
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……恨まないでくださいね？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……恨まないでくださいね？」
+			ENDIF
+		ENDIF
+	CASE 63
+		IF TARGET == 1
+			;喪失
+			IF CFLAG:29 || TFLAG:16 == 2
+				;
+			;丸呑み中
+			ELSEIF CFLAG:21
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 触手と肉壁に覆われた視界の隅で、仲間が走り去っていくのが見えた
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 触手と肉壁に覆われた視界の隅で、仲間が走り去っていくのが見えた
+				ENDIF
+				PRINTFORML 「…あやや……薄情ですねえ…ほんと…」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 生ぬるい粘液にまみれ、文は他人事のように溜め息を吐いた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 生ぬるい粘液にまみれ、文は他人事のように溜め息を吐いた…
+				ENDIF
+			ELSE
+				PRINTFORML 「…………はぁ」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 走り去る背を見やる文の目は、酷く冷ややかだった…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 走り去る背を見やる文の目は、酷く冷ややかだった…
+				ENDIF
+			ENDIF
+		ELSE
+			;喪失
+			IF CFLAG:29 || TFLAG:16 == 2
+				;
+			;丸呑み中
+			ELSEIF CFLAG:21
+				PRINTFORML 「ちょっ……またまたぁ、冗談にしてはタチが悪いんじゃないですか？」
+				PRINTFORML 「あれ？　……あの、%CALLNAME:1%さーん？　……ちょ、あの…んぐっ──」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 背から追いすがる声は、不気味な咀嚼音にかき消された…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 背から追いすがる声は、不気味な咀嚼音にかき消された…
+				ENDIF
+			ELSE
+				PRINTFORML 「……………」
+				PRINTFORMDL 一度だけ振り返った時、不意に視線が交錯する
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文のその目は、酷く冷ややかだった──
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文のその目は、酷く冷ややかだった──
+				ENDIF
+			ENDIF
+		ENDIF
+	
+	;戦闘勝利
+	CASE 57
+		;喪失
+		IF CFLAG:29 || TFLAG:16 == 2
+			;
+		;発情
+		ELSEIF CFLAG:28
+			PRINTFORMDL 文は荒い息をつきながら、ぺたん、と座り込んだ
+			IF FLAG:AUTOMODE
+				PRINTFORML 「はーーっ……はーーっ……いけないいけない、変な癖になっちゃいそうです…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「はーーっ……はーーっ……いけないいけない、変な癖になっちゃいそうです…」
+			ENDIF
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いやいや。天狗に性的な意味で参ったと言わせるには、それではとてもとても…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いやいや。天狗に性的な意味で参ったと言わせるには、それではとてもとても…」
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…珍しい被写体ではあるけど、紙面を飾るにはちょっと、ねぇ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…珍しい被写体ではあるけど、紙面を飾るにはちょっと、ねぇ」
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「かくして射命丸特派員はまたひとつ、危機を退けたのでありました」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「かくして射命丸特派員はまたひとつ、危機を退けたのでありました」
+					ENDIF
+			ENDSELECT
+		ENDIF
+		
+		;娘がいる
+		IF (NO:(FLAG:10) == 32 && CFLAG:(FLAG:10):104 == 1) || (NO:(FLAG:11) == 32 && CFLAG:(FLAG:11):104 == 1)
+			;たまに親睦度アップ
+			SIF RAND:3 == 0
+				CFLAG:801 += 1
+		ENDIF
+	
+	;誰かに会う
+	CASE 101
+		;喪失
+		IF CFLAG:29
+			;
+		;相手喪失
+		;あんまり好意的な反応させると、放置していく時に違和感あるかなー
+		ELSEIF ARG:2
+			SELECTCASE NO:(ARG:1)
+				;チルノ
+				CASE 5
+					PRINTFORML 「……………」
+					PRINTFORML 「…死なないから、何をしてもいい…ということでもないでしょう」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 文は小さな身体を抱き起こし、下唇を噛んだ
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 文は小さな身体を抱き起こし、下唇を噛んだ
+					ENDIF
+				;自分の娘
+				CASE 32
+					IF CFLAG:(ARG:1):104 == 1
+						;親子親睦度10以上
+						IF CFLAG:801 >= 10
+							PRINTFORML 「………っ」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 文は足早に駆け寄ると、その身を抱き起こし…小さく安堵の息を吐いた
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 文は足早に駆け寄ると、その身を抱き起こし…小さく安堵の息を吐いた
+							ENDIF
+						;親子親睦度10未満
+						ELSE
+							PRINTFORML 「…あいつらにとっては結局、捕食対象でしかないってことですか」
+							IF FLAG:AUTOMODE
+								PRINTFORML 「………何を苛立ってるんですかね、私は」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「………何を苛立ってるんですかね、私は」
+							ENDIF
+						ENDIF
+					;孫以降
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あやや。……あれは…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あやや。……あれは…」
+						ENDIF
+					ENDIF
+				;椛
+				CASE 41
+					PRINTFORML 「………っ」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 文は足早に駆け寄ると、その身を抱き起こし…小さく安堵の息を吐いた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 文は足早に駆け寄ると、その身を抱き起こし…小さく安堵の息を吐いた
+					ENDIF
+				;はたて
+				CASE 98
+					PRINTFORML 「はたて…はたて。聞こえる？　私ですよ」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL わずかな反応を確認すると、文はとりあえず安堵の息を吐く…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW わずかな反応を確認すると、文はとりあえず安堵の息を吐く…
+					ENDIF
+				;萃香
+				CASE 23
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…………冗談でしょう」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…………冗談でしょう」
+					ENDIF
+				;勇儀
+				CASE 80
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…………悪い夢だわ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…………悪い夢だわ」
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あやや。……あれは…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あやや。……あれは…」
+					ENDIF
+			ENDSELECT
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;チルノ
+				CASE 5
+					;全裸
+					IF BASE:3 <= 0 && TARGET == 1 && CFLAG:28 == 0 && CFLAG:(ARG:1):5 >= 200
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…いやまあ、この格好は…あまり気にしないで頂けると」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…いやまあ、この格好は…あまり気にしないで頂けると」
+						ENDIF
+					ELSE
+						PRINTFORML 「これはこれはチルノさん」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「相も変わらず、お元気そうで何よりです」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「相も変わらず、お元気そうで何よりです」
+						ENDIF
+					ENDIF
+				;自分の娘
+				CASE 32
+					IF CFLAG:(ARG:1):104 == 1
+						;初遭遇
+						IF CFLAG:800 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML （…………これが……私の）
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW （…………これが……私の）
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 文は様々な感情がない交ぜになった面持ちで、目の前の少女を見つめている──
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 文は様々な感情がない交ぜになった面持ちで、目の前の少女を見つめている──
+							ENDIF
+						ELSE
+							;親子親睦度20以上
+							IF CFLAG:801 >= 20
+								IF FLAG:AUTOMODE
+									PRINTFORML 「…よしよし。無茶はしていませんか？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「…よしよし。無茶はしていませんか？」
+								ENDIF
+							;親子親睦度5以上19以下
+							ELSEIF CFLAG:801 >= 5
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ…ほら、あまりくっつくなと言ったでしょう、もう」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ…ほら、あまりくっつくなと言ったでしょう、もう」
+								ENDIF
+							;親子親睦度5未満
+							ELSE
+								PRINTFORML 「…………」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 自分と化け物との間の子を前に、文は引きつった笑みを浮かべざるを得ない…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 自分と化け物との間の子を前に、文は引きつった笑みを浮かべざるを得ない…
+								ENDIF
+							ENDIF
+						ENDIF
+						CFLAG:800 += 1
+					;孫以降
+					ELSE
+						PRINTFORML 「………なんだか、頭が痛くなってきたんですけど…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 明らかに自分の面影を残す少女を前にして、文は溜め息を吐く…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 明らかに自分の面影を残す少女を前にして、文は溜め息を吐く…
+						ENDIF
+					ENDIF
+				;椛
+				CASE 41
+					;全裸
+					IF BASE:3 <= 0 && TARGET == 1 && CFLAG:28 == 0 && CFLAG:(ARG:1):5 >= 200
+						PRINTFORML 「みっともない、って…仕方ないでしょう」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…まったく、そんな顔真っ赤にして怒らなくても」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…まったく、そんな顔真っ赤にして怒らなくても」
+						ENDIF
+					ELSE
+						PRINTFORML 「おやおや、苦労してるみたいねぇ椛」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「手伝ってあげましょうか？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「手伝ってあげましょうか？」
+						ENDIF
+					ENDIF
+				;はたて
+				CASE 98
+					;全裸
+					IF BASE:3 <= 0 && TARGET == 1 && CFLAG:28 == 0 && CFLAG:(ARG:1):5 >= 200
+						IF FLAG:AUTOMODE
+							PRINTFORML 「いや、これは…ちょっと厳しめの取材拒否を受けてねえ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「いや、これは…ちょっと厳しめの取材拒否を受けてねえ」
+						ENDIF
+					ELSE
+						PRINTFORML 「調子はどう、はたて？」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「普段から自分の足で取材してないと、こういう時に動けないんじゃない？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「普段から自分の足で取材してないと、こういう時に動けないんじゃない？」
+						ENDIF
+					ENDIF
+				;萃香
+				CASE 23
+					;全裸
+					IF BASE:3 <= 0 && TARGET == 1 && CFLAG:28 == 0 && CFLAG:(ARG:1):5 >= 200
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…私が裸、ですか？　ははあ、また酔ってらっしゃいますね？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…私が裸、ですか？　ははあ、また酔ってらっしゃいますね？」
+						ENDIF
+					ELSE
+						PRINTFORML 「…っとと、これは萃香さん！」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「心配…は、するだけ無駄ですよねえ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「心配…は、するだけ無駄ですよねえ」
+						ENDIF
+					ENDIF
+				;勇儀
+				CASE 80
+					;全裸
+					IF BASE:3 <= 0 && TARGET == 1 && CFLAG:28 == 0 && CFLAG:(ARG:1):5 >= 200
+						IF FLAG:AUTOMODE
+							PRINTFORML 「いやはや、こんな格好で恐れ入ります…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「いやはや、こんな格好で恐れ入ります…」
+						ENDIF
+					ELSE
+						PRINTFORML 「やや、ご無事で…というのは当たり前ですか」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ご活躍が目に浮かぶようです、ええ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ご活躍が目に浮かぶようです、ええ」
+						ENDIF
+					ENDIF
+				CASEELSE
+					;全裸
+					IF BASE:3 <= 0 && TARGET == 1 && CFLAG:28 == 0 && CFLAG:(ARG:1):5 >= 200
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…いやまあ、この格好は…あまり気にしないで頂けると」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…いやまあ、この格好は…あまり気にしないで頂けると」
+						ENDIF
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「これはこれは、よくぞご無事で！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「これはこれは、よくぞご無事で！」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「これはどうも。そちらの調子はいかがです？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「これはどうも。そちらの調子はいかがです？」
+								ENDIF
+							CASEELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あややや。お互い、しぶとくて何よりですねえ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あややや。お互い、しぶとくて何よりですねえ」
+								ENDIF
+						ENDSELECT
+					ENDIF
+			ENDSELECT
+		ENDIF
+	
+	;雑談
+	CASE 103
+		;喪失
+		IF CFLAG:29
+			;
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;チルノ
+				CASE 5
+					PRINTFORML 「最強のチルノさんがいれば、この異変も解決間違いなしですねえ」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「面白……いえカッコいい活躍、期待してますからね？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「面白……いえカッコいい活躍、期待してますからね？」
+					ENDIF
+				;自分の娘
+				CASE 32
+					IF CFLAG:(ARG:1):104 == 1
+						CFLAG:801 += 1
+						;親子親睦度20以上
+						IF CFLAG:801 >= 20
+							PRINTFORML 「……ふむ。どうやら怪我はないようね」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 文は%CALLNAME:(ARG:1)%の頭を軽くひと撫ぜする…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 文は%CALLNAME:(ARG:1)%の頭を軽くひと撫ぜする…
+							ENDIF
+						;親子親睦度5以上19以下
+						ELSEIF CFLAG:801 >= 5
+							PRINTFORML 「…他の人妖を襲ったりしてないでしょうね」
+							IF FLAG:AUTOMODE
+								PRINTFORML 「他人様に迷惑をかけることは、許しませんからね？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「他人様に迷惑をかけることは、許しませんからね？」
+							ENDIF
+							IF FLAG:10 != 0 || FLAG:11 != 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「………何故でしょう、視線が冷たいんですけど」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「………何故でしょう、視線が冷たいんですけど」
+								ENDIF
+							ENDIF
+						;親子親睦度5未満
+						ELSE
+							PRINTFORML 「……誰が母様、ですか」
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あんまり馴れ馴れしくしないで欲しいんですけどね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あんまり馴れ馴れしくしないで欲しいんですけどね」
+							ENDIF
+						ENDIF
+					;孫以降
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…この子らを連れて帰ったら、私自身がスキャンダルの元になるんじゃ…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…この子らを連れて帰ったら、私自身がスキャンダルの元になるんじゃ…」
+						ENDIF
+					ENDIF
+				;椛
+				CASE 41
+					PRINTFORML 「そんな仏頂面で気を張っていても無駄に疲れるだけでしょうに」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんな時にマイペースでいられる胆力が光明を生むのよ。…多分ね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんな時にマイペースでいられる胆力が光明を生むのよ。…多分ね」
+					ENDIF
+				;はたて
+				CASE 98
+					PRINTFORML 「…そっちも、コレを記事にするつもり？」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「そのまま載せたら、絶対に閻魔様の検閲が入ると思うんだけど」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「そのまま載せたら、絶対に閻魔様の検閲が入ると思うんだけど」
+					ENDIF
+				;その他
+				CASEELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ここでのことを記事にするとして…どうしたものでしょうかね」
+							IF FLAG:AUTOMODE
+								PRINTFORML 「文々。新聞に載せるには、色々とあまりに品性が無さすぎます」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「文々。新聞に載せるには、色々とあまりに品性が無さすぎます」
+							ENDIF
+						CASE 1 
+							IF FLAG:AUTOMODE
+								PRINTFORML 「風が淀んで調子が出ないんですよね。…はあ、お山の空気が恋しいです」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「風が淀んで調子が出ないんですよね。…はあ、お山の空気が恋しいです」
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「…出口なんて、本当にあるんでしょうかね？　………なーんちゃって♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「…出口なんて、本当にあるんでしょうかね？　………なーんちゃって♪」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「…………笑ってくださいよ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「…………笑ってくださいよ」
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	
+	;情報交換
+	CASE 104
+		;喪失
+		IF CFLAG:29
+			;
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;自分の娘
+				CASE 32
+					IF CFLAG:(ARG:1):104 == 1
+						;親子親睦度20以上
+						IF CFLAG:801 >= 20
+							PRINTFORML 「…ふうむ。意外にいいネタを集めてくるじゃないですか」
+							SELECTCASE RAND:2
+								CASE 0
+									IF FLAG:AUTOMODE
+										PRINTFORML 「外に出られたら、私のお古のカメラをあげてもいいですよ」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「外に出られたら、私のお古のカメラをあげてもいいですよ」
+									ENDIF
+								CASEELSE
+									IF FLAG:AUTOMODE
+										PRINTFORML 「なかなか見込みがありますよ」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「なかなか見込みがありますよ」
+									ENDIF
+							ENDSELECT
+						;親子親睦度5以上19以下
+						ELSEIF CFLAG:801 >= 5
+							IF FLAG:AUTOMODE
+								PRINTFORML 「…いいですか。私の娘を名乗るなら、あなたもこのくらいの情報は集められないと──」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「…いいですか。私の娘を名乗るなら、あなたもこのくらいの情報は集められないと──」
+							ENDIF
+						;親子親睦度5未満
+						ELSE
+							PRINTFORML 「…まあ…ギブアンドテイクと言うことなら、やぶさかではないですが」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 文はあくまで淡々と、情報の交換に勤しむ…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 文はあくまで淡々と、情報の交換に勤しむ…
+							ENDIF
+						ENDIF
+					;孫以降
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…ううむ、なかなかの観察眼。これも血なんでしょうか」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…ううむ、なかなかの観察眼。これも血なんでしょうか」
+						ENDIF
+					ENDIF
+				;椛
+				CASE 41
+					PRINTFORML 「…うーん、もっといい情報があったような…はて」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こう、ふっさふさの尻尾とかをワシワシしながらリラックスすれば思い出せそうな──」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こう、ふっさふさの尻尾とかをワシワシしながらリラックスすれば思い出せそうな──」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……刀はしまいましょうよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……刀はしまいましょうよ」
+					ENDIF
+				;はたて
+				CASE 98
+					IF FLAG:AUTOMODE
+						PRINTFORML 「どちらが有益な情報を手に入れたか、勝負してみる？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「どちらが有益な情報を手に入れたか、勝負してみる？」
+					ENDIF
+				CASEELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ははあ、そんな事が。…では、その時の心境を一言──」
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あやや、冗談ですったら！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あやや、冗談ですったら！」
+							ENDIF
+						CASE 1 
+							IF FLAG:AUTOMODE
+								PRINTFORML 「情報集めは私の本職ですからねえ。いいネタ、ありますよ？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「情報集めは私の本職ですからねえ。いいネタ、ありますよ？」
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「──どうです？　これはまだ、ご存じなかったのでは？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「──どうです？　これはまだ、ご存じなかったのでは？」
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	
+	;勧誘失敗
+	CASE 108
+		;喪失
+		IF CFLAG:29
+			;
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;自分の娘
+				CASE 32
+					IF CFLAG:(ARG:1):104 == 1
+						;親子親睦度20以上
+						IF CFLAG:801 >= 20
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あややや。……もう、本当に大丈夫なんでしょうね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あややや。……もう、本当に大丈夫なんでしょうね」
+							ENDIF
+						;親子親睦度5以上19以下
+						ELSEIF CFLAG:801 >= 3
+							IF FLAG:AUTOMODE
+								PRINTFORML 「…やれやれ。一人前のつもりなんでしょうか」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「…やれやれ。一人前のつもりなんでしょうか」
+							ENDIF
+						;親子親睦度5未満
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「そう。…まあ、それがお互いのためでしょうね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「そう。…まあ、それがお互いのためでしょうね」
+							ENDIF
+						ENDIF
+					;孫以降
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「……むむ。野放しにしていていいもんなんでしょうか」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「……むむ。野放しにしていていいもんなんでしょうか」
+						ENDIF
+					ENDIF
+				;椛
+				CASE 41
+					IF FLAG:AUTOMODE
+						PRINTFORML 「やれやれ。嫌われたものねえ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「やれやれ。嫌われたものねえ」
+					ENDIF
+				;はたて
+				CASE 98
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おや。別に、ネタを横取りしようなんてことは……あんまり考えてないわよ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おや。別に、ネタを横取りしようなんてことは……あんまり考えてないわよ？」
+					ENDIF
+				CASEELSE
+					SELECTCASE RAND:3
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「…やれやれ。振られちゃいましたね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「…やれやれ。振られちゃいましたね」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ありゃ。…まあ、気が変わったらいつでも言ってくださいな」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ありゃ。…まあ、気が変わったらいつでも言ってくださいな」
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「一人よりはマシだと思うんですけどねえ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「一人よりはマシだと思うんですけどねえ」
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	
+	CASE 110
+		;PTメンバーと別れる
+		IF ARG:2
+			IF TARGET == 1
+				;主人公として表示する場合、ARG:1のキャラを見送る
+				;喪失
+				IF CFLAG:29
+					;
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ここはひとまず、別行動としましょうか」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ここはひとまず、別行動としましょうか」
+					ENDIF
+				ENDIF
+			ELSE
+				;それ以外の場合、自分が抜ける
+				;喪失
+				IF CFLAG:29
+					PRINTFORML 「…………」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:1%はぐったりと動かない文を一度だけ振り返り、早足でその場を離れた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:1%はぐったりと動かない文を一度だけ振り返り、早足でその場を離れた…
+					ENDIF
+				ELSE
+					PRINTFORML 「まあ、大人数で固まっていてはかえって危険かもしれませんねえ」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「それでは。ご武運をお祈りしていますよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「それでは。ご武運をお祈りしていますよ」
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+	
+	;絶頂の瞬間
+	CASE 120
+		SELECTCASE RAND:4
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「っ、んっ、ん、ぁ！　ああああぁぁっ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「っ、んっ、ん、ぁ！　ああああぁぁっ！！」
+				ENDIF
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はっ、は、っ、こんな、こんなので──んうううぅぅっ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はっ、は、っ、こんな、こんなので──んうううぅぅっ！！」
+				ENDIF
+			CASE 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「きゃふぅっ！　そ、それ、それダメ、ですっ、ひうううぅぅ…っ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「きゃふぅっ！　そ、それ、それダメ、ですっ、ひうううぅぅ…っ！！」
+				ENDIF
+			CASEELSE
+				PRINTFORML 「んぐっ……ん！　んんんん、ぅ……っ！！」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文は歯を食いしばって耐えようとするが、身体は絶頂を止められない…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文は歯を食いしばって耐えようとするが、身体は絶頂を止められない…
+				ENDIF
+		ENDSELECT
+	
+	;戦意喪失中に絶頂
+	CASE 122
+		PRINTFORML 「…………ぁ……ひぅっ…ぅ……」
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 文は虚ろな目で掠れた喘ぎを漏らしながら、がくがくと身体を震わせている…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 文は虚ろな目で掠れた喘ぎを漏らしながら、がくがくと身体を震わせている…
+		ENDIF
+	
+	;寄生が進行
+	CASE 125
+		;喪失
+		IF CFLAG:29
+			;
+		ELSEIF ARG:1 == 8
+			IF FLAG:AUTOMODE
+				PRINTFORML 「………？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「………？」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL （気のせい…かしら。お腹が……）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW （気のせい…かしら。お腹が……）
+			ENDIF
+		ELSEIF ARG:1 == 4
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……人のお腹を……図々しいにも程があるんじゃないですかね…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……人のお腹を……図々しいにも程があるんじゃないですかね…」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 文は自分の身に起こったことを理解し、腹に手を当てて眉を顰める…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 文は自分の身に起こったことを理解し、腹に手を当てて眉を顰める…
+			ENDIF
+		ELSEIF ARG:1 == 1
+			PRINTFORML 「……はぁっ…はぁっ、はっ、うぐぅ…！」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 文が苦痛を訴える間隔が、急激に短くなってきている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 文が苦痛を訴える間隔が、急激に短くなってきている…
+			ENDIF
+		ENDIF
+	
+	;妊娠が進行
+	CASE 126
+		;喪失
+		IF CFLAG:29
+			;
+		;平常時
+		ELSE
+			IF ARG:1 == 11
+				;セーフ
+;				IF CFLAG:36 == 1
+;					PRINTFORMW 「……気のせいだったかしら」
+;					SIF FLAG:10 != 0 || FLAG:11 != 0
+;						PRINTFORMW 「…ああいえ、何でもありません。探索を続けましょうか」
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+;				ELSE
+					PRINTFORML 「うぇ…っ！　……まさかあの化け物たち、たちの悪い病気なんて持ってたりは…」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 文は不意に吐き気に襲われ、忌々しげに眉を顰める…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 文は不意に吐き気に襲われ、忌々しげに眉を顰める…
+					ENDIF
+;				ENDIF
+			ELSEIF ARG:1 == 8
+				;セーフ
+				IF CFLAG:36 == 1
+					PRINTFORML 「……ん。気分が悪いのも治まってくれたようですね」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「やれやれ。我ながら、繊細すぎるのも困りものです」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「やれやれ。我ながら、繊細すぎるのも困りものです」
+					ENDIF
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…………冗談きつい、ですよ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…………冗談きつい、ですよ…」
+					ENDIF
+				ENDIF
+			ELSEIF ARG:1 == 3
+				PRINTFORML 「…羽の代わりに触手の生えた烏の子でも…生まれるんですかね？」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 自棄のように口走り、文は溜め息を吐く…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 自棄のように口走り、文は溜め息を吐く…
+				ENDIF
+			ELSEIF ARG:1 == 1
+				PRINTFORML 「ぐっ…ぅ！　…あ、暴れないで欲しいんです、けど…！」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文は時折つらそうに眉根を寄せ、息を荒げる…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文は時折つらそうに眉根を寄せ、息を荒げる…
+				ENDIF
+			ENDIF
+		ENDIF
+	
+	CASE 127
+		;寄生出産
+		SELECTCASE ARG:1
+			CASE 0
+				;
+			CASE 1
+				;
+			CASE 2
+				;
+			ENDSELECT
+	
+	;部屋を浄化
+	CASE 130
+		IF TARGET == 1
+			IF CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「烏は綺麗好きなんです。これ本当」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「烏は綺麗好きなんです。これ本当」
+						ENDIF
+					CASE 1
+						PRINTFORML 「──旋風『鳥居つむじ風』！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 文が団扇を一振りすると、無数の竜巻が部屋中の触手をこそぎ取り、吹き散らしていく！
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 文が団扇を一振りすると、無数の竜巻が部屋中の触手をこそぎ取り、吹き散らしていく！
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「少しはマシになりましたかね？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「少しはマシになりましたかね？」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+	
+	;部屋を移動（突撃）
+	CASE 132
+		IF TARGET == 1
+			IF CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「先手必勝！　単純ですが、悪くないかもしれません」
+					CASE 1
+						PRINTFORML 「どうもどうも！　清く正しい真実の泉、文々。新聞ですよー！」
+					CASEELSE
+						PRINTFORML 「では、先陣は頂きますよ？」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	
+	;部屋を移動（慎重）
+	CASE 133
+		IF TARGET == 1
+			IF CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「…どうもー。新聞ですよー？」
+						PRINTFORMDL とぼけた台詞とは裏腹に、文は油断なく周囲に感覚を走らせる…
+					CASE 1
+						PRINTFORML 「……ううむ。やっぱり空気が淀んで、気配を探りにくいわね」
+					CASEELSE
+						PRINTFORML 「職業柄、気配を消すのは得意な方でしてね」
+						SIF FLAG:10 != 0 || FLAG:11 != 0
+							PRINTFORML 「…え、記者とはあんまり関係ない？　またまたご冗談を」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	
+	;部屋を移動（待ち伏せ）
+	CASE 134
+		IF TARGET == 1
+			IF CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「…さて、鬼が出るか蛇が出るか…」
+					CASE 1
+						PRINTFORMDL 文は部屋中の空気の流れを油断なく探っている…
+					CASEELSE
+						PRINTFORML 「何か、来ますかね…？」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	
+	;部屋を移動（探索）
+	CASE 135
+		;喪失
+		IF CFLAG:29
+			;
+		ELSEIF TARGET == 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「何事も見逃さない観察眼と注意力…記者の腕の見せ所です」
+				CASE 1
+					PRINTFORML 「こんなところで拾ったものを使うのも気が引けますが…」
+				CASEELSE
+					PRINTFORML 「…どこか、外に通じていないかしら…」
+			ENDSELECT
+		ENDIF
+	
+	;処女喪失
+	CASE 136
+		SELECTCASE ARG:1
+			CASE 0
+				SELECTCASE ARG:3
+					;喪失直前
+					CASE 1
+						;戦意喪失
+						IF CFLAG:29 || TFLAG:16 == 2
+							PRINTFORML 「…………ぅ…」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 自分のその部分にグロテスクなものを押し当てられたのを見て、文はわずかに身じろぎする
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 自分のその部分にグロテスクなものを押し当てられたのを見て、文はわずかに身じろぎする
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORMDL ──が、それを押し止めるだけの力は彼女には残されていなかった…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW ──が、それを押し止めるだけの力は彼女には残されていなかった…
+							ENDIF
+						ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									IF FLAG:AUTOMODE
+										PRINTFORML 「こんの…調子に乗るんじゃ……！」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「こんの…調子に乗るんじゃ……！」
+									ENDIF
+								CASE 1
+									IF FLAG:AUTOMODE
+										PRINTFORML 「あやややや！　ちょ…待っ、本気ですか！？」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「あやややや！　ちょ…待っ、本気ですか！？」
+									ENDIF
+								CASEELSE
+									IF FLAG:AUTOMODE
+										PRINTFORML 「な──ダメダメ、それはダメですったら！」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「な──ダメダメ、それはダメですったら！」
+									ENDIF
+							ENDSELECT
+						ENDIF
+					;未遂
+					CASE 2
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「ふぅ……、不届きにも程がありますよ！」
+							CASE 1
+								PRINTFORML 「もう…！　あなたには過ぎた相手ですよ」
+							CASEELSE
+								PRINTFORML 「残念。そうお安くはありませんよ」
+						ENDSELECT
+					CASEELSE
+						;戦意喪失
+						IF CFLAG:29 || TFLAG:16 == 2
+							PRINTFORML 「………っ……ぃ…」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 文はびくり、と一度だけ身体を跳ねさせ、また力無く目を伏せる
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 文はびくり、と一度だけ身体を跳ねさせ、また力無く目を伏せる
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 触手を伝う粘液と少女の体液が混じったものの中に、わずかに赤いものが見て取れた──
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 触手を伝う粘液と少女の体液が混じったものの中に、わずかに赤いものが見て取れた──
+							ENDIF
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「…………っ、あ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「…………っ、あ」
+							ENDIF
+							PRINTFORML 
+							IF FLAG:AUTOMODE
+								PRINTFORML 「別に……後生大事に取っておいたわけじゃ…ありません、けどね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「別に……後生大事に取っておいたわけじゃ…ありません、けどね」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「…あなたみたいなのにくれてやるつもりも…無かったんですよ…？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「…あなたみたいなのにくれてやるつもりも…無かったんですよ…？」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 俯き加減に苦しげな息を吐く文の表情は窺い知れない…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 俯き加減に苦しげな息を吐く文の表情は窺い知れない…
+							ENDIF
+						ENDIF
+				ENDSELECT
+		ENDSELECT
+	
+	;PTに勧誘された
+	CASE 140
+		;通常、成功
+		IF ARG:1 == 0 && ARG:2 == 1
+			;喪失
+			IF CFLAG:29
+				PRINTFORML 「…………ぅ…」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文をこのまま放っておけばどうなるかは、想像に難くない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文をこのまま放っておけばどうなるかは、想像に難くない。
+				ENDIF
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「やあやあ、お目が高い。きっとお役に立ちますよ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「やあやあ、お目が高い。きっとお役に立ちますよ！」
+						ENDIF
+					CASE 1
+						PRINTFORML 「謎の不気味な迷宮からの脱出ドキュメンタリー…悪くないわね」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「いい表情とかリアクションとか、お願いしますね！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「いい表情とかリアクションとか、お願いしますね！」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「私の力が必要だ、と。ええ、ええ。分かりますとも♪」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「私の力が必要だ、と。ええ、ええ。分かりますとも♪」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		;通常、失敗
+		ELSEIF ARG:1 == 0 && ARG:2 == 0
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いやぁ、もう少し単独で調べたいことがありまして…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いやぁ、もう少し単独で調べたいことがありまして…」
+					ENDIF
+				CASEELSE
+					PRINTFORML 「うーん。あまり大人数で一緒に動いていては、ネタの漏洩──」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…やや、化け物どもに見つかりやすくなってしまいますし、ねえ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…やや、化け物どもに見つかりやすくなってしまいますし、ねえ」
+					ENDIF
+			ENDSELECT
+		;共闘申し出→受諾
+;		ELSEIF ARG:1 == 1 && ARG:2 == 1
+		
+		ENDIF
+	
+	;烏の行水
+	CASE 149
+		IF CFLAG:29
+		;
+		;娘がいる
+		ELSEIF (NO:(FLAG:10) == 32 && CFLAG:(FLAG:10):104 == 1) || (NO:(FLAG:11) == 32 && CFLAG:(FLAG:11):104 == 1)
+			CFLAG:801 += 1
+			;親子親睦度20以上
+			IF CFLAG:801 >= 20
+				PRINTFORML 「…母様の家の近くには、もっと大きい、水浴びにぴったりな泉があるんですよ」
+				IF FLAG:AUTOMODE
+					PRINTFORML 「近くには立派な滝もあって。…ああ、でも気を付けないと意地悪なワンちゃんが──」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「近くには立派な滝もあって。…ああ、でも気を付けないと意地悪なワンちゃんが──」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文は娘の背を流しながら、妖怪の山に思いを馳せる…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文は娘の背を流しながら、妖怪の山に思いを馳せる…
+				ENDIF
+			;親子親睦度5以上19以下
+			ELSEIF CFLAG:801 >= 5
+				PRINTFORML 「…ほら、まだ汚れてる。私の娘なら、ちょっとは気を遣いなさい」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文はわしわしと娘の髪を洗っている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文はわしわしと娘の髪を洗っている…
+				ENDIF
+			;親子親睦度5未満
+			ELSE
+				PRINTFORML 「…………ふぅ」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 文は入浴中も、あえて我が子と目を合わせようとしない…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 文は入浴中も、あえて我が子と目を合わせようとしない…
+				ENDIF
+			ENDIF
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「くう～～……なんだか、湯浴みもずいぶん久々な気がしてしまいます」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「くう～～……なんだか、湯浴みもずいぶん久々な気がしてしまいます」
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…どうせまた汚れるんでしょうけど…まあ、今は考えるのはやめましょうか」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…どうせまた汚れるんでしょうけど…まあ、今は考えるのはやめましょうか」
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「♪～～……ここでお酒の一杯もあれば、嫌な気分もだいぶ紛れるんですが」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「♪～～……ここでお酒の一杯もあれば、嫌な気分もだいぶ紛れるんですが」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	
+	;完全捕食
+	CASE 152
+		IF FLAG:AUTOMODE
+			PRINTFORML 「…………ぁ」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「…………ぁ」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML （もう……意識が）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （もう……意識が）
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML （百年、千年を生きてみても……終わりは呆気ないものですね）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （百年、千年を生きてみても……終わりは呆気ないものですね）
+		ENDIF
+		PRINTFORML 
+		IF FLAG:AUTOMODE
+			PRINTFORML 「……………もみ、じ……はたて………みん…な──」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「……………もみ、じ……はたて………みん…な──」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 頬を粘液以外のものが伝う感触を最後に、文は意識を手放した──
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 頬を粘液以外のものが伝う感触を最後に、文は意識を手放した──
+		ENDIF
+	
+	;復活
+	CASE 158
+		SELECTCASE ARG:1
+			;助けてもらった
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「………あはは…恩に…着ます…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 力なく笑い、文はどうにか身を起こした…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 力なく笑い、文はどうにか身を起こした…
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「……いやあ…危うく、鳥刺しでつるりと…いかれるところ、でした…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「……いやあ…危うく、鳥刺しでつるりと…いかれるところ、でした…」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 力の入らない身体に鞭打ち、文は精一杯おどけて見せた…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 力の入らない身体に鞭打ち、文は精一杯おどけて見せた…
+						ENDIF
+					CASEELSE
+						PRINTFORML 「………これは…かっこ悪いところを、お見せしまして…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 力なく笑い、文はどうにか身を起こした…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 力なく笑い、文はどうにか身を起こした…
+						ENDIF
+				ENDSELECT
+			;敵に打ち捨てられた
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML （………解放…された…？）
+						IF FLAG:AUTOMODE
+							PRINTFORML （今の…うちに……少しでも、遠く、へ…！）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （今の…うちに……少しでも、遠く、へ…！）
+						ENDIF
+					CASE 1
+						PRINTFORML 「………ぅ…く……」
+						IF FLAG:AUTOMODE
+							PRINTFORML （身体……動く……っ）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （身体……動く……っ）
+						ENDIF
+					CASEELSE
+						PRINTFORML 「………ふ…ふふ、詰めが甘い、ですね…っ」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL がくがくと震える膝に力を込め、文は無理やり立ち上がった…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW がくがくと震える膝に力を込め、文は無理やり立ち上がった…
+						ENDIF
+				ENDSELECT
+		ENDSELECT
+	
+	;好感度でPT離脱
+	CASE 161
+		SELECTCASE RAND:2
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「やはり、別行動した方がいいと思うんですよね。…お互いの為にも」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「やはり、別行動した方がいいと思うんですよね。…お互いの為にも」
+				ENDIF
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はあ。理由ですか？　…ご自分の胸に聞いてみてはいかがです？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はあ。理由ですか？　…ご自分の胸に聞いてみてはいかがです？」
+				ENDIF
+		ENDSELECT
+
+	;好感度でPT離脱される
+	CASE 162
+		SELECTCASE NO:(ARG:1)
+			;自分の娘
+			CASE 32
+				IF CFLAG:(ARG:1):104 == 1
+					;親子親睦度20以上
+					IF CFLAG:801 >= 20
+						PRINTFORML 「あっ、こら！」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「はあ。…あの子なら、そう簡単にやられるとは思えませんが…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「はあ。…あの子なら、そう簡単にやられるとは思えませんが…」
+						ENDIF
+					;親子親睦度5以上19以下
+					ELSEIF CFLAG:801 >= 5
+						PRINTFORML 「あっ、こら！」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ああもう…子供のこういうところは面倒ですね…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ああもう…子供のこういうところは面倒ですね…」
+						ENDIF
+					;親子親睦度5未満
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ふん。……勝手になさい」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ふん。……勝手になさい」
+						ENDIF
+					ENDIF
+				;孫以降
+				ELSE
+					PRINTFORML 「あっ、こら！」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああもう…子供のこういうところは面倒ですね…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああもう…子供のこういうところは面倒ですね…」
+					ENDIF
+				ENDIF
+			;椛
+			CASE 41
+				PRINTFORML 「まったく…相変わらず頭が固いと言うか」
+			;はたて
+			CASE 98
+				PRINTFORML 「…ああ、もう。大丈夫かしらね、あんな様子で」
+			CASEELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「…やれやれ。気難しい方ですねえ」
+					CASEELSE
+						PRINTFORML 「はあ。こんな時に冷静になれないで、どうするのかしら」
+				ENDSELECT
+		ENDSELECT
+	
+	;ランダムイベント発生　ARG:2で同じイベントの詳細分岐
+	CASE 200
+		SELECTCASE ARG:1
+			;親睦
+			;未実装
+;			CASE 161
+;				IF ARG:2 == 0
+;					SELECTCASE ARG:3
+;						;襲われた
+;						CASE 0
+;							PRINTFORMW 「」
+;						;襲われたが助かった
+;						CASE 1
+;							PRINTFORMW 「」
+;						;一人でやってろ！した
+;						CASE 2
+;							PRINTFORMW 「」
+;					ENDSELECT
+;				ELSE
+;					SELECTCASE ARG:3
+;						;発情・襲った
+;						CASE 0
+;							PRINTFORMW 「」
+;						;発情・襲い失敗、自慰
+;						CASE 1
+;							PRINTFORMW 「」
+;						;発情・乱交、相思相愛
+;						CASE 2
+;							PRINTFORMW 「」
+;					ENDSELECT
+;				ENDIF
+			
+		ENDSELECT
+	
+	;触手スーツ装着
+	CASE 440
+		IF CFLAG:29
+		;
+		ELSE
+			SELECTCASE ARG:1
+				;装着
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……え？　ちょっ、な、これ……！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……え？　ちょっ、な、これ……！？」
+					ENDIF
+				;抵抗する？
+				CASE 1
+					
+				;抵抗開始
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こ…っの！　……これくらいっ、どうって、こと…！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こ…っの！　……これくらいっ、どうって、こと…！」
+					ENDIF
+				;抵抗失敗
+				CASE 3
+					
+				;A攻め
+				CASE 4
+					PRINTFORML 「くぁ、っ！？　あひ、っぃ、ぃあああぁぁぁ！」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おしり、っ、おしりなんかでっ、わたっ、し──！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おしり、っ、おしりなんかでっ、わたっ、し──！！」
+					ENDIF
+				;B攻め
+				CASE 8
+					PRINTFORML 「んあああぁぁっ！　やめっ…そこ、弱──っ」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…う、そ、私…わたし、胸だけ、で、こんな……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…う、そ、私…わたし、胸だけ、で、こんな……！」
+					ENDIF
+				;C(P)攻め
+				CASE 10
+					;ふたなり
+					IF CFLAG:42 || TALENT:121
+						PRINTFORML 「ひあああぁっ！？　だ、ダメ、そこはダメですっ！」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「こんなの、知らないっ、からぁっ！　吸わないっ、でぇぇっ！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「こんなの、知らないっ、からぁっ！　吸わないっ、でぇぇっ！！」
+						ENDIF
+					ELSE
+						PRINTFORML 「ひっ！　やっ、きゃいっ！　う、ぅ、声、止まらな……っ、」
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あ！　あ！　ああぅ！　そこ、ばっかり、やめええぇっ！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あ！　あ！　ああぅ！　そこ、ばっかり、やめええぇっ！！」
+						ENDIF
+					ENDIF
+				;V攻め
+				CASE 12
+					PRINTFORML 「うああああぁっ！　おく、っぅ、にぃっ！　そんなにぃっ…！」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「これ、これっ、だめ、ですっ…私、もうっ…！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「これ、これっ、だめ、ですっ…私、もうっ…！」
+					ENDIF
+				;諦める
+				CASE 14
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……はぁ……はぁっ…………脱ぐのは…無理、ですか…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……はぁ……はぁっ…………脱ぐのは…無理、ですか…」
+					ENDIF
+				;コンゴトモヨロシク
+				CASE 15
+					PRINTFORML 「んぅ……っ」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……なんとかしないと…ほんとに、頭がおかしくなっちゃいますよ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……なんとかしないと…ほんとに、頭がおかしくなっちゃいますよ…」
+					ENDIF
+				;全箇所攻め
+				CASE 17
+					PRINTFORML 「！！？　ひぃ、っ！？　ぁ、あ！　ひあああぁっ！！」
+					PRINTFORML 「ま、待っ、おねが──ぃあああああああぁ！？」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 我が物顔で全身を蹂躙する触手に対し、文は全く抗うすべを持たない！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 我が物顔で全身を蹂躙する触手に対し、文は全く抗うすべを持たない！
+					ENDIF
+				;淫乱取得
+				CASE 18
+					PRINTFORML 「……はぁーっ……はぁーっ……はぁーっ……あ、は──」
+					IF FLAG:AUTOMODE
+						PRINTFORML （……こんな…っ、……わたしの、体、こんな……）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （……こんな…っ、……わたしの、体、こんな……）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （こんなに……気持ちよく、なれるん、だ──）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （こんなに……気持ちよく、なれるん、だ──）
+					ENDIF
+			ENDSELECT
+		ENDIF
+	
+	;触手スーツ常駐
+	CASE 441
+	
+	CASEELSE
+		;汎用
+ENDSELECT
+ENDIF
+
+RESETCOLOR
+
+;口上記入済み
+RETURN 1
+

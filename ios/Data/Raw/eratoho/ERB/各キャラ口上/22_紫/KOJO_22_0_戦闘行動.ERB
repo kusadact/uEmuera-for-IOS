@@ -1,0 +1,885 @@
+﻿;ARG:0 == 1の管理
+@BATTLE_MIKATA_KOUDOU_HATUDOU_22_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	IF ARG:1 < 10
+		CALL BATTLE_MIKATA_KOUDOU_SONOTA_22_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;娘系を狙う
+	ELSEIF DA:(CFLAG:51):0 == 19 && ARG:1 < 35
+		CALL BATTLE_MIKATA_KOUDOU_VSMUSUME_22_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 35
+		CALL BATTLE_MIKATA_KOUDOU_KOUGEKI_22_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 54
+		CALL BATTLE_MIKATA_KOUDOU_KOUSOKU_NOW_22_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 59
+		CALL BATTLE_MIKATA_KOUDOU_ONEDARI_22_0_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ENDIF
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_VSMUSUME_22_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+	IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+		;溜め撃ち
+		IF ARG:1 == 13
+				;溜め
+				IF CFLAG:31 == 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「舐めないでほしいわね、小娘が……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「舐めないでほしいわね、小娘が……！」
+					ENDIF
+				;発射
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「三途の川で死神に運ばせてやるわ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「三途の川で死神に運ばせてやるわ！」
+					ENDIF
+				ENDIF
+		ELSE
+			SELECTCASE RAND:4
+				CASE 0
+				;落ち着け
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ガキが……図に乗るんじゃない！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ガキが……図に乗るんじゃない！」
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……亡き者にしてほしいようね？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……亡き者にしてほしいようね？」
+					ENDIF
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんな戦い方をするからには、殺されても文句は言わないでしょうねぇ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんな戦い方をするからには、殺されても文句は言わないでしょうねぇ？」
+					ENDIF
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「そのはしゃぎ回る様……目障りよ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「そのはしゃぎ回る様……目障りよ！」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	ELSE
+		;溜め撃ち
+		IF ARG:1 == 13
+			;溜め
+			IF CFLAG:31 == 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「可愛がってあげるわ、子猫ちゃん？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「可愛がってあげるわ、子猫ちゃん？」
+				ENDIF
+			;発射
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「身の程を知りなさい」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「身の程を知りなさい」
+				ENDIF
+			ENDIF
+		ELSE
+			SELECTCASE RAND:4
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「年長者には従うものよ……？　例え見た目が幼くてもね！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「年長者には従うものよ……？　例え見た目が幼くてもね！」
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「幻想郷のルールなんて知らないでしょう？　身を以って教えてあげる」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「幻想郷のルールなんて知らないでしょう？　身を以って教えてあげる」
+					ENDIF
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「姿形は似ていても、私と貴方には決定的な違いがあるの。あいにくだけど」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「姿形は似ていても、私と貴方には決定的な違いがあるの。あいにくだけど」
+					ENDIF
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「貴方が手段を選ばないなら、私も手段は選ばない」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「貴方が手段を選ばないなら、私も手段は選ばない」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	ENDIF
+
+@BATTLE_MIKATA_KOUDOU_SONOTA_22_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;防御
+		CASE 1
+			;身を守る
+			IF ARG:2 == 0
+				;MP1/4以下か拘束中か朦朧
+				IF MAXBASE:MP/4 >= BASE:MP || CFLAG:20 || FLAG:7 >= 11
+					IF RAND:2 == 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ちぃっ、結界を……！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ちぃっ、結界を……！」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「こんな結界がどこまでもつか……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「こんな結界がどこまでもつか……」
+						ENDIF
+					ENDIF
+				;HP1/4以下か妊娠中か要睡眠か発情
+				ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3 || FLAG:7 >= 7 || CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 結界を展開した紫の額に、汗が浮かんでいる……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 結界を展開した紫の額に、汗が浮かんでいる……
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「この体でも、結界を展開するくらいは造作も無いわね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「この体でも、結界を展開するくらいは造作も無いわね」
+					ENDIF
+				ENDIF
+			;リロード
+			ELSEIF ARG:2 == 1
+				IF CFLAG:805 == 5
+					CFLAG:805 = 0
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「頼らざるを得ないわね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「頼らざるを得ないわね」
+					ENDIF
+					CFLAG:805 = 5
+				ENDIF
+			ENDIF
+;		;アイテム
+;		CASE 2
+		;前進
+		CASE 3
+			;発情時・MP1/4時・HP0時・妊娠時・朦朧時で他に味方がいる
+			IF FLAG:10 && (CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 「無茶言うわねぇ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「無茶言うわねぇ……」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「……さて」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「……さて」
+				ENDIF
+			ENDIF
+		;後退
+		CASE 4
+			IF FLAG:AUTOMODE
+				PRINTFORML 「失礼。盾役は辞退させていただきますわ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「失礼。盾役は辞退させていただきますわ」
+			ENDIF
+;		;逃走
+;		CASE 5
+	ENDSELECT
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_KOUGEKI_22_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;攻撃系
+	;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+	IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+		SELECTCASE ARG:1
+			;弱、節約
+			CASE 10, 20, 23
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「一気に力を使い果たすわけにもいかないか……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「一気に力を使い果たすわけにもいかないか……」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「焦りは禁物ね……こんな体では尚更に」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「焦りは禁物ね……こんな体では尚更に」
+						ENDIF
+					CASE 2
+						IF FLAG:AUTOMODE
+							PRINTFORML 「突っ立って休んでいる暇はないでしょうね……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「突っ立って休んでいる暇はないでしょうね……」
+						ENDIF
+				ENDSELECT
+			;溜め撃ち
+			CASE 13
+				;溜め
+				IF CFLAG:31 == 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……目障りよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……目障りよ」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「疾く往ぬがいい！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「疾く往ぬがいい！」
+					ENDIF
+				ENDIF
+			;貫通弾、乱れ打ち
+			CASE 15, 24
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「寸分の差異もなく消えるがいい！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「寸分の差異もなく消えるがいい！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「長期戦は不利……一か八かで速攻を仕掛けるしかないようね」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「長期戦は不利……一か八かで速攻を仕掛けるしかないようね」
+						ENDIF
+				ENDSELECT
+			;非消耗武器の弱攻撃、中攻撃、強攻撃
+			CASE 30, 31, 32
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あまり無茶はできないわね……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あまり無茶はできないわね……」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「……やはり、体が鈍いかしら」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「……やはり、体が鈍いかしら」
+						ENDIF
+					CASE 2
+						IF FLAG:AUTOMODE
+							PRINTFORML 「接近戦も力の乱用も、お断りなのだけれど……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「接近戦も力の乱用も、お断りなのだけれど……」
+						ENDIF
+				ENDSELECT
+			;下段狙い、急所狙い
+			CASE 33, 34
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「悪いけれど、真っ向勝負できる体ではないのよね……！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「悪いけれど、真っ向勝負できる体ではないのよね……！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「全力が出せないなら……搦め手を使うしか手はない」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「全力が出せないなら……搦め手を使うしか手はない」
+						ENDIF
+					CASE 2
+						IF FLAG:AUTOMODE
+							PRINTFORML 「……動きを止めておけば！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「……動きを止めておけば！」
+						ENDIF
+				ENDSELECT
+			;その他
+			CASEELSE
+				SELECTCASE RAND:4
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「わかってはいたけど、この体ですらすぐ息切れするわね……！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「わかってはいたけど、この体ですらすぐ息切れするわね……！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「私はいつまで戦える……？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「私はいつまで戦える……？」
+						ENDIF
+					CASE 2
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あまり力を使いたくはないけれど……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あまり力を使いたくはないけれど……」
+						ENDIF
+					CASE 3
+						IF FLAG:AUTOMODE
+							PRINTFORML 「やれるかしら……いえ、やるのよ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「やれるかしら……いえ、やるのよ！」
+						ENDIF
+				ENDSELECT
+		ENDSELECT
+	;霊夢が捕まっている時ランダム
+	ELSEIF NO:(DA:(CFLAG:51):20) == 1 && CFLAG:(DA:(CFLAG:51):20):104 == 0 && RAND:3 == 0
+		;丸呑み
+		IF NO:(DA:(CFLAG:51):21) == 1
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML （さすがにあれの体内へ直接スキマを開くのは不可能……外からどうにかするしかない……！）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （さすがにあれの体内へ直接スキマを開くのは不可能……外からどうにかするしかない……！）
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「霊夢、私の声が耳に届いているでしょう！？　もうしばらく堪えなさい！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「霊夢、私の声が耳に届いているでしょう！？　もうしばらく堪えなさい！」
+					ENDIF
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「転移させて救出するには敵の拘束が強すぎる……なら、弱めればいいだけの話よ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「転移させて救出するには敵の拘束が強すぎる……なら、弱めればいいだけの話よ」
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「早くその子を離しなさい。今なら八つ裂きにするだけで許してあげる」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「早くその子を離しなさい。今なら八つ裂きにするだけで許してあげる」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	;緋緋色金の剣装備時非消耗攻撃でランダム
+	ELSEIF TFLAG:67 == 16 && ARG:1 > 29 && RAND:6 == 0
+		SELECTCASE RAND:2
+			CASE 0
+				;東方世界の武士ってどれだけ強いんだろうなぁ、鬼を軽くぶちのめすMOMOTAROUあたりやばそうだけど
+				IF FLAG:AUTOMODE
+					PRINTFORML 「外の世界では『首おいてけ』なる妖怪が大人気とか……真似してみましょうか」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「外の世界では『首おいてけ』なる妖怪が大人気とか……真似してみましょうか」
+				ENDIF
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「まさか、この歳になって妖忌の真似事をするとはねぇ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「まさか、この歳になって妖忌の真似事をするとはねぇ」
+				ENDIF
+		ENDSELECT
+	ELSE
+		SELECTCASE ARG:1
+			;弱、節約
+			CASE 10, 20, 23
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「肩慣らしといきましょうか」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「肩慣らしといきましょうか」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「この程度で十分よ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「この程度で十分よ」
+						ENDIF
+					CASE 2
+						IF FLAG:AUTOMODE
+							PRINTFORML 「外の世界だと、こういうのは省エネって言うらしいわね」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「外の世界だと、こういうのは省エネって言うらしいわね」
+						ENDIF
+				ENDSELECT
+			;中
+			CASE 11, 21
+				SELECTCASE RAND:4
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「誘ってるの？　それなら、弾でも抱えなさい」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「誘ってるの？　それなら、弾でも抱えなさい」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「これくらいでいいかしら」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「これくらいでいいかしら」
+						ENDIF
+					CASE 2
+						IF FLAG:AUTOMODE
+							PRINTFORML 「行くわよ？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「行くわよ？」
+						ENDIF
+					CASE 3
+						IF FLAG:AUTOMODE
+							PRINTFORML 「仕掛けさせてもらいましょう」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「仕掛けさせてもらいましょう」
+						ENDIF
+				ENDSELECT
+			;強
+			CASE 12, 22
+				;拘束状態で強弾幕。つまり、霊撃
+				IF (CFLAG:10 || CFLAG:20) && ARG:1 == 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「もったいぶっている場合ではないわね……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「もったいぶっている場合ではないわね……！」
+					ENDIF
+				ELSE
+					IF RAND:3 == 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「降り注げ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「降り注げ！」
+						ENDIF
+					ELSEIF RAND:2 == 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「こういう生き物は、最後までしっかり粉砕しておかないと」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「こういう生き物は、最後までしっかり粉砕しておかないと」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「花火の打ち上げと行きましょうか？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「花火の打ち上げと行きましょうか？」
+						ENDIF
+					ENDIF
+				ENDIF
+			;溜め撃ち
+			CASE 13
+				;使い魔装備時
+				IF CFLAG:7 == 22 || CFLAG:8 == 22
+					;溜め
+					IF CFLAG:31 == 2
+						IF FLAG:AUTOMODE
+							PRINTFORML 「さて、拾い物の使い魔だけれど……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「さて、拾い物の使い魔だけれど……」
+						ENDIF
+					;発射
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「全員整列！　一斉射撃！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「全員整列！　一斉射撃！」
+						ENDIF
+					ENDIF
+				ELSE
+					;溜め
+					IF CFLAG:31 == 2
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「どうやって潰してあげましょうか？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「どうやって潰してあげましょうか？」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「いい加減、貴方達の存在は見飽きてきたわ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「いい加減、貴方達の存在は見飽きてきたわ」
+								ENDIF
+							ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「――消えなさい」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「――消えなさい」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「お前は幻想郷の住人じゃない……だから容赦は不要ね」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「お前は幻想郷の住人じゃない……だから容赦は不要ね」
+								ENDIF
+							ENDSELECT
+					ENDIF
+				ENDIF
+			;ばら撒き弾
+			CASE 14
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「まずは足を止めましょうか」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「まずは足を止めましょうか」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「足元に気をつけることね。落とし穴が開いている」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「足元に気をつけることね。落とし穴が開いている」
+						ENDIF
+				ENDSELECT
+			;貫通弾
+			CASE 15
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「たとえ散開しようとも、私の弾は食らいつく！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「たとえ散開しようとも、私の弾は食らいつく！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「折れ曲がる直進弾を見せてあげる」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「折れ曲がる直進弾を見せてあげる」
+						ENDIF
+				ENDSELECT
+			;乱れ打ち
+			CASE 24
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「どこに逃げても無駄よ？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「どこに逃げても無駄よ？」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「一人での包囲射撃と洒落こみましょうか！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「一人での包囲射撃と洒落こみましょうか！」
+						ENDIF
+				ENDSELECT
+			;一点集中
+			CASE 25
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「遠距離からのゼロ距離射撃、味わうといいわ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「遠距離からのゼロ距離射撃、味わうといいわ」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「手先を転移させるくらい、まだまだ簡単にできるわよ？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「手先を転移させるくらい、まだまだ簡単にできるわよ？」
+						ENDIF
+				ENDSELECT
+			;ここから非消耗
+			;弱攻撃
+			CASE 30
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あいにく、私の攻撃には近づく必要なんてないのです」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あいにく、私の攻撃には近づく必要なんてないのです」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「軽い攻撃なら、その場を動く必要すらありませんわ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「軽い攻撃なら、その場を動く必要すらありませんわ」
+						ENDIF
+					CASE 2
+						IF FLAG:AUTOMODE
+							PRINTFORML 「踏み込みなんていらない……私の力ならば」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「踏み込みなんていらない……私の力ならば」
+						ENDIF
+				ENDSELECT
+			;中攻撃
+			CASE 31
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「単純な相手……転移を先読みされる心配はない」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「単純な相手……転移を先読みされる心配はない」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「後ろにも注意するべきよ？　たとえ、私が前にいても」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「後ろにも注意するべきよ？　たとえ、私が前にいても」
+						ENDIF
+					CASE 2
+						IF FLAG:AUTOMODE
+							PRINTFORML 「腕が短くなっていても、私の射程は変わらないのよ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「腕が短くなっていても、私の射程は変わらないのよ」
+						ENDIF
+				ENDSELECT
+			;強攻撃
+			CASE 32
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「さすがに、ちゃんと踏み込んで叩きこまないとダメね」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「さすがに、ちゃんと踏み込んで叩きこまないとダメね」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「相変わらずの外見ね……見てると叩き潰したくなるわ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「相変わらずの外見ね……見てると叩き潰したくなるわ！」
+						ENDIF
+				ENDSELECT
+			;下段狙い
+			CASE 33
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「文字通りに、足を引っ張ってあげましょう……地面のスキマからね」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「文字通りに、足を引っ張ってあげましょう……地面のスキマからね」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「地面と盛大なキスをなさい！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「地面と盛大なキスをなさい！」
+						ENDIF
+				ENDSELECT
+			;急所狙い
+			CASE 34
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「直接、中身を狙ってあげるわ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「直接、中身を狙ってあげるわ！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「急所が外になかろうと、私には関係ない」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「急所が外になかろうと、私には関係ない」
+						ENDIF
+				ENDSELECT
+			ENDSELECT
+	ENDIF
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_KOUSOKU_NOW_22_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE ARG:1
+		;拘束離脱
+		CASE 42
+			IF ARG:3 == 0
+				;HP1/4orMP1/4or発情中or絶頂中or妊娠中
+				IF MAXBASE:HP/4 >= BASE:HP || MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:35 || CFLAG:36 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「一瞬でもいい、体を離せれば……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「一瞬でもいい、体を離せれば……！」
+					ENDIF
+				;その他
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「少しでも体を離せれば、私にはそれで十分！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「少しでも体を離せれば、私にはそれで十分！」
+					ENDIF
+				ENDIF
+			ENDIF
+		;力溜め
+		CASE 43
+			IF ARG:2 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「スキマを使って逃げようにも、相手とくっついたままじゃ意味がない……！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「スキマを使って逃げようにも、相手とくっついたままじゃ意味がない……！」
+				ENDIF
+			ENDIF
+		;諦め
+		CASE 44
+			IF ARG:2 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML （初手を誤った時点で、この末路は決まっていた……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （初手を誤った時点で、この末路は決まっていた……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 　もう……どうしようも……ない、のね……）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　もう……どうしようも……ない、のね……）
+				ENDIF
+			ENDIF
+		;何もしない
+		CASE 45
+		;強制自慰
+		CASE 46
+			PRINTFORM （駄目、だわ……からだ……あついのっ……
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML ）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW ）
+			ENDIF
+		;お尻ガード
+		CASE 50
+		;胸ガード
+		CASE 51
+		;Cガード
+		CASE 52
+		;挿入ガード
+		CASE 53
+			;戦意喪失は戻す
+			SIF CFLAG:29
+				RETURN
+
+			IF TALENT:0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「再生した処女を処女と呼べるかは疑問だけれど、渡してあげる義理もないわ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「再生した処女を処女と呼べるかは疑問だけれど、渡してあげる義理もないわ」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML （中に入られれば、スキマで逃げ出すことすら難しくなる……！）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （中に入られれば、スキマで逃げ出すことすら難しくなる……！）
+				ENDIF
+			ENDIF
+	ENDSELECT
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_ONEDARI_22_0_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;おねだり
+		CASE 54 TO 58
+			;戦意喪失
+			IF CFLAG:29
+				IF RAND:2 == 0
+					PRINTFORM （皆が楽に戦えるから……だから、早く襲ってぇ……
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML ）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ）
+					ENDIF
+				ELSE
+					PRINTFORM （戦えない、なら、味方の代わりに……気持ちよく、ならないとぉ……
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML ）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ）
+					ENDIF
+				ENDIF
+			;発情レベル＋触手中毒＋自慰中毒合計値4以上
+			ELSEIF (CFLAG:28 + ABL:10 + ABL:11) >= 4
+				IF FLAG:AUTOMODE
+					PRINTFORML （我慢できない、戦えないから処理してもらう……それだけ、それだけ、よ……）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （我慢できない、戦えないから処理してもらう……それだけ、それだけ、よ……）
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML （これは策……これは策っ……！）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （これは策……これは策っ……！）
+				ENDIF
+			ENDIF
+	ENDSELECT
+RETURN

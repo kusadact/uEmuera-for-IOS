@@ -1,0 +1,1264 @@
+﻿@SYSTEM_MESSAGE_14_718(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM おねだり
+#DIM 体位
+;ARG:4	NFフラグ
+
+;おねだり	CFLAG:50がおねだりであれば1に。簡略化用
+;体位		名前こそ体位だが、差分パターンを一時的に記憶するための変数。正常位なのに打屁股のメッセージが出るとかいうのを防ぐためのもの。
+VARSET LOCAL
+VARSET おねだり
+VARSET 体位
+SELECTCASE CFLAG:50
+	CASE 54 TO 58
+		おねだり = 1
+	CASEELSE
+		おねだり = 0
+ENDSELECT
+;体位セレクタ
+SELECTCASE TFLAG:63
+	CASE 0, 3
+		IF おねだり
+			PRINTDATA 体位
+				DATAFORM 自己趴在地上向後挺起屁股、
+				DATAFORM 自己趴在地上像狗一樣抬起一隻腿、
+				DATAFORM 扶住墻壁向後挺腰、
+				DATAFORM 自己以対面座位的姿勢跨坐在%ARGS:1%身上、
+				DATAFORM 自己擺出了屈膝位的姿勢、
+				DATAFORM 自己跨坐在躺着的%ARGS:1%身上、
+				DATAFORM 自己仰躺在地張開了双腿、
+			ENDDATA
+			IF !TFLAG:63
+				PRINTDATA
+					DATAFORM 用双手掰開了臀瓣、把肛門暴露在衆目睽睽之下
+					DATAFORM 舞蹈般淫乱的動作搖動着屁股
+					DATAFORM 説着自己已経屈服的話誘惑着%ARGS:1%們
+				ENDDATA
+			ELSE
+				PRINTDATA
+					DATAFORM 用手指掰開了陰唇、把膣口暴露在衆目睽睽之下
+					DATAFORM 舞蹈般淫乱的動作搖動着腰肢
+					DATAFORM 説着自己已経屈服的話誘惑着%ARGS:1%們
+				ENDDATA
+			ENDIF
+		ELSE
+			PRINTFORM 即使抵抗也还是被拘束成了
+			PRINTDATA 体位
+				DATAFORM 四肢着地挺起屁股的姿勢
+				DATAFORM 所謂的屈膝位的姿勢
+				DATAFORM 仰躺在地張開大腿的姿勢
+			ENDDATA
+			PRINTFORM 
+		ENDIF
+	CASE 1
+		IF おねだり
+			IF TALENT:貧乳 || TALENT:絶壁
+				PRINTFORM 露出貧瘠的
+			ELSEIF TALENT:巨乳
+				PRINTFORM 露出豊満的
+			ELSEIF TALENT:爆乳
+				PRINTFORM 露出豊満得像要撐破似的
+			ELSEIF TALENT:超乳
+				PRINTFORM 露出異常肥大的
+			ENDIF
+			PRINTFORM 乳房、擺出媚態撒嬌起来
+
+	ELSE
+		PRINTFORM 即使抵抗也還是被摁得死死的
+	ENDIF
+	CASE 2
+		IF GET_PENIS(TARGET)
+			IF おねだり
+				PRINTFORM 自己露出了陰茎、
+				PRINTDATA
+					DATAFORM 搖着腰肢
+					DATAFORM 一辺満満捋動一辺
+					DATAFORM 張開大腿
+				ENDDATA
+				PRINTFORM 撒嬌起来
+			ELSE
+				PRINTFORM 被摁住四肢、拘束成了仰躺的姿勢
+			ENDIF
+		ELSE
+			IF おねだり
+				PRINTFORM 自己裸露出淫核、擺出媚態撒嬌起来
+			ELSE
+				PRINTFORM 即使被拘束着也在努力併攏双腿
+			ENDIF
+		ENDIF
+ENDSELECT
+PRINTFORM %ARGS:1%們
+PRINTDATA
+	DATAFORM 露出卑劣的笑容
+	DATAFORM 一辺捋動着股間的肉棒一辺
+	DATAFORM 露出看向猟物的眼神
+	DATAFORM 為了不讓抓住的雌性逃走一斉
+	DATAFORM 一辺発出下流的起哄声一辺
+	DATAFORM 露出下流的笑容
+	DATAFORM 一辺挺着股間的肉棒一辺
+	DATAFORM 為了強姦眼前的雌性一斉
+ENDDATA
+PRINTFORML 囲住了%ARGS:0%
+
+;ここから本文（？）
+SELECTCASE DA:(TFLAG:52):87
+	;ペニス使用
+	CASE 0
+		SELECTCASE TFLAG:63
+			;ケツ,まんこ
+			CASE 0, 3
+				
+				IF TALENT:処女 && TFLAG:63
+					PRINTFORML %ARGS:1%把手指挿入了%ARGS:0%的陰裂之内、仔細愛撫着確認裡面的膣壁的感触
+					PRINTFORML 発現%ARGS:0%還有着純潔之証的時候、眼睛開始充血……
+				ENDIF
+				IF おねだり
+					PRINTDATA
+						DATAFORM 因為期待而色眼迷離的
+						DATAFORM 呼吸発燙的
+					ENDDATA
+				ELSE
+					PRINTDATA
+						DATAFORM 扭動着身体想要逃走的
+						DATAFORM 激烈抵抗着的
+					ENDDATA
+				ENDIF
+				PRINTFORM %ARGS:0%的
+				IF !RAND:2 && おねだり
+					PRINTDATA
+						DATAFORM 因期待而軟化的
+						DATAFORM 一陣陣收縮着的
+						DATAFORM 妖媚蠢動着的
+						DATAFORM 被繁殖的欲求所驅使的
+						DATAFORM 因肉欲而饑渇難耐的
+					ENDDATA
+				ENDIF
+				SIF TALENT:処女 && TFLAG:63
+					PRINTFORM 不知男人滋味的
+				PRINTFORML \@ TFLAG:63 ? 膣口 # 菊穴 \@、被%ARGS:1%的亀頭頂住了
+				PRINTFORML 然後%ARGS:1%就這樣、一口気的挿入了%ARGS:0%的\@ TFLAG:63 ? 子宮内 # 肛門 \@！
+				IF TALENT:処女 && LOST_VIRGIN_CHECK(TARGET) && TFLAG:63
+					PRINTFORML 在身体内響起了令人不快的声音
+					PRINTFORML 知道自己的貞操以悲慘的形式喪失了的%ARGS:0%、\@ おねだり ? 対這種事実而感到了興奮 # 臉色発青、説不出話来 \@
+					IF おねだり
+						PRINTFORM %ARGS:0%毫不在意剛剛才失去了純潔、自己
+						PRINTDATAL 
+							DATAFORM 大幅張開了双腿、搖動腰肢貪求着快感……
+							DATAFORM 搖動腰肢、不停地説着淫乱的話語要求膣内射精……
+						ENDDATA
+					ELSE
+						PRINTFORM 因為被奪走了純潔而憤怒的%ARGS:0%、
+						PRINTDATAL 
+							DATAFORM 雖然激烈的抵抗着、但還是被不知道多少%ARGS:1%牢牢地圧住了……
+							DATAFORM 扭動着腰想要逃脱、但是結果只是讓対方変得更加的興奮了……
+						ENDDATA
+					ENDIF
+				ENDIF
+				IF おねだり
+					IF !RAND:5
+						PRINTFORM 体内被射入熱流的感触、讓%ARGS:0%
+						PRINTDATAL
+							DATAFORM 発出了愉悦的声音、扭動着腰肢……
+							DATAFORM 喊着要不行了不停嬌喘……
+							DATAFORM 色眼迷離、発出了迷酔的声音……
+						ENDDATA
+					ENDIF
+					SIF !RAND:5
+						PRINTFORML %ARGS:1%喘着粗気、緊緊地抱住了%ARGS:0%的腰部……
+					SIF !RAND:5
+						PRINTFORML %ARGS:1%不停的用下流的髒話辱罵着発出嬌喘的%ARGS:0%……
+					SIF !RAND:5
+						PRINTFORML %ARGS:0%熱情的扭動着腰、奉仕着%ARGS:1%的肉棒……
+					SIF TALENT:処女 && LOST_VIRGIN_CHECK(TARGET) && TFLAG:63
+							PRINTFORML 愛液溢出的同時、那象征着純潔的証明、也混在一起流了出来……
+					IF !RAND:5
+						SELECTCASE 体位
+							CASE 0, 1, 2
+								PRINTDATAL 
+									DATAFORM %ARGS:1%一辺罵道再夾緊一点、一辺緊緊地抓着%ARGS:0%的屁股……
+									DATAFORM %ARGS:1%喘着粗気、從%ARGS:0%的背後反復激烈的抽插着……
+									DATAFORM %ARGS:0%因為用狗一樣的姿勢被侵犯而感到了喜悦……
+									DATAFORM %ARGS:1%的腰部撞撃着%ARGS:0%的屁股、発出了有節奏的清脆的啪啪声……
+								ENDDATA
+							CASE 3
+								PRINTDATAL
+									DATAFORM %ARGS:0%坐在%ARGS:1%的腿上、上下扭動腰肢進行着奉仕……
+									DATAFORM %ARGS:0%和%ARGS:1%抱在一起、積極的互吻着……
+									DATAFORM %ARGS:1%把%ARGS:0%的胸部当做自己的東西毫不顧忌的肆意揉搓着……
+									DATAFORM %ARGS:1%把手移到了%ARGS:0%的屁股上、毫不顧忌的肆意揉搓着……
+								ENDDATA
+							CASE 4
+								PRINTDATAL
+									DATAFORM %ARGS:0%的眼前、能清楚的看到正被不停侵犯着的自己的\@ TFLAG:63 ? 膣穴 # 肛門 \@……
+									DATAFORM 以全身都徹底暴露的屈辱的姿勢被侵犯的事実、讓%ARGS:0%感到了快感……
+									DATAFORM %ARGS:1%圧在%ARGS:0%身上、用肉棒剜動着肉穴……
+								ENDDATA
+							CASE 5
+								PRINTDATAL
+									DATAFORM %ARGS:0%跨坐在%ARGS:1%之上、上下扭動腰肢進行着奉仕……
+									DATAFORM %ARGS:0%圧在%ARGS:1%身上、積極的互吻着……
+									DATAFORM %ARGS:1%把%ARGS:0%的胸部当做自己的東西毫不顧忌的肆意揉搓着……
+									DATAFORM %ARGS:1%把手移到了%ARGS:0%的屁股上、毫不顧忌的肆意揉搓着……
+								ENDDATA
+							CASE 6
+								PRINTDATAL
+									DATAFORM %ARGS:0%用脚夾住了%ARGS:1%的腰、請求着\@ TFLAG:63 ? 膣内射精 # 肛内射精 \@……
+									DATAFORM %ARGS:0%和%ARGS:1%抱在一起、積極的互吻着……
+									DATAFORM %ARGS:0%自己抱起了双腿、迎接着%ARGS:1%的肉棒……
+									DATAFORM %ARGS:1%勒住了%ARGS:0%的脖子、一辺收緊一辺更加激烈的動着腰……
+								ENDDATA
+						ENDSELECT
+					ENDIF
+				ELSE
+					IF !RAND:5
+						PRINTFORM 体内被射入熱流的感触、讓%ARGS:0%
+						PRINTDATAL
+							DATA 翻起了白眼……
+							DATA 即使心裡否定了、但是身体卻有了反応……
+							DATA 想要尽力抵抗、但是卻因為肉欲而無法使出力気……
+						ENDDATA
+					ENDIF
+						SIF !RAND:5
+							PRINTFORML %ARGS:1%不停的用下流的髒話辱罵着嘴上否定自己有了感覚的%ARGS:0%……
+						SIF !RAND:5
+							PRINTFORML %ARGS:1%指出了%ARGS:0%的肉欲、煽動着%ARGS:0%的羞恥心……
+						SIF !RAND:5
+							PRINTFORML %ARGS:1%們牢牢地圧住了%ARGS:0%的四肢、不讓%ARGS:0%做出任何抵抗……
+						SIF TALENT:処女 && LOST_VIRGIN_CHECK(TARGET) && TFLAG:63
+							PRINTFORML 愛液溢出的同時、那象征着純潔的証明、也混在一起流了出来……
+					IF !RAND:5
+						SELECTCASE 体位
+							CASE 1
+								PRINTDATAL
+									DATAFORM %ARGS:1%的腰部撞撃着%ARGS:0%的屁股、発出了有節奏的清脆的啪啪声……
+									DATAFORM %ARGS:1%圧住%ARGS:0%的頭讓%ARGS:0%変成了土下座的姿勢、不讓%ARGS:0%逃脱……
+									DATAFORM %ARGS:1%喘着粗気、從%ARGS:0%的背後反復激烈的抽插着……
+									DATAFORM %ARGS:0%因為用狗一樣的姿勢被侵犯所帯来的屈辱、眼角含泪……
+									DATAFORM %ARGS:1%們一直牢牢地抓住%ARGS:0%的腰、讓其完全無法逃脱……
+								ENDDATA
+							CASE 2
+								PRINTDATAL
+									DATAFORM %ARGS:0%的眼前、能清楚的看到正被不停侵犯着的自己的\@ TFLAG:63 ? 膣穴 # 肛門 \@……
+									DATAFORM 以全身都徹底暴露的姿勢被侵犯\@ TFLAG:63 ?  # 肛門 \@所帯来的羞恥和屈辱、讓%ARGS:0%感到了憤怒和悔恨……
+									DATAFORM %ARGS:1%們毫不顧忌的嘲笑着以屈辱的姿勢被侵犯着的%ARGS:0%……
+									DATAFORM %ARGS:1%圧在%ARGS:0%身上、用肉棒剜動着肉穴……
+								ENDDATA
+							CASE 3
+								PRINTDATAL
+									DATAFORM %ARGS:0%用脚夾住了%ARGS:1%的腰、請求着\@ TFLAG:63 ? 膣内射精 # 肛内射精 \@……
+									DATAFORM 两体%ARGS:1%分別抱住了%ARGS:0%双腿、讓%ARGS:0%連閉腿都無法做到……
+									DATAFORM %ARGS:1%就連%ARGS:0%投向自己的充満了殺意的視線都在発出嘲笑……
+									DATAFORM %ARGS:1%勒住了%ARGS:0%的脖子、一辺收緊一辺更加激烈的動着腰……
+								ENDDATA
+						ENDSELECT
+					ENDIF
+				ENDIF
+				SIF !RAND:5
+					PRINTFORML 她的\@ TFLAG:63 ? 子宮 # 直腸 \@、已経被変成了只為了性交的器官……
+				SIF !RAND:5
+					PRINTFORML 響起了\@ TFLAG:63 ? 咕啾、咕啾地水分很多的 # 噗嗤、噗嗤地粘度很高的 \@声音……
+			;パイオツ
+			CASE 1
+				IF おねだり
+					PRINTDATA
+						DATAFORM %ARGS:1%讓%ARGS:0%躺在地上并覆蓋在了%ARGS:0%身上、
+						DATAFORM %ARGS:1%讓%ARGS:0%跪倒、
+					ENDDATA
+				ELSE
+					PRINTFORM %ARGS:1%圧住%ARGS:0%并覆蓋在了%ARGS:0%身上、
+				ENDIF
+				;NF(巨乳以上)
+				IF ARG:4 > 0
+					IF TALENT:超乳
+						PRINTFORM 把肉棒抵在極大的乳頭之上、
+					ELSEIF TALENT:爆乳
+						PRINTFORM 把肉棒抵在巨大的乳頭之上、
+					ELSE
+						PRINTFORM 把肉棒抵在乳頭之上、
+					ENDIF
+					PRINTFORML 頂開乳頭挿入到了乳腺之中
+					TFLAG:98 += 1
+				ELSE
+					IF TALENT:超乳
+						PRINTFORML 把肉棒埋進了那発育異常醜陋肥大的乳肉之間
+					ELSEIF TALENT:爆乳
+						PRINTFORML 把肉棒埋進了那与体格不相称的巨大的乳房之間
+					ELSEIF TALENT:巨乳
+						PRINTFORML 把肉棒埋進了那柔軟豊満的乳房之間
+					ELSEIF TALENT:貧乳
+						PRINTFORML 用肉棒頂住了那発育謙虚的乳房
+					ELSEIF TALENT:絶壁
+						PRINTFORML 用肉棒頂住了胸板
+					ELSE
+						PRINTFORML 用胸部夾住了肉棒
+					ENDIF
+				ENDIF
+				PRINTFORML 然後晃動腰部、開始把%ARGS:0%的乳房当做性処理道具使用！
+				IF おねだり && ARG:4 > 0
+					SIF !RAND:3
+						PRINTFORML %ARGS:0%的乳房和乳腺上、沾満了雄性的気味……
+					SIF !RAND:3
+						PRINTFORML %ARGS:0%也自己扭動着身体、想要取悦%ARGS:0%的肉棒……
+				ELSEIF おねだり
+					SIF !RAND:3
+						PRINTFORML %ARGS:0%的乳房、沾満了雄性的気味……
+					SIF !RAND:3
+						PRINTFORML %ARGS:0%也自己扭動着身体、想要取悦%ARGS:0%的肉棒……
+					IF !RAND:5
+						PRINTDATAL
+							DATAFORM 之後%ARGS:1%命令%ARGS:0%含住肉棒的前端進行奉仕、%ARGS:0%高興的遵從了
+							DATAFORM 之後%ARGS:0%自己主動含住了肉棒的前端
+						ENDDATA
+						PRINTFORML 瞬間在口中拡散開的雄性的味道、讓她不由得色眼迷離……
+						SIF !RAND:2
+							PRINTFORML %ARGS:0%就這樣、用嘴唇和舌頭巧妙的含弄愛撫着……
+					ENDIF
+				ELSE
+					SIF !RAND:3
+						PRINTFORML %ARGS:0%想要抵抗、但是双手双脚都被牢牢按住、毫無辦法……
+					SIF !RAND:3
+						PRINTFORML %ARGS:0%的乳房、沾満了雄性的気味……
+				ENDIF
+			;ペニクリ
+			CASE 2
+				;ペニス
+				IF GET_PENIS(TARGET)
+					IF おねだり
+						PRINTFORML 対着%ARGS:0%的堅挺勃起的那個、%ARGS:1%用自己的肉棒圧了上去、開始用陰茎摩擦着陰茎！
+						SIF !RAND:5
+							PRINTFORML 這異常的行為、反而讓%ARGS:0%感到了興奮……
+						SIF !RAND:5
+							PRINTFORML 彼此的肉棒所滲出的前列腺液、就像是潤滑液一般讓摩擦帯来了更大的快感……
+						SIF !RAND:5  && !TALENT:122
+							PRINTFORML 対女性来説不可能体験過的快感、讓%ARGS:0%感到了這從腰部開始讓身体漸漸溶化的感覚……
+						SIF !RAND:5
+							PRINTFORML %ARGS:0%的雄性象徴、被標記上了其他雄性的気味……
+						IF !RAND:5
+							PRINTDATAL
+								DATAFORM %ARGS:0%同時和%ARGS:1%互相親吻、積極的奉仕着%ARGS:1%……
+								DATAFORM %ARGS:1%把舌頭伸進来的時候、%ARGS:0%也配合着把舌頭纏了上去。発出了下流的水声……
+								DATAFORM 這在期間%ARGS:1%也用手摟住了%ARGS:0%的腰、尽情享受着%ARGS:0%的兩瓣臀肉的感触……
+								DATAFORM 這在期間%ARGS:1%也用手摟住了%ARGS:0%的胸、像要留下痕跡般用力揉搓着……
+							ENDDATA
+						ENDIF
+					ELSE
+						PRINTFORML 対着激烈抵抗的%ARGS:0%的那個、%ARGS:1%用自己的肉棒圧了上去、開始用陰茎摩擦着陰茎！
+							SIF !RAND:5
+								PRINTFORML 這異常的行為讓%ARGS:0%感到了嫌悪、但是卻無法掩飾住肉体傳来的快感……
+							SIF !RAND:5
+								PRINTFORML 在無法掩飾的快感下滲出的前列腺液、就像是潤滑液一般讓摩擦帯来了更大的快感……
+							SIF !RAND:5  && !TALENT:122
+								PRINTFORML 対女性来説不可能体験過的快感、讓%ARGS:0%雖然覚得嫌悪但是卻還是接受了……
+							SIF !RAND:5
+								PRINTFORML %ARGS:0%的雄性象徴、被標記上了其他雄性的気味……
+					ENDIF
+				;クライテリオン
+				ELSE
+					IF おねだり
+						PRINTFORM 
+						PRINTDATA 体位
+							DATAFORM 讓%ARGS:0%跨坐在自己身上後、
+							DATAFORM 讓%ARGS:0%保持站立、併攏双腿後、
+							DATAFORM 讓%ARGS:0%仰躺在地後、
+						ENDDATA
+					ENDIF
+					PRINTDATA
+						DATAFORM %ARGS:1%用翹起的肉棒、
+						DATAFORM %ARGS:1%用散発悪臭的肉棒、
+						DATAFORM %ARGS:1%用雄壮的肉棒、
+					ENDDATA
+					PRINTFORML 摩擦起%ARGS:0%的秘裂！
+					IF おねだり
+						SIF !RAND:5
+							PRINTFORML 陰核被雄性象徴不停蹂躙、讓%ARGS:0%腰肢乱顫……
+						SIF !RAND:5
+							PRINTFORML 被頂弄摩擦的刺激、讓%ARGS:0%的秘裂溢出了愛液……
+						SIF !RAND:5
+							PRINTFORML %ARGS:0%自己也動起了腰、貪求着快楽……
+						SIF !RAND:5
+							PRINTFORML %ARGS:0%自己也在期望着、緊貼着股間摩擦的那灼熱堅硬的感触……
+						IF !RAND:5
+							PRINTDATAL
+								DATALIST
+									DATAFORM %ARGS:0%同時和%ARGS:1%互相親吻、積極的奉仕着%ARGS:1%……
+									DATAFORM %ARGS:1%把舌頭伸進来的時候、%ARGS:0%也配合着把舌頭纏了上去。発出了下流的水声……
+								ENDLIST
+								DATAFORM 這在期間%ARGS:1%也用手摟住了%ARGS:0%的腰、尽情享受着%ARGS:0%的兩瓣臀肉的感触……
+								DATAFORM 這在期間%ARGS:1%也用手摟住了%ARGS:0%的胸、像要留下痕跡般用力揉搓着……
+							ENDDATA
+						ENDIF
+					ELSE
+						SIF !RAND:5
+							PRINTFORML 不想要被挿入的%ARGS:0%雖然在抵抗着、但是卻在肉欲下漸漸脱力了……
+						SIF !RAND:5
+							PRINTFORML 被頂弄摩擦的刺激、讓%ARGS:0%的秘裂溢出了愛液……
+						SIF !RAND:5
+							PRINTFORML %ARGS:0%為了逃走不断扭動着腰部、但是卻只起到了給予対方更大的快感的效果……
+						SIF !RAND:5
+							PRINTFORML 緊貼着股間摩擦的那灼熱堅硬的感触雖然讓%ARGS:0%感到嫌悪、但是身体的反応卻很敏感……
+					ENDIF
+				ENDIF
+		ENDSELECT
+		;射精セレクタ
+		IF !RAND:15
+			PRINTFORM %ARGS:1%
+			PRINTDATA
+				DATAFORM 発出難聽的呻吟并
+				DATAFORM 一声呻吟并
+				DATAFORM 低声呻吟并
+			ENDDATA
+			IF !RAND:3 && TFLAG:63 == 0
+				PRINTFORML 晃動着腰撞撃着%ARGS:0%的屁股、在肛内射精了……
+				IF RAND:2
+					PRINTFORM %ARGS:1%把肉棒抜出来後、白色的汚濁
+					PRINTDATA
+						DATAFORM 
+						DATAFORM 
+						DATAFORM 
+					ENDDATA
+					PRINTFORML 開始溢了出来……
+				ENDIF
+				IF !RAND:5
+					IF おねだり
+						PRINTDATAL
+							DATAFORM 之後、%ARGS:1%把被\@ TALENT:処女 && LOST_VIRGIN_CHECK(TARGET) && TFLAG:63 ? 血液、 #  \@\@ TFLAG:63 ? 愛液和精液 # 腸液和精液 \@弄髒的肉棒挿入了%ARGS:0%口中、讓其仔細地清掃口交……
+							DATAFORM 之後、%ARGS:0%含住了%ARGS:1%的被\@ TALENT:処女 && LOST_VIRGIN_CHECK(TARGET) && TFLAG:63 ? 血液、 #  \@\@ TFLAG:63 ? 愛液和精液 # 腸液和精液 \@弄髒的肉棒仔細地清掃口交着……
+						ENDDATA
+					ELSE
+						PRINTFORML 之後、%ARGS:1%按住了一臉厭悪的%ARGS:0%、把被\@ TALENT:処女 && LOST_VIRGIN_CHECK(TARGET) && TFLAG:63 ? 血液、 #  \@\@ TFLAG:63 ? 愛液和精液 # 腸液和精液 \@弄髒的肉棒挿入了%ARGS:0%口中、讓其清掃口交……
+					ENDIF
+				ENDIF
+			ELSEIF RAND:3 && TFLAG:63 == 1
+				PRINTFORM 射精了、那濃厚的精液
+				IF ARG:4 > 0
+					IF RAND:5
+						PRINTFORML 讓%ARGS:0%的乳腺内充満了白濁……
+						TFLAG:98 += 1
+					ELSE
+						PRINTFORML 讓%ARGS:0%的乳房上沾満了白濁……
+					ENDIF
+				ELSEIF おねだり
+					PRINTDATAL
+						DATAFORM 讓%ARGS:0%的乳房上沾満了白濁……
+						DATAFORM 讓%ARGS:0%的整個臉上都沾満了白濁……
+						DATAFORM 讓%ARGS:0%的口中充満了白濁……
+					ENDDATA
+				ELSE
+					PRINTDATAL
+						DATAFORM 讓%ARGS:0%的乳房上沾満了白濁……
+						DATAFORM 讓%ARGS:0%的整個臉上都沾満了白濁……
+					ENDDATA
+				ENDIF
+			ELSEIF RAND:3 && TFLAG:63 == 2 && GET_PENIS(TARGET)
+				PRINTFORML %ARGS:0%勃起的肉棒就這樣把精液全射了出来……
+				IF おねだり
+					PRINTDATAL
+						DATAFORM %ARGS:0%的陰茎完全被其他雄性的精液染成了白色……
+						DATAFORM 接着、把沾着的精液作為潤滑液、再次摩擦起彼此的陰茎……
+					ENDDATA
+				ELSE
+					PRINTDATAL
+						DATAFORM %ARGS:0%的陰茎完全被其他雄性的精液染成了白色……
+						DATAFORM 接着、把沾着的精液作為潤滑液、再次摩擦起彼此的陰茎……
+					ENDDATA
+				ENDIF
+			ELSE
+				SIF TFLAG:63 == 0 || TFLAG:63 == 3
+					PRINTFORM 從她的\@ TFLAG:63 ? 膣穴 # 肛門 \@中抜出肉棒、
+				PRINTFORM 対着她的
+				PRINTDATA 体位
+					DATAFORM 屁股
+					DATAFORM 下腹
+					DATAFORM 膣口
+					DATAFORM 乳房
+					DATAFORM 臉上
+					DATAFORM 頭髪
+				ENDDATA
+				PRINTFORML 射出了汚濁……
+				SELECTCASE 体位
+					CASE 0
+						IF おねだり
+							PRINTDATAL
+								DATAFORM 精液從那雪白光滑的肌膚上不断地滴落下来……
+								DATAFORM %ARGS:0%像是在展示一般自己把汚濁塗満了整個屁股……
+							ENDDATA
+						ELSE
+							PRINTDATAL
+								DATAFORM 精液從那雪白光滑的肌膚上不断地滴落下来……
+								DATAFORM %ARGS:1%把汚濁塗満了感到厭悪的%ARGS:0%的整個屁股、做着標記……
+							ENDDATA
+						ENDIF
+					CASE 1
+						IF おねだり
+							PRINTDATAL
+								DATAFORM %ARGS:0%自己把白濁塗抹在全身之上、讓肌膚沾満了男人的気味……
+								DATAFORM %ARGS:0%用手指刮起白濁放入了口中、賣弄般的品嘗和味道……
+							ENDDATA
+						ELSE
+							PRINTDATAL
+								DATAFORM %ARGS:1%接着把精液塗満了%ARGS:0%的全身、讓%ARGS:0%沾満了自己的気味……
+								DATAFORM %ARGS:1%用手指刮起白濁塞入了%ARGS:0%的口中、強行讓其感受着雄性的味道……
+							ENDDATA
+						ENDIF
+					CASE 2
+						IF おねだり
+							PRINTDATAL
+								DATAFORM %ARGS:0%被白濁玷汚的秘裂、散発着粘糊妖異的光芒……
+								DATAFORM %ARGS:0%因為沒有被膣内射精而感到有些遺憾……
+								DATAFORM %ARGS:0%之後露出了淫靡的笑容、像是要把射在裂縫上的汚濁塗在膣内般開始自慰起来……
+							ENDDATA
+						ELSE
+							PRINTDATAL
+								DATAFORM %ARGS:0%被白濁玷汚的秘裂、散発着粘糊妖異的光芒……
+								DATAFORM 以為要被膣内射精的%ARGS:0%臉色瞬間発白、但之後露出了有些安心的表情……
+							ENDDATA
+						ENDIF
+					CASE 3
+						IF おねだり
+							PRINTDATAL
+								DATAFORM %ARGS:0%把舌頭伸到了胸前、把精液当做甘露般舔舐起来……
+								DATAFORM %ARGS:0%像是在塗抹精液般不停揉搓着乳房、讓上面沾満了雄性的気味……
+								DATAFORM 白色的汚濁、從她柔軟的乳房上不停地滴落下来……
+								DATAFORM %ARGS:1%毫不顧忌的、用她的乳房擦拭着肉棒上的汚漬……
+							ENDDATA
+						ELSE
+							PRINTDATAL
+								DATAFORM 白色的汚濁、從她柔軟的乳房上不停地滴落下来……
+								DATAFORM %ARGS:1%毫不顧忌的、用她的乳房擦拭着肉棒上的汚漬……
+								DATAFORM %ARGS:1%像是在塗抹精液般揉搓着%ARGS:0%的乳房、讓上面沾満了雄性的気味……
+							ENDDATA
+						ENDIF
+					CASE 4
+						IF おねだり
+							PRINTDATAL
+								DATAFORM %ARGS:0%一臉陶酔的接住了它、品味着那粘糊的暖流從臉上流過的感触……
+								DATAFORM %ARGS:0%把它当成肥皂般塗抹開来、親自玷汚了自己的美貌……
+								DATAFORM %ARGS:0%作出深呼吸把那気味完全吸進了肺部、色眼迷離……
+								DATAFORM %ARGS:1%毫不顧忌的、用她的臉頰擦拭着肉棒上的汚漬……
+							ENDDATA
+						ELSE
+							PRINTDATAL
+								DATAFORM %ARGS:0%皺着眉頭、対從臉上流過的粘糊温暖的感触表示了嫌悪……
+								DATAFORM %ARGS:1%把它塗抹開、用自己的精液在%ARGS:0%的美貌上做了標記……
+							ENDDATA
+						ENDIF
+					CASE 5
+						IF おねだり
+							PRINTDATAL
+								DATAFORM %ARGS:0%一臉出神的接住了它、品味着自己頭髮上傳来的粘滑的感触……
+								DATAFORM %ARGS:0%把它当成肥皂般塗抹開来、親自玷汚了能称之為女人生命的部位……
+								DATAFORM 在%ARGS:0%的角質層的空隙中、沾満了雄性的気味……
+							ENDDATA
+						ELSE
+							PRINTDATAL
+								DATAFORM %ARGS:0%皺着眉頭、対從自己頭髮上流過的粘糊的感触表示了嫌悪……
+								DATAFORM %ARGS:1%把它塗抹開、用自己的精液在%ARGS:0%能称之為女人生命的部位上做了標記……
+								DATAFORM 在%ARGS:0%的角質層的空隙中、沾満了雄性的気味……
+							ENDDATA
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;指などによるプレイ
+	CASE 1, 2
+		SELECTCASE TFLAG:63
+			;けつとまんこ
+			;指、舌、玩具、低確率でフィスト
+			CASE 0, 3
+				IF TALENT:処女 && TFLAG:63
+					PRINTFORML %ARGS:1%把手指挿入了%ARGS:0%的陰裂之内、仔細愛撫着確認裡面的膣壁的感触
+					PRINTFORML 発現%ARGS:0%還有着純潔之証的時候、眼睛開始充血……
+				ENDIF
+				IF おねだり
+					PRINTDATA
+						DATAFORM 対着因為期待而色眼迷離的
+						DATAFORM 対着呼吸発燙的
+					ENDDATA
+				ELSE
+					PRINTDATA
+						DATAFORM 対着扭動着身体想要逃走的
+						DATAFORM 対着激烈抵抗着的
+					ENDDATA
+				ENDIF
+				PRINTFORM %ARGS:0%的
+				IF !RAND:2 && おねだり
+					PRINTDATA
+						DATAFORM 因期待而軟化的
+						DATAFORM 一陣陣收縮着的
+						DATAFORM 妖媚蠢動着的
+						DATAFORM 被繁殖的欲求所驅使的
+						DATAFORM 因肉欲而饑渇難耐的
+					ENDDATA
+				ENDIF
+				SIF TALENT:処女 && TFLAG:63
+					PRINTFORM 不知男人滋味的
+				PRINTFORM \@ TFLAG:63 ? 膣口 # 菊穴 \@、
+				SELECTCASE RAND:12
+					CASE 0 TO 2
+						PRINTFORML 把好幾根手指挿了進去、来回搔弄着！
+						IF TFLAG:63 && LOST_VIRGIN_CHECK(TARGET) && TALENT:処女
+							PRINTFORML 在身体内響起了令人不快的声音
+							PRINTFORML 知道自己的貞操以悲慘的形式喪失了的%ARGS:0%、\@ おねだり ? 対這種事実而感到了興奮 # 臉色発青、説不出話来 \@
+							IF おねだり
+								PRINTDATAL 
+									DATAFORM 大幅張開了双腿、搖動腰肢貪求着快感……
+									DATAFORM 扭動腰肢、不断説出淫靡的話央求着快楽……
+								ENDDATA
+							ELSE
+								PRINTFORM 因為被奪走了純潔而憤怒的%ARGS:0%、
+								PRINTDATAL 
+									DATAFORM 雖然激烈的抵抗着、但還是被不知道多少%ARGS:1%牢牢地圧住了……
+									DATAFORM 扭動着腰想要逃走、但是只起到了煽動対方的興奮和優越感的效果……
+								ENDDATA
+							ENDIF
+						ENDIF
+						IF おねだり
+							SIF !RAND:4
+								PRINTFORML %ARGS:0%的\@ TFLAG:63 ? 膣穴 # 肛門 \@熱情的款待了侵入者、像擁抱般把軟肉纏了上去……
+							SIF !RAND:4
+								PRINTFORML \@ TFLAG:63 ? 膣 # 腸 \@壁在被搔弄的愉悦下、配合着手指的動作反復收縮着……
+							SIF !RAND:4
+								PRINTFORML %ARGS:0%的\@ TFLAG:63 ? 秘部 # 菊穴 \@分泌了大量的\@ TFLAG:63 ? 愛液 # 腸液 \@、在汁液四散的同時、発出了\@ TFLAG:63 ? 咕啾咕啾 # 咕啵咕啵 \@的淫靡的水声……
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%注意着%ARGS:0%的弱点和反応、不断地改変着玩弄刺激的部位……
+						ELSE
+							SIF !RAND:4
+								PRINTFORML 雖然嘴上説着否定并同時做出了抵抗、但是%ARGS:0%的身体卻確実的感受到了那行為帯来的性的感覚……
+							SIF !RAND:4
+								PRINTFORML %ARGS:0%的\@ TFLAG:63 ? 秘部 # 菊穴 \@所分泌出的和出汗一樣大量的水分、清楚的顕示出了她的肉欲……
+							SIF !RAND:4
+								PRINTFORML 想要掩飾自己的感覚的%ARGS:0%、讓%ARGS:1%們放声大笑……
+						ENDIF
+					CASE 3 TO 5
+						PRINTFORML 用粗糙的舌頭舔弄起来！
+						TFLAG:95 = 1
+						SIF TFLAG:63 && TALENT:処女
+							PRINTFORML 舌尖触碰到処女膜所帯来的刺激、%ARGS:0%因為喪失処女的\@ おねだり ? 期待 # 恐怖 \@而\@ おねだり ? 扭動着腰肢 # 渾身顫抖 \@
+						IF おねだり
+							SIF !RAND:4
+								PRINTFORML \@ TFLAG:63 ? 膣 # 腸 \@壁的皺褶被粗糙的舌頭仔細舔弄、讓%ARGS:0%発出了嬌喘……
+							SIF !RAND:4
+								PRINTFORML 每次舌頭進出、%ARGS:0%的\@ TFLAG:63 ? 膣穴 # 腸道 \@都会分泌出大量的汁液……
+							SIF !RAND:4
+								PRINTFORML \@ TFLAG:63 ? 愛液 # 腸液 \@被攪弄得発出声音、讓%ARGS:0%感到了羞恥的快感……
+							SIF !RAND:4
+								PRINTFORML 讓人溶化般的快感、讓%ARGS:0%也自己把腰挺向了%ARGS:1%的嘴……
+						ELSE
+							SIF !RAND:4
+								PRINTFORML 雖然嘴上説着否定并同時做出了抵抗、但是%ARGS:0%的身体卻確実的感受到了那行為帯来的性的感覚……
+							SIF !RAND:4
+								PRINTFORML %ARGS:0%雖然想要逃走、但是每次舌頭摩擦内襞的時候手脚都会失去力量……
+							SIF !RAND:4
+								PRINTFORML %ARGS:0%的\@ TFLAG:63 ? 秘部 # 菊穴 \@所分泌出的和出汗一樣大量的水分、清楚的顕示出了她的肉欲……
+							SIF !RAND:4
+								PRINTFORML 想要掩飾自己的感覚的%ARGS:0%、讓%ARGS:1%們放声大笑……
+						ENDIF
+					CASE 6 TO 8
+						PRINTFORML 把從其他地方取出的男根状的巨大玩具強行塞了進去！
+						IF TFLAG:63 && LOST_VIRGIN_CHECK(TARGET) && TALENT:処女
+							PRINTFORML 在身体内響起了令人不快的声音
+							PRINTFORML 知道自己的貞操以悲慘的形式喪失了的%ARGS:0%、\@ おねだり ? 対這種事実而感到了興奮 # 臉色発青、説不出話来 \@
+							IF おねだり
+								PRINTDATAL 
+									DATAFORM 大幅張開了双腿、搖動腰肢貪求着快感……
+									DATAFORM 扭動腰肢、不断説出淫靡的話央求着快楽……
+								ENDDATA
+							ELSE
+								PRINTFORM 因為被奪走了純潔而憤怒的%ARGS:0%、
+								PRINTDATAL 
+									DATAFORM 雖然激烈的抵抗着、但還是被不知道多少%ARGS:1%牢牢地圧住了……
+									DATAFORM 扭動着腰想要逃走、但是只起到了煽動対方的興奮和優越感的效果……
+								ENDDATA
+							ENDIF
+						ENDIF
+						IF おねだり
+							SIF !RAND:4
+								PRINTFORML 発出低沈声音在\@ TFLAG:63 ? 膣内 # 肛内 \@蠢動的玩具、傳們出了妖異的性奮感……
+							SIF !RAND:4
+								PRINTFORML 被\@ TFLAG:63 ? 啾噗啾噗 # 嗚噗嗚噗 \@的玩具不停抽插、与触手和肉棒都完全不同的感覚讓%ARGS:0%只能在快感下不断嬌喘……
+							SIF !RAND:4
+								PRINTFORML %ARGS:0%的\@ TFLAG:63 ? 膣穴 # 肛門 \@緊緊地含住了玩具、像在擁抱般完全不讓它離開……
+							SIF !RAND:4
+								PRINTFORML 被%ARGS:1%們命令、%ARGS:0%親自把玩具挿入了自己的\@ TFLAG:63 ? 膣穴 # 肛門 \@、忘我地自慰着……
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%們指着在無機物的抽插下感到了満足的%ARGS:0%、大声嘲笑着……
+						ELSE
+							SIF !RAND:4
+								PRINTFORML 在\@ TFLAG:63 ? 膣内 # 肛内 \@蠢動的玩具、毫不留情地刺激着%ARGS:0%的性欲……
+							SIF !RAND:4
+								PRINTFORML %ARGS:0%掙扎着想要抵抗、但是卻在激烈地在\@ TFLAG:63 ? 膣内 # 肛内 \@進出的玩具所帯来的快感下脱力了……
+							SIF !RAND:4
+								PRINTFORML 那毫不留情的快感、完全打消了%ARGS:0%抵抗的気力……
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%們指着在無機物下感到了性快感的%ARGS:0%、大声嘲笑着……
+						ENDIF
+					CASE 9 TO 11
+						PRINTFORML 為了讓其感受到自虐的味道、命令%ARGS:0%自慰！
+						TFLAG:95 = 1
+						SIF TFLAG:63 && TALENT:処女
+							PRINTFORML 指尖触碰到処女膜所帯来的刺激、%ARGS:0%因為喪失処女的\@ おねだり ? 期待 # 恐怖 \@而\@ おねだり ? 扭動着腰肢 # 渾身顫抖 \@
+						IF おねだり
+							SIF !RAND:4
+								PRINTFORML %ARGS:0%在被人看見的羞恥下感到了快感……
+							SIF !RAND:4
+								PRINTFORML %ARGS:0%在%ARGS:1%們的辱罵中、忘我地自慰着……
+							SIF !RAND:4
+								PRINTFORML 在想要獲得快感的\@ TFLAG:63 ? 膣内 # 肛内 \@的促使下、%ARGS:0%急不可耐地用手指抽插着……
+							SIF !RAND:4
+								PRINTFORML 甚至連%ARGS:1%説出的辱罵的話語、都成為了讓%ARGS:0%興奮的材料……
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%們露出下流的笑容、看着正淫乱的自慰着的%ARGS:0%……
+						ELSE
+							SIF !RAND:4
+								PRINTFORML 拒絶的%ARGS:0%、被%ARGS:1%抓住手腕、強迫玩弄着自己的\@ TFLAG:63 ? 膣内 # 肛内 \@……
+							SIF !RAND:4
+								PRINTFORML %ARGS:0%雖然想要拒絶、但是卻在敏感的肉穴被蹂躙的過程中、忘記了抵抗的意志……
+							SIF !RAND:4
+								PRINTFORML 在想要獲得快感的\@ TFLAG:63 ? 膣内 # 肛内 \@的促使下、%ARGS:0%漸漸忘我地沈迷其中……
+							SIF !RAND:4
+								PRINTFORML 在%ARGS:1%説出的辱罵的話語下、%ARGS:0%感到了屈辱、変了臉色……
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%們露出下流的笑容、看着淒慘的自慰着的%ARGS:0%……
+						ENDIF
+					CASEELSE
+						PRINTFORML 把握緊的拳頭伸了進去！
+						IF TFLAG:63 && LOST_VIRGIN_CHECK(TARGET) && TALENT:処女 && 体位 != 1
+							PRINTFORML 在身体内響起了令人不快的声音
+							PRINTFORML 知道自己的貞操以悲慘的形式喪失了的%ARGS:0%、\@ おねだり ? 対這種事実而感到了興奮 # 臉色発青、説不出話来 \@
+							IF おねだり
+								PRINTDATAL 
+									DATAFORM 大幅張開了双腿、搖動腰肢貪求着快感……
+									DATAFORM 扭動腰肢、不断説出淫靡的話央求着快楽……
+								ENDDATA
+							ELSE
+								PRINTFORM 因為被奪走了純潔而憤怒的%ARGS:0%、
+								PRINTDATAL 
+									DATAFORM 雖然激烈的抵抗着、但還是被不知道多少%ARGS:1%牢牢地圧住了……
+									DATAFORM 扭動着腰想要逃走、但是只起到了煽動対方的興奮和優越感的效果……
+								ENDDATA
+							ENDIF
+						ENDIF
+						IF おねだり
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%毫不留情的搔弄着発出\@ TFLAG:63 ? 咕啾咕啾 # 咕啵咕啵 \@的悲鳴的\@ TFLAG:63 ? 膣口 # 菊穴 \@……
+							SIF !RAND:4
+								PRINTFORML 在\@ TFLAG:63 ? 膣内 # 肛門 \@被撕裂的痛苦下、%ARGS:0%感到了快感、忍不住挺起了腰懇求着更多……
+							SIF !RAND:4
+								PRINTFORML 像要銘刻在腦海中的強烈快感、讓%ARGS:0%張大了嘴不停発出着尖叫……
+							SIF !RAND:4
+								PRINTFORML 她的\@ TFLAG:63 ? 膣穴 # 肛門 \@激烈地分泌着汁液、貪求着快感……
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%們用軽蔑的眼光看着在這暴力的行為下感到了快感的%ARGS:0%……
+						ELSE
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%毫不留情的搔弄着発出\@ TFLAG:63 ? 咕啾咕啾 # 咕啵咕啵 \@的悲鳴的\@ TFLAG:63 ? 膣口 # 菊穴 \@……
+							SIF !RAND:4
+								PRINTFORML 在\@ TFLAG:63 ? 膣内 # 肛門 \@被撕裂的痛苦下、%ARGS:0%露出了苦悶的表情……
+							SIF !RAND:4
+								PRINTFORML 劇烈的痛苦讓%ARGS:0%満頭大汗……
+							SIF !RAND:4
+								PRINTFORML 自己的\@ TFLAG:63 ? 秘部 # 排泄器官 \@要被破坏的恐懼、讓%ARGS:0%発出了不成声的尖叫……
+							SIF !RAND:4
+								PRINTFORML 她的\@ TFLAG:63 ? 膣穴 # 肛門 \@激烈地分泌着汁液、用来保護自己……
+							SIF !RAND:4
+								PRINTFORML 苦しむ%ARGS:0%の姿を%ARGS:1%們は面白がり、もっとやろうと騒ぎ立てている……
+						ENDIF
+				ENDSELECT
+				SIF TALENT:処女 && LOST_VIRGIN_CHECK(TARGET) && TFLAG:63
+					PRINTFORML 愛液溢出的同時、那象征着純潔的証明、也混在一起流了出来……
+			;パイオッツ
+			CASE 1
+				PRINTDATAL 体位
+					DATA 用手指粗暴地揉弄着
+					DATA 用舌頭和牙歯玩弄着
+					DATA 用手掌覆蓋住了
+					DATA 把小小的玩具摁向了
+				ENDDATA
+				PRINTFORM %ARGS:0%的
+				IF TALENT:貧乳 || TALENT:絶壁
+					PRINTFORM 貧瘠的
+				ELSEIF TALENT:巨乳
+					PRINTFORM 豊満的
+				ELSEIF TALENT:爆乳
+					PRINTFORM 豊満得像要撐破似的
+				ELSEIF TALENT:超乳
+					PRINTFORM 異常肥大的
+				ENDIF
+				PRINTFORM 乳房！
+				SELECTCASE 体位
+					CASE 0
+						IF おねだり
+							SIF !RAND:4
+								PRINTFORML 乳房被当做物品一樣対待、讓%ARGS:0%感到了精神上的愉悦感……
+							SIF !RAND:4
+								PRINTFORML 眼睛充血的%ARGS:1%、為了在%ARGS:0%的双丘下留下痕跡而不断的用力玩弄着……
+							SIF !RAND:4
+								PRINTFORML 敏感的尖端被粗暴的揉捏着、讓%ARGS:0%高声叫喊着……
+							SIF !RAND:4
+								PRINTFORML 只是被触碰到胸部而已、就讓%ARGS:0%的秘部因為期待而完全湿潤了……
+							SIF !RAND:4
+								PRINTFORML 只是被玩弄着胸部就快要去了的%ARGS:0%那可憐的樣子、引起了%ARGS:1%們的大声嘲笑……
+						ELSE
+							SIF !RAND:4
+								PRINTFORML 乳房被当做物品一樣対待、讓%ARGS:0%在屈辱的同時也感到了無法掩飾的性快感……
+							SIF !RAND:4
+								PRINTFORML 眼睛充血的%ARGS:1%、為了在%ARGS:0%的双丘下留下痕跡而不断的用力玩弄着……
+							SIF !RAND:4
+								PRINTFORML 在%ARGS:1%不停的玩弄下、%ARGS:0%無法掩飾住自己的呻吟……
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%抓住%ARGS:0%的乳頭不停扭動、強行引出了她的性快感……
+							SIF !RAND:4
+								PRINTFORML 嘴上説着否定但是卻無法掩飾住快感的%ARGS:0%、引起了%ARGS:1%們的大声嘲笑……
+						ENDIF
+					CASE 1
+						IF おねだり
+							SIF !RAND:4
+								PRINTFORML 乳房被当做物品一樣対待、讓%ARGS:0%感到了精神上的愉悦感……
+							SIF !RAND:4
+								PRINTFORML 眼睛充血的%ARGS:1%、不停用自己的唾液玷汚着%ARGS:0%的乳房……
+							SIF !RAND:4
+								PRINTFORML 敏感的尖端被軽咬和愛撫、讓%ARGS:0%高声叫喊着……
+							SIF !RAND:4
+								PRINTFORML 敏感的尖端被舌尖繞着舔、讓%ARGS:0%発出了色情的呻吟声……
+							SIF !RAND:4
+								PRINTFORML 只是被玩弄着胸部就快要去了的%ARGS:0%那可憐的樣子、引起了%ARGS:1%們的大声嘲笑……
+						ELSE
+							SIF !RAND:4
+								PRINTFORML 乳房被当做物品一樣対待、讓%ARGS:0%在屈辱的同時也感到了無法掩飾的性快感……
+							SIF !RAND:4
+								PRINTFORML 眼睛充血的%ARGS:1%、不停用自己的唾液玷汚着%ARGS:0%的乳房……
+							SIF !RAND:4
+								PRINTFORML 在%ARGS:1%不停的玩弄下、%ARGS:0%無法掩飾住自己的呻吟……
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%巧妙的用牙歯軽咬%ARGS:0%敏感的尖端、強行引出了她的性快感……
+							SIF !RAND:4
+								PRINTFORML 嘴上説着否定但是卻無法掩飾住快感的%ARGS:0%、引起了%ARGS:1%們的大声嘲笑……
+						ENDIF
+					CASE 2
+						IF おねだり
+							SIF !RAND:4
+								PRINTFORML 傳遍乳房的痛苦和快感、讓%ARGS:0%交替発出着悲鳴和嬌喘……
+							SIF !RAND:4
+								PRINTFORML 被当做物品一樣対待和虐待、讓她挺起了胸部央求着更多……
+							SIF !RAND:4
+								PRINTFORML 她的胸部被留下了一個小小的紅手印……
+							SIF !RAND:4
+								PRINTFORML 被打了都有感覚的%ARGS:0%那可恥的姿態、讓%ARGS:1%們破口大罵……
+						ELSE
+							SIF !RAND:4
+								PRINTFORML 傳遍乳房的痛苦、讓%ARGS:0%発出了小声的悲鳴……
+							SIF !RAND:4
+								PRINTFORML 被当做物品一樣対待的屈辱、讓她怒瞪着%ARGS:1%們……
+							SIF !RAND:4
+								PRINTFORML 她的胸部被留下了一個小小的紅手印……
+							SIF !RAND:4
+								PRINTFORML 雖然感到了痛苦、但是与此不同的是%ARGS:0%也感到身体漸漸変熱了起来……
+							SIF !RAND:4
+								PRINTFORML 苦しむ%ARGS:0%の姿を%ARGS:1%們は面白がり、もっとやろうと騒ぎ立てている……
+						ENDIF
+					CASE 3
+						IF おねだり
+							SIF !RAND:4
+								PRINTFORML 乳房被当做物品一樣対待、讓%ARGS:0%感到了精神上的愉悦感……
+							SIF !RAND:4
+								PRINTFORML 眼睛充血的%ARGS:1%、用玩具開拓着%ARGS:0%的双丘……
+							SIF !RAND:4
+								PRINTFORML 敏感的尖端被振動的玩具頂在上面、讓%ARGS:0%高声叫喊着……
+							SIF !RAND:4
+								PRINTFORML 只是被玩弄着胸部而已、就讓%ARGS:0%的秘部因為期待而完全湿潤了……
+							SIF !RAND:4
+								PRINTFORML 被%ARGS:1%們命令、%ARGS:0%開始用那個玩具自慰起来……
+							SIF !RAND:4
+								PRINTFORML 只是被玩弄着胸部就快要去了的%ARGS:0%那可憐的樣子、引起了%ARGS:1%們的大声嘲笑……
+						ELSE
+							SIF !RAND:4
+								PRINTFORML 乳房被当做物品一樣対待、讓%ARGS:0%在屈辱的同時也感到了無法掩飾的性快感……
+							SIF !RAND:4
+								PRINTFORML 眼睛充血的%ARGS:1%、用玩具開拓着%ARGS:0%的双丘……
+							SIF !RAND:4
+								PRINTFORML 在%ARGS:1%不停的玩弄下、%ARGS:0%無法掩飾住自己的呻吟……
+							SIF !RAND:4
+								PRINTFORML %ARGS:1%把振動的玩具強圧在了%ARGS:0%的乳頭上、強行引出了她的性快感……
+							SIF !RAND:4
+								PRINTFORML 嘴上説着否定但是卻無法掩飾住快感的%ARGS:0%、引起了%ARGS:1%們的大声嘲笑……
+						ENDIF
+				ENDSELECT
+			;ちんこ・クライテリオン
+			CASE 2
+				;ちんこ女へ
+				IF GET_PENIS(TARGET)
+					PRINTDATAL 体位
+						DATAFORM %ARGS:1%們開始用手捋動着%ARGS:0%的肉棒！
+						DATAFORM %ARGS:1%們拿出了内側有触手在蠢動的筒、套在了%ARGS:0%的肉棒上！
+						DATAFORM %ARGS:1%們開始用脚踩踏着%ARGS:0%的肉棒！
+						DATAFORM %ARGS:1%們命令%ARGS:0%捋動自己的肉棒！
+					ENDDATA
+					SELECTCASE 体位
+						CASE 0
+							IF おねだり
+								SIF !RAND:4
+									PRINTFORML 雄性的象征在他們遠超自己手法的巧妙捋動下、%ARGS:0%腰部発軟沈溺于快感之中……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%迎合着手交扭動着腰肢、自己也貪求着快楽……
+								SIF !RAND:4
+									PRINTFORML 在被擼着肉棒的時候、%ARGS:0%也報復性的用手指握住了身旁的%ARGS:1%們的肉棒捋動了起来……
+								SIF !RAND:4
+									PRINTFORML 女人無法享受到的快楽、讓%ARGS:0%很快地就滲出了前列腺液……
+								SIF !RAND:4
+									PRINTFORML 被粗暴地摩擦着肉棒、讓她不断地嬌喘着……
+								SIF !RAND:4
+									PRINTFORML 沈溺于雄性快楽的%ARGS:0%、被%ARGS:1%怒罵道真是下賤的肉棒女……
+							ELSE
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%虽然想要忍耐、但是在巧妙的手法下还是被肆意玩弄了……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%扭動着腰想要從玩弄自己肉棒的手中逃出、但是結果只起到了煽動自己快感的結果
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%搖着頭想要否定快感、但是那股間的肉棒卻清楚的顕示了她的興奮……
+								SIF !RAND:4
+									PRINTFORML 身体違背了自身意志感到了快感、很快就從馬眼中滲出了前列腺液……
+								SIF !RAND:4
+									PRINTFORML 感到了女人不可能体会到的快感的%ARGS:0%、被%ARGS:1%怒罵道真是下賤的肉棒女……
+							ENDIF
+						CASE 1
+							IF おねだり
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們把自己的精液尽情的射在了筒中、用来代替潤滑液……
+								SIF !RAND:4
+									PRINTFORML 筒中的触手們激烈的蠢動着、從她的肉棒不断地榨取精液……
+								SIF !RAND:4
+									PRINTFORML 無数的触手們無時無刻都在愛撫着肉棒的每一処、讓%ARGS:0%腰肢乱顫……
+								SIF !RAND:4
+									PRINTFORML 那毫不留情的快感、讓%ARGS:0%感到了從身体内部有白色的東西涌了上来……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們直接用筒捋動着%ARGS:0%們的肉棒……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%在難以抗拒的快感下、自己向着筒挺起了腰……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%露出軽蔑的眼光嘲笑着発出嬌喘的%ARGS:0%……
+							ELSE
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們把自己的精液尽情的射在了筒中、用来代替潤滑液……
+								SIF !RAND:4
+									PRINTFORML 筒中的触手們激烈的蠢動着、從她的肉棒不断地榨取精液……
+								SIF !RAND:4
+									PRINTFORML 無数的触手們無時無刻都在愛撫着肉棒的每一処、讓%ARGS:0%的腰与意志無関的顫抖了起来……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%拼命地想要忍耐、但是那暴力的快感直接打散了抵抗的意志……
+								SIF !RAND:4
+									PRINTFORML 那毫不留情的快感、讓%ARGS:0%感到了從身体内部有白色的東西涌了上来……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們直接用筒捋動着%ARGS:0%們的肉棒……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%露出軽蔑的眼光嘲笑着雖然嘴上説着不要但是身体卻有了感覚的%ARGS:0%……
+							ENDIF
+						CASE 2
+							IF おねだり
+								SIF !RAND:4
+									PRINTFORML 肉棒在脚底下被玩弄的刺激、讓%ARGS:0%発出了嬌喘……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%用脚趾夾住肉竿上下摩擦、讓%ARGS:0%腰部顫抖……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%露出下流的笑容、踩踏着%ARGS:0%的肉棒……
+								SIF !RAND:4
+									PRINTFORML 在恐懼要被踩爛的同時、%ARGS:0%也感覚到了快感……
+								SIF !RAND:4
+									PRINTFORML 敏感的亀頭在脚底下被不停摩擦、讓%ARGS:0%発出了不成体統的呻吟……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%増強了脚上的力道、讓%ARGS:0%腰部顫抖……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們一辺笑着一辺辱罵着%ARGS:0%那丟人的樣子……
+							ELSE
+								SIF !RAND:4
+									PRINTFORML 肉棒被在脚底下被玩弄的屈辱讓%ARGS:0%眼中含泪……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%用脚趾夾住肉竿上下摩擦、讓%ARGS:0%腰部顫抖……
+								SIF !RAND:4
+									PRINTFORML 面対掙扎的%ARGS:0%、%ARGS:1%加大了脚上的力度作為懲罰……
+								SIF !RAND:4
+									PRINTFORML 会被踩爛的恐懼、讓%ARGS:0%臉色慘白……
+								SIF !RAND:4
+									PRINTFORML 敏感的亀頭在脚底下被不停摩擦、讓%ARGS:0%与意志無関感到了快感……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們一辺笑着一辺辱罵着%ARGS:0%那丟人的樣子……
+							ENDIF
+						CASE 3
+							IF おねだり
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%在被人看見的羞恥下感到了快感……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%在%ARGS:1%們的辱罵中、忘我地自慰着……
+								SIF !RAND:4
+									PRINTFORML 在從男根深処湧上的射精衝動的促使下、%ARGS:0%迫不及待的捋動着自己的陰茎……
+								SIF !RAND:4
+									PRINTFORML 甚至連%ARGS:1%説出的辱罵的話語、都成為了讓%ARGS:0%興奮的材料……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們露出下流的笑容、看着可憐的捋動着肉棒的%ARGS:0%……
+							ELSE
+								SIF !RAND:4
+									PRINTFORML 拒絶的%ARGS:0%、被%ARGS:1%抓住手腕、強迫捋動着自己的肉棒……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%雖然想要拒絶、但是卻在捋動着敏感的肉棒的過程中、忘記了抵抗的意志……
+								SIF !RAND:4
+									PRINTFORML 在從男根深処湧上的射精衝動的促使下、%ARGS:0%漸漸忘我地沈迷其中……
+								SIF !RAND:4
+									PRINTFORML 在%ARGS:1%説出的辱罵的話語下、%ARGS:0%感到了屈辱、変了臉色……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們露出下流的笑容、看着可憐的捋動着肉棒的%ARGS:0%……
+							ENDIF
+					ENDSELECT
+				ELSE
+					PRINTDATAL 体位
+						DATAFORM %ARGS:1%們開始用指尖玩弄着%ARGS:0%的陰核！
+						DATAFORM %ARGS:1%們把臉埋在了%ARGS:0%的股間、用舌頭舔舐起陰核！
+						DATAFORM %ARGS:1%命令%ARGS:0%開始自慰！
+					ENDDATA
+					SELECTCASE 体位
+						CASE 0
+							IF おねだり
+								SIF !RAND:4
+									PRINTFORML 像要捏碎陰蒂般的粗暴手法、讓%ARGS:0%腰部発軟沈溺于快感之中……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%迎合着手交扭動着腰肢、自己也貪求着快楽……
+								SIF !RAND:4
+									PRINTFORML 在被玩弄陰核的時候、%ARGS:0%也報復性的用手指握住了身旁的%ARGS:1%們的肉棒捋動了起来……
+								SIF !RAND:4
+									PRINTFORML 如同電撃般傳遍全身的快感、讓%ARGS:0%只能不断高声嬌喘着……
+								SIF !RAND:4
+									PRINTFORML 陰核被指尖不停揉捏、讓她不断地嬌喘着……
+								SIF !RAND:4
+									PRINTFORML 対着沈溺于雌性快感的%ARGS:0%、%ARGS:1%不停説着下流的話……
+							ELSE
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%虽然想要忍耐、但是在巧妙的手法下还是被肆意玩弄了……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%扭動着腰想要從玩弄自己陰核的手中逃出、但是結果只起到了煽動自己快感的結果……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%搖着頭想要否定快感、但是那流出愛液的陰部卻清楚的顕示了她的興奮……
+								SIF !RAND:4
+									PRINTFORML 身体違背了自身意志感到了快感、從口中発出了大声的嬌喘……
+								SIF !RAND:4
+									PRINTFORML 対着感到了雌性快感的%ARGS:0%、%ARGS:1%不停説着下流的話……
+							ENDIF
+						CASE 1
+							IF おねだり
+								SIF !RAND:4
+									PRINTFORML 那粗糙的表面從陰核摩擦過去的感触、讓感到快感的%ARGS:0%腰部発軟……
+								SIF !RAND:4
+									PRINTFORML 敏感的部位被舌尖頂含舔弄着、讓%ARGS:0%只能任人玩弄……
+								SIF !RAND:4
+									PRINTFORML 沈溺于雌性快感的%ARGS:0%、向%ARGS:1%們央求着更多的快感……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們露出下流的笑容、看着扭動腰肢不停嬌喘的%ARGS:0%……
+							ELSE
+								SIF !RAND:4
+									PRINTFORML 那粗糙的表面從陰核摩擦過去的感触、讓感到快感的%ARGS:0%腰部発軟……
+								SIF !RAND:4
+									PRINTFORML 敏感的部位被舌尖頂含舔弄着、讓%ARGS:0%只能任人玩弄……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%扭動着腰想要逃走、但是卻被%ARGS:1%們牢牢圧住了……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們露出下流的笑容、看着嘴上説着不要但是卻発出了嬌喘的%ARGS:0%……
+							ENDIF
+						CASE 2
+							IF おねだり
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%在被人看見的羞恥下感到了快感……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%在%ARGS:1%們的辱罵中、忘我地自慰着……
+								SIF !RAND:4
+									PRINTFORML 陰核傳来的如同有電流通過的快感、讓%ARGS:0%急不可耐地来回搔弄着陰部……
+								SIF !RAND:4
+									PRINTFORML 甚至連%ARGS:1%説出的辱罵的話語、都成為了讓%ARGS:0%興奮的材料……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們露出下流的笑容、看着淒慘的自慰着的%ARGS:0%……
+							ELSE
+								SIF !RAND:4
+									PRINTFORML 拒絶的%ARGS:0%、被%ARGS:1%抓住手腕、強迫揉弄着自己的陰核……
+								SIF !RAND:4
+									PRINTFORML %ARGS:0%雖然想要拒絶、但是卻在敏感的肉粒被揉捏的過程中、忘記了抵抗的意志……
+								SIF !RAND:4
+									PRINTFORML 陰核傳来的如同有電流通過的快感、讓%ARGS:0%漸漸忘我地沈迷其中……
+								SIF !RAND:4
+									PRINTFORML 在%ARGS:1%説出的辱罵的話語下、%ARGS:0%感到了屈辱、変了臉色……
+								SIF !RAND:4
+									PRINTFORML %ARGS:1%們露出下流的笑容、看着淒慘的自慰着的%ARGS:0%……
+							ENDIF
+					ENDSELECT
+				ENDIF
+		ENDSELECT
+ENDSELECT
+
+;周り表示
+;ザ・フレーバー
+IF !RAND:15
+	PRINTFORM 在這期間、%ARGS:1%們囲住了%ARGS:0%、
+	PRINTDATAL 体位
+		DATAFORM 用%ARGS:0%的頭髮捋動着肉棒……
+		DATAFORM 把肉棒頂在了%ARGS:0%的臉上、不停摩擦……
+		DATAFORM 把肉棒挿入了%ARGS:0%的口中、讓其奉仕……
+		DATAFORM 讓%ARGS:0%握住肉棒、開始奉仕……
+		DATAFORM 把肉棒頂在了%ARGS:0%的胸部上、不停摩擦……
+		DATAFORM 把肉棒頂在了%ARGS:0%的小腹上、不停摩擦……
+		DATAFORM 把肉棒頂在了%ARGS:0%的屁股上、不停摩擦……
+		DATAFORM 玩弄着%ARGS:0%的身体……
+	ENDDATA
+	SELECTCASE 体位
+		CASE 0
+			IF おねだり
+				SIF !RAND:4
+					PRINTFORML 頭髮被雄性気味沾満的屈辱、讓%ARGS:0%色眼迷離……
+			ELSE
+				SIF !RAND:4
+					PRINTFORML 頭髮被雄性気味沾満的屈辱、讓%ARGS:0%変了臉色……
+			ENDIF
+				SIF !RAND:4
+					PRINTFORML 角質層的每一個角落、都沾満了%ARGS:1%的気味……
+				SIF !RAND:4
+					PRINTFORML %ARGS:1%就這樣、用白濁玷汚着%ARGS:0%的頭髮……
+		CASE 1
+			IF おねだり
+				SIF !RAND:4
+					PRINTFORML 頂在臉上的那灼熱的肉塊、讓%ARGS:0%色眼迷離……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%深深地吸気、享受着漂来的雄性気味……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%自己動起臉龐、用臉頰奉仕着髒汚的肉棒……
+			ELSE
+				SIF !RAND:4
+					PRINTFORML 頂在臉上的那灼熱的肉塊、讓%ARGS:0%皺起了眉頭……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%想要背過臉去、但是卻被牢牢地抓住了頭……
+			ENDIF
+			IF !RAND:4
+				PRINTFORML %ARGS:1%就這樣、用白濁玷汚了%ARGS:0%的臉龐……
+				SIF おねだり
+					PRINTFORML %ARGS:0%伸出舌頭、舔舐着臉上的汚濁……
+			ENDIF
+		CASE 2
+			IF おねだり
+				SIF !RAND:4
+					PRINTFORML 口中被肉棒侵犯、讓%ARGS:0%感到了喜悦……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%像是対待美味一般舔舐着%ARGS:1%的肉棒……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%尽情享受着在口中拡散開的雄性的気味……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%自己積極地把舌頭纏了上去、進行着奉仕……
+				SIF !RAND:4
+					PRINTFORML 連喉壁都被頂到的感覚、讓%ARGS:0%感到了喜悦……
+			ELSE
+				SIF !RAND:4
+					PRINTFORML 口中被肉棒侵犯、讓%ARGS:0%因為屈辱而変了臉色……
+				SIF !RAND:4
+					PRINTFORML 口中拡散開的雄性的気味、讓%ARGS:0%皺起了眉頭……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%想要背過臉去、但是卻被牢牢地抓住了頭……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%因為喉壁被頂到而発出了痛苦的呻吟……
+			ENDIF
+			IF !RAND:4
+				PRINTFORML %ARGS:1%就這樣、在%ARGS:0%的口内釋放了精液……
+				IF おねだり
+					PRINTDATAL
+						DATAFORM %ARGS:0%尽情品味着射在嘴裡的汚濁……
+						DATAFORM %ARGS:0%像是対待甘露一般、露出至福的表情把汚濁全部喝了下去……
+						DATAFORM %ARGS:0%色眼迷離、用精液漱着口……
+					ENDDATA
+				ELSE
+					PRINTDATAL
+						DATAFORM %ARGS:0%想要把精液吐出去、但是卻被強迫呑下去了……
+						DATAFORM %ARGS:0%拼命忍耐着在口中拡散開的悪臭……
+						DATAFORM %ARGS:0%掙扎着想要抵抗、但是被牢牢的抓住了頭而無法做到……
+					ENDDATA
+				ENDIF
+				SIF RAND:3
+					PRINTFORML 之後、又有其他的%ARGS:1%開始侵犯%ARGS:0%的口中……
+			ENDIF
+		CASE 3
+			IF おねだり
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%仔細地用指尖握住脈動着的肉棒開始了愛撫……
+				SIF !RAND:4
+					PRINTFORML 配合着%ARGS:0%手部的動作、%ARGS:1%也動起了腰……
+			ELSE
+				SIF !RAND:4
+					PRINTFORML 想要拒絶的%ARGS:0%、被%ARGS:1%抓住手腕、強迫握住了肉棒……
+				SIF !RAND:4
+					PRINTFORML 從手掌傳来的活物的温暖感、讓%ARGS:0%無法掩飾住自己的厭悪……
+			ENDIF
+			IF !RAND:4
+				PRINTFORML %ARGS:1%就這樣、在%ARGS:0%的手掌中射精了……
+				SIF RAND:3
+					PRINTFORML 之後、又有其他的%ARGS:1%強迫%ARGS:0%進行奉仕……
+			ENDIF
+		CASE 4
+			IF おねだり
+				SIF !RAND:4
+					PRINTFORML 乳房感受到的雄性的堅挺、讓%ARGS:0%発出了灼熱的呼吸……
+				SIF !RAND:4
+					PRINTFORML 乳頭被亀頭頂到的時候、%ARGS:0%漏出了小声的呻吟……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%的肌膚上、沾満了雄性的気味……
+			ELSE
+				SIF !RAND:4
+					PRINTFORML 從肌膚傳来的活物的温暖感、讓%ARGS:0%無法掩飾住自己的厭悪……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%扭動着身体想要逃走、但是卻被軽而易舉的按住了……
+			ENDIF
+			IF !RAND:4
+				PRINTFORML %ARGS:1%就這樣、対着%ARGS:0%的乳房射精了……
+				SIF RAND:3
+					PRINTFORML 之後、又有其他的%ARGS:1%強迫%ARGS:0%進行奉仕……
+			ENDIF
+		CASE 5
+			IF おねだり
+				SIF !RAND:4
+					PRINTFORML
+			ELSE
+				SIF !RAND:4
+					PRINTFORML
+			ENDIF
+		CASE 6
+			IF おねだり
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%自己也搖晃着腰、用臀肉奉仕着肉棒……
+				SIF !RAND:4
+					PRINTFORML 臀部被灼熱、堅硬的東西頂住的時候讓%ARGS:0%清楚的知道在発生着什麼……
+				SIF !RAND:4
+					PRINTFORML 配合着%ARGS:0%腰部的動作、%ARGS:1%也動起了腰……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%的肌膚上、沾満了雄性的気味……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%、被頂到的時候忍不住想象着\@ RAND:1 ? 膣穴 # 尻穴 \@被貫穿的瞬間、私処立即就溢出了愛蜜……
+			ELSE
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%扭動着腰想要逃走、但是卻只起到了煽動対方的興奮和快感的效果……
+				SIF !RAND:4
+					PRINTFORML 從肌膚傳来的活物的温暖感、讓%ARGS:0%表現出了厭悪……
+			ENDIF
+			IF !RAND:4
+				PRINTFORML %ARGS:1%就這樣、対着%ARGS:0%的臀部射精了……
+				SIF RAND:3
+					PRINTFORML 之後、又有其他的%ARGS:1%強迫%ARGS:0%進行奉仕……
+			ENDIF
+		CASE 7
+			IF おねだり
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%熱情的和%ARGS:1%們舌吻着、交換着彼此的唾液……
+			ELSE
+				SIF !RAND:4
+					PRINTFORML 被%ARGS:1%們強吻的%ARGS:0%、眼中浮現出了泪水……
+			ENDIF
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%的乳房被毫不顧忌的揉弄着……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%的陰裂被手指来回撫弄着……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%的臀肉被毫不顧忌的揉弄着……
+				SIF !RAND:4
+					PRINTFORML %ARGS:0%的菊穴被手指来回撫弄着……
+				SIF !RAND:4
+					PRINTFORML %ARGS:1%\@ GET_PENIS(TARGET) ? 不停捋動着%ARGS:0%的肉棒 # 不停揉捏着%ARGS:0%的陰核 \@……
+	ENDSELECT
+ENDIF
+

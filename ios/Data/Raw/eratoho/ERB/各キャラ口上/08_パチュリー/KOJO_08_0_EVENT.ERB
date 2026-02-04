@@ -1,0 +1,2162 @@
+﻿;イベント
+
+@EVENT_RANDOM_8_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;ランダムイベント
+
+	SELECTCASE ARG:0
+	;トラップ
+	CASE 200
+		CALL EVENT_RANDOM_TRAP_8_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	;PT分断テレポート
+	CASE 201
+		SELECTCASE ARG:1
+		;飛ばされる前
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「なっなに…？　この光───────……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「なっなに…？　この光───────……」
+			ENDIF
+		;飛ばされた後
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ここは…さっきまで居た場所と違うわね…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ここは…さっきまで居た場所と違うわね…」
+			ENDIF
+			IF FLAG:10 && FLAG:11
+				IF FLAG:AUTOMODE
+					PRINTFORML 「%CALLNAME_8_0(FLAG:10)%！　%CALLNAME_8_0(FLAG:11)%！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「%CALLNAME_8_0(FLAG:10)%！　%CALLNAME_8_0(FLAG:11)%！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…返事が無いわね。　二人とも別の場所に飛ばされたのかしら…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…返事が無いわね。　二人とも別の場所に飛ばされたのかしら…」
+				ENDIF
+			ELSEIF FLAG:10
+				IF FLAG:AUTOMODE
+					PRINTFORML 「%CALLNAME_8_0(FLAG:10)%も見当たらない…どこか別の場所に飛ばされたのかしら…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「%CALLNAME_8_0(FLAG:10)%も見当たらない…どこか別の場所に飛ばされたのかしら…」
+				ENDIF
+			ENDIF
+		ENDSELECT
+		
+	ENDSELECT
+
+RETURN
+
+
+
+
+;ランダムイベント
+;-----------------------------------------------------------------------------------------------------------------------------------------
+@EVENT_RANDOM_TRAP_8_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;トラップイベント発生
+;ARG:1にイベントID　ARG:2で同じイベントの詳細分岐
+;●特殊イベント系
+
+	;常に呼ぶ行動（戦意喪失でも）
+	SELECTCASE ARG:1
+	;ペット結婚式
+	CASE 179
+		;ペット化してる
+		IF TALENT:140 > 0
+			;小悪魔のペット
+			IF PET:0 == 70
+				;色を小悪魔に
+				TRYCCALL KOJO_DEFAULT_COLOR_7_0
+					SETCOLOR RESULT
+				CATCH
+					SETCOLOR RGBCOLOR(200, 10, 80)
+				ENDCATCH
+				
+				SELECTCASE ARG:2
+				;呼ばれる
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「この場所は…%CALLNAME:(TARGET)%様！　ちょっと付いて来て下さい！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「この場所は…%CALLNAME:(TARGET)%様！　ちょっと付いて来て下さい！」
+					ENDIF
+				;結婚式前
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「どうです…素敵な場所でしょう…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「どうです…素敵な場所でしょう…」
+					ENDIF
+				;触手服ウェディングドレス
+				CASE 2
+				;誓いの公開レイプ
+				CASE 3
+					PRINTFORM 「%CALLNAME:(TARGET)%様…愛しています
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;誓いの公開孕ませ
+				CASE 4
+					PRINTFORM 「さぁ%CALLNAME:(TARGET)%様っ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　私のっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 想いをっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「子宮で受け取って下さいッッッ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;素質花嫁入手
+				CASE 5
+					PRINTFORM 「はぁ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　ほら…%CALLNAME:(TARGET)%様の子宮が…私の子種でいっぱい…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL そう言って%PETNAME%は愛しげに%CALLNAME:(TARGET)%の下腹部を擦った…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW そう言って%PETNAME%は愛しげに%CALLNAME:(TARGET)%の下腹部を擦った…
+					ENDIF
+				;結婚式後メッセージ
+				CASE 6
+				
+				;無視して離れた
+				CASE 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「残念です、%CALLNAME:(TARGET)%様…また今度、気が変わりましたら是非♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「残念です、%CALLNAME:(TARGET)%様…また今度、気が変わりましたら是非♪」
+					ENDIF
+				ENDSELECT
+				
+				;色を戻す
+				CALL KOJO_DEFAULT_COLOR_8_0
+				SETCOLOR RESULT
+			ENDIF
+			
+			SELECTCASE ARG:2
+			;呼ばれる
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「え…そっちに行くの？　何があるのかしら…？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「え…そっちに行くの？　何があるのかしら…？」
+				ENDIF
+			;結婚式前
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ここは一体…　え？　私達の結婚式場？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ここは一体…　え？　私達の結婚式場？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…嬉しいです！　ご主人様…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…嬉しいです！　ご主人様…」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(TARGET)%は涙を浮かべながら嬉しそうに微笑んだ
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(TARGET)%は涙を浮かべながら嬉しそうに微笑んだ
+				ENDIF
+				PRINTFORMDL もうすでに身も心も%PETNAME%に依存しきっている様だ…
+				PRINTL
+			
+			;触手服ウェディングドレス
+			CASE 2
+				PRINTFORM 「んんぅ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　このウェディングドレス…身体中…幸せになるぅ…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORMDL みるみる内に%CALLNAME:(TARGET)%の身体をピッチリと覆ったウエディングドレスが
+				PRINTFORMDL 祝福の瞬間を今かと待ちわびて蠢いている…
+				PRINTL
+			;誓いの公開レイプ
+			CASE 3
+				;パーティ
+				IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+					PRINTFORM 「皆の前でご主人様に抱かれるだなんて…恥ずかしいけど嬉しいっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「ふふっ…二人っきりの結婚式ね…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;誓いの公開孕ませ
+			CASE 4
+				PRINTFORMDL %PETNAME%は最後の仕上げとばかりに%CALLNAME:(TARGET)%を抱きかかえ
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 子宮めがけて激しく注挿を繰り返した
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 子宮めがけて激しく注挿を繰り返した
+				ENDIF
+				PRINTFORM 「奥っ…おくッッ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　グリグリしちゃっ…子宮…口っ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　開いちゃうっ…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				;寄生or妊娠中
+				IF CFLAG:22 != 0 && CFLAG:36 != 1 && CFLAG:36 != 2
+					PRINTFORM 「おなかの赤ちゃんなら大丈夫だからっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　このままびゅくびゅくってしてぇっっ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「ご主人様の赤ちゃんっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　孕むからっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　このままびゅくびゅくってしてぇっっ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL びゅっ！ぶびゅびゅっ！びゅぐっっ！！ぶびゅびゅーーーーーっ！！！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW びゅっ！ぶびゅびゅっ！びゅぐっっ！！ぶびゅびゅーーーーーっ！！！
+					ENDIF
+					PRINTFORMDL 激しく脈打つペニスから大量の子種汁が噴き出し、%CALLNAME:(TARGET)%の子宮中を真っ白に染め上げた…
+					PRINTL
+			;素質花嫁入手
+			CASE 5
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %PETNAME%との永遠の誓いを交わした%CALLNAME:(TARGET)%は息も絶え絶え幸せそうに震えている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %PETNAME%との永遠の誓いを交わした%CALLNAME:(TARGET)%は息も絶え絶え幸せそうに震えている…
+				ENDIF
+				PRINTFORM 「ふあぁ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　わらひ…しあわせれしゅぅ…
+				CALL HEARTCB(0xD02830, 3)
+				PRINTFORML 」
+				PRINTL
+			;結婚式後メッセージ
+			CASE 6
+			
+			;無視して離れた
+			CASE 8
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ごめんなさい、ご主人様。何か嫌な予感がするの…行ってはいけない場所みたいな…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ごめんなさい、ご主人様。何か嫌な予感がするの…行ってはいけない場所みたいな…」
+				ENDIF
+			ENDSELECT
+		ENDIF
+		
+		RETURN
+	ENDSELECT
+
+	;戦意喪失
+	IF CFLAG:29
+		RETURN
+	ENDIF
+
+;------------------------------
+	;主人公の時しか呼ばない行動
+	IF TARGET == 1
+		SELECTCASE ARG:1
+		;誰かの荷物　荷物袋が落ちている　開けると着替えセット（54）と日本酒（52）を入手　無視した場合は残る
+		;誰かの荷物　荷物袋が落ちている　開けると中から触手　雑魚を１匹生成して、敵の先制で強制戦闘　無視した場合は残る
+		;誰かの荷物　ヒュプノ
+		CASE 140, 141, 171
+			;開けた
+			IF ARG:2 == 0
+				;通常
+				IF ARG:1 == 140
+					IF FLAG:AUTOMODE
+						PRINTFORML 「誰かの荷物かしら…こんな場所だし申し訳ないけど有効活用させて貰うわよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「誰かの荷物かしら…こんな場所だし申し訳ないけど有効活用させて貰うわよ」
+					ENDIF
+				;敵
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……敵っ？！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……敵っ？！」
+					ENDIF
+				ENDIF
+			;開けない
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こんな場所で落ちてる荷物なんて怪しいわ。ひとます放置しておきましょう」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こんな場所で落ちてる荷物なんて怪しいわ。ひとます放置しておきましょう」
+				ENDIF
+			ENDIF
+		;柔らかい壁　壁の無い部屋で発生したら即終了＋再配置　高難易度　体当たりすると崩れて通路追加orネチョ　ネチョか放置の場合は残る
+		CASE 144
+			SELECTCASE ARG:2
+			;あっさり崩れた
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あら…この壁…通れるじゃない」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あら…この壁…通れるじゃない」
+				ENDIF
+			;ヤられた
+			CASE 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…え…ぬっ抜け出せな…ひぁっ？　ちょっ！ちょっとそこ…や…やめ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…え…ぬっ抜け出せな…ひぁっ？　ちょっ！ちょっとそこ…や…やめ……」
+				ENDIF
+			ENDSELECT
+		;不意打ち　強めの雑魚を１匹生成して、敵の先制で強制戦闘
+		CASE 151
+			IF ARG:2 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「敵っ？！　く…油断したわ…っ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「敵っ？！　く…油断したわ…っ」
+				ENDIF
+			ENDIF
+		
+		ENDSELECT
+	ENDIF
+	
+;------------------------------
+	;常に呼ぶ行動
+	SELECTCASE ARG:1
+	;湧き水　飲むとHP・MP・EP全快　飲まなかった場合は残る
+	CASE 130
+		IF ARG:2 == 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…ふぅ、生き返るわね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…ふぅ、生き返るわね」
+			ENDIF
+		ENDIF
+	;湧き水　飲むとEPが1になる　飲まなかった場合は残る
+	CASE 131
+		IF ARG:2 == 0
+			PRINTFORM 「…ぇ……身体が……ん…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+	;湧き水　飲むとHPが上昇
+	CASE 132
+		IF ARG:2 == 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「なんだか不思議な味ね…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「なんだか不思議な味ね…」
+			ENDIF
+		ENDIF
+	;澄んだ泉　飲むとMP25％回復、入るとEP50％回復　拠点にすることを想定
+	CASE 133
+		SELECTCASE ARG:2
+		;MP回復
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「冷たくて美味しい…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「冷たくて美味しい…」
+			ENDIF
+		;EP回復
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…ほっ。少し落ち着いたわ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…ほっ。少し落ち着いたわ」
+			ENDIF
+		;無視
+		CASE 2
+			;主人公
+			IF TARGET == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「怪しいものね…こんなところにある泉なんて」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「怪しいものね…こんなところにある泉なんて」
+				ENDIF
+			ENDIF
+		ENDSELECT
+	;白濁した泉　133とは違う場所　飲むとMP全快or発情　入ると速度+5or寄生（種類はランダム）
+	CASE 134
+		SELECTCASE ARG:2
+		;MP全回復
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「こく…こく……ふぅ、もう大丈夫」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「こく…こく……ふぅ、もう大丈夫」
+			ENDIF
+		;眠気
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……なんだか眠気が…あ！　し、しまっ……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……なんだか眠気が…あ！　し、しまっ……」
+			ENDIF
+		;発情
+		CASE 2
+			PRINTFORM 「はぁ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　はぁ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　……ぁ…ひょっとして今の水……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　……ぁ…ひょっとして今の水……」
+			ENDIF
+		;速度+
+		CASE 3
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あら…気のせいかなんだか身体が軽くなったような…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あら…気のせいかなんだか身体が軽くなったような…」
+			ENDIF
+		;寄生
+		CASE 4
+			IF FLAG:AUTOMODE
+				PRINTFORML 「いっ？！　いやっ！！　入って来ちゃ…ぁあっ！　あぁ……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「いっ？！　いやっ！！　入って来ちゃ…ぁあっ！　あぁ……」
+			ENDIF
+		;無視
+		CASE 5
+			;主人公
+			IF TARGET == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「流石にあの色の水は…近づかない方が無難ね」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「流石にあの色の水は…近づかない方が無難ね」
+				ENDIF
+			ENDIF
+		;ふたなり化
+		CASE 6
+			CALL KOJO_FUTAKA_8_0
+		ENDSELECT
+	;不思議な泉　飲むとHP・MP・EP全快　入ると寄生を含む全状態異常治療　処女モードの場合処女も回復
+	CASE 135
+		SELECTCASE ARG:2
+		;HP・MP・EP全快
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……!!　これは…凄い効能ね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……!!　これは…凄い効能ね」
+			ENDIF
+		;全状態異常治療
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ふぅ…この泉なんだか癒されるわ……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ふぅ…この泉なんだか癒されるわ……」
+			ENDIF
+		;無視
+		CASE 2
+			;主人公
+			IF TARGET == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「怪しい泉ね…近づかない方が身のためだわ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「怪しい泉ね…近づかない方が身のためだわ」
+				ENDIF
+			ENDIF
+		ENDSELECT
+	;天井からスライム　危機回避判定失敗でCPが0に
+	CASE 136
+		SELECTCASE ARG:2
+		;回避失敗
+		CASE 1
+			;全裸
+			IF BASE:CP == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…っ？！　この種のスライムなら害はないわね…どうせ服も着てないのだし……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…っ？！　この種のスライムなら害はないわね…どうせ服も着てないのだし……」
+				ENDIF
+			;触装
+			ELSEIF CFLAG:40
+				;触手中毒LV2以上
+				IF ABL:11 >= 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…ダメージは無いみたい……ッッッ？？？？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…ダメージは無いみたい……ッッッ？？？？」
+					ENDIF
+					PRINTFORMDL %CALLNAME:(TARGET)%を襲ったスライムは少し離れた場所で、
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 体内に捕食したスーツ形状の生物をゆっくりと味わっていた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 体内に捕食したスーツ形状の生物をゆっくりと味わっていた…
+					ENDIF
+					PRINTFORML 「やっ…やめてぇッッ！！！　それは私の…大事な……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%の悲痛な叫びも虚しく、久々の食事に満足したスライムは闇へと消えて行った…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%の悲痛な叫びも虚しく、久々の食事に満足したスライムは闇へと消えて行った…
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…あら？　あの忌々しいスーツが…そう、あのスライムもたまには役に立つのね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…あら？　あの忌々しいスーツが…そう、あのスライムもたまには役に立つのね」
+					ENDIF
+				ENDIF
+			;その他
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…っ？！　身体に害はないけど…この服はもう着れないわね」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…っ？！　身体に害はないけど…この服はもう着れないわね」
+				ENDIF
+			ENDIF
+		;回避成功
+		CASE 2
+			;触装＆触手中毒LV2以上
+			IF CFLAG:40 && ABL:11 >= 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ…はぁ…もし今のスライムが直撃していたら……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ…はぁ…もし今のスライムが直撃していたら……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「だめ…この服だけは…絶対…手放したくない…ッ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「だめ…この服だけは…絶対…手放したくない…ッ！」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ…驚かさないで欲しいわ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ…驚かさないで欲しいわ」
+				ENDIF
+			ENDIF
+		ENDSELECT
+	;壁から触手　危機回避判定失敗で数回ランダム箇所絶頂
+	CASE 137
+		SELECTCASE ARG:2
+		;回避失敗
+		CASE 1
+			;触手中毒LV2以上
+			IF ABL:11 >= 2
+				PRINTFORM 「はぁん
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　いきなりなんて…そんな…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;触手中毒LV1
+			ELSEIF ABL:11 == 1
+				PRINTFORM 「ん
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　なんで壁から…だめ…早く離れないと…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　なんで壁から…だめ…早く離れないと…」
+				ENDIF
+			;通常
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ちょっ…壁から触手が出てくるなんて聞いてないわ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ちょっ…壁から触手が出てくるなんて聞いてないわ」
+				ENDIF
+			ENDIF
+		;回避成功
+		CASE 2
+			;触手中毒LV2以上
+			IF ABL:11 >= 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…あ…反射的に避けちゃったけど……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…あ…反射的に避けちゃったけど……」
+				ENDIF
+			;触手中毒LV1
+			ELSEIF ABL:11 == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あと少し気づくのが遅かったら…ごくり…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あと少し気づくのが遅かったら…ごくり…」
+				ENDIF
+			;通常
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あと少し気づくのが遅かったら…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あと少し気づくのが遅かったら…」
+				ENDIF
+			ENDIF
+		ENDSELECT
+	;落とし穴に触手　危機回避判定（易しめ）失敗で多数ランダム絶頂＋寄生
+	;落とし穴に媚薬風呂
+	;落とし穴に白濁風呂
+	CASE 138, 174, 175
+		SELECTCASE ARG:2
+		;回避失敗
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…え？　きゃぁぁぁ…………」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…え？　きゃぁぁぁ…………」
+			ENDIF
+			;触手
+			IF ARG:1 == 138
+				;触手中毒LV2以上
+				IF ABL:11 >= 2
+					PRINTFORM 「あ…ここは…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　はぁ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　そう…そこ…もっと……んんっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;触手中毒LV1
+				ELSEIF ABL:11 == 1
+					PRINTFORM 「しょっ…触手っ？！　んぅ…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　ぬるぬる絡んで…やめ…そこは……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 　ぬるぬる絡んで…やめ…そこは……」
+					ENDIF
+				;通常
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ってきゃああああっっ？！　何っここ？？？　だっだめっ！入って来ちゃ！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ってきゃああああっっ？！　何っここ？？？　だっだめっ！入って来ちゃ！！」
+					ENDIF
+				ENDIF
+			;媚薬風呂
+			ELSEIF ARG:1 == 174
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 妖しい香りを放つ液体に浸かった%CALLNAME:(TARGET)%は、みるみる顔が紅潮していく…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 妖しい香りを放つ液体に浸かった%CALLNAME:(TARGET)%は、みるみる顔が紅潮していく…
+				ENDIF
+				PRINTFORM 「んっ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　このヌルヌルした液体…身体中に染み込んでくる……ふはぁ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;白濁風呂
+			ELSE
+				;精液中毒LV2
+				IF ABL:14 >= 2
+					PRINTFORM 「なにこれ…ベトベトして生臭くて、まるで……んんぅ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%は大量の白濁液に溺れ息苦しそうにしつつも、うっとりとしている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%は大量の白濁液に溺れ息苦しそうにしつつも、うっとりとしている…
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「なにこれ…ベトベトして生臭くて、まるで……んぶっ！！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「なにこれ…ベトベトして生臭くて、まるで……んぶっ！！！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「やっ…やめなさいっ！　早く出たいのに…引きずり込まないでっっ！！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「やっ…やめなさいっ！　早く出たいのに…引きずり込まないでっっ！！！」
+					ENDIF
+				ENDIF
+			ENDIF
+			
+		;回避成功
+		CASE 2
+			;パーティ
+			IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「っ？　みんなっ！飛びのいてっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「っ？　みんなっ！飛びのいてっ！」
+				ENDIF
+			;ぼっち
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「っ？　…落とし穴とは油断ならないわね」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「っ？　…落とし穴とは油断ならないわね」
+				ENDIF
+			ENDIF
+		;回避失敗&寄生　CASE 1から連続で発生するので注意
+		CASE 3
+			;触手
+			IF ARG:1 == 138
+				;触手中毒LV2以上
+				IF ABL:11 >= 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あぁ…これ…寄生されちゃったみたいね…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あぁ…これ…寄生されちゃったみたいね…」
+					ENDIF
+				;触手中毒LV1
+				ELSEIF ABL:11 == 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うぅ…やだ…お腹が熱いままで…何か残ってる感じ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うぅ…やだ…お腹が熱いままで…何か残ってる感じ…」
+					ENDIF
+				;通常
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うぅ…身体が重い…これは…想像もしたくないわね…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うぅ…身体が重い…これは…想像もしたくないわね…」
+					ENDIF
+				ENDIF
+			ENDIF
+		
+		ENDSELECT
+	;桃色のガス　自慰中毒判定失敗で強制自慰
+	CASE 139
+		SELECTCASE ARG:2
+		;回避失敗
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「うぅ…はぁ…身体が…疼くの……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「うぅ…はぁ…身体が…疼くの……」
+			ENDIF
+		;回避成功
+		CASE 2
+			;パーティ
+			IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ガスっ！？　みんな口を塞いでっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ガスっ！？　みんな口を塞いでっ！」
+				ENDIF
+			;ぼっち
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…………（ガスが……一時たりとも油断しちゃダメね）」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…………（ガスが……一時たりとも油断しちゃダメね）」
+				ENDIF
+			ENDIF
+		ENDSELECT
+	;喋れる触手　各部位の感覚Lv3を連れて行くとネチョる代わりにレアアイテムをくれる　コンプリートで全武器１つずつ＋イベント消滅
+	CASE 142
+		SELECTCASE ARG:2
+;開始は呼ばない？
+;		;開始
+;		CASE 2
+;			SELECTCASE ARG:3
+;			;A
+;			CASE 0
+;"
+;「おしりで感じちゃうなら…その…私も…」
+;「あっ<▼>　あっ<▼>　おしりッッ<▼>　おしりしゅごいのぉぉぉっっ<▼><▼><▼>」
+;"
+;			;B
+;			CASE 1
+;"
+;「乳首が敏感な人を探してるって、私だってそこまで…らめぇぇぇぇっっっ<▼><▼><▼>」
+;"
+;			;C
+;			CASE 2
+;"
+;「クリトリスって普通敏感なんじゃ……はぁぁっ<▼>　ビリビリ来ちゃうッッ<▼><▼><▼>」
+;"
+;			;V
+;			CASE 3
+;"
+;「ヴァギナが敏感ねぇ…私に資格があるのかしら…（ドキドキ）」
+;「ふあっ<▼>　んんっ<▼>　もっと<▼>　もっと奥までぢゅぽぢゅぽしてぇぇっっ<▼><▼><▼>」
+;"
+;			ENDSELECT
+			
+		;終了
+		CASE 3
+			SELECTCASE ARG:3
+			;A
+			CASE 0
+				PRINTFORM 「はぁ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　はぁ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　おしり…まだヒクヒクいってる…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;B
+			CASE 1
+				PRINTFORM 「ふぅ……
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　私の胸…どうなっちゃったの…触ってるだけで…シビれちゃう…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;C
+			CASE 2
+				;ふたなり
+				IF CFLAG:42 || TALENT:121
+					PRINTFORM 「ぅぅ……
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　おちんちんが……これ…下着が擦れるだけでイっちゃいそう…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「ぅぅ……
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　クリトリスが……これ…下着が擦れるだけでイっちゃいそう…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;V
+			CASE 3
+				PRINTFORM 「ぁぁ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　こんなの初めて…これじゃ…おまんこ…もっともっと欲しくなっちゃう…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+			
+			
+		;だが断る
+		CASE 4
+			;主人公
+			IF TARGET == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「生憎だけど、他を当たって」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「生憎だけど、他を当たって」
+				ENDIF
+			ENDIF
+		;コンプ
+		CASE 5
+			;主人公
+			IF TARGET == 1
+				PRINTFORM 「はぁ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　はぁ…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　やったわね…これで全部よ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　やったわね…これで全部よ…」
+				ENDIF
+			ENDIF
+		ENDSELECT
+	;不思議なガス　危機回避判定失敗で　眠気+2/全員発情/全員強制自慰/全員TP200/全員TP0　のいずれか
+	CASE 143
+		SELECTCASE ARG:2
+		;眠気
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…ぅ…瞼が…重…い……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…ぅ…瞼が…重…い……」
+			ENDIF
+		;発情
+		CASE 2
+			PRINTFORM 「…けほっ　…はぁ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　…はぁ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		;自慰
+		CASE 3
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…このガス…ぁ…ダメよ…こんなところでシたくなるなんて……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…このガス…ぁ…ダメよ…こんなところでシたくなるなんて……」
+			ENDIF
+		;テンション上昇
+		CASE 4
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……フッ、行くわよ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……フッ、行くわよ」
+			ENDIF
+		;テンション下降
+		CASE 5
+			IF FLAG:AUTOMODE
+				PRINTFORML 「はぁ……今日は厄日ね…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「はぁ……今日は厄日ね…」
+			ENDIF
+		;回避
+		CASE 6
+			;パーティ
+			IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ガスっ！？　みんな口を塞いでっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ガスっ！？　みんな口を塞いでっ！」
+				ENDIF
+			;ぼっち
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…………（ガスが……一時たりとも油断しちゃダメね）」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…………（ガスが……一時たりとも油断しちゃダメね）」
+				ENDIF
+			ENDIF
+		ENDSELECT
+	;スッキリ草　眠気を０にしてくれる薬草　効果は必ず分かってOK　使わなかった場合は残る
+	CASE 145
+		SELECTCASE ARG:2
+		;使った
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「そうね、危険を冒して睡眠するくらいなら、これを使う手もありだわ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「そうね、危険を冒して睡眠するくらいなら、これを使う手もありだわ」
+			ENDIF
+		;放置
+		CASE 2
+			;主人公
+			IF TARGET == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「この草…普段なら喉から手が出るほど欲しいんだけど…今は少しでも寝て体力を回復しないと」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「この草…普段なら喉から手が出るほど欲しいんだけど…今は少しでも寝て体力を回復しないと」
+				ENDIF
+			ENDIF
+		ENDSELECT
+	;淫蟲の大群　A属性EPダメージ　絶頂時MPダメージ大
+	CASE 146
+		PRINTFORM 「や…こっこの蟲達……だっダメっ！　おしり入って来ちゃっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　あっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　あっ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;淫蟲の大群　B属性EPダメージ　母乳体質時EP・MPダメージ倍
+	CASE 147
+		;母乳体質
+		IF TALENT:母乳体質
+			PRINTFORM 「むっ…蟲達が……んんっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　おっぱい吸い付いちゃ…あっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　でっ出ちゃう…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		;普通
+		ELSE
+			PRINTFORM 「蟲が……んんっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　こらっ、おっぱい…離れなさ…ふぁんっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　だっ誰か引き剥がしてぇ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　だっ誰か引き剥がしてぇ…」
+			ENDIF
+		ENDIF
+	;淫蟲の大群　C属性EPダメージ　それなりの確率で発情
+	CASE 148
+		SELECTCASE ARG:2
+		;受けた時
+		CASE 1
+			PRINTFORM 「やっやだ…纏わり付いて……んきゅっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			PRINTFORMDL 下半身を登ってくる蟲達からの刺激に%CALLNAME:(TARGET)%はたまらず跪いた。
+			IF FLAG:AUTOMODE
+				PRINTFORMDL が…その体勢は余計に蟲を群がらせてしまうのであった…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW が…その体勢は余計に蟲を群がらせてしまうのであった…
+			ENDIF
+			PRINTFORM 「やめ…んんっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　ちょっ…なんでこの蟲達…ん…そこばっかり…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　ちょっ…なんでこの蟲達…ん…そこばっかり…」
+			ENDIF
+		;発情　↑から連続で発生するので被りに注意
+		CASE 2
+			PRINTFORM 「はぁ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　はぁ…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　今の蟲…絶対何かの毒を…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　今の蟲…絶対何かの毒を…」
+			ENDIF
+		;ふたなり化（↑から連続で発生するので被りに注意）
+		CASE 3
+			CALL KOJO_FUTAKA_8_0
+		ENDSELECT
+	;淫蟲の大群　V属性EPダメージ　稀に寄生
+	CASE 149
+		SELECTCASE ARG:2
+		;受けた時
+		CASE 1
+			PRINTFORM 「ちょっ…やめてそこは……んんんっっ
+			CALL HEARTCB(0xD02830, 3)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			PRINTFORM 「だ…ダメ……そんな沢山で来ても……もう入らな…んあああッッ
+			CALL HEARTCB(0xD02830, 2)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		;寄生　↑から連続で発生するので被りに注意
+		CASE 2
+			PRINTFORM 「はぁ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　はぁ…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　全部…取り出したはずよね？　なのに…中にまだ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　全部…取り出したはずよね？　なのに…中にまだ…」
+			ENDIF
+		ENDSELECT
+	;落石　危機回避判定失敗でHPダメージ
+	CASE 150
+		SELECTCASE ARG:2
+		;回避失敗
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「むきゅぅぅ……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「むきゅぅぅ……」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:(TARGET)%は落ちてきた石が頭にぶつかってのびている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:(TARGET)%は落ちてきた石が頭にぶつかってのびている…
+			ENDIF
+		;回避成功
+		CASE 2
+			;パーティ
+			IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「上っ？！　みんな避けてっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「上っ？！　みんな避けてっ！」
+				ENDIF
+			;ぼっち
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「上からっ？！　このくらいなら…避けられるわっ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「上からっ？！　このくらいなら…避けられるわっ」
+				ENDIF
+			ENDIF
+		ENDSELECT
+	;C寄生
+	CASE 152
+		SELECTCASE ARG:2
+		;ふたなり化
+		CASE 1
+			CALL KOJO_FUTAKA_8_0
+		;吸精
+		CASE 2
+			;射精中毒LV3（ランダム）
+			IF ABL:12 >= 3 && RAND:2
+				SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「…ん
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　そんなに…ミルク欲しいの？　いいわよ…こってりした濃いの…ご馳走してあげる
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				CASEELSE
+					PRINTFORM 「んぅ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　この蟲…ほんと上手…んふぅ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　すぐ…美味しい精液あげるから…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDSELECT
+			;射精中毒LV2
+			ELSEIF ABL:12 >= 2
+				SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「こらっ、そんなところに…んぅ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　だめ…なのにぃ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 　だめ…なのにぃ…」
+					ENDIF
+				CASEELSE
+					PRINTFORM 「んんっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　だめっ…そっ、そんなに吸い付い…ちゃっ
+					CALL HEARTCB(0xD02830, 2)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「ちょっ？！　や、やめなさい！　そんなと…こ……んぅ…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　やぁ…この蟲…吸い付いて…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 　やぁ…この蟲…吸い付いて…」
+					ENDIF
+				CASEELSE
+					PRINTFORM 「え…こ…この蟲…やだっ、離れな…んんっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　くっ口の中で…ううっ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 　くっ口の中で…ううっ…」
+					ENDIF
+				ENDSELECT
+			ENDIF
+		ENDSELECT
+	;自販機
+	CASE 160
+		SELECTCASE ARG:2
+		;自販機発見
+		CASE 0
+			;主人公
+			IF TARGET == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…はぁ。　また、いかにもな代物ね…この触手で出来た装置（？）は…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…はぁ。　また、いかにもな代物ね…この触手で出来た装置（？）は…」
+				ENDIF
+			ENDIF
+		;衣服を纏う
+		CASE 1
+			;装着中
+			IF ARG:3 == 0
+				;触手中毒LV3
+				IF ABL:11 >= 3
+					PRINTFORM 「は…早くぅ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　私の身体中…ぬるぬるで覆ってぇ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;触手中毒LV2
+				ELSEIF ABL:11 >= 2
+					IF FLAG:AUTOMODE
+						PRINTFORML （また私…これ着ちゃうの…でも…我慢できない…）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （また私…これ着ちゃうの…でも…我慢できない…）
+					ENDIF
+				ELSEIF ABL:11 >= 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…いや…これはあれよ。たとえ触手で出来ていても服くらい着ていないと」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…いや…これはあれよ。たとえ触手で出来ていても服くらい着ていないと」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いや、ちょっ…服って別にそういうのが欲しかったわけじゃ…いやぁぁぁぁ……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いや、ちょっ…服って別にそういうのが欲しかったわけじゃ…いやぁぁぁぁ……」
+					ENDIF
+				ENDIF
+			;装着完了
+			ELSE
+				;触手中毒LV3
+				IF ABL:11 >= 3
+					PRINTFORM 「はぁ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　やっぱりこの服じゃないと落ち着かないわ…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;触手中毒LV2
+				ELSEIF ABL:11 >= 2
+					PRINTFORM 「はぁ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　やっぱり…この感覚…癖になっちゃう…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「はーーーっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　はーーーっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　やっと…落ち着いてくれた…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 　やっと…落ち着いてくれた…」
+					ENDIF
+				ENDIF
+			ENDIF
+		;腹を満たす
+		CASE 2
+			;挿入中
+			IF ARG:3 == 0
+				;触手中毒LV2
+				IF ABL:11 >= 2
+					PRINTFORM 「んんっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　おなかの中…たくさんちょうだい…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「んくっ…やっ、そんな奥…までっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　あっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　あっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;たぽたぽ
+			ELSE
+				;触手中毒LV2
+				IF ABL:11 >= 2
+					PRINTFORM 「はぁ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　もう、せーえきで…おなかのなかいっぱい…
+					CALL HEARTCB(0xD02830, 2)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うぅ…もう入らないわよ…こんな溢れるまで射精しなくても…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うぅ…もう入らないわよ…こんな溢れるまで射精しなくても…」
+					ENDIF
+				ENDIF
+			ENDIF
+		;何か飲み物を
+		CASE 3
+			;媚薬漬け中
+			IF ARG:3 == 0
+				PRINTFORM 「んぷっ？！　んくっ！！！！　んっ！！　…んっ…ん…ん
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　…ん
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;媚薬漬け後
+			ELSE
+				PRINTFORM 「んはぁ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　はぁ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　はぁ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　今、飲まされたのは…んんっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　身体が…火照って…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　身体が…火照って…」
+				ENDIF
+			ENDIF
+		;能力の強化
+		CASE 4
+			SELECTCASE ARG:3
+			;選ばれた
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「そ、そうね。身体能力的に私を底上げするのも良い作戦よね…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「そ、そうね。身体能力的に私を底上げするのも良い作戦よね…」
+				ENDIF
+			;選んだ
+			CASE 1
+				;主人公
+				IF TARGET == 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「じゃあ頑張って。　貴女を強化するのが一番効率良いの。」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「じゃあ頑張って。　貴女を強化するのが一番効率良いの。」
+					ENDIF
+				ENDIF
+			;私自らが出る
+			CASE 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「それじゃあ…私の能力を強化してもらおうかしら？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「それじゃあ…私の能力を強化してもらおうかしら？」
+				ENDIF
+			ENDSELECT
+		;能力強化
+		CASE 5
+			SELECTCASE ARG:3
+			;A
+			CASE 0
+				PRINTFORM 「ひぁっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　おっお尻っ
+				CALL HEARTCB(0xD02830, 3)
+				PRINTFORM 　う、うそっ…やめ…っっっ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;B
+			CASE 1
+				;爆乳or巨乳
+				IF TALENT:108 || TALENT:110
+					PRINTFORM 「おっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　おっぱいっ
+					CALL HEARTCB(0xD02830, 3)
+					PRINTFORM 　そんな絞っちゃ……あぁんッッ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「むっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　胸っ
+					CALL HEARTCB(0xD02830, 2)
+					PRINTFORM 　そんなっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　強…過ぎっっ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;C
+			CASE 2
+				;ふたなり
+				IF CFLAG:42 || TALENT:121
+					PRINTFORM 「あっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　あっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　おちんちん…先っぽッッ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　敏感なのッッッ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「やっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　クっ、クリっ
+					CALL HEARTCB(0xD02830, 2)
+					PRINTFORM 　そんなにくりくりしちゃっっ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;V
+			CASE 3
+				PRINTFORM 「んんぅっっ
+				CALL HEARTCB(0xD02830, 2)
+				PRINTFORM 　そっそこ…ざらついてるとこ…ゴリゴリ…って
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;縮乳
+			CASE 4
+				PRINTFORM 「んくっ
+				CALL HEARTCB(0xD02830, 2)
+				PRINTFORM 　そっそんな…勢いよく吸い上げられたら…あぁぁっ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		;回避率を上げる
+		CASE 6
+			;魔改造中
+			IF ARG:3 == 0
+				PRINTFORM 「んんんっっ？！　んんっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　んんっーーーーーーーーーーー………」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　んんっーーーーーーーーーーー………」
+				ENDIF
+			;小さくなった
+			ELSEIF ARG:3 == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ…はぁ……え…身体が…？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ…はぁ……え…身体が…？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(TARGET)%は小さくなった手のひらで全身をペタペタ確認しながら呟いた
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(TARGET)%は小さくなった手のひらで全身をペタペタ確認しながら呟いた
+				ENDIF
+			ENDIF
+		;ふたなり化
+		CASE 7
+			CALL KOJO_FUTAKA_8_0
+		;立ち去る
+		CASE 8
+			;主人公
+			IF TARGET == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「どう考えてもリスクが高過ぎるわ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「どう考えてもリスクが高過ぎるわ」
+				ENDIF
+			ENDIF
+		;残弾補充
+		CASE 9
+			SELECTCASE ARG:3
+			;開始
+			CASE 0
+				PRINTFORM 「ひうっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　そっ…そこは入れる穴じゃな…っ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「やっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　なっ何かっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　流れ込んで来てるッッ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;終了
+			CASE 1
+				PRINTFORM 「…はふぅ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　これ…また元気になっちゃったみたい…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		;母乳を止める
+		CASE 10
+			SELECTCASE ARG:3
+			;開始
+			CASE 0
+				PRINTFORM 「はうぅっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　乳首ッ…そんな吸っちゃッ
+				CALL HEARTCB(0xD02830, 2)
+				PRINTFORM 　強過ぎるッッッ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			
+			;終了
+			CASE 1
+				PRINTFORM 「はぁ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　はぁ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　全部…吸われたのかしら…母乳が染み出して来なくなったわね」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　全部…吸われたのかしら…母乳が染み出して来なくなったわね」
+				ENDIF
+			
+			ENDSELECT
+		
+		;精液風呂
+		CASE 11
+			SELECTCASE ARG:3
+			;開始
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こっこれ？　もしかして…え…やだ駄目…膣内に入っちゃったりしたら…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こっこれ？　もしかして…え…やだ駄目…膣内に入っちゃったりしたら…」
+				ENDIF
+				PRINTFORM 「ん…っ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　だっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM ダメなのよっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　やぁ…塗りこまないでぇ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			
+			;発情
+			CASE 1
+				PRINTFORM 「この臭い…はぁ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　駄目…なのに…身体が欲しがっちゃって来てる…
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			
+			;終了
+			CASE 2
+			
+			ENDSELECT
+		
+		ENDSELECT
+	;親睦
+	CASE 161
+		CALL GET_PT_CHAR_NO_8_0(7)
+		;襲われた
+		IF ARG:2 == 0
+			SELECTCASE ARG:3
+			;襲われた
+			CASE 0
+				;小悪魔発情（ランダム）
+				IF (RESULT > 0) && (CFLAG:(RESULT):28 >= 1) && RAND:2
+					PRINTFORM 「…ちょっ？！　小悪魔…？　貴女なにを…んんっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　やっやめなさ…んぅッッ
+					CALL HEARTCB(0xD02830, 2)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「ひゃっ？！　なっなにを…むきゅっ？！　んはぁっ　やっやめ…んんっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;襲われたが助かった
+			CASE 1
+				;小悪魔発情（ランダム）
+				IF (RESULT > 0) && (CFLAG:(RESULT):28 >= 1) && RAND:2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ぜー…っ　ぜー…っ　た…助かった…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ぜー…っ　ぜー…っ　た…助かった…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「サキュバスの貴女が劣情のままに人を襲ったら、ただじゃ済まないでしょ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「サキュバスの貴女が劣情のままに人を襲ったら、ただじゃ済まないでしょ…」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はーーーっ　はーーーっ　まったく…油断していたら味方にも襲われるの、ここは…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はーーーっ　はーーーっ　まったく…油断していたら味方にも襲われるの、ここは…」
+					ENDIF
+				ENDIF
+			;一人でやってろ！した
+			CASE 2
+				;小悪魔発情（ランダム）
+				IF (RESULT > 0) && (CFLAG:(RESULT):28 >= 1) && RAND:2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いつも言ってるでしょ、小悪魔。そう毎回相手なんて、できないんだから…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いつも言ってるでしょ、小悪魔。そう毎回相手なんて、できないんだから…」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…そんなに欲求不満なら一人で解消してなさいよ…私を巻き込まないで」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…そんなに欲求不満なら一人で解消してなさいよ…私を巻き込まないで」
+					ENDIF
+				ENDIF
+			ENDSELECT
+		;襲った
+		ELSE
+			IF RESULT == 0 || RAND:2
+				LOCAL:0 = RESULT
+				;魔理沙
+				CALL GET_PT_CHAR_NO_8_0(2)
+				;レミリア
+				IF RESULT == 0
+					CALL GET_PT_CHAR_NO_8_0(10)
+				ENDIF
+				;アリス
+				IF RESULT == 0
+					CALL GET_PT_CHAR_NO_8_0(14)
+				ENDIF
+				;上記キャラが居ないので元に戻す
+				IF RESULT == 0
+					RESULT = LOCAL:0
+				ENDIF
+			ENDIF
+			
+			SELECTCASE ARG:3
+			;襲った
+			CASE 0
+				;特定キャラが居る（ランダム）
+				IF (RESULT > 0) && RAND:2
+					SELECTCASE NO:(RESULT)
+					;小悪魔
+					CASE 7
+						PRINTFORM 「小悪魔…
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 　ちょっと私の相手をしなさい」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 　ちょっと私の相手をしなさい」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「別にいいでしょ、いつもは貴女の方から誘ってきてるんだから…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「別にいいでしょ、いつもは貴女の方から誘ってきてるんだから…」
+						ENDIF
+					CASEELSE
+						PRINTFORM 「ねぇ…%CALLNAME_8_0(RESULT)%……私…身体が熱くて眠れないの…
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ENDSELECT
+				ELSE
+					PRINTFORM 「んふ…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　このままだと戦いにも支障が出るでしょう？　だから…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 　このままだと戦いにも支障が出るでしょう？　だから…」
+					ENDIF
+				ENDIF
+			;襲い失敗、自慰
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「わ…私とした事が…ごめんなさい…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「わ…私とした事が…ごめんなさい…」
+				ENDIF
+				PRINTFORM 「でも…自分ひとりででもどうにかしないと…んんっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　見ないで…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;乱交、相思相愛
+			CASE 2
+				;特定キャラが居る（ランダム）
+				IF (RESULT > 0) && RAND:2
+					PRINTFORM 「ふふ…いいわよ、%CALLNAME_8_0(RESULT)%…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「そうね…少しくらいいいと思…ぅんんっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　もう、せっかちなんだから…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+					PRINTFORM 「ほら…こんな状況だし…せめて一緒に愉しみましょう……んっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	;動物耳
+	CASE 173
+		SELECTCASE ARG:2
+		;発情
+		CASE 1
+			PRINTFORM 「はぁ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　はぁ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　……身体が…火照って…もしかして今食べた実が……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　……身体が…火照って…もしかして今食べた実が……」
+			ENDIF
+		;動物耳が生える
+		CASE 2
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…えっ！？　このふさふさしたのは…耳？　って、尻尾まで…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…えっ！？　このふさふさしたのは…耳？　って、尻尾まで…」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:(TARGET)%は被った帽子を押し分けて生えてきた猫の様な耳を、興味深く弄っている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:(TARGET)%は被った帽子を押し分けて生えてきた猫の様な耳を、興味深く弄っている…
+			ENDIF
+		;その場を離れる
+		CASE 3
+			IF FLAG:AUTOMODE
+				PRINTFORML 「流石に、こんな場所に成っている実をおいそれと食べられないわ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「流石に、こんな場所に成っている実をおいそれと食べられないわ…」
+			ENDIF
+		;動物耳が消える
+		CASE 4
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ…耳が…尻尾も…引っ込んだみたい？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ…耳が…尻尾も…引っ込んだみたい？」
+			ENDIF
+		;HP回復
+		CASE 5
+			IF FLAG:AUTOMODE
+				PRINTFORML 「甘くて美味しい…！　疲れが取れるわね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「甘くて美味しい…！　疲れが取れるわね」
+			ENDIF
+		ENDSELECT
+		
+	;壁尻スライム
+	CASE 176
+		SELECTCASE ARG:2
+		;捕らえられた
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML （ちょ…ちょっとっ！！　これ…うっ動けない……！？）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW （ちょ…ちょっとっ！！　これ…うっ動けない……！？）
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 上半身をスライムに包まれた%CALLNAME:(TARGET)%は声も出せないまま、尻を高く上げた状態でもがいている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 上半身をスライムに包まれた%CALLNAME:(TARGET)%は声も出せないまま、尻を高く上げた状態でもがいている…
+			ENDIF
+		CASE 1
+		;犯された
+			;V感覚2以上
+			IF ABL:Ｖ感覚 >= 2
+				PRINTFORM （ん…んんぅ！？　え…だっ誰！？　やっ…んぅ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　だ…だめぇ…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML ）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ）
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML （ん…んんぅ！？　え…だっ誰！？　やっ…やめなさいっっ！！！）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （ん…んんぅ！？　え…だっ誰！？　やっ…やめなさいっっ！！！）
+				ENDIF
+			ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(TARGET)%は身動きの取れないまま、露出した尻を犯される…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(TARGET)%は身動きの取れないまま、露出した尻を犯される…
+				ENDIF
+		;犯す側
+		CASE 2, 3
+			IF FLAG:AUTOMODE
+				PRINTFORML （そんな風にお尻を突き出しちゃって…今なら…ちょっとくらいイタズラしても判らないわよね…）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW （そんな風にお尻を突き出しちゃって…今なら…ちょっとくらいイタズラしても判らないわよね…）
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 目の前に無防備に曝け出された尻を見て、%CALLNAME:(TARGET)%は湧き上がる痴情を抑え切れなかった…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 目の前に無防備に曝け出された尻を見て、%CALLNAME:(TARGET)%は湧き上がる痴情を抑え切れなかった…
+			ENDIF
+		ENDSELECT
+		
+	;入れ替わり
+	CASE 180
+		SELECTCASE ARG:2
+		CASE 2
+			LOCAL:0 = 0
+			IF CFLAG:(1):114 == CFLAG:110
+				LOCAL:0 = 1
+			ENDIF
+			IF (LOCAL:0 == 0) && (FLAG:10 != 0)
+				IF CFLAG:(FLAG:10):114 == CFLAG:110
+					LOCAL:0 = FLAG:10
+				ENDIF
+			ENDIF
+			IF (LOCAL:0 == 0) && (FLAG:11 != 0)
+				IF CFLAG:(FLAG:11):114 == CFLAG:110
+					LOCAL:0 = FLAG:11
+				ENDIF
+			ENDIF
+			
+			;念のため判定
+			IF LOCAL:0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「く……ようやく目が慣れて…………っ？？？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「く……ようやく目が慣れて…………っ？？？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「なんで私が目の前に……というか、この身体……もしかして%CALLNAME_8_0(GET_ID_FROM_NO(CFLAG:114))%の…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「なんで私が目の前に……というか、この身体……もしかして%CALLNAME_8_0(GET_ID_FROM_NO(CFLAG:114))%の…」
+				ENDIF
+			ENDIF
+		ENDSELECT
+		
+	ENDSELECT
+
+RETURN
+
+
+
+
+
+
+

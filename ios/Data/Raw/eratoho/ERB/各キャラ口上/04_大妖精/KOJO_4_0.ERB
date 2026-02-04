@@ -1,0 +1,2189 @@
+﻿;*********************************************************
+;　東方触手宮　大妖精口上
+;		2012/09/18	ver 0.01
+;*********************************************************
+
+;	CFLAG
+;
+
+;口上選択時のタイトル
+@KOJO_TITLE_4_0
+RESULTS = 東方触手宮　大妖精口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_4_0
+PRINTFORML いつも一生懸命な大ちゃんをいじめたい追い詰めたい
+PRINTFORML 弱い子が必死なのってそそるよね！興奮するよね！
+PRINTFORML しっかりもののお姉さんだけど怖がり
+PRINTFORML イタズラ好きでちょっと天然でちょっと黒い
+PRINTFORML そんなイメージの大ちゃんです
+
+;文字色　エメラルドグリーン
+@KOJO_DEFAULT_COLOR_4_0
+RETURN RGBCOLOR(71, 234, 126)
+
+;口上本体
+@KOJO_4_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+CALL KOJO_4_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;文字色設定
+SETCOLOR CFLAG:700
+
+;****************************************************
+
+;寝てる
+IF CFLAG:25 && CFLAG:29 != 1
+
+SELECTCASE ARG:0
+	;HPダメージ
+	CASE 12
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「いたっ……ん…」
+			CASE 1
+				PRINTFORML 「……」
+			CASEELSE
+				PRINTFORML 「………げほっ…やっ…」
+		ENDSELECT
+	;寄生、性攻撃
+	CASE 14 ,16
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「ひゃっ…っ……ぅぅ…」
+			CASE 1
+				PRINTFORML 「………むにゃ…？」
+			CASEELSE
+				PRINTFORML 「ひゃんっ…！？………すぅ」
+		ENDSELECT
+ENDSELECT
+
+;*****************************************************
+
+;通常時
+ELSE
+
+SELECTCASE ARG:0
+	
+	CASE 1
+		SELECTCASE ARG:1
+			;防御
+			CASE 1
+				;発情
+				IF CFLAG:28
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ふぇええ…動けないよぉ…」
+						CASE 1
+							PRINTFORML 「ゾクゾクして……何もできない」
+						CASE 2
+							PRINTFORMDL 大妖精は頬を紅色に染めて身を守っている
+					ENDSELECT
+				;MP1/4以下またはHP0
+				ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「お願い…こないでよぉ…」
+						CASE 1
+							PRINTFORML 「怖いよぉ……」
+						CASE 2
+							PRINTFORMDL 大妖精は肩を抱き震えて座り込んでいる…
+					ENDSELECT
+				;全裸
+				ELSEIF !BASE:CP
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「見ちゃダメです…」
+						CASE 1
+							PRINTFORML 「えっち！」
+						CASE 2
+							PRINTFORML 「こっち見ないでくださーい！」
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ひっく…怖いよぉ」
+						CASE 1
+							PRINTFORMDL 大妖精は頭を抱えてぷるぷる震えている
+						CASE 2
+							PRINTFORML 「こないで……」
+					ENDSELECT
+				ENDIF
+			;アイテム
+			CASE 2
+				PRINTFORML 「道具を使います！」
+			;前進
+			CASE 3
+				;仲間が居る
+				IF FLAG:10
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「近づくなんて…怖い…」
+						CASE 1
+							PRINTFORML 「私に…オトリになれって言うんですか！？」
+						CASE 2
+							PRINTFORML 「ふぇ…？ま、前にでるの？」
+					ENDSELECT
+				;ソロ
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「え？あれ？きゃあ！いつのまに目の前に！」
+						CASE 1
+							PRINTFORML 「こうなったらヤケクソ！至近距離で撃ち込んじゃう！」
+						CASE 2
+							PRINTFORML 「私だってやる時はやるんだから！」
+					ENDSELECT
+				ENDIF
+			;後退
+			CASE 4
+				;仲間が居る
+				IF FLAG:10
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「きゃあ！きゃあ！怖い！近い！」
+						CASE 1
+							PRINTFORML 「オトリなんてやっぱりできませーん！」
+						CASE 2
+							PRINTFORML 「もうやだー!」
+					ENDSELECT
+				;ソロ
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「離れて弾幕っ！」
+						CASE 1
+							PRINTFORML 「もっともっと距離をとらなきゃ！」
+						CASE 2
+							PRINTFORML 「近くにいたら…危ない…！」
+					ENDSELECT
+				ENDIF
+			;逃走
+			CASE 5
+				;発情
+				IF CFLAG:28
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML (はやく逃げなきゃはやく逃げなきゃはやく逃げなきゃ)
+						CASE 1
+							PRINTFORML 「おいかけてこないでくださーい！」
+						CASE 2
+							PRINTFORML (捕まったら身体のうずうずもきっと…ってダメダメ！にげなきゃ！)
+					ENDSELECT
+				;MP1/4以下またはHP0
+				ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「誰…か…助け……助けてっ」
+						CASE 1
+							PRINTFORML 「はぁっ…はぁっ……このままじゃ…」
+						CASE 2
+							PRINTFORML 「誰か………」
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「こんなの勝てないよぉ…」
+						CASE 1
+							PRINTFORML 「誰か助けてーー！」
+						CASE 2
+							PRINTFORML 「に、逃げろー！」
+					ENDSELECT
+				ENDIF
+			
+			;弾幕攻撃
+			;弱弾幕～強弾幕、ばらまき、貫通
+			CASE 10 TO 12 ,14 ,15
+				;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「もう…諦めて……」
+						CASE 1
+							PRINTFORML 「効いてないの…？」
+						CASE 2
+							PRINTFORML 「当たって！ねえ当たってよお！」
+						CASEELSE
+							PRINTFORMDL 大妖精はガタガタと震える腕を構えた
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「チルノちゃんをも苦しめた必殺の弾幕です！」
+						CASE 1
+							PRINTFORML 「私、妖精の中では強いコなんですから！」
+						CASE 2
+							PRINTFORML 「それっ！あたってー！」
+						CASEELSE
+							PRINTFORML 「私って意外とおてんばなんですよ」
+					ENDSELECT
+				ENDIF
+			;溜め撃ち
+			CASE 13
+				;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					;溜め
+					IF CFLAG:31 == 2
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「落ち着いて、集中しなきゃ…」
+							CASE 1
+								PRINTFORML 「もっと…もっとすごい弾幕なら」
+							CASEELSE
+								PRINTFORML 「………やらなきゃやられちゃう」
+						ENDSELECT
+					;発射
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「これだけ用意すれば！避けれないでしょう！？」
+							CASE 1
+								PRINTFORML 「手加減無しの全力の弾幕です！」
+							CASEELSE
+								PRINTFORML 「お願い！これで倒れて！」
+						ENDSELECT
+					ENDIF
+				;その他
+				ELSE
+					;溜め
+					IF CFLAG:31 == 2
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「落ち着いて、集中して…」
+							CASE 1
+								PRINTFORML 「もっと…もっとすごいのをイメージ」
+							CASEELSE
+								PRINTFORML 「………よしっ！」
+						ENDSELECT
+					;発射
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「この量のクナイ弾、避けれますか？うふふっ♪」
+							CASE 1
+								PRINTFORML 「いきますよー！必殺炎弾！」
+							CASEELSE
+								PRINTFORML 「弾幕ッ！瞬間移動ッ！また弾幕のッ！さらにもう一発です！」
+						ENDSELECT
+					ENDIF
+				ENDIF
+
+			;消耗武器
+			CASE 20 TO 25
+				;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「もう…諦めて……」
+						CASE 1
+							PRINTFORML 「効いてないの…？」
+						CASE 2
+							PRINTFORML 「当たって！ねえ当たってよお！」
+						CASEELSE
+							PRINTFORMDL 大妖精はガタガタと震える腕で武器を構えた
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「無駄遣いしないように気をつけなきゃ」
+						CASE 1
+							PRINTFORML 「えへへ、外に出たらこの武器でイタズラしてみようかな」
+						CASE 2
+							PRINTFORML 「おもちゃみたいでちょっと面白いかも♪」
+					ENDSELECT
+				ENDIF
+			
+			;非消耗武器
+			CASE 30 TO 34
+				;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「もう…諦めてくださいよお……」
+						CASE 1
+							PRINTFORML 「効いてないの…？」
+						CASE 2
+							PRINTFORML 「当たって！ねえ当たってよお！」
+						CASEELSE
+							PRINTFORMDL 大妖精はガタガタと震える腕で武器を構えた
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「チャンバラごっこってあんまりやらないんだけどなぁ…」
+						CASE 1
+							PRINTFORML 「武器を持ってると物語の中のヒーローになったみたい♪」
+						CASE 2
+							PRINTFORML 「おもちゃみたいでちょっと面白いかも♪」
+					ENDSELECT
+				ENDIF
+
+			;拘束離脱
+			CASE 42
+				IF ARG:3 == 0
+					;丸呑み
+					IF CFLAG:21
+						;MP1/4以下またはHP0
+						IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「……きっと私…このまま食べられちゃうんだ」
+							CASE 1
+								PRINTFORML 「誰か！誰か助けて！チルノちゃん！ルーミアちゃん！誰かぁ！」
+							CASE 2
+								PRINTFORMDL 大妖精は這い出そうと必死に肉壁に指をかけようとしている
+						ENDSELECT
+						;その他
+						ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「ふえぇええん！出してよぉー！食べられたくないよぉ！」
+							CASE 1
+								PRINTFORML 「私なんて美味しくないよお！」
+							CASE 2
+								PRINTFORML 大妖精は這い出そうと手足をばたつかせ暴れている
+						ENDSELECT
+						ENDIF
+					;拘束
+					ELSE
+						;MP1/4以下またはHP0
+						IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「……きっと私…このまま殺されちゃうんだ」
+							CASE 1
+								PRINTFORML 「助けて！助けてよお！早く助けてぇ！」
+							CASE 2
+								PRINTFORML 「どうしてこんな目にあわなきゃいけないの！？」
+						ENDSELECT
+						;その他
+						ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「離してよエッチ！」
+							CASE 1
+								PRINTFORML 「ひゃんっ！？へんなとこ触んないでください！」
+							CASE 2
+								PRINTFORML 「ぬるぬるして気持ち悪いよぉ」
+						ENDSELECT
+						ENDIF
+					ENDIF
+				ENDIF
+			;力溜め
+			CASE 43
+				;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML (こんな状況だからこそチャンスを狙って…)
+						CASE 1
+							PRINTFORML 「ぅぅ…次で絶対逃げてやるんだから！」
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML (おちついて私、まだチャンスはあるわ！)
+						CASE 1
+							PRINTFORML 「むぐぐぐぐぐぐぐ…！」
+					ENDSELECT
+				ENDIF
+			
+			;諦め
+			CASE 44
+				
+				SELECTCASE RAND:7
+					CASE 0
+						PRINTFORML 「どうして…誰も助けてくれないの…？」
+					CASE 1
+						PRINTFORML 「おうち…帰りたい……」
+					CASE 2
+						PRINTFORML 「一回休みはやだよぉ」
+					CASE 3
+						PRINTFORML 「怖いよぉ…」
+					CASE 4
+						PRINTFORML 「なんで…こんなことになっちゃったんだろ…」
+					CASE 5
+						PRINTFORMDL 大妖精はぐしゃぐしゃの顔を拭うこともできないまま泣きじゃくっている
+					CASEELSE
+						PRINTFORMDL ぐったりとした大妖精の身体を触手が弄んでいる
+				ENDSELECT
+			;動けない
+			CASE 45
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「ふぇ……」
+					CASE 1
+						PRINTFORML 「ぅぅぅ…」
+				ENDSELECT
+			
+			;Ａを守る
+			CASE 50
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「うひゃぁ！？どこ触ろうとしてるんですか！？」
+					CASE 1
+						PRINTFORML 「ちょちょちょちょちょ…！？」
+					CASE 2
+						PRINTFORML 「そんなとこ汚いですよー！」
+				ENDSELECT
+			;Ｂを守るなんてとんでもない！
+			CASE 51
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「えっちなことしないでください！」
+					CASE 1
+						PRINTFORML 「ど、どうしてそんなとこ触ろうとするんですかー！？」
+					CASE 2
+						PRINTFORML 「やめて！やめてください！」
+				ENDSELECT
+			;Ｃ、Ｖを守る
+			CASE 52 TO 53
+			IF TALENT:0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ここだけはぜーったいにダメですからね！」
+					CASE 1
+						PRINTFORML 「好きな人にしかなにかさせちゃダメな場所なんです…！」
+					CASE 2
+						PRINTFORML 「もっと素敵な人にあげるんですから…！」
+				ENDSELECT
+					PRINTFORMDL 大妖精は初めてを奪われまいと必死だ
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「赤ちゃんなんていらないっ…」
+					CASE 1
+						PRINTFORML 「ここだけは…ダメ…」
+					CASE 2
+						PRINTFORML 「変態さんは嫌いです…！」
+				ENDSELECT
+					PRINTFORMDL ガタガタ震えながらも大妖精は大切な場所を庇っている
+			ENDIF
+		ENDSELECT
+	;拘束攻撃
+	CASE 5
+		;喪失中
+		IF CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML (あはは…食べられちゃうのかな…)
+				CASE 1
+					PRINTFORML 「助け……」
+				CASE 2
+					PRINTFORML 「あ……ぁ…」
+			ENDSELECT
+		ELSE
+		
+		SELECTCASE ARG:3
+			;拘束
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「きゃっ！？なになに！？」
+					CASE 1
+						PRINTFORML 「ふぇ……？」
+					CASE 2
+						PRINTFORML 「きゃあ！？」
+				ENDSELECT
+			;丸呑み
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「きゃああ！？」
+					CASE 1
+						PRINTFORML 「やだやだこないで！私おいしくない！」
+					CASE 2
+						PRINTFORML 「いやぁああ！誰か助けてーー！」
+				ENDSELECT
+		ENDSELECT
+		ENDIF
+		
+	;寄生攻撃
+	;下のお口からいっぱいいっぱいミルクごくごくしようねー
+	CASE 6
+		IF CFLAG:29
+		
+		ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「気持ち悪い！気持ち悪い！」
+			CASE 1
+				PRINTFORML 「ひぃいいぃ！いやぁああ！いやあぁああ！」
+			CASE 2
+				PRINTFORML 「やだぁ！変なことしないでえ！」
+		ENDSELECT
+		ENDIF
+			
+	;HPダメージ
+	CASE 12
+		;HPがないor喪失中
+		IF BASE:HP == 0 || CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「……」
+				CASE 1
+					PRINTFORML 「痛いよぉ……」
+				CASEELSE
+					PRINTFORML 「……死んじゃうよぉ」
+			ENDSELECT
+		;平常時
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いったーい！」
+				CASE 1
+					PRINTFORML 「乱暴しないでよぉ！」
+				CASEELSE
+					PRINTFORML 「ぐすっ…ひどいです…」
+			ENDSELECT
+		ENDIF
+	;EPダメージ
+	CASE 14
+	;喪失時
+		IF CFLAG:29
+				;絶頂時
+			IF BASE:EP < ARG:3
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぁあぁああ！やだぁあやだぁああ！ぎもじいいぃいやだぁあ！！」
+					CASE 1
+						PRINTFORM 「ーーーーーーーっ
+						CALL HEARTC()
+						PRINTFORML 」
+					CASEELSE
+						PRINTFORM 「だめぇええ！一回休みになっちゃぅうーー
+						CALL HEARTC()
+						PRINTFORML 」
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「もう･･･やめて……」
+					CASE 1
+						PRINTFORML 「…ふぁ…くすぐったい」
+					CASEELSE
+						PRINTFORM 「あっ…
+						CALL HEARTC()
+						PRINTFORM 」
+				ENDSELECT
+			ENDIF
+		ELSE
+			;絶頂時
+			IF BASE:EP < ARG:3
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML (声…止まんない…頭真っ白……もう…何も考えられ…)
+					CASE 1
+						PRINTFORM 「なに！？なに！？私どうなっちゃうの！？ふぁ…ぁああぁああ
+						CALL HEARTC()
+						PRINTFORML 」
+					CASEELSE
+						PRINTFORMDL 大妖精は漏れそうな声を我慢しようと奥歯を噛み締め目を強く瞑ったが
+						PRINTFORMDL こみ上げる快感に耐えることはできなかった
+				ENDSELECT
+			;EPダメージ3000以上
+			ELSEIF ARG:3 >= 3000
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「ひやぁあああ！？」
+					CASEELSE
+						PRINTFORM 「ぁ…んんんっ…ふぁぁ
+						CALL HEARTC()
+						PRINTFORML …はっ！？」
+				ENDSELECT
+			;EPダメージ3000未満
+			ELSE
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「えっち！」
+					CASE 1
+						PRINTFORML 「変態さんは大ッ嫌いです！」
+					CASE 2
+						PRINTFORML 「変なトコさわんないで！」
+					CASEELSE
+						PRINTFORML 「えっちなことしちゃめっ！なんですよ！きゃあ！」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;寄生攻撃命中
+	CASE 16
+		SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「いやぁああ！お腹の中に変なのがぁ！」
+		CASE 1
+			PRINTFORML 「やめて！汚さないでえ！」
+		CASE 2
+			PRINTFORML 「うえええぇえぇん！」
+		CASEELSE
+			PRINTFORML 「抜いてえ！抜いてよぉお！」
+		ENDSELECT
+
+	;攻撃回避
+	CASE 22 TO 24, 27
+		;MP1/4以下またはHP0
+		IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ひっ……」
+				CASE 1
+					PRINTFORML 「ぐすっ…」
+				CASEELSE
+					PRINTFORML 「は、外れた…？」
+			ENDSELECT
+		;その他
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃあっ！」
+				CASE 1
+					PRINTFORML 「ひゃっ、あぶないなあもう！」
+				CASEELSE
+					PRINTFORML 「ふふっ、残念でした♪」
+			ENDSELECT
+		ENDIF
+		
+	;拘束攻撃回避
+		;MP1/4以下またはHP0
+		IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ひぃい！？」
+				CASE 1
+					PRINTFORML (い、いまの捕まっちゃってたら…)
+				CASEELSE
+					PRINTFORML 「こ、怖かったよぉ…」
+			ENDSELECT
+		;その他
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「び、びっくりしたぁ」
+				CASE 1
+					PRINTFORML 「はぁ･･･はぁ･･･鬼ごっこは得意なんだからね！」
+				CASEELSE
+					PRINTFORML 「怖かったぁ…捕まったら大変だもん」
+			ENDSELECT
+		ENDIF
+	
+	;寄生攻撃回避
+	;つまり防御したとき？
+	CASE 26
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「ぅぅう…これじゃいつか変なことされちゃう…」
+			CASE 1
+				PRINTFORML 「ひゃああ！汚いっ！変なのださないでよぉ！」
+			CASE 2
+				PRINTFORML （このネバネバを体の中に入れられるところだったのね･･･ぅぅ）
+		ENDSELECT
+	;敵を撃破
+	CASE 31
+		IF CFLAG:29
+		
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「はぁ…はぁ…」
+				CASE 1
+					PRINTFORML 「これに懲りたらもうエッチなことはめっ！ですよ！」
+				CASE 2
+					PRINTFORML （こ、こわかったぁ…）
+			ENDSELECT
+		ENDIF
+	;HP0
+	CASE 32
+		IF CFLAG:29
+		
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML (ふらふらする…)
+				CASE 1
+					PRINTFORML (もう…力が…はいんないよぉ…)
+				CASE 2
+					PRINTFORML 「痛い…痛いよぉ……」
+			ENDSELECT
+		ENDIF
+	;戦意喪失
+	CASE 33
+		;発情
+		IF CFLAG:28
+			PRINTFORM 「もう…いっか…一回休みで…気持ちいいんだもん
+			CALL HEARTC()
+			PRINTFORML 」
+		;その他
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もう…動けない……」
+				CASE 1
+					PRINTFORML 「助けて………」
+				CASEELSE
+					PRINTFORML 「……疲れ…ちゃった」
+			ENDSELECT
+		ENDIF
+	;服の破れ強度
+	CASE 35
+		IF CFLAG:29
+		
+		ELSE
+			SELECTCASE ARG:1
+			;全裸
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「っ！？きゃぁあああ！」
+					CASE 1
+						PRINTFORML 「ふ、服！服が！？」
+					CASEELSE
+						PRINTFORML 「こんな格好見られたらお嫁にいけないよぉ！」
+				ENDSELECT
+			;半裸
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ど、どうしよう…」
+					CASE 1
+						PRINTFORML 「は、早く着替え見つけないと裸になっちゃうっ…」
+					CASEELSE
+						PRINTFORML 「このままじゃ下着までやぶけちゃうよぉ」
+				ENDSELECT
+			;破れ始め
+			CASE 2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「きゃあ！下着みえちゃう！」
+					CASE 1
+						PRINTFORML 「やだ！おっきな穴があいてる…」
+					CASEELSE
+						PRINTFORML 「うぅぅ…ボロボロになっちゃった…」
+				ENDSELECT
+			ENDSELECT
+		ENDIF
+	;アイテム使用
+	CASE 36
+		;喪失＆拘束中は静かに
+		IF CFLAG:29 || CFLAG:20
+		
+		ELSE
+		;アイテムIDで使用アイテム
+		SELECTCASE ARG:1
+			
+		ENDSELECT
+		ENDIF
+	;寄生された
+	CASE 40
+		IF CFLAG:29
+
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ひっ！？な、なにかがズルって…」
+				CASE 1
+					PRINTFORML 「な、なにをされちゃったの…」
+				CASEELSE
+					PRINTFORML 「…やだ…やだ…怖いよぉ」
+			ENDSELECT
+		ENDIF
+	
+	;戦闘開始
+	CASE 54
+	
+	;逃走成功
+	CASE 55
+		;拘束中は静かに
+		IF CFLAG:20 || CFLAG:29
+			;
+		;MP1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「こわ…かったぁ……」
+				CASE 1
+					PRINTFORML 「ぅぅ…もうやだよぉ」
+				CASEELSE
+					PRINTFORML 「追いかけて…よかったぁ…きてないんだ」
+			ENDSELECT
+		;その他
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「よしっ、逃げ切った！みんなと鬼ごっこで鍛えてた甲斐があったわ」
+				CASE 1
+					PRINTFORML 「はぁぁあぁ…こわかったぁ」
+				CASEELSE
+					PRINTFORML 「もー！ケンカなんてできないよ」
+			ENDSELECT
+		ENDIF
+	;仲間を見捨てた
+	CASE 62
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「うわーん！ごめんなさーい！」
+			CASE 1
+				PRINTFORML 「た、たすけてーー！」
+			CASEELSE
+				PRINTFORML 「私たちじゃ無理だよぉ！」
+		ENDSELECT
+	CASE 63
+		;大ちゃんが主人公
+		IF TARGET == 1
+		;丸呑みで見捨てられた
+			IF CFLAG:21
+				PRINTFORMDL 大妖精の全身を揉みしだく肉壁にもみくちゃにされ、
+				PRINTFORMDL 酸欠でボーっとする頭で必死に意識を繋ぎとめ
+				PRINTFORMDL 全身を陵辱しようと迫る触手に怯えながらも何度も何度も助けを求めた
+				PRINTFORMDL 叫びつかれ、喉が痛みぐったりと肉壁に身をゆだねる大妖精はハッとして気づいた。
+				PRINTFORMDL 厚い肉の向こう側から何も聞こえないのだ。
+				IF FLAG:AUTOMODE
+					PRINTFORML (え…どうして…？みんなやられちゃったの？)
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW (え…どうして…？みんなやられちゃったの？)
+				ENDIF
+				PRINTFORMDL だとしたら悲鳴や抵抗する音くらい聞こえてもいいはずだ。そう思い悟った
+				IF FLAG:AUTOMODE
+					PRINTFORML (私…見捨てられちゃった！？)
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW (私…見捨てられちゃった！？)
+				ENDIF
+				PRINTFORMDL 痛む喉から必死にかすれた声を出そうとも聞こえてくるのは自身を貪る触手と汚濁液の水音だけ…
+				PRINTFORMDL 自力で這い出そうとしても既に上も下も分からない状態で
+				PRINTFORMDL さらに出口も肉襞に隠されてしまっている…
+				IF FLAG:AUTOMODE
+					PRINTFORML 「どうして…ひどいよ……ひどいよぉ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「どうして…ひどいよ……ひどいよぉ…」
+				ENDIF
+				PRINTFORMDL 脱出を諦めた大妖精の全身から力が抜けると肉壁は悦ぶようにさらに激しく脈動を始めた
+		;拘束中に見捨てられた
+			ELSE
+				PRINTFORMDL %CALLNAME:(ARG:2)%は申し訳なさそうに大妖精をちらりと見ると背を向け駆け出した
+				PRINTFORML 「待って！？どうして逃げちゃうの！」
+				PRINTFORMDL 小さくなっていく背中に悲痛な声で問いかける大妖精の体に触手は次々に絡み付いていく
+				PRINTFORML 「離して！やめて！助けて！」
+				PRINTFORMDL 涙で顔をボロボロに汚しながら叫ぶ大妖精の目の前には洞窟の暗闇しか広がっていない…
+			ENDIF
+		ELSE
+			;丸呑み中に見捨てられた
+			IF CFLAG:21
+				PRINTFORMDL %CALLNAME:1%では大妖精を助けることは出来そうにない…
+				PRINTFORMDL 弱々しいくぐもった悲鳴を背に、%CALLNAME:1%はその場を後にした…
+			ELSE
+				PRINTFORML 「待って！？どうして逃げちゃうの！」
+				PRINTFORMDL すがるような叫びを背中に受けながらも%CALLNAME:1%は自身が生き延びる為に逃げ出した
+			ENDIF
+		ENDIF
+	;戦闘勝利
+	CASE 57
+		;喪失中は静かにしようねえ
+		IF CFLAG:29
+		;戦闘が終わったみたいだけどもうどうでもいいや早く帰りたいこれ以上動けない的な気持ち
+		ELSE
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML 「ふぇぇぇ…」
+			CASE 1
+				PRINTFORML 「終わった…のかなあ？」
+			;仲間がいる
+			CASE 2
+				PRINTFORML 「怖かったぁ…」
+			CASEELSE
+				PRINTFORML 「うー…一体何匹いるんですか…も～…」
+		ENDSELECT
+		ENDIF
+	;誰かに会う
+	CASE 101
+		IF ARG:2 && TARGET == 1
+			PRINTFORML （…？）
+			PRINTFORMDL 誰かが居るような気がする…
+		;喪失中
+		ELSEIF CFLAG:29
+		
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML (ん？人影？)
+				CASE 1
+					PRINTFORML （誰かいるみたい…）
+				CASEELSE
+					PRINTFORML 「きゃっ…？」
+			ENDSELECT
+		ENDIF
+
+	;別れる
+	CASE 102
+		;喪失キャラ
+		IF ARG:2
+			SELECTCASE NO:(ARG:1)
+				;バカルテットwithおくう
+				CASE 3, 5, 24, 25, 80
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「%CALLNAME:(ARG:1)%ちゃん…」
+							PRINTFORML 「ごめん、私じゃ何もしてあげられないや…」
+						CASE 1
+							PRINTFORML 「今は何もしてあげられないけど…」
+							PRINTFORML 「きっと助けていくからね」
+					ENDSELECT
+				;三妖精
+				CASE 45 TO 47
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML （この娘達なら放っておいても多分大丈夫よね）
+						CASE 1
+							PRINTFORML (ボロボロだけど…大丈夫よねたぶん)
+					ENDSELECT
+				CASEELSE
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「ごめんなさい…何もしてあげられなくて…」
+					CASE 1 
+						PRINTFORML 「どうか見つからないように気をつけて…」
+					ENDSELECT
+			ENDSELECT
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;バカルテットwithおくう
+				CASE 3, 5, 24, 25, 80
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「%CALLNAME:(ARG:1)%ちゃんなんか大変そう…」
+							PRINTFORML 「声かけられる雰囲気じゃないや」
+						CASE 1
+							PRINTFORML 「ゆっくりお話してる場合じゃないよね」
+					ENDSELECT
+				;三妖精
+				CASE 45 TO 47
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「…話しかけたらまた戦争の時みたいに面倒なことになるかも」
+						CASE 1
+							PRINTFORML 「う～、なんとなく話しかけ辛い感じだなぁ…」
+					ENDSELECT
+				CASEELSE
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML (･･･なんかピリピリしてて怖い)
+					CASE 1 
+						PRINTFORML 「今は探検のほうが大切よね」
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	;雑談
+	CASE 103
+		IF CFLAG:29
+		
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;バカルテットwithおくう
+				CASE 3, 5, 24, 25, 80
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「%CALLNAME:(ARG:1)%ちゃん大丈夫？」
+							PRINTFORML 「私…？大丈夫じゃないよぉ…」
+						CASE 1
+							PRINTFORML 「どこもかしこもにょろにょろぬるぬる気持ち悪いね…」
+					ENDSELECT
+				;三妖精
+				CASE 45 TO 47
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「チルノちゃんの次はにょろにょろ相手に戦争なの？」
+						CASE 1
+							PRINTFORML 「私もみんなみたいにかくれんぼ向きの能力ほしいなぁ」
+					ENDSELECT
+				CASEELSE
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「早く外に出たいですね…」
+					CASE 1 
+						PRINTFORML 「その･･･気分は…良いわけないですよね…」
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+		
+	;情報交換
+	CASE 104
+		IF CFLAG:29
+		
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;バカルテットwithおくう
+				CASE 3, 5, 24, 25, 80
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「私はこんなことがあったの」
+							PRINTFORML 「%CALLNAME:(ARG:1)%ちゃん覚えられる？本当に？」
+							PRINTFORML 「･･･心配だなぁ」
+						CASE 1
+							PRINTFORML 「ふんふん、そんなとこにそんなのがあったんだ」
+							PRINTFORML (本当かなぁ…)
+					ENDSELECT
+				;三妖精
+				CASE 45 TO 47
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「へ、へえ…時代は情報戦なんだ…」
+						CASE 1
+							PRINTFORML 「ここでこんなことが…え？違うよこうだったもん！そっちが間違えてるよ！」
+					ENDSELECT
+				CASEELSE
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「そんなことが…えーと、私はですね…」
+					CASE 1 
+						PRINTFORML 「ここではこんな事があって…こんな事もあって…」
+					ENDSELECT
+			ENDSELECT
+		
+		ENDIF
+	;パーティー加入誘われた
+	CASE 140
+		IF CFLAG:29
+			PRINTFORMDL 力なく横たわっている大妖精に近づくが大妖精はぴくりとも動かない
+		ELSE
+		SELECTCASE NO:(ARG:1)
+			;バカルテットwithおくう 三妖精
+			CASE 3, 5, 24, 25, 80, 45, 46, 47
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「へ？私…」
+					CASE 1
+						PRINTFORML 「ん～……」
+					CASEELSE
+						PRINTFORML 「え？え？」
+				ENDSELECT
+			CASEELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「え？私ですか…？」
+					CASE 1
+						PRINTFORML 「その……あの…」
+					CASEELSE
+						PRINTFORML 「ふぇ！？え、えっと……」
+				ENDSELECT
+		ENDSELECT
+	ENDIF
+	
+	;パーティー勧誘成功
+	CASE 107
+		IF CFLAG:29
+			PRINTFORMDL (ほうっておけないよね…)
+		ELSE
+		SELECTCASE NO:(ARG:1)
+			;バカルテットwithおくう 三妖精
+			CASE 3, 5, 24, 25, 80, 45, 46, 47
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「うん、一緒に頑張ろうね！」
+					CASE 1
+						PRINTFORML 「えへへ、みんなと一緒だぁ♪」
+					CASEELSE
+						PRINTFORML 「よーし！みんなでかえろうね！」
+				ENDSELECT
+			CASEELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「よろしくお願いします！」
+					CASE 1
+						PRINTFORML 「えへへ、頑張りましょうね」
+					CASEELSE
+						PRINTFORML 「きっと出口はあります！」
+				ENDSELECT
+		ENDSELECT
+		ENDIF
+	
+	;パーティ加入
+	CASE 109
+		IF CFLAG:29
+			PRINTFORMDL ぐったりとしている大妖精の小さな体を%CALLNAME:1%は抱えあげた
+		ELSE
+		SELECTCASE NO:(ARG:1)
+			;バカルテットwithおくう 三妖精
+			CASE 3, 5, 24, 25, 80, 45, 46, 47
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「私、頑張るからね！」
+					CASE 1
+						PRINTFORML 「えへへ、みんなと一緒だぁ♪」
+					CASEELSE
+						PRINTFORML 「よーし！みんなでかえろうね！」
+				ENDSELECT
+			CASEELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「よろしくお願いします！」
+					CASE 1
+						PRINTFORML 「頑張って役に立ってみせます！」
+					CASEELSE
+						PRINTFORML 「脚をひっぱらないように気をつけます…」
+				ENDSELECT
+		ENDSELECT
+		ENDIF
+	CASE 110
+		;PTメンバーと別れる
+		;主人公として表示する場合、ARG:1のキャラを見送る
+		IF TARGET == 1 && CFLAG:29 != 1
+			;死体放置
+			IF CFLAG:(ARG:1):29
+			SELECTCASE NO:(ARG:1)
+				;バカルテットwithおくう 三妖精
+				CASE 3, 5, 24, 25, 80, 45, 46, 47
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ごめんね%CALLNAME:(ARG:1)%ちゃん…」
+						CASE 1
+							PRINTFORML 「きっと迎えにいくからね」
+						CASEELSE
+							PRINTFORML 「ごめん、ちょっとだけ待っててね」
+					ENDSELECT
+				CASEELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML （…だって、これ以上つれていけないよ）
+						CASE 1
+							PRINTFORML 「その…うまく逃げてね？」
+						CASEELSE
+							PRINTFORML 「きっと誰か助けてくれるよ…」
+					ENDSELECT
+			ENDSELECT
+			ELSE
+			SELECTCASE NO:(ARG:1)
+				;バカルテットwithおくう 三妖精
+				CASE 3, 5, 24, 25, 80, 45, 46, 47
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「二手に分かれよう」
+						CASE 1
+							PRINTFORML 「またあとでね！」
+						CASEELSE
+							PRINTFORML 「どっちが先に帰れるか競争だよ」
+					ENDSELECT
+				CASEELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「二手にわかれませんか？」
+						CASE 1
+							PRINTFORML 「また機会があればよろしくおねがいします」
+						CASEELSE
+							PRINTFORML 「お互い、早く帰れるといいですね」
+					ENDSELECT
+			ENDSELECT
+			ENDIF
+		ELSE
+			;それ以外の場合、自分が抜ける
+			;喪失中
+			IF CFLAG:29
+				PRINTFORMDL 満身創痍で身動きすら取れない大妖精を連れて歩く余裕はない…
+				PRINTFORMDL %CALLNAME:1%は大妖精をそっと物陰に横たえた…
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「うぅ…一人は不安ですよお…」
+					CASE 1
+						PRINTFORML 「また機会があればよろしくおねがいします」
+					CASEELSE
+						PRINTFORML 「な、なんとか逃げまわります…」
+				ENDSELECT
+			ENDIF
+		ENDIF
+		;アイテム発見
+		CASE 113
+		;喪失中はだまr
+		IF CFLAG:29
+		;
+		ELSE
+			;ARG:1にアイテムID
+			SELECTCASE ARG:1
+				;着替えセット
+				CASE 54
+				;全裸
+					IF BASE:3 == 0
+						IF RAND:2 == 0
+							PRINTFORML 「よかったぁ…やっと服を着れる…」
+						ELSE
+							PRINTFORML 「ふぁぁ…これで一安心…」
+						ENDIF
+					ELSE
+						IF RAND:2 == 0
+							PRINTFORML 「着替えだぁ！わあい♪」
+						ELSE
+							PRINTFORML 「えっちな怪物ばっかりなんだもん。いやになっちゃう」
+						ENDIF
+					ENDIF
+			
+			ENDSELECT
+		ENDIF
+	;睡眠開始
+	CASE 114
+		IF CFLAG:29
+		
+		ELSE
+		SELECTCASE ARG:1
+			;見張りなし
+			CASE 0
+				;朦朧
+				IF FLAG:7 >= 11
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ふぁあ…もう限界…」
+						CASEELSE
+							PRINTFORML 「眠いよぉ……すぅ…すぅ…」
+					ENDSELECT
+				;妊娠か寄生
+				ELSEIF CFLAG:36 >= 3 || CFLAG:22
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「私…どうなっちゃうんだろう…」
+						CASEELSE
+							PRINTFORML 「くるしいよぉ…気持ち悪いよぉ…」
+					ENDSELECT
+				;要睡眠
+				ELSEIF FLAG:7 >= 7
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ふぁあ…そろそろおやすみなさい」
+						CASE 1
+							PRINTFORML 「怖い夢見そう…」
+						CASEELSE
+							PRINTFORML 「ちゃんと寝れるかな…」
+					ENDSELECT
+				;睡眠可
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「空気が悪くて…あんまり寝れる気がしないなぁ」
+						CASE 1
+							PRINTFORML 「ん～、ゆっくりやすもうっと」
+						CASEELSE
+							PRINTFORML 「怖いの、きませんように…」
+					ENDSELECT
+				ENDIF
+			;PTで見張り
+			CASE 1
+				;朦朧
+				IF FLAG:7 >= 11
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ふぁあ…もう限界…」
+						CASEELSE
+							PRINTFORML 「眠いよぉ……すぅ…すぅ…」
+					ENDSELECT
+				;妊娠か寄生
+				ELSEIF CFLAG:36 >= 3 || CFLAG:22
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「あ…見張り交代の時間ですか？」
+							PRINTFORML 「うん、大丈夫ですよ。横になって少し楽になりました」
+						CASEELSE
+							PRINTFORML 「ぅぅ…大丈夫です。見張りの役目はできますから」
+					ENDSELECT
+				;要睡眠
+				ELSEIF FLAG:7 >= 7
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ん～～やっと寝れますね」
+						CASE 1
+							PRINTFORML 「見張りの交代ですね。大丈夫、おかげさまで元気です！」
+						CASEELSE
+							PRINTFORML 「はい、見張り一生懸命頑張りますよ！」
+					ENDSELECT
+				;睡眠可
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「空気が悪くて…あんまり寝た気がしないです」
+						CASE 1
+							PRINTFORML 「はい、交代ですね」
+						CASEELSE
+							PRINTFORML 「寝れる時に寝とかなきゃですね」
+					ENDSELECT
+				ENDIF
+			;NPCに見張り ARG:2で見張りキャラ
+			CASE 2
+				;朦朧
+				IF FLAG:7 >= 11
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「見張りお願いします…眠いの…」
+						CASE 1
+							PRINTFORML 「おかげでやっと寝れます……」
+						CASEELSE
+							PRINTFORML 「おやすみなさい。ありがとうございます…すぅ」
+					ENDSELECT
+				;妊娠か寄生
+				ELSEIF CFLAG:36 >= 3 || CFLAG:22
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ありがとうございます…体調が…悪くて…」
+						CASE 1
+							PRINTFORML 「……すごく助かります」
+						CASEELSE
+							PRINTFORML 「助かりました。…その、ちょっと辛くて」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ありがとう。これで安心して眠れます！」
+						CASE 1
+							PRINTFORML 「おやすみなさい。久しぶりに安心して眠れます」
+						CASEELSE
+							PRINTFORML 「そのうち私が見張りしてあげますね！」
+					ENDSELECT
+				ENDIF
+		ENDSELECT
+		ENDIF
+		;絶頂
+		CASE 120
+			;諦めた
+			IF TFLAG:16 == 2
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORM 「誰か…誰かたすけぇええ
+						CALL HEARTC()
+						PRINTFORML 」
+					CASE 1
+						PRINTFORML 「もうっ…もう抵抗しないからぁ…許してぇえ！」
+					CASE 2
+						PRINTFORM 「せめて…せめてもうちょっとやさし…ふぁぁあ
+						CALL HEARTC()
+						PRINTFORML 」
+					CASE 3
+						PRINTFORM 「いやっ！やっやっいやっ…ぁ…
+						CALL HEARTC()
+						PRINTFORML 」
+					CASE 4
+						PRINTFORML 「ふにゃぁああ！？」
+				ENDSELECT
+			;MP1/4以下か喪失
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「だ…だめっ！一回休みになっちゃうっ
+						CALL HEARTC()
+						PRINTFORML 」
+					CASE 1
+						PRINTFORML 「ふぇえええぇ！？」
+					CASEELSE
+						PRINTFORM 「
+						CALL HEARTC()
+						CALL HEARTC()
+						CALL HEARTC()
+						PRINTFORML 」
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「ふぇぇ！？…お、おねがいっやめ…やめ…ぁ…
+						CALL HEARTC()
+						PRINTFORML 」
+					CASE 1
+						PRINTFORML 「やぁああん！？」
+					CASEELSE
+						PRINTFORM 「あ…あたまっ･･･おかしくっ……
+						CALL HEARTC()
+						PRINTFORML 」
+				ENDSELECT
+			ENDIF
+
+	CASE 125
+		;寄生が進行
+		IF CFLAG:29
+		
+		ELSEIF ARG:1 == 8
+			PRINTFORML 「ふぇえぇぇ…何かがおなかの中でガサガサいってるよぉ…」
+			PRINTFORMDL 大妖精はしきりに下腹部を気にしている
+		ELSEIF ARG:1 == 4
+			PRINTFORML 「ぅぅ…育ってる……絶対育ってる…」
+			PRINTFORMDL イヤでも感じる腹の圧迫感に大妖精の表情は晴れない
+		ELSEIF ARG:1 == 1
+			PRINTFORMDL 大妖精は何度も蹲り、何度も青ざめた顔で膨らんだ腹部をさすっている…
+		ENDIF
+	CASE 126
+		;妊娠が進行
+		IF CFLAG:29 || CFLAG:20
+			IF ARG:1 == 9
+				PRINTFORML (……体…調子が)
+			ELSEIF ARG:1 == 8
+				;セーフ
+				IF CFLAG:36 == 1
+					PRINTFORML (……また…できるまでおなかに)
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+				ELSE
+					PRINTFORML 「あかちゃん･･･ばけもののあかちゃんがいるの…」
+				ENDIF
+			ELSEIF ARG:1 == 1
+				PRINTFORMDL 「…･･･どうして」
+			ENDIF
+		;平常時
+		ELSE
+			IF ARG:1 == 11
+				PRINTFORML (うぅ…つかれたよぉ)
+			ELSEIF ARG:1 == 8
+				;セーフ
+				IF CFLAG:36 == 1
+					PRINTFORML 「はぁ…少しは疲れとれたかな…？」
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+				ELSE
+					PRINTFORML (！？)
+					PRINTFORML (え…お腹の中で…なにかが動いて…)
+				ENDIF
+			ELSEIF ARG:1 == 3
+				PRINTFORML 「や、やだ！やだやだやだやだ！」
+				PRINTFORML 「こんなのヤダ！赤ちゃんなんて産みたくない！」
+				PRINTFORML 「だって相手は怪物だし！産んだ後何されるかわかんないし！」
+				PRINTFORML 大妖精は頭を抱えて座り込みひとしきり叫んだ後、めそめそと泣き始めた…
+			ELSEIF ARG:1 == 1
+				PRINTFORML 「痛いよぉ……もうどうしょうもないの…？」
+			ENDIF
+		ENDIF
+		
+	CASE 127
+		;寄生出産
+		SELECTCASE ARG:1
+			CASE 0
+				;
+			CASE 1
+				;
+			CASE 2
+				;
+			ENDSELECT
+		;浄化
+		CASE 130
+			IF CFLAG:29
+			
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「それ！ふきとばしちゃえ！」
+					CASE 1
+						PRINTFORML 「気持ち悪いの全部お掃除よ！」
+					CASEELSE
+						PRINTFORML 「えへへ、洗濯もお掃除も得意なんですよ」
+				ENDSELECT
+			ENDIF
+			
+	CASE 132
+		;部屋を移動（突撃）
+		IF TARGET == 1 && CFLAG:29 != 1
+			IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「うわーん！誰か助けてよー！」
+					CASE 1
+						PRINTFORML 「はやく、はやくなんとかしないと！」
+					CASEELSE
+						PRINTFORML 「急がなきゃ…急がなきゃ…！」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「いそげー！」
+					CASE 1
+						PRINTFORML 「のりこめー！」
+					CASEELSE
+						PRINTFORML 「いっけー！」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 133
+		;部屋を移動（慎重）
+		IF TARGET == 1 && CFLAG:29 != 1
+			IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML (そーっと…そーっと…)
+					CASE 1
+						PRINTFORML (見つかっちゃダメ…気をつけなくちゃ…)
+					CASEELSE
+						PRINTFORML (お願い……誰も私に気づかないで……)
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぬきあしー…さしあしー…」
+					CASE 1
+						PRINTFORML 「短距離ワープを上手に使って…」
+					CASEELSE
+						PRINTFORML (足音立てないように気をつけて…)
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 134
+		;部屋を移動（待ち伏せ）
+		IF TARGET == 1 && CFLAG:29 != 1
+			IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML (怖いよぉ…みつかりませんように…)
+					CASE 1
+						PRINTFORML (怪物がきませんように…)
+					CASEELSE
+						PRINTFORML 「誰か…助けにきてよぉ…」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ばーんときたところをガツンッ！です♪」
+					CASE 1
+						PRINTFORML 「く、くるならこーい！」
+					CASEELSE
+						PRINTFORML 「くるなら早くきて…ううん、やっぱり何もこないでー」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 135
+		;部屋を移動（探索）
+		IF TARGET == 1 && CFLAG:29 != 1
+		;MP1/4以下またはHP0
+			IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「うぅ…なんでもいいから役に立つものでてよぉ」
+					CASE 1
+						PRINTFORML 「脱出の手がかりは…手がかりはないの…？」
+					CASEELSE
+						PRINTFORMDL 大妖精は瞳に涙を浮かべながら探索をしている
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「なにかないかなー」
+					CASE 1
+						PRINTFORML 「たっから探し♪たっから探し♪」
+					CASEELSE
+						PRINTFORML 「いいもの見つかるといいな」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;処女喪失
+	CASE 136
+		SELECTCASE ARG:1
+			;攻撃で処女喪失
+			CASE 0
+				SELECTCASE ARG:3
+					;直前
+					CASE 1
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「えっち！やだ！やめてぇ！」
+							CASE 1
+								PRINTFORML 「だ、だめぇ！そんなとこさわんないで！」
+							CASEELSE
+								PRINTFORML 「やだやだやだ！赤ちゃんできちゃうよお！」
+						ENDSELECT
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORMDL 大妖精は拘束された手足で必死に抵抗している
+							CASE 1
+								PRINTFORMDL 悲痛な大妖精の叫びが洞窟内に木霊した
+							CASEELSE
+								PRINTFORMDL 涙でぐしゃぐしゃな顔で大妖精は必死に叫んだ
+						ENDSELECT
+					;回避
+					CASE 2
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「うえええん！やだぁ！怖いよお！」
+							CASE 1
+								PRINTFORML 「ひっく…えっく……」
+							CASEELSE
+								PRINTFORML 「怖い…よぉ……」
+						ENDSELECT
+					;アウト
+					CASEELSE
+						PRINTFORML 「いぎぃいい！？」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 大妖精は普段出さないような悲痛な声をあげた
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 大妖精は普段出さないような悲痛な声をあげた
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 狭い膣を力づくで押し広げられる激痛に大妖精はひゅーひゅーと荒い呼吸を繰り返す
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 狭い膣を力づくで押し広げられる激痛に大妖精はひゅーひゅーと荒い呼吸を繰り返す
+						ENDIF
+						PRINTFORMDL 奥へ奥へと侵入しようとのた打ち回る異物が作る激痛に何度も何度も痛々しい声を漏らし
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 怯えた瞳で自分の秘所にねじ込まれたものを見つめている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 怯えた瞳で自分の秘所にねじ込まれたものを見つめている…
+						ENDIF
+				ENDSELECT
+		ENDSELECT
+	;襲い掛かる
+	CASE 142
+		;ドッペる
+		IF ARG:2 == 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「うふふっ、遊びましょー♪」
+				CASE 1
+					PRINTFORML 「いたズら 楽しイなー」
+				CASEELSE
+					PRINTFORML 「私と遊んでくれませんか？ふふ…ふふふふふふふ」
+			ENDSELECT
+		ENDIF
+	
+	;完全捕食
+	CASE 152
+		IF FLAG:AUTOMODE
+			PRINTFORML (……いし…き…が)
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW (……いし…き…が)
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML (やだ…怖い……)
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW (やだ…怖い……)
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML (消えちゃう……消えちゃうの…私……？)
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW (消えちゃう……消えちゃうの…私……？)
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML (……えへへ…そっか…)
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW (……えへへ…そっか…)
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML (もう…怖い思いも…気持ち悪いのも…)
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW (もう…怖い思いも…気持ち悪いのも…)
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML (おしまい…なんだ…ね……)
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW (おしまい…なんだ…ね……)
+		ENDIF
+	
+	;一回休み
+	CASE 154
+		IF FLAG:AUTOMODE
+			PRINTFORML (…意識…が…一回…休みに)
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW (…意識…が…一回…休みに)
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML (目…醒めたら…きっと全部夢で……)
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW (目…醒めたら…きっと全部夢で……)
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML (夢で…あって……)
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW (夢で…あって……)
+		ENDIF
+	
+	;復活！
+	CASE 158
+		SELECTCASE ARG:1
+			;助けてもらった
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「あ……私…いったい……」
+					CASE 1
+						PRINTFORML 「あり…がとう……ございます…」
+					CASEELSE
+						PRINTFORML 「誰か…助けてくれるって…しんじてた……」
+				ENDSELECT
+			;捨てられた
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「逃げなきゃ…」
+					CASE 1
+						PRINTFORMDL 大妖精は必死の形相で助けを求めて駆け出した
+					CASEELSE
+						PRINTFORML 「助けて……おねがい…」
+				ENDSELECT
+		ENDSELECT
+		
+;大ちゃんとお風呂はいるとすごく恥ずかしそうに前隠してて
+;「私…ぺったんこだし…妖精だし…見られると…恥ずかしいです…」
+;って耳までまっかなだいちゃんにかわいい綺麗と連呼してのぼせさせたい
+;
+;おふろ
+CASE 149
+;喪失中
+IF CFLAG:29
+;
+ELSE
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORML 「ふぁぁ…しあわせー…」
+		CASE 1
+			PRINTFORML 「お風呂気持ちいい…」
+		CASE 2
+			PRINTFORML 「えへへ…幸せ♪」
+		CASE 3
+			PRINTFORML 「すごくさっぱりするね」
+		CASEELSE
+			PRINTFORMDL 大妖精は幸せそうに湯船に浸かっている
+	ENDSELECT
+ENDIF
+
+	
+
+	;好感度でPT離脱
+	CASE 161
+		;バカルテットWITHお空
+		SELECTCASE NO:(ARG:1)
+		CASE 3, 5, 24, 25, 80
+			PRINTFORML 「%CALLNAME:(ARG:1)%ちゃん！いっつもいっつも最後に我慢してるの私なんだよ！？」
+			PRINTFORML 「今回だってそう！私ばっかり酷い目にあってる！」
+			PRINTFORML 「もう%CALLNAME:(ARG:1)%ちゃんなんて知らない！」
+		CASEELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「どうして酷いことばっかりお願いするの！？」
+					PRINTFORML 「私だって怒るんですよ！？」
+				CASE 1
+					PRINTFORML 「…もうやだ！一緒にいるなんて我慢できないよ！」
+				CASEELSE
+					PRINTFORML 「もう%CALLNAME:TARGET%さんのことなんて知らないっ！」
+			ENDSELECT
+		ENDSELECT
+
+	;好感度でPT離脱される
+	CASE 162
+		;バカルテットWITHお空
+		SELECTCASE NO:(ARG:1)
+		CASE 3, 5, 24, 25, 80
+			PRINTFORML 「あ…%CALLNAME:(ARG:1)%ちゃん…一人じゃ危ない……」
+			PRINTFORML 「うう…どうしてこんなことになっちゃったんだろ……」
+		CASEELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「私はただ…守って欲しかっただけなのに…」
+				CASE 1
+					PRINTFORML 「…怒らせちゃった」
+				CASEELSE
+					PRINTFORML 「どうしよう…あやまらなきゃ…」
+			ENDSELECT
+		ENDSELECT
+
+;MAP表示時に一言
+CASE 160
+	;開始時
+	IF DAY == 1 && TIME:0 == 0
+		PRINTFORML 「え、えーと…とりあえず周りをよく調べてみなきゃ！」
+	;睡眠中は静かにしようね
+	ELSEIF CFLAG:25
+	;
+	;喪失時
+	ELSEIF CFLAG:29
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「………ぐすっ」
+			CASE 1
+				PRINTFORML 「………………」
+			CASE 2
+				PRINTFORMDL 大妖精は虚空を眺めている…
+		ENDSELECT
+	;汎用メッセージ、元気があればあれこれ喋るよ！
+	ELSEIF RAND:3 == 0 && (MAXBASE:MP/4 < BASE:MP || BASE:HP != 0)
+		SELECTCASE RAND:11
+			CASE 0
+				PRINTFORML 「うねうねきもち悪いなぁ」
+			CASE 1
+				PRINTFORML 「大空をとびまわりたーい！」
+			CASE 2
+				PRINTFORML 「洗濯物、どうなっちゃったんだろう…」
+			CASE 3
+				PRINTFORML 「…怖いよお」
+			CASE 4
+				PRINTFORML 「壁を上に上にほっていけばいつかは…」
+			CASE 5
+				PRINTFORML 「早く帰ってのんびりご本の続きよみたいな」
+			CASE 6
+				PRINTFORML 「こんな鬼ごっこたのしくないよぉ」
+			CASE 7
+				PRINTFORML 「そろそろ誰かがこの異変解決してくれてもいいのに」
+			CASE 8
+				PRINTFORML 「つかれちゃった…」
+			CASE 9
+				PRINTFORML 「きゃあ！…あ、私の影だった」
+			CASEELSE
+				PRINTFORML 「もうやだよお…」
+		ENDSELECT
+	
+	;MPが1/4以下またはHP0
+	ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「……どうしてこんな目にあわなきゃダメなの」
+			CASE 1
+				PRINTFORML 「もうやだ……」
+			CASE 2
+				PRINTFORML 「……このまま私…捕まっちゃうの？」
+		ENDSELECT
+	;朦朧
+	ELSEIF FLAG:7 >= 11
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML (･･･もう…どこでもいいから…寝かせて)」
+			CASE 1
+				PRINTFORML 「意識が……眠くて…」
+			CASE 2
+				PRINTFORML 「……あ、あれ？私、寝てた？」
+		ENDSELECT
+	;要睡眠
+	ELSEIF FLAG:7 >= 7
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「ふぁぁ…眠いよぉ……」
+			CASE 1
+				PRINTFORML 「目がしょぼしょぼする…」
+			CASE 2
+				PRINTFORML 「ふぁ…あくびとまんない…」
+		ENDSELECT
+	
+	ELSEIF CFLAG:22
+	;寄生時
+		IF CFLAG:23 == 12
+			PRINTFORML 「…ぅぅ…何をいれられちゃったんだろう…」
+		ELSEIF CFLAG:23 == 8
+			PRINTFORML 「やだっ…おなかの中で動いてる…」
+		ELSEIF CFLAG:23 == 4
+			PRINTFORML 「おなかいたいよぉ…」
+		ELSEIF CFLAG:23 == 2
+			PRINTFORML 「いっ…痛いッ……暴れないでッ」
+		ELSE
+			PRINTFORML 「おなかが気にになる…」
+		ENDIF
+	ELSEIF CFLAG:36
+	;妊娠時
+		IF CFLAG:23 == 11
+			PRINTFORML 「ぅぅぅ…つかれちゃったよぉ…」
+		ELSEIF CFLAG:23 == 9
+			PRINTFORML 「体が重いなぁ…」
+		ELSEIF CFLAG:23 == 5
+			PRINTFORML 「妊娠……」
+		ELSEIF CFLAG:23 == 3
+			PRINTFORML 「化物のおかあさんなんてやだ…」
+		ELSEIF CFLAG:23 == 1
+			PRINTFORML 「えへへ…どうせなら…かわいい女の子が欲しいな…」
+			PRINTFORMDL 大妖精は暗い笑顔を浮かべている…
+		ELSE
+			PRINTFORML 「ふぇ……」
+		ENDIF
+	ELSEIF BASE:EP <= 1000 || CFLAG:28
+	;絶頂間際or発情
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML (ふわふわする…)
+			CASE 1
+				PRINTFORML (も、もうえっちな気持ちが…ぅぅぅ)
+			CASE 2
+				PRINTFORM 「ふぁ…
+				CALL HEARTC()
+				PRINTFORML 」
+		ENDSELECT
+	ELSEIF BASE:CP <= 0
+	;全裸
+		IF ITEM:54
+		;着替えセット所持
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「着替えもってるんだし早く着なきゃ」
+				CASE 1
+					PRINTFORML 「たしか着替えもってたよね…？」
+				CASE 2
+					PRINTFORML 「着替え！着替えどこにしまったっけ！？」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ふぇえん、着替えないのぉ…？」
+				CASE 1
+					PRINTFORML 「新しい服欲しいよぉ…」
+				CASE 2
+					PRINTFORML 「ぅぅぅ…はずかしいよぉ」
+			ENDSELECT
+		ENDIF
+	ELSEIF BASE:CP <= MAXBASE:CP / 3
+	;半裸
+		IF ITEM:54
+		;着替えセット所持
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「着替えるべきかまだ取っておくべきか…うーん…」
+				CASE 1
+					PRINTFORML 「もうこんなにボロボロ…着替えようかしら」
+				CASE 2
+					PRINTFORML 「頑張って直せばまだ大丈夫そうだけど…」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「着替えがないのは不安ね…」
+				CASE 1
+					PRINTFORML 「もう布が殆どのこってないわ…」
+				CASE 2
+					PRINTFORML 「着替え…ないかしら」
+			ENDSELECT
+		ENDIF
+	;きちゃない
+	ELSEIF BASE:DP >= 90
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「すごいにおい……」
+			CASE 1
+				PRINTFORML 「こんなに汚れちゃったら洗ってもそう簡単にはおちないわね」
+			CASE 2
+				PRINTFORML 「早くお風呂にはいりたいわ」
+		ENDSELECT
+	ELSEIF BASE:DP >= 60
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「だいぶ汚れちゃったわ…」
+			CASE 1
+				PRINTFORML 「･･･この匂い、私の体からしているの？」
+			CASE 2
+				PRINTFORML 「ひっ…こんなとこにまで粘液が…」
+		ENDSELECT
+	ELSEIF BASE:DP >= 30
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「きゃっ！？…いつのまに汚れたのかしら」
+			CASE 1
+				PRINTFORML 「ちょっと汚れちゃったわ」
+			CASE 2
+				PRINTFORML 「気にするほどの汚れではないけど…」
+		ENDSELECT
+	;全部ぬけたら(服着ていて元気があって清潔で眠くない)
+	;汎用一言２
+	ELSE
+		SELECTCASE RAND:8
+			CASE 0
+				PRINTFORML 「今は進むしかないわね…」
+			CASE 1
+				PRINTFORML 「出口…どこかしら？」
+			CASE 2
+				PRINTFORML 「もう、散々ね…」
+			CASE 3
+				PRINTFORML 「あら？……気のせいかしら」
+			CASE 4
+				PRINTFORML 「せめて身を隠せる場所だけでもあれば…」
+			CASE 5
+				PRINTFORML 「はぁ……」
+			CASE 6
+				PRINTFORML 「帰れるのかしら……」
+			CASEELSE
+				PRINTFORML 「私の能力…役に立たないわね…くすん」
+		ENDSELECT
+	ENDIF
+
+
+
+
+	;遺品
+	CASE 202
+		;バカルテットWITHお空
+		SELECTCASE NO:(ARG:1)
+		CASE 3, 5, 24, 25, 80
+			PRINTFORML 「え……これってまさか%CALLNAME:(ARG:1)%ちゃんの……」
+			PRINTFORML 「そ、そんなことないよね！きっと似てるだけだよね！」
+			PRINTFORML 「きっと…ひっく…きっとそう…ふぇえぇえ…」
+			PRINTFORML 「うえええええええん！%CALLNAME:(ARG:1)%ちゃーん！びぇええええぇえ！」
+			PRINTFORML 大妖精はここが危険な場所であることも忘れて座り込んで泣き続けた…
+		CASEELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ひっ…誰かがやられちゃったの…」
+					PRINTFORML 「やだなぁ…私もいつか……ぅぅ…」
+				CASE 1
+					PRINTFORML 「これって…ぅ、ぅぅぅ･･･違うよねそんなことないよね…」
+				CASEELSE
+					PRINTFORML 「は、はやく外に出ないと私もそのうち…」
+			ENDSELECT
+		ENDSELECT
+
+	
+	;エンディング
+	;クイーン撃破
+	CASE 210
+	
+	;囮
+	CASE 204
+	
+	;ガーディアン撃破、渦発見
+	CASE 206, 208
+	
+	
+	;クイーンソロとかできねーよ！
+	CASE 212
+	
+	;オープニング
+	CASE 203
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 「きゅーじゅーく、ひゃーく！よーし、見つけちゃうぞー！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 「きゅーじゅーく、ひゃーく！よーし、見つけちゃうぞー！」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL オニ役の妖精が明後日の方向へと飛んでいくのを木陰から眺め大妖精はクスクスと笑った
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW オニ役の妖精が明後日の方向へと飛んでいくのを木陰から眺め大妖精はクスクスと笑った
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そして逆方向の茂みの深いほうへと駆けていった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そして逆方向の茂みの深いほうへと駆けていった
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ふふっ、チルノちゃんが場外に行かなければ今回のかくれんぼ私の勝ちかな？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ふふっ、チルノちゃんが場外に行かなければ今回のかくれんぼ私の勝ちかな？」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL	上機嫌で口にした大ちゃんはころっと表情を不安げに変えた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW	上機嫌で口にした大ちゃんはころっと表情を不安げに変えた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「…チルノちゃん、場外禁止！って忘れてるかも」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「…チルノちゃん、場外禁止！って忘れてるかも」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 今度、いつまで立っても見つからなかったらほうっておこう
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 今度、いつまで立っても見つからなかったらほうっておこう
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そう思ったまさにその時だった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そう思ったまさにその時だった
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 大妖精は不意に足をとられ短い悲鳴をあげて派手に転んでしまった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 大妖精は不意に足をとられ短い悲鳴をあげて派手に転んでしまった
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 草と枯葉と枯れ枝でいっぱいの地面に投げ出される衝撃を避けようと反射的に伸びた手が伸びる
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 草と枯葉と枯れ枝でいっぱいの地面に投げ出される衝撃を避けようと反射的に伸びた手が伸びる
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そしてその手はぐにょりとした何かを掴むと「それ」は意思を持っているかのように腕にも絡みつく
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そしてその手はぐにょりとした何かを掴むと「それ」は意思を持っているかのように腕にも絡みつく
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 大妖精が何をされているか頭で理解するより先に細いウエストに、丸みを帯びた太股に、
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 大妖精が何をされているか頭で理解するより先に細いウエストに、丸みを帯びた太股に、
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 無防備な胴体に、太い肉の紐のようなものが次々に巻きつき、その小さな体を力強く引く
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 無防備な胴体に、太い肉の紐のようなものが次々に巻きつき、その小さな体を力強く引く
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ふぇ！？え？え？きゃああぁあああ！？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ふぇ！？え？え？きゃああぁあああ！？」
+		ENDIF
+		PRINTFORMDL 
+		IF FLAG:AUTOMODE
+			PRINTFORMDL ………
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW ………
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL ……
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW ……
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL …
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW …
+		ENDIF
+		PRINTFORML 
+	
+	;おっぱい選択
+	;大ちゃんのおっぱいは洗濯板
+	CASE 159
+		RESETCOLOR
+		PRINTFORMDL 大ちゃんは
+		PRINTFORMDL [0]胸も大ちゃん！
+		PRINTFORMDL [1]胸は中ちゃん！
+		PRINTFORMDL [2]胸はぺったん！
+		PRINTFORMDL [3]胸は絶壁！
+		
+	$DAICHAN_OPPAI
+	INPUT
+	SELECTCASE RESULT
+		CASE 0
+			PRINTFORML 大ちゃんの胸が【巨乳】の状態でスタートします
+			TALENT:110 = 1
+		CASE 1
+			PRINTFORML 大ちゃんの胸は普通の状態でスタートします
+		CASE 2
+			PRINTFORML 大ちゃんの胸が【貧乳】の状態でスタートします
+			TALENT:109 = 1
+		CASE 3
+			PRINTFORML 大ちゃんの胸が【絶壁】の状態でスタートします
+			TALENT:107 = 1
+		CASEELSE
+			GOTO DAICHAN_OPPAI
+	ENDSELECT
+
+		
+		
+	CASEELSE
+		;汎用
+ENDSELECT
+ENDIF
+
+RESETCOLOR
+
+;口上記入済み
+RETURN 1
+

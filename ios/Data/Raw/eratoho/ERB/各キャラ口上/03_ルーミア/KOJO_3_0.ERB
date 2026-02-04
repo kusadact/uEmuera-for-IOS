@@ -1,0 +1,4483 @@
+﻿;　東方触手宮　○○口上
+
+;口上基礎知識
+;　口上を書く時は基本的に ARG:0 と ARG:1 の中に「シチュエーション」が入っているので、
+;　それに応じて分岐を行い、適切なメッセージを表示する……というのが基本方針になります
+;　
+;　なお、TARGET に口上を表示するキャラが指定された状態になっているので、
+;　自分の名前や自分のCFLAGを見たい時などは CALLNAME:TARGET とか CFLAG:1 とかで参照できます
+;===========================================================================================================
+;XXをキャラNOに置き換えることで使用できます
+;戦闘行動（別ファイル）のほうも置き換えましょう
+;RGBCOLOR(0, 0, 0)もキャラにあった色を指定しておきましょう
+;すべてを書く必要がありませんが、まだ書いていない部分のPRINTFORMW は「;」を左につけるか消すかしたほうがよいでしょう
+;逆に口上を書いたPRINTFORMW はその行の左にある「;」を消しましょう
+;===========================================================================================================
+;この口上デフォルトのCFLAG活用
+;ビット演算に１が開いてるのは単なる趣味、（テンプレートを作った人が）個人的に２の倍数で覚えたほうがわかりやすいので
+;CFLAG:802　ビット演算　2 出産経験　4 娘出産経験　8 幼体出産経験　16 寄生経験
+;CFLAG:805　口上非表示管理　1で探索時、2で出産時、3で自慰、4で戦闘開始、5でリロード二刀流
+;===========================================================================================================
+
+;口上選択時のタイトル
+@KOJO_TITLE_3_0
+RESULTS = 東方触手宮　ルーミア口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_3_0
+PRINTFORML 趣味を詰め込んだルーミアちゃん　Ver.0.8
+
+
+
+;色付け
+@KOJO_DEFAULT_COLOR_3_0
+	RETURN RGBCOLOR(0, 0, 0)
+
+;口上本体
+@KOJO_3_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+CALL KOJO_3_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;子供をさよならする
+IF CFLAG:104 >= 1
+	RESETCOLOR
+	RETURN 0
+ENDIF
+
+	SELECTCASE ARG:0
+		;OP
+		CASE 203
+		;設定
+		CASE 159
+			RESETCOLOR
+			PRINTFORMDL 尿道責めOK？
+			PRINTFORMDL [0] ばっちこい
+			PRINTFORMDL [1] 絶対にノウ
+
+		INPUT
+		IF RESULT == 0
+			PRINTFORML 尿道責めONになりました
+			CFLAG:840 = 1
+		ELSE
+			PRINTFORML 尿道責めはOFFです
+			CFLAG:840 = 0
+		ENDIF
+	ENDSELECT
+
+;戦意喪失は21以上149以下か160以上なら一部を除いて逃がす
+;ここで逃がさないもの（＝除外してRETURN 1させないもの）
+;戦闘中（20以下）MP0(33)服が破ける(35)ターン終了時自慰(48)自慰メッセージ(118)自慰で絶頂失敗(119)
+;戦意喪失中に絶頂(122)母乳を吸われる(123)出産系イベント(127と129)喪失中に気付け薬を使われた(144)
+;捕食とか復活とかゲームオーバーとかオープニング（150～159)遺品発見(フラグのみ回収する・202)
+;エンディング(204、206、208、210)
+SIF CFLAG:29 && ARG:0 != 33 && ARG:0 != 48 && ARG:0 != 118 && ARG:0 != 119 && ARG:0 != 122 && ARG:0 != 123 && ARG:0 != 127 && ARG:0 != 129 && ARG:0 != 144 && ARG:0 != 202 && ARG:0 != 204 && ARG:0 != 206 && ARG:0 != 208 && ARG:0 != 210 && ((ARG:0 > 20 && ARG:0 < 150) || ARG:0 >= 160 && ARG:0 != 159)
+RETURN 1
+
+
+;文字色設定
+SETCOLOR CFLAG:700
+
+
+
+;睡眠　ここに来るのはほぼ間違いなく戦闘中に何か食らった時だけだろうし……多分
+;叩き起こされたときは除く
+IF CFLAG:25 && ARG:0 != 41
+	IF RAND:3 == 0
+	;	PRINTFORMW 
+	ELSEIF RAND:2 == 0
+	;	PRINTFORMW 
+	ELSE
+	;	PRINTFORMW 
+	ENDIF
+	RESETCOLOR
+	;口上記入済み
+	RETURN 1
+ENDIF
+
+SELECTCASE ARG:0
+;-------------------------------------------------------------------------------------------------
+;戦闘行動
+;-------------------------------------------------------------------------------------------------
+	CASE 1
+		CALL BATTLE_MIKATA_KOUDOU_HATUDOU_3_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;-------------------------------------------------------------------------------------------------
+;おねだり
+;-------------------------------------------------------------------------------------------------
+		IF CFLAG:50 == 54
+			;発情中
+			IF CFLAG:28 == 1
+				;A感覚LV2以上
+				IF ABL:6 >= 2 || CFLAG:29 == 1
+					;触手中毒LV3
+					IF ABL:11 >= 0
+						SELECTCASE RAND:2
+						CASE 1
+							PRINTFORML 「こっち%UNICODE(0x2665)%こっちにいれてっ%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアの口からはだらりと舌を出し触手による陵辱に期待しているようだ…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアの口からはだらりと舌を出し触手による陵辱に期待しているようだ…
+							ENDIF
+							CFLAG:822 = 1
+						CASE 0
+							PRINTFORML 「おしり…%UNICODE(0x2665)%おしりかきまぜてっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは待ちきれないようですでに指でアナルを刺激している…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは待ちきれないようですでに指でアナルを刺激している…
+							ENDIF
+							CFLAG:822 = 1
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+						CASE 1
+							PRINTFORML 「おしりめちゃくちゃにして…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアはアナルに指を掛け広げて誘っている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアはアナルに指を掛け広げて誘っている
+							ENDIF
+							CFLAG:822 = 1
+						CASE 0
+							PRINTFORML 「おしりきもちいからかき混ぜてよ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:822 = 1
+						ENDSELECT
+					ENDIF
+				ELSE
+					PRINTFORML 「こ…こっちなら…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML ルーミアは恐る恐る尻を触手に向けるが心なしか期待しているようだ…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ルーミアは恐る恐る尻を触手に向けるが心なしか期待しているようだ…
+					ENDIF
+					CFLAG:822 = 1
+				ENDIF
+			ELSE
+				;A感覚LV2以上
+				IF ABL:6 >= 2 || CFLAG:29 == 1
+					;触手中毒LV3
+					IF ABL:11 >= 0
+						SELECTCASE RAND:2
+						CASE 1
+							PRINTFORML 「はぁっ…%UNICODE(0x2665)%こっちなら…いいよ…%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアはこれから起こることを想像しただけで軽く身体を震わせた…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアはこれから起こることを想像しただけで軽く身体を震わせた…
+							ENDIF
+							CFLAG:822 = 1
+						CASE 0
+							PRINTFORML 「こっちきもちいから…%UNICODE(0x2665)%」
+							CFLAG:822 = 1
+						ENDSELECT
+					ELSE
+						PRINTFORML 「おしりなら…」
+						IF FLAG:AUTOMODE
+							PRINTFORML ルーミアははぁはぁと興奮し尻を触手へ向けた…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ルーミアははぁはぁと興奮し尻を触手へ向けた…
+						ENDIF
+						CFLAG:822 = 1
+					ENDIF
+				ELSE
+					PRINTFORML 「こっちなら…」
+					IF FLAG:AUTOMODE
+						PRINTFORML ルーミアは恐る恐る尻を触手に向けた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ルーミアは恐る恐る尻を触手に向けた…
+					ENDIF
+					CFLAG:822 = 1
+				ENDIF
+			ENDIF
+		;Bおねだり
+		ELSEIF CFLAG:50 == 55
+			;発情中　B感覚LV2以上　触手中毒LV3
+			IF CFLAG:28 && ABL:7 >= 2 && ABL:11 >= 0 || CFLAG:29 == 1
+				PRINTFORML 「こっち%UNICODE(0x2665)%こっちも弄って%UNICODE(0x2665)%%UNICODE(0x2665)%」
+				CFLAG:822 = 2
+			ELSEIF ABL:11 >= 2
+				PRINTFORML 「おっぱいも気持ちよくして…」
+				IF FLAG:AUTOMODE
+					PRINTFORML ルーミアは顔を朱に染め触手へ胸を突き出した…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ルーミアは顔を朱に染め触手へ胸を突き出した…
+				ENDIF
+				CFLAG:822 = 2
+			ELSE
+				PRINTFORML 「む…胸なら…」
+				CFLAG:822 = 2
+			ENDIF
+		;Cおねだり
+		ELSEIF CFLAG:50 == 56
+			;発情中　C感覚LV2以上　触手中毒LV3
+			IF CFLAG:28 && ABL:8 >= 2 && ABL:11 >= 0 || CFLAG:29 == 1
+				IF RAND:2 && CFLAG:842 >= 50
+					PRINTFORML 「こっち…%UNICODE(0x2665)%こっちもきもちいからいじめて%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML ルーミアは開発により拡がった尿道を慰めながら触手からの刺激をねだる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ルーミアは開発により拡がった尿道を慰めながら触手からの刺激をねだる…
+					ENDIF
+					CFLAG:822 = 3
+				ELSE
+					PRINTFORML 「く…%UNICODE(0x2665)%クリもめちゃくちゃにして…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML ルーミアは顔を上気させ、肩で息をしながら触手に懇願している…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ルーミアは顔を上気させ、肩で息をしながら触手に懇願している…
+					ENDIF
+					CFLAG:822 = 3
+				ENDIF
+			;触手中毒LV2以上
+			ELSEIF ABL:11 >= 2
+				PRINTFORML 「お…お豆も…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+				IF FLAG:AUTOMODE
+					PRINTFORML ルーミアはクリトリスをむき出しにし、刺激をねだっている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ルーミアはクリトリスをむき出しにし、刺激をねだっている…
+				ENDIF
+				CFLAG:822 = 3
+			ELSE
+				PRINTFORML 「く…クリトリスなら…」
+				IF FLAG:AUTOMODE
+					PRINTFORML ルーミアは恥ずかしさのあまり瞳に涙を溜めながら触手へと秘所を向けた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ルーミアは恥ずかしさのあまり瞳に涙を溜めながら触手へと秘所を向けた…
+				ENDIF
+				CFLAG:822 = 3
+			ENDIF
+		ELSEIF CFLAG:50 == 57
+			;Vおねだり
+			;発情中
+			IF CFLAG:28
+				;V感覚LV2以上
+				IF ABL:9 >= 2 || CFLAG:29 == 1
+					;触手中毒LV3
+					IF ABL:11 >= 0
+						SELECTCASE RAND:3
+						CASE 2
+							PRINTFORML 「こっち…%UNICODE(0x2665)%こっちかき混ぜて…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは顔を朱に染め、秘所を開き触手へと向けた…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは顔を朱に染め、秘所を開き触手へと向けた…
+							ENDIF
+							CFLAG:822 = 4
+						CASE 1
+							PRINTFORML 「おまんこ%UNICODE(0x2665)%おまんこに入れてよっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは我慢できないのかすでに指でくちゅくちゅと指で慰め始めている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは我慢できないのかすでに指でくちゅくちゅと指で慰め始めている…
+							ENDIF
+							CFLAG:822 = 4
+						CASE 0
+							PRINTFORML 「もうっ…%UNICODE(0x2665)%我慢できないからっ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは尻を突き上げ、触手へと秘所を向けている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは尻を突き上げ、触手へと秘所を向けている
+							ENDIF
+							CFLAG:822 = 4
+						ENDSELECT
+					ELSE
+						PRINTFORML 「こっちなら…%UNICODE(0x2665)%こっちなら…いいよ…%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML ルーミアは恐る恐る触手へと秘所を向けた…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ルーミアは恐る恐る触手へと秘所を向けた…
+						ENDIF
+						CFLAG:822 = 4
+					ENDIF
+				ELSE
+					PRINTFORML 「こ…こっちなら…」
+					IF FLAG:AUTOMODE
+						PRINTFORML ルーミアは不安そうに触手へと秘所を向けるが一筋の愛液が零れた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ルーミアは不安そうに触手へと秘所を向けるが一筋の愛液が零れた…
+					ENDIF
+					CFLAG:822 = 4
+				ENDIF
+			ELSE
+				;V感覚LV2以上 or 喪失中
+				IF ABL:9 >= 2 || CFLAG:29 == 1
+					;触手中毒LV3
+					IF ABL:11 >= 0
+						SELECTCASE RAND:2
+						CASE 1
+							PRINTFORML 「そのっ…%UNICODE(0x2665)%そのふといの入れてよっ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは通じるとも分からない言葉を触手へと向け必死におねだりを続けている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは通じるとも分からない言葉を触手へと向け必死におねだりを続けている…
+							ENDIF
+							CFLAG:822 = 4
+						CASE 0
+							PRINTFORML 「待ちきれないから…%UNICODE(0x2665)%%UNICODE(0x2665)%はやくっ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは触手へと秘所を向け必死におねだりを続けている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは触手へと秘所を向け必死におねだりを続けている…
+							ENDIF
+							CFLAG:822 = 4
+						ENDSELECT
+					ELSE
+						PRINTFORML 「こっち…入れて…%UNICODE(0x2665)%」
+						CFLAG:822 = 4
+					ENDIF
+				ELSE
+					PRINTFORML 「こ…こっちなら…」
+					IF FLAG:AUTOMODE
+						PRINTFORML ルーミアは不安そうに触手へと秘所を向けた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ルーミアは不安そうに触手へと秘所を向けた…
+					ENDIF
+					CFLAG:822 = 4
+				ENDIF
+			ENDIF
+		;その他おねだり
+		ELSEIF CFLAG:50 == 58
+			;触手中毒LV2以上
+			IF ABL:11 >= 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「きもちよくして…%UNICODE(0x2665)%」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「きもちよくして…%UNICODE(0x2665)%」
+				ENDIF
+				CFLAG:822 = 5
+			ELSE
+				PRINTFORML 「触るだけ…だよ…」
+				IF FLAG:AUTOMODE
+					PRINTFORML ルーミアは恥ずかしさのあまり身体を震わせている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ルーミアは恥ずかしさのあまり身体を震わせている…
+				ENDIF
+				CFLAG:822 = 5
+			ENDIF
+		ENDIF
+	;ターン終了時自慰
+	CASE 48
+		;諦めか戦意喪失
+		IF CFLAG:29 || TFLAG:16 == 2
+		;	PRINTFORMW 「
+		ELSE
+		;	PRINTFORMW 　
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;敵の攻撃
+;-------------------------------------------------------------------------------------------------
+	;HPダメージ
+	CASE 12
+		;戦意喪失or諦め
+		IF CFLAG:29 || TFLAG:16 == 2
+			PRINTFORML 「あっ…くっ…」
+			IF FLAG:AUTOMODE
+				PRINTFORML すっかり抵抗する気力をなくしたルーミアは為す術なくされるがままだ…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW すっかり抵抗する気力をなくしたルーミアは為す術なくされるがままだ…
+			ENDIF
+		;MP1/4以下＆拘束中
+		ELSEIF MAXBASE:MP/4 >= BASE:MP && CFLAG:20
+			IF FLAG:AUTOMODE
+				PRINTFORML 「いたっ…こ…これ以上は…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「いたっ…こ…これ以上は…」
+			ENDIF
+		;HP1/4以下orMP1/4以下or拘束中
+		;HPはダメージ後の数値を見る
+		ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:20
+			IF FLAG:AUTOMODE
+				PRINTFORML 「も…もうやめてよ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「も…もうやめてよ…」
+			ENDIF
+		;その他
+		ELSE
+			IF RAND:2 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「いたっ…やめてよっ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「いたっ…やめてよっ…」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「もー、あざになっちゃうじゃないっ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「もー、あざになっちゃうじゃないっ！！」
+				ENDIF
+			ENDIF
+		ENDIF
+	;EPダメージ
+	CASE 14
+		IF CFLAG:25
+			PRINTDATAL
+				DATAFORM 「んっ…くー…%UNICODE(0x2665)%」
+				DATAFORM 「あっ…んひゅ…%UNICODE(0x2665)%」
+				DATAFORM 「きもちい…んー…」
+			ENDDATA
+		ELSE
+		SELECTCASE ARG:1
+			
+			;A
+			CASE 302,307,311,317,328,342,346,351,355,367,373,379
+				;A拡張100以上
+				IF CFLAG:822 >= 1
+					IF CFLAG:822 == 1
+						IF ABL:11 >= 2
+							PRINTFORML 「あっ%UNICODE(0x2665)%きたっ%UNICODE(0x2665)%おしりきたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:822 = 0
+						ELSE
+							PRINTFORML 「ひぐっ…なかに…はいって…」
+							CFLAG:822 = 0
+						ENDIF
+					ELSE
+						IF ABL:11 >= 2
+							PRINTFORML 「そっちは…ちがっ…　ひんっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:822 = 0
+						ELSE
+							PRINTFORML 「そっちはちがっ…ひぐっ」
+							CFLAG:822 = 0
+						ENDIF
+					ENDIF
+				ELSEIF RAND:2 && CFLAG:830 >= 100
+					;発情中
+					IF CFLAG:28 == 1
+						IF CFLAG:29 == 1
+							PRINTFORML 「ひっ…%UNICODE(0x2665)%うぐっ%UNICODE(0x2665)%%UNICODE(0x2665)%るーみゃのけつまんこ…%UNICODE(0x2665)%こわれひゃった%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 肛門の奥の奥で触手を受け入れ光の無くした瞳で身体を揺する…
+							CFLAG:830 ++
+						;A感覚LV3
+						ELSEIF ABL:6 == 3
+							SELECTCASE RAND:2
+							CASE 1
+								PRINTFORML 「ひぐっ…%UNICODE(0x2665)%ふっといのきたぁ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML ルーミアのアナルは完全に開発されきり、括約筋が切れかねないほどの触手をくわえ込むが
+								IF FLAG:AUTOMODE
+									PRINTFORML やすやすと受け入れ嬌声を上げてしまう…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW やすやすと受け入れ嬌声を上げてしまう…
+								ENDIF
+							CASE 0
+								PRINTFORML 「あはぁ…%UNICODE(0x2665)%きもちいのはいって…%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML ルーミアのアナルは完全に開発されきり、腹部はぼこりぼこりと蠢き
+								IF FLAG:AUTOMODE
+									PRINTFORML 接合部からは触手が前後する度に『ぶじゅりぶじゅり』と音を立てながら腸液を撒き散らしている…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 接合部からは触手が前後する度に『ぶじゅりぶじゅり』と音を立てながら腸液を撒き散らしている…
+								ENDIF
+							ENDSELECT
+						;A感覚LV2
+						ELSEIF ABL:6 == 2
+							PRINTFORML 「はっ…%UNICODE(0x2665)%はいっちゃってる…%UNICODE(0x2665)%%UNICODE(0x2665)%おっきいのがはいっちゃってるううぅぅぅ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアのアナルは肛虐を受け入れられるほど開発され、その暴力的な快楽に顔を上気させ朱に染めている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアのアナルは肛虐を受け入れられるほど開発され、その暴力的な快楽に顔を上気させ朱に染めている…
+							ENDIF
+						;その他
+						;ELSE
+							;PRINTFORML 「」
+						ENDIF
+					;発情していない
+					ELSE
+						;A感覚LV3
+						IF ABL:6 == 3
+							SELECTCASE RAND:2
+							CASE 1
+								PRINTFORML 「ひっ…%UNICODE(0x2665)%に…二本も…%UNICODE(0x2665)%%UNICODE(0x2665)%はいらなっ…%UNICODE(0x2665)%」
+								PRINTFORML ルーミアのアナルはこれまでの肛虐により、二本、三本受け入れても切れる事は無く
+								IF FLAG:AUTOMODE
+									PRINTFORML 肛門や直腸への刺激により腸液を撒き散らしている…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 肛門や直腸への刺激により腸液を撒き散らしている…
+								ENDIF
+							CASE 0
+								PRINTFORML 「うぐっ…そ…そこはっ…%UNICODE(0x2665)%あはああぁぁああぁぁ…%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML 触手はアナルに殺到し、開発されきったルーミアのアナは触手たちを易々と飲み込み快楽に溺れてゆく…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 触手はアナルに殺到し、開発されきったルーミアのアナは触手たちを易々と飲み込み快楽に溺れてゆく…
+								ENDIF
+							ENDSELECT
+						;A感覚LV2
+						ELSEIF ABL:6 == 2
+							PRINTFORML 「ひぐっ…そ…そんなに一杯…」
+							PRINTFORML ルーミアのアナルは一際太い触手をくわえ込み嘔吐感がこみ上げてくるが
+							IF FLAG:AUTOMODE
+								PRINTFORML 今までの開発により肛門は真っ赤に咲きながらも快楽を流し込んでくる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 今までの開発により肛門は真っ赤に咲きながらも快楽を流し込んでくる…
+							ENDIF
+						;その他
+						;ELSE
+							;PRINTFORML 「」
+						ENDIF
+					ENDIF
+				;A拡張無し
+				ELSE
+					IF CFLAG:29 == 1
+						PRINTFORML 「ひっ…%UNICODE(0x2665)%あはっ…%UNICODE(0x2665)%」
+						PRINTFORML ルーミアの肛門は大量の触手を受け入れ限界まで広がりきり
+						IF FLAG:AUTOMODE
+							PRINTFORML 腸液を撒き散らしながら責めを受け続けている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 腸液を撒き散らしながら責めを受け続けている…
+						ENDIF
+						CFLAG:830 ++
+					;発情中
+					ELSEIF CFLAG:28 == 1
+						;A感覚LV3
+						IF ABL:6 == 3
+							PRINTFORML 「きたぁ…%UNICODE(0x2665)%ごしごしルーミアの腸いじめてぇっ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:830 ++
+						;A感覚LV2
+						ELSEIF ABL:6 == 2
+							PRINTFORML 「ふぐっ…おしりっ…%UNICODE(0x2665)%きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML ルーミアはすっかりアナルへの刺激がクセになってしまったのか
+							IF FLAG:AUTOMODE
+								PRINTFORML 涙を流しながらより感じようと身体を揺すっている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 涙を流しながらより感じようと身体を揺すっている…
+							ENDIF
+							CFLAG:830 ++
+						;その他
+						ELSE
+							PRINTFORML 「ひぐっ…%UNICODE(0x2665)%そっちはぁっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:830 ++
+						ENDIF
+					;発情していない
+					ELSE
+						;A感覚LV3
+						IF ABL:6 == 3
+							PRINTFORML 「ひっ…ぎっ…ふといのぉ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 一際太い触手を受け入れルーミアのアナルはみちみちと音を立てるように広がってゆく…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 一際太い触手を受け入れルーミアのアナルはみちみちと音を立てるように広がってゆく…
+							ENDIF
+							CFLAG:830 ++
+						;A感覚LV2
+						ELSEIF ABL:6 == 2
+							PRINTFORML 「そんなに太いの…ひぐっ…」
+							PRINTFORML 触手の一際太い部分が括約筋を抜けた瞬間の衝撃により
+							IF FLAG:AUTOMODE
+								PRINTFORML 舌を突き出し白目を剥いてしまう…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 舌を突き出し白目を剥いてしまう…
+							ENDIF
+							CFLAG:830 ++
+						;その他
+						ELSE
+							PRINTFORML 「ひっ…や…やめてよ…ひ…ぎぃっ！！」
+							PRINTFORML ルーミアは一際太い触手で貫かれるが粘膜から分泌される媚薬により
+							IF FLAG:AUTOMODE
+								PRINTFORML 次第にアナルは赤く咲き始めた…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 次第にアナルは赤く咲き始めた…
+							ENDIF
+							CFLAG:830 ++
+						ENDIF
+					ENDIF
+				ENDIF
+			;A全体
+			CASE 353,357
+				IF CFLAG:29 == 1
+					PRINTFORML 「あっ…%UNICODE(0x2665)%」
+					PRINTFORML 気力を無くし避けることすら出来なくなったルーミアに粘液が降りかかり
+					IF FLAG:AUTOMODE
+						PRINTFORML その刺激により脳の回路を焼ききろうとする…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW その刺激により脳の回路を焼ききろうとする…
+					ENDIF
+					CFLAG:830 ++
+				ELSEIF CFLAG:28 == 1
+					PRINTFORML 「ひっ%UNICODE(0x2665)%もっとつよいの…%UNICODE(0x2665)%つよいのちょうだい…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML 降りかかる液体から与えられる微弱な刺激では物足りずより強い刺激をねだる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 降りかかる液体から与えられる微弱な刺激では物足りずより強い刺激をねだる…
+					ENDIF
+					CFLAG:830 ++
+				ELSE
+					PRINTFORML 「ひっ…べとべとする…んっ…%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML 一見汚濁した液体だが粘膜に触れた途端ルーミアの脳に微弱な快感が送られる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 一見汚濁した液体だが粘膜に触れた途端ルーミアの脳に微弱な快感が送られる…
+					ENDIF
+					CFLAG:830 ++
+				ENDIF
+			;B全体
+			CASE 354,358
+				IF CFLAG:29 == 1
+					PRINTFORML 「んっ…%UNICODE(0x2665)%」
+					PRINTFORML 気力お無くしだらりと四肢を投げ出したルーミアに刺激が送られると
+					IF FLAG:AUTOMODE
+						PRINTFORML ソレに反応しぴくりと身体を揺らす…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ソレに反応しぴくりと身体を揺らす…
+					ENDIF
+				ELSEIF CFLAG:28 == 1
+					PRINTFORML 「ひあっ%UNICODE(0x2665)%おっぱいもっとぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML 胸全体を包み込む粘液はルーミアへ堕落させようと絶え間なく刺激を送る…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 胸全体を包み込む粘液はルーミアへ堕落させようと絶え間なく刺激を送る…
+					ENDIF
+				ELSE
+					PRINTFORML 「ひっ…揉んでもなにも…でないからぁ…あっ%UNICODE(0x2665)%」
+				ENDIF 
+			;A強
+			CASE 602,607,611,617,628,642,646,651,655,667,673,679
+				;戦意喪失
+				IF CFLAG:29 == 1
+					PRINTFORML 「あひゅ…%UNICODE(0x2665)%るーみゃのおしり…%UNICODE(0x2665)%こわれひゃったぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					PRINTFORML 抵抗の気力をなくしたルーミアの腹部は大量の触手を受け入れ
+					IF FLAG:AUTOMODE
+						PRINTFORML まるで妊娠したかのように腹部は膨れ上がる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW まるで妊娠したかのように腹部は膨れ上がる…
+					ENDIF
+					CFLAG:830 ++
+				ELSEIF CFLAG:822 >= 1
+					IF CFLAG:822 == 1
+						IF ABL:11 >= 2
+							PRINTFORML 「あっ%UNICODE(0x2665)%きたっ%UNICODE(0x2665)%おしりきたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:822 = 0
+						ELSE
+							PRINTFORML 「ひぐっ…なかに…はいって…」
+							CFLAG:822 = 0
+						ENDIF
+					ELSE
+						IF ABL:11 >= 2
+							PRINTFORML 「そっちは…ちがっ…　ひんっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:822 = 0
+						ELSE
+							PRINTFORML 「そっちはちがっ…ひぐっ」
+							CFLAG:822 = 0
+						ENDIF
+					ENDIF
+				;A拡張100以上
+				ELSEIF RAND:2 && CFLAG:830 >= 100
+					;発情中
+					IF CFLAG:28 == 1
+						;A感覚LV3
+						IF ABL:6 == 3
+							IF RAND:3 == 0
+								PRINTFORML 「らめだよぉ…%UNICODE(0x2665)%しょんにゃにふといのぉ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML ルーミアのアナルはすっかり広がりきり、花を咲かす…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW ルーミアのアナルはすっかり広がりきり、花を咲かす…
+								ENDIF
+							ELSEIF RAND:2 == 0
+								PRINTFORML 「ひぐっ%UNICODE(0x2665)%きもちい%UNICODE(0x2665)%もっとふといの…いれてぇ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML ルーミアは丸太のような触手を体内に叩き込まれるが
+								IF FLAG:AUTOMODE
+									PRINTFORML 表情はすっかり蕩けきり快感に震えている…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 表情はすっかり蕩けきり快感に震えている…
+								ENDIF
+							ELSE
+								PRINTFORML 「あはぁ%UNICODE(0x2665)%きもちいっ%UNICODE(0x2665)%きもちいからもっといっぱい…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML 丸太のような触手を肛門に入れられるがすっかりと蕩けきったアナルは
+								IF FLAG:AUTOMODE
+									PRINTFORML 千切れるような様子を全く見せず快楽を与えるだけの器官となった…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 千切れるような様子を全く見せず快楽を与えるだけの器官となった…
+								ENDIF
+							ENDIF
+						;A感覚LV2
+						ELSEIF ABL:6 == 2
+							IF RAND:3 == 0
+								PRINTFORML 「ひぐっ…%UNICODE(0x2665)%そんなにゆすっちゃ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML ルーミアの腸の奥を叩くようにがつりがつりと触手は前後する
+								IF FLAG:AUTOMODE
+									PRINTFORML しかし開発されたアナルはその責めを受けきり腹部はぼこりぼこりと脈動する…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW しかし開発されたアナルはその責めを受けきり腹部はぼこりぼこりと脈動する…
+								ENDIF
+							ELSEIF RAND:2 == 0
+								PRINTFORML 「ひあっ…%UNICODE(0x2665)%そんなおっきいの…%UNICODE(0x2665)%あうっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML 丸太のように太い触手を叩き込まれその衝撃で息が詰まってしまうが
+								IF FLAG:AUTOMODE
+									PRINTFORML 苦しさよりも快楽の方が勝っている様で秘裂からは愛液が絶え間なく溢れている…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 苦しさよりも快楽の方が勝っている様で秘裂からは愛液が絶え間なく溢れている…
+								ENDIF
+							ELSE
+								PRINTFORML 「ひっ%UNICODE(0x2665)%あっあっ…%UNICODE(0x2665)%ひろがってりゅ…　おひりひろがってりゅ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML 極太の触手を肛門で受け入れぎちぎちと音を立てるように拡がりながら腸液があふれ出す…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 極太の触手を肛門で受け入れぎちぎちと音を立てるように拡がりながら腸液があふれ出す…
+								ENDIF
+							ENDIF
+						;その他
+						ELSE
+							;PRINTFORML 「」
+						ENDIF
+					ELSE
+						;A感覚LV3
+						IF ABL:6 == 3
+							PRINTFORML 「そこっ%UNICODE(0x2665)%%UNICODE(0x2665)%きもちいっ…%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML ルーミアは快楽の許容量を超えたのか歯をガチガチと鳴らしながらも
+							IF FLAG:AUTOMODE
+								PRINTFORML 腸液やよだれを垂らしつつ快感を楽しんでいる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 腸液やよだれを垂らしつつ快感を楽しんでいる…
+							ENDIF
+						;A感覚LV2
+						ELSEIF ABL:6 == 2
+							PRINTFORML 「ひぐっ…そ…そこはあああぁぁぁああぁぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 触手はアナルに何本も殺到し、ぶちゅりと音を立てながらルーミアを責め立て
+							IF FLAG:AUTOMODE
+								PRINTFORML その接合部からは腸液があふれ出し責めの激しさを物語る…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW その接合部からは腸液があふれ出し責めの激しさを物語る…
+							ENDIF
+						;その他
+						ELSE
+							;PRINTFORML 「」
+						ENDIF
+					ENDIF
+				;拡張無し
+				ELSE
+					IF CFLAG:29 == 1
+						PRINTFORML 「あっ…あはっ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						PRINTFORML 触手による責めにより遂には抵抗する気力をなくしてしまい
+						IF FLAG:AUTOMODE
+							PRINTFORML めりめりと音を立てるように丸太のような触手を肛門に受け入れ揺すられている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW めりめりと音を立てるように丸太のような触手を肛門に受け入れ揺すられている…
+						ENDIF
+						CFLAG:830 ++
+					;発情中
+					ELSEIF CFLAG:28 == 1
+						;A感覚LV3
+						IF ABL:6 == 3
+							IF RAND:3 == 0
+								PRINTFORML 「あはぁ%UNICODE(0x2665)%きもちいのきたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML ルーミアは内臓へ響く衝撃をも快楽に変え絶頂へと昇ろうとしている…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW ルーミアは内臓へ響く衝撃をも快楽に変え絶頂へと昇ろうとしている…
+								ENDIF
+								CFLAG:830 ++
+							ELSEIF RAND:2 == 0
+								PRINTFORML 「んにゅ%UNICODE(0x2665)%おしり…%UNICODE(0x2665)%おなかいっぱい…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML 触手を思う存分咥えこみ揺すられる衝撃を心行くまで楽しんでいる…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 触手を思う存分咥えこみ揺すられる衝撃を心行くまで楽しんでいる…
+								ENDIF
+								CFLAG:830 ++
+							ELSE
+								PRINTFORML 「ひぎっ…%UNICODE(0x2665)%おにゃか%UNICODE(0x2665)%こわれひゃうっ%UNICODE(0x2665)%こわれひゃううぅぅううぅっ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML 自分勝手に動きまわる触手だがソレすらも性感として悶えている…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 自分勝手に動きまわる触手だがソレすらも性感として悶えている…
+								ENDIF
+								CFLAG:830 ++
+							ENDIF
+						;A感覚LV2
+						ELSEIF ABL:6 == 2
+							PRINTFORML 「ひゅごいっ%UNICODE(0x2665)%おひりいっぱいひゅごいよぉおおぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアはぐちゅぐちゅと腸をかき回される刺激により目の前が真っ白になる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアはぐちゅぐちゅと腸をかき回される刺激により目の前が真っ白になる…
+							ENDIF
+							CFLAG:830 ++
+						;その他
+						ELSE
+							PRINTFORML 「ひぐっ%UNICODE(0x2665)%しょくしゅにイかされひゃうっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:830 ++
+						ENDIF
+					ELSE
+						;A感覚LV3
+						IF ABL:6 == 3
+							PRINTFORML 「そこっ…きもちいっ…%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML ルーミアは快楽の許容量を超えたのか歯をガチガチと鳴らしながらも
+							IF FLAG:AUTOMODE
+								PRINTFORML 腸液やよだれを垂らしつつ快感を楽しんでいる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 腸液やよだれを垂らしつつ快感を楽しんでいる…
+							ENDIF
+							CFLAG:830 ++
+						;A感覚LV2
+						ELSEIF ABL:6 == 2
+							PRINTFORML 「ひぐっ…そ…そこはあああぁぁぁああぁぁ」
+							PRINTFORML 触手はアナルに何本も殺到しぶちゅりぶちゅりと音を立てながらルーミアを責め立てる
+							IF FLAG:AUTOMODE
+								PRINTFORML その接合部からは腸液があふれ出し責めの激しさを物語る…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW その接合部からは腸液があふれ出し責めの激しさを物語る…
+							ENDIF
+							CFLAG:830 ++
+						;その他
+						ELSE
+							PRINTFORML 「ひっ…やめてっ…！！」
+							CFLAG:830 ++
+						ENDIF
+					ENDIF
+				ENDIF
+			;B
+			CASE 303,308,312,318,322,325,334,338,352,354,356,358,368,374
+				IF CFLAG:822 >= 1
+					IF CFLAG:822 == 2
+						IF ABL:11 >= 2
+							PRINTFORML 「ひっ…%UNICODE(0x2665)%おっぱいきたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:822 = 0
+						ELSE
+							PRINTFORML 「ひっ…」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは胸を責められ嫌悪感を抱きながら耐えている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは胸を責められ嫌悪感を抱きながら耐えている…
+							ENDIF
+							CFLAG:822 = 0
+						ENDIF
+					ELSE
+						IF ABL:11 >= 2
+							PRINTFORML 「んっ%UNICODE(0x2665)%そっちはちがっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:822 = 0
+						ELSE
+							PRINTFORML 「んっ…や、やめて…」
+							CFLAG:822 = 0
+						ENDIF
+					ENDIF
+				ELSEIF CFLAG:28 == 1
+					PRINTFORML 「ひっ%UNICODE(0x2665)%おっぱいきもちい…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML 触手に胸を責められ身体をぴくりと震わせた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 触手に胸を責められ身体をぴくりと震わせた…
+					ENDIF
+				ELSE
+					PRINTFORML 「ひっ…さ、さわらないでよ…」
+				ENDIF
+			;B強
+			CASE 603,608,612,618,622,625,634,638,652,656,658,668,674
+				IF CFLAG:822 >= 1
+					IF CFLAG:822 == 2
+						IF ABL:11 >= 2
+							PRINTFORML 「ひっ…%UNICODE(0x2665)%おっぱいきたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:822 = 0
+						ELSE
+							PRINTFORML 「ひっ…」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは胸を責められ嫌悪感を抱きながら耐えている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは胸を責められ嫌悪感を抱きながら耐えている…
+							ENDIF
+							CFLAG:822 = 0
+						ENDIF
+					ELSE
+						IF ABL:11 >= 2
+							PRINTFORML 「んっ%UNICODE(0x2665)%そっちはちがっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:822 = 0
+						ELSE
+							PRINTFORML 「んっ…や、やめて…」
+							CFLAG:822 = 0
+						ENDIF
+					ENDIF
+				ELSEIF CFLAG:28 == 1
+					PRINTFORML 「ひぎっ%UNICODE(0x2665)%ち…ちくびひっぱらにゃいでぇ…%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML 細い触手はルーミアの乳首に狙いを定め巻きつき快楽を受け一際大きく身体を震わせた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 細い触手はルーミアの乳首に狙いを定め巻きつき快楽を受け一際大きく身体を震わせた…
+					ENDIF
+				ELSE
+					PRINTFORML 「ち…ちくびはダメだから…」
+					IF FLAG:AUTOMODE
+						PRINTFORML 触手がピンと張った乳首を責めるたびにルーミアはぴくりぴくりと身体を震わせた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 触手がピンと張った乳首を責めるたびにルーミアはぴくりぴくりと身体を震わせた…
+					ENDIF
+				ENDIF
+			;C
+			CASE 304,309,313,319,329,332,335,339,359,363,369,375
+				;尿道有り
+				IF CFLAG:841 == 1
+					;発情中
+					IF CFLAG:28 == 1
+						;初尿道
+						IF CFLAG:842 == 0
+							PRINTFORML 「そ…そこはちがっ…がっ…あっ…あぁっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 本来挿入する場所ではない尿道を責められ
+							PRINTFORML 痛みで歯を食いしばり、ぽろぽろと涙を零し必死に耐えているが
+							IF FLAG:AUTOMODE
+								PRINTFORML 媚薬の効果により次第に快楽へと変わっていく…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 媚薬の効果により次第に快楽へと変わっていく…
+							ENDIF
+							CFLAG:842 ++
+						ELSEIF CFLAG:842 >= 100
+							;IF RAND:3 == 0
+								PRINTFORML 「あはっ%UNICODE(0x2665)%せまいトコきたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML すっかり開発されきったルーミアの尿道は易々と咥えこみ
+								IF FLAG:AUTOMODE
+									PRINTFORML 尿と触手の分泌した粘液が接合部からぶちゅりぶちゅりと溢れる…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 尿と触手の分泌した粘液が接合部からぶちゅりぶちゅりと溢れる…
+								ENDIF
+								CFLAG:842 ++
+							;ELSEIF RAND:2 == 0
+								;PRINTFORML 「」
+							;ELSE
+								;PRINTFORML
+							;ENDIF
+						ELSEIF CFLAG:842 >= 50
+							PRINTFORML 「いっ…ぎっいいぃ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 開発されたルーミアの尿道は本来ならばありえないほど拡がり
+							IF FLAG:AUTOMODE
+								PRINTFORML 触手の責めを受けソレを快楽へと変えてゆく…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 触手の責めを受けソレを快楽へと変えてゆく…
+							ENDIF
+							CFLAG:842  ++
+						ELSEIF CFLAG:842 >= 5
+							PRINTFORML 「そ…そっちはちがっ…ひぎっ%UNICODE(0x2665)%」
+							PRINTFORML ルーミアは本来挿入する場所ではない穴への責めも
+							IF FLAG:AUTOMODE
+								PRINTFORML 媚薬により快楽へと変えてしまう…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 媚薬により快楽へと変えてしまう…
+							ENDIF
+							CFLAG:842 ++
+						ELSE
+							PRINTFORML 「あっ…ぐっ…%UNICODE(0x2665)%」
+							PRINTFORML 経験が足らないようで挿入までは至らないが
+							IF FLAG:AUTOMODE
+								PRINTFORML 尿道口をなでられると微かな快楽を生み出す…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 尿道口をなでられると微かな快楽を生み出す…
+							ENDIF
+							CFLAG:842 ++
+						ENDIF
+					ELSE
+						;初尿道
+						IF CFLAG:842 == 0
+							PRINTFORML 「そ…そこはちがっ…がっ…あっ…」
+							PRINTFORML 本来挿入する場所ではない尿道を責められ
+							IF FLAG:AUTOMODE
+								PRINTFORML 痛みで歯を食いしばり、ぽろぽろと涙を零し必死に耐えている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 痛みで歯を食いしばり、ぽろぽろと涙を零し必死に耐えている…
+							ENDIF
+							CFLAG:842 ++
+						ELSEIF CFLAG:842 >= 100
+							PRINTFORML 「ひぐっ…ひ…ひだいけど…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 開発されきったルーミアの尿道は易々と触手を受け入れ
+							IF FLAG:AUTOMODE
+								PRINTFORML 痛みと快楽でがちがちと歯を鳴らしながら耐えている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 痛みと快楽でがちがちと歯を鳴らしながら耐えている…
+							ENDIF
+							CFLAG:842 ++
+						ELSEIF CFLAG:842 >= 50
+							PRINTFORML 「ひっ…ま…またっ…あぁっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 触手は開発途中の尿道に狙いを定め責め始めた…
+							CFLAG:842 ++
+						ELSEIF CFLAG:842 >= 5
+							PRINTFORML 「ひっ…ぐぅ…」
+							PRINTFORML 殆ど拡がらない尿道を責められ
+							IF FLAG:AUTOMODE
+								PRINTFORML がちがちと歯を鳴らし、涙を零しながら痛みに耐えている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW がちがちと歯を鳴らし、涙を零しながら痛みに耐えている…
+							ENDIF
+							CFLAG:842 ++
+						ELSE
+							PRINTFORML 「そ…そっちはちがっ…うぐっ…」
+							IF FLAG:AUTOMODE
+								PRINTFORML 本来挿入には剥かない穴を責められ嫌悪感に溢れ嗚咽を漏らす…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 本来挿入には剥かない穴を責められ嫌悪感に溢れ嗚咽を漏らす…
+							ENDIF
+							CFLAG:842 ++
+						ENDIF
+					ENDIF
+				ELSE
+					IF CFLAG:28 == 1
+						PRINTFORML 「ひぐっ…そ、そこはつよいからぁ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML ルーミアは淫核を責められ快楽を必死に耐えている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ルーミアは淫核を責められ快楽を必死に耐えている…
+						ENDIF
+					ELSE
+						PRINTFORML 「ひっ…そっちは強すぎるから…」
+					ENDIF
+				ENDIF
+			;C強
+			CASE 604,609,613,619,629,632,635,639,659,663,669,675
+				;尿道有り
+				IF CFLAG:841 == 1
+					;発情中
+					IF CFLAG:28 == 1
+						;初尿道
+						IF CFLAG:842 == 0
+							PRINTFORML 「そ…そこはちがっ…がっ…あっ…あぁっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 本来挿入する場所ではない尿道を責められ
+							PRINTFORML 痛みで歯を食いしばり、ぽろぽろと涙を零し必死に耐えているが
+							IF FLAG:AUTOMODE
+								PRINTFORML 媚薬の効果により次第に快楽へと変わっていく…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 媚薬の効果により次第に快楽へと変わっていく…
+							ENDIF
+							CFLAG:842 ++
+						ELSEIF CFLAG:842 >= 100
+							PRINTFORML 「あはっ%UNICODE(0x2665)%せまいトコきたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML すっかり開発されきったルーミアの尿道は易々と咥えこみ
+							IF FLAG:AUTOMODE
+								PRINTFORML 尿と触手の分泌した粘液が接合部からぶちゅりぶちゅりと溢れる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 尿と触手の分泌した粘液が接合部からぶちゅりぶちゅりと溢れる…
+							ENDIF
+							CFLAG:842 ++
+						ELSEIF CFLAG:842 >= 50
+							PRINTFORML 「いっ…ぎっいいぃ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 開発されたルーミアの尿道は本来ならばありえないほど拡がり
+							IF FLAG:AUTOMODE
+								PRINTFORML 触手の責めを受けソレを快楽へと変えてゆく…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 触手の責めを受けソレを快楽へと変えてゆく…
+							ENDIF
+							CFLAG:842  ++
+						ELSEIF CFLAG:842 >= 5
+							PRINTFORML 「そ…そっちはちがっ…ひぎっ%UNICODE(0x2665)%」
+							PRINTFORML ルーミアは本来挿入する場所ではない穴への責めも
+							IF FLAG:AUTOMODE
+								PRINTFORML 媚薬により快楽へと変えてしまう…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 媚薬により快楽へと変えてしまう…
+							ENDIF
+							CFLAG:842 ++
+						ELSE
+							PRINTFORML 「そ…そっちはちがっ…うぐっ…」
+							IF FLAG:AUTOMODE
+								PRINTFORML 本来挿入には剥かない穴を責められ嫌悪感に溢れ嗚咽を漏らす…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 本来挿入には剥かない穴を責められ嫌悪感に溢れ嗚咽を漏らす…
+							ENDIF
+							CFLAG:842 ++
+						ENDIF
+					ELSE
+						;初尿道
+						IF CFLAG:842 == 0
+							PRINTFORML 「そ…そこはちがっ…がっ…あっ…」
+							PRINTFORML 本来挿入する場所ではない尿道を責められ
+							IF FLAG:AUTOMODE
+								PRINTFORML 痛みで歯を食いしばり、ぽろぽろと涙を零し必死に耐えている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 痛みで歯を食いしばり、ぽろぽろと涙を零し必死に耐えている…
+							ENDIF
+							CFLAG:842 ++
+						ELSEIF CFLAG:842 >= 100
+							PRINTFORML 「ひぐっ…ひ…ひだいけど…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 開発されきったルーミアの尿道は易々と触手を受け入れ
+							IF FLAG:AUTOMODE
+								PRINTFORML 痛みと快楽でがちがちと歯を鳴らしながら耐えている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 痛みと快楽でがちがちと歯を鳴らしながら耐えている…
+							ENDIF
+							CFLAG:842 ++
+						ELSEIF CFLAG:842 >= 50
+							PRINTFORML 「ひっ…ま…またっ…あぁっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 触手は開発途中の尿道に狙いを定め責め始めた…
+							CFLAG:842 ++
+						ELSEIF CFLAG:842 >= 5
+							PRINTFORML 「ひっ…ぐぅ…」
+							PRINTFORML 殆ど拡がらない尿道を責められ
+							IF FLAG:AUTOMODE
+								PRINTFORML がちがちと歯を鳴らし、涙を零しながら痛みに耐えている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW がちがちと歯を鳴らし、涙を零しながら痛みに耐えている…
+							ENDIF
+							CFLAG:842 ++
+						ELSE
+							PRINTFORML 「そ…そっちはちがっ…うぐっ…」
+							IF FLAG:AUTOMODE
+								PRINTFORML 本来挿入には向かない穴を責められ嫌悪感に溢れ嗚咽を漏らす…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 本来挿入には向かない穴を責められ嫌悪感に溢れ嗚咽を漏らす…
+							ENDIF
+							CFLAG:842 ++
+						ENDIF
+					ENDIF
+				ELSE
+					IF CFLAG:28 == 1
+						PRINTFORML 「ひぐっ%UNICODE(0x2665)%%UNICODE(0x2665)%しょこはらめぇ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML ルーミアは淫核の責めによりすっかりとろけきってしまったようだ…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ルーミアは淫核の責めによりすっかりとろけきってしまったようだ…
+						ENDIF
+					ELSE
+						PRINTFORML 「ひっ…そ…そっちは…」
+						PRINTFORML 触手はルーミアの淫核にまきつき引っ張る…
+						IF FLAG:AUTOMODE
+							PRINTFORML その責めを歯を食いしばって必死に耐えるしかない…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW その責めを歯を食いしばって必死に耐えるしかない…
+						ENDIF
+					ENDIF
+				ENDIF
+			;V
+			CASE 305,310,314,320,323,326,343,347,360,364,370,376,382
+				;喪失中
+				IF CFLAG:29 == 1
+						PRINTFORML 「ひっ…%UNICODE(0x2665)%あはぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML ルーミアの瞳は光を無くし開発されきった肉壺は遠慮無く突き入れられた触手を締め上げる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ルーミアの瞳は光を無くし開発されきった肉壺は遠慮無く突き入れられた触手を締め上げる…
+						ENDIF
+				;V拡張有り
+				ELSEIF CFLAG:831 >= 100
+					;発情
+					IF CFLAG:28 == 1
+						;V感覚LV3
+						IF ABL:9 == 3
+							PRINTFORML 「ひぐっ…%UNICODE(0x2665)%おっきいのきたぁ%UNICODE(0x2665)%」
+							PRINTFORML 触手はぐちゅりぐちゅりと音を立てながらルーミアの陰部に突き刺さり
+							IF FLAG:AUTOMODE
+								PRINTFORML すくい切れないほどの愛液があふれ続けている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW すくい切れないほどの愛液があふれ続けている…
+							ENDIF
+						ELSEIF ABL:9 == 2
+							PRINTFORML 「ひぎっ…あはぁ…%UNICODE(0x2665)%%UNICODE(0x2665)%きもちいのきたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 触手は子宮の奥まで詰まっているのかルーミアの腹部はいびつに歪むが
+							IF FLAG:AUTOMODE
+								PRINTFORML すっかり開発された性器は易々と受け入れ快感へと変えてゆく…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW すっかり開発された性器は易々と受け入れ快感へと変えてゆく…
+							ENDIF
+						;ELSE
+							;PRINTFORML 「」
+						ENDIF
+					;発情無し
+					ELSE
+						IF ABL:9 == 3
+							PRINTFORML 「ひぎっ%UNICODE(0x2665)%おくまで…はいってきたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML ルーミアはよだれや涙で顔を汚しながらも触手の責めを受けるが
+							IF FLAG:AUTOMODE
+								PRINTFORML 広がりきった性器は触手を奥まで深く深くくわえ込みながらより深い快感を得るため身体を揺すっている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 広がりきった性器は触手を奥まで深く深くくわえ込みながらより深い快感を得るため身体を揺すっている…
+							ENDIF
+						ELSEIF ABL:9 == 2
+							PRINTFORML 「ひぎっ…き…っつ…あはぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 太めの触手をくわえ込み痛みすら快楽に変えその責めを受け腰を振っている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 太めの触手をくわえ込み痛みすら快楽に変えその責めを受け腰を振っている…
+							ENDIF
+						;ELSE
+							;PRINTFORMW
+						ENDIF
+					ENDIF
+				ELSE
+					IF CFLAG:29 == 1
+						PRINTFORML 「あっ…あはっ…%UNICODE(0x2665)%%UNICODE(0x2665)%こわれひゃう…%UNICODE(0x2665)%あはぁっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						PRINTFORML 抵抗する気力をなくしたルーミアはだらりと四肢を投げ出し
+						IF FLAG:AUTOMODE
+							PRINTFORML 糸の切れた人形のように突かれるたびがくりがくりと身体が揺れる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 糸の切れた人形のように突かれるたびがくりがくりと身体が揺れる…
+						ENDIF
+						CFLAG:831 ++
+					ELSEIF CFLAG:28 == 1
+						;V感覚LV3
+						IF ABL:9 == 3
+							PRINTFORML 「ひぐっ…%UNICODE(0x2665)%ふといのぉ%UNICODE(0x2665)%きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアの陰部は限界まで広がりきり、ぐちゅりぐちゅりと卑猥な音を立てている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアの陰部は限界まで広がりきり、ぐちゅりぐちゅりと卑猥な音を立てている…
+							ENDIF
+							CFLAG:831 ++
+						ELSEIF ABL:9 == 2
+							PRINTFORML 「ひぎっ…そ…そこはぁ…あひゃああぁぁん%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 触手は子宮の奥まで詰まっているのかルーミアの腹部はいびつに歪み
+							IF FLAG:AUTOMODE
+								PRINTFORML 性器はぎちりぎちりと限界まで広がりきっている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 性器はぎちりぎちりと限界まで広がりきっている…
+							ENDIF
+							CFLAG:831 ++
+						ELSE
+							PRINTFORML 「ひっ…ぐっ…あはぁ%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 触手はルーミアの性器をみちりみちりと音が鳴っているかのように限界まで広がりきり責め立てている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 触手はルーミアの性器をみちりみちりと音が鳴っているかのように限界まで広がりきり責め立てている…
+							ENDIF
+							CFLAG:831 ++
+						ENDIF
+					;発情無し
+					ELSE
+						IF ABL:9 == 3
+							PRINTFORML 「んにゅ%UNICODE(0x2665)%あはぁ%UNICODE(0x2665)%きもちいのが…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML みちみちと音を立てるかのようにルーミアの性器に割り込み責め立てている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW みちみちと音を立てるかのようにルーミアの性器に割り込み責め立てている…
+							ENDIF
+							CFLAG:831 ++
+						ELSEIF ABL:9 == 2
+							PRINTFORML 「ひぎっ…そ…そこはっ…」
+							PRINTFORML 触手は子宮の奥まで詰まっているのかルーミアの腹部はいびつに歪み
+							IF FLAG:AUTOMODE
+								PRINTFORML 涙をため歯をガチガチ鳴らしながら責めに耐えている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 涙をため歯をガチガチ鳴らしながら責めに耐えている…
+							ENDIF
+							CFLAG:831 ++
+						ELSE
+							PRINTFORML 「ひっ…うぐっ…」
+							CFLAG:831 ++
+						ENDIF
+					ENDIF
+				ENDIF
+			;V強
+			CASE 605,610,614,620,623,626,643,647,660,664,670,676,682,684
+				;戦意喪失中
+				IF CFLAG:29 == 1
+					PRINTFORML 「ひっ…%UNICODE(0x2665)%あっ%UNICODE(0x2665)%%UNICODE(0x2665)%
+					PRINTFORML るーみゃのおまんこ…%UNICODE(0x2665)%こっわれひゃった%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					PRINTFORML すっかり犯しつくされ抵抗の気力をなくしたルーミアの肉壺へと触手は殺到し
+					IF FLAG:AUTOMODE
+						PRINTFORML 破壊する勢いの触手を何本もくわえ込んでいる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 破壊する勢いの触手を何本もくわえ込んでいる…
+					ENDIF
+				;V拡張有り
+				ELSEIF CFLAG:831 >= 100
+					;発情
+					IF CFLAG:28 == 1
+						;V感覚LV3
+						IF ABL:9 == 3
+							PRINTFORML 「あっ%UNICODE(0x2665)%あっ%UNICODE(0x2665)%あっ%UNICODE(0x2665)%すごいのっ%UNICODE(0x2665)%すごいのきちゃうっ%UNICODE(0x2665)%」
+							PRINTFORML ルーミアの開発された性器は太い触手を二本くわえ込んでも緩むことは無く
+							IF FLAG:AUTOMODE
+								PRINTFORML ただひたすらに快楽を貪っている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ただひたすらに快楽を貪っている…
+							ENDIF
+						ELSEIF ABL:9 == 2
+							PRINTFORML 「ひぐっ…%UNICODE(0x2665)%ひ%UNICODE(0x2665)%ひもちいのっ%UNICODE(0x2665)%ひもちいのひひゃうっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは触手をくわえ込み、ただひたすらに快楽を貪っている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは触手をくわえ込み、ただひたすらに快楽を貪っている…
+							ENDIF
+						;ELSE
+							;PRINTFORML 「」
+						ENDIF
+					;発情無し
+					ELSE
+						IF ABL:9 == 3
+							PRINTFORML 「はぁ…%UNICODE(0x2665)%はぁ…%UNICODE(0x2665)%ふ…ふとすぎるよぉ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 触手はルーミアを玩具のように扱い
+							IF FLAG:AUTOMODE
+								PRINTFORML ぐちゅりぐちゅりとでたらめに奥を突いている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ぐちゅりぐちゅりとでたらめに奥を突いている
+							ENDIF
+						ELSEIF ABL:9 == 2
+							PRINTFORML 「ひっ…%UNICODE(0x2665)%あはぁ%UNICODE(0x2665)%きもちいよぉ…%UNICODE(0x2665)%」
+						;ELSE
+							;PRINTFORMW
+						ENDIF
+					ENDIF
+				ELSE
+					IF CFLAG:29 == 1
+						PRINTFORML 「あっ…あはっ…%UNICODE(0x2665)%きもちい…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						PRINTFORML ルーミアの瞳からは光が消え、明らかに許容量を超えた太さの触手を咥えこみ
+						IF FLAG:AUTOMODE
+							PRINTFORML ぼこりぼこりと腹部は脈動している…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ぼこりぼこりと腹部は脈動している…
+						ENDIF
+						CFLAG:831 ++
+					;発情中
+					ELSEIF CFLAG:28 == 1
+						;V感覚LV3
+						IF ABL:9 == 3
+							PRINTFORML 「ひぎっ…%UNICODE(0x2665)%そんな太いのいれたら…こわれちゃうよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML ルーミアの性器をみちみちと音を立てるかのように触手の形に広がるも
+							IF FLAG:AUTOMODE
+								PRINTFORML そのすさまじい衝撃すら快楽となっているようでとろとろと愛液が流れ続ける…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW そのすさまじい衝撃すら快楽となっているようでとろとろと愛液が流れ続ける…
+							ENDIF
+							CFLAG:831 ++
+						ELSEIF ABL:9 == 2
+							PRINTFORML 「ひっ…ぐぅ…」
+							PRINTFORML 触手は一息で子宮の奥まで突きいれ腹部はいびつにぼこりと膨らむ…
+							IF CFLAG:831 >= 30
+							IF FLAG:AUTOMODE
+								PRINTFORML しかしルーミアはその衝撃すらも快楽に感じるのか嬌声を上げてしまう
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW しかしルーミアはその衝撃すらも快楽に感じるのか嬌声を上げてしまう
+							ENDIF
+							CFLAG:831 ++
+						ELSE
+							PRINTFORML 「ひっ…%UNICODE(0x2665)%そんなにふといの…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 性器に突き入れられ歯をガチガチと鳴らしながらもその衝撃すら快楽と感じて愛液がトロトロと止まらない…
+							CFLAG:831 ++
+						ENDIF
+					;発情無し
+					ELSE
+						IF ABL:9 == 3
+							PRINTFORML 「ひぐっ…こわされひゃう…%UNICODE(0x2665)%わたしのおまんこ…%UNICODE(0x2665)%こわされひゃうううぅぅ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは快楽に耐えられるよう歯を食いしばり、涙を零しながらも触手の責めを必死に受け入れる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは快楽に耐えられるよう歯を食いしばり、涙を零しながらも触手の責めを必死に受け入れる…
+							ENDIF
+							CFLAG:831 ++
+						ELSEIF ABL:9 == 2
+							PRINTFORML 「ひぎっ…どこに…あはあぁぁあぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 触手は一息で子宮の奥まで突きいれ腹部はいびつにぼこりと膨らむ…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 触手は一息で子宮の奥まで突きいれ腹部はいびつにぼこりと膨らむ…
+							ENDIF
+							IF CFLAG:831 >= 30
+							IF FLAG:AUTOMODE
+								PRINTFORML 性器はその責めにより次第に解れ始めていた…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 性器はその責めにより次第に解れ始めていた…
+							ENDIF
+							CFLAG:831 ++
+						ELSE
+							PRINTFORML 「ひっ…こわれる…こわされちゃうからっ…」
+							IF FLAG:AUTOMODE
+								PRINTFORML 性器に突き入れられ歯をガチガチと鳴らしながら触手の与えてくる衝撃を必死に耐えている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 性器に突き入れられ歯をガチガチと鳴らしながら触手の与えてくる衝撃を必死に耐えている…
+							ENDIF
+							CFLAG:831 ++
+						ENDIF
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+			;B吸収
+			CASE 336,340,385,636,640,685
+				IF CFLAG:28 == 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ひっ%UNICODE(0x2665)%すわないで…すわないでよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ひっ%UNICODE(0x2665)%すわないで…すわないでよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「や…やめて…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「や…やめて…」
+					ENDIF
+				ENDIF
+			;C吸収
+			CASE 337,341,637,641
+				;尿道有り
+				IF CFLAG:841 == 1
+					IF CFLAG:840 == 1
+						IF CFLAG:28 == 1
+							;初尿道
+							IF CFLAG:842 == 0
+								PRINTFORML 「な…なにして…ひぎっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML 尿道に初めて触手を受け入れ涙を零すも
+								IF FLAG:AUTOMODE
+									PRINTFORML 媚薬により次第に声は熱を帯びてくる…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 媚薬により次第に声は熱を帯びてくる…
+								ENDIF
+								CFLAG:842 ++
+							ELSEIF CFLAG:842 >= 100
+								PRINTFORML 「あっ%UNICODE(0x2665)%おしっこのあにゃぁ%UNICODE(0x2665)%%UNICODE(0x2665)%きたあはぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML 今までの拡張によりルーミアの尿道は太い触手も易々と咥えこみ快楽を生むようになっていた…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 今までの拡張によりルーミアの尿道は太い触手も易々と咥えこみ快楽を生むようになっていた…
+								ENDIF
+								CFLAG:842 ++
+							ELSEIF CFLAG:842 >= 50
+								PRINTFORML 「ひっ…ぎいっ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML 触手が尿道に突き入れると苦悶の表情を浮かべるが次第にとろけ始めてしまう…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 触手が尿道に突き入れると苦悶の表情を浮かべるが次第にとろけ始めてしまう…
+								ENDIF
+								CFLAG:842 ++
+							ELSEIF CFLAG:842 >= 5
+								PRINTFORML 「そこは…ちがっ……あはぁっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML 本来挿入する場所ではない穴に突き入れられ
+								IF FLAG:AUTOMODE
+									PRINTFORML ルーミアの尿道はみちみちと音を立てるかのように拡がってゆく…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW ルーミアの尿道はみちみちと音を立てるかのように拡がってゆく…
+								ENDIF
+								CFLAG:842 ++
+							ELSE
+								PRINTFORML 「あっ…ぐっ…%UNICODE(0x2665)%」
+								PRINTFORML 経験が足らないようで挿入までは至らないが
+								IF FLAG:AUTOMODE
+									PRINTFORML 尿道口をなでられると微かな快楽を生み出す…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 尿道口をなでられると微かな快楽を生み出す…
+								ENDIF
+								CFLAG:842 ++
+							ENDIF
+						ELSE
+							IF CFLAG:842 == 0
+								PRINTFORML 「さけちゃう…さけちゃうからあああぁぁぁっ」
+								PRINTFORML 初めて触手を受け入れる尿道の痛みに喉が張り裂けんばかりの声を上げるが
+								IF FLAG:AUTOMODE
+									PRINTFORML 触手は意に介さずルーミアの尿道を責め立て続ける…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 触手は意に介さずルーミアの尿道を責め立て続ける…
+								ENDIF
+								CFLAG:842 ++
+							ELSEIF CFLAG:842 >= 100
+								PRINTFORML 「ひっ%UNICODE(0x2665)%いたいの…%UNICODE(0x2665)%%UNICODE(0x2665)%きもちい%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML すっかりと触手の形を覚えこんだルーミアの尿道は脳を焼ききらんばかりの快楽を与えてくる…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW すっかりと触手の形を覚えこんだルーミアの尿道は脳を焼ききらんばかりの快楽を与えてくる…
+								ENDIF
+								CFLAG:842 ++
+							ELSEIF CFLAG:842 >= 50
+								PRINTFORML 「ひっ…%UNICODE(0x2665)%い…たっ…あはぁあん%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML 開発された尿道は触手を受け入れぶちゅりと音を立てながら拡がってゆく…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 開発された尿道は触手を受け入れぶちゅりと音を立てながら拡がってゆく…
+								ENDIF
+								CFLAG:842 ++
+							ELSEIF CFLAG:842 >= 5
+								PRINTFORML 「ひっ…ぐぅ…」
+								PRINTFORML 殆ど拡がらない尿道を責められ
+								IF FLAG:AUTOMODE
+									PRINTFORML がちがちと歯を鳴らし、涙を零しながら痛みに耐えている…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW がちがちと歯を鳴らし、涙を零しながら痛みに耐えている…
+								ENDIF
+								CFLAG:842 ++
+							ELSE
+								PRINTFORML 「あっ…ぐっ…」
+								PRINTFORML 経験が足らないようで挿入までは至らず
+								IF FLAG:AUTOMODE
+									PRINTFORML 涙を零しながら必死に痛みに耐えている…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 涙を零しながら必死に痛みに耐えている…
+								ENDIF
+								CFLAG:842 ++
+							ENDIF
+						ENDIF
+					ENDIF
+				ELSEIF CFLAG:28 == 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ひぐっ…%UNICODE(0x2665)%ちぎれひゃうっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ひぐっ…%UNICODE(0x2665)%ちぎれひゃうっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いたっ…ひぐっ%UNICODE(0x2665)%」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いたっ…ひぐっ%UNICODE(0x2665)%」
+					ENDIF
+				ENDIF
+			;AV同時
+			CASE 306,315,316,344,350,371,377,383,606,615,644,671,677,683
+				IF CFLAG:830 >= 100 || CFLAG:831 >= 100
+					IF CFLAG:28 == 1
+						IF ABL:11 == 3
+							SELECTCASE RAND:2
+							CASE 1
+								PRINTFORML 「ひ…ぎっ%UNICODE(0x2665)%いっしょに…%UNICODE(0x2665)%きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML 限界まで広がりきったルーミアの性器は易々とくわえ込み
+								IF FLAG:AUTOMODE
+									PRINTFORML 快楽という名の暴力を受け嬌声を上げている…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 快楽という名の暴力を受け嬌声を上げている…
+								ENDIF
+							CASE 0
+								PRINTFORML 「～～～～ッ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								PRINTFORML 奥まで突き入れられた衝撃により愛液と腸液がぶちゅりと音を立ててあふれ出す
+								IF FLAG:AUTOMODE
+									PRINTFORML しかしその衝撃を受けても舌を突き出し快楽を受け入れ楽しんでいる…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW しかしその衝撃を受けても舌を突き出し快楽を受け入れ楽しんでいる…
+								ENDIF
+							ENDSELECT
+						ELSE
+							PRINTFORML 「ごりごりきてゆ%UNICODE(0x2665)%おくまでけずってゆううぅぅぅううう%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 前と後ろでくわえ込み触手はルーミアの肉壺を削り取らんばかりの激しさで責め立てる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 前と後ろでくわえ込み触手はルーミアの肉壺を削り取らんばかりの激しさで責め立てる…
+							ENDIF
+						ENDIF
+					ELSE
+						SELECTCASE RAND:2
+						CASE 1
+							PRINTFORML 「ひゅっ%UNICODE(0x2665)%お…%UNICODE(0x2665)%おっきすぎるよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 両方の穴に触手をくわえ込み、激しく前後する…
+							IF FLAG:AUTOMODE
+								PRINTFORML その暴力的な刺激を受け肉壺は限界まで拡がり淫靡な音を奏でる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW その暴力的な刺激を受け肉壺は限界まで拡がり淫靡な音を奏でる…
+							ENDIF
+						CASE 0
+							PRINTFORML 「ひゅぐっ%UNICODE(0x2665)%いっしょは…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 突き入れられた瞬間ルーミアの目の前で光が弾けた…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 突き入れられた瞬間ルーミアの目の前で光が弾けた…
+							ENDIF
+						ENDSELECT
+					ENDIF
+				ELSE
+					IF CFLAG:CFLAG:28 == 1
+						IF ABL:11 == 3
+							PRINTFORML 「んひゃあぁん%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 暴力的な衝撃により身体は上下にがくがくと揺れるが
+							PRINTFORML すっかり開発されきったルーミアの肉壺は易々と咥えこみ
+							IF FLAG:AUTOMODE
+								PRINTFORML 嬌声を上げ快楽を楽しんでいる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 嬌声を上げ快楽を楽しんでいる…
+							ENDIF
+							CFLAG:830 ++
+							CFLAG:831 ++
+						ELSE
+							PRINTFORML 「ひっ…%UNICODE(0x2665)%にほんは…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 両方の穴に触手を咥えこみルーミアの腹部はぼこりといびつに歪んだ…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 両方の穴に触手を咥えこみルーミアの腹部はぼこりといびつに歪んだ…
+							ENDIF
+							CFLAG:830 ++
+							CFLAG:831 ++
+						ENDIF
+					ELSE
+						IF ABL:11 == 3
+							PRINTFORML 「ひっ…ぐぅ…%UNICODE(0x2665)%はげし…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							PRINTFORML 触手はルーミアのナカで自分勝手に動き回り
+							IF FLAG:AUTOMODE
+								PRINTFORML ぐにぐにと腹部が動き回る…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ぐにぐにと腹部が動き回る…
+							ENDIF
+							CFLAG:830 ++
+							CFLAG:831 ++
+						ELSE
+							PRINTFORML 「ひ…ひだい"っ"…い"だい"よぉ…」
+							IF FLAG:AUTOMODE
+								PRINTFORML 触手を限界まで突き入れられ一筋のしずくが瞳から零れた…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 触手を限界まで突き入れられ一筋のしずくが瞳から零れた…
+							ENDIF
+							CFLAG:830 ++
+							CFLAG:831 ++
+						ENDIF
+					ENDIF
+				ENDIF
+			;A吸収
+			CASE 348,648
+				IF CFLAG:28 == 1
+					PRINTFORML 「あっ%UNICODE(0x2665)%そんなとこ…%UNICODE(0x2665)%%UNICODE(0x2665)%あひゃああぁぁん%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML 肛門に突き刺さった触手は一定の間隔で脈動しルーミアに快感を与えてくる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 肛門に突き刺さった触手は一定の間隔で脈動しルーミアに快感を与えてくる…
+					ENDIF
+					CFLAG:830 ++
+				ELSE
+					PRINTFORML 「ひっ…なに…これっ」
+					PRINTFORML 肛門に突き刺さった触手は一定の間隔で脈動し
+					IF FLAG:AUTOMODE
+						PRINTFORML 今まで経験した事の無い感覚にルーミアは包まれる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 今まで経験した事の無い感覚にルーミアは包まれる…
+					ENDIF
+					CFLAG:830 ++
+				ENDIF
+			;V吸収
+			CASE 349,649
+				IF CFLAG:28 == 1
+					PRINTFORML 「ひっ…%UNICODE(0x2665)%ナカ…すってる%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML 性器に突き刺さった触手は一定の間隔で脈動しルーミアに快感を与えてくる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 性器に突き刺さった触手は一定の間隔で脈動しルーミアに快感を与えてくる…
+					ENDIF
+					CFLAG:831 ++
+				ELSE
+					PRINTFORML 「ひっ…なに…これっ」
+					PRINTFORML 性器に突き刺さった触手は一定の間隔で脈動し
+					IF FLAG:AUTOMODE
+						PRINTFORML 今まで経験した事の無い感覚にルーミアは包まれる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 今まで経験した事の無い感覚にルーミアは包まれる…
+					ENDIF
+					CFLAG:831 ++
+				ENDIF
+			;複合+自慰誘発
+			CASE 361,365
+				IF ABL:11 >= 2
+					IF RAND:3 == 0
+						PRINTFORML 「あはっ%UNICODE(0x2665)%きたっ%UNICODE(0x2665)%きもちいおくすりきたっ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						PRINTFORML ルーミアは媚薬を流し込まれガチガチと歯を鳴らしながら
+						IF FLAG:AUTOMODE
+							PRINTFORML 股からは愛液が溢れている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 股からは愛液が溢れている…
+						ENDIF
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「ひっ%UNICODE(0x2665)%なかにも%UNICODE(0x2665)%きもちいのはいってっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						PRINTFORML ルーミアは媚薬を流し込まれガチガチと歯を鳴らしながら
+						IF FLAG:AUTOMODE
+							PRINTFORML 股からは愛液が溢れている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 股からは愛液が溢れている…
+						ENDIF
+					ELSE
+						PRINTFORML 「とけひゃう%UNICODE(0x2665)%るーみゃのおまんこ%UNICODE(0x2665)%とけひゃううぅぅぅううっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						PRINTFORML ルーミアは媚薬を流し込まれガチガチと歯を鳴らしながら
+						IF FLAG:AUTOMODE
+							PRINTFORML 股からは愛液が溢れている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 股からは愛液が溢れている…
+						ENDIF
+					ENDIF
+				ELSE
+					PRINTFORML 「ひっ…な…なに%UNICODE(0x2665)%これっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					PRINTFORML ルーミアは媚薬を流し込まれガチガチと歯を鳴らし涙を零しながら
+					IF FLAG:AUTOMODE
+						PRINTFORML 未知の感覚に必死に耐えている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 未知の感覚に必死に耐えている…
+					ENDIF
+				ENDIF
+			;AV同時+自慰誘発強
+			CASE 661,665
+				IF ABL:11 >= 2
+					IF RAND:3 == 0
+						PRINTFORML 「ひぐっ%UNICODE(0x2665)%%UNICODE(0x2665)%つよいにょ%UNICODE(0x2665)%きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML 従来よりも強烈な媚薬を流し込まれ快感の回路が焼ききれそうになる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 従来よりも強烈な媚薬を流し込まれ快感の回路が焼ききれそうになる…
+						ENDIF
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「なかにも%UNICODE(0x2665)%きもちいの%UNICODE(0x2665)%ひゃああぁぁああぁん%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML 従来よりも強烈な媚薬を流し込まれ快感の回路が焼ききれそうになる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 従来よりも強烈な媚薬を流し込まれ快感の回路が焼ききれそうになる…
+						ENDIF
+					ELSE
+						PRINTFORML 「なかっ%UNICODE(0x2665)%なかとけひゃうっ%UNICODE(0x2665)%とけひゃうぅううぅぅ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML 従来よりも強烈な媚薬を流し込まれ快感の回路が焼ききれそうになる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 従来よりも強烈な媚薬を流し込まれ快感の回路が焼ききれそうになる…
+						ENDIF
+					ENDIF
+				ELSE
+					PRINTFORML 「ひっ…ぎっ…」
+					PRINTFORML 従来よりも強烈な媚薬を流し込まれ
+					IF FLAG:AUTOMODE
+						PRINTFORML 嫌悪感によりがちがちと歯を鳴らしながら必死に耐えている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 嫌悪感によりがちがちと歯を鳴らしながら必死に耐えている…
+					ENDIF
+				ENDIF
+			;複合スライムブロブ
+			CASE 653,657
+				IF ABL:11 >= 2
+					PRINTFORML 「あっ…と…とけちゃう…%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML %ARGS:1%の体内で嬲られるルーミアはぴりぴりとした刺激を与えられ悶えている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW %ARGS:1%の体内で嬲られるルーミアはぴりぴりとした刺激を与えられ悶えている…
+					ENDIF
+				ELSE
+					PRINTFORML 「あっ…ひぐっ…そこは…だめだから…」
+					IF FLAG:AUTOMODE
+						PRINTFORML %ARGS:1%の体内で嬲られるルーミアはぴりぴりとした未知の刺激を必死に耐えている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW %ARGS:1%の体内で嬲られるルーミアはぴりぴりとした未知の刺激を必死に耐えている…
+					ENDIF
+				ENDIF
+			;コウノトリV全体
+			CASE 387,388
+				IF ABL:11 == 3
+					;PRINTFORML 
+				ELSE
+					;PRINTFORML
+				ENDIF
+			;V弱
+			CASE 1891,1897,1898,1899
+				IF CFLAG:28 == 1
+					PRINTFORML 「もっとぉ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML 微弱な快感により物足りなくなり必死に哀願している…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 微弱な快感により物足りなくなり必死に哀願している…
+					ENDIF
+				ELSE
+					PRINTFORML 「ひっ…や、やだぁ…」
+				ENDIF
+		
+			CASEELSE
+		ENDSELECT
+	ENDIF
+	;拘束攻撃
+	CASE 15
+		;拘束
+		IF ARG:2 == 0
+			;睡眠状態はカット
+			IF CFLAG:25
+			ELSE
+				PRINTDATAL
+					DATAFORM 「はなしてよっ！！」
+					DATAFORM 「やっ…やめてよっ…」
+				ENDDATA
+			ENDIF
+		;丸呑み
+		ELSE
+			;睡眠状態
+			IF CFLAG:25
+			ELSE
+				IF ABL:11 == 3
+					PRINTFORML （あっ%UNICODE(0x2665)%ひどいこと…%UNICODE(0x2665)%%UNICODE(0x2665)%されちゃう…%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%）
+				ELSE
+					SELECTCASE RAND:3
+					CASE 2
+						PRINTFORML 「ひっ…わたしをたべてもおいしくないよ…」
+					CASE 1
+						PRINTFORML 「やっ…やめてよっ…」
+					CASE 0
+						PRINTFORML 「やだっ…やだよぉ…」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		ENDIF
+	;寄生攻撃
+	CASE 16
+		;睡眠状態
+		IF CFLAG:25
+		ELSE
+		SELECTCASE ARG:1
+		;寄生攻撃etc
+			CASE 801 TO 831,833,835 TO 841
+				;初寄生
+				IF CFLAG:811 == 0
+					PRINTFORML 「ひっ…な、なにっ!?」
+					PRINTFORML またぐらに突き刺さった触手の節々がぼこりと隆起し
+					IF FLAG:AUTOMODE
+						PRINTFORML 奥の奥まで精を注ぎ込んでくる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 奥の奥まで精を注ぎ込んでくる…
+					ENDIF
+					PRINTFORML 「やめて…やめてよぉ…」
+					PRINTFORML 涙を一筋零し、ナカに収まらなかった精液が接合部からごぽり溢れた…
+					CFLAG:811 ++
+				;発情＆触手中毒LV3
+				ELSEIF CFLAG:28 == 1 && ABL:11 == 3
+					PRINTFORML 「あっ…%UNICODE(0x2665)%」
+					PRINTFORML ルーミアはすっかり触手の虜となり、種を植え付ける行為とその後を想像し、ぴくりと身体を震わせた…
+				;触手中毒LV3
+				ELSEIF ABL:11 == 3
+					PRINTFORML 「な…何っ…!?%UNICODE(0x2665)%%UNICODE(0x2665)%
+					PRINTFORML 入って…%UNICODE(0x2665)%くるっ…%UNICODE(0x2665)%ひぐっ…%UNICODE(0x2665)%」
+					PRINTFORML 本来ならば嫌悪感を抱くはずの触手の種を植え付けられると言う行為は
+					PRINTFORML すっかり触手の虜となったルーミアには精神的性感にしかならなかった…
+				;戦意喪失or諦めでランダムか、おねだり（ランダムではない）
+				ELSEIF (RAND:2 == 0 && (CFLAG:29 || TFLAG:16 == 2)) || (CFLAG:50 >= 54 && CFLAG:50 <= 58)
+				;	PRINTFORMW 　
+				;発情中or戦意喪失or諦め
+				ELSEIF CFLAG:29 || TFLAG:16 == 2
+				;	PRINTFORMW 
+				ELSE
+					IF RAND:2 == 0
+						PRINTFORML 「何か膨らんで…っ」
+						PRINTFORML またぐらに突き刺さっている触手はぼこりぼこりと膨らむと
+						PRINTFORML ルーミアはその後に起こることを理解したようだ…
+					ELSE
+						PRINTFORML 「…！！」
+						PRINTFORML ルーミアのまたぐらに突き刺さっている触手がぼこりと膨らむと
+						PRINTFORML 何が起こるのか理解したようで、涙を零しながら言葉にならない何かを叫んでいる…
+					ENDIF
+				ENDIF
+			;アルラウネ二段妊娠
+			CASE 832
+				IF CFLAG:28 == 1 && ABL:11 >= 2
+					SELECTCASE CFLAG:822
+					CASE 0
+						IF CFLAG:822 >= 1
+							IF CFLAG:822 == 4
+								PRINTFORML 「あっ%UNICODE(0x2665)%ちんちん…きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML 望んでいた場所に望んでいたモノを受け入れ歓喜の声を上げる…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 望んでいた場所に望んでいたモノを受け入れ歓喜の声を上げる…
+								ENDIF
+								CFLAG:821 ++
+								CFLAG:822 = 0
+							ELSE
+								PRINTFORML 「ひぐっ%UNICODE(0x2665)%そっちじゃ…ないけどぉ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								IF FLAG:AUTOMODE
+									PRINTFORML 身構えていたトコとは違うところを責められ耐えられず声を上げてしまう…
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 身構えていたトコとは違うところを責められ耐えられず声を上げてしまう…
+								ENDIF
+								CFLAG:821 ++
+								CFLAG:822 = 0
+							ENDIF
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「あっ%UNICODE(0x2665)%でてりゅ%UNICODE(0x2665)%%UNICODE(0x2665)%おなかにょなかにぃ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ELSE
+							PRINTFORML 「ひんっ%UNICODE(0x2665)%そんにゃにだしたら%UNICODE(0x2665)%できひゃうよぅ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ENDIF
+					CASE 1
+						PRINTFORML 「ひっ%UNICODE(0x2665)%んひゅ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						PRINTFORML 触手が引き抜かれるとぴくりぴくりとひきつきながら
+						IF FLAG:AUTOMODE
+							PRINTFORML ぽっかりと口をあけた肉壺からごぽりと精液が溢れてきた…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ぽっかりと口をあけた肉壺からごぽりと精液が溢れてきた…
+						ENDIF
+						CFLAG:821 = 0
+					ENDSELECT
+				ELSEIF ABL:11 >= 2
+					SELECTCASE CFLAG:821
+					CASE 0
+						IF RAND:2 == 0
+							PRINTFORML 「あ…どくんどくんって…%UNICODE(0x2665)%でてる%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ELSE
+							PRINTFORML 「あっ…おなかの中…あったかい%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ENDIF
+					CASE 1
+						PRINTFORML 「ひぎゅっ%UNICODE(0x2665)%にゃかででてりゅ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML 肉壺から触手が引き抜かれるとごぽりと音を立てながら精液が溢れてきた…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 肉壺から触手が引き抜かれるとごぽりと音を立てながら精液が溢れてきた…
+						ENDIF
+						CFLAG:821 = 0
+					ENDSELECT
+				ELSE
+					SELECTCASE CFLAG:821
+					CASE 0
+						IF RAND:2 == 0
+							PRINTFORML 「ひっ…や…　やめ…て…」
+							CFLAG:821 ++
+						ELSE
+							PRINTFORML 「よごさ…　ないで…」
+							CFLAG:821 ++
+						ENDIF
+					CASE 1
+						PRINTFORML 「あ…は…　だされ…ちゃっ…たぁ…」
+						IF FLAG:AUTOMODE
+							PRINTFORML ルーミアは一筋の雫を瞳から流し、ごぽりと肉壺から精液が溢れた…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ルーミアは一筋の雫を瞳から流し、ごぽりと肉壺から精液が溢れた…
+						ENDIF
+						CFLAG:821 = 0
+					ENDSELECT
+				ENDIF
+			;ドリアード三段妊娠
+			;CASE 834
+				;発情中
+				IF CFLAG:28 == 1
+					SELECTCASE CFLAG:821
+					CASE 0
+						IF CFLAG:822 >= 1
+							IF CFLAG:822 == 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あはぁ%UNICODE(0x2665)%きもちいの…きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あはぁ%UNICODE(0x2665)%きもちいの…きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								ENDIF
+								CFLAG:821 ++
+								CFLAG:822 = 0
+							ELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「そっちじゃ…ないよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「そっちじゃ…ないよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								ENDIF
+								CFLAG:821 ++
+								CFLAG:822 = 0
+							ENDIF
+						ELSEIF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あっ%UNICODE(0x2665)%なか…でてる･･%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あっ%UNICODE(0x2665)%なか…でてる･･%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							ENDIF
+							CFLAG:821 ++
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あはっ%UNICODE(0x2665)%せーえき…きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あはっ%UNICODE(0x2665)%せーえき…きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							ENDIF
+							CFLAG:821 ++
+						ENDIF
+					CASE 1
+						IF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ひぐっ%UNICODE(0x2665)%きもちいの…きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ひぐっ%UNICODE(0x2665)%きもちいの…きたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							ENDIF
+							CFLAG:821 ++
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「んひゅ%UNICODE(0x2665)%おなか…いっぱい%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「んひゅ%UNICODE(0x2665)%おなか…いっぱい%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							ENDIF
+							CFLAG:821 ++
+						ENDIF
+					CASE 2
+						IF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もう%UNICODE(0x2665)%はいらにゃいよおぉぉぉ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もう%UNICODE(0x2665)%はいらにゃいよおぉぉぉ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							ENDIF
+							CFLAG:821 = 0
+						ELSE
+							PRINTFORML 「イったかりゃ%UNICODE(0x2665)%もういってりゅかりゃああぁぁああぁぁ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 絶頂に上ったルーミアだが、そのようなことは気にもせず攻め立てながら射精を続ける…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 絶頂に上ったルーミアだが、そのようなことは気にもせず攻め立てながら射精を続ける…
+							ENDIF
+							CFLAG:821 = 0
+						ENDIF
+					ENDSELECT
+				;触手中毒lv2以上
+				ELSEIF ABL:11 >= 2
+					SELECTCASE CFLAG:821
+					CASE 0
+						IF CFLAG:822 >= 1
+							IF CFLAG:822 == 4
+								IF FLAG:AUTOMODE
+									PRINTFORML 「あっ%UNICODE(0x2665)%ちんちん…きたぁ%UNICODE(0x2665)%」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「あっ%UNICODE(0x2665)%ちんちん…きたぁ%UNICODE(0x2665)%」
+								ENDIF
+								CFLAG:821 ++
+								CFLAG:822 = 0
+							ELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「そっちじゃ…ないよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「そっちじゃ…ないよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								ENDIF
+								CFLAG:821 ++
+								CFLAG:822 = 0
+							ENDIF
+						ELSEIF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「だ…ださないで…　んひぃ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「だ…ださないで…　んひぃ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							ENDIF
+							CFLAG:821 ++
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「よ…よごさな…　んにゅうぅぅううぅぅ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「よ…よごさな…　んにゅうぅぅううぅぅ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							ENDIF
+							CFLAG:821 ++
+						ENDIF
+					CASE 1
+						;IF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「はぁ…%UNICODE(0x2665)%はぁっ%UNICODE(0x2665)%あかひゃん…　できひゃう%UNICODE(0x2665)%%UNICODE(0x2665)%」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「はぁ…%UNICODE(0x2665)%はぁっ%UNICODE(0x2665)%あかひゃん…　できひゃう%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							ENDIF
+							CFLAG:821 ++
+						;ELSE
+							;PRINTFORMW 「」
+							;CFLAG:821 ++
+						;ENDIF
+					CASE 2
+						IF RAND:2 == 0
+							PRINTFORML 「はぁ%UNICODE(0x2665)%はぁ%UNICODE(0x2665)%るーみゃのおまんこ…こわれひゃったぁ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 触手が引き抜かれるとルーミアの肉壺からは大量の精液がごぽりと溢れた…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 触手が引き抜かれるとルーミアの肉壺からは大量の精液がごぽりと溢れた…
+							ENDIF
+							CFLAG:821 = 0
+						ELSE
+							PRINTFORML 「ひぐっ%UNICODE(0x2665)%%UNICODE(0x2665)%せーえき…　あはぁ%UNICODE(0x2665)%でてりゅ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 触手がルーミアの肉壺を突く度ぶちゅりと接合部から精液が溢れる…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 触手がルーミアの肉壺を突く度ぶちゅりと接合部から精液が溢れる…
+							ENDIF
+							CFLAG:821 = 0
+						ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE CFLAG:821
+					CASE 0
+						IF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「や…やめ…て…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「や…やめ…て…」
+							ENDIF
+							CFLAG:821 ++
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ひぐっ…これいじょうは…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ひぐっ…これいじょうは…」
+							ENDIF
+							CFLAG:821 ++
+						ENDIF
+					CASE 1
+						IF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あ…あ…あっ…　でて…る…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あ…あ…あっ…　でて…る…」
+							ENDIF
+							CFLAG:821 ++
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ださ…ないで…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ださ…ないで…」
+							ENDIF
+							CFLAG:821 ++
+						ENDIF
+					CASE 2
+						IF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ひぎっ…　まだ…でてる…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ひぎっ…　まだ…でてる…」
+							ENDIF
+							CFLAG:821 = 0
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「もう…　よごさないで…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「もう…　よごさないで…」
+							ENDIF
+							CFLAG:821 = 0
+						ENDIF
+					ENDSELECT
+				ENDIF
+		;コウノトリ
+			;妊娠
+			CASE 842
+				IF ABL:11 == 3
+					PRINTFORML 「んっ…%UNICODE(0x2665)%なに、これ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 「おなかの中…　なんかあつい…」
+				ENDIF
+			;妊娠　低威力大量射精
+			CASE 843
+				IF ABL:11 == 3
+					PRINTFORML 「ひぐっ…%UNICODE(0x2665)%ナカ…%UNICODE(0x2665)%でてるぅ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					IF FLAG:AUTOMODE
+						PRINTFORML コウノトリがびくりと身を震わせるたびルーミアの中へ精が注ぎ込まれる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW コウノトリがびくりと身を震わせるたびルーミアの中へ精が注ぎ込まれる…
+					ENDIF
+				ELSE
+					PRINTFORML 「だ…ださないで…」
+					IF FLAG:AUTOMODE
+						PRINTFORML ルーミアの中へ精をぶちまけずるりと抜けるが未だその陰茎が萎える様子は無い…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ルーミアの中へ精をぶちまけずるりと抜けるが未だその陰茎が萎える様子は無い…
+					ENDIF
+				ENDIF
+			;妊娠　高威力超大量射精
+			CASE 844
+				IF ABL:11 == 3
+					PRINTFORML 「ひぎっ%UNICODE(0x2665)%でてるっ%UNICODE(0x2665)%せーえきでてるよぉおおぉぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					PRINTFORML コウノトリはあふれんばかりの精液をルーミアの中へとぶちまけ
+					IF FLAG:AUTOMODE
+						PRINTFORML 子宮の中まで埋め尽くしたのか腹部は軽くぽこりと膨らむ…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 子宮の中まで埋め尽くしたのか腹部は軽くぽこりと膨らむ…
+					ENDIF
+				ELSE
+					PRINTFORML 「ふぐっ…おお…い…よ…」
+					PRINTFORML ルーミアの中はコウノトリの精液の量を受け入れられるほどなれている訳はなく
+					IF FLAG:AUTOMODE
+						PRINTFORML 腹部はぼこりとふくらみ入りきらなかった精液は接合部からごぽりと溢れた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 腹部はぼこりとふくらみ入りきらなかった精液は接合部からごぽりと溢れた…
+					ENDIF
+				ENDIF
+			;妊娠　低威力二段
+			CASE 845
+				IF ABL:11 == 3
+					SELECTCASE CFLAG:821
+					CASE 0
+						PRINTFORML 「なかで…%UNICODE(0x2665)%でてるよぉ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						CFLAG:821 ++
+					CASE 1
+						PRINTFORML 「まだ…%UNICODE(0x2665)%でるよね…？%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						CFLAG:821 = 0
+					ENDSELECT
+				ELSE
+					SELECTCASE CFLAG:821
+					CASE 0
+						PRINTFORML 「やだっ…やだよぉ…」
+						CFLAG:821 ++
+					CASE 1
+						PRINTFORML 「まだ…でるの…？」
+						CFLAG:821 = 0
+					ENDSELECT
+				ENDIF
+			;妊娠　高威力三段
+			CASE 846
+				IF ABL:11 == 3
+					SELECTCASE CFLAG:821
+					CASE 0
+						PRINTFORML 「ひぎゅっ…%UNICODE(0x2665)%せーえき%UNICODE(0x2665)%でてるよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						CFLAG:821 ++
+					CASE 1
+						PRINTFORML 「まだびゅくびゅく%UNICODE(0x2665)%でてるよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						CFLAG:821 ++
+					CASE 2
+						PRINTFORML 「ふにゃあぁあぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						PRINTFORML ルーミアの腹部はまるで妊娠したかのように膨らみ瞳は空ろになり
+						IF FLAG:AUTOMODE
+							PRINTFORML 性器がぴくりぴくりと震えるたび大量に詰まった精液がごぽりと溢れている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 性器がぴくりぴくりと震えるたび大量に詰まった精液がごぽりと溢れている…
+						ENDIF
+						CFLAG:821 = 0
+					ENDSELECT
+				ELSE
+					SELECTCASE CFLAG:821
+					CASE 0
+						PRINTFORML 「ひっ…ぎっ…いやっ…いやぁ…」
+						CFLAG:821 ++
+					CASE 1
+						PRINTFORML 「やめっ…やめて…よぉ…
+						CFLAG:821 ++
+					CASE 2
+						PRINTFORML 「かはっ…はぁっ…はぁっ…」
+						IF FLAG:AUTOMODE
+							PRINTFORML ルーミアは望まなくともナカですべての精を受けきり瞳からは光が消えかけている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ルーミアは望まなくともナカですべての精を受けきり瞳からは光が消えかけている…
+						ENDIF
+						CFLAG:821 = 0
+					ENDSELECT
+				ENDIF
+			;妊娠　高威力十段
+			CASE 847
+				IF ABL:11 == 3
+					SELECTCASE CFLAG:821
+					CASE 0
+						IF RAND:3 == 0
+							PRINTFORML 「せーえきっ…！　おくにっ…」
+							CFLAG:821 ++
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「あっ…　せーえき…きたぁ%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ELSE
+							PRINTFORML 「あっ…　きもちいのきたぁ%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ENDIF
+					CASE 1
+						IF RAND:3 == 0
+							PRINTFORML 「ひっ…　あはぁ…%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「ひぐっ…　おなかが…%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ELSE
+							PRINTFORML 「おなかぁ…　いっぱい…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ENDIF
+					CASE 2
+						IF RAND:3 == 0
+							PRINTFORML 「ひぐっ…%UNICODE(0x2665)%せーえき…%UNICODE(0x2665)%おくっ…たたいて…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「ちんちん…%UNICODE(0x2665)%あかちゃんのへや%UNICODE(0x2665)%たたいてる…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ELSE
+							PRINTFORML 「おかしくなるっ%UNICODE(0x2665)%あたまっ　おかしくなっちゃう%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ENDIF
+					CASE 3
+						IF RAND:3 == 0
+							PRINTFORML 「はにゃあぁっ%UNICODE(0x2665)%%UNICODE(0x2665)%きもちいっ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「ひにゅ%UNICODE(0x2665)%いっぱい…　せーえききたぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:821  ++
+						ELSE
+							PRINTFORML 「あんっ%UNICODE(0x2665)%にんしん…しちゃう…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							CFLAG:821 ++
+						ENDIF
+					CASE 4
+						IF RAND:3 == 0
+							PRINTFORML 「らめっ%UNICODE(0x2665)%こわれひゃうっ%UNICODE(0x2665)%あかちゃんのへやこわれひゃうからっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 大量に注ぎ込まれる精液は次第にルーミアのハラを大きくしていく…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 大量に注ぎ込まれる精液は次第にルーミアのハラを大きくしていく…
+							ENDIF
+							CFLAG:821 ++
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「ひっ%UNICODE(0x2665)%つくたび…　でてるうぅぅ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 突く度子宮に精を注ぎ込まれるが、肉壺はがっちりと咥えこみ一滴すら逃そうとしない…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 突く度子宮に精を注ぎ込まれるが、肉壺はがっちりと咥えこみ一滴すら逃そうとしない…
+							ENDIF
+							CFLAG:821 ++
+						ELSE
+							PRINTFORML 「でてるっ%UNICODE(0x2665)%きもちよくなるおくすり%UNICODE(0x2665)%あかちゃんのへやででてるっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML %ARGS:1%が突く度ルーミアは身体をびくんと震わせ絶頂を続けている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW %ARGS:1%が突く度ルーミアは身体をびくんと震わせ絶頂を続けている…
+							ENDIF
+						ENDIF
+					CASE 5
+						IF RAND:2 == 0
+							PRINTFORML 「おくっ%UNICODE(0x2665)%ふかひよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML コウノトリは体勢を変え重力によりルーミアの奥の奥へと突き刺さっていく…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW コウノトリは体勢を変え重力によりルーミアの奥の奥へと突き刺さっていく…
+							ENDIF
+							CFLAG:821 ++
+						ELSE
+							PRINTFORML 「もれひゃうっ%UNICODE(0x2665)%きもひよすぎてっ%UNICODE(0x2665)%おしっこれひゃううぅぅぅ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML 繰り返す絶頂によりルーミアはちょろちょろと尿を漏らし始めてしまった…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 繰り返す絶頂によりルーミアはちょろちょろと尿を漏らし始めてしまった…
+							ENDIF
+							CFLAG:821 ++
+						ENDIF
+					CASE 6
+						IF RAND:2
+							PRINTFORML 「ひもちいひっ%UNICODE(0x2665)%ひもちいひよぉっ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアはついに与えられる快楽に負け自ら腰を振るい性器の奥へとより深いところへと飲み込む…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアはついに与えられる快楽に負け自ら腰を振るい性器の奥へとより深いところへと飲み込む…
+							ENDIF
+							CFLAG:821 ++
+						ELSE
+							PRINTFORML 「あひゃぁ%UNICODE(0x2665)%んにゅ%UNICODE(0x2665)%きもひいい%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							IF FLAG:AUTOMODE
+								PRINTFORML ルーミアは快楽に負け自ら肉壺に手を沿え奥まで飲み込もうとしている…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW ルーミアは快楽に負け自ら肉壺に手を沿え奥まで飲み込もうとしている…
+							ENDIF
+							CFLAG:821 ++
+						ENDIF
+					CASE 7
+						PRINTFORML 「あぁあ%UNICODE(0x2665)%ぬ…ぬけひゃう…%UNICODE(0x2665)%%UNICODE(0x2665)%えっ…ひぎゅうぅぅう%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML ぎりぎりまで抜けるか抜けないかまで引き抜き、一気におくまで突き入れられルーミアの頭の中は真っ白に弾けてしまった
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ぎりぎりまで抜けるか抜けないかまで引き抜き、一気におくまで突き入れられルーミアの頭の中は真っ白に弾けてしまった
+						ENDIF
+						CFLAG:821 ++
+					CASE 8
+						PRINTFORML 「いっひゃう%UNICODE(0x2665)%わらひいっひゃうかりゃああぁぁあ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML 遂には入りきらなくなった精液は接合部から卑猥な音を立てながらあふれ出しながらも交尾をやめることは無いようだ…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 遂には入りきらなくなった精液は接合部から卑猥な音を立てながらあふれ出しながらも交尾をやめることは無いようだ…
+						ENDIF
+						CFLAG:821 ++
+					CASE 9
+						PRINTFORML 「らめっ%UNICODE(0x2665)%らめらかりゃあぁぁ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML 触手が引き抜かれた陰部はぽっかりと開ききり身体が震えるたびに精液があふれ出てくる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 触手が引き抜かれた陰部はぽっかりと開ききり身体が震えるたびに精液があふれ出てくる…
+						ENDIF
+						CFLAG:821 = 0
+					ENDSELECT
+				ELSE
+					SELECTCASE CFLAG:821
+					CASE 0
+						PRINTFORML 「ひっ…なに…」
+						CFLAG:821 ++
+					CASE 1
+						PRINTFORML 「もう…もうはいらないからっ…」
+						CFLAG:821 ++
+					CASE 2
+						PRINTFORML 「ひぐっ…やめ…やめてよぉ…」
+						CFLAG:821 ++
+					CASE 3
+						PRINTFORML 「ひぐっ…かはっ…」
+						IF FLAG:AUTOMODE
+							PRINTFORML コウノトリが一際大きく震えたと思うとより大量の精液を流し込んできた…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW コウノトリが一際大きく震えたと思うとより大量の精液を流し込んできた…
+						ENDIF
+						CFLAG:821 ++
+					CASE 4
+						PRINTFORML 「ひっ…%UNICODE(0x2665)%あっ%UNICODE(0x2665)%あっ…%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML すっかり抵抗をする気力を失ったのかコウノトリが突く度がくがくと首が揺れ一筋の涙が零れる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW すっかり抵抗をする気力を失ったのかコウノトリが突く度がくがくと首が揺れ一筋の涙が零れる…
+						ENDIF
+						CFLAG:821 ++
+					CASE 5
+						PRINTFORML 「しゅごい%UNICODE(0x2665)%おちんぽしゅごいいぃぃぃ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML すっかり快楽を受け入れ揺すられる度に陰部からは愛液が噴出す…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW すっかり快楽を受け入れ揺すられる度に陰部からは愛液が噴出す…
+						ENDIF
+						CFLAG:821 ++
+					CASE 6
+						PRINTFORML 「もっとぉ%UNICODE(0x2665)%もっとちょうらいよぉ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML ついには肉壺に収まりきらなかった精液は突かれる度に溢れてくる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ついには肉壺に収まりきらなかった精液は突かれる度に溢れてくる…
+						ENDIF
+						CFLAG:821 ++
+					CASE 7
+						PRINTFORML 「ま…まらイったばか…ひぎゅうぅぅぅぅぅうううぅぅ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML イったばかりで敏感になったルーミアの膣は触手を食いちぎらんばかりの力で刺激し射精を促す…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW イったばかりで敏感になったルーミアの膣は触手を食いちぎらんばかりの力で刺激し射精を促す…
+						ENDIF
+						CFLAG:821 ++
+					CASE 8
+						PRINTFORML 「も…もうらめっ%UNICODE(0x2665)%もうらめらからぁああぁぁ%UNICODE(0x2665)%%UNICODE(0x2665)%ひぐうぅぅぅ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML コウノトリは次第に突き上げる速度を上げ始め息も絶え絶えになりながらも快楽を受け入れている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW コウノトリは次第に突き上げる速度を上げ始め息も絶え絶えになりながらも快楽を受け入れている…
+						ENDIF
+						CFLAG:821 ++
+					CASE 9
+						PRINTFORML 「～～～～～～ッ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML 絶頂と同時に声にならない嬌声をあるも、コウノトリの責めは止まらない
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 絶頂と同時に声にならない嬌声をあるも、コウノトリの責めは止まらない
+						ENDIF
+						PRINTFORML 「こわれひゃうっ%UNICODE(0x2665)%%UNICODE(0x2665)%るーみゃのおまんここあれひゃう%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						IF FLAG:AUTOMODE
+							PRINTFORML びくびくと震え呼吸も困難な状態で射精され頭の中は真っ白になってしまった…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW びくびくと震え呼吸も困難な状態で射精され頭の中は真っ白になってしまった…
+						ENDIF
+						CFLAG:821 = 0
+					ENDSELECT
+				ENDIF
+			CASEELSE
+			ENDSELECT
+			ENDIF
+	;通常攻撃回避
+	CASE 22
+		;戦意喪失未経験MP1/4以下or発情中
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 && CFLAG:810 == 0
+			PRINTFORML 「はぁっ…はぁっ…これ以上はっ…
+			PRINTFORML あ…あぶなかったぁ…」
+		ELSEIF CFLAG:810 == 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「な…なんかえっちな気配感じる…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「な…なんかえっちな気配感じる…」
+			ENDIF
+		;MP1/4以下or発情中
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+			PRINTFORML 「はぁ…はぁ…　も…もう、あんなことは…」
+		ELSE
+			PRINTFORML 「あぶなかったぁ…
+			IF FLAG:AUTOMODE
+				PRINTFORML もうあんなことは嫌だよ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW もうあんなことは嫌だよ…」
+			ENDIF
+		ENDIF
+	;衣服攻撃回避
+	CASE 23
+		;MP1/4以下or発情中
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+			;PRINTFORMW 
+		ELSE
+			PRINTFORML 「うわっ…
+			IF FLAG:AUTOMODE
+				PRINTFORML もう、あぶないなぁ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW もう、あぶないなぁ」
+			ENDIF
+		ENDIF
+	;性攻撃回避
+	CASE 24
+		;MP1/4以下or発情中
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+		;	PRINTFORMW 
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ…あれに捕まってたら…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ…あれに捕まってたら…」
+			ENDIF
+		ENDIF
+	;拘束・寄生・その他攻撃回避
+	CASE 25 TO 27
+		;MP1/4以下or発情中
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+		;	PRINTFORMW 
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ…あぶなかったぁ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ…あぶなかったぁ…」
+			ENDIF
+		ENDIF
+	;戦意喪失
+	CASE 33
+		;諦めか戦意喪失
+		;初戦意喪失＆拘束中＆触手中毒LV3
+		IF CFLAG:29 || TFLAG:16 == 2 && ABL:11 == 3 && CFLAG:20 == 1 && CFLAG:810 == 0
+			IF FLAG:AUTOMODE
+				PRINTFORML （あぁっ…%UNICODE(0x2665)%わたし、これから犯されつくされちゃうのかな…%UNICODE(0x2665)%）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW （あぁっ…%UNICODE(0x2665)%わたし、これから犯されつくされちゃうのかな…%UNICODE(0x2665)%）
+			ENDIF
+			PRINTFORML ルーミアは体をぴくりと震わせ
+			PRINTFORML 四肢を力なくだらんと投げ出し触手たちにされるがままだ
+		;初戦意喪失＆拘束中
+		ELSEIF CFLAG:29 || TFLAG:16 == 2 && CFLAG:20 == 1
+			PRINTFORML 「助からない…のかなぁ…」
+			PRINTFORML 先ほどまで意地でも触手に犯されまいと必死の抵抗をしていたが
+			PRINTFORML 涙を一筋とぽつりと言葉をこぼしたのを最後にルーミアの心はヒビ入ってしまったようだ…
+		;その他
+		ELSEIF CFLAG:29 || TFLAG:16 == 2 && CFLAG:810 == 0
+			PRINTFORML 「もう…ダメみたい…」
+			PRINTFORML そうぽつりと呟くとルーミアの瞳から覇気は消えていった…
+		;二回目拘束触手中毒
+		ELSEIF CFLAG:29 || TFLAG:16 == 2 && ABL == 3 && CFLAG:810 == 1
+			PRINTFORML 「はっ%UNICODE(0x2665)%　あぁっ…%UNICODE(0x2665)%もう…だめっ…%UNICODE(0x2665)%
+			PRINTFORML きもちいいのに%UNICODE(0x2665)%任せちゃって…%UNICODE(0x2665)%いいよねっ…%UNICODE(0x2665)%」
+			PRINTFORML ルーミアは触手に縛り付けられ、嬲られ、遂には心はひび割れ触手に身を任せてしまう…
+		;二回目拘束
+		ELSEIF CFLAG:29 || TFLAG:16 == 2 && CFLAG:810 == 1
+			PRINTFORML 「もう…だめ……かな…」
+			PRINTFORML ルーミアの体は縛り付けられ、触手に玩ばれ、
+			PRINTFORML 遂にはすべてを諦め瞳からは覇気すら消えてしまう…
+		;その他
+		ELSE
+			PRINTFORML 「もう…つかれちゃった…」
+			PRINTFORML これまでの陵辱により遂には諦めてしまう…	
+		ENDIF
+	;服が破ける
+	CASE 35
+		;戦意喪失or諦め
+		IF CFLAG:29 || TFLAG:16 == 2
+		;	PRINTFORMW 
+		;全裸
+		ELSEIF ARG:1 == 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「もうぼろぼろで着れないよ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「もうぼろぼろで着れないよ…」
+			ENDIF
+		;半裸
+		ELSEIF ARG:1 == 1
+			PRINTFORML 「むーっ…」
+		;破れ始めた
+		ELSEIF ARG:1 == 2
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ちょっ…やめてよっ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ちょっ…やめてよっ！」
+			ENDIF
+		ENDIF
+	;攻撃されて起きた
+	CASE 41
+		PRINTFORML 「ふぁっ…!?」
+		IF FLAG:AUTOMODE
+			PRINTFORML 本気で寝入っていたようで口からはよだれが垂れている…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 本気で寝入っていたようで口からはよだれが垂れている…
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;戦闘開始or終了
+;-------------------------------------------------------------------------------------------------
+	;戦闘開始
+	CASE 54
+	IF CFLAG:840 == 1
+		IF RAND:2 == 0
+			IF TFLAG:14 == 3
+				PRINTFORML 「くー…くー…むにゃ…」
+				PRINTFORML ルーミアは敵に全く気づかずこれから起こるコトを知らないまま
+				IF FLAG:AUTOMODE
+					PRINTFORML 幸せそうな寝顔をしている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 幸せそうな寝顔をしている…
+				ENDIF
+				CFLAG:841 = 1
+			;娘との初遭遇時、口上スキップ
+			ELSEIF CFLAG:805 == 4
+				CFLAG:805 = 0
+			;MP1/4以下or発情中or要睡眠以上or妊娠中
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 7 || CFLAG:36 >= 3
+				;敵先制
+				IF TFLAG:14 == 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ひっ…　ま、まって!!」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ひっ…　ま、まって!!」
+					ENDIF
+					CFLAG:841 = 1
+				;ボス
+				;ELSEIF ARG:1
+				;	PRINTFORMW 
+				;味方先制
+				ELSEIF TFLAG:14 == 1
+				;	PRINTFORMW 
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…はぁ…　ま…負けないよ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…はぁ…　ま…負けないよ…」
+					ENDIF
+					CFLAG:841 = 1
+				ENDIF
+			ELSE
+				;敵先制
+				IF TFLAG:14 == 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「て…敵!?　ま、待って!!」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「て…敵!?　ま、待って!!」
+					ENDIF
+					CFLAG:841 = 1
+				;ボス
+				ELSEIF ARG:1
+					;一人PTか戦闘技能1以下か戦意喪失が二人いる
+					IF FLAG:10 == 0 || (ABL:3 < 2 && ABL:4 < 2) || (CFLAG:1:29 && CFLAG:(FLAG:10):29) || (CFLAG:1:29 && CFLAG:(FLAG:11):29) || (CFLAG:(FLAG:10):29 && CFLAG:(FLAG:11):29)
+						IF FLAG:AUTOMODE
+							PRINTFORML 「勝てるのかな…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「勝てるのかな…」
+						ENDIF
+						CFLAG:841 = 1
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ま…負けないんだからね!!」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ま…負けないんだからね!!」
+						ENDIF
+						CFLAG:841 = 1
+					ENDIF
+				;味方先制でランダム
+				ELSEIF RAND:2 == 0 && TFLAG:14 == 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「せんてひっしょう!!」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「せんてひっしょう!!」
+					ENDIF
+					CFLAG:841 = 1
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「コレなら勝てるかも!!」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「コレなら勝てるかも!!」
+					ENDIF
+					CFLAG:841 = 1
+				ENDIF
+			ENDIF
+		ELSE
+			IF TFLAG:14 == 3
+				PRINTFORML 「くー…くー…むにゃ…」
+				PRINTFORML ルーミアは敵に全く気づかずこれから起こるコトを知らないまま
+				IF FLAG:AUTOMODE
+					PRINTFORML 幸せそうな寝顔をしている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 幸せそうな寝顔をしている…
+				ENDIF
+			;娘との初遭遇時、口上スキップ
+			ELSEIF CFLAG:805 == 4
+				CFLAG:805 = 0
+			;MP1/4以下or発情中or要睡眠以上or妊娠中
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 7 || CFLAG:36 >= 3
+				;敵先制
+				IF TFLAG:14 == 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ひっ…　ま、まって!!」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ひっ…　ま、まって!!」
+					ENDIF
+				;ボス
+				;ELSEIF ARG:1
+				;	PRINTFORMW 
+				;味方先制
+				ELSEIF TFLAG:14 == 1
+				;	PRINTFORMW 
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…はぁ…　ま…負けないよ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…はぁ…　ま…負けないよ…」
+					ENDIF
+				ENDIF
+			ELSE
+				;敵先制
+				IF TFLAG:14 == 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「て…敵!?　ま、待って!!」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「て…敵!?　ま、待って!!」
+					ENDIF
+				;ボス
+				ELSEIF ARG:1
+					;一人PTか戦闘技能1以下か戦意喪失が二人いる
+					IF FLAG:10 == 0 || (ABL:3 < 2 && ABL:4 < 2) || (CFLAG:1:29 && CFLAG:(FLAG:10):29) || (CFLAG:1:29 && CFLAG:(FLAG:11):29) || (CFLAG:(FLAG:10):29 && CFLAG:(FLAG:11):29)
+						IF FLAG:AUTOMODE
+							PRINTFORML 「勝てるのかな…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「勝てるのかな…」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ま…負けないんだからね!!」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ま…負けないんだからね!!」
+						ENDIF
+					ENDIF
+				;味方先制でランダム
+				ELSEIF RAND:2 == 0 && TFLAG:14 == 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「せんてひっしょう!!」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「せんてひっしょう!!」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「コレなら勝てるかも!!」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「コレなら勝てるかも!!」
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+	ELSE
+		IF TFLAG:14 == 3
+			PRINTFORML 「くー…くー…むにゃ…」
+			PRINTFORML ルーミアは敵に全く気づかずこれから起こるコトを知らないまま
+			IF FLAG:AUTOMODE
+				PRINTFORML 幸せそうな寝顔をしている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 幸せそうな寝顔をしている…
+			ENDIF
+		;娘との初遭遇時、口上スキップ
+		ELSEIF CFLAG:805 == 4
+			CFLAG:805 = 0
+		;MP1/4以下or発情中or要睡眠以上or妊娠中
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 7 || CFLAG:36 >= 3
+			;敵先制
+			IF TFLAG:14 == 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ひっ…ま、まって!!」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ひっ…ま、まって!!」
+				ENDIF
+			;ボス
+			;ELSEIF ARG:1
+			;	PRINTFORMW 
+			;味方先制
+			ELSEIF TFLAG:14 == 1
+			;	PRINTFORMW 
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ…はぁ…　ま…負けないよ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ…はぁ…　ま…負けないよ…」
+				ENDIF
+			ENDIF
+		ELSE
+			;敵先制
+			IF TFLAG:14 == 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「て…敵!?　ま、待って!!」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「て…敵!?　ま、待って!!」
+				ENDIF
+			;ボス
+			ELSEIF ARG:1
+				;一人PTか戦闘技能1以下か戦意喪失が二人いる
+				IF FLAG:10 == 0 || (ABL:3 < 2 && ABL:4 < 2) || (CFLAG:1:29 && CFLAG:(FLAG:10):29) || (CFLAG:1:29 && CFLAG:(FLAG:11):29) || (CFLAG:(FLAG:10):29 && CFLAG:(FLAG:11):29)
+					IF FLAG:AUTOMODE
+						PRINTFORML 「勝てるのかな…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「勝てるのかな…」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ま…負けないんだからね!!」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ま…負けないんだからね!!」
+					ENDIF
+				ENDIF
+			;味方先制でランダム
+			ELSEIF RAND:2 == 0 && TFLAG:14 == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「せんてひっしょう!!」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「せんてひっしょう!!」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「コレなら勝てるかも!!」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「コレなら勝てるかも!!」
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+	;ARG:1 の種族と初遭遇
+	CASE 61
+		;娘
+		IF ARG:1 == 19 && TFLAG:14 != 3
+			;自分の子（パッチなしだと無効）
+			IF ARG:2 == TARGET
+			;	PRINTFORMW 「
+			;その他
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+			CFLAG:805 = 4
+		ENDIF
+;	;戦闘敗北　なんか戦意喪失とかぶってしっくり来ない
+;	CASE 56
+;		;味方か助っ人がいる
+;		SIF FLAG:10 || FLAG:15
+;		;	PRINTFORMW 
+	;戦闘勝利
+	CASE 57
+		;戦意喪失未経験MP1/4以下or要睡眠以上か妊娠中
+		IF CFLAG:840 == 1
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7 || CFLAG:36 >= 3 && CFLAG:810 == 0
+				PRINTFORML 「はぁっ…はぁっ…ふぅ…
+				IF FLAG:AUTOMODE
+					PRINTFORML た…たすかったぁ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW た…たすかったぁ…」
+				ENDIF
+				CFLAG:841 = 0
+			ELSEIF CFLAG:28 == 1 && ABL:11 == 3 && CFLAG:810 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ…%UNICODE(0x2665)%はぁ…%UNICODE(0x2665)%あ…あぶなかったぁ…%UNICODE(0x2665)%」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ…%UNICODE(0x2665)%はぁ…%UNICODE(0x2665)%あ…あぶなかったぁ…%UNICODE(0x2665)%」
+				ENDIF
+				CFLAG:841 = 0
+			;MP1/4以下or要睡眠以上か妊娠中
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7 || CFLAG:36 >= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ…はぁ…もう…起き上がらないよね…？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ…はぁ…もう…起き上がらないよね…？」
+				ENDIF
+				CFLAG:841 = 1
+			ELSEIF CFLAG:28 == 1 && ABL:11 == 3
+				PRINTFORML 「はぁ…%UNICODE(0x2665)%はぁ…%UNICODE(0x2665)%たすかったけど…%UNICODE(0x2665)%」
+				IF FLAG:AUTOMODE
+					PRINTFORML 口ではそう言うが…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 口ではそう言うが…
+				ENDIF
+				CFLAG:841 = 0
+			ELSE
+				;HP最大・MP最大・EP半分以上・CP半分以上
+				IF BASE:MP >= MAXBASE:MP && BASE:HP >= MAXBASE:HP && BASE:EP >= MAXBASE:EP/2 && BASE:CP >= MAXBASE:CP/2
+				;	PRINTFORMW 「
+				ELSEIF CFLAG:810 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「負けるわけないよねー」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「負けるわけないよねー」
+					ENDIF
+					CFLAG:841 = 0
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「も…もうあんなことは嫌だよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「も…もうあんなことは嫌だよ」
+					ENDIF
+					CFLAG:841 = 0
+				ENDIF
+			ENDIF
+		ELSE
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7 || CFLAG:36 >= 3 && CFLAG:810 == 0
+				PRINTFORML 「はぁっ…はぁっ…ふぅ…
+				IF FLAG:AUTOMODE
+					PRINTFORML た…たすかったぁ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW た…たすかったぁ…」
+				ENDIF
+			ELSEIF CFLAG:28 == 1 && ABL:11 == 3 && CFLAG:810 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ…%UNICODE(0x2665)%はぁ…%UNICODE(0x2665)%あ…あぶなかったぁ…%UNICODE(0x2665)%」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ…%UNICODE(0x2665)%はぁ…%UNICODE(0x2665)%あ…あぶなかったぁ…%UNICODE(0x2665)%」
+				ENDIF
+			;MP1/4以下or要睡眠以上か妊娠中
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7 || CFLAG:36 >= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ…はぁ…もう…起き上がらないよね…？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ…はぁ…もう…起き上がらないよね…？」
+				ENDIF
+			ELSEIF CFLAG:28 == 1 && ABL:11 == 3
+				PRINTFORML 「はぁ…%UNICODE(0x2665)%はぁ…%UNICODE(0x2665)%たすかったけど…%UNICODE(0x2665)%」
+				IF FLAG:AUTOMODE
+					PRINTFORML 口ではそう言うが…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 口ではそう言うが…
+				ENDIF
+			ELSE
+				;HP最大・MP最大・EP半分以上・CP半分以上
+				IF BASE:MP >= MAXBASE:MP && BASE:HP >= MAXBASE:HP && BASE:EP >= MAXBASE:EP/2 && BASE:CP >= MAXBASE:CP/2
+				;	PRINTFORMW 「
+				ELSEIF CFLAG:810 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「負けるわけないよねー」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「負けるわけないよねー」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「も…もうあんなことは嫌だよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「も…もうあんなことは嫌だよ」
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;逃亡成功後
+;-------------------------------------------------------------------------------------------------
+	;普通に成功
+	CASE 55
+		;発情
+		IF CFLAG:28
+		;	PRINTFORMW 「
+		;	PRINTFORMW 　
+		;MP1/4以下かHP1/4以下か妊娠中か要睡眠以上
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3 || FLAG:7 >= 7
+				PRINTFORML 「はぁっ…はぁっ…　に…にげるよっ」
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「にげるよっ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「にげるよっ！」
+			ENDIF
+		ENDIF
+	;見捨てて逃げた
+	CASE 62
+
+	;見捨てられた
+	CASE 63
+
+
+;-------------------------------------------------------------------------------------------------
+;エロス
+;-------------------------------------------------------------------------------------------------
+	;睡眠時自慰
+	CASE 117
+		;ランダムで仲間がいる
+		IF RAND:2 == 0 && FLAG:10
+		;	PRINTFORMW 
+		ELSE
+		;	PRINTFORMW 
+		ENDIF
+	;自慰発生時　フラグだけ回収するので戦意喪失でも来る
+	;いろんな自慰からここに来るのでフラグ関係はここだけ書いておけば大丈夫
+	;もしここの口上を書くときは色んな自慰から飛んでくるのを考慮して書かないといけない
+	CASE 118
+		CFLAG:805 = 3
+		RESETCOLOR
+		;口上記入済み
+		RETURN 1
+	;自慰で絶頂失敗　フラグだけ消去するので戦意喪失でも来る
+	CASE 119
+		CFLAG:805 = 0
+		RESETCOLOR
+		;口上記入済み
+		RETURN 1
+	;絶頂
+	CASE 120
+		;出産絶頂は出さない
+		IF CFLAG:805 == 2
+			CFLAG:805 = 0
+		;諦め時orMP1/4以下or発情中
+		ELSEIF TFLAG:16 == 2 || MAXBASE:MP/4 >= BASE:MP || CFLAG:28
+			;諦め時専用で自慰でない　自慰するかどうかはともかく……
+			IF RAND:3 == 0 && TFLAG:16 == 2 && CFLAG:805 != 3
+			;	PRINTFORMW 
+			ELSEIF RAND:2 == 0
+			;	PRINTFORMW 
+			ELSE
+			;	PRINTFORMW 
+			ENDIF
+		ELSE
+			;ランダムか自慰で絶頂した時
+			;発情中
+			IF RAND:4 == 0 || CFLAG:805 == 3 && CFLAG:28 == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「きひゃう%UNICODE(0x2665)%すごいのきひゃうっ…%UNICODE(0x2665)%」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「きひゃう%UNICODE(0x2665)%すごいのきひゃうっ…%UNICODE(0x2665)%」
+				ENDIF
+			;触手中毒LV3
+			ELSEIF RAND:3 == 0 && ABL:11 == 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「イっちゃう%UNICODE(0x2665)%まっしろになっちゃうっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「イっちゃう%UNICODE(0x2665)%まっしろになっちゃうっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+				ENDIF
+			ELSEIF RAND:2 == 0 || CFLAG:805 == 3
+				PRINTFORML 「ふっ…くぅ…」
+				IF FLAG:AUTOMODE
+					PRINTFORML ルーミアは身体をぴくりと震わせ絶頂へと達した…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ルーミアは身体をぴくりと震わせ絶頂へと達した…
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ…はぁ……　ふぐっ…うっ……ひぐうっ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ…はぁ……　ふぐっ…うっ……ひぐうっ…」
+				ENDIF
+			ENDIF
+		ENDIF
+		;自慰絶頂管理
+		IF CFLAG:805 == 3
+			CFLAG:805 = 0
+		ENDIF
+	;喪失中絶頂
+	CASE 122
+		;出ない時
+		IF CFLAG:805 == 2
+			CFLAG:805 = 0
+		;自慰のときはこっちでない
+		ELSEIF RAND:2 == 0 && CFLAG:805 != 3
+
+		ELSE
+		;	PRINTFORMW 
+			IF CFLAG:805 == 3	
+				CFLAG:805 = 0
+			ENDIF
+		ENDIF
+	;母乳を吸われる　戦意喪失でも来る
+	CASE 123
+		SELECTCASE ARG:1
+			;娘
+			CASE 19
+				;発情時・戦意喪失時・諦め時
+				IF CFLAG:28 || CFLAG:29 || TFLAG:16 == 2
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			CASEELSE
+				;発情時・戦意喪失時・諦め時・MP1/4以下でランダム
+				IF CFLAG:28 || CFLAG:29 || TFLAG:16 == 2 || (RAND:3 == 0 && MAXBASE:MP/4 >= BASE:MP)
+					;諦め時か戦意喪失時専用
+					IF RAND:2 == 0 && (TFLAG:16 == 2 || CFLAG:29)
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あ…ひぐっ…%UNICODE(0x2665)%%UNICODE(0x2665)%」 
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あ…ひぐっ…%UNICODE(0x2665)%%UNICODE(0x2665)%」 
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ひっ%UNICODE(0x2665)%おっぱいでひゃう…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ひっ%UNICODE(0x2665)%おっぱいでひゃう…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						ENDIF
+					ENDIF
+				ELSE
+					IF RAND:2 == 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「すわない…で…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「すわない…で…」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「おっぱい…でて…る…　んっ…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「おっぱい…でて…る…　んっ…」
+						ENDIF
+					ENDIF
+				ENDIF
+			ENDSELECT
+	;処女喪失
+	CASE 136
+		SELECTCASE ARG:1
+			;敵の攻撃で
+			CASE 0
+				SELECTCASE ARG:3
+				;喪失直前
+				CASE 1
+
+
+				;守れた
+				CASE 2
+
+				CASEELSE
+
+				ENDSELECT
+			;自慰で　確か絶頂しないと処女破らない……はず
+			CASE 1
+
+			;出産
+			CASE 2
+
+		ENDSELECT
+;----------------------------------------------------------------------------------------------
+;キャラに遭遇
+;---------------------------------------------------------------------------------------------
+	;誰かに会う
+	CASE 101
+		;喪失キャラ
+		IF ARG:2
+			SELECTCASE NO:(ARG:1)
+				;YYのキャラが相手
+				CASE 1
+
+				CASEELSE
+
+			ENDSELECT
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;YYのキャラが相手
+				CASE 1
+
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あっ、やっほー」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あっ、やっほー」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	;別れる
+	CASE 102
+		;喪失キャラ
+		IF ARG:2
+			SELECTCASE NO:(ARG:1)
+				;YYのキャラが相手
+				CASE 1
+
+				CASEELSE
+
+			ENDSELECT
+		ELSE
+			SELECTCASE NO:(ARG:1)
+				;YYのキャラが相手
+				CASE 1
+
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おたがいがんばろーね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おたがいがんばろーね」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	;雑談
+	CASE 103
+			;HP1/2以下でMP1/8以下で味方がいないか味方が戦意喪失　たぶん救出されたて
+			IF MAXBASE:HP/2 > BASE:HP && MAXBASE:MP/8 >= BASE:MP && (FLAG:10 == 0 || CFLAG:(FLAG:10):29)
+
+			;妊娠時
+			ELSEIF CFLAG:22 && (CFLAG:36 == 0 || CFLAG:36 >= 3)
+				SELECTCASE NO:(ARG:1)
+					;YYのキャラが相手
+					CASE 1
+
+					CASEELSE
+
+				ENDSELECT
+			ELSE
+				SELECTCASE NO:(ARG:1)
+					;YYのキャラが相手
+					CASE 1
+
+					CASEELSE
+
+				ENDSELECT
+			ENDIF
+	;情報交換
+	CASE 104
+			IF ARG:2 == 0
+				;HP1/2以下でMP1/8以下で味方がいないか味方が戦意喪失　たぶん救出されたて
+				IF MAXBASE:HP/2 > BASE:HP && MAXBASE:MP/8 >= BASE:MP && (FLAG:10 == 0 || CFLAG:(FLAG:10):29)
+				;	PRINTFORMW 「
+				ELSE
+				SELECTCASE NO:(ARG:1)
+					;YYのキャラが相手
+					CASE 1
+
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「そだねー…　んーっと…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「そだねー…　んーっと…」
+						ENDIF
+				ENDSELECT
+				ENDIF
+			ENDIF
+	;アイテム強請り成功
+	CASE 105
+		;相手が喪失
+		IF ARG:3
+
+		ELSE
+			;HP1/2以下でMP1/8以下で味方がいないか味方が戦意喪失　たぶん救出されたて
+			IF MAXBASE:HP/2 > BASE:HP && MAXBASE:MP/8 >= BASE:MP && (FLAG:10 == 0 || CFLAG:(FLAG:10):29)
+			;	PRINTFORMW 
+			ELSE
+				SELECTCASE NO:(ARG:1)
+					;YYのキャラが相手
+					CASE 1
+
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「おにくのがよかったけど…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「おにくのがよかったけど…」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;勧誘成功
+	CASE 107
+		;相手が喪失
+		IF ARG:2
+			SELECTCASE NO:(ARG:1)
+				;YYのキャラが相手
+				CASE 1
+
+				CASEELSE
+
+			ENDSELECT
+		ELSE
+			;HP1/2以下でMP1/8以下で味方がいないか味方が戦意喪失　たぶん救出されたて
+			IF MAXBASE:HP/2 > BASE:HP && MAXBASE:MP/8 >= BASE:MP && (FLAG:10 == 0 || CFLAG:(FLAG:10):29)
+			;	PRINTFORMW 
+			ELSE
+				SELECTCASE NO:(ARG:1)
+					;YYのキャラが相手
+					CASE 1
+
+					CASEELSE
+
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;遭遇時逆襲
+	CASE 112, 111
+	;	PRINTFORMW 
+	;PTに勧誘された
+	CASE 140
+		;成功
+		IF ARG:2 == 1
+			;通常
+			IF ARG:1 == 0
+
+			;共闘
+			ELSE
+
+			ENDIF
+		;失敗
+		ELSE
+			;主人公が捕まってる＝助けを求めた
+			IF CFLAG:1:10
+
+			ELSE
+			
+			ENDIF
+		ENDIF
+	;喪失キャラに気付け薬を使った
+	CASE 143
+		;使った時
+		IF ARG:2 == 0
+
+		ENDIF
+
+;-------------------------------------------------------------------------------------------------
+;寄生・妊娠
+;-------------------------------------------------------------------------------------------------
+	;寄生が進行 802の16で寄生経験があるかどうか確認する
+	;ARG;1は残り期間
+	CASE 125
+		;寄生出産経験済み
+		IF (CFLAG:802 & 16)
+			IF ARG:1 >= 8
+				IF RAND:3 == 0
+				;	PRINTFORMW 
+				ELSEIF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 
+					ENDIF
+				ENDIF
+			ELSEIF ARG:1 >= 4
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 2
+			;	PRINTFORMW 
+			ELSEIF ARG:1 >= 1
+			;	PRINTFORMW 
+			ENDIF
+		ELSE
+			IF ARG:1 >= 8
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+					;妊娠経験済み
+					IF (CFLAG:802 & 2)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ENDIF
+			ELSEIF ARG:1 >= 4
+			;	PRINTFORMW 
+			ELSEIF ARG:1 >= 2
+					;妊娠経験済み
+					IF (CFLAG:802 & 2)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+			ELSEIF ARG:1 >= 1
+			;	PRINTFORMW 
+			ENDIF
+		ENDIF
+;	;妊娠が進行
+	CASE 126
+		;妊娠出産経験済み　4で娘経験、8で幼体経験
+		IF (CFLAG:802 & 2)
+			IF ARG:1 >= 11
+				IF RAND:3 == 0
+				;	PRINTFORMW 
+				ELSEIF RAND:2 == 0
+					;戦意喪失じゃない味方がいる
+					IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 9
+				IF RAND:3 == 0
+				;	PRINTFORMW 
+				ELSEIF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 8
+				;実らず
+				IF CFLAG:36 == 1
+				;	PRINTFORMW 
+				;妊娠進行
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 5
+				IF RAND:3 == 0
+				;	PRINTFORMW 
+				ELSEIF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 3
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 1
+				IF RAND:2 == 0
+					;戦意喪失じゃない味方がいる
+					IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ENDIF
+		;妊娠出産経験なし
+		ELSE
+			IF ARG:1 >= 11
+				IF RAND:2 == 0
+					;戦意喪失じゃない味方がいる
+					IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 9
+				IF RAND:2 == 0
+					;戦意喪失じゃない味方がいる
+					IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 8
+				;実らず
+				IF CFLAG:36 == 1
+				;	PRINTFORMW 「
+				;妊娠進行
+				ELSE
+				;	PRINTFORMW 
+					;戦意喪失じゃない味方がいる
+					IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+				ENDIF
+			ELSEIF ARG:1 >= 5
+				IF RAND:2 == 0
+					PRINTFORML 
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSEIF ARG:1 >= 3
+			;	PRINTFORMW 
+			ELSEIF ARG:1 >= 1
+				;母乳体質取得済み
+				IF TALENT:130
+				;	PRINTFORMW 
+				;母乳体質取得
+				ELSE
+				;	PRINTFORMW 
+				;	PRINTFORMW 
+				ENDIF
+			ENDIF
+		ENDIF
+	;寄生・出産イベント　喪失中も出る
+	;ARG:1はイベント進行
+	CASE 127
+		;絶頂口上を出ないように管理する
+		CFLAG:805 = 2
+		;寄生出産経験済み
+		IF (CFLAG:802 & 16)
+			;生まれ始める
+			IF ARG:1  == 0
+				IF RAND:2 == 0
+					PRINTFORML 「ひっ…ぎっ…　ひろがって…」
+				ELSE
+				;	PRINTFORMW 「また…うんじゃう…%UNICODE(0x2665)%」
+				ENDIF
+			;生んだ後胸吸われる
+			ELSEIF ARG:1 == 1
+				IF RAND:2 == 0
+				;	PRINTFORMW 
+				ELSE
+				;	PRINTFORMW 
+				ENDIF
+			ELSE
+			;	PRINTFORMW 
+				;ここからは絶頂に行かないので
+				CFLAG:805 = 0
+			ENDIF
+		ELSE
+			;生まれ始める
+			IF ARG:1  == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ひっ…　ぎっ…　ひだい…い"だい"よぉ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ひっ…　ぎっ…　ひだい…い"だい"よぉ…」
+				ENDIF
+			;生んだ後胸吸われる
+			ELSEIF ARG:1 == 1
+				;母乳体質習得
+				IF TALENT:130 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あっ…おっぱい…でて…る…？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あっ…おっぱい…でて…る…？」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ひっ…　す…すわない…で…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ひっ…　す…すわない…で…」
+					ENDIF
+				ENDIF
+			;寄生体が去る
+			ELSE
+			;	PRINTFORMW 
+				;寄生出産経験
+				CFLAG:802 |= 16
+				;ここからは絶頂に行かないので
+				CFLAG:805 = 0
+			ENDIF
+		ENDIF
+	;妊娠・出産イベント 喪失中でも出る
+	CASE 129
+		;絶頂口上を出ないように管理する
+		CFLAG:805 = 2
+		;妊娠出産経験済み　4で娘出産経験、8で幼体出産経験
+		IF (CFLAG:802 & 2)
+			;生まれ始める
+			IF ARG:1  == 0
+				IF ABL:11 >= 2
+					IF RAND:2 == 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ひっ…%UNICODE(0x2665)%　あかちゃんが…こすれてきもちく…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ひっ…%UNICODE(0x2665)%　あかちゃんが…こすれてきもちく…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ひぐっ%UNICODE(0x2665)%　あかちゃん…産んできもちく…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ひぐっ%UNICODE(0x2665)%　あかちゃん…産んできもちく…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						ENDIF
+					ENDIF
+				ELSE
+					IF RAND:2 == 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あぐっ…　ひっ…　また…でてきて…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あぐっ…　ひっ…　また…でてきて…」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「やっ…　ひぐっ…　も…むりだか…　ひぎっ…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「やっ…　ひぐっ…　も…むりだか…　ひぎっ…」
+						ENDIF
+					ENDIF
+				ENDIF
+			;生んだ後胸吸われる
+			ELSEIF ARG:1 == 1
+				IF ABL:11 >= 2
+					IF RAND:2 == 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ひんっ%UNICODE(0x2665)%おっぱい…すって…　んにゃあぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ひんっ%UNICODE(0x2665)%おっぱい…すって…　んにゃあぁ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「はぁ%UNICODE(0x2665)%はぁ%UNICODE(0x2665)%　ひんっ%UNICODE(0x2665)%」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「はぁ%UNICODE(0x2665)%はぁ%UNICODE(0x2665)%　ひんっ%UNICODE(0x2665)%」
+						ENDIF
+					ENDIF
+				ELSE
+					IF RAND:2 == 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あ…　あはっ…　も…もうやめ…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あ…　あはっ…　も…もうやめ…」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ひっ…　や…やめて…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ひっ…　や…やめて…」
+						ENDIF
+					ENDIF
+				ENDIF
+			;子が去る
+			ELSEIF ARG:1 == 2
+			;	PRINTFORMW 
+				;ここからは絶頂に行かないので
+				CFLAG:805 = 0
+				;幼体出産経験
+				IF ARG:2 == 0 && (CFLAG:802 & 8) == 0
+					CFLAG:802 |= 8
+				;娘出産経験
+				ELSEIF ARG:2 == 1 && (CFLAG:802 & 4) == 0
+					CFLAG:802 |= 4
+				ENDIF
+			ENDIF
+		ELSE
+			;生まれ始める
+			IF ARG:1  == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ひっ…　な…なに…　ひっ…　ぎっい…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ひっ…　な…なに…　ひっ…　ぎっい…」
+				ENDIF
+			;生んだ後胸吸われる
+			ELSEIF ARG:1 == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あ…　ひんっ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あ…　ひんっ…」
+				ENDIF
+			;子が去る
+			ELSEIF ARG:1 == 2
+			;	PRINTFORMW 
+				;ここからは絶頂に行かないので
+				CFLAG:805 = 0
+				;出産経験
+				CFLAG:802 |= 2
+				IF ARG:2 == 0 && (CFLAG:802 & 8) == 0
+					CFLAG:802 |= 8
+				ELSEIF ARG:2 == 1 && (CFLAG:802 & 4) == 0
+					CFLAG:802 |= 4
+				ENDIF
+			ENDIF
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;マップ行動
+;-------------------------------------------------------------------------------------------------
+	;睡眠開始
+	CASE 114
+		IF TARGET == 1
+			SELECTCASE ARG:1
+				;見張りなし
+				CASE 0
+					;朦朧
+					IF FLAG:7 >= 11
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あーっ…　もーだめ…　寝よ…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あーっ…　もーだめ…　寝よ…」
+						ENDIF
+					;妊娠中
+					ELSEIF CFLAG:36 >= 3
+						IF RAND:2 == 0
+						;	PRINTFORMW 
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+					;要睡眠
+					ELSEIF FLAG:7 >= 7
+						IF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「そろそろ寝ないとまずいかな」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「そろそろ寝ないとまずいかな」
+							ENDIF
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「んー…　むにゃむにゃ…　ねっ寝てないよ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「んー…　むにゃむにゃ…　ねっ寝てないよ」
+							ENDIF
+						ENDIF
+					;睡眠可
+					ELSE
+						;IF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ばんぜんで挑まないとね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ばんぜんで挑まないとね」
+							ENDIF
+						;ELSE
+						;	PRINTFORMW 
+						;ENDIF
+					ENDIF
+				;PTで見張り
+				CASE 1
+					;朦朧
+					IF FLAG:7 >= 11
+						PRINTFORML 「うん…　こーたいで見張りね・･　きいてるきいてる　むにゃむにゃ…」
+					;	PRINTFORMW 
+					;妊娠中
+					;ELSEIF CFLAG:36 >= 3
+						;IF RAND:2 == 0
+						;	PRINTFORMW 
+						;ELSE
+						;	PRINTFORMW 
+						;ENDIF
+					;要睡眠
+					ELSEIF FLAG:7 >= 7
+						;IF RAND:2 == 0
+							PRINTFORML 「変わりばんこで　見張りね　きいてるきいてる　むにゃむにゃ…」
+							;PRINTFORMW 
+						;ELSE
+							;PRINTFORMW 
+						;ENDIF
+					;睡眠可
+					ELSE
+						IF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「交代で見張りだね　先に寝てもいいかな…？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「交代で見張りだね　先に寝てもいいかな…？」
+							ENDIF
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「交代でみはりだね　まだ寝付けないから先に寝ててよ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「交代でみはりだね　まだ寝付けないから先に寝ててよ」
+							ENDIF
+						ENDIF
+					ENDIF
+				;NPCに見張り ARG:2で見張りキャラ
+				CASE 2
+					;朦朧
+					IF FLAG:7 >= 11
+					;	PRINTFORMW 
+					;妊娠中
+					ELSEIF CFLAG:36 >= 3
+					;	PRINTFORMW 
+					ELSE
+					;	PRINTFORMW 
+					ENDIF
+			ENDSELECT
+		ENDIF
+	;浄化開始
+	CASE 130
+		;MPが1/4以下か発情中か朦朧
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 11
+			;SELECTCASE RAND:2
+				;CASE 0
+				;	PRINTFORMW 「」
+				;CASEELSE
+				;	PRINTFORMW 
+			;ENDSELECT
+		;HPが1/4以下か妊娠中か要睡眠
+		ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3 || FLAG:7 >= 7
+			SELECTCASE RAND:2
+				CASE 0
+				;	PRINTFORMW 
+				CASEELSE
+				;	PRINTFORMW 
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ごはんには困らなさそうだけど…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ごはんには困らなさそうだけど…」
+					ENDIF
+				CASE 1
+				;	PRINTFORMW 「さすがにこれは食べられないかなぁ…」
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「えいやー！　むー、刈ってもしばらくしたら生えてくる…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「えいやー！　むー、刈ってもしばらくしたら生えてくる…」
+					ENDIF
+			ENDSELECT
+		ENDIF
+	;部屋を移動（突撃）
+	CASE 132
+		;ランダム
+		IF RAND:2 == 0
+			;MPが1/4以下か朦朧　ここだけ移動系の中では条件違う
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 11
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;HPが1/4以下か妊娠中か発情中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3 || CFLAG:28
+				SELECTCASE RAND:2
+					CASE 0
+						;戦意喪失じゃない味方がいる
+						IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+						;	PRINTFORMW 
+						ELSE
+						;	PRINTFORMW 
+						ENDIF
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;要睡眠
+			ELSEIF FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「んー…　とつげーき…　むにゃむにゃ…　いたた…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「んー…　とつげーき…　むにゃむにゃ…　いたた…」
+				ENDIF
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「とつげーき！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「とつげーき！！」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ごーごー！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ごーごー！」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;部屋を移動（慎重）
+	CASE 133
+		IF RAND:2 == 0
+			;MPが1/4以下か発情中か朦朧
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 11
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;HPが1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;要睡眠
+			ELSEIF FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「みつからにゃいように…　むにゃむにゃ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「みつからにゃいように…　むにゃむにゃ…」
+				ENDIF
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「そーっと…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「そーっと…」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「闇展開すれば簡単なのに…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「闇展開すれば簡単なのに…」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;部屋を移動（待ち伏せ）
+	CASE 134
+		IF RAND:2 == 0
+			;MPが1/4以下か発情中か朦朧
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 11
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;HPが1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;要睡眠
+			ELSEIF FLAG:7 >= 7
+				;PRINTFORMW 
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;探索開始
+	CASE 135
+		IF RAND:2 == 0
+			;MPが1/4以下か発情中か朦朧
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 11
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;HPが1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				SELECTCASE RAND:2
+					CASE 0
+					;	PRINTFORMW 
+					CASEELSE
+					;	PRINTFORMW 
+				ENDSELECT
+			;要睡眠
+			ELSEIF FLAG:7 >= 7
+			;	PRINTFORMW 
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「なにかないかなー」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「なにかないかなー」
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「使えるものはないかなー？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「使えるものはないかなー？」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;結界とお風呂
+	CASE 149
+		;MPが1/4以下か発情中か妊娠か朦朧
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:36 >= 3 || FLAG:7 >= 11
+		;	PRINTFORMW 「
+		ELSE
+			;戦意喪失じゃない味方がいる
+			IF (TARGET == 1 && FLAG:10 && CFLAG:(FLAG:10):29 == 0) || (TARGET == 1 && FLAG:11 && CFLAG:(FLAG:11):29 == 0) || (TARGET != 1 && CFLAG:1:29 == 0)
+				IF FLAG:AUTOMODE
+					PRINTFORML 「おちつくねー」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「おちつくねー」
+				ENDIF
+			;味方はいるが壊滅状態
+			;ELSEIF FLAG:10
+			;	PRINTFORMW 「
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はー、おちつくー」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はー、おちつくー」
+				ENDIF
+			ENDIF
+		ENDIF
+;-------------------------------------------------------------------------------------------------
+;その他マップ
+;-------------------------------------------------------------------------------------------------
+	;離脱時
+	CASE 110
+		;このキャラが主人公でない＝別れる方
+		IF TARGET != 1
+			;離脱後
+			IF ARG:2 == 1
+				;好感度200以上
+				IF CFLAG:5 >= 200
+					PRINTFORML 「無事で外で会おうね！」
+				;	PRINTFORMW 　
+				;MP1/4以下か妊娠中かHPとCPが0
+				ELSEIF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || (BASE:HP <= 0 && BASE:CP <= 0)
+					PRINTFORML 「んっ…おたがいがんばろうね…」
+				ELSE
+					PRINTFORML 「そっかー、じゃあこれからは別行動だね」
+				ENDIF
+			ENDIF
+		ENDIF
+	;完全捕食
+	CASE 152
+	;	PRINTFORMW 
+	;	PRINTFORMW 
+	;主人公復活
+	CASE 158
+		;助けてもらって復活
+		IF ARG:1 == 0
+		;	PRINTFORMW 
+		;	PRINTFORMW 
+		ENDIF
+	;PT離脱　このキャラが抜ける
+	CASE 161
+	;	PRINTFORMW 
+	;PT離脱　このキャラが残る
+	CASE 162
+	;	PRINTFORMW 
+;-------------------------------------------------------------------------------------------------
+;ランダムイベント
+;-------------------------------------------------------------------------------------------------
+
+	;ランダムイベント発生
+	CASE 200
+		;MPが1/4以下か発情中か妊娠か朦朧
+		IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:36 >= 3 || FLAG:7 >= 11
+			SELECTCASE ARG:1
+				;澄んだ泉　0で飲む、1で入る、2で無視
+				CASE 133
+					SELECTCASE ARG:2
+						;MP回復
+						CASE 0
+						;	PRINTFORMW 「
+						;EP回復
+						CASE 1
+						;	PRINTFORMW 「」
+						;無視
+						CASE 2
+						;	PRINTFORMW 「
+						ENDSELECT
+				;不思議な泉　0で飲む、1で入る、2で無視
+				CASE 135
+					SELECTCASE ARG:2
+						;HP・MP・EP全快	;全状態異常治療
+						CASE 0, 1
+						;	PRINTFORMW 「
+						;無視
+						CASE 2
+						;	PRINTFORMW 「
+						ENDSELECT
+				;天井からスライム　1で回避失敗、2で回避成功
+				CASE 136
+					SELECTCASE ARG:2
+						CASE 1
+							IF BASE:CP <= 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ひぐっ…　もう…やめ…て…」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ひぐっ…　もう…やめ…て…」
+								ENDIF
+							ELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ひんっ…　ふ、服が…」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ひんっ…　ふ、服が…」
+								ENDIF
+							ENDIF
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「はぁっ…はぁっ…　あぶなかったぁ…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「はぁっ…はぁっ…　あぶなかったぁ…」
+							ENDIF
+					ENDSELECT
+				;壁から触手　1で回避失敗、2で回避成功
+				CASE 137
+					SELECTCASE ARG:2
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「うわっ、ま…まって…　ひっ…んっ%UNICODE(0x2665)%」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「うわっ、ま…まって…　ひっ…んっ%UNICODE(0x2665)%」
+							ENDIF
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ひっ…　こ、これ以上は…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ひっ…　こ、これ以上は…」
+							ENDIF
+					ENDSELECT
+				;桃色ガス　1で回避失敗、2で回避成功
+				CASE 139
+					SELECTCASE ARG:2
+						CASE 1
+							;自慰中毒2以上
+							IF ABL:10 > 1
+							;	PRINTFORMW 
+							ELSE
+							;	PRINTFORMW 
+							ENDIF
+						CASE 2
+						;	PRINTFORMW 
+					ENDSELECT
+				;誰かの荷物
+				CASE 140
+				;	PRINTFORMW 
+				;喋れる触手
+				CASE 142
+					SELECTCASE ARG:2
+						;犯される
+						CASE 0, 1, 2, 3
+						;	PRINTFORMW 「
+						;絶対にノゥ！
+						CASE 4
+						;	PRINTFORMW 「
+					ENDSELECT
+				;落石　1で回避失敗、2で回避成功
+				CASE 150
+					SELECTCASE ARG:2
+						CASE 1
+						;	PRINTFORMW 
+						CASE 2
+						;	PRINTFORMW 
+					ENDSELECT
+			ENDSELECT
+		ELSE
+			SELECTCASE ARG:1
+				;澄んだ泉　0で飲む、1で入る、2で無視
+				CASE 133
+					SELECTCASE ARG:2
+						;MP回復
+						CASE 0
+						;	PRINTFORMW 「
+						;EP回復
+						CASE 1
+						;	PRINTFORMW 「」
+						;無視
+						CASE 2
+						;	PRINTFORMW 「
+						ENDSELECT
+				;不思議な泉　0で飲む、1で入る、2で無視
+				CASE 135
+					SELECTCASE ARG:2
+						;HP・MP・EP全快	;全状態異常治療
+						CASE 0, 1
+						;	PRINTFORMW 「
+						;無視
+						CASE 2
+						;	PRINTFORMW 「
+						ENDSELECT
+				;天井からスライム　1で回避失敗、2で回避成功
+				CASE 136
+					SELECTCASE ARG:2
+						CASE 1
+							IF BASE:CP <= 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「べたべた…　お風呂入りたいなぁ　もー…」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「べたべた…　お風呂入りたいなぁ　もー…」
+								ENDIF
+							ELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「べたべた…　あれ、服が…」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「べたべた…　あれ、服が…」
+								ENDIF
+							ENDIF
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あぶなかったぁ…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あぶなかったぁ…」
+							ENDIF
+					ENDSELECT
+				;壁から触手　1で回避失敗、2で回避成功
+				CASE 137
+					SELECTCASE ARG:2
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あっ…　やだっ…　はなしてよっ…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あっ…　やだっ…　はなしてよっ…」
+							ENDIF
+						CASE 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あ…　あぶなかったぁ…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あ…　あぶなかったぁ…」
+							ENDIF
+					ENDSELECT
+				;桃色ガス　1で回避失敗、2で回避成功
+				CASE 139
+					SELECTCASE ARG:2
+						CASE 1
+							;自慰中毒2以上
+							IF ABL:10 > 1
+							;	PRINTFORMW 
+							ELSE
+							;	PRINTFORMW 
+							ENDIF
+						CASE 2
+						;	PRINTFORMW 
+					ENDSELECT
+				;誰かの荷物
+				CASE 140
+				;	PRINTFORMW 
+				;喋れる触手
+				CASE 142
+					SELECTCASE ARG:2
+						CASE 0, 1, 2, 3
+						;	PRINTFORMW 「
+						CASE 4
+						;	PRINTFORMW 「
+					ENDSELECT
+				;落石　1で回避失敗、2で回避成功
+				CASE 150
+					SELECTCASE ARG:2
+						CASE 1
+						;	PRINTFORMW 
+						CASE 2
+						;	PRINTFORMW 
+					ENDSELECT
+				ENDSELECT
+	ENDIF
+;-------------------------------------------------------------------------------------------------
+;遺品　YYのキャラの遺品を発見した
+;-------------------------------------------------------------------------------------------------
+	;遺品回収
+	CASE 202
+		SELECTCASE NO:(ARG:1)
+			CASE 1
+		ENDSELECT
+;-------------------------------------------------------------------------------------------------
+;ふたなり　別に飛ぶ
+;-------------------------------------------------------------------------------------------------
+	CASE 451, 452, 453, 454, 455, 456, 457
+		CALL FUTANARI_3_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CASEELSE
+		;汎用　行あけ区分のためこっちから戻す
+		RESETCOLOR
+		;口上記入済み
+		RETURN 1
+ENDSELECT
+
+RESETCOLOR
+
+;行あけ
+PRINTFORML 
+
+;口上記入済み
+RETURN 1
+

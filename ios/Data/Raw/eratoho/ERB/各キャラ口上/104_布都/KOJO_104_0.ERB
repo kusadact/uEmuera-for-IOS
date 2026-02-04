@@ -1,0 +1,1745 @@
+﻿;□　　　　　　　　　　　　　　　　　　　　　　　　　□
+;■　　　　　era東方触手宮･物部布都口上　　　　　　　■
+;■　　　　　　　　　　　　　　　12/7/14　ver.0.5　　■
+;■　　　　　　　　　　　　　　　　　　　　　　　　　■
+;■・使用フラグ　CFLAG:812　ADSフラグ　　　　　　　　■
+;■　　　　　　　　　　　　　　　　　　　　　　　　　■
+;■　　　　　　　　　　　　　　つくったひと・コルッカ■
+;□　　　　　　　　　　　　　　　　　　　　　　　　　□
+
+@KOJO_TITLE_104_0
+RESULTS = 物部布都　ドヤァ系聖童女口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_104_0
+PRINTFORML 触手宮　物部の口上です。
+PRINTFORML 緊張感がねえので嫌な人はOFF推奨。
+PRINTFORML ちょろい！　ちょろいよ布都ちゃん！
+PRINTFORML ドヤ顔の素敵な尸解仙は好きですか？
+
+
+;文字色　ブルー・オルタンシア
+;(烏帽子の紺＋髪の鉛色でこんな色？)
+@KOJO_DEFAULT_COLOR_104_0
+RETURN 0x7572fe
+
+@KOJO_104_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;SETCOLOR CFLAG:700 でそのキャラの口上色を反映できる
+SETCOLOR CFLAG:700
+
+;地の文呼び出し
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;CALL KOJO_104_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;喪失時の処理。霊夢口上の方のを流用、改変。以下自分用メモ
+;33(MP0になった時)、42(敵から開放)、63(仲間に見捨てられた)111(遭遇時逆襲アイテム)、122(喪失時絶頂)、127(寄生出産)、129(妊娠出産)以外かつ、
+;20以上144以下(20までは攻撃関連)か200以上は無言で返す
+IF CFLAG:29 && ARG:0 != 33 && ARG:0 != 42 && ARG:0 != 63 && ARG:0 != 111 && ARG:0 != 122 && ARG:0 != 127 && ARG:0 != 129 && ((ARG:0 > 20 && ARG:0 < 144) || ARG:0 >= 200)
+	RESETCOLOR
+	RETURN 1
+
+ELSE
+SELECTCASE ARG:0
+	CASE 1
+	;(戦闘ではすっげえノリノリの布都ちゃん。こういう上げて落としてまた上げたくキャラ、堪りません)
+	;(ADSをオンにしとかないとDQN過ぎて見てらんない気も…ええ作者の力量不足と趣味ですとも)
+		SELECTCASE ARG:1
+			CASE 1
+			;防御
+				IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORM 「ぐむむ、い…今は耐えるべきであるな
+						CASE 1
+							PRINTFORM 「ええい！　効かぬ！　効かぬぞ！
+						CASE 2
+							PRINTFORM 「させぬと言うておる……
+						ENDSELECT
+						CALL ADS_KOJO_104
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+						PRINTFORM 「ふ、まともには食らわんぞぉ！
+						CASE 1
+						PRINTFORM 「我への攻撃も計算の内よ
+						CASE 2
+						PRINTFORM 「これぞ物部の八門遁甲陣……
+						CASE 3
+						PRINTFORM 「これぞ物部の根源一気陣……
+					ENDSELECT
+					CALL ADS_KOJO_104
+				ENDIF
+			CASE 2
+			;アイテム使用
+				PRINTFORM 「物部に伝わる十種の神宝のひとつ！
+				CALL ADS_KOJO_104
+			CASE 3
+			;前に出る
+				IF FLAG:10 != 0 || FLAG:15 != 0
+					IF CFLAG:28
+						PRINTFORM 「ううぅ……この状態で…出ろ、と？
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORM 「我におまかせを！
+							CASE 1
+								PRINTFORM 「虎穴に入らずんば……というわけだな？
+							CASE 2
+								PRINTFORM 「はっはっは！　我が相手だ！！
+						ENDSELECT
+						CALL ADS_KOJO_104
+					ENDIF
+				ELSE
+					PRINTFORM 「この距離なら外すまい！
+					CALL ADS_KOJO_104
+				ENDIF
+			CASE 4
+			;後退
+				IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+					IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP
+						PRINTFORM 「い……一旦下がらせてもらう…
+						CALL ADS_KOJO_104
+					ELSE
+						PRINTFORM 「この後退は後への布石よ！
+						CALL ADS_KOJO_104
+					ENDIF
+				ELSE
+					PRINTFORM 「この方角はまずいのでな
+					CALL ADS_KOJO_104
+				ENDIF
+			CASE 5
+			;逃走
+			;(すげえ無双っぽい)
+				IF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORML 「こ…この逃走は未来への進軍である！
+					CALL ADS_KOJO_104
+				ELSEIF CFLAG:28
+					PRINTFORM 「い…今は危険である、な……
+					CALL HEARTCB(0xD02830)
+					CALL ADS_KOJO_104
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORM 「三十六計逃げるに如かず、と言うのでな
+						CASE 1
+							PRINTFORM 「我が退くことになろうとは……
+					ENDSELECT
+						CALL ADS_KOJO_104
+				ENDIF
+			;弾幕
+			CASE 10
+			;弱弾幕
+				;発情
+				IF CFLAG:28
+					PRINTFORM 「ぞ、造作もない、こ、とよッ！
+					CALL ADS_KOJO_104_L
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORML 「ここから、だな
+					CALL ADS_KOJO_104_L
+				;(神子、屠自古と一緒。もっといい分岐方法はある。確実に)
+				ELSEIF FLAG:10 == 103 || FLAG:11 == 103|| FLAG:15 == 103 || FLAG:16 == 103 || FLAG:10 == 105 || FLAG:11 == 105 || FLAG:15 == 105 || FLAG:16 == 105
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORM 「我が出る！
+							CALL ADS_KOJO_104_L
+						CASE 1
+							PRINTFORM 「豪族の力を思い知るがよいわ！
+							CALL ADS_KOJO_104_L
+						CASEELSE
+							PRINTFORM 「まだまだぁ！
+							CALL ADS_KOJO_104_L
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORM 「猪口才わぁ！！
+							CALL ADS_KOJO_104_L
+						CASE 1
+							PRINTFORM 「お前など止まって見えるわ！
+							CALL ADS_KOJO_104_L
+						CASE 2
+							PRINTFORM 「甘いっ！
+							CALL ADS_KOJO_104_L
+						CASE 3
+							PRINTFORM 「無駄だ！
+							CALL ADS_KOJO_104_L
+						CASEELSE
+							PRINTFORM 「我におまかせを！
+							CALL ADS_KOJO_104_L
+					ENDSELECT
+				ENDIF
+			;中弾幕
+			CASE 11
+				;発情
+				IF CFLAG:28
+					PRINTFORM 「ふ……この程度障りに、も……ならぬ、わぁ！！
+					CALL ADS_KOJO_104_L
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORML 「我にも一族の矜持がある！！
+					CALL ADS_KOJO_104_L
+				;神子、布都といっしょ
+				ELSEIF FLAG:10 == 104 || FLAG:11 == 104|| FLAG:15 == 104 || FLAG:16 == 104 || FLAG:10 == 105 || FLAG:11 == 105 || FLAG:15 == 105 || FLAG:16 == 105
+						SELECTCASE RAND:4
+						CASE 0
+							PRINTFORM 「ゆくぞ！　これが物部の戦術だ！！
+						CASE 1
+							PRINTFORM 「攻める！　我に続くのだ！！
+						CASEELSE
+							PRINTFORM 「話にもならぬわぁ！
+					ENDSELECT
+					CALL ADS_KOJO_104_L
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORM 「瞬きも許さぬ
+						CASE 1
+							PRINTFORM 「八十平瓮の閃きを見よ！！
+						CASE 2
+							PRINTFORM 「食らえぇい！！
+						CASEELSE
+							PRINTFORM 「我自ら撃つ！
+					ENDSELECT
+				CALL ADS_KOJO_104_L
+				ENDIF
+			;強弾幕
+			CASE 12
+				;発情
+				IF CFLAG:28
+					PRINTFORM 「ぐ……卑、怯なあぁぁっ！！
+					CALL ADS_KOJO_104_L
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORM 「このような所で……終わらぬわぁ！
+					CALL ADS_KOJO_104_L
+				;神子、布都といっしょ
+				ELSEIF FLAG:10 == 104 || FLAG:11 == 104|| FLAG:15 == 104 || FLAG:16 == 104 || FLAG:10 == 105 || FLAG:11 == 105 || FLAG:15 == 105 || FLAG:16 == 105
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORM 「貴様に負ける道理がないわ
+						CASE 1
+							PRINTFORM 「我らを邪魔する者は、芥も残さぬ！！
+						CASEELSE
+							PRINTFORM 「我におまかせを！
+					ENDSELECT
+				CALL ADS_KOJO_104_L
+				;その他
+				ELSE
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORM 「汚物は消毒……だな
+						CASE 1
+							PRINTFORM 「物部の砲煙弾雨！　其の身に受けよ！
+						CASE 2
+							PRINTFORM 「我のやり方でやらせてもらうぞ
+						CASE 3
+							PRINTFORM 「お主を倒せば我も晴れて仙人…だな？
+						CASEELSE
+							PRINTFORM 「この方角…此方が貴様の天中殺よ！！
+					ENDSELECT
+				CALL ADS_KOJO_104_L
+				ENDIF
+			;溜め撃ち
+			CASE 13
+				;溜め
+				;(溜め中にピンチになると前後が繋がらない。どうでもいい)
+				IF CFLAG:31 == 2
+					IF MAXBASE:MP/4 >= BASE:MP
+						PRINTFORM 「乾坤一擲……この一撃にて決する……
+						CALL ADS_KOJO_104_L
+					ELSEIF CFLAG:28
+						PRINTFORM 「耐えられぬ……ほどでもっ…！
+						CALL ADS_KOJO_104_L
+					ELSEIF BASE:TP >= 150
+						PRINTFORM 「出でよ！！　天の磐船ぇ！！！
+						CALL ADS_KOJO_104_L
+					ELSE 
+						PRINTFORM 「暫し準備にかかる！　前線は頼んだぞ！
+						CALL ADS_KOJO_104_L
+					ENDIF
+				;発射
+				ELSE
+					IF MAXBASE:MP/4 >= BASE:MP
+						PRINTFORM 「……食らえい！！　『大物忌正餐』！！！
+						CALL ADS_KOJO_104
+					ELSEIF CFLAG:28
+						PRINTFORM 「く、ふうぅぅ……でき、た…
+						CALL HEARTCB(0xD02830)
+						CALL ADS_KOJO_104_L
+					ELSEIF BASE:TP >= 150
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 布都を舳先に乗せたまま巨大な船体が相手に突貫した…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 布都を舳先に乗せたまま巨大な船体が相手に突貫した…
+						ENDIF
+						PRINTFORM 「天へ！！　昇れええぇぇぇ！！！！
+						CALL ADS_KOJO_104
+						SELECTCASE RAND:10
+							CASE 0
+								PRINTFORML ――――人の子の　勉むは国の　為なれど
+							CASE 1
+								PRINTFORML ――――天てらす　神の御末の　弥栄を
+							CASE 2
+								PRINTFORML ――――夕空の　輝く星も　曇りなし
+							CASE 3
+								PRINTFORML ――――古の　戦を偲び　我をもと
+							CASE 4
+								PRINTFORML ――――立ち行かむ　せなに秋津を　掻き負ひて
+							CASEELSE
+						ENDSELECT
+					ELSE
+						PRINTFORM 「待たせな！　矢の雨よ！　降り注げぃ！
+						CALL ADS_KOJO_104
+					ENDIF
+				ENDIF
+			;ばら撒き弾
+			CASE 14
+				IF CFLAG:22 || CFLAG:36 >= 3
+					PRINTFORM 「寄るな！　我に寄るなあっ！！
+					CALL ADS_KOJO_104_L
+				ELSEIF CFLAG:28
+					PRINTFORM 「ふうぅ、あぁっ!!
+					CALL ADS_KOJO_104_L
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORM 「いやぁっ！！　こ、怖くなどないわ！！
+					CALL ADS_KOJO_104_L
+				ELSE
+					PRINTFORML 「物理的な結界でないと機能せぬか……
+					CALL ADS_KOJO_104_L
+				ENDIF
+			;貫通弾
+			CASE 15
+				IF CFLAG:28
+					PRINTFORM 「か……貫通…か……
+					CALL ADS_KOJO_104_L
+					PRINTFORMD 布都は何やらドギマギしている…
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORM 「穿つ…！
+					CALL ADS_KOJO_104_L
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORM 「敵を一気に殲滅するぞ！！
+						CASE 1
+							PRINTFORM 「我の弾幕は必殺よぉ！！
+					ENDSELECT
+				CALL ADS_KOJO_104_L
+				ENDIF
+			CASE 20, 21, 22
+			;飛び道具弱中攻撃
+				IF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORM 「この窮地に外さぬ…！！
+					CALL ADS_KOJO_104_L
+				ELSEIF CFLAG:28
+					PRINTFORM 「こ、この熱を……弾、にぃ……ゃあ…
+					CALL ADS_KOJO_104_L
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 布都が放った弾は、へろへろと力ない軌道を描いて飛んだ…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 布都が放った弾は、へろへろと力ない軌道を描いて飛んだ…
+					ENDIF
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORM 「我の妙技を見よ！
+						CASE 1
+							PRINTFORM 「これが！　弾の扱い方だっ！
+						CASE 2
+							PRINTFORM 「とくと馳走してやろう
+					ENDSELECT
+					CALL ADS_KOJO_104_L
+				ENDIF
+			CASE 23
+			;節約攻撃
+				IF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORM 「ここで大敗するわけには……
+					CALL ADS_KOJO_104_L
+				ELSEIF CFLAG:28
+					PRINTFORM 「く、ぅ……せ、ぇ一杯！　撃つ！
+					CALL ADS_KOJO_104_L
+				ELSE
+					PRINTFORM 「強者は一にて二も五をも得るのだ
+					CALL ADS_KOJO_104_L
+				ENDIF
+			CASE 24
+			;みだれ撃ち
+			IF MAXBASE:MP/4 >= BASE:MP
+				PRINTFORM 「下がれ三下共ぉ！！
+				CALL ADS_KOJO_104_L
+			ELSE
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORM 「暴虐、かつ繊細に！
+						CALL ADS_KOJO_104_L
+					CASEELSE
+						PRINTFORM 「礼を言おう！　往時の感覚が戻ってきた
+						CALL ADS_KOJO_104_L
+				ENDSELECT
+			ENDIF
+			CASE 25
+			;一点集中
+				IF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORM 「そこ、だぁ……っ！！
+					CALL ADS_KOJO_104_L
+				ELSEIF CFLAG:28
+					PRINTFORM 「集中……しゅうちゅう……しゅう、ちゅう……
+					CALL HEARTCB(0xD02830)
+					PRINTFORM く、いかんいかん…
+					CALL ADS_KOJO_104_L
+					PRINTFORMDL 何やら違う事を考えていたようだ…。
+				ELSE
+					PRINTFORM 「間断なく射る！
+					CALL ADS_KOJO_104_L
+				ENDIF
+			CASE 30,31,32
+			;武器弱中強攻撃
+				IF CFLAG:28
+					PRINTFORM 「うぅ…踏み込みもままならぬ……
+					CALL ADS_KOJO_104_L
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 布都は内股気味で攻撃を行った…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 布都は内股気味で攻撃を行った…
+					ENDIF
+				ELSE
+				;(何となく接近戦好きそうですよね)
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORM 「武事有る者はまた文事有り……逆もまた然り、ぞ
+							CALL ADS_KOJO_104_L
+						CASE 1
+							PRINTFORM 「武芸は我の得意とする所……
+							CALL ADS_KOJO_104_L
+						CASE 2
+							PRINTFORM 「麁鹿火殿の御霊よ、我に力を！
+							CALL ADS_KOJO_104_L
+						CASE 3
+							PRINTFORM 「ええぃ、やはり遠距離戦は性に合わん！！
+							CALL ADS_KOJO_104_L
+					ENDSELECT
+				ENDIF
+			CASE 33
+			;下段狙い
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「これならかわせまいっ！
+						CALL ADS_KOJO_104_L
+					CASE 1
+						PRINTFORM 「その動き、始めから計算のうちよっ！！
+						CALL ADS_KOJO_104_L
+				ENDSELECT
+			CASE 34
+			;急所狙い
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「悪く思うでないぞぉ！
+						CALL ADS_KOJO_104_L
+					CASE 1
+						PRINTFORM 「あえて言おう！　これが戦だ！
+						CALL ADS_KOJO_104_L
+				ENDSELECT
+			CASE 42
+			;拘束離脱
+			;(絶頂中なんかは余裕無いだろうなー、と言う事でADSいれてません。でも布都ちゃんのドヤ顔アクメなら見たい！　不思議！)
+				IF ARG:3 == 0
+					IF MAXBASE:MP/4 >= BASE:MP
+						PRINTFORM 「ぐうぅ……そ、そろそろ離せ！　は、なせぇ！！
+						CALL ADS_KOJO_104_L
+					ELSEIF CFLAG:35 != 0
+					;絶頂中
+						IF CFLAG:28
+							PRINTFORML 「ふ、あ………ああ………」
+							PRINTFORM (ぬ…けねば…ならぬ……の、にぃ……
+							CALL HEARTCB(0xD02830)
+							PRINTFORML )
+						ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「ひ、きゃあっ！！　ううぁっ！！」
+									PRINTFORML 「く、うぅ……ち、力が…」
+								CASE 1
+									PRINTFORML 「じゃ、邪魔するなぁっ！！　ひ、ひぎぃっ！！」
+									PRINTFORML 「あ…あ、あぁ…………」
+									PRINTFORMDL 布都は腰をガクガク揺らして達している…
+								CASE 2
+									PRINTFORML 「ふああぁっ?!」
+									PRINTFORM 「お…抑え、られ、ぬっ……
+									CALL HEARTCB(0xD02830)
+									PRINTFORML 」 
+							ENDSELECT
+						ENDIF
+					ELSE
+						IF CFLAG:21 != 0
+						;丸呑み
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 「うーー！！！　ふむーーーっ！！！」
+									PRINTFORML (出せっ！　出さぬかぁ！！)
+								CASE 1
+									PRINTFORML 「…………むーっ！！」
+									PRINTFORML (……い、今だなっ！！)
+							ENDSELECT
+						ELSE
+							IF CFLAG:28
+								PRINTFORM 「こ、のままではぁ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORM は……はやくぅ……抜けねば…」
+							ELSE
+								SELECTCASE RAND:3
+									CASE 0
+										PRINTFORM 「くっ！　我が貴様の思い通りになると思うな！
+										CALL ADS_KOJO_104_L
+									CASE 1
+										PRINTFORM 「この拘束を解いた時が貴様の最期だ！
+										CALL ADS_KOJO_104_L
+										PRINTFORM 「だ、からっ…！　は、な、せっ！！」
+									CASE 2
+										PRINTFORML 「こ、これ以上何かすると承知せんぞ！！
+										CALL ADS_KOJO_104_L
+								ENDSELECT
+							ENDIF
+						ENDIF
+					ENDIF
+				ENDIF
+			CASE 43
+			;力溜め
+			IF ARG:2 == 0
+				IF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORML 「……ぐっ。されるがままとは情けない……
+					CALL ADS_KOJO_104_L
+				ELSEIF CFLAG:28
+					PRINTFORM 「さ……されるがままぁ……
+					CALL HEARTCB(0xD02830)
+					PRINTFORML ……あはぁ……」
+				ELSE
+					PRINTFORML 「き、貴様に猶予をやろう！！　わ、我を解放するなら今の、ひきゅうっ！！
+					CALL ADS_KOJO_104_L
+				ENDIF
+			ENDIF
+			CASE 44
+			;諦める
+				IF ARG:2 == 0
+					IF CFLAG:21 != 0
+						IF FLAG:AUTOMODE
+							PRINTFORML (……何も……見えぬ…………。味方も、我も)
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW (……何も……見えぬ…………。味方も、我も)
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 　・　・　・　・　・　・　
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 　・　・　・　・　・　・　
+						ENDIF
+						PRINTFORM (もう…この……快感しか、ぁ……
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML )
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW )
+						ENDIF
+					ELSEIF CFLAG:28
+						PRINTFORM 「…………う、はぁ……
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML (そう、だ……どうせ逃れえぬ、なら……この…快楽、を…………)
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW (そう、だ……どうせ逃れえぬ、なら……この…快楽、を…………)
+						ENDIF
+						PRINTFORM 「え、へへへぇ……
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ELSE
+						PRINTFORM 「…だ、め…………も……
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ENDIF
+				ENDIF
+			CASE 45
+				;何もしない
+				IF CFLAG:20 != 0
+					PRINTFORM 「こ、の…痴れ者がぁ……っ
+					CALL ADS_KOJO_104_L
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORM 「ま…まだ我の動くときではない……
+							CALL ADS_KOJO_104_L
+					ENDSELECT
+				ENDIF
+			CASE 46
+				;強制自慰
+				IF CFLAG:35 != 0
+					PRINTFORML 「ひぃっ！　はあぁっ！！　来てるっ！！　きておる、かあっ！！！」
+					PRINTFORML 「ひ、やあああぁぁっっ！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 布都はだらしなく舌を突き出して自らが生んだ快感に酔い痴れている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 布都はだらしなく舌を突き出して自らが生んだ快感に酔い痴れている…
+					ENDIF
+				ELSEIF CFLAG:21 != 0
+				;丸呑み時
+					IF FLAG:AUTOMODE
+						PRINTFORMDL (ひゃあああぁぁ！！　
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW (ひゃあああぁぁ！！　
+					ENDIF
+				ELSEIF CFLAG:28
+					PRINTFORM 「わ…我のぉ、自慰がぁ……
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 見られる、の、だぁ……
+					CALL HEARTCB(0xD02830)
+					CALL ADS_KOJO_104_L
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あ…ありがたくぅ……ふ、ふうううぅっっ！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あ…ありがたくぅ……ふ、ふうううぅっっ！！」
+					ENDIF
+				ELSEIF CFLAG:20 != 0
+				;拘束時
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORM 「な、ぜだぁ……
+							CALL HEARTCB(0xD02830)
+							PRINTFORM 腰がぁ……かって、にぃ……！
+							CALL ADS_KOJO_104_L
+						CASE 1
+							PRINTFORML 「いやぁ！　嫌なのだっ！　ひうっ！！　へ、はああぁっ！！」
+							PRINTFORM 「へこへこぉ……へこへこが止まらぬぅ……あひゃああぁぁ……
+							CALL HEARTCB(0xD02830)
+							CALL ADS_KOJO_104_L
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「な……なぜ我が…こ、んな…っ！！」
+							IF FLAG:AUTOMODE
+								PRINTFORML 「く、そぉっ！　見るな！　見るなぁっ！！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「く、そぉっ！　見るな！　見るなぁっ！！」
+							ENDIF
+							
+						CASE 1
+							PRINTFORML 「こ……この程度の辱めぇ…………我に、ふぁあぁっっ！！」
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ひゅぐううぅ！！　ひゃ、ひゃよおおぉっ！！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ひゅぐううぅ！！　ひゃ、ひゃよおおぉっ！！」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			CASE 50
+				;A防御
+				IF CFLAG:28
+					PRINTFORM 「や、やめろっ！　こんな所を責めるなどっ！　どうか…し、ておるっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「後生だ……ここはぁ…っ
+					CALL ADS_KOJO_104_L
+				ENDIF
+			CASE 51
+				;B防御
+					PRINTFORM 「わ…われの胸など弄ってもつまらないであろう……っ！
+					CALL ADS_KOJO_104_L
+			CASE 52
+				;C防御
+				IF CFLAG:94
+					PRINTFORM 「こ…こんなもの！　嬲るでないわ
+					CALL ADS_KOJO_104_L
+				ELSE
+					PRINTFORM 「す、好きにはさせぬっ！
+					CALL ADS_KOJO_104_L
+				ENDIF
+			CASE 53
+				;V防御
+				IF TALENT:TARGET:0
+					;処女
+					;(勿論聖童女は処女だよね！　でもちょっと経験あって周りにさも玄人のように自慢する布都ちゃんもいいよね！！)
+					PRINTFORML 「くっ…や、めろぉ……！　それ、だ、けはぁっ！！！」
+				ELSE
+					PRINTFORM 「……貴様の様な人外がっ…！！　触れて良い場所と思うなッ！！
+					CALL ADS_KOJO_104_L
+				ENDIF
+		ENDSELECT
+	;CASE 2から7は敵の各攻撃発動時　現在キャラ口上無し
+;	CASE 11
+		;味方の攻撃（命中）
+		;ARG:1にコマンドID　ARG:2にダメージ
+	CASE 12
+		;敵の通常攻撃（命中）
+		;ARG:1にコマンドID　ARG:2にHPダメージ　ARG:3にCPダメージ
+		IF CFLAG:28
+			PRINTFORML 「く、……よ、せっ！……う、あ…」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 敵の攻撃を受けた部分がジンジンと甘い熱を持って疼き始めた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 敵の攻撃を受けた部分がジンジンと甘い熱を持って疼き始めた…
+			ENDIF
+		ELSEIF BASE:0 <= ((MAXBASE:0) / 4)
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ぐはぅっ……や、やめ…………」
+				CASE 1
+					PRINTFORM 「ふんっ！　大事ないわ
+					CALL ADS_KOJO_104_L
+					PRINTFORML 「……ひいっ！」
+				CASE 2
+					PRINTFORML 「待て……！　この方角はっ……」
+			ENDSELECT
+		ELSEIF BASE:TARGET:0 <= (((MAXBASE:TARGET:0)/3)*2)
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「き、効かぬ！　効かぬわぁ！
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「そ…その程度か
+					CALL ADS_KOJO_104_L
+				CASE 2
+					PRINTFORM 「す……少しはやるようだな……っ
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「それだけか？
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「煩いだけよ！
+					CALL ADS_KOJO_104_L
+				CASE 2
+					PRINTFORM 「無駄だぁ！！
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ENDIF
+	CASE 13
+		;敵の衣服攻撃（命中）
+		;ARG:1にコマンドID ARG:2に部位　ARG:3にCPダメージ　ARG:4にEPダメージ
+		IF BASE:TARGET:3 <= ((MAXBASE:TARGET:3) / 3)
+		;CP三分の一以下
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「くっ……まさか服を…？」
+				CASE 1
+					PRINTFORM 「将を射んとするにはまず馬を……というわけだな？
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ELSEIF BASE:TARGET:3 <= (((MAXBASE:TARGET:3) / 3) * 2)
+		;CP三分の二以下
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「や、やめろぉ……もう許してくれ！」
+				CASE 1
+					PRINTFORML 「ぐぐ……、これではもう着れぬ……」
+			ENDSELECT
+		ELSEIF BASE:TARGET:3 <= 0
+		;CP０以下
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「く、そぉ……これ以上何を……」
+				CASE 1
+					PRINTFORML 「ひやぁぁ！！　止めろ！　や、あっ！」
+			ENDSELECT				
+		ELSE
+		;CP満タンから三分の二
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「我に当たっておらぬわ！
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「どうした！　掠っただけだぞ！
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ENDIF
+	CASE 14
+		;敵の性攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に部位(0:A　1:B　2:C　3:V)　ARG:3にEPダメージ
+		;(心中定まったら埋める)
+		SELECTCASE ARG:1
+			CASEELSE
+				IF MAXBASE:TARGET:2 <= ARG:3
+					SELECTCASE ARG:2
+						CASE 0
+							;A
+							PRINTFORML 「い、いぎいいいいいいぃぃぃっっ！！！！！？？！？！？！」
+						CASE 1
+							;B
+							PRINTFORML 「うぁ…う、うひゃあああああぁぁぁっっ！！！！」
+						CASE 2
+							;C
+							PRINTFORML 「や、めぇ、よおおおおおおおぉぉぉっっ！！　う、はあぁぁっ！！」
+							PRINTFORML 「イっておる、ぅ！！　からぁ！！」
+						CASE 3
+							;V
+							PRINTFORML 「あがはああああぁぁぁっ！！！　おご、があああぁぁぁっ！！！！」
+							PRINTFORML 「ひっ！！　やめろ、やめてくれえええええええぇぇぇぇっっ!?!」
+					ENDSELECT
+				ELSEIF BASE:TARGET:2 <= 0
+					SELECTCASE ARG:2
+						CASE 0
+							;A
+							PRINTFORML 「ひいぃぃ……う、嘘?!　わ、我がこ、んなあぁぁぁっ！」」
+						CASE 1
+							;B
+							PRINTFORML 「う、あああぁぁぁっ?!　な、何かキておるううぅぅ！！！」
+						CASE 2
+							;C
+							PRINTFORML 「ふああ、あ、あぁぁぁ……あ、ああぁぁっ！！！！」
+						CASE 3
+							;V
+							PRINTFORML 「いぐぅ！！　ひっ?!　だ、駄目だ駄目だだめだぁっ！！」
+					ENDSELECT
+				ELSEIF BASE:TARGET:2 <= ((MAXBASE:TARGET:2) / 2)
+					SELECTCASE ARG:2
+						CASE 0
+							;A
+							PRINTFORML 「だ…から、そ、こは、ふぁ、う、ああぁぁ……」
+						CASE 1
+							;B
+							PRINTFORML 「えぇい、しつこ、っ！　くううぅぅ……！」
+						CASE 2
+							;C
+							PRINTFORML 「や…めよ……これ以上、はあぁぁ……」
+						CASE 3
+							;V
+							PRINTFORML 「ふ、あ、はあぁ！　い、ひやあぁぁ！！！」
+					ENDSELECT
+				ELSE
+					SELECTCASE ARG:2
+						CASE 0
+							;A
+							PRINTFORML 「お、おいっ!?　そこは違うぞ！」
+						CASE 1
+							;B
+							PRINTFORML 「くっ……我の胸など相手にせんでよいわ……」
+						CASE 2
+							;C
+							PRINTFORML 「ひ…い、いや、無駄だ！」
+						CASE 3
+							;V
+							PRINTFORML 「ふ、ふん……！　全く効きなどせんわ」
+					ENDSELECT
+				ENDIF
+		ENDSELECT
+	CASE 15
+		;敵の拘束攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に丸呑みフラグ
+		IF ARG:2 != 0
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「わ、我を、食べる、のか……？　い、やあ……」　
+				CASE 1
+					PRINTFORML 「や、め……うもーっ！　むぐーっ！！」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「キリがないわ……くっ?!」
+				CASE 1
+					PRINTFORML 「まだまだぁ！　……っ！！　ふっ、不覚っ！！」
+				CASE 2
+					PRINTFORML 「く…、かわし、きれっ?!　くうっ！」
+			ENDSELECT
+			PRINTFORMDL 触手は布都の一瞬の隙をついた！ 
+		ENDIF
+	CASE 16
+		;敵の寄生攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に妊娠フラグ　ARG:3にMPダメージ
+		IF MAXBASE:MP/4 >= BASE:MP
+			PRINTFORML 「ひいぃ……、もう…われが、わるかった……。あやまる……あやま、う、ああぁぁ……」
+		ELSEIF CFLAG:28
+			PRINTFORML 「待てぇ！　今は…今はま…ず、んあああぁぁぁ！！」
+		ELSEIF ARG:2 != 0
+			PRINTFORML 「く、そ！　くそおぉぉ！！　うあああぁぁぁぁっっ！！」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 布都は死に物狂いで暴れたが、抵抗虚しく触手の汚らわしい白濁液が布都の胎内に満たされた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 布都は死に物狂いで暴れたが、抵抗虚しく触手の汚らわしい白濁液が布都の胎内に満たされた…
+			ENDIF
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ぐうッ！　き、貴様ぁ…原型を留めていら、あッ！　ひゃうっ！！」
+				CASE 1
+					PRINTFORML 「ころ、すうぅぅ……我がぁ…いああぁぁっ！！」
+				CASE 2
+					PRINTFORML 「ぐ、う…ひゃ、あ、ああぁぁっ！！」
+			ENDSELECT
+		ENDIF
+	CASE 17
+		;敵のその他攻撃（命中）
+		;ARG:1にコマンドID
+		;(個別性攻撃を書く気力も語彙力も無いのでせめてここだけでも)
+			SELECTCASE ARG:1
+				CASE 10, 11
+					PRINTFORM 「小手先だけで我が倒せるか！
+					CALL ADS_KOJO_104_L
+				CASE 12, 14
+					PRINTFORM 「ふん！　なんだこの……粉…………は
+					CALL ADS_KOJO_104_L
+					PRINTFORML ……くー…くー……」
+					PRINTFORMDL 怪しい花粉を吸い込んだ布都はその場で座り込んで寝息を立て始めた。
+				CASE 13, 15
+					PRINTFORM 「こ、このようなまやかし……我には通じぬわぁ…
+					CALL HEARTCB(0xD02830)
+					CALL ADS_KOJO_104_L
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 布都は頬を赤く上気させ、内腿を擦り合わせている…。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 布都は頬を赤く上気させ、内腿を擦り合わせている…。
+					ENDIF
+				CASE 16
+					PRINTFORM 「くっ！　我の意思ではない！　わりぇの、い、しではぁ……
+					CALL HEARTCB(0xD02830)
+					CALL ADS_KOJO_104_L
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 布都は息を荒げ、自らを慰め始めた…。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 布都は息を荒げ、自らを慰め始めた…。
+					ENDIF
+				CASE 17
+					PRINTFORML 「う……」
+				CASE 18
+					PRINTFORM 「何をしておるかっ！！　気味の悪いっ！！
+					CALL ADS_KOJO_104_L
+				CASE 19
+					PRINTFORML 「我の、を吸って何が面白いというのだ…！　は、なれんかぁ……！」
+						IF CFLAG:TARGET:35
+							PRINTFORML 「ひ、や……う、そ……」
+							PRINTFORM 「ひきゅうっ！！　ひっ　ひゃああああぁぁぁ！！！
+							CALL HEARTCB(0xD02830)
+							CALL HEARTCB(0xD02830)
+						ENDIF
+				CASE 20
+					PRINTFORML 「ううぅ……か、体の自由が効かぬ！　やぁ……と、まれぇ……」
+				CASE 21
+					PRINTFORM 「ひゃあぁ……ふ、触れるなぁ…っ！　我にふれるなあぁっ
+					CALL HEARTCB(0xD02830)
+					CALL HEARTCB(0xD02830)
+					PRINTFORML 」
+			ENDSELECT
+	CASE 21
+		;味方の攻撃（回避）
+		;ARG:1にコマンドID
+		IF MAXBASE:MP/4 >= BASE:MP
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「そ……んな」
+				CASE 1
+					PRINTFORML 「当てねば……ならぬ」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORM 「ほう……よく避けたな
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「我の一撃を……さてはおぬしも尸解仙…？
+					CALL ADS_KOJO_104_L
+				CASE 2
+					PRINTFORM 「えぇい、避けるでない！　当たれぇ！
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ENDIF
+	CASE 22,23,27
+		;敵の通常攻撃（回避）
+		;ARG:1にコマンドID
+		;敵の衣服攻撃（回避）
+		;ARG:1にコマンドID ARG:2に部位
+			IF MAXBASE:HP/10 >= BASE:HP
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「くぅ……窮地にあって負けぬ！
+						CALL ADS_KOJO_104_L
+					CASE 1
+						PRINTFORM 「一撃たりとも食らえぬな
+						CALL ADS_KOJO_104_L
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「鈍いわ！
+						CALL ADS_KOJO_104_L
+					CASE 1
+						PRINTFORM 「ふん、止まって見えおる！
+						CALL ADS_KOJO_104_L
+					CASE 2
+						PRINTFORM 「貴様の攻撃を食らうなど末代までの恥よ！
+						CALL ADS_KOJO_104_L
+				ENDSELECT
+			ENDIF
+	CASE 24
+		;敵の性攻撃（回避）
+		;ARG:1にコマンドID　ARG:2に部位
+			IF MAXBASE:MP/4 >= BASE:MP
+				PRINTFORML 「や、今は……無理、だ……」
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「この色情魔が……
+						CALL ADS_KOJO_104_L
+					CASE 1
+						PRINTFORM 「当たってやれぬな！
+						CALL ADS_KOJO_104_L
+				ENDSELECT
+			ENDIF
+	CASE 25
+		;敵の拘束攻撃（回避）
+		;ARG:1にコマンドID
+			IF MAXBASE:MP/4 >= BASE:MP
+				PRINTFORM 「くっ……間一髪だな
+				CALL ADS_KOJO_104_L
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「狙いは良い。が、当たらぬわ
+					CASE 1
+						PRINTFORM 「我を生け捕りとは…嘗められたものよ
+				ENDSELECT
+				CALL ADS_KOJO_104_L
+			ENDIF
+	CASE 26
+		;敵の寄生攻撃（回避）
+		;ARG:1にコマンドID　ARG:2に妊娠フラグ　ARG:3にMPダメージ
+		IF ARG:2 != 0
+			PRINTFORML 「ひいぃ！　止めろ、止めてくれぇ！！」
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「何をする気だ……っ?!」
+				CASE 1
+					PRINTFORML 「それはっ！　は、離れろっ！」
+			ENDSELECT
+		ENDIF
+	CASE 31
+		;敵を撃破
+		;ARG:1に敵ID
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORM 「弱いわぁ！
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「次ぃ！
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+	CASE 35
+		;CPが減少した
+		;ARG:1に破れ強度　（ARG:1が　0：全裸になった　1：半裸になった　2：破れ始めた）
+			SELECTCASE ARG:1
+				CASE 0
+					PRINTFORML 「ぐぅ……このような、辱めぇ……」
+				CASE 1
+					PRINTFORML 「くぅ…我の、服が……っ！」
+				CASE 2
+					PRINTFORML 「な、何だ?!」
+			ENDSELECT
+	CASE 36
+		;戦闘中にアイテムを使って貰った
+		;ARG:1にアイテムID　ARG:2にアイテム使用キャラID
+		IF ARG:2 == 105
+				PRINTFORM 「太子様、我に気遣いは無用です！
+				CALL ADS_KOJO_104_L
+		ELSEIF ARG:2 == 103
+				PRINTFORM 「すまぬな、屠自古
+				CALL ADS_KOJO_104_L
+		ELSEIF TARGET == 1
+		ELSE
+			PRINTFORM 「ふむ、有難く頂戴しよう
+			CALL ADS_KOJO_104_L
+		ENDIF
+	CASE 50
+		;カウンター中
+		PRINTFORM 「ふふ……。どうした？
+		CALL ADS_KOJO_104_L
+		PRINTFORML 布都は不敵に笑っている…
+	CASE 51
+		;カウンター発動
+		PRINTFORM 「全ては我が掌の上よ……
+		CALL ADS_KOJO_104_L
+	CASE 55
+		;戦闘から普通に逃げた
+		IF CFLAG:28
+			PRINTFORML 「に…にげられた……のか……？」
+			PRINTFORML 「ふふん、ぅ……よ、かった……これでぇ…」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 布都は股間に両手を重ね、濡れぼそったヴァギナを弄りながら蕩けた表情をしている…。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 布都は股間に両手を重ね、濡れぼそったヴァギナを弄りながら蕩けた表情をしている…。
+			ENDIF
+		ELSEIF MAXBASE:MP/4 >= BASE:MP
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「と、ともかく、生きる…！　それが全てだ……
+				CASE 1
+					PRINTFORM 「君子、危うきに、ちかぁ…寄らず、だぁ…… 
+			ENDSELECT
+			CALL ADS_KOJO_104_L
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「勝算が立つまで、一度離れるべきだな
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「よし、……追っては来ぬようだな
+					CALL ADS_KOJO_104_L
+				CASE 2
+					PRINTFORM 「ふ、撤退も策の内よ！
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ENDIF
+	CASE 56
+		;戦闘で敗北　※ゲームオーバーは157
+		;ARG:1にイベントID
+		PRINTFORML 「やぁ……。……う……………」
+	;戦闘勝利
+	CASE 57
+		IF MAXBASE:MP / 4 >= BASE:MP
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「……か、勝てば官軍…だな
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「一度、建て直そうではないか…
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		;発情
+		ELSEIF CFLAG:28
+			PRINTFORM 「ひゅうーー……。ひうー……。かっ…たぁ」
+			PRINTFORM 「これ、でぇ……
+			CALL HEARTCB(0xD02830)
+			PRINTFORML 」
+		;睡眠
+		ELSEIF TFLAG:14 == 3
+			IF FLAG:AUTOMODE
+				PRINTFORML 「くぉーー……くーー…………」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「くぉーー……くーー…………」
+			ENDIF
+		ELSE
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORM 「貴様等の不運は……相手が我だった。ただそれだけよ
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「勝って甲の緒を締めよ……だ
+					CALL ADS_KOJO_104_L
+				CASE 2
+					PRINTFORM 「無謀の輩に我の相手は勤まらぬわ
+					CALL ADS_KOJO_104_L
+				CASE 3
+				;(ナチュラルにこの言い方しそう)
+					PRINTFORM 「貴様等では役不足よ！
+					CALL ADS_KOJO_104_L
+				CASEELSE
+					PRINTFORM 「強靱、無敵、最強……だな？
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ENDIF
+	CASE 58
+		PRINTFORM 「二兎を追う者は一兎をも得ず……だな？
+		CALL ADS_KOJO_104_L
+	CASE 59
+		;戦闘中に捕食されている
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「や、だっ！　……離せぃ！」
+			CASE 1
+				PRINTFORML 「この下衆がぁ！　さっさとくたばれぇ……」
+		ENDSELECT 
+	CASE 60
+		;先制攻撃・不意打ち発生　ARG:2に先制状況
+		;ARG:1にイベントID
+		IF TARGET == 1
+			IF ARG:2 == 1
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORM 「一気に叩く！
+					CASE 1
+						PRINTFORM 「勝てば良かろうなのだぁ！
+					CASE 2
+						PRINTFORM 「貴様等に戦の作法など無用だな
+					CASE 3
+						PRINTFORM 「始めは処女の如く！　後には脱兎の如く！
+				ENDSELECT
+				CALL ADS_KOJO_104_L
+			;睡眠
+			ELSEIF ARG:2 == 3
+				PRINTFORML 「ぐー…………」
+			ELSE
+				IF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORM 「くっ！　満身創痍の身に奇襲！　上等だ！！
+					CALL ADS_KOJO_104_L
+				ELSEIF CFLAG:28
+					PRINTFORM 「ひゃ……あ、相手になってやる…わぁ……
+					CALL ADS_KOJO_104_L
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORM 「先手はくれてやるわ！
+							CALL ADS_KOJO_104_L
+						CASE 1
+							PRINTFORM 「我らは後の先を取る！
+							CALL ADS_KOJO_104_L
+						CASE 2
+							PRINTFORM 「手数で勝敗は決せぬわ
+							CALL ADS_KOJO_104_L
+					ENDSELECT
+				ENDIF
+			ENDIF
+		ENDIF
+	;誰かに会う
+	CASE 101
+		;迷宮内で誰かに会った
+		IF CFLAG:(ARG:1):29
+		;喪失状態
+			PRINTFORML 「おーい……駄目だ。完全にトんでおる…」
+		ELSEIF NO:(ARG:1) == 102
+		;にゃんにゃんに会った
+			IF CFLAG:(ARG:1):22 || CFLAG:(ARG:1):36 >= 3
+				PRINTFORML 「青娥、ど、の……。いえ、何も」
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「おお青娥殿。ご機嫌は…良いはずがございませんな
+						CALL ADS_KOJO_104_L
+				ENDSELECT
+			ENDIF
+		ELSEIF NO:(ARG:1) == 103
+		;屠自古に会った
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「ふむ、我の為にしっかり働くのだ！
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「我々で、必ず脱出するぞ
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ELSEIF NO:(ARG:1) == 105
+		;神子に会った
+			IF CFLAG:(ARG:1):22 || CFLAG:(ARG:1):36 >= 3
+				PRINTFORML 「…………。……全て燃やしてしまえばよいのですか？」
+			ELSEIF BASE:(ARG:1):CP == 0
+				PRINTFORML 「た、太子様……そのようにみだりに肌を露出させては……」
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「我の力がご入用ですか？
+						CALL ADS_KOJO_104_L
+					CASE 1
+						PRINTFORM 「太子様、ご無事で何よりでございます！
+						CALL ADS_KOJO_104_L
+				ENDSELECT
+			ENDIF
+		;睡眠
+		ELSEIF TFLAG:14 == 3 && TARGET != 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「かくーー」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「かくーー」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 布都は無防備に腹を出して眠っている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 布都は無防備に腹を出して眠っている…
+			ENDIF
+		;発情
+		ELSEIF FLAG:10 != 103 && FLAG:11 != 103
+		;(TARGET == 1をとると相手の時に口上が出ないのが嫌なのでこうした。もっといい方法があるかな)
+			IF CFLAG:28
+				PRINTFORML 「うぅ……あまり近寄るな……何をするか自分でも分からんのだ……」
+			ELSEIF BASE:CP == 0
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORM 「わ、我の裸体がそんなにめずらしい……のか？
+						CALL ADS_KOJO_104_L
+					CASE 1
+						PRINTFORML 「うぅ……なぜおぬしはそう堂々とできるのだ……」
+					CASE 2
+						PRINTFORML 「み、見るな……顔が灼けそうだ……」
+					CASE 3
+						PRINTFORML 「わ、我の本体は皿であってこのような形はあくまで写し身であってだな……」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORM 「その方角、あまり進まぬ方が良いぞ
+						CALL ADS_KOJO_104_L
+					CASE 1
+						PRINTFORM 「はかどっているか？　それは何よりだな
+						CALL ADS_KOJO_104_L
+					CASE 2
+						PRINTFORM 「我も独自に色々と調べていたところだ
+						CALL ADS_KOJO_104_L
+					CASEELSE
+						PRINTFORM 「ふむ、そちらの首尾はどうだ？
+						CALL ADS_KOJO_104_L
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 102
+		;遭遇時会話：別れた
+		;ARG:1に遭遇キャラ
+		IF NO:(ARG:1) == 105
+		PRINTFORM 「では、我は露払いに勤しみますぞ！
+		CALL ADS_KOJO_104_L
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「では、武運を祈る
+				CASE 1
+					PRINTFORM 「用心せよ
+				CASE 2
+					PRINTFORM 「無事でまた会えれば良いな
+			ENDSELECT
+			CALL ADS_KOJO_104_L
+		ENDIF
+	;遭遇時会話：雑談
+	CASE 103
+	;ARG:1に遭遇キャラ　ARG:2にMP回復量
+		;主人公
+		IF TARGET == 1
+			SELECTCASE NO:(ARG:1)
+				CASE 105
+					PRINTFORML 「そうですな…まずはここを固めてしまうのが上策かと……」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ええ、こちらからは我が、囮は幸い幾らでも……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ええ、こちらからは我が、囮は幸い幾らでも……」
+					ENDIF
+				CASE 103
+					PRINTFORML 「しかし、おぬしは亡霊で良かったな」
+					PRINTFORM 「今は屠自古が羨ましく思えるぞ
+					CALL ADS_KOJO_104_L
+				CASEELSE
+					PRINTFORM 「貴公の話を聞かせてくれい
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:6
+				CASE 0
+					PRINTFORM 「ふふん、我の能力を持ってすればあらゆる障害を避ける事が可能だ
+					CALL ADS_KOJO_104
+					PRINTFORM 「敵が動く？　それは我の管轄外だな
+					CALL ADS_KOJO_104
+				CASE 1
+					PRINTFORML 「しかしこの世界は奇妙な事が起こるのだな」
+					PRINTFORM 「今回が初めて？　そうなのか…
+					CALL ADS_KOJO_104
+				CASE 2
+					PRINTFORM 「これも、尸解仙の修行の一つであるやもしれぬ。手抜きはできぬな
+					CALL ADS_KOJO_104
+				CASE 3
+				;(彼方は「あなた」と読みます。スゲー読みにくいクソックソッ)
+					PRINTFORM 「彼方は進まぬ方が無難だ。気が塞がっておる
+					CALL ADS_KOJO_104
+				CASE 4
+					PRINTFORML 「此処が案外と根の国であったりしてな」
+					PRINTFORM 「我らは隠された、という事……だな
+					CALL ADS_KOJO_104
+				CASE 5
+					PRINTFORM 「屠自古も巻き込まれたかもしれぬな」
+					PRINTFORM 「あやつは怒らせぬ方が良いぞ、雷が落ちる、いや、比喩でなくてな…」
+				CASE 6
+					PRINTFORML 「しかし、この広い迷宮でよく出会えたものだ」
+					PRINTFORM 「僥倖、と言うべきだな
+					CALL ADS_KOJO_104
+			ENDSELECT
+		ENDIF
+	;情報
+	CASE 104
+		IF NO:(FLAG:10) != 104 && NO:(FLAG:11) != 104
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「敵を知り、己を知れば百戦危うからずということだな
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「刻舟と言えども、知っておいた方がよい…な
+					CALL ADS_KOJO_104_L
+				CASE 2
+					PRINTFORML 「我が来た経路はこうだから……ここに……」
+			ENDSELECT
+		ENDIF
+	CASE 107		
+		;遭遇時会話：勧誘成功
+		;ARG:1に遭遇キャラ	
+		IF TARGET == 1
+			IF ARG:2 == 1
+				PRINTFORM 「……捨て置けぬ
+				CALL ADS_KOJO_104
+			ELSE
+				PRINTFORM 「うむ、頼んだぞ
+				CALL ADS_KOJO_104
+			ENDIF
+		ELSE
+		ENDIF
+	CASE 108
+		;遭遇時会話：勧誘失敗
+		;ARG:1に遭遇キャラ	
+		IF TARGET == 1
+			PRINTFORM 「…我と共に行かなかった事、後悔しても知らぬぞ？
+			CALL ADS_KOJO_104_L
+		ENDIF
+	;パーティ加入
+	CASE 109
+		IF TARGET == 1
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「宜しく頼むぞ
+				CASE 1
+					PRINTFORM 「我におまかせを！
+				CASEELSE
+					PRINTFORM 「我に助力するとは……さてはおぬしも…
+			ENDSELECT
+			CALL ADS_KOJO_104_L
+		ENDIF
+	CASE 110
+		;離脱時　ARG:2が　0：確認　1：別れた  ※主人公の方も呼ばれる点に注意
+		;好感度200以上で分岐アリ？
+		IF ARG:2 == 1
+			IF ARG != 0
+				PRINTFORML 「……すまん。必ず戻るゆえ、暫し耐えてくれ」
+			ELSE
+				PRINTFORM 「よし、戦力を分散させ、効率化を図るとしよう
+				CALL ADS_KOJO_104_L
+			ENDIF
+		ENDIF
+	CASE 113
+		IF ARG:1 == 3
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ふむ…この突起を押せばよいのか？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ふむ…この突起を押せばよいのか？」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「おお！　炎だ！　炎が出おった！！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「おお！　炎だ！　炎が出おった！！」
+			ENDIF
+			PRINTFORM 「これは……捗るな
+			CALL ADS_KOJO_104
+			PRINTFORMDL 布都は笑顔で火炎放射器をしまった…
+		ENDIF
+	CASE 121
+		;発情がおさまった
+		PRINTFORML 「ううぅぅぅ…………」
+		PRINTFORML 「この程度で、心が乱されるとは仙人失格……だぁ…あんな、こと……」
+		PRINTFORML 布都は自らの精神の弱さを恥じて、淫行を思い出しては赤面している…
+			SIF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+				PRINTFORML 「ご…後生だ……この事は誰にもぉ……」
+	CASE 122
+		;戦意喪失中に絶頂
+		PRINTFORML 「……！！！　…ひ…ぃ………」
+		IF FLAG:AUTOMODE
+			PRINTFORMDL もはや布都の身体は抵抗なく快楽を受け入れ、腰をかくかく揺らして達している…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW もはや布都の身体は抵抗なく快楽を受け入れ、腰をかくかく揺らして達している…
+		ENDIF
+	CASE 130
+		;部屋の浄化実行
+		IF TARGET == 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「鎮まれぇ！
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「ふ、この秘術、一朝一夕で出来るものではない
+					CALL ADS_KOJO_104_L
+				CASE 2
+					PRINTFORM 「よし、少しは落ち着くことが出来るな
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ENDIF
+	CASE 131
+		;眠気が進行
+		IF TARGET == 1
+			IF FLAG:7 == 5
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「むー……」
+						PRINTFORMDL 布都は目を擦っている…
+				ENDSELECT
+			ELSEIF FLAG:7 == 7
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「眠いと、士気が下がるぞ」
+				ENDSELECT
+			ELSEIF FLAG:7 == 12
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「………………ハッ！　ね、寝ておらぬ！　よもや寝ておらぬぞ！！　
+						IF FLAG:AUTOMODE
+							PRINTFORML 「……………ぐぅ…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「……………ぐぅ…」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 132
+		;部屋を移動：突撃
+		IF TARGET == 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「行くぞ！
+						SIF FLAG:10
+							PRINTFORM 　我に続けぇ！！
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「中央突破こそ我が信条！
+					CALL ADS_KOJO_104_L
+				CASE 2
+					PRINTFORM 「どうしたどうしたぁ！　我はここにおるぞ！！
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ENDIF
+	CASE 133
+		;部屋を移動：慎重
+		IF TARGET == 1
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「…………む、こっちだ」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 布都は独特の歩法で気配を殺している…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 布都は独特の歩法で気配を殺している…
+					ENDIF
+				CASE 1
+					PRINTFORML 「あくまで…素早く、されど静かに…」
+				CASE 2
+					PRINTFORM 「何が起こるや分からぬ。常に心を一間先に置いて進め……
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ENDIF
+	CASE 134
+		;部屋を移動：待ち伏せ
+		IF TARGET == 1
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORM 「伏兵に必要なものは、運とタイミング…だな
+					CALL ADS_KOJO_104
+				CASE 1
+					PRINTFORM 「伏せては死者の如く……
+					CALL ADS_KOJO_104
+				CASE 2
+					PRINTFORM 「ふふん、いつでも来るがよいわ
+					CALL ADS_KOJO_104
+			ENDSELECT
+		ENDIF
+	CASE 135
+		;探索開始
+		IF TARGET == 1
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORM 「よし、少し斥候を行う
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「この地を知るのも悪手ではあるまい
+					CALL ADS_KOJO_104_L
+				CASE 2
+					PRINTFORM 「用心して進まねばな…
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:6
+				CASE 0
+					PRINTFORM 「天、人、地の内の地を蔑ろには出来ぬな
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「ふむ、……我はあの方角をあたってみようか…
+					CALL ADS_KOJO_104_L
+				CASE 2
+					SIF FLAG:10 
+					PRINTFORM 「なるべく固まらず、離れすぎず探索をすべきだな…
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ENDIF
+	CASE 139
+		;遭遇時会話：アイテムを強請られた　（ARG:1は渡したアイテム。0なら失敗）　※主人公ではなく、強請られた側のキャラの口上　喪失中のアイテム盗難はCFLAG:29をチェック
+		IF CFLAG:29
+		ELSEIF ARG:1 != 0
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「我の施しであるぞ。感謝せよ
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「ふむ、これで良いか？
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「そのような余裕はないな
+					CALL ADS_KOJO_104_L
+				CASE 1
+					PRINTFORM 「貴重な物資を易々と渡すとでも？
+					CALL ADS_KOJO_104_L
+			ENDSELECT
+		ENDIF
+	CASE 140
+		;PTに勧誘された　（ARG:1が0：通常　1：共闘）　ARG:2が0：失敗　1：成功　※主人公ではなく、誘われた側のキャラの口上
+		IF ARG:1 ==1
+			IF ARG:2 == 0
+				PRINTFORM 「我が出るまでもなかろう
+				CALL ADS_KOJO_104_L
+			ELSEIF ARG:2 == 1
+				PRINTFORM 「我の力が必要か？　いいだろういいだろう！！
+				CALL ADS_KOJO_104_L
+			ELSE
+			ENDIF
+		ELSE
+			IF ARG:2 == 0
+				PRINTFORM 「まだ我一人で十分だ
+				CALL ADS_KOJO_104_L
+			ELSEIF ARG:2 == 1
+				PRINTFORM 「さあ行くぞ！　我の力を思い知るが良い！
+				CALL ADS_KOJO_104_L
+			ELSE
+			ENDIF
+		ENDIF
+	CASE 141
+		;遭遇時逆襲：襲い掛かられた　ARG:2が1なら実はドッペル
+		PRINTFORM 「乱心か!?　ええい！　気を確かに持て！
+		CALL ADS_KOJO_104_L
+	CASE 142
+		;遭遇時逆襲：襲い掛かった　ARG:2が1なら実はドッペル　※主人公ではなく、襲った側のキャラの口上
+		IF ARG:2  == 1
+			PRINTFORM 「油断したな！　食らうのじゃ！
+			CALL ADS_KOJO_104_L
+		ELSE
+			PRINTFORM 「油断したな！　食らうがよいわ！
+			CALL ADS_KOJO_104_L
+		ENDIF
+	CASE 159
+		PRINTFORML 
+		IF FLAG:AUTOMODE
+			PRINTFORML 「お主も我の"どやがお"とやらが見たいのであろう？　そうだろうそうに決まっておる」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「お主も我の"どやがお"とやらが見たいのであろう？　そうだろうそうに決まっておる」
+		ENDIF
+		PRINTFORMDL ADS(オールウェイズ・ドヤア・システム)をONにしますか？
+		PRINTFORMDL (ONにすると布都ちゃんの語尾に(ﾄﾞﾔｧが付きます)
+		PRINTFORMDL 
+		PRINTFORMDL [0] はい
+		PRINTFORMDL [1] いいえ
+		$INPUT_LOOP
+		INPUT
+		IF RESULT == 0
+			FLAG:812 = 1
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ADSをONにしました！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ADSをONにしました！
+			ENDIF
+			PRINTFORM 「やはり…な。お主も我の復活を祝ってくれるのだな
+			CALL ADS_KOJO_104
+			PRINTFORML 
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ADSをOFFにしました！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ADSをOFFにしました！
+			ENDIF
+			PRINTFORM 「そ、そうか。ならば我の勘違いだ。すまん
+			CALL ADS_KOJO_104
+			PRINTFORML 
+		ENDIF
+	CASE 161
+	;好感度低下によるPT離脱　※抜けるキャラ側の口上　(ARG:1に対象キャラ)
+		PRINTFORM 「我の言う通りに動いておればよかったものを…
+		CALL ADS_KOJO_104
+	CASE 162
+	;好感度低下によるPT離脱　※PT側の口上 (ARG:1に対象キャラ)
+		PRINTFORM 「去る者は追わず……だな
+		CALL ADS_KOJO_104
+	
+ENDSELECT
+ENDIF
+
+RESETCOLOR
+
+RETURN 1
+
+@ADS_KOJO_104
+;ADS(Always Doya Systems)について
+;オールウェイズ・ドヤァ・システムとは、布都ちゃんの代名詞でもあるドヤ顔を存分に堪能するために作られたシステムです
+;うざい？　ほめ言葉だよ！(ﾄﾞﾔｧ
+IF FLAG:812 == 1
+	IF FLAG:AUTOMODE
+		PRINTFORML (ﾄﾞﾔｧ」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW (ﾄﾞﾔｧ」
+	ENDIF
+ELSE
+	IF FLAG:AUTOMODE
+		PRINTFORML 」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 」
+	ENDIF
+ENDIF
+
+@ADS_KOJO_104_L
+;飛ばすならこっち。いちいちドヤで止まって煩わしいって人は置換かけてCALL ADS_KOJO_104 →CALL ADS_KOJO_104_Lでどぞー
+IF FLAG:812 == 1
+	PRINTFORML (ﾄﾞﾔｧ」
+ELSE
+	PRINTFORML 」
+ENDIF
+
+

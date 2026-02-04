@@ -1,0 +1,4421 @@
+﻿;ふたなりイベント対応
+
+@FUTANARI_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;ふたなりイベント
+
+	SELECTCASE ARG:0
+		;射精
+		CASE 451
+			CALL FUTANARI_EJACULATE_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+		;寄生終了
+		CASE 452
+			CALL FUTANARI_END_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+		;強制発情
+		CASE 453
+			CALL FUTANARI_HEAT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+		;完全化
+		CASE 454
+			CALL FUTANARI_ETERNAL_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+		;性欲発散（通常、仲間時、相手が催眠状態）
+		CASE 455 TO 457
+			CALL FUTANARI_RAPE_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+		;性欲発散される　全員からされ終わった時に一言だけ
+;		CASE 458
+;			CALL FUTANARI_RAPED<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+		;ふたなり治療される
+		CASE 459
+			CALL FUTANARI_TREATED_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+		;ふたなりで触手モンスターをおしおきする
+		CASE 460
+			CALL FUTANARI_OSHIOKI_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+		;ふたなり治療する
+		CASE 461
+			CALL FUTANARI_TREAT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+		;キス
+		CASE 464
+			CALL FUTANARI_KISS_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+		;出会い頭治療
+		CASE 465
+			CALL FUTANARI_MEET_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+	ENDSELECT
+
+RETURN
+
+@KOJO_7_0_FUTANARI(LOCAL:0, LOCAL:1, ARG:0, ARG:1, ARG:2)
+;触手宮ふたなり勝手パッチ対応
+;ARG:
+;	0	相手の番号
+;	1	もしかしたら使うかも…
+;LOCAL:
+;	0	シチュエーション1
+;	1	シチュエーション2
+;
+;口上は基本的に地の文→受け側口上→攻め側口上の順で表示されます
+;特定キャラとの二言以上の会話は……受け側の口上にまとめて書いて、攻め側ではIFを使って回避してください
+;(なるべくFLAG等は使わないようにしているせいです)
+;処女厨も居るかもしれないので処女かそうでないかも分けてあります
+
+
+;そのキャラの口上の文字色を反映します
+CALL KOJO_DEFAULT_COLOR_7_0
+SETCOLOR RESULT
+
+SELECTCASE LOCAL:0
+	;ふたなりになった(プレイヤーは遠くに居るはず)
+;	CASE 0
+		
+	;ふたなりが伝染した
+	CASE 13
+		CALL KOJO_FUTAKA_7_0
+;		CALL KOJO_F_CONTAGION<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;襲撃開始
+	CASE 1
+		CALL KOJO_F_RAPE_START_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;抵抗成功、失敗
+	CASE 2,3
+		CALL KOJO_F_RESIST_FAILED_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;抵抗しない
+	CASE 4
+		CALL KOJO_F_RESIST_NON_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;一回目の行為（共通処理使用）
+	CASE 5
+		CALL KOJO_F_COMMON_SEX_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;触手による追加攻撃（通常SEX触手と共用）
+	CASE 6
+		CALL KOJO_F_SEX_TENTACLES_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;追加攻撃
+;	CASE 7
+;		CALL KOJO_F_RAPE_ADD<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+
+;------------------------ここからは同意モード------------------------
+	;夜這い開始
+	CASE 8
+		CALL KOJO_F_SEX_START_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;一回目の行為（共通処理使用）
+	CASE 9
+		CALL KOJO_F_COMMON_SEX_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;触手による追加攻撃
+	CASE 10
+		CALL KOJO_F_SEX_TENTACLES_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;追加攻撃おねだり
+;	CASE 11
+;		CALL KOJO_F_SEX_DESIRE<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;追加攻撃
+;	CASE 12
+;		CALL KOJO_F_SEX_ADD<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+
+;------------------------Ver.0.08より以下を追加------------------------
+	;見返りを身体で要求
+	CASE 14
+		CALL KOJO_F_DEMAND_START_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+	;一回目の行為（共通処理使用）
+	CASE 15
+		CALL KOJO_F_COMMON_SEX_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+		
+ENDSELECT
+
+
+RESETCOLOR
+
+RETURN 1
+
+
+;ふたなりイベント
+;-----------------------------------------------------------------------------------------------------------------------------------------
+@FUTANARI_EJACULATE_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;射精
+	
+	;逆レイプで射精（前）
+	IF CFLAG:901 == 731
+		SELECTCASE RAND:2
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:(TARGET)%の限界を察した%SAVESTR:(CFLAG:902)%は射精に備え子宮口をピタリと鈴口に吸い付けた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:(TARGET)%の限界を察した%SAVESTR:(CFLAG:902)%は射精に備え子宮口をピタリと鈴口に吸い付けた…
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL トドメとばかりに激しく腰を突き落とした%SAVESTR:(CFLAG:902)%の最奥で、%CALLNAME:(TARGET)%の熱い滾りが迸る…！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW トドメとばかりに激しく腰を突き落とした%SAVESTR:(CFLAG:902)%の最奥で、%CALLNAME:(TARGET)%の熱い滾りが迸る…！
+			ENDIF
+		ENDSELECT
+	ENDIF
+
+
+	;初回
+	IF EXP:12 == 0
+		PRINTFORM 「この…こみ上げてくる…感覚っ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　こ、これがっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORML 　射精っっっ？？？！！！」
+		PRINTFORM 「ふぁぁ…っ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　とっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　止まらないっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　精液全部…でちゃうッッッ
+		CALL HEARTCB(0xD02830, 4)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 初めて味わう射精の感覚に%CALLNAME:(TARGET)%は、しばらく放心状態で居た
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 初めて味わう射精の感覚に%CALLNAME:(TARGET)%は、しばらく放心状態で居た
+		ENDIF
+		PRINTFORM 「…ぁぁ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　はぁ…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 　こんな…の……精を…自分の方から…出してしまうなんて…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　こんな…の……精を…自分の方から…出してしまうなんて…」
+		ENDIF
+		RETURN
+	ENDIF
+	
+	SELECTCASE ABL:12 + RAND:2
+	;射精中毒LV0～1
+	CASE 0, 1
+		IF RAND:2 == 0
+			PRINTFORM 「…んんっ？　これ…ま…またっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　でっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　射精ちゃうっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ELSE
+			PRINTFORM 「…んぅ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　おちんちんだと…が、我慢の仕方が…ぁ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　イっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　イっちゃうぅぅっ
+			CALL HEARTCB(0xD02830, 2)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+	;射精中毒LV1～2
+	CASE 2
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORM 「…ふぁっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　もうっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　精液射精ちゃうっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　はあぁぁぁぁんんっっっ
+			CALL HEARTCB(0xD02830, 2)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 1
+			PRINTFORM 「この…こみ上げてくる…感覚っ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　だめっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　とっ止められっ……ああああッッッ
+			CALL HEARTCB(0xD02830, 2)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「だっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 駄目なのっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　淫魔が…精液出しちゃうなんてっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　でっでも無理ぃぃぃぃぃっっっ
+			CALL HEARTCB(0xD02830, 3)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+	;射精中毒LV2～3
+	CASE 3
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORM 「ふはぁ…また…来るっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　せーえき登って…キっ…ちゃ…ううううううぅぅぅっっっ
+			CALL HEARTCB(0xD02830, 3)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 1
+			PRINTFORM 「おちんちん…ビクビクしちゃって…るッ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　あ…あッ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　ーーーーーーーッッッ
+			CALL HEARTCB(0xD02830, 4)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「ん…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　溜めて…溜めて…ふふ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　我慢した分だけ………あぁぁんんっイイのぉぉぉぉぉぉっっ
+			CALL HEARTCB(0xD02830, 3)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+	;射精中毒LV3
+	CASEELSE
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORM 「んふふふ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　熱いザーメン…びゅくびゅくってたくさん……射精しちゃい…ますッッッッッ
+			CALL HEARTCB(0xD02830, 5)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 1
+			PRINTFORM 「イイっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　しゃせーイイっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　ぶびゅびゅびゅっっっ……ってぇぇぇぇぇっっっ
+			CALL HEARTCB(0xD02830, 3)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「くすくす…イっちゃいますよ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　思う存分…どぴゅどぴゅしちゃいます
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			PRINTFORM 「…ほら…濃いぃせーえき…っっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　ぶちまけちゃうぅぅぅぅぅぅんんっっっっッッ
+			CALL HEARTCB(0xD02830, 5)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+	ENDSELECT
+
+	;射精音
+	SELECTCASE RAND:8
+	CASE 0
+		PRINTFORMDL びゅくっ！びゅっ！びゅびゅーーーーーーーっ！！！
+	CASE 1
+		PRINTFORMDL どぷっ！ぶびゅびゅびゅっ！びゅくっ！！びゅくっ！！
+	CASE 2
+		PRINTFORMDL ぴゅっ！びゅるっ！！びゅるるるるるっっ！
+	CASE 3
+		PRINTFORMDL ドビュッ！ビュッ！ビューーーーーーーっっ！！！
+	CASE 4
+		PRINTFORMDL どくんっ！ドクッ！ドクッ！！
+	CASE 5
+		PRINTFORMDL ぶびゅるっ！！！ぶびっ！！どびゅるるるるるっっっっ！！！！
+	CASE 6
+		PRINTFORMDL びゅくっ！びゅくるるッッ！！！びゅくっ！びゅくっ！！！
+	CASEELSE
+		PRINTFORMDL ブピュッ！！ピュッ！ブビュゥゥゥゥゥッッ！！！！
+	ENDSELECT
+	
+	PRINTFORMD %CALLNAME:(TARGET)%は
+	SELECTCASE RAND:4
+	CASE 0
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 身を震わせながら白濁液をぶちまけた…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 身を震わせながら白濁液をぶちまけた…
+		ENDIF
+	CASE 1
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 何度も何度もペニスを激しく脈動させた…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 何度も何度もペニスを激しく脈動させた…
+		ENDIF
+	CASE 2
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 口から涎を垂れ流し惚けた顔で、凄まじい勢いの射精を繰り返す…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 口から涎を垂れ流し惚けた顔で、凄まじい勢いの射精を繰り返す…
+		ENDIF
+	CASEELSE
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 激しく己の欲望を吐き出した…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 激しく己の欲望を吐き出した…
+		ENDIF
+	ENDSELECT
+	
+
+	;逆レイプで射精（後）
+	IF CFLAG:901 == 731
+		SELECTCASE RAND:2
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 断続的に続く%CALLNAME:(TARGET)%の射精に合わせ、全て飲み干すかの様に%SAVESTR:(CFLAG:902)%は膣内を脈動させていた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 断続的に続く%CALLNAME:(TARGET)%の射精に合わせ、全て飲み干すかの様に%SAVESTR:(CFLAG:902)%は膣内を脈動させていた…
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %SAVESTR:(CFLAG:902)%の淫肉が、一滴残らず搾り取ろうと%CALLNAME:(TARGET)%のペニスに絡みついている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %SAVESTR:(CFLAG:902)%の淫肉が、一滴残らず搾り取ろうと%CALLNAME:(TARGET)%のペニスに絡みついている…
+			ENDIF
+		ENDSELECT
+	ENDIF
+
+
+RETURN
+
+@FUTANARI_END_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;寄生終了
+
+	;射精中毒LV2
+	IF ABL:12 >= 2
+		PRINTFORM 「はぁ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 　…ぁ　おちんちん…取れちゃったんですね…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　…ぁ　おちんちん…取れちゃったんですね…」
+		ENDIF
+	ELSE
+		PRINTFORM 「ふぅ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 　射精しきって…取れたみたいですね…良かった」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　射精しきって…取れたみたいですね…良かった」
+		ENDIF
+	ENDIF
+
+RETURN
+
+@FUTANARI_HEAT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;強制発情
+
+	;射精中毒LV3
+	IF ABL:12 >= 3
+		PRINTFORM 「…あはははははっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　いい…気分です
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　おちんぽ…ギンギンですよ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「誰でもいいですから…早く…このおちんぽ味合わせてあげたい…
+		CALL HEARTCB(0xD02830)
+		PRINTFORML 」
+		PRINTFORM 「そして膣の中の一番奥目掛けて…溢れるほど子種汁注いであげちゃうっ
+		CALL HEARTCB(0xD02830, 2)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;射精中毒LV2
+	ELSEIF ABL:12 >= 2
+		PRINTFORM 「はーーー…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　お…おちんちんが…射精させろ…って
+		CALL HEARTCB(0xD02830, 2)
+		PRINTFORML 」
+		PRINTFORM 「早く…精液出さないと…私…暴走しちゃいそうです……
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ELSE
+		PRINTFORM 「…ぅふぅッッ？！
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　下半身から…じわ～って…か、身体が…熱い…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDIF
+
+RETURN
+
+@FUTANARI_ETERNAL_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;完全化
+
+	PRINTFORM 「……あ…おちんぽ…完全に根付いてしまった様ですね…………ふふふふ
+	CALL HEARTCB(0xD02830)
+	IF FLAG:AUTOMODE
+		PRINTFORML 」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 」
+	ENDIF
+	PRINTFORM 「ははっ……これじゃサキュバス失格かもしれません…でも…別にいいんです
+	CALL HEARTCB(0xD02830)
+	PRINTFORML 」
+	PRINTFORM 「だって、これからは好きなだけ…おまんこにびゅくびゅく射精できるんですよ
+	CALL HEARTCB(0xD02830)
+	IF FLAG:AUTOMODE
+		PRINTFORML 」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 」
+	ENDIF
+	PRINTFORM 「そう…誰とでも…パチュリー様にだって…種付けできちゃうんです
+	CALL HEARTCB(0xD02830)
+	IF FLAG:AUTOMODE
+		PRINTFORML 」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 」
+	ENDIF
+	PRINTL
+
+RETURN
+
+@FUTANARI_RAPE_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;性欲発散
+
+	;コンフィグ設定で主人公のみふたなり化時しか出ない
+	;しかもこれだけヤられた側で呼ばれる。相手は主人公確定
+	;お掃除フェラ
+	IF ARG:1 == 30
+		PRINTFORM 「ん…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　いかかでした…？　%CALLNAME_7_0(1)%…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そう言って微笑むと、%CALLNAME:(TARGET)%は綺麗にし終えた%CALLNAME:(1)%のペニスにキスをした…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そう言って微笑むと、%CALLNAME:(TARGET)%は綺麗にし終えた%CALLNAME:(1)%のペニスにキスをした…
+		ENDIF
+		PRINTL
+		RETURN
+	;蔑む目
+	ELSEIF ARG:1 == 31
+		RETURN
+	ENDIF
+
+
+	SELECTCASE ARG:0
+	;喪失キャラを犯す
+	CASE 455
+		CALL GET_ID_FROM_NAME_7_0(ARGS:1)
+		LOCAL:0 = 0
+		SELECTCASE ARG:1
+		;睡眠中
+		CASE 2, 9, 12, 17
+			LOCAL:0 = 1
+		ENDSELECT
+		
+		;オリジナル
+		IF CFLAG:(RESULT):104 == 0
+			SELECTCASE NO:(RESULT)
+			;パチュリー
+			CASE 8
+				IF FLAG:AUTOMODE
+					PRINTFORML 「パチュリー様……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「パチュリー様……」
+				ENDIF
+				;睡眠中
+				IF LOCAL:0 == 1
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%は息も絶え絶えなパチュリーに対して一歩ずつ近づいて行った…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%は息も絶え絶えなパチュリーに対して一歩ずつ近づいて行った…
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%は、ぐっすり眠ったパチュリーに一歩ずつ近づいて行った…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%は、ぐっすり眠ったパチュリーに一歩ずつ近づいて行った…
+					ENDIF
+				ENDIF
+			ENDSELECT
+		ENDIF
+		
+		;射精中毒LV3
+		IF ABL:12 >= 3
+			;小柄体型
+			IF RESULT && TALENT:RESULT:100
+				PRINTFORM 「うふふ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　とっても良い生オナホール…見つけちゃいました
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「早速使って…ぶびゅびゅびゅーーー…っっってザーメン注ぎ込んじゃいましょう
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ELSE
+				PRINTFORM 「くすくすっ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　そんなところで横になってしまって…誘っているんですか？
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「わかりました…私のおちんぽで種付けして…元気な赤ちゃん作りましょうか
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		;射精中毒LV2
+		ELSEIF ABL:12 >= 2
+			;睡眠中
+			IF LOCAL:0 == 1
+				PRINTFORM 「ぐっすり眠ってますね…では、今の内に元気を注入しておいてあげます
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ELSE
+				PRINTFORM 「動けなくなってしまいましたか…では、元気を注入してあげます
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(TARGET)%は天に向けてそそり勃つ剛直を見せ付けながら、妖しい笑みを浮かべている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(TARGET)%は天に向けてそそり勃つ剛直を見せ付けながら、妖しい笑みを浮かべている…
+				ENDIF
+		ELSE
+			;睡眠中
+			IF LOCAL:0 == 1
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ゆさゆさ…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ゆさゆさ…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「んー……深く眠ってるみたいですね。これはちょっとやそっとじゃ起きませんか…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「んー……深く眠ってるみたいですね。これはちょっとやそっとじゃ起きませんか…」
+				ENDIF
+				PRINTFORM 「では、申し訳ないのですが…私のコレ…解消するためにご協力お願いしますね
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「……あの、よく考えたんですが。　動ける者を優先した方が助かる確率が高くなりますよね？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「……あの、よく考えたんですが。　動ける者を優先した方が助かる確率が高くなりますよね？」
+				ENDIF
+				PRINTFORM 「私…これがあると困ってしまうんです…なので、申し訳ないのですが…解消のご協力お願いします
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		ENDIF
+		
+		;射精中毒LV3
+		IF ABL:12 >= 3
+			SELECTCASE ARG:1
+			;相手が巨乳
+			CASE 7, 8
+				PRINTFORM 「くすっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　%CALLNAME_7_0(ARG:3)%って大きなおっぱいしてますよね…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　%CALLNAME_7_0(ARG:3)%って大きなおっぱいしてますよね…」
+				ENDIF
+				PRINTFORM 「そんなエッチなおっぱいを使わないのは…勿体無いと思いません？　くすくすっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		ENDIF
+		
+	;喪失キャラを便乗して犯す
+	CASE 456
+		;射精中毒LV3
+		IF ABL:12 >= 3
+			PRINTFORM 「…うふふ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　凄く気持ち良さそうでしたよ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　今度は…私の番ですね
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			PRINTFORM 「もう…見ていて待ちきれなくて、おちんぽ…我慢汁だらだらだったんですから…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		;射精中毒LV2
+		ELSEIF ABL:12 >= 2
+			PRINTFORM 「…ずるいですよ…私だって我慢しているのに…そんなわけで引き続き、私とお願いします
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……あの…私も…便乗させてもらっても構わないでしょうか…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……あの…私も…便乗させてもらっても構わないでしょうか…」
+			ENDIF
+		ENDIF
+	;性欲発散（相手が催眠状態）
+	CASE 457
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あれ……%CALLNAME_7_0(ARG:3)%…その目……？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あれ……%CALLNAME_7_0(ARG:3)%…その目……？」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL %CALLNAME:(TARGET)%は%CALLNAME:(ARG:3)%が何かいつもと違う事に気が付いた様だ…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW %CALLNAME:(TARGET)%は%CALLNAME:(ARG:3)%が何かいつもと違う事に気が付いた様だ…
+		ENDIF
+		;射精中毒LV2以上
+		IF ABL:12 >= 2
+			IF FLAG:AUTOMODE
+				PRINTFORML （ごくり……）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW （ごくり……）
+			ENDIF
+			PRINTFORM 「くすくす…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　その状態でしたら…ナニをシても元に戻れば綺麗さっぱり忘れられますよね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　その状態でしたら…ナニをシても元に戻れば綺麗さっぱり忘れられますよね」
+			ENDIF
+			PRINTFORM 「さぁ…%CALLNAME_7_0(ARG:3)%
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　私と…気持ち良いコトしましょうか
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML （ごくり……）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW （ごくり……）
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「えーと…%CALLNAME_7_0(ARG:3)%？　宜しければ、今から私と…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「えーと…%CALLNAME_7_0(ARG:3)%？　宜しければ、今から私と…」
+			ENDIF
+		ENDIF
+	
+	ENDSELECT
+
+
+	SELECTCASE ARG:1
+	;膣で
+	CASE 0, 1, 2
+		;性欲発散（相手が催眠状態）
+		IF ARG:0 == 457
+			;射精中毒LV2以上
+			IF (ABL:12 >= 2)
+				PRINTFORM 「おやおや？　%CALLNAME_7_0(ARG:3)%が自ら動いてくれるんですか
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「分かりました、%CALLNAME_7_0(ARG:3)%のエッチな腰つきを存分に披露して下さい…期待してますよ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ELSE
+				PRINTFORM 「それでは…%CALLNAME_7_0(ARG:3)%が上で…お願いします
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		ENDIF
+		
+		;射精中毒LV2以上（ランダムパターン追加）
+		IF (ABL:12 >= 2) && RAND:2
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「んっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　はっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　どうです？%CALLNAME_7_0(ARG:3)%
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「私がおちんちんで突き上げる側というのも…気持ちイイでしょう？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「私がおちんちんで突き上げる側というのも…気持ちイイでしょう？」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「ふはっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　はっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　おちんちん生えてると…サキュバスの本分を忘れちゃうっ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「%CALLNAME_7_0(ARG:3)%…覚悟して下さいね
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　私がいつも搾り取ってる分を…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　私がいつも搾り取ってる分を…」
+				ENDIF
+				PRINTFORM 「%CALLNAME_7_0(ARG:3)%の膣内に…放出しちゃいますからっっっ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「はぁ…%CALLNAME_7_0(ARG:3,1)%
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　凄く…イイ具合ですよ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　腰が…自然に動いちゃいます
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「んぅ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　私のおちんちん…%CALLNAME_7_0(ARG:3)%を気持ち良くしてあげられてますか？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　私のおちんちん…%CALLNAME_7_0(ARG:3)%を気持ち良くしてあげられてますか？」
+				ENDIF
+				PRINTFORM 「そう…ですか
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　私も…とっても気持ち良いです
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　あぁんっ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		ENDIF
+		
+		
+		;性欲発散（相手が催眠状態）
+		IF ARG:0 == 457
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 上に乗せた%CALLNAME:(ARG:3)%の動きに合わせ、%CALLNAME:(TARGET)%は巧みに腰を突き上げている…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 上に乗せた%CALLNAME:(ARG:3)%の動きに合わせ、%CALLNAME:(TARGET)%は巧みに腰を突き上げている…
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:(ARG:3)%の身体を抱き寄せた%CALLNAME:(TARGET)%は、腰をくねらせ快楽を送り込んでいる…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:(ARG:3)%の身体を抱き寄せた%CALLNAME:(TARGET)%は、腰をくねらせ快楽を送り込んでいる…
+			ENDIF
+		ENDIF
+		
+	;胸で
+	CASE 5, 6, 7, 8, 9
+		;性欲発散（相手が催眠状態）
+		IF ARG:0 == 457
+			;射精中毒LV2以上
+			IF (ABL:12 >= 2)
+				;爆乳・巨乳
+				IF TALENT:(ARG:3):108 == 1 || TALENT:(ARG:3):110 == 1
+					PRINTFORM 「早くぅ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　私…%CALLNAME_7_0(ARG:3)%のおっぱいに包まれたいです
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「%CALLNAME_7_0(ARG:3,1)%…イかせてぇ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　その可愛らしいお胸を…白濁で穢したいんです
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			ELSE
+				PRINTFORM 「お願いしますね…。%CALLNAME_7_0(ARG:3)%の、その綺麗な肌で…ご奉仕して頂けるなんて
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		ENDIF
+		
+		;射精中毒LV2以上（ランダムパターン追加）
+		IF (ABL:12 >= 2) && RAND:2
+			;爆乳・巨乳
+			IF TALENT:(ARG:3):108 == 1 || TALENT:(ARG:3):110 == 1
+				SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「%CALLNAME_7_0(ARG:3)%のおっぱい…とても温かい
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「この包まれてる中で…中でっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　イっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM いいですよね、%CALLNAME_7_0(ARG:3,1)%
+					CALL HEARTCB(0xD02830, 2)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				CASEELSE
+					PRINTFORM 「はぁ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　はぁ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　おっぱいの隙間から…おちんちんが顔を出してとてもいやらしい…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「%CALLNAME_7_0(ARG:3)%…顔にかけるのがいいですか？　それともこのまま…お胸に擦りこみます？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「%CALLNAME_7_0(ARG:3)%…顔にかけるのがいいですか？　それともこのまま…お胸に擦りこみます？」
+					ENDIF
+				ENDSELECT
+			ELSE
+				PRINTFORM 「ほら…おちんちんで乳首擦れると…ふふっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　%CALLNAME_7_0(ARG:3)%、ビクっとしちゃって
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「乳首凄く…固くなってますよ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　だから擦れると…私も余計に気持ちよく
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		ELSE
+			;爆乳・巨乳
+			IF TALENT:(ARG:3):108 == 1 || TALENT:(ARG:3):110 == 1
+				PRINTFORM 「んぅ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　%CALLNAME_7_0(ARG:3)%…おっぱいに出し入れされて…感じてます？
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「私のおちんちん…凄く熱くなってるでしょう？　もう…限界が近いです…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ELSE
+				PRINTFORM 「こうやって…おちんちんを胸に擦り付けているだけでも…んんぅ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		ENDIF
+		
+		
+		;性欲発散（相手が催眠状態）
+		IF ARG:0 == 457
+			;爆乳・巨乳
+			IF TALENT:(ARG:3):108 == 1 || TALENT:(ARG:3):110 == 1
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:3)%は、その大きな胸で%CALLNAME:(TARGET)%のペニスを包み込み、擦りあげた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:3)%は、その大きな胸で%CALLNAME:(TARGET)%のペニスを包み込み、擦りあげた…
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:3)%は、仰向けになり天を向いた%CALLNAME:(TARGET)%の剛直をその胸で抑えつつ身体を揺すらせている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:3)%は、仰向けになり天を向いた%CALLNAME:(TARGET)%の剛直をその胸で抑えつつ身体を揺すらせている…
+				ENDIF
+			ENDIF
+		ELSE
+			;爆乳・巨乳
+			IF TALENT:(ARG:3):108 == 1 || TALENT:(ARG:3):110 == 1
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:3)%の乳房の間に男根を挟み込み、%CALLNAME:(TARGET)%は腰を激しく前後させている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:3)%の乳房の間に男根を挟み込み、%CALLNAME:(TARGET)%は腰を激しく前後させている…
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(TARGET)%は%CALLNAME:(ARG:3)%の胸板に、自らの欲望を擦りつけている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(TARGET)%は%CALLNAME:(ARG:3)%の胸板に、自らの欲望を擦りつけている…
+				ENDIF
+			ENDIF
+		ENDIF
+		
+	;尻で
+	CASE 10, 11, 12
+		;性欲発散（相手が催眠状態）
+		IF ARG:0 == 457
+			;射精中毒LV2以上（ランダムパターン追加）
+			IF (ABL:12 >= 2) && RAND:2
+				PRINTFORM 「んんっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　%CALLNAME_7_0(ARG:3,1)%
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　そんなに激しく動かなくてもっ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「早く精液欲しいんですか？　慌てなくても…んっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　す…すぐっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　あっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM あっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM あ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:3)%が激しく腰を落とすたび、%CALLNAME:(TARGET)%は大きな嬌声を上げる…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:3)%が激しく腰を落とすたび、%CALLNAME:(TARGET)%は大きな嬌声を上げる…
+				ENDIF
+			ELSE
+				PRINTFORM 「%CALLNAME_7_0(ARG:3)%のお尻が私のを飲み込んで…また顔を出して…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「ん…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　んふぅ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　とてもイイ…ですよ…続けて下さい…%CALLNAME_7_0(ARG:3)%
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 目の前でゆっくりと尻を振る%CALLNAME:(ARG:3)%の姿に、%CALLNAME:(TARGET)%はよりいっそうその剛直を固くさせた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 目の前でゆっくりと尻を振る%CALLNAME:(ARG:3)%の姿に、%CALLNAME:(TARGET)%はよりいっそうその剛直を固くさせた…
+				ENDIF
+			ENDIF
+		ELSE
+			;射精中毒LV2以上（ランダムパターン追加）
+			IF (ABL:12 >= 2) && RAND:2
+				PRINTFORM 「ふはっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　%CALLNAME_7_0(ARG:3)%のお尻っ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　ずりゅずりゅずりゅって凄いぃ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「イキますよ…ッ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　一番奥まで突き入れると同時に…いっぱいせーえき射精しちゃいますぅッッッ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(TARGET)%は%CALLNAME:(ARG:3)%の腰をぐっと掴み、最奥へ欲望を放とうと自らの腰を密着させた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(TARGET)%は%CALLNAME:(ARG:3)%の腰をぐっと掴み、最奥へ欲望を放とうと自らの腰を密着させた…
+				ENDIF
+			ELSE
+				PRINTFORM 「んっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　くすっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　どうです、お尻だって…立派な性器でしょう？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　どうです、お尻だって…立派な性器でしょう？」
+				ENDIF
+				PRINTFORM 「ほら…精を搾り出そうと締め付けて来てますっ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:3)%を四つんばいにさせた%CALLNAME:(TARGET)%は、ゆっくりと慣らす様に抽挿させている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:3)%を四つんばいにさせた%CALLNAME:(TARGET)%は、ゆっくりと慣らす様に抽挿させている…
+				ENDIF
+			ENDIF
+			
+		ENDIF
+		
+	;口で
+	CASE 15, 16, 17
+		;射精中毒LV2以上（ランダムパターン追加）
+		IF (ABL:12 >= 2) && RAND:2
+			PRINTFORM 「んふぅ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　そう…その感じです
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　口をすぼめて…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			PRINTFORM 「そろそろ…動きを速くっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 大きくっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　ほらっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM せーえき登って来てるッッ
+			CALL HEARTCB(0xD02830, 3)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ELSE
+			PRINTFORM 「ん…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　そこ…舌を這わせて…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　んんっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　いい…ですよ…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:(TARGET)%の助言を受けながら、%CALLNAME:(ARG:3)%は奉仕しているペニスを絶頂へと導いていく…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:(TARGET)%の助言を受けながら、%CALLNAME:(ARG:3)%は奉仕しているペニスを絶頂へと導いていく…
+			ENDIF
+		
+	ENDSELECT
+	
+	
+	;射精メッセージが無いのは寂しいからとりあえず入れておく
+	CALL PRINT_MESSAGE(TARGET, 451, 0, CALLNAME:(TARGET), "")
+
+
+RETURN
+
+;	@INCLUDE FUTANARI_RAPED<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+@FUTANARI_TREATED_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;ふたなり治療される
+;治療する側より先に表示されるので部位で分けずに、迫られる感じで
+
+;69だけ治療する側でも呼ばれてるので、とりあえず飛ばしておこう
+IF NO:1 == 7
+	;覚醒モード
+	IF TALENT:156
+		CALL INM_FUTANARI_TREAT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSE
+		CALL FUTANARI_TREAT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ENDIF
+	RETURN
+ENDIF
+
+	;射精中毒LV2 or 覚醒モード
+	IF ABL:12 >= 2 || TALENT:156
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORM 「%CALLNAME_7_0(1)%、もしかして…鎮めて頂けるんですか、これ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「せつないです…ねぇ…%CALLNAME_7_0(1,1)%
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:2
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「な…なにをするんですか…%CALLNAME_7_0(1)%」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「な…なにをするんですか…%CALLNAME_7_0(1)%」
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「え…ちょ、ちょっと…%CALLNAME_7_0(1)%…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「え…ちょ、ちょっと…%CALLNAME_7_0(1)%…」
+			ENDIF
+		ENDSELECT
+	ENDIF
+
+RETURN
+
+@FUTANARI_OSHIOKI_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;ふたなりで触手モンスターをおしおきする
+
+IF ARG:1 <= 0
+	RETURN
+ENDIF
+
+;敵小悪魔
+IF DA:(TFLAG:52):0 == 70
+	IF FLAG:AUTOMODE
+		PRINTFORML 「もう…ここの空気が魔界に近いからって、何をやっているんですか…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「もう…ここの空気が魔界に近いからって、何をやっているんですか…」
+	ENDIF
+	PRINTFORM 「ふふっ、精気が足りなかったんですよね。少し分けてあげますよ。方法はもちろん…
+	CALL HEARTCB(0xD02830)
+	IF FLAG:AUTOMODE
+		PRINTFORML 」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 」
+	ENDIF
+ELSE
+	IF FLAG:AUTOMODE
+		PRINTFORML 「すみません…貴女が私%TACHI()%を襲わないという話…信じないわけではないのですが…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「すみません…貴女が私%TACHI()%を襲わないという話…信じないわけではないのですが…」
+	ENDIF
+	PRINTFORM 「念のため…魅了の術の儀式をさせて頂きますね
+	CALL HEARTCB(0xD02830)
+	IF FLAG:AUTOMODE
+		PRINTFORML 」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 」
+	ENDIF
+ENDIF
+
+SELECTCASE ARG:1
+	;膣で
+	CASE 1
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そう言って%ARGS:1%は%ARGS:0%の秘所をペニスでかき回す！
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そう言って%ARGS:1%は%ARGS:0%の秘所をペニスでかき回す！
+		ENDIF
+		PRINTFORM 「ん…ふぅ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 　どうですか…？　身体の奥から…気持ちイイのが溢れて来るでしょう？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　どうですか…？　身体の奥から…気持ちイイのが溢れて来るでしょう？」
+		ENDIF
+		PRINTFORM 「…ぁ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　今…最後の仕上げを…いっぱい…注ぎ込んであげますね…
+		CALL HEARTCB(0xD02830, 2)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	
+	;胸で
+	CASE 2
+		IF FLAG:521 == 0
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう言って%ARGS:1%は%ARGS:0%の双丘に優しく手をやり、その間にペニスを潜り込ませた！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう言って%ARGS:1%は%ARGS:0%の双丘に優しく手をやり、その間にペニスを潜り込ませた！
+			ENDIF
+			PRINTFORM 「ふふ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　改めて触れると…本当に大きいですね
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　それに…感度も良くて
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			PRINTFORM 「私のおちんちんに…しっとり吸い付いてきます…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう言って%ARGS:1%は馬乗りになり%ARGS:0%の胸に己の固くなったモノを擦り付ける！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう言って%ARGS:1%は馬乗りになり%ARGS:0%の胸に己の固くなったモノを擦り付ける！
+			ENDIF
+			PRINTFORM 「うふふ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　大丈夫ですよ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　小さくても気にしないで
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			PRINTFORM 「ほら…その証拠に…私の…涎垂らしてるでしょう？　その胸でイクところ…ちゃんと見てて下さいね
+			CALL HEARTCB(0xD02830, 2)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+	;尻で
+	CASE 3
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そう言って%ARGS:1%は焦らす様にゆっくりと%ARGS:0%の尻穴を犯す…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そう言って%ARGS:1%は焦らす様にゆっくりと%ARGS:0%の尻穴を犯す…
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そして後ろにぴったりと張り付きながら、耳元で囁いた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そして後ろにぴったりと張り付きながら、耳元で囁いた
+		ENDIF
+		PRINTFORM 「くすくす…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　お尻にされるの…好きなんですね
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「いいんですよ…私と…このまま一緒にイキましょう…
+		CALL HEARTCB(0xD02830, 2)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;口で
+	CASE 4
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そう言って%ARGS:1%は%ARGS:0%に口淫を促した…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そう言って%ARGS:1%は%ARGS:0%に口淫を促した…
+		ENDIF
+		PRINTFORM 「ん…上手
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　こういう優しい奉仕もできるんですね
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「はぁ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　全部…飲んで下さいね
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　んっんんぅぅッッ
+		CALL HEARTCB(0xD02830, 2)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;触手で
+	CASE 5
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そう言って%ARGS:1%は%ARGS:0%の触手を引き寄せた…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そう言って%ARGS:1%は%ARGS:0%の触手を引き寄せた…
+		ENDIF
+		PRINTFORM 「くぅっんんっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　こんなに気持ち良くできるんですから…平和的に使いましょうよ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「そう…けして乱暴にしないで…お互い気持ちよく…うぅぅんんんッ
+		CALL HEARTCB(0xD02830, 3)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	
+ENDSELECT
+
+
+RETURN
+
+@FUTANARI_TREAT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;ふたなり治療する
+
+;オリジナル
+IF CFLAG:(ARG:2):104 == 0
+	SELECTCASE NO:(ARG:2)
+	;パチュリー
+	CASE 8
+		PRINTFORM 「%CALLNAME_7_0(ARG:2,1)%…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　お困りなんですよね…それ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDSELECT
+ENDIF
+
+
+;精液中毒LV3
+IF ABL:14 >= 3
+	IF FLAG:AUTOMODE
+		PRINTFORMDL %CALLNAME:(TARGET)%はクスクスと妖しい笑みを浮かべながら%CALLNAME:(ARG:2)%へと、にじり寄った…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW %CALLNAME:(TARGET)%はクスクスと妖しい笑みを浮かべながら%CALLNAME:(ARG:2)%へと、にじり寄った…
+	ENDIF
+	
+	SELECTCASE RAND:2
+	CASE 0
+		PRINTFORM 「はぁ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　我慢できるわけないじゃないですか…そんなに美味しそうな精液の匂いを嗅がせられたら
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	CASEELSE
+		PRINTFORM 「ん…んぅ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　逞しいですね…それ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　私が鎮めてさしあげましょうか…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDSELECT
+	
+;精液中毒LV2
+ELSEIF ABL:14 >= 2
+	IF FLAG:AUTOMODE
+		PRINTFORMDL %CALLNAME:(TARGET)%は物欲しそうに熱い眼差しで%CALLNAME:(ARG:2)%を見つめている…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW %CALLNAME:(TARGET)%は物欲しそうに熱い眼差しで%CALLNAME:(ARG:2)%を見つめている…
+	ENDIF
+	
+	SELECTCASE RAND:2
+	CASE 0
+		PRINTFORM 「おちんちん…生えちゃってると色々と困りますよね？　私を…使ってもいいですよ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	CASEELSE
+		PRINTFORM 「それ…私だったら気持ちよく解消させられますけれど…任せて頂けません？
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:2
+	CASE 0
+		IF FLAG:AUTOMODE
+			PRINTFORML 「お困りの様子ですね。仕方ないですよ、恥ずかしがらず処理した方が宜しいかと…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「お困りの様子ですね。仕方ないですよ、恥ずかしがらず処理した方が宜しいかと…」
+		ENDIF
+	CASEELSE
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あ……いえ、私が搾り取ってあげたいなぁとか、その事だけ考えていたわけでもなくて…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あ……いえ、私が搾り取ってあげたいなぁとか、その事だけ考えていたわけでもなくて…」
+		ENDIF
+	ENDSELECT
+ENDIF
+
+
+SELECTCASE ARG:1
+;膣で
+CASE 0
+	SELECTCASE RAND:4
+	CASE 0
+		PRINTFORM 「くぅん…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　素敵…です
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　挿入れただけでも…精が満ち溢れてます
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「これで射精までされちゃったら…んぅんっ
+		CALL HEARTCB(0xD02830, 2)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	CASE 1
+		PRINTFORM 「はぁ…私…我慢できなく…お困りの様ですし…いいですよね、挿入れてもっ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 言い終わる前に、すでに挿入していた%CALLNAME:(TARGET)%だった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 言い終わる前に、すでに挿入していた%CALLNAME:(TARGET)%だった
+		ENDIF
+		PRINTFORM 「はぁぁんっ
+		CALL HEARTCB(0xD02830, 2)
+		PRINTFORM 　これですっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　これが欲しかったんですっ
+		CALL HEARTCB(0xD02830, 3)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	CASE 2
+		PRINTFORM 「んんんぅぅぅ…
+		CALL HEARTCB(0xD02830, 3)
+		PRINTFORM 　ふふ…膣内で震えてますね、いいですよ、すぐイっちゃっても
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「一回や二回イったところで…続けて搾り取ってあげます
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「いっ……ぱぁい射精しないと、このおちんちん、いつまでも生えたままですからね
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	CASEELSE
+		PRINTFORM 「だめ…そのおちんぽ見てるだけで…身体が疼いて来ちゃうんです
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「私のっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　膣内でっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　たくさんっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ぴゅっぴゅすればっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　きっと治りますからっ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL %CALLNAME:(TARGET)%は言い訳がましく腰をくねらせ射精を促した……
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW %CALLNAME:(TARGET)%は言い訳がましく腰をくねらせ射精を促した……
+		ENDIF
+	ENDSELECT
+	
+;胸で
+CASE 1
+	SELECTCASE RAND:2
+	CASE 0
+		PRINTFORM 「どうです…私のおっぱい
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ほら…こうすると…キャっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ビクンって
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	CASEELSE
+		PRINTFORM 「ふふ…おっぱいで包んだだけで…みんな大人しくなっちゃうんですよねぇ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDSELECT
+
+;尻で
+CASE 2
+	SELECTCASE RAND:2
+	CASE 0
+		IF FLAG:AUTOMODE
+			PRINTFORML 「エナジードレインの能力を持っているサキュバスと交わるのは怖い…ですか？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「エナジードレインの能力を持っているサキュバスと交わるのは怖い…ですか？」
+		ENDIF
+		PRINTFORM 「それなら、こっちを使えば……んぅぅ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　挿入ったぁ
+		CALL HEARTCB(0xD02830, 2)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL %CALLNAME:(TARGET)%は半ば強引に後ろの穴の方へと導いた……
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW %CALLNAME:(TARGET)%は半ば強引に後ろの穴の方へと導いた……
+		ENDIF
+		PRINTFORM 「…でも、エナジードレインって別に膣への挿入時以外でも可能なんですけどね
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	CASEELSE
+		PRINTFORM 「くすっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　今回はこっちを…使ってみます？　膣とはまた違った快感が味わえますよ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「…くぅぅん
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ふぁぁ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　いいですよ…もっと自由に動いて…はぁぁぁんっっ
+		CALL HEARTCB(0xD02830, 3)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDSELECT
+
+;口で
+;69
+CASE 3, 5
+	SELECTCASE RAND:2
+	CASE 0
+		IF FLAG:AUTOMODE
+			PRINTFORMDL ぢゅぷっ…ぢゅぷ…ぬぶっ！ぬぶっ！ぬぶっ！
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW ぢゅぷっ…ぢゅぷ…ぬぶっ！ぬぶっ！ぬぶっ！
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 静かな室内に、口淫の水音だけが響き渡る…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 静かな室内に、口淫の水音だけが響き渡る…
+		ENDIF
+		PRINTFORM 「んはぁ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　もう少しで…ですね。それでは一気に…
+		CALL HEARTCB(0xD02830, 2)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そう言って%CALLNAME:(TARGET)%は口を大きく開き、限界まで膨張したペニスを根元まで咥え込んだ…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そう言って%CALLNAME:(TARGET)%は口を大きく開き、限界まで膨張したペニスを根元まで咥え込んだ…
+		ENDIF
+	CASEELSE
+		PRINTFORM 「ん…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　んぷっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　んむ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ん…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL %CALLNAME:(TARGET)%は一心不乱に、しかし丁寧に口での奉仕を続ける…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW %CALLNAME:(TARGET)%は一心不乱に、しかし丁寧に口での奉仕を続ける…
+		ENDIF
+	ENDSELECT
+	
+	;69
+	IF ARG:1 == 5
+		PRINTFORM 「あ…私の方もシて頂けるんですか？　では…お願いします
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDIF
+
+;手で
+CASE 4
+	SELECTCASE RAND:2
+	CASE 0
+		IF FLAG:AUTOMODE
+			PRINTFORML 「手で…いいんですか？　せめて口くらい使わせてくれても？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「手で…いいんですか？　せめて口くらい使わせてくれても？」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL %CALLNAME:(TARGET)%はしなやかな指使いで男根をしごきあげるが、いささか不満気な表情だ…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW %CALLNAME:(TARGET)%はしなやかな指使いで男根をしごきあげるが、いささか不満気な表情だ…
+		ENDIF
+	CASEELSE
+		PRINTFORM 「くすっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　見つめてもらいながらシコシコされると…恥ずかしいけど気持ちいいでしょう？
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL %CALLNAME:(TARGET)%による的確な刺激によって、早くも%CALLNAME:(ARG:2)%のマグマは噴火寸前だ…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW %CALLNAME:(TARGET)%による的確な刺激によって、早くも%CALLNAME:(ARG:2)%のマグマは噴火寸前だ…
+		ENDIF
+	ENDSELECT
+
+ENDSELECT
+
+
+
+RETURN
+
+@FUTANARI_MEET_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;出会い頭治療
+
+	SELECTCASE ARG:1
+	;足でさせる
+	CASE 0
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORM 「そうですね…その足で挟んで…コスって頂けますか
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「では…申し訳ありませんが%CALLNAME_7_0(1)%の足で…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「では…申し訳ありませんが%CALLNAME_7_0(1)%の足で…」
+			ENDIF
+		ENDSELECT
+	
+	;口でさせる
+	CASE 2
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORM 「じゃあ…お口でお願いします
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「んー…その…%CALLNAME_7_0(1)%のお口で舐めて頂けたらな、と…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「んー…その…%CALLNAME_7_0(1)%のお口で舐めて頂けたらな、と…」
+			ENDIF
+		ENDSELECT
+	
+	;手でさせる
+	CASE 4
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORM 「どうすれば良いかですか？　そうですねぇ…手でコスって頂ければと
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「えーと…%CALLNAME_7_0(1)%にシコシコして頂けたら…多分治ると思います」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「えーと…%CALLNAME_7_0(1)%にシコシコして頂けたら…多分治ると思います」
+			ENDIF
+		ENDSELECT
+	
+	;れいぽぅする
+	CASE 6
+		SELECTCASE RAND:4
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あら、どこへ行こうというんですか…%CALLNAME_7_0(1)%…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あら、どこへ行こうというんですか…%CALLNAME_7_0(1)%…」
+			ENDIF
+		CASE 1
+			PRINTFORM 「ねぇ…お願いしますよ、%CALLNAME_7_0(1, 1)%
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 2
+			IF FLAG:AUTOMODE
+				PRINTFORML 「見て下さい…私のおちんぽ…こんなにギンギンになっちゃってるんですよ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「見て下さい…私のおちんぽ…こんなにギンギンになっちゃってるんですよ…」
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「もう…我慢できそうにないんです…だから……すみません%CALLNAME_7_0(1)%っっ！！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「もう…我慢できそうにないんです…だから……すみません%CALLNAME_7_0(1)%っっ！！」
+			ENDIF
+		ENDSELECT
+	
+	;足でさせられる
+	CASE 1
+			SELECTCASE RAND:2
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「足なんかでいいんですか？　では失礼して…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「足なんかでいいんですか？　では失礼して…」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「足でですか…ふふっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　えぇ、いいですよ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		
+	;口でさせられる
+	CASE 3
+			SELECTCASE RAND:4
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「分かりました、おくちで抜いて差し上げればいいんですね」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「分かりました、おくちで抜いて差し上げればいいんですね」
+				ENDIF
+			CASE 1
+				PRINTFORM 「くすくすっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　口で…ですね、了解致しました」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　口で…ですね、了解致しました」
+				ENDIF
+			CASE 2
+				PRINTFORM 「んぅ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　凄い臭ってきますね…　すぐに精液…出させてあげます
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「はい
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　では失礼して……かぷっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		
+	
+	;渋々手でする
+	CASE 5
+			SELECTCASE RAND:4
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「これで…宜しいですか？　私の方は別にお口でも他の場所でも構わないのですが…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「これで…宜しいですか？　私の方は別にお口でも他の場所でも構わないのですが…」
+				ENDIF
+			CASE 1
+				PRINTFORM 「うふふ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　ちょっとシコシコしちゃっただけで、ビクって反応してますよ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASE 2
+				PRINTFORM 「ほら…私の顔を見て下さい
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　射精したくなったら、いつでも私の顔にかけていいですからね…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「%CALLNAME_7_0(ARG:2)%のおちんちん…すっごく元気ですね♪　涎で私の手がべとべとです
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		
+	
+	;れいぽぅされる
+	CASE 7
+			SELECTCASE RAND:4
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…えっ！？　脚に触手が…？　や、やめて下さい…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…えっ！？　脚に触手が…？　や、やめて下さい…」
+				ENDIF
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あれ？　あれれっ！？　いつの間にこんな…うっ動けませんよ、これ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あれ？　あれれっ！？　いつの間にこんな…うっ動けませんよ、これ…」
+				ENDIF
+			CASE 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「や…触手が…脚に…だ、だめですってばぁ…そんなに左右に大きく開いたら…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「や…触手が…脚に…だ、だめですってばぁ…そんなに左右に大きく開いたら…」
+				ENDIF
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORMDL すてんっ
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW すてんっ
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「いたたた…何かにつまづいたと思ったら…足首に触手が絡まってますね…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「いたたた…何かにつまづいたと思ったら…足首に触手が絡まってますね…」
+				ENDIF
+			ENDSELECT
+		
+			SELECTCASE RAND:4
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「えーと…%CALLNAME_7_0(ARG:2)%？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「えーと…%CALLNAME_7_0(ARG:2)%？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「このまま収まりませんよね…その股間を見れば分かりますよ…はい」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「このまま収まりませんよね…その股間を見れば分かりますよ…はい」
+				ENDIF
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「もう…仕方ないですね。触手さんに捕まってしまったという事で…大義名分はできました♪」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「もう…仕方ないですね。触手さんに捕まってしまったという事で…大義名分はできました♪」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そう言って%CALLNAME:(TARGET)%は誘う様な目線を向けた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そう言って%CALLNAME:(TARGET)%は誘う様な目線を向けた…
+				ENDIF
+			CASE 2
+				PRINTFORM 「鼻息荒いですよ、%CALLNAME_7_0(ARG:2)%……分かりました、私で宜しければ、お相手します
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「この展開は…そうなりますよね、うんうん」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「この展開は…そうなりますよね、うんうん」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 追い込まれているはずなのに、どこか嬉しそうな%CALLNAME:(TARGET)%だった…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 追い込まれているはずなのに、どこか嬉しそうな%CALLNAME:(TARGET)%だった…
+				ENDIF
+			ENDSELECT
+			
+			SELECTCASE RAND:4
+			CASE 0
+				PRINTFORM 「では…どうぞ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　ぅん…挿入ってくる……
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASE 1
+				PRINTFORM 「せっかくですし…思う存分膣内に射精して下さいね
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASE 2
+				PRINTFORM 「ぜーんぶ…私のナカに注ぎ込んで下さいね、%CALLNAME_7_0(ARG:2, 1)%
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「んもう…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　ちゃんと私も満足させてくれないと…イヤですよ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		
+
+	ENDSELECT
+
+
+
+
+RETURN
+
+@FUTANARI_KISS_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;キス（ふたなり関係ないけど番号的にここで）
+
+	;攻め側
+	IF (ARG:1 & 1) == 0
+		SELECTCASE RAND:4
+		CASE 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 「じっとしていて下さい、%CALLNAME_7_0(ARG:3)%…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「じっとしていて下さい、%CALLNAME_7_0(ARG:3)%…」
+			ENDIF
+		CASE 1
+			PRINTFORM 「%CALLNAME_7_0(ARG:3)%ったら、そんな顔をして…その唇…欲しくなっちゃいます
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 2
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……%CALLNAME_7_0(ARG:3)%…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……%CALLNAME_7_0(ARG:3)%…」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:(TARGET)%はそう呟くと、そっと%CALLNAME:(ARG:3)%を引き寄せた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:(TARGET)%はそう呟くと、そっと%CALLNAME:(ARG:3)%を引き寄せた…
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…キス……しても宜しいでしょうか…？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…キス……しても宜しいでしょうか…？」
+			ENDIF
+		ENDSELECT
+		
+		LOCAL:0 = ARG:3
+	ELSE
+		LOCAL:0 = 1
+	ENDIF
+
+	;攻撃側受け側共通
+	SELECTCASE RAND:4
+	CASE 0
+		PRINTFORM 「%CALLNAME_7_0(LOCAL:0)%…んぅ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　うふふ…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「んむ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　んっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちゅぱっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちゅぷ…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	CASE 1
+		PRINTFORM 「ふふ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　…ん
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「…はふぅ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ん……っ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　んむ……
+		CALL HEARTCB(0xD02830, 2)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「んんっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　…んむっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちぷゅっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちゅっ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	CASE 2
+		PRINTFORM 「…ぶちゅぅ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちゅっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちゅぷ……
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちゅっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちゅぱっ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「…くすっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　素敵です…%CALLNAME_7_0(LOCAL:0, 1)%…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ん……
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	CASEELSE
+		PRINTFORM 「んっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ん
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちゅく…くちゅ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　ちゅぷ…
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「ふぅ…
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　…ふふっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　…んっ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 　んんんんぅぅ…
+		CALL HEARTCB(0xD02830, 2)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDSELECT
+
+
+RETURN
+
+
+;追加イベント
+;-----------------------------------------------------------------------------------------------------------------------------------------
+;	@INCLUDE KOJO_F_CONTAGION<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+
+@KOJO_F_RAPE_START_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+;襲撃開始
+
+	;攻め側
+	IF (LOCAL:1 & 1)
+		;射精中毒LV2以上
+		IF ABL:(ARG:1):12 >= 2
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……あ、起こしちゃいましたね……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……あ、起こしちゃいましたね……」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:(ARG:0)%が目を覚ますと、そこには今にも襲い掛かろうとしている%CALLNAME:(ARG:1)%が居た！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:(ARG:0)%が目を覚ますと、そこには今にも襲い掛かろうとしている%CALLNAME:(ARG:1)%が居た！
+			ENDIF
+			PRINTFORM 「むしろ意識があった方が…くすっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　私としても犯り甲斐があるというものです
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……すみません、%CALLNAME_7_0(ARG:0)%が寝ている間に済ましてしまおうと思っていたのですが…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……すみません、%CALLNAME_7_0(ARG:0)%が寝ている間に済ましてしまおうと思っていたのですが…」
+			ENDIF
+			PRINTFORM 「この…おちんちんから来る衝動に、どうしても抗えないんです
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 寝起き直後で意味も分からず%CALLNAME:(ARG:0)%は押し倒された…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 寝起き直後で意味も分からず%CALLNAME:(ARG:0)%は押し倒された…
+			ENDIF
+	;受け側
+	ELSE
+		IF FLAG:AUTOMODE
+			PRINTFORML 「…………ん？　えっ……%CALLNAME_7_0(ARG:0)%…もしかして私が寝ている間に！？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「…………ん？　えっ……%CALLNAME_7_0(ARG:0)%…もしかして私が寝ている間に！？」
+		ENDIF
+		PRINTFORM 「なんでそんな事するんですかっ！　こっそりするくらいなら…起こして下さいよぉ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	ENDIF
+
+RETURN
+
+@KOJO_F_RESIST_FAILED_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+;抵抗成功・失敗
+
+	;攻め側
+	IF (LOCAL:1 & 1)
+		;抵抗開始
+		IF (LOCAL:1 < 4)
+			PRINTFORM 「え…%CALLNAME_7_0(ARG:0)%自身もとっても気持ちよくなれるのに？　淫魔の私が保証しますよ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		;抵抗失敗
+		ELSEIF LOCAL:0 == 3
+			;触手スーツを暴走させる
+			IF (LOCAL:1 < 8)
+				PRINTFORM 「おや…%CALLNAME_7_0(ARG:0)%の服って、もしかして……うふふふふふ…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORMDL %CALLNAME:(ARG:0)%の服が普通でない事に気づいた%CALLNAME:(ARG:1)%は、
+				IF FLAG:AUTOMODE
+					PRINTFORMDL とても悪そうな顔で口の端を吊り上げて笑った
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW とても悪そうな顔で口の端を吊り上げて笑った
+				ENDIF
+			;触手スーツを暴走させ、行為再開した
+			ELSEIF (LOCAL:1 < 12)
+				PRINTFORM 「ふふ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　触手さんに責められて…大人しくなって頂けたみたいですね
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「これで準備もＯＫです…行きますよ、%CALLNAME_7_0(ARG:0)%
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;服を破く
+			ELSEIF (LOCAL:1 < 16)
+				IF FLAG:AUTOMODE
+					PRINTFORML 「暴れないで下さいっ。　ほら、服が肌蹴ちゃってますってば…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「暴れないで下さいっ。　ほら、服が肌蹴ちゃってますってば…」
+				ENDIF
+			
+			;服を破いて、行為再開した
+			ELSEIF (LOCAL:1 < 20)
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あーあ…まるでレイプされたみたいな格好になりましたね、%CALLNAME_7_0(ARG:0)%…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あーあ…まるでレイプされたみたいな格好になりましたね、%CALLNAME_7_0(ARG:0)%…」
+				ENDIF
+				PRINTFORM 「では、実際にレイプを始めましょう
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　大丈夫です、こっちは優しくしますから
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			
+			;服を着てなく、行為再開した
+			ELSEIF (LOCAL:1 < 24)
+				PRINTFORM 「くすくす…淫魔の私に寝技じゃ勝てないですよ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			
+			ENDIF
+		ENDIF
+		
+	;受け側
+	ELSE
+		;抵抗開始
+		IF (LOCAL:1 < 4)
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ、あの…私としては嬉しいんですが…今は体力を回復させないとこの後が…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ、あの…私としては嬉しいんですが…今は体力を回復させないとこの後が…」
+			ENDIF
+		;抵抗失敗
+		ELSEIF LOCAL:0 == 3
+			;触手スーツを暴走させられる
+			IF (LOCAL:1 < 8)
+				PRINTFORM 「んんんんぅッッ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　これ、下手に刺激しちゃほんと危ないですって…んふぅぅぅんんんッ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;触手スーツを暴走させられ、行為再開した
+			ELSEIF (LOCAL:1 < 12)
+				PRINTFORM 「…んもぅ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　こんなコトされたら…私の方も我慢が…できなくなっちゃいます
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;服を破かれた
+			ELSEIF (LOCAL:1 < 16)
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ちょっ！？　や、やめて下さいよ！！！　服なら脱ぎますからっ！！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ちょっ！？　や、やめて下さいよ！！！　服なら脱ぎますからっ！！！」
+				ENDIF
+			;行為再開した
+			ELSEIF (LOCAL:1 < 24)
+				IF FLAG:AUTOMODE
+					PRINTFORML 「……ふぅ……仕方ないですね、一回だけしたら大人しく寝る。約束ですよ？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「……ふぅ……仕方ないですね、一回だけしたら大人しく寝る。約束ですよ？」
+				ENDIF
+			ENDIF
+		ENDIF
+		
+	ENDIF
+
+RETURN
+
+@KOJO_F_RESIST_NON_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+;抵抗しない
+
+	;攻め側
+	IF (LOCAL:1 & 1)
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ありがとうございます！　%CALLNAME_7_0(ARG:0)%！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ありがとうございます！　%CALLNAME_7_0(ARG:0)%！」
+		ENDIF
+		PRINTFORM 「一回だけ…すっごく気持ちいいのをして…すっきり眠りにつきましょう
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+	;受け側
+	ELSE
+		IF FLAG:AUTOMODE
+			PRINTFORML 「……解りました、一回だけですよ？　あんまり頑張ると明日に差し支えありますからね」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「……解りました、一回だけですよ？　あんまり頑張ると明日に差し支えありますからね」
+		ENDIF
+	ENDIF
+RETURN
+
+;	@INCLUDE KOJO_F_RAPE_FIRST<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+
+;	@INCLUDE KOJO_F_RAPE_TENTACLES<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+
+;	@INCLUDE KOJO_F_RAPE_ADD<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+
+@KOJO_F_SEX_START_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+;夜這い開始
+
+	;攻め側
+	IF (LOCAL:1 & 1)
+		;要求
+		IF (LOCAL:1 < 4)
+			PRINTFORM 「%CALLNAME_7_0(ARG:0,1)%…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　その…１回だけでもいいので…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　その…１回だけでもいいので…」
+			ENDIF
+		;挿入前
+		ELSEIF (LOCAL:1 < 8)
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORM 「んぅ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　%CALLNAME_7_0(ARG:0)%の膣内…吸い込まれる様に挿入って行っちゃいます…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASE 1
+				PRINTFORM 「どうです？　この大きいモノが今から%CALLNAME_7_0(ARG:0)%の…ふふっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「その…濡れほそぼったところに…ずぷずぷずぷぅ…って、挿入っていくんですよ…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「さぁ…クスクス
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　%CALLNAME_7_0(ARG:0)%の…気持ち良くよがる顔…間近で見させて下さいね
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		;挿入後
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORM 「あぁ…んんぅ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　%CALLNAME_7_0(ARG:0, 1)%…んふ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　はぁ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　凄く…いい具合です…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASE 1
+				PRINTFORM 「んっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　んふぅっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　いい…ですよ、%CALLNAME_7_0(ARG:0)%
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　もっと…愛し合いましょう
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「%CALLNAME_7_0(ARG:0)%の膣内…ひだの一つ一つが…んぅ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　精液を搾り取ろうと絡まってきます
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		ENDIF
+		
+	;受け側
+	ELSE
+		;挿入前
+		IF (LOCAL:1 < 4)
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORM 「早く…待ちきれません……来て下さい…%CALLNAME_7_0(ARG:0, 1)%
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASE 1
+				PRINTFORM 「…んぅ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　焦らすおつもりですか？　くすっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　そんな事…させませんよ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:1)%は%CALLNAME:(ARG:0)%を抱きしめると、脚を絡めて自らヴァギナにペニスを器用に導いた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:1)%は%CALLNAME:(ARG:0)%を抱きしめると、脚を絡めて自らヴァギナにペニスを器用に導いた…
+				ENDIF
+			CASEELSE
+				PRINTFORM 「最高の…ふふっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　快楽を…味あわせてあげますよ、%CALLNAME_7_0(ARG:0)%
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		;挿入後
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORM 「ん…ぅぅんっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　いいですよ…%CALLNAME_7_0(ARG:0)%
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　好きな様に…動いて下さって…んん
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「%CALLNAME_7_0(ARG:0)%…気持ち良過ぎて腰が抜けちゃいましたか？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「%CALLNAME_7_0(ARG:0)%…気持ち良過ぎて腰が抜けちゃいましたか？」
+				ENDIF
+				PRINTFORM 「それでは私の方から…んぅ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　…ふぅ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　…ふぁぁっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORMDL %CALLNAME:(ARG:1)%が腰をくねらせる事により、
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:0)%のペニスが抽挿を始めた水音がいやらしく響き渡る…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:0)%のペニスが抽挿を始めた水音がいやらしく響き渡る…
+				ENDIF
+			CASEELSE
+				PRINTFORM 「んっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　そっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM そこぉ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　擦っ…てぇぇん
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　そう…%CALLNAME_7_0(ARG:0)%って…上手…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+		ENDIF
+	ENDIF
+
+RETURN
+
+;	@INCLUDE KOJO_F_SEX_FIRST<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+
+@KOJO_F_SEX_TENTACLES_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+;触手による追加攻撃
+
+	;攻め側
+	IF (LOCAL:1 & 1)
+		SELECTCASE LOCAL:1
+		;触手スーツが絡み合った
+		CASE 1, 3
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…これは…服同士が……まだ離れさせてもらえないみたいですね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…これは…服同士が……まだ離れさせてもらえないみたいですね」
+			ENDIF
+			PRINTFORM 「仕方ありません…%CALLNAME_7_0(ARG:0)%、続き…しましょうか
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		
+		;触手でふたなりになった(ループ中なので一回のみ表示)
+		CASE 5, 7
+			PRINTFORM 「くぅんっっ
+			CALL HEARTCB(0xD02830, 2)
+			PRINTFORM 　また…おちんちん生えちゃいました
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			PRINTFORM 「覚悟して下さい…%CALLNAME_7_0(ARG:0)%
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　もっと…溢れるまで…溢れてもまだ…注ぎ込んであげますから
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		
+		;触手に愛撫された(ループ中なので一回のみ表示)
+		CASE 9, 11
+			PRINTFORM 「…んぅ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　なんでしょう…私を愛撫して…早く%CALLNAME_7_0(ARG:0)%に注ぎ込めって事でしょうか…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　なんでしょう…私を愛撫して…早く%CALLNAME_7_0(ARG:0)%に注ぎ込めって事でしょうか…」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「たぶん…私たちを使って子孫を孕ませるのが目的みたいですし…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「たぶん…私たちを使って子孫を孕ませるのが目的みたいですし…」
+			ENDIF
+			PRINTFORM 「つまり…ふふふ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　%CALLNAME_7_0(ARG:0)%に…受精して頂く必要があるという事ですね
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		
+		;触手に愛撫され、射精された(ループ中なので一回のみ表示)
+		CASE 13, 15
+			PRINTFORM 「あ…ぁ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　もっと…もっと%CALLNAME_7_0(ARG:0)%の胎内に子種を注ぎ込めってぇ…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		
+		;触手が突然解放した
+		CASE 17, 19
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……あ…触手が…離れた？　えーと、それはつまり…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……あ…触手が…離れた？　えーと、それはつまり…」
+			ENDIF
+			PRINTFORM 「%CALLNAME_7_0(ARG:0)%が、おめでた…きゃっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			
+		;気絶してしまう
+		CASE 21, 23
+			PRINTFORM 「ふひゅぅぅぅ………
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　これ以上は……むり…です……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　これ以上は……むり…です……」
+			ENDIF
+		
+		;触手から脱出
+		CASE 25, 27
+			PRINTFORM 「ふぅ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　なんとか解けましたね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　なんとか解けましたね」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「セックスくらい…好きにさせて欲しいですよ、やっぱり…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「セックスくらい…好きにさせて欲しいですよ、やっぱり…」
+			ENDIF
+		
+		ENDSELECT
+
+	;受け側
+	ELSE
+		SELECTCASE LOCAL:1
+		;触手スーツが絡み合った
+		CASE 0, 2
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…あ…これ…勝手に絡まって……どうしましょう、%CALLNAME_7_0(ARG:0)%？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…あ…これ…勝手に絡まって……どうしましょう、%CALLNAME_7_0(ARG:0)%？」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 触手も絡んでいるが%CALLNAME:(ARG:1)%の両手両脚も%CALLNAME:(ARG:0)%の身体に、がっしりと絡められている
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 触手も絡んでいるが%CALLNAME:(ARG:1)%の両手両脚も%CALLNAME:(ARG:0)%の身体に、がっしりと絡められている
+			ENDIF
+			PRINTFORM 「諦めて…続き、しましょうか
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			
+;		;相手が触手でふたなりになった(ループ中なので一回のみ表示)
+;		CASE 4, 6
+			
+		;触手に愛撫された(ループ中なので一回のみ表示)
+		CASE 8, 10
+			PRINTFORM 「んんぅ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　膣内…ぢゅぽぢゅぽされながら…触手が全身を…ふぁぅぅぅ
+			CALL HEARTCB(0xD02830, 4)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			
+		;触手に愛撫され、射精された(ループ中なので一回のみ表示)
+		CASE 12, 14
+			PRINTFORM 「あっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM あ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　凄い…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　精液が勢い良くっ
+			CALL HEARTCB(0xD02830, 2)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　赤ちゃんの部屋…入口こじ開けて…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　赤ちゃんの部屋…入口こじ開けて…」
+			ENDIF
+			PRINTFORM 「ぶびゅびゅびゅぅぅぅぅぅっって流れ込んできてますッッッ
+			CALL HEARTCB(0xD02830, 5)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			
+		;触手が突然解放した
+		CASE 16, 18
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……え？　あれだけ強引に絡んでた触手が、放してくれましたね…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……え？　あれだけ強引に絡んでた触手が、放してくれましたね…」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「それと…今射精されたので…なんだか…子宮の中に…違和感の様な…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「それと…今射精されたので…なんだか…子宮の中に…違和感の様な…」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL お腹をさすった%CALLNAME:(ARG:1)%の中に、新たな生命が誕生した瞬間だった…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW お腹をさすった%CALLNAME:(ARG:1)%の中に、新たな生命が誕生した瞬間だった…
+			ENDIF
+			
+		;気絶してしまう
+		CASE 20, 22
+			PRINTFORM 「ふひゅぅぅぅ………
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　これ以上は……むり…です……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　これ以上は……むり…です……」
+			ENDIF
+			
+		;触手から脱出
+		CASE 24, 26
+			PRINTFORM 「ふぅ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　なんとか解けましたね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　なんとか解けましたね」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「セックスくらい…好きにさせて欲しいですよ、やっぱり…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「セックスくらい…好きにさせて欲しいですよ、やっぱり…」
+			ENDIF
+		
+		ENDSELECT
+	ENDIF
+
+RETURN
+
+;	@INCLUDE KOJO_F_SEX_DESIRE<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+
+;	@INCLUDE KOJO_F_SEX_ADD<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+
+@KOJO_F_DEMAND_START_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+;見返りを身体で要求
+
+	;攻め側
+	IF (LOCAL:1 & 1)
+		SELECTCASE LOCAL:1
+		;相手に要求
+		CASE 1 TO 11
+			;パチュリー（オリジナル）
+			IF (NO:(ARG:0) == 8) && (CFLAG:(ARG:0):104 == 0)
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あ、パチュリー様。アイテムですか？　もちろん、差し上げるのは構わないのですが…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あ、パチュリー様。アイテムですか？　もちろん、差し上げるのは構わないのですが…」
+				ENDIF
+			;好感度高
+			ELSEIF LOCAL:1 <= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「アイテムが必要なんですか？　うーん…差し上げても別にいいのですが…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「アイテムが必要なんですか？　うーん…差し上げても別にいいのですが…」
+				ENDIF
+			;好感度中
+			ELSEIF LOCAL:1 <= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「え？　困りましたね…こちらもアイテムが余っているわけではないですし…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「え？　困りましたね…こちらもアイテムが余っているわけではないですし…」
+				ENDIF
+			;好感度低
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「何かアイテムが欲しいのですか？　そうですねぇ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「何かアイテムが欲しいのですか？　そうですねぇ…」
+				ENDIF
+			ENDIF
+			
+			
+			;スカートあり
+			IF BASE:(ARG:1):CP >= (MAXBASE:(ARG:1):CP/2)
+				PRINTFORMDL ゆっくりとスカートをたくし上げた%CALLNAME:(ARG:1)%のそこには
+			;半裸
+			ELSEIF BASE:(ARG:1):CP > 0
+				PRINTFORMDL 下着姿の%CALLNAME:(ARG:1)%のショーツに目をやると、そこには
+			;全裸
+			ELSE
+				PRINTFORMDL 一糸纏わぬ%CALLNAME:(ARG:1)%の下腹部に目をやると、そこには
+			ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 本来あるわけのない、ガチガチに勃起した男のシンボルがビクビクと戦慄いていた
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 本来あるわけのない、ガチガチに勃起した男のシンボルがビクビクと戦慄いていた
+				ENDIF
+			
+			
+			;好感度高
+			IF LOCAL:1 <= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「せっかくこちらが要求できる機会ですし……解りますよね？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「せっかくこちらが要求できる機会ですし……解りますよね？」
+				ENDIF
+			ELSEIF LOCAL:1 <= 7
+				PRINTFORM 「貴女の身体と引き換え…というのはいかがでしょう？　%CALLNAME_7_0(ARG:0)%
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;好感度低
+			ELSE
+				PRINTFORM 「もちろんタダで…というわけにはいかないですね
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:1)%は妖艶な視線で見つめながら見返りに身体を要求した…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:1)%は妖艶な視線で見つめながら見返りに身体を要求した…
+				ENDIF
+			
+		;要求を受け入れられた(挿入前)
+		CASE 13 TO 23
+			PRINTFORM 「ふふ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　アイテムなんてどうでもよくなる位…夢見心地にして差し上げます
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			
+		;要求を受け入れられた(挿入後)
+		CASE 25 TO 35
+			PRINTFORM 「くすくす…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　挿入れただけで軽くイっちゃいました？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　挿入れただけで軽くイっちゃいました？」
+			ENDIF
+			PRINTFORM 「もう少し我慢ができないと…これからイキ過ぎて倒れてしまうかもしれませんよ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			
+		;要求を断られた
+		CASE 37 TO 47
+			IF FLAG:AUTOMODE
+				PRINTFORML 「そう…ですか…。　それはとても残念です…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「そう…ですか…。　それはとても残念です…」
+			ENDIF
+			
+		ENDSELECT
+
+	;受け側
+	ELSE
+		SELECTCASE LOCAL:1
+		;要求を受け入れる(挿入前)
+		CASE 0 TO 10
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あれ？　そんな事でいいんですか…？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あれ？　そんな事でいいんですか…？」
+			ENDIF
+			PRINTFORM 「それを見せ付けられていて…むしろこちらからお願いしたいくらいで…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:(ARG:1)%は妖しく舌舐めずりしながら、二つ返事で要求を快諾した
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:(ARG:1)%は妖しく舌舐めずりしながら、二つ返事で要求を快諾した
+			ENDIF
+			
+		;要求を受け入れる(挿入後)
+		CASE 12 TO 22
+			PRINTFORM 「んぅ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　%CALLNAME_7_0(ARG:0)%の逞しいものが…私のナカに挿入ってきます…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			
+		;要求を断った
+		CASE 24 TO 34
+			;パチュリー（オリジナル）
+			IF (NO:(ARG:0) == 8) && (CFLAG:(ARG:0):104 == 0)
+				IF FLAG:AUTOMODE
+					PRINTFORML 「えーと…ごめんなさい、パチュリー様。」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「えーと…ごめんなさい、パチュリー様。」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「今この状況でその要求を受け入れてしまうと…パチュリー様に危険が及ぶ可能性もありますので…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「今この状況でその要求を受け入れてしまうと…パチュリー様に危険が及ぶ可能性もありますので…」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:1)%は心底残念そうにしながら、%CALLNAME:(ARG:0)%に深くお辞儀をして去っていった…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:1)%は心底残念そうにしながら、%CALLNAME:(ARG:0)%に深くお辞儀をして去っていった…
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「申し訳ありません。要求の内容自体は、むしろ凄く魅力的なのですが…今はちょっと…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「申し訳ありません。要求の内容自体は、むしろ凄く魅力的なのですが…今はちょっと…」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:1)%は心底残念そうにしながら、%CALLNAME:(ARG:0)%にお辞儀をして去っていった…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:1)%は心底残念そうにしながら、%CALLNAME:(ARG:0)%にお辞儀をして去っていった…
+				ENDIF
+			ENDIF
+			
+		ENDSELECT
+	ENDIF
+
+RETURN
+
+;	@INCLUDE KOJO_F_DEMAND_FIRST<#>(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+
+@KOJO_F_COMMON_SEX_7_0(LOCAL:0, LOCAL:1, ARG:0, ARG:1)
+;ふたなりセックス共通処理
+
+	;共通化するために変数をセット
+	;LOCAL:2	フェイズ
+	;			攻め側	絶頂直前: 1、射精直前: 2、射精直後: 3、終わり: 4
+	;			受け側	絶頂直前:11、射精直前:12、射精直後:13、終わり:14
+	;			
+	;LOCAL:3	フラグ	絶頂: bit 0、中: bit 1
+	
+	LOCAL:2 = 0
+	LOCAL:3 = 0
+	
+	SELECTCASE LOCAL:0
+	;レイプ、合意・一回目の行為
+	CASE 5,9
+		;強絶頂・絶頂
+		IF LOCAL:1 < 48
+			LOCAL:3 |= 1
+		ENDIF
+		
+		;中出し
+		IF (LOCAL:1 <= 11) || ((LOCAL:1 >= 24)&&(LOCAL:1 <= 35)) || ((LOCAL:1 >= 48)&&(LOCAL:1 <= 55))
+			LOCAL:3 |= 2
+		ENDIF
+		
+		;攻め側
+		IF (LOCAL:1 & 1)
+			SELECTCASE LOCAL:1
+			;絶頂直前
+			CASE  1,  3, 13, 15, 25, 27, 37, 39
+				LOCAL:2 = 1
+				
+			;射精直前
+			CASE  5,  7, 17, 19, 29, 31, 41, 43, 49, 51, 57, 59
+				LOCAL:2 = 2
+				
+			;射精後
+			CASE  9, 11, 21, 23, 33, 35, 45, 47, 53, 55, 61, 63
+				LOCAL:2 = 3
+				
+			;終わり
+			CASE 65, 67
+				LOCAL:2 = 4
+				
+			ENDSELECT
+			
+		;受け側
+		ELSE
+			SELECTCASE LOCAL:1
+			;絶頂直前
+			CASE  0,  2, 12, 14, 24, 26, 36, 38
+				LOCAL:2 = 11
+				
+			;射精直前
+			CASE  4,  6, 16, 18, 28, 30, 40, 42, 48, 50, 56, 58
+				LOCAL:2 = 12
+				
+			;射精後
+			CASE  8, 10, 20, 22, 32, 34, 44, 46, 52, 54, 60, 62
+				LOCAL:2 = 13
+				
+			;終わり
+			CASE 64, 66
+				LOCAL:2 = 14
+				
+			ENDSELECT
+		ENDIF
+	
+	;見返りで身体を要求・一回目の行為
+	CASE 15
+		;攻め側
+		IF (LOCAL:1 & 1)
+			SELECTCASE LOCAL:1
+			;絶頂直前
+			CASE 1 TO 23
+				LOCAL:2 = 1
+			;射精直前
+			CASE 25 TO 71
+				LOCAL:2 = 2
+				
+				;絶頂あり
+				IF LOCAL:1 < 48
+					LOCAL:3 |= 1
+				ENDIF
+				
+				;中出し
+				SELECTCASE LOCAL:1
+				CASE 25, 27, 33, 35, 41, 43, 49, 51, 57, 59, 65, 67
+					LOCAL:3 |= 2
+				ENDSELECT
+				
+			;射精直後
+			CASE 73 TO 119
+				LOCAL:2 = 3
+				
+				;絶頂あり
+				IF LOCAL:1 < 96
+					LOCAL:3 |= 1
+				ENDIF
+				
+				;中出し
+				SELECTCASE LOCAL:1
+				CASE 73, 75, 81, 83, 89, 91, 97, 99, 105, 107, 113, 115
+					LOCAL:3 |= 2
+				ENDSELECT
+				
+			ENDSELECT
+		;受け側
+		ELSE
+			SELECTCASE LOCAL:1
+			;絶頂直前
+			CASE 0 TO 22
+				LOCAL:2 = 11
+				
+			;射精直前
+			CASE 24 TO 70
+				LOCAL:2 = 12
+				
+				;絶頂あり
+				IF LOCAL:1 < 48
+					LOCAL:3 |= 1
+				ENDIF
+				
+				;中出し
+				SELECTCASE LOCAL:1
+				CASE 24, 26, 32, 34, 40, 42, 48, 50, 56, 58, 64, 66
+					LOCAL:3 |= 2
+				ENDSELECT
+				
+			;射精直後
+			CASE 72 TO 118
+				LOCAL:2 = 13
+				
+				;絶頂あり
+				IF LOCAL:1 < 96
+					LOCAL:3 |= 1
+				ENDIF
+				
+				;中出し
+				SELECTCASE LOCAL:1
+				CASE 72, 74, 80, 82, 88, 90, 96, 98, 104, 106, 112, 114
+					LOCAL:3 |= 2
+				ENDSELECT
+				
+			ENDSELECT
+		ENDIF
+	ENDSELECT
+	
+;"
+;ふたなりセックス フェイズ{LOCAL:2} 絶頂{LOCAL:3&1} 中{LOCAL:3&2}
+;"
+	
+	SELECTCASE LOCAL:2
+	;攻め側
+	;絶頂直前
+	CASE 1
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORM 「%CALLNAME_7_0(ARG:0, 1)%…ひと突きごとにビクってしちゃって…くすくすっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASE 1
+			PRINTFORM 「その羞恥と快楽に染まった顔…うふふ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　これから…もっと凄いのがキますよ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「んんぅ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　とても具合が良いですよ、%CALLNAME_7_0(ARG:0)%の膣肉が絡みついて…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+		
+	;射精直前
+	CASE 2
+		;絶頂あり
+		IF LOCAL:3 & 1
+			IF RAND:3 == 0
+				PRINTFORM 「んぅ…っ
+				CALL HEARTCB(0xD02830, 2)
+				PRINTFORM 　%CALLNAME_7_0(ARG:0,1)%…そろそろ…私の方も限界みたいです…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ELSE
+				;中出し
+				IF LOCAL:3 & 2
+					PRINTFORM 「そんなに足を絡めちゃってぇ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　%CALLNAME_7_0(ARG:0)%ったら膣内に欲しいんですね
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「いいですよ…一番奥に…んんっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　びゅびゅーーーってッッッ
+					CALL HEARTCB(0xD02830, 5)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;外出し
+				ELSE
+					PRINTFORM 「そう…ですね…%CALLNAME_7_0(ARG:0)%のお顔を見てたらなんだか…穢したくなっちゃいました
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「ほらぁ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　しっかり舌を出して受け止めて下さいっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　んんあああああぁぁぁんッッ
+					CALL HEARTCB(0xD02830, 5)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			ENDIF
+		
+		;絶頂無し
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORM 「くぅ…んんっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　だ、だめっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　私の方が…さっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 先にッ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　イっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM イっちゃ…………ッ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ELSE
+				;中出し
+				IF LOCAL:3 & 2
+					PRINTFORM 「うふふ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　さぁ…%CALLNAME_7_0(ARG:0)%の膣内に…注ぎ込んであげます…ねっっっ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;外出し
+				ELSE
+					PRINTFORM 「んぅ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　もう…我慢が…んっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　んんっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　だっ…だめぇぇぇぇぇぇぇ～～～っ
+					CALL HEARTCB(0xD02830, 4)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+		
+	;射精直後
+	CASE 3
+		;中出し
+		IF LOCAL:3 & 2
+			;絶頂あり
+			IF LOCAL:3 & 1
+				SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「ん……ぅ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　全部注ぎ込むまで…じっとしていて下さいね、%CALLNAME_7_0(ARG:0)%
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORMDL %CALLNAME:(ARG:1)%は子宮口にぴったりと亀頭を密着させたまま
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 少しでも子宮内に入る様にと%CALLNAME:(ARG:0)%の身体を優しく揺すった…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 少しでも子宮内に入る様にと%CALLNAME:(ARG:0)%の身体を優しく揺すった…
+					ENDIF
+				CASE 1
+					PRINTFORM 「……ふぁぁ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　%CALLNAME_7_0(ARG:0,1)%
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　どくどく射精てるの…わかります？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 　どくどく射精てるの…わかります？」
+					ENDIF
+					PRINTFORM 「私のせーえき…%CALLNAME_7_0(ARG:0)%の赤ちゃんのお部屋…たぷたぷになるまで注いじゃいます
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				CASEELSE
+					PRINTFORM 「…ふぅ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　もう少し…繋がったままで居させて下さい
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「うふふ…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　%CALLNAME_7_0(ARG:0)%の膣内がピクピク悦んでるのが伝わってきて…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 　%CALLNAME_7_0(ARG:0)%の膣内がピクピク悦んでるのが伝わってきて…
+					ENDIF
+				ENDSELECT
+			ELSE
+				PRINTFORM 「…んふぅ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　%CALLNAME_7_0(ARG:0)%の膣内気持ち良過ぎて…我慢できずに射精ちゃいました…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　%CALLNAME_7_0(ARG:0)%の膣内気持ち良過ぎて…我慢できずに射精ちゃいました…」
+				ENDIF
+				PRINTFORM 「次はきっと…%CALLNAME_7_0(ARG:0)%がイってる時に合わせてみせますから
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		;外出し
+		ELSE
+			;絶頂あり
+			IF LOCAL:3 & 1
+				SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「……ふはぁ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　%CALLNAME_7_0(ARG:0)%…顔にも胸にも…たくさんかかっちゃいましたね
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「これが…%CALLNAME_7_0(ARG:0)%の膣内に入っていたんですよ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　ほら…舐めてみて下さい…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORMDL 目の前に差し出された、%CALLNAME:(ARG:1)%の精液と%CALLNAME:(ARG:0)%の愛液に塗れたペニスに
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(ARG:0)%は朦朧としたままおずおずと舌を伸ばした…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(ARG:0)%は朦朧としたままおずおずと舌を伸ばした…
+					ENDIF
+				CASE 1
+					PRINTFORM 「まっまだ射精ますっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　%CALLNAME_7_0(ARG:0,1)%っ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(ARG:1)%の剛直は依然衰えぬまま、びゅるびゅると欲望を撒き散らしていた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(ARG:1)%の剛直は依然衰えぬまま、びゅるびゅると欲望を撒き散らしていた
+					ENDIF
+					PRINTFORM 「…はぁ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　%CALLNAME_7_0(ARG:0)%の綺麗なお顔が…私の精液でドロドロです…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				CASEELSE
+					PRINTFORM 「…ぅん…ぅ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　ふぅ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　なんだか…随分とせーえき撒き散らしちゃいましたね
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL その傍ら、色々な体液の水溜りに息も絶え絶え倒れこんでいる%CALLNAME:(ARG:0)%の姿があった…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW その傍ら、色々な体液の水溜りに息も絶え絶え倒れこんでいる%CALLNAME:(ARG:0)%の姿があった…
+					ENDIF
+				ENDSELECT
+			ELSE
+				PRINTFORM 「…あぁ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　申し訳ありません、%CALLNAME_7_0(ARG:0)%…一人で先にイってしまって…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　申し訳ありません、%CALLNAME_7_0(ARG:0)%…一人で先にイってしまって…」
+				ENDIF
+				PRINTFORM 「次こそは…絶頂で震える%CALLNAME_7_0(ARG:0)%の子宮に注ぎ込んでみせますから…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		ENDIF
+	
+	;終わり
+	CASE 4
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORM 「…とりあえずは満足できました
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　ありがとうございます、%CALLNAME_7_0(ARG:0)%
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「ふぅ、助かりました♪　ではおやすみなさい、%CALLNAME_7_0(ARG:0)%
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+	
+	;受け側
+	;絶頂直前
+	CASE 11
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORM 「んっ…く
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　イっ…ちゃう……%CALLNAME_7_0(ARG:0)%もっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　一緒…にっ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　%CALLNAME_7_0(ARG:0,1)%…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			PRINTFORM 「んぅ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　ねぇ…%CALLNAME_7_0(ARG:0,1)%
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　このまま一緒に……ん
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　んんっ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+		
+	;射精直前
+	CASE 12
+		;絶頂あり
+		IF LOCAL:3 & 1
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「くぅぅぅっっ
+				CALL HEARTCB(0xD02830, 2)
+				PRINTFORM 　膣内にっ…下さいっっっっっ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「んんんん～～ッッ
+				CALL HEARTCB(0xD02830, 2)
+				PRINTFORM 　膣内に…射精してぇぇぇぇんんんッッッ
+				CALL HEARTCB(0xD02830, 4)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+			
+			;中出し
+			IF LOCAL:3 & 2
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(ARG:1)%は脚を強く絡めて%CALLNAME:(ARG:0)%を抱きしめ、その瞬間を待ち構えた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(ARG:1)%は脚を強く絡めて%CALLNAME:(ARG:0)%を抱きしめ、その瞬間を待ち構えた…
+				ENDIF
+			ENDIF
+			
+		;絶頂無し
+		ELSE
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「…ふふっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　イっちゃうんですよね
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　いいですよ…ほら…いっぱい射精して下さい
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			CASEELSE
+				PRINTFORM 「いつ見ても…精を放つ直前の顔って素敵です
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　限界でしょう…さぁ…思う存分…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+			
+			;中出し
+			IF LOCAL:3 & 2
+				PRINTFORMDL %CALLNAME:(ARG:0)%の身体を優しく抱きしめた%CALLNAME:(ARG:1)%は、膣内を蠢かせ射精を促した…
+			ENDIF
+		ENDIF
+		
+	;射精直後
+	CASE 13
+		;絶頂あり
+		IF LOCAL:3 & 1
+			;中出し
+			IF LOCAL:3 & 2
+				SELECTCASE RAND:3
+				CASE 0
+					PRINTFORM 「………ん
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　膣内射精されて一緒にイクと…より美味しい精気が味わえるんです…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(ARG:1)%は優しく%CALLNAME:(ARG:0)%を抱きしめながら耳元で囁いた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(ARG:1)%は優しく%CALLNAME:(ARG:0)%を抱きしめながら耳元で囁いた…
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL いまだ%CALLNAME:(ARG:1)%の膣内では緩やかな射精が断続的に続いている…全てを搾り尽くすかの様に…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW いまだ%CALLNAME:(ARG:1)%の膣内では緩やかな射精が断続的に続いている…全てを搾り尽くすかの様に…
+					ENDIF
+				CASE 1
+					PRINTFORM 「うぅん……っ
+					CALL HEARTCB(0xD02830, 2)
+					PRINTFORM 　…はぁ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　一緒に…イキましたね、%CALLNAME_7_0(ARG:0)%
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「おなかの中…ふふっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　たっぷたぷになるくらい射精してもらっちゃいました
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				
+				CASEELSE
+					PRINTFORM 「%CALLNAME_7_0(ARG:0)%…んもぅ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　いつまで射精すれば気が済むんですか
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「まだ…膣内で、おちんちん…びゅくんびゅくんさせて…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「いくら私のおまんこが淫魔のそれだからって…流石に射精し過ぎですよぉ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				
+				ENDSELECT
+			;外だし
+			ELSE
+				PRINTFORM 「……もう…ひどいです…%CALLNAME_7_0(ARG:0)%。　お願いですから次は膣内で射精して下さいよぉ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+			
+		;絶頂無し
+		ELSE
+			;中出し
+			IF LOCAL:3 & 2
+				SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「……ふふ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　膣内でどくんどくんって
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「せーえきぴゅっぴゅしながら、ふるふる震えてる今の%CALLNAME_7_0(ARG:0)%…凄く可愛いです
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 射精の快感に腰砕けになっている%CALLNAME:(ARG:0)%の身体を%CALLNAME:(ARG:1)%は優しく抱きしめた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 射精の快感に腰砕けになっている%CALLNAME:(ARG:0)%の身体を%CALLNAME:(ARG:1)%は優しく抱きしめた
+					ENDIF
+				CASEELSE
+					PRINTFORM 「あらあら…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　私がまだイってないのに…我慢できないおちんちんですね
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「いいですよ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　%CALLNAME_7_0(ARG:0)%が…くすくす
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　気の済むまで…吐き出してくれれば…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDSELECT
+			;外だし
+			ELSE
+				PRINTFORM 「…あぁぁ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　精液…こんなにいっぱい…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　今度は…膣内にも下さいね
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 顔に身体にぶちまけられた精液を指で拭い舐め取りながら、%CALLNAME:(ARG:1)%は妖艶に微笑んだ…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 顔に身体にぶちまけられた精液を指で拭い舐め取りながら、%CALLNAME:(ARG:1)%は妖艶に微笑んだ…
+				ENDIF
+			ENDIF
+			
+		ENDIF
+	;終わり
+	CASE 14
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORM 「うふふ…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　満足げな顔ですね、%CALLNAME_7_0(ARG:0)%
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　お疲れ様でした
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		CASEELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「いかがでした？　これで心地良く…眠りにつけるでしょうか？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「いかがでした？　これで心地良く…眠りにつけるでしょうか？」
+			ENDIF
+			PRINTFORM 「まだお望みであれば……続きは…夢の中で
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDSELECT
+	
+	ENDSELECT
+
+RETURN
+
+

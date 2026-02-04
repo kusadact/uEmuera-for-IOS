@@ -1,0 +1,155 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 1 味方の攻撃 (発動時) - 30～34 非消耗武器攻撃
+; ------------------------------------------------------------------------------
+
+; □ 30 非消耗武器攻撃 弱攻撃
+@KOJO_27_0_SYSTEM_MESSAGE_1_30(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 汎用口上を読み込む
+	CALL KOJO_27_0_SYSTEM_MESSAGE_1_DIRECT_ATTACK(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL KOJO_27_0_FIX_MESSAGE
+	
+	SELECTCASE KOJO_MODE
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「できるだけヒットアンドアウェイで」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「軽く攻撃して、すぐに離れるっ！」\n"
+	ENDSELECT
+RETURN RESULT
+
+
+; □ 31 非消耗武器攻撃 中攻撃
+@KOJO_27_0_SYSTEM_MESSAGE_1_31(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 汎用口上を読み込む
+	CALL KOJO_27_0_SYSTEM_MESSAGE_1_DIRECT_ATTACK(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL KOJO_27_0_FIX_MESSAGE
+RETURN RESULT
+
+
+; □ 32 非消耗武器攻撃 強攻撃
+@KOJO_27_0_SYSTEM_MESSAGE_1_32(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 汎用口上を読み込む
+	CALL KOJO_27_0_SYSTEM_MESSAGE_1_DIRECT_ATTACK(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL KOJO_27_0_FIX_MESSAGE
+	
+	SELECTCASE KOJO_MODE
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「大振りの近接攻撃って性格的に合わないわ～」\n"
+	ENDSELECT
+RETURN RESULT
+
+
+; □ 33 非消耗武器攻撃 下段狙い
+@KOJO_27_0_SYSTEM_MESSAGE_1_33(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE KOJO_MODE
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「わざわざ使い魔を壊す人間の気持ちがわからないでもないわ」\n"
+	ENDSELECT
+RETURN 1
+
+
+; □ 34 非消耗武器攻撃 急所狙い
+@KOJO_27_0_SYSTEM_MESSAGE_1_34(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE KOJO_MODE
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「スキあり！」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「で、油断したところを仕留めると」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「そっこだぁ！」\n"
+	ENDSELECT
+RETURN 1
+
+
+; □ XX 非消耗武器攻撃 汎用口上
+@KOJO_27_0_SYSTEM_MESSAGE_1_DIRECT_ATTACK(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 汎用攻撃口上を読み込む
+	CALL KOJO_27_0_SYSTEM_MESSAGE_1_VERSATILE_ATTACK(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL KOJO_27_0_FIX_MESSAGE
+	
+	; 残りMP 33%以上
+	IF BASE:1 >= (MAXBASE:1 / 100 * 33)
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「叩いて、のめすッ！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「攻撃のたび近づくとか危ないなあ、もう！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「もっと離れて攻撃したいわ～」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「攻撃したらすぐに離れる！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「もうちょこっと離れて攻撃できるといいんだけどねー」\n"
+		ENDSELECT
+		
+	; 残りMP 0%以上
+	ELSEIF BASE:1 >= (MAXBASE:1 / 100 * 0)
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ううっ……　武器が重い……っ……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（こんなフラフラな状態で直接攻撃しなきゃいけないなんて……）\n"
+		ENDSELECT
+	ENDIF
+	
+	; 1人で行動中なら追加口上
+	IF GET_MEMBER_SUM() == 1
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「一人で戦う時は、あんま敵に近付きたくないんだけどなあ」\n"
+		ENDSELECT
+	ENDIF
+	
+	; 2人以上のPTで行動中、他キャラが行動可能なら追加口上
+	IF GET_MEMBER_SUM() > 1 && ((TARGET != 1 && CHECK_FINE(TARGET)) || (FLAG:10 && FLAG:10 != TARGET && CHECK_FINE(FLAG:10)) || (FLAG:11 && FLAG:11 != TARGET && CHECK_FINE(FLAG:11)))
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「力はあんま無いから、直接攻撃とか他のヒトに任せたいんだけどねぇ」\n"
+		ENDSELECT
+	ENDIF
+		
+	; 武器別追加口上
+	SELECTCASE TFLAG:67
+	; こんぼう
+	CASE 10
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「もうちょっと強い武器が欲しいわ～」\n"
+		ENDSELECT
+		
+	; ナギナタ
+	CASE 11
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「長モノで直接攻撃なんて、あたしのキャラじゃないわよねー\n　杵ならしっくりくるんだけど…」\n"
+		ENDSELECT
+	
+		; 2人以上のパーティーなら追加口上
+		IF GET_MEMBER_SUM() > 1
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「周りの味方を巻き込まないように…と、長モノはコレがあるから面倒だわ」\n"
+			ENDSELECT
+		ENDIF
+		
+	; 白狼刀
+	CASE 12
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「うぅ…　重いなあ、この刀…」\n"
+		ENDSELECT
+		
+	; マジカルステッキ
+	CASE 13
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「殴っても強い魔法杖ってお約束よね」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「強いのはいいんだけど、星とかハートとか飛ぶのは小っ恥ずかしいわ…」\n"
+		ENDSELECT
+		
+	; 緋緋色金の剣
+	CASE 16
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「えーい！　剣の錆にしてくれる！　錆びないけど！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「切れ味の良すぎる剣って、それはそれで怖いわ」\n"
+		ENDSELECT
+	ENDSELECT
+RETURN 1
+

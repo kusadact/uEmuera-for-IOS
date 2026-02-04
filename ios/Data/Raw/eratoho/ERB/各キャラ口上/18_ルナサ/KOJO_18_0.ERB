@@ -1,0 +1,1692 @@
+﻿;*********************************************************
+;　東方触手宮　ルナサ口上　　　★スーパー静葉口上の改変  プリントDLだと白かな。
+;		2020 11/1
+;*********************************************************
+
+;	CFLAG
+;	800	スーパーモード　１オン　２オフ
+;	801	トラウマ値	エンディング分岐につかおうかなー
+;	802	相棒関連　０そもそも迷宮内にいない　１迷宮内にいる　２目撃情報あり　３であった　４遺品発見済み　５穣子生還せず(エンディングで使用)　６穣子がいないといわれた
+;	803 相棒のキャラID
+;	804 雑多な判定
+
+;口上選択時のタイトル
+@KOJO_TITLE_18_0
+RESULTS = 東方触手宮　スーパールナサ口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_18_0
+PRINTFORML 静葉さんの秋モードにノリを合わせる。
+PRINTFORML では、よい触手ライフを…
+
+;文字色　銀
+@KOJO_DEFAULT_COLOR_18_0
+IF CFLAG:104
+	RETURN RGBCOLOR(236, 124, 79)
+ELSE
+	RETURN RGBCOLOR(150, 200, 200)
+ENDIF
+
+;口上本体
+@KOJO_18_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+;OP、EDスキップの為にシステムメッセージとばす
+CALL KOJO_18_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;文字色設定
+SETCOLOR CFLAG:700
+
+	SELECTCASE ARG:0
+		;オープニング
+		CASE 203
+
+
+
+
+		;キャラ選択
+		CASE 159
+
+
+			DRAWLINE
+
+			PRINTL 
+			;スーパーモードオン
+			CFLAG:800 = 1
+
+
+			
+			
+		ENDSELECT
+
+
+
+
+;スーパーモード口上
+IF CFLAG:800 == 1
+
+	;寝てる
+	IF CFLAG:25 && CFLAG:29 != 1
+
+	SELECTCASE ARG:0
+		;HPダメージ
+		CASE 12
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「まぁ……メルランったら」
+				CASE 1
+					PRINTFORML 「もぅ……ルナサったら」
+				CASE 2
+					PRINTFORML 「……本番前に……練習ぅ」
+				CASEELSE
+					PRINTFORML 「……まだ休演中ぅ」
+			ENDSELECT
+		;寄生、性攻撃
+		CASE 14 ,16
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「すぅ…zzz」
+				CASE 1
+					PRINTFORML 「すぅ……すぅ……」
+				CASE 2
+					PRINTFORML 「……すぅ～……すりぷる……すぅ～……」
+				CASEELSE
+					PRINTFORML 「柔らかいって……すぅ……」
+			ENDSELECT
+	ENDSELECT
+
+;*****************************************************
+	
+;通常時
+ELSE
+	SELECTCASE ARG:0
+		
+		CASE 1
+
+			IF ARG:1 > 9 && ARG:1 < 35 && CFLAG:28 > 0
+				SELECTCASE RAND:19
+					CASE 0
+						PRINTFORML （これじゃ演奏できない……♥）
+					CASE 1
+						PRINTFORML 「こ、こんな状態じゃ……♥」
+					CASE 2
+						PRINTFORML 「ひ、ひきょうものッ♥」
+					CASE 3
+						PRINTFORML （おちつかないと……♥）
+					CASE 4
+						PRINTFORML （どこかでこっそり『独奏』の練習しないと……♥）
+					CASE 5
+						PRINTFORML （カラダ、火照ってる……♥）
+					CASE 6
+						PRINTFORML （もう濡れて……♥）
+					CASE 7
+						PRINTFORML （姉としてしっかりしないと……♥）
+					CASE 8
+						PRINTFORML （どうしよう……♥）
+					CASE 9
+						PRINTFORML （疼いてる……♥）
+					CASE 10
+						PRINTFORML （ア、アソコが……♥）
+					CASE 11
+						PRINTFORML （しゅうちゅうして……平常心を……♥）
+					CASE 12
+						PRINTFORML （ク、クリが……♥）
+					CASE 13
+						PRINTFORML （む、胸が擦れて……♥）
+					CASE 14
+						PRINTFORML （いま、ジワって……♥）
+					CASE 15
+						PRINTFORML （敏感にされたッ♥）
+					CASE 16
+						PRINTFORML （これじゃ、アノ音が漏れる……♥）
+					CASE 17
+						PRINTFORML （こんなノイズくらいで……♥）
+					CASE 18
+						PRINTFORML （一度手入れしないとぉ♥）
+				ENDSELECT
+
+				GOTO KOJO_18_END_LOOP
+			ENDIF
+
+
+			SELECTCASE ARG:1
+				;防御
+				CASE 1
+					;発情
+					IF CFLAG:28 > 0
+						PRINTFORML 「ち、近寄るなぁ……♥」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「小休止」
+							CASE 1
+								PRINTFORML 「近寄らないで」
+							CASE 2
+								PRINTFORML 「ここは一旦下がる」
+						ENDSELECT
+	;				;全裸
+	;				ELSEIF !BASE:CP
+	;					SELECTCASE RAND:3
+	;						CASE 0
+	;							PRINTFORML 
+	;						CASE 1
+	;							PRINTFORML 
+	;						CASE 2
+	;							PRINTFORML 
+	;					ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「小休止」
+							CASE 1
+								PRINTFORML 「近寄らないで」
+							CASE 2
+								PRINTFORML 「ここは一旦下がる」
+						ENDSELECT
+					ENDIF
+				;アイテム
+				CASE 2
+					PRINTFORML 「何かあったはずだけど……」
+				;前進
+				CASE 3
+					PRINTFORML 「ここは姉として」
+				;後退
+				CASE 4
+					PRINTFORML 「一度距離を取ろうか」
+				;逃走
+				CASE 5
+					;発情
+					IF CFLAG:28 > 0
+						PRINTFORML 「こんな状況で戦えるわけが……♥」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「逃げるよ」
+							CASE 1
+								PRINTFORML 「しぶとい奴は嫌い」
+							CASE 2
+								PRINTFORML 「大人しくしててね？」
+
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「逃げるよ」
+							CASE 1
+								PRINTFORML 「しぶとい奴は嫌い」
+							CASE 2
+								PRINTFORML 「大人しくしててね？」
+						ENDSELECT
+					ENDIF
+				
+				;弾幕攻撃
+				;弱弾幕
+				CASE 10
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						PRINTFORMDL ルナサの呼吸が乱れている……
+
+
+						SELECTCASE RAND:6
+							CASE 0
+								PRINTFORML 「響かせるよ」
+							CASE 1
+								PRINTFORML 「届かせるよ」
+							CASE 2
+								PRINTFORML 「これが私の前奏曲」
+							CASE 3
+								PRINTFORML 「柔らかな水の音のように」
+							CASE 4
+								PRINTFORML 「誘いの調べを…」
+							CASE 5
+								PRINTFORML 「テンポを上げるよ。これでもついてこれる？」
+
+
+
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:6
+							CASE 0
+								PRINTFORML 「響かせるよ」
+							CASE 1
+								PRINTFORML 「届かせるよ」
+							CASE 2
+								PRINTFORML 「これが私の前奏曲」
+							CASE 3
+								PRINTFORML 「柔らかな水の音のように」
+							CASE 4
+								PRINTFORML 「誘いの調べを…」
+							CASE 5
+								PRINTFORML 「テンポを上げるよ。これでもついてこれる？」
+
+
+						ENDSELECT
+
+					ENDIF
+				;中弾幕
+				CASE 11
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						PRINTFORMDL ルナサの呼吸が乱れている……
+
+					ENDIF
+
+					IF RAND:10 > 1000
+						;死に分岐用
+
+					;その他
+					ELSE
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「良い結末を迎えるかどうかは自分次第」
+							CASE 1
+								PRINTFORML 「散ってしまえばいいのに」
+							CASE 2
+								PRINTFORML 「嫌な音は私が消す」
+							CASE 3
+								PRINTFORML 「永遠に静かにして」
+							CASE 4
+								PRINTFORML 「優しい旋律だけが流れ続ければいいのに」
+						ENDSELECT
+					ENDIF
+				;強弾幕
+				CASE 12
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+
+						PRINTFORMDL ルナサの呼吸が乱れている……
+
+					ENDIF
+
+					IF RAND:10 > 100
+						;無駄な空欄確保
+
+					;その他
+					ELSE
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「これだけじゃ全部は伝えられないけど、今はこれが精一杯。わかったら、二度と近寄らないで」
+							CASE 1
+								PRINTFORML 「派手めに行ってみようか」
+							CASE 2
+								PRINTFORML 「塵ひとつ残さない！」
+							CASE 3
+								PRINTFORML 「掃除の時間！」
+							CASE 4
+								PRINTFORML 「これが音楽の力よ！」
+						ENDSELECT
+
+
+					ENDIF
+				;溜め撃ち
+				CASE 13
+					;溜め
+					IF CFLAG:31 == 2
+						PRINTFORML 「ここからは徐々に強く……」
+					;発射
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「全てを…流す！」
+							CASE 1
+								PRINTFORML 「これでフィナーレ！」
+
+						ENDSELECT
+
+					ENDIF
+				;ばら撒き弾
+				CASE 14
+					PRINTFORML 「逃がさないよ」
+				;貫通弾
+				CASE 15
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「まとめて綺麗にするよ！」
+						CASE 1
+							PRINTFORML 「この会場は空席だけでいい！」
+						CASE 2
+							PRINTFORML 「戦列を突き破る！」
+						CASE 3
+							PRINTFORML 「貫け！雷鳴の如く！」
+						CASE 4
+							PRINTFORML 「串刺しにするよ！」
+					ENDSELECT
+
+				;消耗武器
+				CASE 20 TO 25
+					SELECTCASE RAND:7
+						CASE 0
+							PRINTFORML 「このほうが手っ取り早い」
+						CASE 1
+							PRINTFORML 「私じゃ上手く扱えないかも……ううん、善処する」
+						CASE 2
+							PRINTFORML 「無駄使いはできないけど！」
+						CASE 3
+							PRINTFORML 「期待に応えて。お願い！」
+						CASE 4
+							PRINTFORML 「掃除してあげる！」
+						CASE 5
+							PRINTFORML 「嫌な音の発生源は、どうしても止めたくなるの」
+						CASE 6
+							PRINTFORML 「これで奏でて見せる！戦いのシンフォニー！」
+
+					ENDSELECT
+				
+				;非消耗武器
+				CASE 30 TO 34
+					SELECTCASE RAND:12
+						CASE 0
+							PRINTFORML 「その間合い…甘過ぎ！」
+						CASE 1
+							PRINTFORML 「次、踏み込む！」
+						CASE 2
+							PRINTFORML 「おあいにくさま。演奏用の楽器と撲殺用の楽器は別なの」
+						CASE 3
+							PRINTFORML 「楽器の使い方が意外？奏者に必要なのは表現力と発想力だから問題ない」
+						CASE 4
+							PRINTFORML 「悪いね。今持ってる楽器は撲殺用のスペアなの」
+						CASE 5
+							PRINTFORML 「私の間合いだよ！」
+						CASE 6
+							PRINTFORML 「お転婆は少し、恥ずかしい……けど、ふふっ、悪くないよ」
+						CASE 7
+							PRINTFORML 「いくら撲殺用とはいえ……楽器で殴りつけるのって……緊張、するね」
+						CASE 8
+							PRINTFORML 「リリカがいたずらでつくった撲殺用楽器シリーズが役に立つなんてね」
+						CASE 9
+							PRINTFORML 「音を鳴らすだけが騒霊の仕事だと思ったのが運のツキ」
+						CASE 10
+							PRINTFORML 「この演奏スタイル。んふふっ、今までより積極的になれそう」
+						CASE 11
+							PRINTFORML 「はあっ！」
+					ENDSELECT
+				
+				;拘束離脱
+				CASE 42
+					IF ARG:3 == 0
+						;丸呑み
+						IF CFLAG:21
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:5
+								CASE 0
+									PRINTFORML 「まずい･･･かもね」
+								CASE 1
+									PRINTFORML 「くすんっ……あぁ、いやぁ……」
+								CASE 2
+									PRINTFORML 「たす…けて……」
+								CASE 3
+									PRINTFORML 「ッはぁ！…はぁっ…」
+								CASE 4
+									PRINTFORML 「ごめんなさい、もう…ここからだして…」
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:5
+								CASE 0
+									PRINTFORML 「うるさいのは嫌い……」
+								CASE 1
+									PRINTFORML 「嫌な鼓動ばかり聞こえる……」
+								CASE 2
+									PRINTFORML 「違和感あるでしょ？この旋律を聴くと」
+								CASE 3
+									PRINTFORML 「この場所に響く旋律、私は好きじゃないから」
+								CASE 4
+									PRINTFORML 「こんな音、聞きたくない。私が止めるわ」
+							ENDSELECT
+							ENDIF
+						;拘束
+						ELSE
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+
+
+								PRINTFORML 「はぁ……はぁ……」
+
+							ENDIF
+
+							IF RAND:10 > 100
+
+								;死に分岐
+
+							;その他
+							ELSE
+							SELECTCASE RAND:8
+								CASE 0
+									PRINTFORML 「こういう状況の練習なんてしたことないけど！」
+								CASE 1
+									PRINTFORML 「挽回する、必ず」
+								CASE 2
+									PRINTFORML 「成功するまで……繰り返すだけ」
+								CASE 3
+									PRINTFORML 「舞台づくりに楽器運び、足腰だって鍛えてる。大丈夫」
+								CASE 4
+									PRINTFORML 「道は常に自分の力で切り開いていくもの」
+								CASE 5
+									PRINTFORML 「それなら、こんな音色はどうかしら？」
+								CASE 6
+									PRINTFORML 「身体能力強化の音色に身を委ねて……」
+								CASE 7
+									PRINTFORML 「勇気の調べよ、私に力を……」
+								
+							ENDSELECT
+							ENDIF
+						ENDIF
+					ENDIF
+				;力溜め
+				CASE 43
+					;発情
+					IF CFLAG:28 > 0
+						PRINTFORML 「やってみるしか……♥」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「次につなげる……」
+							CASE 1
+								PRINTFORML 「練習は無駄にならない……！」
+							CASE 2
+								PRINTFORML 「流れは切らさない……」
+							CASE 3
+								PRINTFORML 「さて、どんな曲を奏でようか」
+							CASE 4
+								PRINTFORML 「旋律を重ねよう……」
+
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「次につなげる……」
+							CASE 1
+								PRINTFORML 「練習は無駄にならない……！」
+							CASE 2
+								PRINTFORML 「流れは切らさない……」
+							CASE 3
+								PRINTFORML 「さて、どんな曲を奏でようか」
+							CASE 4
+								PRINTFORML 「旋律を重ねよう……」
+
+
+						ENDSELECT
+					ENDIF
+				
+				;諦め●毎ターンでるらしいが。
+				CASE 44
+					
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「メルラン、リリカ……ごめんなさい…」
+						CASE 1
+							PRINTFORML 「メルラン、リリカ……ごめんなさい…」
+						CASEELSE
+							PRINTFORML 「メルラン、リリカ……ごめんなさい…」
+					ENDSELECT
+				;動けない●ひるみ関係なく出る。拘束されたターン。
+				CASE 45
+
+				;Ａを守る
+				CASE 50
+					PRINTFORML 「絶対に嫌……！」
+				;Ｂを守るなんてとんでもない！
+				CASE 51
+					PRINTFORML 「魅力はないと思うけど、絶対に嫌……！」
+				;Ｃを守る
+				CASE 52
+					PRINTFORML 「絶対に嫌……！」
+
+				;Ｖを守る
+				CASE 53
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「絶対に嫌……！」
+						CASE 1
+							PRINTFORML 「絶対に駄目よ……！」
+						CASE 2
+							PRINTFORML 「駄目ぇ！メルランやリリカにだってこんなこと……！」
+					ENDSELECT
+			ENDSELECT
+
+			
+
+				
+		;HPダメージ
+		CASE 12
+
+			;HPがないまたは喪失
+			IF BASE:HP == 0 || CFLAG:29
+				SELECTCASE RAND:7
+					CASE 0
+						PRINTFORML 「げほっ……」
+					CASE 1
+						PRINTFORML 「うぇぇ……」
+					CASE 2
+						PRINTFORML 「ゃぁ……」
+					CASE 3
+						PRINTFORML 「ぉぇ……」
+					CASE 4
+						PRINTFORML 「かはっ……」
+					CASE 5
+						PRINTFORML 「やめぇ……」
+					CASEELSE
+						PRINTFORML 「……ぅぅ」
+				ENDSELECT
+			;少し痛い
+			ELSEIF ARG:2 >= 400
+
+
+
+				;通常攻撃の属性による追加口上
+				SELECTCASE TFLAG:89
+				; 鞭
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「痛っ…」
+						CASE 1
+							PRINTFORML 「きゃぁぁぁ！」
+						CASEELSE
+							PRINTFORML 「げほっげほっ……」
+					ENDSELECT
+				;吸収
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「力がっ…」
+						CASE 1
+							PRINTFORML 「何をしてぇ……」
+						CASEELSE
+							PRINTFORML 「あああぁ……」
+					ENDSELECT
+				;毒
+				CASE 2
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「げほっげほっ…」
+						CASE 1
+							PRINTFORML 「瘴気！？」
+						CASEELSE
+							PRINTFORML 「く、苦しい……」
+					ENDSELECT
+				;関節技
+				CASE 3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「痛っ…」
+						CASE 1
+							PRINTFORML 「きゃぁぁぁ！」
+						CASEELSE
+							PRINTFORML 「や、やめっ……」
+					ENDSELECT
+				;首絞め
+				CASE 4
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「げほっげほっ…」
+						CASE 1
+							PRINTFORML 「かはっ……」
+						CASEELSE
+							PRINTFORML 「く、苦しい……」
+					ENDSELECT
+				;電撃
+				CASE 5
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ああああああっ！」
+						CASE 1
+							PRINTFORML 「きゃぁぁぁ！」
+						CASEELSE
+							PRINTFORML 「やっ、やめぇぇ！」
+					ENDSELECT
+				;打撃
+				CASE 6
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「痛っ…」
+						CASE 1
+							PRINTFORML 「きゃぁぁぁ！」
+						CASEELSE
+							PRINTFORML 「げほっげほっ……」
+					ENDSELECT
+				;斬撃
+				CASE 7
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「痛っ…」
+						CASE 1
+							PRINTFORML 「きゃぁぁぁ！」
+						CASEELSE
+							PRINTFORML 「やっ、やめっ！」
+					ENDSELECT
+				;疲労
+				CASE 8
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「力がっ…」
+						CASE 1
+							PRINTFORML 「うっ、何をしたの……」
+						CASEELSE
+							PRINTFORML 「あああぁ……」
+					ENDSELECT
+
+				ENDSELECT
+
+
+
+
+			;あんまり痛くない
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「少し、痛い……」
+					CASE 1
+						PRINTFORML 「痛く、ない…！」
+					CASEELSE
+						PRINTFORML 「……ちょっと怒ってるから」
+				ENDSELECT
+			ENDIF
+		;衣服攻撃
+		CASE 13
+			;喪失　触手服
+			IF CFLAG:29 || CFLAG:40
+
+			ELSEIF BASE:3 > 0
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「さっ、捌き…切れない！？」
+					CASE 1
+						PRINTFORML 「……いじわる」
+					CASE 2
+						PRINTFORML 「乱暴しないで！」
+					CASE 3
+						PRINTFORML 「お、お、お、お、落ちつかないと……！」
+					CASEELSE
+						PRINTFORML 「……はいはい、そういうのいいから」
+				ENDSELECT
+
+
+			ENDIF
+
+
+		;EPダメージ
+		CASE 14
+
+			IF CFLAG:29
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「あーっ♥ あーっ♥♥ あーっ♥♥♥」
+						CASE 1
+							PRINTFORML 「いっちゃう♥ イっちゃう♥♥ イッちゃう♥♥♥」
+						CASEELSE
+							PRINTFORMDL ルナサは言葉にならない声をあげ全身を痙攣させている……
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「すごぃ…」
+						CASE 1
+							PRINTFORML 「あひぃ…」
+						CASE 2
+							PRINTFORML 「やめてぇ…」
+						CASE 3
+							PRINTFORML 「それだめぇ…」
+						CASEELSE
+							PRINTFORML 「気持ちいい……」
+					ENDSELECT
+				ENDIF
+			ELSE
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:14
+						CASE 0
+							PRINTFORML 「くるっ♥ なにかくるっ♥♥ あーッ♥♥♥」
+						CASE 1
+							PRINTFORML 「ダメっ♥ これダメっ♥♥ ダメなのぉ♥♥♥」
+						CASE 2
+							PRINTFORML 「いっちゃう♥ イっちゃう♥♥ イッちゃう♥♥♥」
+						CASE 3
+							PRINTFORML 「おっ♥ 犯されてぇ♥♥ やめぇ♥♥♥」
+						CASE 4
+							PRINTFORML 「かんじてるっ♥ かんじちゃう♥♥ あーッ♥♥♥」
+						CASE 5
+							PRINTFORML 「きちゃうっ♥ きもちいいのがっ♥♥ あひぃ♥♥♥」
+						CASE 6
+							PRINTFORML 「これっ♥ これダメっ♥♥ ダメぇ♥♥♥」
+						CASE 7
+							PRINTFORML 「こんなっ♥ こんなのぉ♥♥ むりぃ♥♥♥」
+						CASE 8
+							PRINTFORML 「こんなっ♥ されたらぁ♥♥ むりぃ♥♥♥」
+						CASE 9
+							PRINTFORML 「ズルイっ♥ これズルイっ♥♥ あーっ♥♥♥」
+						CASE 10
+							PRINTFORML 「まっ♥ まってぇ♥♥ これダメなのぉ♥♥♥」
+						CASE 11
+							PRINTFORML 「むりっ♥ これ無理ぃ♥♥ もう無理だからぁ♥♥♥」
+						CASE 12
+							PRINTFORML 「やめっ♥ やめてぇ♥♥ イっちゃうぅ♥♥♥」
+
+						CASEELSE
+							PRINTFORMDL ルナサはだらしなく顔をゆるませ甘えるような声をあげた
+					ENDSELECT
+				;EPダメージ3000以上
+				ELSEIF ARG:3 >= 3000
+					SELECTCASE RAND:6
+						CASE 0
+							PRINTFORML （心が…すごくドキドキしてる……！）
+						CASE 1
+							PRINTFORML 「んんんッ……！」
+						CASE 2
+							PRINTFORML （た、耐えないとぉ……！）
+						CASE 3
+							PRINTFORML 「くぅぅぅ……んッ！」
+						CASE 4
+							PRINTFORML （あ、喘ぐわけには……！）
+						CASEELSE
+							PRINTFORML 「あ、危ない……平常心、平常心…」
+					ENDSELECT
+				;EPダメージ3000未満
+				ELSE
+					SELECTCASE RAND:8
+						CASE 0
+							PRINTFORML 「命…捨てたいんだね」
+						CASE 1
+							PRINTFORML 「もう……やり方がいやらしいよ」
+						CASE 2
+							PRINTFORML 「奏者の体に触るのはご法度」
+						CASE 3
+							PRINTFORML 「……あなたにはもう何も我慢しない。全ての旋律を全力でたたき込む。今、そう決めた」
+						CASE 4
+							PRINTFORML 「そう。お説教が必要みたいね」
+						CASE 5
+							PRINTFORML 「っ…こういうのは嫌いなの。わかった？」
+						CASE 6
+							PRINTFORML 「……触っていいって言ってないのに」
+
+						CASEELSE
+							PRINTFORML 「あっ……お返しちゃんとするから、動かないで待っててね」
+					ENDSELECT
+				ENDIF
+			ENDIF
+
+		;拘束攻撃 5は発動時。１５が命中時
+		CASE 15
+			IF CFLAG:29
+			
+			ELSE
+			SELECTCASE ARG:3
+				;拘束
+				CASE 0
+					SELECTCASE RAND:13
+						CASE 0
+							PRINTFORML 「きゃっ…離れろ！」
+						CASE 1
+							PRINTFORML 「しまった！」
+						CASE 2
+							PRINTFORML 「速いっ！？」
+						CASE 3
+							PRINTFORML 「きゃぁ！やってくれる！」
+						CASE 4
+							PRINTFORML 「きゃぁ！よくも！」
+						CASE 5
+							PRINTFORML 「あぁっ！？でも、まだ終わるわけには！」
+						CASE 6
+							PRINTFORML 「あぁっ！？見切れなかった！」
+						CASE 7
+							PRINTFORML 「ええぃ！面倒なのに！」
+						CASE 8
+							PRINTFORML 「うそっ！？捕まった！？」
+						CASE 9
+							PRINTFORML 「反応が遅れた！？」
+						CASE 10
+							PRINTFORML 「誘い込まれた！？」
+						CASE 11
+							PRINTFORML 「そんな！？」
+						CASE 12
+							PRINTFORML 「これじゃ動けない！？」
+
+					ENDSELECT
+				;丸呑み
+				CASE 1
+					SELECTCASE RAND:13
+						CASE 0
+							PRINTFORML 「呑まれる！？」
+						CASE 1
+							PRINTFORML 「しまった！」
+						CASE 2
+							PRINTFORML 「速いっ！？」
+						CASE 3
+							PRINTFORML 「きゃぁ！やってくれる！」
+						CASE 4
+							PRINTFORML 「きゃぁ！よくも！」
+						CASE 5
+							PRINTFORML 「あぁっ！？でも、まだ終わるわけには！」
+						CASE 6
+							PRINTFORML 「あぁっ！？見切れなかった！」
+						CASE 7
+							PRINTFORML 「ええぃ！面倒なのに！」
+						CASE 8
+							PRINTFORML 「うそっ！？捕まった！？」
+						CASE 9
+							PRINTFORML 「反応が遅れた！？」
+						CASE 10
+							PRINTFORML 「誘い込まれた！？」
+						CASE 11
+							PRINTFORML 「そんな！？」
+						CASE 12
+							PRINTFORML 「これじゃ動けない！？」
+
+					ENDSELECT
+			ENDSELECT
+			ENDIF
+
+
+		;寄生攻撃命中  6:発動時
+		;だけどV防御中に矛盾でちゃったから一旦封印。そのうちいじろう
+		CASE 16
+			;喪失
+			IF CFLAG:29
+			
+			;中古
+			ELSEIF TALENT:0 == 0
+
+					SELECTCASE RAND:15
+					CASE 0
+						PRINTFORML 「だ、だされた……！？」
+					CASE 1
+						PRINTFORML 「い、今のって……」
+					CASE 2
+						PRINTFORML 「ま、間に合わなかった……」
+					CASE 3
+						PRINTFORML 「遅かれ早かれこうなるのは……」
+					CASE 4
+						PRINTFORML 「くっ、いい加減にしてよ……」
+					CASE 5
+						PRINTFORML 「こ、こんなやつらに……」
+					CASE 6
+						PRINTFORML 「最低の結末は避けたいけど……」
+					CASE 7
+						PRINTFORML 「ど、どうってことない……」
+					CASE 8
+						PRINTFORML 「ナカにだされたか……」
+					CASE 9
+						PRINTFORML 「最低の感触なんだね……」
+					CASE 10
+						PRINTFORML 「私はあなたを許さない……」
+					CASE 11
+						PRINTFORML 「む、無駄。そんなことをしても私は折れない……」
+					CASE 12
+						PRINTFORML 「よ、汚された……」
+					CASE 13
+						PRINTFORML 「絶対に許さないから……」
+
+					CASEELSE
+						PRINTFORML 「好き勝手なことを……」
+					ENDSELECT
+			ENDIF
+		;攻撃回避
+		CASE 22 TO 25, 27
+			;発情
+			IF CFLAG:28 > 0
+				PRINTFORML （これ以上触られたら緊張の弦が切れる……♥）
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「速く…もっと速く！」
+					CASE 1
+						PRINTFORML 「楽器の手入れは十分みたい」
+					CASEELSE
+						PRINTFORML 「パターン通り」
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「速く…もっと速く！」
+					CASE 1
+						PRINTFORML 「楽器の手入れは十分みたい」
+					CASEELSE
+						PRINTFORML 「パターン通り」
+				ENDSELECT
+			ENDIF
+		;寄生攻撃回避
+		;つまり防御したとき？
+		CASE 26
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「……たすかったの？」
+				CASE 1
+					PRINTFORML 「ギリギリだったけど……」
+
+			ENDSELECT
+		;敵を撃破
+		CASE 31
+			SELECTCASE RAND:6
+				CASE 0
+					PRINTFORML 「手応えあり」
+				CASE 1
+					PRINTFORML 「努力は嘘をつかない」
+				CASE 2
+					PRINTFORML 「よし、次……」
+				CASE 3
+					PRINTFORML 「うん。上出来」
+				CASE 4
+					PRINTFORML 「やっと静かになったみたいね」
+				CASE 5
+					PRINTFORML 「アンコールはないわ」
+			ENDSELECT
+		;戦意喪失
+		CASE 33
+			;発情
+			IF CFLAG:28 > 0
+				PRINTFORML 「妹たちには手を出さないでぇ……」
+			;その他
+			ELSE
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「あぁっ……儚いね、本当……。」
+					CASE 1
+						PRINTFORML 「メルラン……リリカ……」
+					CASE 2
+						PRINTFORML 「力、抜けてく…ごめん、ね…」
+					CASEELSE
+						PRINTFORML 「ぁぁ……私の演奏ではダメなの……？」
+				ENDSELECT
+			ENDIF
+		;服の破れ強度
+		CASE 35
+			IF CFLAG:29
+			
+			ELSE
+			SELECTCASE ARG:1
+			;全裸
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「……しょうがないなぁ…もう」
+					CASE 1
+						PRINTFORML 「もう…私を怒らせるの、上手すぎるよ」
+					CASEELSE
+						PRINTFORML 「……こうなった以上、すぐに片付けないと！」
+				ENDSELECT
+			;半裸
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やっぱり…照れちゃうね。こういう格好は」
+					CASE 1
+						PRINTFORML 「視線を浴びるのは慣れているけど、こういう格好にされると……」
+					CASEELSE
+						PRINTFORML 「いつもはメルランの方が目立つのだけれど……」
+				ENDSELECT
+			;破れ始め
+			CASE 2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「統一感のある衣装が……」
+					CASE 1
+						PRINTFORML 「どうせ軽くなるなら、この気持ちも軽くしてほしい……」
+					CASEELSE
+						PRINTFORML 「……見すぎは駄目」
+				ENDSELECT
+			ENDSELECT
+			ENDIF
+		;寄生された
+		CASE 40
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「！？旋律が乱れた？……そんな、まさか……」
+				CASE 1
+					PRINTFORML 「！？嫌な鼓動の予感が……これって…おぇっ」
+				CASEELSE
+					PRINTFORML 「！？今ので寄生された？……とっておきの子守歌が仇になるなんて」
+			ENDSELECT
+			
+		;戦闘開始
+		CASE 54
+			IF CFLAG:20 || CFLAG:29
+				;
+			;発情
+			ELSEIF CFLAG:28 > 0
+				PRINTFORML 「えっ♥ まって♥ まだチューニングが♥」
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+
+			;その他
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「戦闘……気が乗らないかな。」
+				CASE 1
+					PRINTFORML 「私の演奏、役に立つといいけど……」
+				CASEELSE
+					PRINTFORML 「聞こえてくるのは、幻想郷の旋律だけでいいのに……」
+			ENDSELECT
+			ENDIF
+
+
+
+		;逃走成功
+		CASE 55
+			IF CFLAG:20 || CFLAG:29
+				;
+			;発情
+			ELSEIF CFLAG:28 > 0
+				PRINTFORML 「あ、足腰が……もぅ♥」
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「私の力じゃ、この程度……。」
+					CASE 1
+						PRINTFORML 「泣き言なんて、言いたくないけど…！」
+					CASEELSE
+						PRINTFORML 「あいつらも増援呼んだみたい……これからどうすれば……」
+				ENDSELECT
+			;その他
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「私の力じゃ、この程度……。」
+				CASE 1
+					PRINTFORML 「泣き言なんて、言いたくないけど…！」
+				CASEELSE
+					PRINTFORML 「あいつらも増援呼んだみたい……これからどうすれば……」
+			ENDSELECT
+			ENDIF
+
+
+		;戦闘勝利
+		CASE 57
+			;喪失中は静かにしようねえ
+			IF CFLAG:29
+			;
+			ELSE
+			SELECTCASE RAND:9
+				CASE 0
+					PRINTFORML 「ふう。まだまだ強敵が残っているし問題も山積みになっているけど……」
+				CASE 1
+					PRINTFORML 「私が言えるのはひとつだけ。何が来たって、幻想郷は負けたりしない」
+				CASE 2
+					PRINTFORML 「よかった……ちゃんと、勝てた……！」
+				CASE 3
+					PRINTFORML 「もう少し、うまく勝ちたかったけど……。」
+				CASE 4
+					PRINTFORML 「上手く弾けなかったフレーズが弾けるようになるのはうれしいもの」
+				CASE 5
+					PRINTFORML 「嫌な音、やっと終わったみたい」
+				CASE 6
+					PRINTFORML 「本来ならレクイエムの時間だろうけど」
+				CASE 7
+					PRINTFORML 「弦の張り替え、いつにしようかな」
+				CASEELSE
+					PRINTFORML 「やっぱり、勝てると嬉しいものだね。」
+			ENDSELECT
+			ENDIF
+
+
+		;初回遭遇
+		CASE 61
+
+ 
+
+		;!!! v0.05.3で逃走口上の仕様が変わったため、勝手に改変
+		CASE 62
+			PRINTFORML 「……ごめんなさい！」
+		CASE 63
+			IF TARGET == 1
+				IF CFLAG:21
+					PRINTFORML 「よかった……私のせいで全滅したらどうしようって思ってたから」
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「私は、あなたを信じて待つだけ。大丈夫、意外と楽しいから」
+						CASE 1
+							PRINTFORML 「私は、あなたを信じて待つだけ。大丈夫、意外と楽しいから」
+						CASEELSE
+
+					ENDSELECT
+
+				ENDIF
+			ELSE
+				IF CFLAG:21
+
+					PRINTFORML 「よかった……私のせいで全滅したらどうしようって思ってたから」
+
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+
+							PRINTFORML 「私は、あなたを信じて待つだけ。大丈夫、意外と楽しいから」
+						CASE 1
+							PRINTFORML 「私は、あなたを信じて待つだけ。大丈夫、意外と楽しいから」
+						CASEELSE
+
+					ENDSELECT
+
+
+				ENDIF
+			ENDIF
+
+		;誰かに会う
+		CASE 101
+			IF ARG:2
+				PRINTFORMDL …？
+				PRINTFORMDL 誰かの弱々しい息遣いが聞えた気がした。
+			ELSEIF CFLAG:29 != 1
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「大丈夫？怪我とかしてない？」
+					CASE 1
+						PRINTFORML 「私もボロボロだから、あなたの視線もやっぱり気になるかな……」
+					CASE 2
+						PRINTFORML 「悲しい音色が響いているわ」
+					CASEELSE
+						PRINTFORML 「お待たせ。助けに来たよ」
+				ENDSELECT
+			ENDIF
+
+		;別れる
+		CASE 102
+			;喪失キャラ
+			IF CFLAG:29
+			
+			ELSEIF ARG:2
+				PRINTFORML 「勝ってくるから、ここで待ってて」
+			ELSE
+				PRINTFORML 「勝ってくるから、ここで待ってて」
+			ENDIF
+		;雑談
+		CASE 103
+			IF CFLAG:29
+			
+			ELSE
+				SELECTCASE NO:(ARG:1)
+
+
+
+					CASEELSE
+						SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「課題は見えた。みんなで頑張ろうか」
+						CASE 1
+							PRINTFORML 「裁縫のためのスタイル測定中だけど……大丈夫？きつくなったら言ってね。」
+						CASE 2
+							PRINTFORML 「貴方の綺麗な音色、もっと聴かせて」
+						CASE 3
+							PRINTFORML 「貴方の心の中に流れる旋律、私は好き」
+						CASE 4
+							PRINTFORML 「こんな場所でもちゃんと耳を澄ますとね、自然が奏でる音色が聴こえるの…」
+
+
+
+						ENDSELECT
+				ENDSELECT
+			ENDIF
+		;パーティー勧誘成功
+		CASE 107
+			IF CFLAG:29
+				PRINTFORMDL 虚ろな瞳で妹たちの名を呟くルナサを放置することはできない
+
+
+
+			ELSE
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「ガンガン行くから。ついてきて」
+					CASE 1
+						PRINTFORML 「私っていう中身は変わってないはずなのに、前より、前を向けてる気がする」
+					CASE 2
+						PRINTFORML （奉仕とか…お願いされたら、どうしよう…？）
+					CASE 3
+						PRINTFORML 「この瞬間を、私は忘れない。何があっても、絶対に」
+
+					CASEELSE
+						PRINTFORML 「私と一緒に居て、つまらなくないかな……？話も下手だし……」
+				ENDSELECT
+			ENDIF
+
+
+		;パーティ加入
+		CASE 109
+			IF CFLAG:29
+				PRINTFORMDL %CALLNAME:1%はルナサの綺麗な手を取った
+			ELSE
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「ガンガン行くから。ついてきて」
+					CASE 1
+						PRINTFORML 「私っていう中身は変わってないはずなのに、前より、前を向けてる気がする」
+					CASE 2
+						PRINTFORML （奉仕とか…お願いされたら、どうしよう…？）
+					CASE 3
+						PRINTFORML 「この瞬間を、私は忘れない。何があっても、絶対に」
+
+					CASEELSE
+						PRINTFORML 「私と一緒に居て、つまらなくないかな……？話も下手だし……」
+				ENDSELECT
+			ENDIF
+		CASE 110
+			;PTメンバーと別れる
+			IF CFLAG:29
+			
+			ELSEIF ARG:2
+				IF TARGET == 1
+					;主人公として表示する場合、ARG:1のキャラを見送る
+					PRINTFORML 「危険だけど、一度別れるしかないみたいね……」
+				ELSE
+					;それ以外の場合、自分が抜ける
+					;喪失中
+					IF CFLAG:29
+						PRINTFORMDL 完全に燃え尽きて力尽きたルナサを守りながら探索は出来そうにない
+						PRINTFORMDL そう判断した%CALLNAME:1%は苦渋の決断でルナサをおいていくことにした……
+					ELSE
+						PRINTFORML 「危険だけど、一度別れるしかないみたいね……」
+					ENDIF
+				ENDIF
+			ENDIF
+
+		CASE 125
+			;寄生が進行
+			IF CFLAG:29
+				PRINTFORML 「ぅ…ぁぁ……」
+			ELSE
+
+			ENDIF
+
+		CASE 126
+			;妊娠が進行
+			IF CFLAG:29
+				PRINTFORML 「ぅ…ぁぁ……」
+
+			ELSE
+
+			ENDIF
+			
+		CASE 127
+			;寄生出産
+			SELECTCASE ARG:1
+				CASE 0
+					;
+				CASE 1
+					;
+				CASE 2
+					;
+				ENDSELECT
+				
+
+		CASE 130
+			;浄化
+			IF CFLAG:29
+
+			ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ここも綺麗に掃除していかないとね」
+						CASE 1
+							PRINTFORML 「まとめて片づける！」
+						CASEELSE
+							PRINTFORML 「やってみせる。掃除は嫌いじゃないから」
+					ENDSELECT
+			ENDIF
+
+		CASE 132
+			;部屋を移動（突撃）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「こ、この場所からはすぐに離れないと……」
+						CASE 1
+							PRINTFORML 「前に……前に進むんだ……」
+						CASEELSE
+							PRINTFORML 「止まれない…止まるわけにはいかない……」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「体は暖まってる。問題ないよ」
+						CASE 1
+							PRINTFORML 「演奏が冴えてきた。いい感じ」
+						CASEELSE
+							PRINTFORML 「狙いはあそこ。少し急ごうか」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 133
+			;部屋を移動（慎重）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「何も見逃さないように……」
+						CASE 1
+							PRINTFORML (音漏れしないように…)
+						CASEELSE
+							PRINTFORML (リリカが音探しをしてたことがあったような……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「何も見逃さないように……」
+						CASE 1
+							PRINTFORML (音漏れしないように…)
+						CASEELSE
+							PRINTFORML  (リリカが音探しをしてたことがあったような……)
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 134
+			;部屋を移動（待ち伏せ）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「今のうちにチューニングを……」
+						CASE 1
+							PRINTFORML 「今はこれでいい……」
+						CASEELSE
+							PRINTFORML 「もしかしたら、今、立ってる場所だって危険なのかもしれないけど」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「今はこれでいい……」
+						CASE 1
+							PRINTFORML 「今のうちにチューニングを……」
+						CASEELSE
+							PRINTFORML 「もしかしたら、今、立ってる場所だって危険なのかもしれないけど」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 135
+			;部屋を移動（探索）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+			;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「何も見逃さないように……」
+						CASE 1
+							PRINTFORML 「ここに放置された道具は付喪神にはなれなそうね……」
+						CASEELSE
+							PRINTFORML 「物には執着しない…なんて思ってたけど、そうは言ってられない」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「何も見逃さないように……」
+						CASE 1
+							PRINTFORML 「物には執着しない…なんて思ってたけど、そうは言ってられない」
+						CASEELSE
+							PRINTFORML 「ここに放置された道具は付喪神にはなれなそうね……」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;処女喪失
+		CASE 136
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE ARG:3
+						CASE 1
+							PRINTFORML 「や、やめてよ！」
+						CASE 2
+							PRINTFORML 「お願いだから、それだけは許して！」
+						CASEELSE
+							PRINTFORML 「痛ッ、こんなのいやぁぁぁっ！」
+					ENDSELECT
+			ENDSELECT
+			
+			;おふろ
+			CASE 149
+			;死に風呂
+			IF CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「ふぅ……この時間が私は好き。お風呂が嫌いな人はいないだろうけどね」
+					CASE 1
+						PRINTFORML 「はぁぁ…うん、いい感じ。力が少し戻っていくみたい」
+					CASE 2
+						PRINTFORML 「リリカとおふろ～に、はい～ったら～♪」
+						PRINTFORMDL ルナサは幸せそうにお風呂の想い出をうたっている
+					CASE 3
+						PRINTFORML 「メルランとおふろ～に、はい～ったら～♪」
+						PRINTFORMDL ルナサは幸せそうにお風呂の想い出をうたっている
+					CASEELSE
+						PRINTFORMDL ルナサは幸せそうに湯船に浸かっている
+				ENDSELECT
+			ENDIF
+		;完全捕食
+		CASE 152
+			IF FLAG:AUTOMODE
+				PRINTFORML 「メルラン……リリカ……ごめんね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「メルラン……リリカ……ごめんね」
+			ENDIF
+		;復活！
+		CASE 158
+			SELECTCASE ARG:1
+				;助けてもらった
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「う、うぅぅ……あ、ありがとう」
+						CASE 1
+							PRINTFORMDL ルナサは濁った瞳でふらふらと立ち上がった…
+						CASEELSE
+							PRINTFORML 「……あ、ありがとう」
+					ENDSELECT
+				;捨てられた
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「奪われたものは……自分の手で……取り戻さないと……」
+						CASE 1
+							PRINTFORMDL ルナサはふらつく足取りで必死に逃げ出した……
+						CASEELSE
+							PRINTFORML 「プリズムリバーの輝きは……私が守らないと……」
+					ENDSELECT
+			ENDSELECT
+
+		;好感度でPT離脱
+		CASE 161
+			PRINTFORML 「……ごめんなさい。私が決着をつけなくてはいけない敵の気配を感じたの」
+
+
+		;好感度でPT離脱される
+		CASE 162
+		IF CFLAG:29
+		
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「私といると音が漏れるものね……」
+				CASE 1
+					PRINTFORML 「サヨナラは別れの言葉じゃないもの」
+
+				CASEELSE
+					PRINTFORML 「でろでろで～ん♪たいへんおきのどくですが……」
+			ENDSELECT
+		ENDIF
+		
+	;遺品
+	CASE 202
+
+		PRINTFORML 「そんな。きっと無事だって……信じさせて……欲しかったのに」
+
+
+	;MAP表示時に一言
+	CASE 160
+		;開始時
+		IF DAY == 1 && TIME:0 == 0
+			PRINTFORML 「……？わたし、気を失ってたの？それで、ここは、どこなの……」
+		;睡眠中は静かにしようね
+		ELSEIF CFLAG:25
+		;
+		;喪失時
+		ELSEIF CFLAG:29
+
+		;汎用メッセージ、元気があればあれこれ喋るよ！→通常汎用に統一
+
+		;MPが1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「希望、なんて……どこにも無いよね」
+				CASE 1
+					PRINTFORML 「心配事ばかり増えていく……悪循環」
+				CASE 2
+					PRINTFORML 「……すぐに心が沈む私の性格、なおさないとなぁ」
+			ENDSELECT
+		;朦朧
+		ELSEIF FLAG:7 >= 11
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「どこかで睡眠を……」
+				CASE 1
+					PRINTFORML 「どこかで睡眠を……」
+				CASE 2
+					PRINTFORML 「どこかで睡眠を……」
+			ENDSELECT
+		;要睡眠
+		ELSEIF FLAG:7 >= 7
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「睡眠のとれそうな場所は……」
+				CASE 1
+					PRINTFORML （休憩したい……）
+				CASE 2
+					PRINTFORML 「ららばい……」
+			ENDSELECT
+		
+		ELSEIF CFLAG:22
+		;寄生時
+			IF CFLAG:23 == 12
+				PRINTFORML 「私の力って、栄養価低そうだけどね…」
+			ELSEIF CFLAG:23 == 8
+				PRINTFORML 「……育つのがはやい」
+			ELSEIF CFLAG:23 == 4
+				PRINTFORML 「順調に育ってる……」
+			ELSEIF CFLAG:23 == 2
+				PRINTFORML 「もうすぐなのね……」
+			ELSEIF CFLAG:23 > 12 && TIME:0 == 2
+				PRINTFORML 「力が吸われているのがわかる……」
+			ENDIF
+		ELSEIF CFLAG:36
+		;妊娠時
+			IF CFLAG:23 == 11
+				PRINTFORML 「いつもよりさらに気分が沈むような……」
+			ELSEIF CFLAG:23 == 9
+				PRINTFORML 「なんだか嫌な旋律が聞こえる……」
+			ELSEIF CFLAG:23 == 5
+				PRINTFORML 「も、もしかしてこのお腹……」
+			ELSEIF CFLAG:23 == 3
+				PRINTFORML 「ちょっと…こんなのって…」
+			ELSEIF CFLAG:23 == 1
+				PRINTFORML 「うぅ……」
+			ELSEIF CFLAG:23 > 11 && TIME:0 == 2
+				PRINTFORML 「……ちょっと、ぼーっとしてた。何だろ…」
+			ENDIF
+		ELSEIF BASE:EP <= 1000 || CFLAG:28 > 0
+		;絶頂間際or発情
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML (あっ♥ あっ♥ 歩くだけで♥)
+				CASE 1
+					PRINTFORML (はぁ…♥ はぁ…♥)
+				CASE 2
+					PRINTFORML (このままじゃ戦闘も罠への対応もできないけど……♥ どうしよう♥)
+			ENDSELECT
+
+		;全部ぬけたら　服や汚染度のセリフはカット
+		;汎用一言２
+		ELSE
+			SELECTCASE RAND:12
+				CASE 0
+					PRINTFORML 「立ち止まる理由なんかどこにも無い。私は前に進むんだ」
+				CASE 1
+					PRINTFORML 「今までの道は険しかったし、きっと、この先も険しいと思うけど」
+				CASE 2
+					PRINTFORML 「うん。いける。私は大丈夫」
+				CASE 3
+					PRINTFORML 「さぁ、次に行こっか」
+				CASE 4
+					PRINTFORML 「もう少し積極的にいかないと……」
+				CASE 5
+					PRINTFORML 「止まらずにいく…」
+				CASE 6
+					PRINTFORML 「次はまっすぐいこうかな」
+				CASE 7
+					PRINTFORML 「誰も耳を塞がなくていいように、私は頑張りたい」
+				CASE 8
+					PRINTFORML 「風を切る音。音色のようね」
+				CASE 9
+					PRINTFORML 「そろそろ新しい効果の曲、練習しようかしら？」
+				CASE 10
+					PRINTFORML 「練習は怠らない。日々の積み重ねが大切」
+
+				CASEELSE
+					PRINTFORML 「誰も置いてかない。全員で帰る……」
+			ENDSELECT
+		ENDIF
+		
+	CASE 204, 206, 208, 212
+		;CALL KOJO_18_0_ENDING_SUPERSIZUHA
+
+		;クイーン撃破
+	CASE 210
+		;CALL KOJO_18_0_ENDING_SUPERSIZUHA_2
+
+		
+	CASEELSE
+		;汎用
+
+	ENDSELECT
+	ENDIF
+
+;**********************************************************
+;	通常モード
+;**********************************************************
+;通常口上
+ELSE
+
+
+
+ENDIF
+
+
+
+$KOJO_18_END_LOOP
+
+
+
+;CALL KOJO_18_0_TORAUMA(ARG:0, ARG:1, ARG:2, ARG:3, ARG:4)
+
+
+RESETCOLOR
+
+;口上記入済み
+RETURN 1
+

@@ -1,0 +1,220 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 33 MPが0になった
+; ------------------------------------------------------------------------------
+
+; □ 汎用口上
+@KOJO_27_0_SYSTEM_MESSAGE_33(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; ペットへ身体を捧げた & 雌犬
+	IF TEMP_FLAG:1 && (TALENT:140 || CFLAG:400 >= 90)
+
+		; 対ペットで喪失はレアケースなので優先口上指定
+		CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+
+		; [ペット]所持時 追加口上
+		IF TALENT:140 == 1
+			CALL KOJO_27_0_ADD_MESSAGE, @"（もっと……っ、ご主人さまと気持ちいいコトしてたい……のにぃ……♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ご主人さま……♥　ご主人さま……♥♥　ごしゅ……さ……♥♥）\n"
+		; [花嫁]所持時 追加口上
+		ELSEIF TALENT:140 == 2
+			CALL KOJO_27_0_ADD_MESSAGE, @"「最後まで一緒にイケない、ダメな奥さんでごめんね……♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「あたしが動けない間、アナタの好きにしていいから……♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（もっと、満足させてあげたい……のに……♥♥）\n"
+		; [しもべ]所持時 追加口上
+		ELSEIF TALENT:140 == 3
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あたし性処理下僕として、ちゃんと役に立ててるかな……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（目が覚めたら……また、ご主人様に……♥♥）\n"
+		ENDIF
+
+		RETURN 1
+		
+	; ペットへ身体を捧げた
+	ELSEIF TEMP_FLAG:1
+		; 対ペットで喪失はレアケースなので優先口上指定
+		CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+		
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ペットに犯されて……っ♥　イキ負けるなんてぇ……♥♥」\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あたしがご主人様……なのに……）\n"
+		CASE "強気"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（飼い犬に手を噛まれる……か……　不覚……）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（こんな奴、飼うんじゃなかった……）\n"
+		ENDSELECT
+		
+	; 通常時
+	ELSE
+		; 催眠中
+		IF KOJO_27_0_IS_HYPNO()
+			; 催眠種類で分岐
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				
+			; 発情・感情操作系
+			CASE 1
+				
+			; 無意識・認識操作系
+			CASE 2
+				; 催眠深度によって変化
+				SELECTCASE CFLAG:43
+				CASE 1
+					CALL KOJO_27_0_ADD_MESSAGE, @"（こんな所で倒れたら……　頭の中……完全に、壊されちゃう……）\n"
+				CASE 2
+					CALL KOJO_27_0_ADD_MESSAGE, @"（ああ……ぁ……　もっと……お便所交尾しなきゃ……ダメ……なのにぃ……）\n"
+				CASEELSE
+					CALL KOJO_27_0_ADD_MESSAGE, @"（もう……動けない……　せめて、オナホールとして……使ってほし……い……な……）\n"
+					CALL KOJO_27_0_ADD_MESSAGE, @"（ごめん……なさい……　おトイレ……故障しちゃい……ました……）\n"
+				ENDSELECT
+				RETURN 1
+			ENDSELECT
+		ENDIF
+
+		; 通常時
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「もうだめぇ♥　あたまのなか……トロットロに……　とけちゃっ……たぁ……♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「もうだめぇ♥　こうさんっ♥　こうさんしますぅ…っ♥♥」\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（もう逆らえないんだ……　あたし……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（やだ……　身体に力、はいんないよぉ……）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（やば……　あたま……　ぼやけて……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あたしの幸せ……　どこ……いっちゃったんだろ……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（だめ……　もう、動けな……い……）\n"
+		ENDSELECT
+		
+		; まだ行動中の味方がいるなら追加口上
+		IF (TARGET != 1 && CHECK_FINE(1)) || (FLAG:10 && TARGET != FLAG:10 && CHECK_FINE(FLAG:10)) || (FLAG:11 && TARGET != FLAG:11 && CHECK_FINE(FLAG:11))
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"（あたしがエッチな囮やるから、あとは頑張ってねぇ……♥）\n"
+				CALL KOJO_27_0_ADD_MESSAGE, @"（他のヒトが頑張ってるから、あたしは気持ちいいことされてれば……いいよね……♥）\n"
+			CASE "発情"
+				CALL KOJO_27_0_ADD_MESSAGE, @"（あたしはもう……ダメ……　後は、よろしく……）\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"（後は……　任せたわ……）\n"
+			ENDSELECT
+		ENDIF
+	ENDIF
+RETURN 1
+
+
+; □ 前回情報参照
+; ◆ 014 敵の性攻撃(命中)
+; ◇ 攻撃種類別
+; ● 0713 アグーAV複合
+@KOJO_27_0_SYSTEM_MESSAGE_33_PREV_14_713(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	SELECTCASE KOJO_MODE
+	CASE "淫乱", "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（あたしの理性……　豚のちんぽに負けちゃったぁ♥♥）\n"
+	ENDSELECT
+RETURN 1
+
+
+; 前回情報参照
+; 014 敵の性攻撃(命中)
+; ◇ 部位別
+; ● A
+@KOJO_27_0_SYSTEM_MESSAGE_33_PREV_14_X_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（お尻の穴で……気絶するほど気持ちよくなっちゃった♥　あたし、変態だぁ♥♥）\n"
+	ENDSELECT
+RETURN 1
+
+
+; 前回情報参照
+; ◆ 016 敵の寄生攻撃(命中)
+@KOJO_27_0_SYSTEM_MESSAGE_33_PREV_16(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 寄生攻撃
+	IF KOJO_27_0_GET_PREV_ARG(2) == 0
+	
+	; 妊娠攻撃
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（頭の中まで、精液漬けにされちゃった……みたい♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「いっぱい……♥　なかだし……♥　されちゃ…ったぁ…♥♥」\n"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+
+; 前回情報参照
+; ◆ 127 出産イベント(寄生)
+; ◇ 0 出産開始
+@KOJO_27_0_SYSTEM_MESSAGE_33_PREV_127_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; うめき声のみ
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「おﾞひ……っ♥　ひぃ……っ♥♥」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あぁ……　あ……」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 前回情報参照
+; ◆ 129 出産イベント(妊娠)
+; ◇ 0 出産開始
+@KOJO_27_0_SYSTEM_MESSAGE_33_PREV_129_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;127 出産イベント(寄生) - 0 出産開始 におねがい
+	CALL KOJO_27_0_SYSTEM_MESSAGE_33_PREV_127_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT

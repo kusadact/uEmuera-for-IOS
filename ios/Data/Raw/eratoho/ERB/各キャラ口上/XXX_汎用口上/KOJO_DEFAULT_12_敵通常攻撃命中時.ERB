@@ -1,0 +1,208 @@
+﻿
+; ////////////////////////////
+; / ARG:0   12    敵の通常攻撃(命中)
+; / ARG:1         コマンドID
+; / ARG:2         HPダメージ
+; / ARG:3         CPダメージ
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_12(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+	
+	; 喪失中
+	IF CFLAG:29
+		CALL ADD_RAND_MESSAGE, @"「呜啊……」"
+		CALL ADD_RAND_MESSAGE, @"「啊呜……」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「该死……、要玩弄你……」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「好痛……　好痛……」"
+			CALL ADD_RAND_MESSAGE, @"「对不起……　对不起……　对不起……」"
+			CALL ADD_RAND_MESSAGE, @"「嗯……！？　停下……！？」"
+		ENDSELECT
+		RETURN 1
+	ENDIF
+	
+	CALL ADD_RAND_MESSAGE, @"「真是的，好疼啊！」"
+	CALL ADD_RAND_MESSAGE, @"「呜啊……！」"
+	CALL ADD_RAND_MESSAGE, @"「呜……！」"
+		
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「好疼……　要是留下痕迹怎么办」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「真是的……　要是留下痕迹怎么办啊」"
+		CALL ADD_RAND_MESSAGE, @"「好疼……　轻点啊」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「呜……　好疼啊……」"
+		CALL ADD_RAND_MESSAGE, @"「别、别打啊……」"
+		CALL ADD_RAND_MESSAGE, @"「啊呜……！」"
+	ENDSELECT
+	
+	; 選択コマンドによる追加口上
+	SELECTCASE CFLAG:50
+	; 防御
+	CASE 1
+		CALL ADD_RAND_MESSAGE, @"「保护自己果然是正确的」"
+		CALL ADD_RAND_MESSAGE, @"「好的，撑住了！」"
+	ENDSELECT
+	
+	;通常攻撃の属性による追加口上
+	SELECTCASE TFLAG:89
+	; 鞭
+	CASE 0
+		CALL ADD_RAND_MESSAGE, @"「嗯呣……」"
+		CALL ADD_RAND_MESSAGE, @"「嘶……」"
+	;吸収
+	CASE 1
+		CALL ADD_RAND_MESSAGE, @"「呜、被吸……」"
+		CALL ADD_RAND_MESSAGE, @"「不、不可能……你在做什么……」"
+	;毒
+	CASE 2
+		CALL ADD_RAND_MESSAGE, @"「什么……毒……？」"
+		CALL ADD_RAND_MESSAGE, @"「难道……毒……！？」"
+	;関節技
+	CASE 3
+		CALL ADD_RAND_MESSAGE, @"「不、不要、断掉了」"
+		CALL ADD_RAND_MESSAGE, @"「疼、疼！　真的好疼！」"
+	;首絞め
+	CASE 4
+		CALL ADD_RAND_MESSAGE, @"「唔……好痛……」"
+		CALL ADD_RAND_MESSAGE, @"「好、好难受……」"
+	;電撃
+	CASE 5
+		CALL ADD_RAND_MESSAGE, @"「好刺激……」"
+		CALL ADD_RAND_MESSAGE, @"「不会留下痕迹吧……？」"
+	;打撃
+	CASE 6
+		CALL ADD_RAND_MESSAGE, @"「咳……」"
+		CALL ADD_RAND_MESSAGE, @"「啊……好疼……」"
+	;斬撃
+	CASE 7
+		CALL ADD_RAND_MESSAGE, @"「呜呜……血……」"
+		CALL ADD_RAND_MESSAGE, @"「稍微……这个有点……」"
+	;疲労
+	CASE 8
+		CALL ADD_RAND_MESSAGE, @"「好恶心……」"
+		CALL ADD_RAND_MESSAGE, @"「呜……」"
+	ENDSELECT
+	
+	
+	
+	; ダメージ計算後 残HPによる追加口上
+	SELECTCASE (BASE:0 - ARG:2)
+	; 75%以上
+	CASE IS >= (MAXBASE:0 / 4 * 3)
+		CALL ADD_RAND_MESSAGE, @"「这种攻击对我没用」"
+		CALL ADD_RAND_MESSAGE, @"「咦？这种东西吗？」"
+	
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_わがまま
+			CALL ADD_RAND_MESSAGE, @"「什么攻击？你有干劲吗？」"
+			CALL ADD_RAND_MESSAGE, @"「只是被蚊子叮咬的程度的伤害」"
+		ENDSELECT
+		
+	; 50%以上
+	CASE IS >= (MAXBASE:0 / 4 * 2)
+	
+	; 25%以上
+	CASE IS >= (MAXBASE:0 / 4 * 1)
+		
+	; それ未満
+	CASEELSE
+		CALL ADD_RAND_MESSAGE, @"「咳……啊……」"
+		CALL ADD_RAND_MESSAGE, @"「咳……」"
+		CALL ADD_RAND_MESSAGE, @"「不要了……」"
+	ENDSELECT
+RETURN 1
+
+
+
+
+;以下特定の攻撃に対応する専用口上
+
+
+
+
+; ////////////////////////////
+; / ARG:0   12    敵の通常攻撃(命中)
+; / ARG:1   40    コマンドID 幻惑の光
+; / ARG:2         HPダメージ
+; / ARG:3         CPダメージ
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_12_40(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+
+	
+	; important属性付与
+	CALL SET_IMPORTANT_FLAG
+	
+	CALL ADD_RAND_MESSAGE, @"（为什么――！？无法移开目光――！？）"
+	CALL ADD_RAND_MESSAGE, @"（不要看……！闭上眼睛……！）"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   12    敵の通常攻撃(命中)
+; / ARG:1  167    コマンドID ゲルシューター 通常
+; / ARG:2         HPダメージ
+; / ARG:3         CPダメージ
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_12_167(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+
+
+
+	
+	; 喪失中
+	SIF CFLAG:29
+		RETURN 0
+	
+	CALL ADD_RAND_MESSAGE, @"「子弹太多了！躲不开！」"
+	CALL ADD_RAND_MESSAGE, @"「等、等、等……这个不行啦！」"
+RETURN 1
+
+
+
+
+
+
+

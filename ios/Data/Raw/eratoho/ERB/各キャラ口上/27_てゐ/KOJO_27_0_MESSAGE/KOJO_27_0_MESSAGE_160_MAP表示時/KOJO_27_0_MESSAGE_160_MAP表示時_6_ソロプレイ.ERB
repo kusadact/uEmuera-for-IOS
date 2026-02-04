@@ -1,0 +1,42 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 6 ソロプレイ
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_6(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; PTメンバーが居るなら別会話をしましょう
+	SIF GET_MEMBER_SUM() != 1
+		RETURN 0
+	
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 通常時
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（ひとりぼっちって、犯されてる時だーれも助けてくれないんだよねぇ♥）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（仲間が居ない今、襲われたら……♥　あたし……♥）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（独りで居るって事は、気持ちいいのも独り占め出来るって事よね～♪）\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（誰か一人だけでも、一緒に戦ってくれるのを見つけないと……）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（仲間が居ないのは、本格的にヤバイかも……）\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「か弱いウサギ一匹でうろつくには、ちょっとハードだと思うの」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あたしみたいなかわいい子が一人歩きなんて、襲われちゃったらどうするのよ」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「どっかに仲間になってくれそうなの、いないかなぁ」\n"
+	ENDSELECT
+RETURN 1

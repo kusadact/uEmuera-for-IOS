@@ -1,0 +1,1924 @@
+﻿; ****************************************************************************************************
+;	口上ルール
+;　自分で何かしら表示したら  を実行すること
+;　自分で全く何も表示しない(処理しない)なら RETURN 0 を実行すること
+;
+;	口上の書き方メモ
+;　地の文を流用しつつ、台詞は自分で書く　→　CALL SYSTEM_MESSAGE してから文章を書いて、
+;　地の文だけ書き換える　　　　　　　　　→　文章を書いてから CALL KOJO_DEFAULT して、
+;　全部自分で書く　　　　　　　　　　　　→　全部自分で書いて、
+;　自分では何も書かない　　　　　　　　　→　何もせずに RETURN 0
+;　自分では書かないけど、汎用口上は嫌　　→　CALL SYSTEM_MESSAGE だけやっておいて、
+
+; ****************************************************************************************************
+;	以上KOJO_DEFAULTより引用
+; ****************************************************************************************************
+
+;口上選択時のタイトル
+@KOJO_TITLE_48_0
+RESULTS = 東方触手宮v0.05.2用　稗田阿求口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_48_0
+PRINTFORML ・ﾔﾏﾄﾅﾃﾞｼｺｫ！
+PRINTFORML 
+PRINTFORML ・無駄知識
+PRINTFORML 
+PRINTFORML ・貧弱貧弱ゥ
+PRINTFORML 
+PRINTFORML ・気丈、というよりは死への恐怖が薄い
+PRINTFORML 　ただし苦痛への耐性がある訳ではない　リョナるよ！
+PRINTFORML 
+PRINTFORML ・耳年増で自慰以外は経験無し
+PRINTFORML 　興味？アリアリだよ
+PRINTFORML 
+PRINTFORML ・AQNはまともに異性と接する機会が殆ど無い…つまり、レズだったんだよーーーー！！！
+PRINTFORML 　Ω　ΩΩ＜…ﾊｧ?
+
+
+;デフォルトの文字色を返す関数
+;これが無い場合、デフォルトはシステムカラー（白文字）になります
+@KOJO_DEFAULT_COLOR_48_0
+RETURN 0xcc9999
+
+; *--------現在の使用フラグ--------*
+;CFLAG:811		LOCAL
+
+; *--------使用フラグ（予定）-------*
+;CFLAG:801~		忘却フラグ
+;CFLAG:805~		特殊BEDフラグ
+
+;CFLAG:820 		口塞がれフラグ
+;CFLAG:821 		自慰カウンタ(戦闘中)
+;CFLAG:822 		絶頂カウンタ(戦闘中)
+
+;CFLAG:825~ 	各敵寄生カウンタ			まあ暇だったら
+;CFLAG:850~ 	各敵妊娠カウンタ			まあ暇だったら
+
+;CFLAG:900~		FIRSTTIME					まあ暇だったら
+
+
+; ****************************************************************************************************
+;	東方触手宮v0.05.2用　稗田阿求　口上			6/21版
+; ****************************************************************************************************
+@KOJO_48_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;SETCOLOR CFLAG:700 でそのキャラの口上色を反映できる
+SETCOLOR CFLAG:700
+
+;地の文呼び出し
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;CALL KOJO_48_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SELECTCASE ARG:0
+	CASE 0
+		;無し
+	
+	CASE 1
+		;味方の攻撃（発動時）
+		;ARG:1にコマンドID
+		SELECTCASE ARG:1
+			; *----汎用----*
+;			CASE 1
+				;防御
+;				PRINTFORML 
+;			CASE 2
+				;アイテム使用
+;			CASE 3
+				;前に出る
+;				IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+;				ENDIF
+;			CASE 4
+				;後退
+;				IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+;				ENDIF
+;			CASE 5
+				;逃走　成功したら55
+;				PRINTFORML 
+
+			; *----弾幕----*
+			CASE 10, 11, 12
+				;弱中強弾幕
+				IF RAND:2 == 0
+					IF DA:(CFLAG:51):20 != 0
+						;攻撃対象が誰かを拘束している
+						IF DA:(CFLAG:51):21 != 0
+;							;かつ丸呑み
+							
+						ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 
+									PRINTFORML 「あの腕に、当てれば…っ」
+									
+								CASE 1
+									PRINTFORML 
+									PRINTFORML 「下手に撃ったら、あの人にまで…」
+									
+								CASE 2
+									PRINTFORML 
+									PRINTFORML 「今、助けますから…！」
+							ENDSELECT
+						ENDIF
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 
+								PRINTFORML 「牽制くらいなら、私の霊力でも…！」
+								
+							CASE 1
+								PRINTFORML 
+								PRINTFORML 「落ち着いて、相手の中心を…」
+								
+							CASE 2
+								PRINTFORML 
+								PRINTFORML 「一発くらいは！」
+								
+						ENDSELECT
+					ENDIF
+				ENDIF
+			
+;			CASE 13
+				;溜め撃ち　溜め開始時ではなく発射時？
+;				PRINTFORML 
+
+			CASE 14
+				;ばら撒き弾
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 
+						PRINTFORML 「相手の回避ルートを潰して…！」
+						
+					CASE 1
+						PRINTFORML 
+						PRINTFORML 「カスりさえすれば！」
+				ENDSELECT
+;			CASE 15
+				;貫通弾
+
+			; *---消耗武器---*
+			CASE 20, 21, 22
+				;弱中強攻撃
+				IF DA:(CFLAG:51):20 != 0
+					;攻撃対象が誰かを拘束している
+					IF DA:(CFLAG:51):21 != 0
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 
+								PRINTFORML 「あの腕に、当てれば…っ」
+								
+							CASE 1
+								PRINTFORML 
+								PRINTFORML 「下手に撃ったら、あの人にまで…」
+								
+							CASE 2
+								PRINTFORML 
+								PRINTFORML 「今、助けますから…！」
+						ENDSELECT
+					ENDIF
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 
+							PRINTFORML 「この距離なら…」
+							
+						CASE 1
+							PRINTFORML 
+							PRINTFORML 「落ち着いて、相手の中心を…」
+							
+						CASE 2
+							PRINTFORML 
+							PRINTFORML 「一発くらいは！」
+							
+					ENDSELECT
+				ENDIF
+			CASE 23
+				;節約攻撃
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 
+						PRINTFORML 「弾も墨も、効率的に…」
+						
+					CASE 1
+						PRINTFORML 
+						PRINTFORML 「無駄撃ちは出来ませんからね…」
+						
+				ENDSELECT
+			CASE 24
+				;みだれ撃ち
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 
+						PRINTFORML 「とにかく、数を減らして…！」
+						
+					CASE 1
+						PRINTFORML 
+						PRINTFORML 「近寄らないで、くださいっ！」
+				ENDSELECT
+			CASE 25
+				;一点集中
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 
+						PRINTFORML 「ここですっ！」
+						
+					CASE 1
+						PRINTFORML 
+						PRINTFORML 「倒れてっ…！」
+				ENDSELECT
+
+			; *--非消耗武器--*
+			CASE 30,31,32
+				;弱中強攻撃
+				IF RAND:2 == 0
+					IF DA:(CFLAG:51):20 != 0
+						;攻撃対象が誰かを拘束している
+						IF DA:(CFLAG:51):21 != 0
+;							;かつ丸呑み							
+						ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 
+									PRINTFORML 「あの腕を、落とせばっ…！」
+									
+								CASE 1
+									PRINTFORML 
+									PRINTFORML 「これ以上、やらせない！」
+									
+								CASE 2
+									PRINTFORML 
+									PRINTFORML 「今、助けますから…」
+							ENDSELECT
+						ENDIF
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+							PRINTFORML 
+							PRINTFORML 「体を乗せて、踏み込みは鋭く…！」
+							
+							CASE 1
+							PRINTFORML 
+							PRINTFORML 「参りますっ！」
+							
+							CASE 2
+							PRINTFORML 
+							PRINTFORML 「この間合いならっ！」
+							
+						ENDSELECT
+					ENDIF
+				ENDIF
+			CASE 33
+				;下段狙い
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 
+						PRINTFORML 「足を止めればっ…」
+						
+					CASE 1
+						PRINTFORML 
+						PRINTFORML 「落とした腰を軸に、払う…！」
+				ENDSELECT
+			CASE 34
+				;急所狙い
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 
+						PRINTFORML 「させませんっ！」
+						
+					CASE 1
+						PRINTFORML 
+						PRINTFORML 「出鼻を挫ければ…！」
+						
+				ENDSELECT
+
+			; *---拘束中---*
+			CASE 42
+				;拘束からの離脱
+				IF CFLAG:35 != 0
+					;絶頂中
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 
+							PRINTFORML 「…だ、めぇっ…！
+							PRINTFORML 　ちから、はいらなくっ…！」
+						CASE 1
+							PRINTFORML 
+							PRINTFORML 「あっ、やぁっ！？
+							PRINTFORML 　も…っ、やです、はなし、離してください…！」
+					ENDSELECT
+				ELSE
+					IF CFLAG:21 != 0
+						;丸呑み
+						;全身系と下半身系で分けるべきか…
+						;やけに説明口調な心理描写も入れねばねば
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 
+								PRINTFORML 「ん、ぐっ！…むぅっ！」
+							CASE 1
+								PRINTFORML 
+								PRINTFORML 「んー…っ！んむーっ！」
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 
+								PRINTFORML 「な、縄抜けの、応用で…っ！」
+							CASE 1
+								PRINTFORML 
+								PRINTFORML 「くる、しい…
+								PRINTFORML 　でもっ…まだ…！」
+						ENDSELECT
+					ENDIF
+				ENDIF
+				
+				
+;			CASE 43
+				;力溜め
+;			CASE 44
+				;諦める
+;				IF CFLAG:21 != 0
+;					IF TARGET == 1
+;						SELECTCASE RAND:2
+;							CASE 0
+;							CASE 1
+;						ENDSELECT
+;					ELSE
+;						SELECTCASE RAND:2
+;							CASE 0
+;							CASE 1
+;						ENDSELECT
+;					ENDIF
+;				ELSE
+;					IF TARGET == 1
+;						SELECTCASE RAND:2
+;							CASE 0
+;							CASE 1
+;						ENDSELECT
+;					ELSE
+;						SELECTCASE RAND:2
+;							CASE 0
+;							CASE 1
+;						ENDSELECT
+;					ENDIF
+;				ENDIF
+;			CASE 45
+				;何もしない
+			CASE 46
+				;強制自慰
+;				IF CFLAG:21 != 0
+;					IF TARGET == 1
+;						SELECTCASE RAND:2
+;							CASE 0
+;							CASE 1
+;						ENDSELECT
+;					ELSE
+;						SELECTCASE RAND:2
+;							CASE 0
+;							CASE 1
+;						ENDSELECT
+;					ENDIF
+;				ELSEIF CFLAG:20 != 0
+;					IF TARGET == 1
+;						SELECTCASE RAND:2
+;							CASE 0
+;							CASE 1
+;						ENDSELECT
+;					ELSE
+;						SELECTCASE RAND:2
+;							CASE 0
+;							CASE 1
+;						ENDSELECT
+;					ENDIF
+;				ELSE
+;					IF TARGET == 1
+;						SELECTCASE RAND:2
+;							CASE 0
+;							CASE 1
+;						ENDSELECT
+;					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「はぅっ、く、ふぅ…！
+								PRINTFORML 　手、止まらなっ…」
+							CASE 1
+								PRINTFORML  「ちがうん、ですっ…！
+								PRINTFORML  　体が、勝手に、いぃ…！」
+							CASE 2
+								PRINTFORML  「あっ、駄目、嫌、見られてるのにっ…！
+								PRINTFORML  　見ないで、見ないでくださっ、ぁっ―――！」
+						ENDSELECT
+;					ENDIF
+;				ENDIF
+;			CASE 50
+				;A防御
+;			CASE 51
+				;B防御
+;			CASE 52
+				;C防御
+;			CASE 53
+				;V防御
+;				IF TALENT:TARGET:0
+					;処女
+;				ENDIF
+		ENDSELECT
+	;CASE 2から7は敵の各攻撃発動時　現在キャラ口上無し
+
+	CASE 11
+		;味方の攻撃（命中）
+		;ARG:1にコマンドID　ARG:2にダメージ
+;		PRINTFORML
+	CASE 12
+		;敵の通常攻撃（命中）
+		;ARG:1にコマンドID　ARG:2にHPダメージ　ARG:3にCPダメージ
+		IF BASE:TARGET:0 <= ((MAXBASE:TARGET:0) / 3)
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「あ、ぐぅっ…！」
+				CASE 1
+					PRINTFORML 「いた、い…っ…」
+			ENDSELECT
+		ELSEIF BASE:TARGET:0 <= (((MAXBASE:TARGET:0) / 3) * 2)
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「大、丈夫です…」
+				CASE 1
+					PRINTFORML 「けほっ、こほっ…」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「あっ！つぅ…
+					PRINTFORML 　後で、痣にならないと良いですけど…」
+				CASE 1
+					PRINTFORML 「これくらい、ならっ！」
+			ENDSELECT
+		ENDIF
+;		PRINTFORML
+	CASE 13
+		;敵の衣服攻撃（命中）
+		;ARG:1にコマンドID ARG:2に部位　ARG:3にCPダメージ　ARG:4にEPダメージ
+		IF BASE:TARGET:3 <= ((MAXBASE:TARGET:3) / 3)
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「だ、駄目ですっ！下着だけは…！」
+				CASE 1
+					PRINTFORML 「あぁっ…！スカート、返して下さいっ！」
+			ENDSELECT
+		ELSEIF BASE:TARGET:3 <= (((MAXBASE:TARGET:3) / 3) * 2)
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「やたらと器用ですねっ…」
+				CASE 1
+					PRINTFORML 「なんでっ、そんなに、腋を狙って…！」
+			ENDSELECT
+		ELSEIF BASE:TARGET:3 <= 0
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「ちょっと、どこを狙って…！」
+				CASE 1
+					PRINTFORML 「破れちゃいますって、止めてください！」
+			ENDSELECT
+		ENDIF
+	CASE 14
+		;敵の性攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に部位(0:A　1:B　2:C　3:V)　ARG:3にEPダメージ
+
+		;さーてどーすんべ( ﾟ∀ﾟ)
+		SELECTCASE ARG:1
+			
+;			CASE 302
+				;クイーン本体　A
+;			CASE 303
+				;クイーン本体　B
+;			CASE 304
+				;クイーン本体　C
+;			CASE 305
+				;クイーン本体　V+
+;			CASE 306
+				;クイーン本体　二段複合
+;			CASE 307
+				;クイーンお供　A+
+;			CASE 308
+				;クイーンお供　B
+;			CASE 309
+				;クイーンお供　C
+;			CASE 310
+				;クイーンお供　V
+;			CASE 311
+				;ガーディアン　A
+;			CASE 312
+				;ガーディアン　B+
+;			CASE 313
+				;ガーディアン　C
+;			CASE 314
+				;ガーディアン　V
+;			CASE 315
+				;ガーディアン　二段複合
+;			CASE 316
+				;ガーディアン　全体複合
+;			CASE 317
+				;バイオプラント　A
+;			CASE 318
+				;バイオプラント　B
+;			CASE 319
+				;バイオプラント　C+
+;			CASE 320
+				;バイオプラント　V
+;			CASE 322
+				;リビングバイン　B
+;			CASE 323
+				;リビングバイン　V+
+;			CASE 325
+				;スカーレットバイン　B
+;			CASE 326
+				;スカーレットバイン　V+
+;			CASE 328
+				;ワーム　A
+;			CASE 329
+				;ワーム　C+
+;			CASE 331
+				;サンドワーム　A
+;			CASE 332
+				;サンドワーム　C+
+;			CASE 334
+				;オクトパス　B+
+;			CASE 335
+				;オクトパス　C
+;			CASE 336
+				;オクトパス　B吸収
+;			CASE 337
+				;オクトパス　C吸収
+;			CASE 338
+				;クラーケン　B+
+;			CASE 339
+				;クラーケン　C
+;			CASE 340
+				;クラーケン　B吸収
+;			CASE 341
+				;クラーケン　C吸収
+;			CASE 342
+				;イソツビ　A
+;			CASE 343
+				;イソツビ　V+
+;			CASE 344
+				;イソツビ　複合
+;			CASE 346
+				;アクティニア　A
+;			CASE 347
+				;アクティニア　V+
+;			CASE 348
+				;アクティニア　A吸収
+;			CASE 349
+				;アクティニア　V吸収
+;			CASE 350
+				;アクティニア　二段複合
+;			CASE 351
+				;スライム　A+
+;			CASE 352
+				;スライム　B
+;			CASE 353
+				;スライム　全体A
+;			CASE 354
+				;スライム　全体B
+;			CASE 355
+				;ブロブ　A+
+;			CASE 356
+				;ブロブ　B
+;			CASE 357
+				;ブロブ　全体A
+;			CASE 358
+				;ブロブ　全体B
+;			CASE 359
+				;アルラウネ　C+
+;			CASE 360
+				;アルラウネ　V
+;			CASE 361
+				;アルラウネ　複合＋自慰誘発
+;			CASE 363
+				;ドリアード　C+
+;			CASE 364
+				;ドリアード　V
+;			CASE 365
+				;ドリアード　複合＋自慰誘発
+;			CASE 367
+				;シェイプシフター　A+
+;			CASE 368
+				;シェイプシフター　B
+;			CASE 369
+				;シェイプシフター　C
+;			CASE 370
+				;シェイプシフター　V
+;			CASE 371
+				;シェイプシフター　複合
+;			CASE 373
+				;ドッペルゲンガー　A+
+;			CASE 374
+				;ドッペルゲンガー　B
+;			CASE 375
+				;ドッペルゲンガー　C
+;			CASE 376
+				;ドッペルゲンガー　V
+;			CASE 377
+				;ドッペルゲンガー　三段複合
+				
+			; *------強性攻撃（主に拘束中）------*
+;			CASE 602
+				;クイーン本体　A
+;			CASE 603
+				;クイーン本体　B
+;			CASE 604
+				;クイーン本体　C
+;			CASE 605
+				;クイーン本体　V+
+;			CASE 606
+				;クイーン本体　二段複合
+;			CASE 607
+				;クイーンお供　A+
+;			CASE 608
+				;クイーンお供　B
+;			CASE 609
+				;クイーンお供　C
+;			CASE 610
+				;クイーンお供　V
+;			CASE 611
+				;ガーディアン　A
+;			CASE 612
+				;ガーディアン　B+
+;			CASE 613
+				;ガーディアン　C
+;			CASE 614
+				;ガーディアン　V
+;			CASE 615
+				;ガーディアン　二段複合
+;			CASE 617
+				;バイオプラント　A
+;			CASE 618
+				;バイオプラント　B
+;			CASE 619
+				;バイオプラント　C+
+;			CASE 620
+				;バイオプラント　V
+;			CASE 622
+				;リビングバイン　B
+;			CASE 623
+				;リビングバイン　V+
+;			CASE 625
+				;スカーレットバイン　B
+;			CASE 626
+				;スカーレットバイン　V+
+;			CASE 628
+				;ワーム　A
+;			CASE 629
+				;ワーム　C+
+;			CASE 631
+				;サンドワーム　A
+;			CASE 632
+				;サンドワーム　C+
+;			CASE 634
+				;オクトパス　B+
+;			CASE 635
+				;オクトパス　C
+;			CASE 636
+				;オクトパス　B吸収
+;			CASE 637
+				;オクトパス　C吸収
+;			CASE 638
+				;クラーケン　B+
+;			CASE 639
+				;クラーケン　C
+;			CASE 640
+				;クラーケン　B吸収
+;			CASE 641
+				;クラーケン　C吸収
+;			CASE 642
+				;イソツビ　A
+;			CASE 643
+				;イソツビ　V+
+;			CASE 644
+				;イソツビ　複合
+;			CASE 646
+				;アクティニア　A
+;			CASE 647
+				;アクティニア　V+
+;			CASE 648
+				;アクティニア　A吸収
+;			CASE 649
+				;アクティニア　V吸収
+;			CASE 650
+				;アクティニア　二段複合
+;			CASE 651
+				;スライム　A+
+;			CASE 652
+				;スライム　B
+;			CASE 653
+				;スライム　複合
+;			CASE 655
+				;ブロブ　A+
+;			CASE 656
+				;ブロブ　B
+;			CASE 657
+				;ブロブ　複合
+;			CASE 659
+				;アルラウネ　C+
+;			CASE 660
+				;アルラウネ　V
+;			CASE 661
+				;アルラウネ　複合＋自慰誘発
+;			CASE 663
+				;ドリアード　C+
+;			CASE 664
+				;ドリアード　V
+;			CASE 665
+				;ドリアード　複合＋自慰誘発
+;			CASE 667
+				;シェイプシフター　A+
+;			CASE 668
+				;シェイプシフター　B
+;			CASE 669
+				;シェイプシフター　C
+;			CASE 670
+				;シェイプシフター　V
+;			CASE 671
+				;シェイプシフター　複合
+;			CASE 673
+				;ドッペルゲンガー　A+
+;			CASE 674
+				;ドッペルゲンガー　B
+;			CASE 675
+				;ドッペルゲンガー　C
+;			CASE 676
+				;ドッペルゲンガー　V
+;			CASE 677
+				;ドッペルゲンガー　三段複合
+
+			CASEELSE
+				;対応してないのは汎用でお茶を濁す
+				;発情分岐と喪失分岐と拘束分岐と感覚分岐と全裸分岐も作らねばあばばばば
+				IF MAXBASE:TARGET:2 >= ARG:3
+;					SELECTCASE ARG:2
+;						CASE 0
+;							;A
+;							SELECTCASE RAND:2
+;								CASE 0
+;								CASE 1
+;								CASE 2
+;							ENDSELECT
+;						CASE 1
+;							;B
+;							SELECTCASE RAND:3
+;								CASE 0
+;								CASE 1
+;								CASE 2
+;							ENDSELECT
+;						CASE 2
+;							;C
+;							SELECTCASE RAND:3
+;								CASE 0
+;								CASE 1
+;								CASE 2
+;							ENDSELECT
+;						CASE 3
+;							;V
+;							SELECTCASE RAND:3
+;								CASE 0
+;								CASE 1
+;								CASE 2
+;							ENDSELECT
+;					ENDSELECT
+				ELSEIF BASE:TARGET:2 <= 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 
+							PRINTFORML 「ひっ…！？
+							PRINTFORML 　いま、イって、イってます…っからぁ…！」
+						CASE 1
+							PRINTFORML 
+							PRINTFORML 「あっ、また、またキて───っ！！」
+						CASE 2
+							PRINTFORML 
+							PRINTFORML 「───っ！
+							PRINTFORML 　──────っ！！」
+					ENDSELECT
+				ELSEIF BASE:TARGET:2 <= ((MAXBASE:TARGET:2) / 2)
+					SELECTCASE ARG:2
+						CASE 0
+							;A
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 
+									PRINTFORML 「あっ、ぅぁ…！
+									PRINTFORML 　そんな、とこ、突かな、いでぇっ…！」
+								CASE 1
+									PRINTFORML 
+									PRINTFORML 「汚いのにっ…
+									PRINTFORML 　そんなところ、駄目なのにぃっ…！」
+							ENDSELECT
+						CASE 1
+							;B
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 
+									PRINTFORML 「そんなに…先っぽ、ばっかりっ…」
+								CASE 1
+									PRINTFORML 
+									PRINTFORML 「今、ぞくって、…あぁっ！？」
+							ENDSELECT
+						CASE 2
+							;C
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 
+									PRINTFORML 「だめ、ですっ…！
+									PRINTFORML 　そこはだめっ、だめぇぇっ！？」
+								CASE 1
+									PRINTFORML 
+									PRINTFORML 「そこばっかりっ…苛め、ないでくださっ…」
+								CASE 2
+									PRINTFORML 
+									PRINTFORML 「あ、ぁあっ…むか、れてぇ…！」
+							ENDSELECT
+						CASE 3
+							;V
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 
+									PRINTFORML 「ふ、ぁっ！ふかい、ふかすぎ、ますっ…！！」
+								CASE 1
+									PRINTFORML 
+									PRINTFORML 「なか、ぐりって、抉られてっ…！」
+							ENDSELECT
+					ENDSELECT
+				ELSE
+					SELECTCASE ARG:2
+						CASE 0
+							;A
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 
+									PRINTFORML 「いぁっ！？」
+									PRINTFORML 　後、ろ…！？」
+								CASE 1
+									PRINTFORML 
+									PRINTFORML 「お、お尻でなんて、嫌です…っ！」
+							ENDSELECT
+						CASE 1
+							;B
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 
+									PRINTFORML 「なんで、わざわざ、私の胸なんて…！」
+								CASE 1
+									PRINTFORML 
+									PRINTFORML 「そんな、揉むほど、無いですからっ…！」
+							ENDSELECT
+						CASE 2
+							;C
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 
+									PRINTFORML 「は、破廉恥ですっ…！」
+								CASE 1
+									PRINTFORML 
+									PRINTFORML 「やっ…！
+									PRINTFORML 　足が、閉じれなっ…！」
+							ENDSELECT
+						CASE 3
+							;V
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 
+									PRINTFORML 「は、挿入って…っ」
+								CASE 1
+									PRINTFORML 
+									PRINTFORML 「こんな、化け物、なんかに…！」
+							ENDSELECT
+					ENDSELECT
+				ENDIF
+		ENDSELECT
+	CASE 15
+		;敵の拘束攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に丸呑みフラグ
+		IF ARG:2 != 0
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 
+					PRINTFORML 「嫌、嫌ですっ！食べられっ…！」
+				CASE 1
+					PRINTFORML 
+					PRINTFORML 「ん、ぐむっ…！？」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 
+					PRINTFORML 「しまっ…！
+					PRINTFORML 　…う、くぅ…っ！」
+				CASE 1
+					PRINTFORML 
+					PRINTFORML 「やっ、ぬるって、気持ち悪、あぁっ！？」
+			ENDSELECT
+		ENDIF
+;		PRINTFORML
+	CASE 16
+		;敵の寄生攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に妊娠フラグ　ARG:3にMPダメージ
+		IF ARG:2 != 0
+;			SELECTCASE RAND:2
+;				CASE 0
+;				CASE 1
+;			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 
+					PRINTFORML 「うぁっ…！？
+					PRINTFORML 　な、なか、あつい、なんですか！？何してるんですか…っ！？」
+				CASE 1
+					PRINTFORML 
+					PRINTFORML 「抜いてくださいっ！抜い、て…あっ───！？」
+			ENDSELECT
+		ENDIF
+;	CASE 17
+		;敵のその他攻撃（命中）
+		;ARG:1にコマンドID
+;		PRINTFORML
+	
+	CASE 21
+		;味方の攻撃（回避）
+		;ARG:1にコマンドID
+		IF BASE:TARGET:4 <= 75
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML
+					PRINTFORML 「や、やっぱり…私じゃ…」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML
+					PRINTFORML 「付け焼き刃では、厳しいですね…」
+				CASE 1
+					PRINTFORML
+					PRINTFORML 「少しは、運動しておけば良かったなぁ…」
+			ENDSELECT
+		ENDIF
+	CASE 22,23
+		;敵の通常攻撃（回避）
+		;ARG:1にコマンドID
+		;敵の衣服攻撃（回避）
+		;ARG:1にコマンドID ARG:2に部位
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML
+				PRINTFORML 「振り抜く瞬間に、潜る…！」
+			CASE 1
+				PRINTFORML
+				PRINTFORML 「せ、背が小さくて助かりました…」
+			CASE 2
+				PRINTFORML
+				PRINTFORML 「踏み込みが、足りませんっ！
+				PRINTFORML 　…あ、本当に踏み込んでこないで下さいね？」
+		ENDSELECT
+;	CASE 24
+		;敵の性攻撃（回避）
+		;ARG:1にコマンドID　ARG:2に部位	CASE 15
+;		PRINTFORML
+;	CASE 25
+		;敵の拘束攻撃（回避）
+		;ARG:1にコマンドID
+;		PRINTFORML
+;	CASE 26
+		;敵の寄生攻撃（回避）
+		;ARG:1にコマンドID　ARG:2に妊娠フラグ　ARG:3にMPダメージ
+;		PRINTFORML
+;	CASE 27
+		;敵のその他攻撃（回避）
+		;ARG:1にコマンドID
+;		PRINTFORML
+		
+	CASE 31
+		;敵を撃破
+		;ARG:1に敵ID
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML
+				PRINTFORML 「はぁっ…！
+				PRINTFORML 　倒し、ました…？」
+			CASE 1
+				PRINTFORML
+				PRINTFORML 「もう起き上がって来ないでくださいね…」
+		ENDSELECT
+;	CASE 32
+		;HPが0になった
+;		PRINTFORML
+;	CASE 33
+		;MPが0になった
+;		PRINTFORML
+;	CASE 34
+		;EPが0になった
+		;ARG:1に絶頂部位　ARG:2で細かい状況を分岐させる予定　※絶頂の瞬間とはまた別 絶頂メッセージは120
+;		PRINTFORML
+;	CASE 35
+		;CPが減少した
+		;ARG:1に破れ強度　（ARG:1が　0：全裸になった　1：半裸になった　2：破れ始めた）
+;		PRINTFORML
+;	CASE 36
+		;戦闘中にアイテムを使って貰った
+		;ARG:1にアイテムID　ARG:2にアイテム使用キャラID
+;		PRINTFORML
+;	CASE 37
+		;敵IDに丸呑みされていて届かない（呑まれている側口上）
+		;ARG:1に敵ID
+;		PRINTFORML
+;	CASE 38
+		;敵IDに丸呑みされていて届かない（行動した側口上）
+		;ARG:1に敵ID
+;		PRINTFORML
+;	CASE 39
+		;通常攻撃を受けてひるんだ
+;		PRINTFORML
+;	CASE 40
+		;寄生された
+		;ARG:1に敵ID
+;		PRINTFORML
+;	CASE 41
+		;攻撃されて起きた
+		;ARG:1に敵ID　ARG:2に攻撃の種類　ARG:3に部位
+;		PRINTFORML
+;	CASE 42
+		;敵から解放された
+		;ARG:1に敵ID
+;		PRINTFORML
+;	CASE 43
+		;時間経過で起きた
+;		PRINTFORML
+;	CASE 44
+		;煙幕が治った
+;		PRINTFORML
+;	CASE 45
+		;砂煙が治った
+;		PRINTFORML
+;	CASE 46
+		;裸で時間経過
+		;ARG:1に羞恥フラグ（ARG:1が　0：恥薄い　1：通常　2：恥じらい）　ARG:2にMPダメージ
+;		PRINTFORML
+;	CASE 47
+		;重度汚染部屋で時間経過
+		;ARG:1に部位　ARG:2にEPダメージ
+;		PRINTFORML
+;	CASE 48
+		;ターン終了時自慰発生
+;		PRINTFORML
+;	CASE 49
+		;眠り継続
+		;ARG:1に
+;		PRINTFORML
+;	CASE 50
+		;カウンター中
+;		PRINTFORML
+;	CASE 51
+		;カウンター発動
+;		PRINTFORML
+;	CASE 52
+		;拘束レベルアップ
+		;ARG:1に拘束レベル　ARG:2に丸呑みフラグ
+;		PRINTFORML
+;	CASE 53
+		;拘束レベルMAX継続　ARG:2に丸呑みフラグ
+;		PRINTFORML
+;	CASE 54
+		;戦闘開始時
+		;ARG:1にイベントID（ARG:1が　0：通常戦闘　1～：ボスなどの特殊戦闘 詳細はTBD）
+;		PRINTFORML
+;	CASE 55
+		;戦闘から逃げた　
+		;ARG:1にイベントID　ARG:2がPT離脱判定　(0：通常　1～：PTから抜けるキャラID)　ARG:3にPTから抜けるキャラ２人目ID
+		;ARG:4に抜け方（0：拘束キャラが抜ける　1：非拘束キャラが抜ける）
+;		PRINTFORML
+;	CASE 56
+		;戦闘で敗北　※ゲームオーバーは157
+		;ARG:1にイベントID
+;		PRINTFORML
+;	CASE 57
+		;戦闘で勝利
+		;ARG:1にイベントID
+;		PRINTFORML
+;	CASE 58
+		;拘束攻撃が当たったが、先客が居たので何とかなった
+		;ARG:1に敵ID
+;		PRINTFORML
+;	CASE 59
+		;戦闘中に捕食されている
+		;ARG:1に敵ID
+;		PRINTFORML
+;	CASE 60
+		;先制攻撃・不意打ち発生　ARG:2に先制状況
+		;ARG:1にイベントID
+;		PRINTFORML
+
+
+;	CASE 101
+		;迷宮内で[遭遇キャラ]と会った
+		;ARG:1に遭遇キャラ	
+;	CASE 102
+		;遭遇時会話：別れた
+		;ARG:1に遭遇キャラ	
+	CASE 103
+		;遭遇時会話：雑談
+		;ARG:1に遭遇キャラ　ARG:2にMP回復量
+		;今のところ主人公側の口上しかないのかな…？
+		CFLAG:811 = RAND:7
+		IF CFLAG:811 == 0
+			PRINTFORML
+			PRINTFORML 「この迷宮に巣くう"彼ら"…一体何者なんでしょうか。
+			PRINTFORML 　私の記憶にもありませんし、この迷宮ごと幻想入りしてきた妖怪、と一括りにするには、少し―――
+			IF FLAG:AUTOMODE
+				PRINTFORML 　っと、そろそろ失礼しますね。余り一つ所に長居はしたくないので」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　っと、そろそろ失礼しますね。余り一つ所に長居はしたくないので」
+			ENDIF
+		ELSEIF CFLAG:811 == 1
+			PRINTFORML
+			PRINTFORML 「私は元々の力が力なのでよく分からないのですが…
+			PRINTFORML 　どうやら、ここでは能力にかなりの制限を受けるようです。
+			IF FLAG:AUTOMODE
+				PRINTFORML 　外部からの救出を待つ余裕もありませんし、厳しい状況ですね…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　外部からの救出を待つ余裕もありませんし、厳しい状況ですね…」
+			ENDIF
+		ELSEIF CFLAG:811 == 2
+			PRINTFORML
+			PRINTFORML 「ここは、一体どこなんでしょうね。
+			PRINTFORML 　弾幕がある程度使えるということは、幻想郷の外、という訳ではないのでしょうが…
+			PRINTFORML
+			PRINTFORML 　これだけの広さとなると、地底にでも作ったのでなければ、
+			IF FLAG:AUTOMODE
+				PRINTFORML 　八雲の紫さんや、あの仙人の方々のように、独自の空間を構築したんでしょうか…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　八雲の紫さんや、あの仙人の方々のように、独自の空間を構築したんでしょうか…」
+			ENDIF
+		ELSEIF CFLAG:811 == 3
+			PRINTFORML
+			PRINTFORML 「今のところ、飲まず…はともかく、しばらく絶食状態ですが、人間の私も特に体調に変化がありませんね。
+			PRINTFORML 　この妙な空気や霧が活力を供給してたりするのかも…
+			PRINTFORML
+			IF FLAG:AUTOMODE
+				PRINTFORML 　ただ、やっぱり口寂しいですね。兎鍋が恋しいです」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　ただ、やっぱり口寂しいですね。兎鍋が恋しいです」
+			ENDIF
+		ELSEIF CFLAG:811 == 4
+			PRINTFORML
+			PRINTFORML 「縁起の編纂に当たって、弾幕ごっこについて調べる機会がありまして。
+			IF FLAG:AUTOMODE
+				PRINTFORML 　ほんの触り程度でしたが、弾幕自体は何とか使えはしますよ。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　ほんの触り程度でしたが、弾幕自体は何とか使えはしますよ。
+			ENDIF
+			PRINTFORML
+			IF FLAG:AUTOMODE
+				PRINTFORML 　…豆鉄砲にも、劣るようなものですけれど」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　…豆鉄砲にも、劣るようなものですけれど」
+			ENDIF
+		ELSEIF CFLAG:811 == 5
+			PRINTFORML
+			PRINTFORML 「時折茶筒が転がっているのを見かけますが…
+			PRINTFORML 　まさか、"彼ら"も茶を嗜んでいたり…しません、よね。
+			PRINTFORML
+			IF FLAG:AUTOMODE
+				PRINTFORML 　あ、もし紅茶を見掛けたら是非教えて下さいね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　あ、もし紅茶を見掛けたら是非教えて下さいね」
+			ENDIF
+		ELSE
+		ENDIF
+	CASE 104
+		;遭遇時会話：情報交換
+		;ARG:1に遭遇キャラ　ARG:2に浄化フラグ
+		PRINTFORML 
+		PRINTFORML 「あ、はい、構いませんよ。
+		PRINTFORML 　幸いなことに紙と筆を持ち歩いていましたので、私なりに地図を描いてまして、
+		PRINTFORML 　えーと、そうですね…」
+;	CASE 105
+		;遭遇時会話：アイテム強請り成功
+		;ARG:1に遭遇キャラ　ARG:2にアイテムID
+;	CASE 106
+		;遭遇時会話：アイテム強請り失敗
+		;ARG:1に遭遇キャラ	
+;	CASE 107		
+		;遭遇時会話：勧誘成功
+		;ARG:1に遭遇キャラ	
+;	CASE 108		
+		;遭遇時会話：勧誘失敗
+		;ARG:1に遭遇キャラ	
+;	CASE 109
+		;加入時
+	CASE 110
+		;離脱時
+		;好感度200以上で分岐アリ？
+		PRINTFORML
+		PRINTFORML 「そう、ですか。
+		PRINTFORML 　分かりました。ここからは私なりに動いてみます。
+		IF FLAG:AUTOMODE
+			PRINTFORML 　短い間でしたが、お世話になりました」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　短い間でしたが、お世話になりました」
+		ENDIF
+;	CASE 111
+		;遭遇時逆襲：アイテム取られる　ARG:2にアイテムID
+		;ARG:1に遭遇キャラ	
+;	CASE 112
+		;遭遇時逆襲：攻撃される
+		;ARG:1に遭遇キャラ	
+	CASE 113		
+		;探索でアイテムを見つけた
+		;ARG:1にアイテムID	
+		SELECTCASE ARG:1
+			; *----消耗武器----*
+			CASE 1
+				;クロスボウ 威力35　弾数70
+				PRINTFORML 
+				PRINTFORML 「洋弓銃、ですね。
+				IF FLAG:AUTOMODE
+					PRINTFORML 　日本では弩は普及しませんでしたから、恐らくは紅魔館辺りと諸共に幻想入りしたものでしょう。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　日本では弩は普及しませんでしたから、恐らくは紅魔館辺りと諸共に幻想入りしたものでしょう。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 　手回し装填式の連弩のようですので、連射は効きますが、正直なところ威力には期待出来ませんね…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　手回し装填式の連弩のようですので、連射は効きますが、正直なところ威力には期待出来ませんね…」
+				ENDIF
+			CASE 2
+				; 魔法の弓矢 威力50　弾数60
+				PRINTFORML 
+				PRINTFORML 「西洋弓、でしょうか。
+				PRINTFORML 　何やら魔法が掛けられているようですが…
+				PRINTFORML 　弦も、緩いですね。これくらいなら引けそうです」
+			CASE 3
+				; 火炎放射器 威力65　弾数50　炎属性攻撃
+				PRINTFORML 
+				PRINTFORML 「…河童のバザーで見かけましたね、これ。
+				PRINTFORML 　外の、火を吹く道具でしたか。何事か叫びながら使うのがマナーだとか…
+				IF FLAG:AUTOMODE
+					PRINTFORML 　ここ、もしかして結界の境に近いんでしょうか」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　ここ、もしかして結界の境に近いんでしょうか」
+				ENDIF
+			CASE 4
+				; マジックミサイル 威力80　弾数40
+				PRINTFORML 
+				PRINTFORML 「スキルカードですね。いわゆる『魔力の矢』、初歩的な加害魔法です。
+				PRINTFORML 　有難いことに必要分の魔力も貯蔵されているようですね。大事に使いましょう」
+			CASE 5
+				; 苺クロス 威力95　弾数30
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…なんでしょうか、これ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…なんでしょうか、これ。
+				ENDIF
+				PRINTFORML 　魔力でも霊力でもなく、純然たる物理現象を発生させる機械のようですが…
+				IF FLAG:AUTOMODE
+					PRINTFORML 　出てくるものが真っ赤な十字架、とは…ちょっと、センスを疑いますね…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　出てくるものが真っ赤な十字架、とは…ちょっと、センスを疑いますね…
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORML 　あと、何だか苺臭いんですけど…これ、ひょっとして動力源…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　あと、何だか苺臭いんですけど…これ、ひょっとして動力源…」
+				ENDIF
+			CASE 6
+				; 博麗のお札 威力115　弾数20
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORML 「まさか、霊夢さん…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「まさか、霊夢さん…
+				ENDIF
+				PRINTFORML 　………いや、でも、あの人弾幕勝負でばら撒いた諸々をめんどくさいからって放置して帰りますからねぇ…
+				IF FLAG:AUTOMODE
+					PRINTFORML 　早計、だといいんですが」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　早計、だといいんですが」
+				ENDIF
+			CASE 7
+				; スペルカード 威力140　弾数10
+				PRINTFORML 
+				PRINTFORML 「あら…スペルカード、ですね。
+				IF FLAG:AUTOMODE
+					PRINTFORML 　というよりは、汎用の霊撃札に近いようですが。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　というよりは、汎用の霊撃札に近いようですが。
+				ENDIF
+				PRINTFORML 
+				PRINTFORML 　霊力も、充填済み…ですか。
+				IF FLAG:AUTOMODE
+					PRINTFORML 　…つまり、宣言中に、何かがあって、落とした、と言うことですね。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　…つまり、宣言中に、何かがあって、落とした、と言うことですね。
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORML 　───無駄には、しませんから」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　───無駄には、しませんから」
+				ENDIF
+
+			; *----非消耗武器----*
+			CASE 10
+				; こんぼう 威力25
+				PRINTFORML 
+				PRINTFORML 「何だか誂えたように手頃な棒が落ちてますね…
+				IF FLAG:AUTOMODE
+					PRINTFORML 　まあ、無いよりはマシですか」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　まあ、無いよりはマシですか」
+				ENDIF
+			CASE 11
+				; ナギナタ 威力40
+				PRINTFORML 
+				PRINTFORML 「薙刀、ですね。柄の短い巴型…女性用に拵えたもののようです。
+				IF FLAG:AUTOMODE
+					PRINTFORML 　撃剣興行も、とっくに幻想入りしてるんでしょうね…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　撃剣興行も、とっくに幻想入りしてるんでしょうね…」
+				ENDIF
+			CASE 12
+				; 白狼刀 威力55
+				PRINTFORML 
+				PRINTFORML 「これは…山の、木端天狗の方々の…
+				IF FLAG:AUTOMODE
+					PRINTFORML 　そうですか、天狗でも容易には脱出できない訳ですね…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　そうですか、天狗でも容易には脱出できない訳ですね…」
+				ENDIF
+			CASE 13
+				; マジカルステッキ 威力70
+				PRINTFORML 
+				PRINTFORML 「えぇっと…なんでしょう、これは。奇天烈な形ですね。
+				IF FLAG:AUTOMODE
+					PRINTFORML 　霊力増幅媒体の一種…でも無いですか、単なる棒みたいですが…？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　霊力増幅媒体の一種…でも無いですか、単なる棒みたいですが…？」
+				ENDIF
+			CASE 14
+				; 龍魚ドリル 威力80
+				PRINTFORML 
+				PRINTFORML 「………布、ですね。布をくるくる巻いて出来た…手鉾？でしょうか。
+				IF FLAG:AUTOMODE
+					PRINTFORML 　天人の羽衣にも見えますが…っ！　ま、回った！？
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　天人の羽衣にも見えますが…っ！　ま、回った！？
+				ENDIF
+				PRINTFORML 　やっ、危なっ…、で、電撃までっ！？
+				IF FLAG:AUTOMODE
+					PRINTFORML 　どうやって止めるんですかこれー！？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　どうやって止めるんですかこれー！？」
+				ENDIF
+			CASE 15
+				; 陰陽玉 威力90
+				PRINTFORML 
+				PRINTFORML 「……………
+				IF FLAG:AUTOMODE
+					PRINTFORML 　微妙に、霊夢さんが持っていたものとは違いますね。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　微妙に、霊夢さんが持っていたものとは違いますね。
+				ENDIF
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORML 　───よかっ、たぁ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　───よかっ、たぁ…」
+				ENDIF
+			CASE 16
+				; 緋緋色金の剣 威力100
+				PRINTFORML 
+				IF FLAG:AUTOMODE
+					PRINTFORML 「───金より軽く、金剛より硬く、永久に錆びず、朽ちない。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「───金より軽く、金剛より硬く、永久に錆びず、朽ちない。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 　太陽のように朱く、月のように冷たく、水鏡のように揺らめく鋼。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　太陽のように朱く、月のように冷たく、水鏡のように揺らめく鋼。
+				ENDIF
+				PRINTFORML 
+				PRINTFORML 　…果たしてこれがそれであるかは、求聞持の千年の記憶を持ってしても分かりませんが、
+				IF FLAG:AUTOMODE
+					PRINTFORML 　これが凡百の刀剣と一線を画すものであることは、確かです」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　これが凡百の刀剣と一線を画すものであることは、確かです」
+				ENDIF
+
+			; *----アクセサリー----*
+			CASE 20
+				; 魔導触媒 弾幕攻撃の威力微増（戦闘素質+10換算）
+			CASE 21
+				; 簡易魔法陣 弾幕攻撃の威力小増（戦闘素質+20換算）
+				PRINTFORML 
+				PRINTFORML 「これは…霊力増幅用の方陣ですか。
+				PRINTFORML 　職業の方の駆け出し魔法使いがよく使うタイプですね…
+				PRINTFORML 　私が使っても焼け石に水ですが…まあ、あって損は無いですよね」
+			CASE 22
+				; 使い魔 弾幕攻撃の威力中増（戦闘素質+40換算）
+				PRINTFORML 
+				PRINTFORML 「あら、これは…媒体、みたいですね。
+				PRINTFORML 　見る限りは、式神か何かの使役のためのものでしょうか…
+				PRINTFORML 　弾幕の補助くらいなら任せられるかも知れませんね」
+			CASE 23
+			; 賢者の石 弾幕攻撃の威力大増（戦闘素質+60換算）
+			CASE 24
+			; ウイングブーツ 速度+20
+			CASE 25
+			; 天狗の団扇 速度+50
+			CASE 26
+			; 咲夜の時計 先制攻撃（速度+500）　唯一品
+				PRINTFORML 
+				PRINTFORML 「懐中時計、ですね。動いてませんが。
+				IF FLAG:AUTOMODE
+					PRINTFORML 　特に変わった点はあり、ませ、ん…？
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　特に変わった点はあり、ませ、ん…？
+				ENDIF
+				PRINTFORML 
+				PRINTFORML 　…今、ネジを巻いたら、体感時間が遅くなりましたね…。
+				PRINTFORML 　何を言ってるか分からないと思いますが、私もよく分かりません」
+			CASE 27
+				; 身代わり人形 回避+10
+			CASE 28
+				; 森羅結界 HPダメージを25％カット
+			CASE 29
+				; 酒樽 MPダメージを25％カット
+			CASE 30
+				; 警策 EPダメージを25％カット
+			CASE 31
+				; 絶対領域 CPダメージを50％カット
+			CASE 32
+				; 病気平癒守 戦闘終了時にHPを10％回復
+			CASE 33
+				; 伊吹瓢 戦闘終了時にMPを5％回復
+			CASE 34
+				; 緋想の剣 戦闘終了時にEPを10％回復
+			CASE 35
+				; ブラウニー 戦闘終了時にCPを25％回復
+			CASE 36
+				; 幸運のお守り 戦闘中に拘束から脱出できる確率UP
+			CASE 37
+				; ブラックコーヒー 睡眠を防ぐ　寝こみを襲われた場合は無理
+			CASE 38
+				; ゴーグル 煙幕・砂煙を防ぐ
+			CASE 39
+				; 媚薬 装備中は常に発情状態になるが、攻撃の威力が2倍になる
+				PRINTFORML 
+				PRINTFORML 「………び、媚薬、ですね。
+				PRINTFORML 　その、すごく…大入りです…。
+				PRINTFORML 　………えー、あー…
+				IF FLAG:AUTOMODE
+					PRINTFORML 　ま、まあ、何かの役には立ちます…かね…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　ま、まあ、何かの役には立ちます…かね…」
+				ENDIF
+
+			; *----その他----*
+			CASE 50
+				; 緑茶 HPを50％回復
+			CASE 51
+				; 玉露 HPを100％回復
+			CASE 52
+				; 日本酒 MPを25％回復
+			CASE 53
+				; 神酒 MPを50％回復
+			CASE 54
+				; 着替えセット CPを100％回復
+			CASE 55
+				; 鎮静剤 EPを100％回復　戦闘中の場合、TPが0になる
+			CASE 56
+				; 興奮剤 発情状態にする　戦闘中の場合、TPが200になる
+			CASE 57
+				; 万能薬 拘束・発情・戦意喪失以外の状態異常を治療する
+			CASE 58
+				; 気付け薬 戦意喪失（MPが0）になってしまった仲間を、MP25％の状態で復活させる
+			CASE 59
+				; 煙玉 戦闘から必ず逃げられる
+			CASE 60
+				; 大人の玩具 非戦闘中のみ使用可能　自慰（＝絶頂）により、EPの回復や発情の解除ができる　唯一品　何度でも使用可能
+				PRINTFORML 
+				PRINTFORML 「は、張り型、ですね、はい。
+				IF FLAG:AUTOMODE
+					PRINTFORML 　実物を見たのは初めてですが…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　実物を見たのは初めてですが…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 　その、何というか…きょ、凶悪ですね。棍棒よりこれで殴った方が強いのでは…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　その、何というか…きょ、凶悪ですね。棍棒よりこれで殴った方が強いのでは…
+				ENDIF
+				PRINTFORML 　
+				PRINTFORML 　そ、そう！これは武器です！
+				IF FLAG:AUTOMODE
+					PRINTFORML 　身を守るものは幾らあっても損にはならない、ので、も、持ってるだけ、なら…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　身を守るものは幾らあっても損にはならない、ので、も、持ってるだけ、なら…」
+				ENDIF
+			CASE 61
+				; 生命の種 最大HP+300のドーピングアイテム
+			CASE 62
+				; 魔力の種 戦闘素質+10のドーピングアイテム
+			CASE 63
+				; 敏捷の種 速度+10のドーピングアイテム
+			CASE 64
+				; 不死鳥の羽 全滅時に一度だけ全回復してランダムな部屋に転送される　唯一品だが消耗品
+			CASE 65
+				; 胡蝶夢丸ナイトメア その場で気絶する代わりにHPなどが回復する　唯一品　何度でも使用可能
+
+			; *----弾----*
+	;		CASE 81
+				;クロスボウ
+	;		CASE 82
+				;魔法の弓矢
+	;		CASE 83
+				;火炎放射器
+	;		CASE 84
+				;マジックミサイル
+	;		CASE 85
+				;苺クロス
+	;		CASE 86
+				;博麗のお札
+	;		CASE 87
+				;スペルカード
+
+		ENDSELECT
+
+;	CASE 114
+		;睡眠開始
+		;ARG:1に状態　（ARG:1が　0：見張り無し　1：PTで見張り　2：ARG:2のキャラが見張り）
+		;ARG:2に見張りNPC
+;	CASE 115
+		;重度汚染部屋で睡眠開始　主人公のみ口上発生
+;	CASE 116
+		;重度汚染部屋で睡眠
+		;ARG:1に部位　ARG:2にEPダメージ
+;	CASE 117
+		;睡眠時自慰発生
+;	CASE 118
+		;自慰メッセージ
+		;ARG:1に部位　ARG:2に道具ありフラグ
+;	CASE 119
+		;自慰で絶頂失敗
+		;ARG:1に部位
+;	CASE 120
+		;絶頂の瞬間
+		;ARG:1に部位　ARG:2にMPダメージ
+;	CASE 121
+		;発情がおさまった
+		;ARG:1に部位
+;	CASE 122
+		;戦意喪失中に絶頂
+		;ARG:1に部位
+;	CASE 123
+		;母乳を吸われる
+		;ARG:1に敵ID　ARG:2に回復量
+;	CASE 124
+		;戦意喪失した
+;	CASE 125		
+		;寄生が進行
+		;ARG:1に残り時間
+;	CASE 126
+		;妊娠が進行
+		;ARG:1に残り時間
+;	CASE 127		
+		;寄生・出産イベント
+		;ARG:1に状況　（ARG:1が　0：最初　1：産まれた　2：吸われた）
+;	CASE 128
+		;妊娠・母乳体質獲得
+;	CASE 129
+		;妊娠・出産イベント
+		;ARG:1に状況　（ARG:1が　0：最初　1：産まれた　2：吸われた）　ARG:2に子供の種類
+
+;	CASE 130
+		;部屋の浄化実行
+;	CASE 131
+		;眠気が進行
+		;ARG:1に眠気
+;	CASE 132
+		;部屋を移動：突撃
+;	CASE 133
+		;部屋を移動：慎重
+;	CASE 134
+		;部屋を移動：待ち伏せ
+;	CASE 135
+		;探索開始
+;	CASE 136
+		;処女を喪失した
+		;ARG:1に状況　（ARG:1の詳細はTBD）
+
+;	CASE 137
+		;遭遇時会話：固定イベント情報取得
+		;ARG:1に遭遇キャラ　ARG:2にイベントID
+;	CASE 138
+		;遭遇時会話：アイテム強請り開始
+		;ARG:1に遭遇キャラ　ARG:2に喪失キャラフラグ
+;	CASE 139
+		;遭遇時会話：アイテムを強請られた
+		;ARG:1にアイテムID　（ARG:1は渡したアイテム。0なら失敗）
+		;※主人公ではなく、強請られた側のキャラの口上　喪失中のアイテム盗難はCFLAG:29をチェック
+	CASE 140
+		;PTに勧誘された
+		;ARG:1に状況　（ARG:1が0：通常　1：共闘）　ARG:2が0：失敗　1：成功
+		;※主人公ではなく、誘われた側のキャラの口上
+		IF ARG:2 == 1 && ARG:1 == 1
+			PRINTFORML 「この状況では、足手まといかどうかなんて言ってられないですよね…」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:TARGET%はこの状況で自分にできる精一杯の行動を考え始めた。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:TARGET%はこの状況で自分にできる精一杯の行動を考え始めた。
+			ENDIF
+		ELSEIF ARG:2 == 1 && ARG:1 == 0
+			PRINTFORML 
+			PRINTFORML 「私…ですか？
+			IF FLAG:AUTOMODE
+				PRINTFORML 　ええ、願ってもないことですが…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　ええ、願ってもないことですが…
+			ENDIF
+			PRINTFORML 　正直に申し上げますと、余り戦いの役には立てませんよ？
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORML 　弾幕ごっこはおろか、ろくに運動もしたことがありませんし、
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　弾幕ごっこはおろか、ろくに運動もしたことがありませんし、
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 　足を引っ張ってばかりで御迷惑に…あっ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　足を引っ張ってばかりで御迷惑に…あっ」
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 面倒になった%CALLNAME:1%は、%CALLNAME:TARGET%の腕を掴んで連れ出した…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 面倒になった%CALLNAME:1%は、%CALLNAME:TARGET%の腕を掴んで連れ出した…
+			ENDIF
+		ENDIF
+;	CASE 141
+		;遭遇時逆襲：襲い掛かられた
+		;ARG:1に遭遇キャラ　ARG:2が1なら実はドッペル
+;	CASE 142
+		;遭遇時逆襲：襲い掛かった
+		;ARG:2が1なら実はドッペル
+		;※主人公ではなく、襲った側のキャラの口上
+;	CASE 143
+		;遭遇時会話：喪失キャラに気付け薬を使った
+		;ARG:1に遭遇キャラ　ARG:2が0：使った時　1：仲間にした　2：仲間入りを断った
+;	CASE 144
+		;遭遇時会話：喪失中に気付け薬を使われた
+		;ARG:1に状況　（ARG:1が0：そのまま立ち去る　1：仲間に入りたい　2：仲間に入った　3：断られた）
+		;※主人公ではなく、助けられた側のキャラの口上
+;	CASE 150
+		;捕食開始
+		;ARG:1に敵ID
+;	CASE 151
+		;捕食されている
+		;ARG:1に敵ID　ARG:2に丸呑みフラグ
+;	CASE 152
+		;捕食された
+		;ARG:1に敵ID　ARG:2に丸呑みフラグ
+;	CASE 153
+		;リザレクション発生（蓬莱人）
+;	CASE 154
+		;一回休み発生（妖精）
+;	CASE 155
+		;不死身発生
+;	CASE 156
+		;敵ランクアップ
+		;ARG:1に敵種類
+;	CASE 157
+		;ゲームオーバー
+		;ARG:1に敵種類
+;	CASE 200
+		;ランダムイベント発生
+		;ARG:1にイベントID　ARG:2で同じイベントの詳細分岐
+		;※イベントIDは固定イベントIDと同一
+;		SELECTCASE ARG:1
+			;●特殊イベント系
+;			CASE 130
+				;湧き水　飲むとHP・MP・EP全快　飲まなかった場合は残る
+;			CASE 131
+				;湧き水　飲むとEPが1になる　飲まなかった場合は残る
+;			CASE 132
+				;湧き水　飲むと最大HPが+500　飲まなかった場合は残る
+;			CASE 133
+				;澄んだ泉　飲むとMP25％回復、入るとEP50％回復　拠点にすることを想定
+;				SELECTCASE ARG:2
+;					CASE 0
+						;MP回復
+;					CASE 1
+						;EP回復
+;					CASE 2
+						;無視
+;				ENDSELECT
+;			CASE 134
+				;白濁した泉　133とは違う場所　飲むとMP全快or発情　入ると速度+5or寄生（種類はランダム）
+;				SELECTCASE ARG:2
+;					CASE 0
+						;MP全回復
+;					CASE 1
+						;眠気
+;					CASE 2
+						;発情
+;					CASE 3
+						;速度+
+;					CASE 4
+						;寄生
+;				ENDSELECT
+;			CASE 135
+				;不思議な泉　飲むとHP・MP・EP全快　入ると寄生を含む全状態異常治療　処女モードの場合処女も回復
+;				SELECTCASE ARG:2
+;					CASE 0
+						;HP・MP・EP全快
+;					CASE 1
+						;全状態異常治療
+;					CASE 2
+						;無視
+;				ENDSELECT
+;			CASE 136
+				;天井からスライム　危機回避判定失敗でCPが0に
+;				SELECTCASE ARG:2
+;					CASE 1
+						;回避失敗
+;					CASE 2
+						;回避成功
+;				ENDSELECT
+;			CASE 137
+				;壁から触手　危機回避判定失敗で数回ランダム箇所絶頂
+;				SELECTCASE ARG:2
+;					CASE 1
+						;回避失敗
+;					CASE 2
+						;回避成功
+;				ENDSELECT
+;			CASE 138
+				;落とし穴に触手　危機回避判定（易しめ）失敗で多数ランダム絶頂＋寄生
+;				SELECTCASE ARG:2
+;					CASE 1
+						;回避失敗
+;					CASE 2
+						;回避成功
+;					CASE 3
+						;回避失敗&寄生　CASE 1から連続で発生するので注意
+;				ENDSELECT
+;			CASE 139
+				;桃色のガス　自慰中毒判定失敗で強制自慰
+;					CASE 1
+						;回避失敗
+;					CASE 2
+						;回避成功
+;			CASE 140
+				;誰かの荷物　荷物袋が落ちている　開けると着替えセット（54）と日本酒（52）を入手　無視した場合は残る
+;			CASE 141
+				;誰かの荷物　荷物袋が落ちている　開けると中から触手　雑魚を１匹生成して、敵の先制で強制戦闘　無視した場合は残る
+;			CASE 142
+				;喋れる触手　各部位の感覚Lv3を連れて行くとネチョる代わりにレアアイテムをくれる　コンプリートで全武器１つずつ＋イベント消滅
+;				SELECTCASE ARG:2
+;					CASE 0
+						;A
+;					CASE 1
+						;B
+;					CASE 2
+						;C
+;					CASE 3
+						;V
+;					CASE 4
+						;だが断る
+;					CASE 5
+						;コンプ
+;				ENDSELECT
+;			CASE 143
+				;不思議なガス　危機回避判定失敗で　眠気+2/全員発情/全員強制自慰/全員TP200/全員TP0　のいずれか
+;				SELECTCASE ARG:2
+;					CASE 1
+						;眠気
+;					CASE 2
+						;発情
+;					CASE 3
+						;自慰
+;					CASE 4
+						;テンション上昇
+;					CASE 5
+						;テンション下降
+;					CASE 6
+						;回避
+;				ENDSELECT
+;			CASE 144
+				;柔らかい壁　壁の無い部屋で発生したら即終了＋再配置　高難易度　体当たりすると崩れて通路追加orネチョ　ネチョか放置の場合は残る
+;				SELECTCASE ARG:2
+;					CASE 1
+						;あっさり崩れた
+;					CASE 2
+						;ヤられた
+;				ENDSELECT
+;			CASE 145
+				;スッキリ草　眠気を０にしてくれる薬草　効果は必ず分かってOK　使わなかった場合は残る
+;				SELECTCASE ARG:2
+;					CASE 1
+						;使った
+;					CASE 2
+						;放置
+;				ENDSELECT
+;			CASE 146
+				;淫蟲の大群　A属性EPダメージ　絶頂時MPダメージ大
+;			CASE 147
+				;淫蟲の大群　B属性EPダメージ　母乳体質時EP・MPダメージ倍
+;			CASE 148
+				;淫蟲の大群　C属性EPダメージ　それなりの確率で発情
+				;
+;				SELECTCASE ARG:2
+;					CASE 1
+						;受けた時
+;					CASE 2
+						;発情　↑から連続で発生するので被りに注意
+;				ENDSELECT
+				
+;			CASE 149
+				;淫蟲の大群　V属性EPダメージ　稀に寄生
+;				SELECTCASE ARG:2
+;					CASE 1
+						;受けた時
+;					CASE 2
+						;寄生　↑から連続で発生するので被りに注意
+;				ENDSELECT
+;			CASE 150
+				;落石　危機回避判定失敗でHPダメージ
+;				CASE 1
+					;回避失敗
+;				CASE 2
+					;回避成功
+;			CASE 151
+				;不意打ち　強めの雑魚を１匹生成して、敵の先制で強制戦闘
+;		ENDSELECT
+	CASEELSE
+		;自分では何も書かない場合
+;		RETURN 0
+ENDSELECT
+
+RESETCOLOR
+
+RETURN 1
+
+
+;@KOJO_48_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;CALL SYSTEM_MESSAGE
+
+

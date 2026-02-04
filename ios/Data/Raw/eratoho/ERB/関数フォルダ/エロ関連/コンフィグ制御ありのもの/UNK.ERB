@@ -1,0 +1,428 @@
+﻿;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;パッチ本体
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;=================================================
+;便意処理
+;=================================================
+@ADD_BP(キャラID,追加量)
+#DIM キャラID
+#DIM 追加量
+	IF FLAG:528 == 0
+		CFLAG:(キャラID):49 = 0
+		RETURN -1
+	ENDIF
+	CFLAG:(キャラID):49 += 追加量
+	IF CFLAG:(キャラID):49 >= 5
+		CFLAG:(キャラID):49 = 5
+	ENDIF
+	
+@UPDATE_BP(キャラID)
+#DIM キャラID
+	IF FLAG:528 == 0
+		CFLAG:(キャラID):49 = 0
+		RETURN
+	ENDIF
+	IF CFLAG:(キャラID):49 > 0
+		CFLAG:(キャラID):49 += 1
+	ENDIF
+	IF CFLAG:(キャラID):49 >= 5
+		CFLAG:(キャラID):49 = 5
+	ENDIF
+
+RETURN
+;=================================================
+;おもらしするかどうかのチェック
+;=================================================
+@CHECK_UNK_OMORASHI(キャラID, MP減少倍率 = 100, 状況 = "通常")
+#DIM キャラID
+#DIMS 状況
+
+#DIM 睡眠フラグ
+#DIM 部屋睡眠フラグ
+#DIM 絶頂フラグ
+#DIM MP減少倍率
+
+	睡眠フラグ = 0
+	部屋睡眠フラグ = 0
+	絶頂フラグ = 0
+
+	IF 状況 == "部屋睡眠"
+		LOCALS = 睡眠
+		睡眠フラグ = 1
+		部屋睡眠フラグ = 1
+		
+	ELSEIF 状況 == "絶頂"
+		LOCALS = 絶頂
+		絶頂フラグ = 1
+		IF FLAG:8 && TFLAG:13 == 0
+			睡眠フラグ = 1
+		ENDIF
+		IF CFLAG:(キャラID):25 > 0
+			睡眠フラグ = 1
+		ENDIF
+	ELSE
+		LOCALS = 通常
+	ENDIF
+
+
+	IF UNK_おもらしチェック(キャラID, LOCALS) == 1
+		CALL UNK_OMORASHI(キャラID, MP減少倍率, 睡眠フラグ, 部屋睡眠フラグ, 絶頂フラグ)
+	ENDIF
+
+;=================================================
+;
+;=================================================
+@UNK_おもらしチェック(キャラID, 種別 = "通常")
+#FUNCTION
+#DIM キャラID
+#DIMS 種別
+#DIM BP率
+#DIM おもらし率
+
+	BP率 = CFLAG:(キャラID):49 * 100 / 5
+	
+	;緩み具合は状況で違うと思うので分岐
+	おもらし率 = 0
+	SELECTCASE 種別
+
+			
+		;一番緩むと思う
+		CASE "絶頂"
+			IF TALENT:(キャラID):漏尿癖
+				;尿意
+				IF BP率 > 60
+					おもらし率 = BP率
+				ENDIF
+			ELSE
+				;上限
+				IF BP率 >= 100
+					おもらし率 = 100
+				;決壊
+				ELSEIF BP率 > 90
+					おもらし率 = BP率
+				;限界
+				ELSEIF BP率 > 80
+					おもらし率 = BP率 * 2 / 3
+				;尿意
+				ELSEIF BP率 > 60
+					おもらし率 = BP率 / 2
+				ENDIF
+			ENDIF
+			
+		;絶頂並みに脱力？
+		CASE "喪失"
+			IF TALENT:(キャラID):漏尿癖
+				;尿意
+				IF BP率 > 60
+					おもらし率 = BP率
+				ENDIF
+			ELSE
+				;上限
+				IF BP率 >= 100
+					おもらし率 = 100
+				;決壊
+				ELSEIF BP率 > 90
+					おもらし率 = BP率
+				;限界
+				ELSEIF BP率 > 80
+					おもらし率 = BP率 * 2 / 3
+				;尿意
+				ELSEIF BP率 > 60
+					おもらし率 = BP率 / 2
+				ENDIF
+			ENDIF
+			
+		;喪失や絶頂してなければそれなりに耐えれると思う
+		CASE "睡眠"
+			IF TALENT:(キャラID):漏尿癖
+				;尿意
+				IF BP率 > 60
+					おもらし率 = BP率
+				ENDIF
+			ELSE
+				;上限
+				IF BP率 >= 100
+					おもらし率 = 100
+				;決壊
+				ELSEIF BP率 > 90
+					おもらし率 = BP率
+				;限界
+				ELSEIF BP率 > 80
+					おもらし率 = BP率 * 2 / 3
+				;尿意
+				ELSEIF BP率 > 60
+					おもらし率 = BP率 - 60
+				ENDIF
+			ENDIF
+			
+		;通常、意識がはっきりしてるから一番我慢できると思う
+		CASEELSE
+			IF TALENT:(キャラID):漏尿癖
+				;尿意
+				IF BP率 > 60
+					おもらし率 = BP率
+				ENDIF
+			ELSE
+				;上限
+				IF BP率 >= 100
+					おもらし率 = 100
+				;決壊
+				ELSEIF BP率 > 90
+					おもらし率 = BP率
+				;限界
+				ELSEIF BP率 > 80
+					おもらし率 = BP率 * 2 / 3
+				ENDIF
+			ENDIF
+			
+			
+	ENDSELECT
+	
+	;---ラストジャッジメント---
+	SIF RAND:100 < おもらし率
+		RETURNF 1
+
+RETURNF 0
+;=================================================
+;おもらし
+;RESULT　なし
+;=================================================
+@UNK_OMORASHI(キャラID, MP減少倍率 = 100, 睡眠フラグ = 0, 部屋睡眠フラグ  =0, 絶頂フラグ = 0)
+#DIM キャラID
+#DIM 睡眠フラグ
+#DIM 部屋睡眠フラグ
+#DIM 絶頂フラグ
+#DIM BP率
+#DIM MP減少倍率
+
+#DIMS 夢の種類
+
+;-MEMO-
+
+	SIF FLAG:528 == 0
+		RETURN -1
+
+	IF FLAG:20 != 0
+		CALL SET_はいてない(キャラID)
+		CALL CHANGE_TP(キャラID, 21)
+		BASE:(キャラID):NP = 0
+		EXP:(キャラID):失禁経験 += 1
+		CALL CHECK_GET_OMORASHI(キャラID)
+		RETURN
+	ENDIF
+	
+	BP率 = CFLAG:(キャラID):49 * 100 / 5
+
+	IF 絶頂フラグ
+	
+		PRINTFORM 從因高潮而顫抖的%CALLNAME:(キャラID)%的
+		
+		;着衣がないorはいてない
+		IF BASE:(キャラID):CP <= 0 || CFLAG:(キャラID):44 == 1
+			PRINTFORM 菊穴、
+			IF BP率 <= 80
+				PRINTFORM 一点点挤出了%UNK_BASE()%
+			ELSEIF BP率 <= 90
+				PRINTFORM 拉出的%UNK_BASE()%形成了抛物线
+			ELSE
+				PRINTFORM 喷出了大量%UNK_BASE()%
+			ENDIF
+			PRINTFORML …
+		ELSE
+			PRINTFORML 從湿潤的屁股那響起了破裂声。
+			PRINTFORM 穿着的衣服
+			IF BP率 <= 80
+				PRINTFORM 慢慢地
+			ELSEIF BP率 <= 90
+			ELSE
+				PRINTFORM 迅速地
+			ENDIF
+			PRINTFORML 沾上了%UNK_COLOR()%、而且越変越深了…
+			IF BP率 > 80
+				PRINTFORM 從内衣中溢出的%UNK_BASE()%掉落在脚下、
+			ENDIF
+			PRINTFORML 四周開始瀰漫着%UNK_SMELL()%…
+		ENDIF
+		WAIT
+	
+	
+		IF 睡眠フラグ
+			CALL SET_はいてない(キャラID)
+			;触手服時and拘束時は脱げない
+			IF RESULT == 1 && CFLAG:(キャラID):40 == 0 && CFLAG:(キャラID):20 == 0
+				PRINTFORM %CALLNAME:(キャラID)%は
+				IF CFLAG:(キャラID):501 == 6 || CFLAG:(キャラID):501 == 8
+					PRINTFORM 無意識的撕掉了因為被弄髒而感覚不舒服的部分衣物…
+				ELSE
+					PRINTFORM 無法忍受継續穿着内衣無意識的脱掉并丢開了…
+				ENDIF
+			ENDIF
+			WAIT
+		ELSE
+			IF FLAG:522 == 1
+				PRINTFORM %CALLNAME:(キャラID)%因為失禁而流出了屈辱的眼泪
+			ELSE
+				PRINTFORM %CALLNAME:(キャラID)%詛咒着自己満溢着愛液的体質
+			ENDIF
+			CALL SET_はいてない(キャラID)
+			;触手服時and拘束時は脱げない
+			IF RESULT == 1 && CFLAG:(キャラID):40 == 0 && CFLAG:(キャラID):20 == 0
+				PRINTFORML 、
+				IF CFLAG:(キャラID):501 == 6 || CFLAG:(キャラID):501 == 8
+					PRINTFORM 同時有些懊悩的把被淋湿的部分撕掉了…
+				ELSE
+					PRINTFORM 同時脱掉了完全湿透的無法再接着穿下去的内衣…
+				ENDIF
+			ELSE
+				PRINTFORM …
+			ENDIF
+			WAIT
+		ENDIF
+		
+		;処理整理中の為一時無効化
+		;CALL PRINT_MESSAGE(キャラID, 506, 5, CALLNAME:1, CALLNAME:(キャラID))
+	
+	;寝てたらおねしょ。
+	ELSEIF 睡眠フラグ
+	
+		IF RAND:10 >= 8
+			夢の種類 = 悪夢
+		ELSE
+			夢の種類 = 普通
+		ENDIF
+		
+		;おもらし少女は触手の夢を見るか？
+		IF 夢の種類 == "悪夢"
+			PRINTFORM 睡着的%CALLNAME:(キャラID)%開始呼吸加快身体不停顫抖。
+			PRINTFORMW 好像在夢裡面被触手侵犯着…
+			PRINTFORMW 迎来高潮的%CALLNAME:(キャラID)%的身体跳動之後向後舒展、
+			
+		ELSEIF 夢の種類 == "普通"
+			PRINTFORM 睡着的%CALLNAME:(キャラID)%好像身体正在顫抖、
+			
+		ENDIF
+		
+		
+		;着衣がないorはいてない
+		IF BASE:(キャラID):CP <= 0 || CFLAG:(キャラID):44 == 1
+			PRINTFORM 從菊穴、
+			IF BP率 <= 80
+				PRINTFORM 慢慢地溢出了%UNK_BASE()%
+			ELSEIF BP率 <= 90
+				PRINTFORM 拉出的%UNK_BASE()%形成了抛物线
+			ELSE
+				PRINTFORM 喷出了大量%UNK_BASE()%
+			ENDIF
+			PRINTFORM …
+		ELSE
+			PRINTFORML 從湿潤的屁股那響起了破裂声。
+			PRINTFORM 穿着的衣服
+			IF BP率 <= 80
+				PRINTFORM 慢慢地
+			ELSEIF BP率 <= 90
+			ELSE
+				PRINTFORM 一口気
+			ENDIF
+			PRINTFORM 被染成了%UNK_COLOR()%、越発膨脹了…
+		ENDIF
+		WAIT
+		
+		
+		IF 夢の種類 == "悪夢"
+			PRINTFORML 
+			PRINTFORML 睜開眼睛、察覚到自己慘状的%CALLNAME:(キャラID)%露出了悔恨的表情
+			
+		ELSEIF 夢の種類 == "普通"
+			PRINTFORMW %CALLNAME:(キャラID)%的表情因安心感舒緩了下去…
+			IF FLAG:522 == 1
+				PRINTFORMW 好像在夢裡面找到了廁所。
+			ELSE
+			
+			ENDIF
+			PRINTFORML 
+			PRINTFORM 睜開眼睛、察覚到自己慘状的%CALLNAME:(キャラID)%
+			IF FLAG:522 == 1
+				PRINTFORM 因為睡前沒有好好上廁所而後悔
+			ELSE
+			
+			ENDIF
+			PRINTL
+		ENDIF
+		
+		
+		CALL SET_はいてない(キャラID)
+		;触手服時and拘束時は脱げない
+			IF RESULT == 1 && CFLAG:(キャラID):40 == 0 && CFLAG:(キャラID):20 == 0
+			IF CFLAG:(キャラID):501 == 6 || CFLAG:(キャラID):501 == 8
+				PRINTFORM 同時有些懊悩的把被淋湿的部分撕掉了…
+			ELSE
+				PRINTFORM 把已経無法使用的内衣脱下扔掉了…
+			ENDIF
+		ELSE
+			PRINTFORM 做着善後処理…
+		ENDIF
+		WAIT
+		
+		;処理整理中の為一時無効化
+		;CALL PRINT_MESSAGE(キャラID, 506, 1, CALLNAME:1, CALLNAME:(キャラID))
+			
+
+			
+	ELSE
+			
+		;着衣がないorはいてない
+		IF BASE:(キャラID):CP <= 0 || CFLAG:(キャラID):44
+			PRINTFORM 從%CALLNAME:(キャラID)%的菊穴、
+			IF BP率 <= 80
+				PRINTFORM 慢慢地溢出了%UNK_BASE()%
+			ELSEIF BP率 <= 90
+				PRINTFORM 拉出的%UNK_BASE()%形成了抛物线
+			ELSE
+				PRINTFORM 喷出了大量%UNK_BASE()%
+			ENDIF
+			PRINTFORM …
+		ELSE
+			PRINTFORM %CALLNAME:(キャラID)%穿着的衣服
+			IF BP率 <= 80
+				PRINTFORM 慢慢地
+			ELSEIF BP率 <= 90
+			ELSE
+				PRINTFORM 急劇地
+			ENDIF
+			PRINTFORM 被染成了%UNK_COLOR()%、越発膨脹了…
+		ENDIF
+		WAIT
+	
+		CALL SET_はいてない(キャラID)
+		;触手服時and拘束時は脱げない
+			IF RESULT == 1 && CFLAG:(キャラID):40 == 0 && CFLAG:(キャラID):20 == 0
+			PRINTFORM %CALLNAME:(キャラID)%
+			IF CFLAG:(キャラID):501 == 6 || CFLAG:(キャラID):501 == 8
+				PRINTFORM 有些懊悩的把被淋湿的部分撕掉了…
+			ELSE
+				PRINTFORM 脱掉了完全湿透的無法再接着穿下去的内衣…
+			ENDIF
+		ENDIF
+		WAIT
+		
+		
+		;処理整理中の為一時無効化
+		;CALL PRINT_MESSAGE(キャラID, 506, 5, CALLNAME:1, CALLNAME:(キャラID))
+			
+			
+	ENDIF
+	
+	;---共通処理---
+	CALL CHANGE_TP(キャラID, 21)
+	;ループしないように前後で便意0に
+	CFLAG:(キャラID):49 = 0
+	IF ABL:(キャラID):6 > 1 && EXP:(キャラID):失禁経験 >= 10
+		PRINTFORM %CALLNAME:(キャラID)%覚醒了失禁漏出%UNK_BASE()%的快感……
+		TFLAG:63 = 0
+		LOCAL:5 = CALC_SENSITIVITY((キャラID), TFLAG:63, 40)
+		CALL DAMAGE_COMMON(キャラID, 2, LOCAL:5 * 2 * EXP:(キャラID):失禁経験, MP減少倍率)
+	ENDIF
+	CFLAG:(キャラID):49 = 0
+	EXP:(キャラID):失禁経験 += 1
+
+

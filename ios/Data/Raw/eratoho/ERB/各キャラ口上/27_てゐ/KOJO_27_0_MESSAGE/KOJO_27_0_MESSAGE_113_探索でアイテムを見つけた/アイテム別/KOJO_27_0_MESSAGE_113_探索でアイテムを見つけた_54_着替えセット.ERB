@@ -1,0 +1,50 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 113 探索でアイテムを見つけた - 54 着替えセット
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_113_54(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中は何もしないで帰る
+	SIF CFLAG:29
+		RETURN 0
+	
+	; 出来るだけ専用メッセージを見せたいので、優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 服のストックなし
+	IF ITEM:54 == 0
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「予備の着替えなかったから助かるわー」\n"
+		ENDSELECT
+		
+		; 自身のCPも低いなら追加口上
+		IF BASE:CP <= (MAXBASE:CP / 100 * 25)
+			CALL KOJO_27_0_ADD_MESSAGE, @"「新しい服探してたのよ\n　早いとこ着替えたいわ、ボロボロだし……」\n"
+		ENDIF
+		
+	; 服のストックあり
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ありがたいけど、なんで新品の服が落ちてるんだろ？」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「すぐダメになっちゃうから服はいくらあっても困らないわー」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「普段ならどうでもいいけど、ここだと多分貴重品よね」\n"
+		ENDSELECT
+		
+		IF BASE:CP <= (MAXBASE:CP / 100 * 25)
+			CALL KOJO_27_0_ADD_MESSAGE, @"「おっ、新しい服\n　替えも何着かあるし、ボロボロの服着てないで着替えたいわー」\n"
+		ENDIF
+	ENDIF
+	
+	; 触装中 追加口上
+	IF CFLAG:40
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「新しい服もいいけど、今着てる気持ちいい服が最高なのよねえ♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「今着てる忌々しい服が脱げるなら、すぐにでも着替えたいトコだけどさ」\n"
+		ENDSELECT
+	ENDIF
+RETURN 1

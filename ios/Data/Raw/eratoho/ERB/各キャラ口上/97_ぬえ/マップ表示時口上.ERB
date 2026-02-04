@@ -1,0 +1,386 @@
+﻿
+;※書き足しやすいように一時的に分割中
+;　必ず後でまとめること！
+;外れたらもう一回抽選
+
+;マップ表示
+	;レミリア口上を全面的に参考、あとはYMのひとこと口上とか
+@KOJO_97_MAPTALK
+
+	
+		
+	
+		;初日、一番最初のメッセージ
+		IF DAY:0 == 1 && TIME:0 == 0
+			CALL SPLIT_HEARTL_K97("「弾幕は一応打てるみたいね。でも壁に当てても反応ナシ、か。」")
+			CALL SPLIT_HEARTL_K97("「とりあえず周囲の様子を探ろうかな」")
+		;優先度最高のグループ
+		;臨月、眠気限界、尿意限界。間もなくなんらかのイベントが起こる
+		;と思ったけど眠気、寄生進行は別口で口上出るからオミット
+		;ELSEIF (CFLAG:23  && CFLAG:23 >= 3) || FLAG:7 >= 7
+		
+		;尿意80以上で最優先表示
+		;尿意［決壊］
+		ELSEIF FLAG:522 == 1 && BASE:TARGET:6 >= 90
+			;おもらし癖
+			;おもらし癖持ちでここまで貯まるのだろうか
+			IF TALENT:57
+				CALL SPLIT_HEARTL_K97("（もう無理、ムリイイぃっ！おしっこ、じょろじょろしたいっ♥、おもらししたいいいいっ！！）")
+			;普通の膀胱
+			ELSE
+				CALL SPLIT_HEARTL_K97("「うううおしっこ～！もうここでいいよね、よね？もう一歩でも動いたら漏れちゃいそうだし！」")
+			ENDIF
+		;尿意[限界]
+		ELSEIF FLAG:522 == 1 && BASE:TARGET:6 >= 80
+			;おもらし癖
+			IF TALENT:57
+				CALL SPLIT_HEARTL_K97("（膀胱がパンパンになって気持ちいいっ……♥　おしっこいっぱい出ちゃうんだろうなあ）")
+			;普通の膀胱
+			ELSE
+				CALL SPLIT_HEARTL_K97("「も、漏れちゃうぅ……っ、くっ、ふぎいぃぃっ」")
+				CALL SPLIT_HEARTL_K97("ぬえは内股になって必死に尿意をこらえている……")
+			ENDIF
+		;喪失で苗床じゃない
+		ELSEIF CFLAG:29 && CFLAG:801 == 0
+			PRINTDATAL
+				DATAFORM 「もう戦うのはイヤ…。次に奴らに見つかったら……」
+				DATAFORM 「このまま、帰れないならずっとここで…？そんなの…」
+				DATAFORM 「ヤバ…、頭がうまく働かない……」
+				DATAFORM 「足が重い、もう歩くのもヤダ。襲われてもいいや……」
+				DATAFORM 「どうせもうここから出られないのかな。それなら、いっそ、苗床になっても…」
+				DATAFORM 「幻想郷でひとりぼっちになるくらいなら、ここで気持よくしてもらって……」
+				DATAFORM 「はは…、こんな得体のしれない化物どもにも勝てないなんて、私も年貢の納め時なのかも……」
+				DATAFORM （頭がぼーっとする……。また、犯されるのかな。もう何度でもおんなじか）
+			ENDDATA
+		ELSE
+			;優先度高のグループ
+			;発情、衣服、尿意等一時的な状態について	
+			;エロイのはきもち確率高めに
+			SELECTCASE RAND:5
+				;発情
+				CASE 1
+					;苗床で発情しまくり
+					IF CFLAG:801 && CFLAG:28 >= 9
+						SELECTCASE RAND:6
+							CASE 0
+								CALL SPLIT_HEARTL_K97("（子宮がずっとキュンキュン鳴いちゃってる……♥　種付けっ、ほしいよおっ♥）")
+							CASE 1
+								CALL SPLIT_HEARTL_K97("「んっ♥　はあん♥　カラダ発情しすぎちゃって……もう服なんて着てらんない！」")
+							CASE 2
+								CALL SPLIT_HEARTL_K97("「う……あああﾞ♥　セックス、セックスのことでアタマいっぱいになっちゃってる……♥」")
+							CASE 3
+								CALL SPLIT_HEARTL_K97("「今すぐちんぽ挿れてもらわないとおかしくなりそうっ♥　でも自分でもするのももったいない……あーどうしよう！」")
+							CASE 4
+								CALL SPLIT_HEARTL_K97("（ううﾞ……ああ……♥　おまんこのよだれが止まんないよおっ♥♥）")
+							CASE 5
+								CALL SPLIT_HEARTL_K97("「おちんぽさまあ♥　このぐじゅぐじゅおまんこ耕してくれるおちんぽが欲しいよお♥」")
+						ENDSELECT
+					;発情値高
+					ELSEIF CFLAG:28 >= 5
+						SELECTCASE RAND:4
+							CASE 0
+								CALL SPLIT_HEARTL_K97("「……っはあ、カラダ、あつい……。何されてもイっちゃいそう♥」")
+							CASE 1
+								CALL SPLIT_HEARTL_K97("（うずいてる……。おまんこ発情しちゃってるっっ♥）")
+							CASE 2
+								CALL SPLIT_HEARTL_K97("（次はどうイかされるのかな……ヤバッ、いまから楽しみすぎてイっちゃいそ♥）")
+							CASE 3
+								CALL SPLIT_HEARTL_K97("「うう、うう……疼いて我慢できないよ。オナニー……しちゃおっかなあ……♥」")
+						ENDSELECT
+					;それなりに発情
+					ELSEIF CFLAG:28
+						SELECTCASE RAND:3
+							CASE 0
+								CALL SPLIT_HEARTL_K97("「ううー、あちこち敏感になってる」")
+							CASE 1
+								CALL SPLIT_HEARTL_K97("「っはあ、はあ♥　うずいちゃって、まともに歩けない……」")
+							CASE 2
+								CALL SPLIT_HEARTL_K97("「うっ、ああ、エロい事しか考えらんない……♥　こんなところで……！」")
+						ENDSELECT
+					;はずれ
+					ELSE
+						CALL KOJO_97_MAPTALK
+					ENDIF
+				;触手服
+				CASE 2
+					IF CFLAG:40
+						;苗床か触手中毒2Lv以上
+						IF CFLAG:801 || ABL:11 >=2
+							SELECTCASE RAND:10
+								CASE 0
+									CALL SPLIT_HEARTL_K97("「あったかいし気持よくしてくれるし、ここから出てもこの服着ててもいいかも」")
+								CASE 1
+									CALL SPLIT_HEARTL_K97("「あっ…んやあっ♥　急に動かないでよおっ♥」")
+								CASE 2
+									CALL SPLIT_HEARTL_K97("「ん……♥　服の中で動かれるのって思ったよりも……♥」")
+								CASE 3
+									PRINTFORMDL 触手服に刺激されてぬえはじゃれつくような甘い声を上げている……
+								CASE 4
+									CALL SPLIT_HEARTL_K97("「服の中…蒸れちゃってエッチなにおいがモワモワ♥」")
+								CASE 5
+									CALL SPLIT_HEARTL_K97("「んっ♥　ふあっ♥　やっ♥　服の中……ずっとイジられて……軽イキしっぱなし♥」")
+								CASE 6
+									CALL SPLIT_HEARTL_K97("「ひゃふっ♥　おまんこ浅くほじられて……　あひっ♥　子宮っ、切ないよおっ！」")
+								CASE 7
+									CALL SPLIT_HEARTL_K97("「触手……ちくびに群がって、あﾞーー♥  ああﾞーー♥　トロけるうぅ♥」")
+								CASE 8
+									CALL SPLIT_HEARTL_K97("「んにゃあっ！おひいぃっ♥　アナルぅ……入り口こそばいっ♥　あひいぃーー♥」")
+								CASE 9
+									CALL SPLIT_HEARTL_K97("「やらっ♥　らめえっ！　クリ弾かないれええぇっ！！　腰跳ねちゃううっ♥」")
+							ENDSELECT
+						;触手スーツによる性感開発をされたことがある
+							;ELSEIF 
+						;その他
+						ELSE
+							SELECTCASE RAND:7
+								CASE 0
+									CALL SPLIT_HEARTL_K97("「ずっとこれ着たままってのは……。こんなのに堕とされる私じゃないけどっ！」")
+								CASE 1
+									CALL SPLIT_HEARTL_K97("「ひああっ……♥　急に動くなあっ！！」")
+								CASE 2
+									CALL SPLIT_HEARTL_K97("「んっ……中でヘンな汁が染み出てきて……」")
+								CASE 3
+									CALL SPLIT_HEARTL_K97("「この妙な服もそのうち慣れるかな。逆に取り込んでやる」")
+								CASE 4
+									CALL SPLIT_HEARTL_K97("「せめてこの服着てるメリットでもあれば……」")
+								CASE 5
+									CALL SPLIT_HEARTL_K97("「ううっ、服の中が蒸れる～！このにおい、クラクラするわ……」")
+								CASE 6
+									CALL SPLIT_HEARTL_K97("「ひゃっ……！急に広げるな～！ううっ、アソコだけすーすーするってヘンな感じ」")
+							ENDSELECT
+						ENDIF
+					;はずれ
+					ELSE
+						CALL KOJO_97_MAPTALK
+					ENDIF
+				;浅い尿意
+				CASE 3
+					IF BASE:6 >= 60
+						;おもらし癖
+						;おもらし癖だとここから漏らし得る
+						IF TALENT:57
+							SELECTCASE RAND:3
+								CASE 0
+									CALL SPLIT_HEARTL_K97("「うあ、もう、おしっこしたくなってきちゃった……」")
+								CASE 1
+									CALL SPLIT_HEARTL_K97("（立ったままおもらしするのって意外ときもちいいんだよね……）")
+								CASE 2
+									CALL SPLIT_HEARTL_K97("「！！　ちょっと漏れちゃった……かも」")
+							ENDSELECT
+						;その他
+						ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									CALL SPLIT_HEARTL_K97("「ちょっとお花摘みに……、って、気持ち悪い花しかないけど」")
+								CASE 1
+									CALL SPLIT_HEARTL_K97("「う～トイレトイレ、できそうな場所見つけとかないと……」")
+								CASE 2
+									PRINTFORMDL ぬえは少しモジモジし始めた……
+							ENDSELECT
+						ENDIF
+					;実はそれほど尿意たまってない
+					ELSE
+						CALL KOJO_97_MAPTALK
+					ENDIF
+				;裸
+				CASE 4
+					IF BASE:3 == 0
+						;苗床
+						IF CFLAG:801
+							SELECTCASE RAND:4
+								CASE 0
+									CALL SPLIT_HEARTL_K97("「いや～ん、こんなトコロで全裸だったらすぐ襲われちゃうなあ♥　ﾁﾗｯ」")
+								CASE 1
+									CALL SPLIT_HEARTL_K97("（見られてる……、私の恥ずかしい体、いろんなところから……♥）")
+								CASE 2
+									CALL SPLIT_HEARTL_K97("「裸だといつでもおちんぽウエルカムって感じになっちゃうなあ。まあ間違ってないけど♥」")
+								CASE 3
+									CALL SPLIT_HEARTL_K97("「こんなレイプ魔だらけの中を裸で歩くなんて……興奮しちゃう♥」")
+							ENDSELECT
+						;その他
+						ELSE
+							SELECTCASE RAND:4
+								CASE 0
+									CALL SPLIT_HEARTL_K97("「早く着替えを探さなくちゃ」")
+								CASE 1
+									CALL SPLIT_HEARTL_K97("「正体不明の種さえ使えれば裸でもどうにかなるかな～。でもここにいる奴ら相手だと効果ないか」")
+								CASE 2
+									CALL SPLIT_HEARTL_K97("「替えの服あったっけなあ」")
+								CASE 3
+									CALL SPLIT_HEARTL_K97("「ここを裸でうろつくのはどう考えたってマズイよね……。早く着替えを見つけなきゃ」")
+							ENDSELECT
+						ENDIF
+					;はずれ
+					ELSE
+						CALL KOJO_97_MAPTALK
+					ENDIF
+				CASE 0
+					;優先度中のグループ
+					;素質や経験済みイベントについて。永続的な状況変化
+					SELECTCASE RAND:5
+						;苗床
+						CASE 1
+							IF CFLAG:801
+								SELECTCASE RAND:5
+									CASE 0
+										CALL SPLIT_HEARTL_K97("「私が産んだ子たちもここに居るんだよね。自分の仔にレイプされちゃうのかな♥」")
+									CASE 1
+										CALL SPLIT_HEARTL_K97("「おまんこのうずうずが治まらないよお♥」")
+									CASE 2
+										CALL SPLIT_HEARTL_K97("「私を孕ませて、気持よくしてくれるイケてる雄はドコかな♥」")
+									CASE 3
+										CALL SPLIT_HEARTL_K97("（触手ザーメン……おまんこがほしがっちゃってる♥）")
+									CASE 4
+										CALL SPLIT_HEARTL_K97("「正体不明の化物とセックスして正体不明の化物を産みまくり、これが私の本分なのかも♥」")
+								ENDSELECT
+							;はずれ
+							ELSE
+								CALL KOJO_97_MAPTALK
+							ENDIF
+						;ABLについて
+						CASE 2
+							;母乳体質
+							IF TALENT:130
+								SELECTCASE TALENT:130
+									;母乳体質
+									CASE 1
+										;裸
+										IF BASE:3 == 0
+											PRINTFORMDL 隠すもののないぬえの乳首からは良く見ると母乳が染みだしている……
+											;発情またはB感覚Lv2以上
+											IF CFLAG:28 || ABL:7 >= 2
+												CALL SPLIT_HEARTL_K97("「おっぱいにミルク溜まっちゃう……誰か吸ってくれないかなあ♥」")
+											;その他
+											ELSE
+												CALL SPLIT_HEARTL_K97("「なんで、母乳なんか出て……」")
+											ENDIF
+										;服を着ている
+										ELSE
+											;発情またはB感覚Lv2以上
+											IF CFLAG:28 || ABL:7 >= 2
+												CALL SPLIT_HEARTL_K97("「服でおっぱいが擦れて……あう、ミルクの染みができちゃってる……」")
+											;その他
+											ELSE
+												CALL SPLIT_HEARTL_K97("「胸が……乳首が疼く、くそ、あいつら、人の体を好き勝手いじくって」")
+											ENDIF
+										ENDIF
+									;母乳分泌異常
+									CASE 2
+										;裸
+										IF BASE:3 == 0
+											PRINTFORMDL ぬえの胸元からあふれるミルクがあたりに甘いにおいを放っている……
+											;発情またはB感覚Lv2以上
+											IF CFLAG:28 || ABL:7 >= 2
+												CALL SPLIT_HEARTL_K97("「やあん♥　おっぱいミルク垂れ流しになっちゃってるう♥」")
+											;その他
+											ELSE
+												CALL SPLIT_HEARTL_K97("「ピジョンミルクどころかアンアイデンティファイドミルクってところね。うう、しかしどこからこんなに……」")
+											ENDIF
+										ELSE
+											PRINTFORMDL 次々と湧き出る母乳に濡れ、ぬえの衣服に甘い香りの染みができている……
+											;発情またはB感覚Lv2以上
+											IF CFLAG:28 || ABL:7 >= 2
+												CALL SPLIT_HEARTL_K97("「あうう、溜まってる……。ビューって出せたら気持ちいいんだろうなあ♥」")
+											;その他
+											ELSE
+												CALL SPLIT_HEARTL_K97("「自分の母乳なのに、嗅いでるとヘンな気分になってきちゃう……」")
+											ENDIF
+										ENDIF
+									;母乳製造装置
+									CASEELSE
+										;裸
+										IF BASE:3 == 0
+											PRINTFORMDL 垂れ流しの母乳をさえぎる服もなく、ぬえを中心に甘ったるい匂いが広がっている……
+											;発情またはB感覚Lv2以上
+											IF CFLAG:28 || ABL:7 >= 2
+												CALL SPLIT_HEARTL_K97("「はあっ♥　おっぱい苦しいよう、搾ってミルクびゅびゅ～って出したいいっ♥」")
+											;その他
+											ELSE
+												CALL SPLIT_HEARTL_K97("「こんなオバケおっぱいにされて裸でうろつくなんて、新しい都市伝説になれるわね」")
+											ENDIF
+										;服を着ている
+										ELSE
+											PRINTFORMDL ぬえの衣服の胸元は垂れ流しの母乳のせいで透けてしまい、いきり立った乳首が浮き出ている……
+											;発情またはB感覚Lv2以上
+											IF CFLAG:28 || ABL:7 >= 2
+												CALL SPLIT_HEARTL_K97("「あううﾞ～♥　おっぱい苦しいよう、服なんか脱いでおもいっきり搾りたいいっ♥」")
+											;その他
+											ELSE
+												CALL SPLIT_HEARTL_K97("「いったいどこにこんな量たまってるっての、絶対おかしいわよ……」")
+											ENDIF
+										ENDIF
+								ENDSELECT
+							;母乳体質ではない
+							ELSE
+								CALL KOJO_97_MAPTALK
+							ENDIF
+						;衣服
+						CASE 3
+							;裸か触手服か苗床だったらもう一回
+							IF BASE:3 == 0 || CFLAG:37 || CFLAG:801
+								CALL KOJO_97_MAPTALK
+							ELSE
+								;新品
+								IF BASE:3 == MAXBASE:3
+									SELECTCASE RAND:3
+										CASE 0
+											CALL SPLIT_HEARTL_K97("「着替えの数はきちんと確認しとこっか」")
+										CASE 1
+											CALL SPLIT_HEARTL_K97("「ここドコなんだろう。地底？魔界？それとも異次元？」")
+										CASE 2
+											CALL SPLIT_HEARTL_K97("「もうちょっと防御力高そうな服が良かったかな。星の服装とかゴテっとしてるし」")
+									ENDSELECT
+								;ちょっと傷、[通常]
+								ELSEIF BASE:CP * 100 / MAXBASE:CP > 66
+									SELECTCASE RAND:2
+										CASE 0
+											CALL SPLIT_HEARTL_K97("「ここのやつら、やたらと服を破こうとしてくるのよね」")
+										CASE 1
+											CALL SPLIT_HEARTL_K97("「あっ、ここほつれちゃってる」")
+									ENDSELECT
+									
+								;[損傷]
+								ELSEIF BASE:CP * 100 / MAXBASE:CP > 33
+									SELECTCASE RAND:2
+										CASE 0
+											CALL SPLIT_HEARTL_K97("「だいぶ生地の残りが……こんなところで肌を晒したくないわ」")
+										CASE 1
+											CALL SPLIT_HEARTL_K97("「ただでさえ短いすそがもう……。パンツ見えちゃう」")
+									ENDSELECT
+								;[中破]
+								ELSE
+									SELECTCASE RAND:2
+										CASE 0
+											CALL SPLIT_HEARTL_K97("「なんとか隠せるくらいは残ってるけど、着替え見つけなきゃ」")
+										CASE 1
+											CALL SPLIT_HEARTL_K97("「やばっ、胸見えちゃってるよね……。」")
+									ENDSELECT
+								ENDIF
+							ENDIF
+						
+						;雑談
+						CASEELSE
+							PRINTDATAL
+								DATAFORM 「こんな異変起こせる輩なんて、出られたら是非お近づきになりたいわね」
+								DATAFORM 「あの風祝が言っていた地球外生命体とかいうやつの仕業かな」
+								DATAFORM 「地底から出られたばっかなのにこんな所に閉じ込められるなんて、はあ～」
+								DATAFORM 「正体不明の種を出してみても全部触手になるんだけど。相当強い妖力ね」
+								DATAFORM 「ううーん、正体不明の迷宮に正体不明者としてのアイデンティティが奪われる～」
+								DATAFORM 「あやかしを閉じ込めて競わせて……、まさか、蠱術？この私がエサ？」
+								DATAFORM 「はあ、出口はどこかなー」
+								DATAFORM 「この辺の化物、今まで見たどんな妖怪とも違うんだよねえ」
+							ENDDATA
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+
+;選択肢3つテンプレ
+;SELECTCASE RAND:3
+;	CASE 0
+;		CALL SPLIT_HEARTL_K97("「」")
+;	CASE 1
+;		CALL SPLIT_HEARTL_K97("「」")
+;	CASE 2
+;		CALL SPLIT_HEARTL_K97("「」")
+;ENDSELECT
+	

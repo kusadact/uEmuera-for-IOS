@@ -1,0 +1,491 @@
+﻿
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  130    発生イベント:全快湧き水
+; / ARG:2    0    0:飲んだ 1:飲まない
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_130_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「呼，又活过来了呢……」"
+	CALL ADD_RAND_MESSAGE, @"「噗关于啊……这是什么好吃的……！」"
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「好棒！感觉精力百倍！」"
+	ENDSELECT
+	
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  131    発生イベント:発情湧き水
+; / ARG:2    0    0:飲んだ 1:飲まない
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_131_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"（身体突然……热♥ 热……♥）"
+	CALL ADD_RAND_MESSAGE, @"「糟糕……♥ 这个可能是不能喝的东西……♥♥」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  132    発生イベント:ステUP湧き水
+; / ARG:2    0    0:飲んだ 1:飲まない
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_132_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「神奇的水，感觉力量涌上来了」"
+	CALL ADD_RAND_MESSAGE, @"「太厉害了！现在感觉什么都能做到！」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  133    発生イベント:澄んだ泉
+; / ARG:2    0    0:飲んだ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_133_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「能得到清澈的水真是太好了」"
+	CALL ADD_RAND_MESSAGE, @"「水的保障很重要呢」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  133    発生イベント:澄んだ泉
+; / ARG:2    1    1:泉に入った
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_133_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「凉凉的，感觉好舒服……」"
+	CALL ADD_RAND_MESSAGE, @"「呀……虽然凉凉的……但是感觉很安心……」"
+	CALL ADD_RAND_MESSAGE, @"「啊～感觉好舒服～」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  133    発生イベント:澄んだ泉
+; / ARG:2    5    5:薬草取得
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_133_5(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 薬草のストック十分、もう持てない
+	IF ITEM:(73) == GET_ITEM_MAX(73)
+		CALL ADD_RAND_MESSAGE, @"「这些草应该够了吧」"
+		CALL ADD_RAND_MESSAGE, @"「留下一些不要全部拿走」"
+	
+	; まだ持てる
+	ELSE
+		CALL ADD_RAND_MESSAGE, @"「看起来能派上用场」"
+		CALL ADD_RAND_MESSAGE, @"「这些草……！」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_ぬけめがない
+			CALL ADD_RAND_MESSAGE, @"「有些东西看起来很有用」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  134    発生イベント:白濁泉
+; / ARG:2    3    3:水に入った（速度アップ）
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_134_3(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「啊，有点黏黏的但是温暖」"
+	CALL ADD_RAND_MESSAGE, @"「看起来比想象中好」"
+
+
+	CALL ADD_RAND_MESSAGE, @"「哎呀，意外。对身体有好处的东西？」"
+	CALL ADD_RAND_MESSAGE, @"「下次试试喝一口怎么样？」"
+	CALL ADD_RAND_MESSAGE, @"「嘛，牛奶也是白色的嘛」"
+
+	CALL ADD_RAND_MESSAGE, @"「这个液体，为什么是白色的呢？」"
+	CALL ADD_RAND_MESSAGE, @"「感觉心情爽快」"
+	CALL ADD_RAND_MESSAGE, @"「清爽舒畅，高能量的感觉？」"
+	CALL ADD_RAND_MESSAGE, @"「让斗志润滑起来」"
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+			CASE 性格_おてんば
+				CALL ADD_RAND_MESSAGE, @"「精力充沛～」"
+				CALL ADD_RAND_MESSAGE, @"「清爽，光滑～」"
+
+			CASE 性格_きれもの
+				CALL ADD_RAND_MESSAGE, @"「预料之外的惊喜。希望总是这样就好了」"
+
+			CASE 性格_しあわせもの
+
+				CALL ADD_RAND_MESSAGE, @"「清爽，光滑～」"
+				CALL ADD_RAND_MESSAGE, @"「复活～，复活～，肌肤力量～」"
+			CASE 性格_セクシーギャル
+				CALL ADD_RAND_MESSAGE, @"「复活～，复活～，肌肤力量～」"
+			CASE 性格_のんきもの
+				CALL ADD_RAND_MESSAGE, @"「复活～，复活～，肌肤力量～」"
+
+			CASE 性格_わがまま
+
+				CALL ADD_RAND_MESSAGE, @"「变成了奢侈的时刻」"
+
+		ENDSELECT
+
+
+
+
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  135    発生イベント:不思議な泉
+; / ARG:2    0    0:水を飲んだ(HP・MP・EP全回復)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_135_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「好厉害的酒……稍微带一点回去……咦？」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  137    発生イベント:壁触手
+; / ARG:2    2    1:触手に捕まった 2:回避した
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_137_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「真是的，不能有一点疏忽和漏洞啊」"
+	CALL ADD_RAND_MESSAGE, @"「连墙壁和地板都要注意啊」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「可惜，这种程度我早就预料到了」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「虽然你的动作很好，但只有这些而已」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  138    発生イベント:落とし穴
+; / ARG:2    1    1:穴に落ちた
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_138_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「什、什么！？ 陷阱！？」"
+	CALL ADD_RAND_MESSAGE, @"「地、地板突然……！」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  138    発生イベント:落とし穴
+; / ARG:2    2    2:回避した
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_138_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「好险，差点掉下去了」"
+	CALL ADD_RAND_MESSAGE, @"「吓我一跳……」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  140    発生イベント:荷物袋
+; / ARG:2    0    0:開けた 1:開けない
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_140_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「是谁掉的东西呢？」"
+	CALL ADD_RAND_MESSAGE, @"「在这种地方有个袋子……？」"
+	CALL ADD_RAND_MESSAGE, @"「虽然不知道是谁掉的，但我就借用一下了」"
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「虽然不知道是谁掉的，但我会有效地利用它」"
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「在这种地方掉落物品，一定是因为平时表现良好」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「不知道是谁掉的，但我就收下了」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  140    発生イベント:荷物袋
+; / ARG:2    1    0:開けた 1:開けない
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_140_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「还是算了吧，如果里面有奇怪的东西会很可怕的」"
+	CALL ADD_RAND_MESSAGE, @"「刚才好像动了一下……」"
+	CALL ADD_RAND_MESSAGE, @"「再怎么说也太可疑了吧……」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  141    発生イベント:荷物袋トラップ
+; / ARG:2    0    0:開けた 1:開けない
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_141_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「敌、敌人！？ 是陷阱吗！？」"
+	CALL ADD_RAND_MESSAGE, @"「什、什么！？ 不可能……！」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  141    発生イベント:荷物袋トラップ
+; / ARG:2    1    0:開けた 1:開けない
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_141_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 発生イベント:荷物袋で処理
+	CALL KOJO_DEFAULT_200_140_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  143    発生イベント:不思議なガス
+; / ARG:2    5    5:テンションが下がった(TP=0)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_143_5(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「怎么突然……感到沮丧……」"
+	CALL ADD_RAND_MESSAGE, @"「嗯……发生了什么……突然有动力了……」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  151    発生イベント:不意打ち
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_151(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「什、什么！？」"
+	CALL ADD_RAND_MESSAGE, @"「袭击！？」"
+	CALL ADD_RAND_MESSAGE, @"「从、从哪里！？」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  152    発生イベント:C寄生淫蟲
+; / ARG:2    1    1:ふたなり化 2:既にふたなり 3:淫蟲を回避
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_152_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「不、不要！？ 离开我……！？」"
+	CALL ADD_RAND_MESSAGE, @"「等一下……！ 为什么会在那种地方……！？ 离开我！」"
+
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  153    発生イベント:淫蟲肌
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_153(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「这些家伙……缠在我的皮肤上……」"
+	CALL ADD_RAND_MESSAGE, @"「讨厌……！ 感觉很恶心……」"
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  170    キュウリ畑
+; / ARG:2    3    食べさせられた
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_170(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「这里的植物到底是怎么回事……」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「以为只是ふつう的植物，结果大意了……」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「哇♪ 这是一个积极的黄瓜呢♪」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「本以为只是个ふつう的黄瓜……」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  171    発生イベント:荷物袋トラップヒュプノ
+; / ARG:2    0    0:開けた 1:開けない
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_171_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「这、这是什么！？怎么进来的！？」"
+	CALL ADD_RAND_MESSAGE, @"「我可没听说过这个！？」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「可恶，狡猾！」"
+	CASE 性格_がんばりや
+		CALL ADD_RAND_MESSAGE, @"「诶！？诶诶诶！？」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「这个生物，如果没有人打开它怎么办？」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「糟了，是陷阱！」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「再多睡一会儿，快快回到袋子里」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「呜……不可能……！？」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「再回到袋子里！别再出来了！」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  171    発生イベント:荷物袋トラップヒュプノ
+; / ARG:2    1    0:開けた 1:開けない
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_171_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 発生イベント:荷物袋で処理
+	CALL KOJO_DEFAULT_200_140_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  173    発生イベント:動物耳
+; / ARG:2    2    2:動物耳取得
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_173_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「诶，这是什么！？耳朵！？」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「长出了可爱的耳朵！？」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  173    発生イベント:動物耳
+; / ARG:2    3    3:食べずに立ち去った
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_173_3(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「对这个我可没食欲」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  173    発生イベント:動物耳
+; / ARG:2    4    4:動物耳喪失
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_173_4(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「呼，恢复原样了呢」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「耳朵消失了啊，明明很可爱的」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  173    発生イベント:動物耳
+; / ARG:2    5    5:HP回復
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_173_5(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「嗯，比想象中好吃」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  173    発生イベント:動物耳
+; / ARG:2    6    6:動物耳と尻尾取得
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_173_6(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「诶，这是什么！？耳朵！？尾巴还有！？」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「长出了可爱的耳朵！？」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「啊，这个耳朵和尾巴，可以动哦」（咻咻）"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「这是龙的尾巴吗？」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「还是更喜欢蓬松的狐狸之类的……」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  173    発生イベント:動物耳
+; / ARG:2    7    7:動物耳ともふ尻尾取得
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_173_7(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「诶，这是什么！？耳朵！？尾巴还有！？啊，好软」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「长出了可爱的耳朵！？」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「啊，这个耳朵和尾巴，可以动哦」（咻咻）"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「现在有点像猫的心情……。看起来很麻烦……」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  174    発生イベント:媚薬風呂
+; / ARG:2    1    1:落下した
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_174_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「呜啊啊！？好烫！？这水好烫啊！？」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「不……不要……！？这水渗进来了……！？」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  175    発生イベント:白濁風呂
+; / ARG:2    1    1:落下した
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_175_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「放开！呜啊！？你在干什么！？」"
+	CALL ADD_RAND_MESSAGE, @"「呜……噗啊……！不要……！口呜……！」"
+	CALL ADD_RAND_MESSAGE, @"「不要！这是什么，好脏！」"
+	CALL ADD_RAND_MESSAGE, @"「咳咳。呜呜……喝下去了……」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  200    ランダムイベント発生
+; / ARG:1  201    発生イベント:石碑
+; / ARG:2    0    0:読むことが出来なかった 1:読めた
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_200_201_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「这是文字吗？」"
+	CALL ADD_RAND_MESSAGE, @"「嗯……这上面写了什么呢？」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「虽然完全看不懂，但这里可能有关于这个地方的线索吧」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「就算想了也不会变得能读懂，算了吧」"
+	ENDSELECT
+RETURN 1
+
+

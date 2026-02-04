@@ -1,0 +1,64 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 14 敵の性攻撃 (命中) - 攻撃種類別 0352 スライム B
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_14_352(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 追加地の文関数(前)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_BEFORE("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_BEFORE")
+
+	; 追加地の文関数(後)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_AFTER("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_AFTER")
+	
+	; 睡眠・喪失・諦め
+	SIF CFLAG:25 || CFLAG:29 || TFLAG:16 == 2
+		RETURN 0
+
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; スライムBの攻撃は着衣状態によって地の文が変化 対応した口上を記述
+	; 全裸状態
+	IF BASE:CP <= 0
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ああぁん♥　たくさんの舌で、ねぶられてるみたいっ♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（やだ……！　弄られてる先っぽヒクヒクしてるの、透けた身体のせいで丸見え……！）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「うああっ……！　離れろぉッ！　吸うなあぁぁッ！」\n"
+		ENDSELECT
+		
+	; 着衣状態
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			; 母乳体質
+			IF TALENT:130
+				CALL KOJO_27_0_ADD_MESSAGE, @"「そんなに揉んだら、おっぱい出ちゃうわよぉ♥」\n"
+				
+			; 母乳は出ない
+			ELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「ごめんね、そんなにしても母乳出ないのよ♪　気持ちよくなるだけ♪」\n"
+			ENDIF
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こいつ……！　胸ばっか刺激してくる……っ！」\n"
+		ENDSELECT
+	ENDIF
+	CALL KOJO_27_0_PARAGRAPH_MESSAGE
+	
+	; 地の文側で\nするので口上側は\nで終わること
+RETURN 1

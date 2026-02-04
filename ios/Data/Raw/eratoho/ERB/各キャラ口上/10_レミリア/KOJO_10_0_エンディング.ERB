@@ -1,0 +1,3036 @@
+﻿@ENDING_KOJO_10_YS
+;リセット
+CFLAG:810 = 0
+;エンディングサーチ
+
+;優先度大
+;優先度中
+IF LOCAL:2 == 0
+	;ペットエンド　ペットがいてそのペットといた日数 + 身体を捧げた回数が20以上で屈服度60(中毒気味)以上。【ペット】なら一度でも身体を捧げて3日以上一緒にいればおｋ
+	IF PET:0 && ((CFLAG:822 >= 10 && ((DAY:0 - CFLAG:821) + CFLAG:822 >= 40) && CFLAG:400>= 60) || (TALENT:140 && CFLAG:822 > 0 && (DAY:0 - CFLAG:821) > 2))
+		;今は書いてないのは弾く　※汎用を作るかそれとも書いたのだけ出すようにするか…
+		;サキュバス
+		IF PET:0 == 41
+		LOCAL:(CFLAG:810) = 1
+		CFLAG:810 ++
+		ELSE
+		ENDIF
+	ENDIF
+	;触手服エンド　触手中毒3。着装時とどめを２種以上体験し、触装or粘装or触包状態でクリア
+	IF ABL:11 == 3 && (CFLAG:811 + CFLAG:812 + CFLAG:813 + CFLAG:814 + CFLAG:815) >= 2 && (CFLAG:40 || CFLAG:46  || CFLAG:48)
+		LOCAL:(CFLAG:810) = 2
+		CFLAG:810 ++
+	ENDIF
+	
+	SIF CFLAG:810 != 0
+	CFLAG:810 = LOCAL:(RAND:(CFLAG:810)) + 200
+ENDIF
+;優先度小グループ
+IF CFLAG:810 == 0
+	;部位エンド　部位陥落補正を抜いた陥落度が5以上でにょろーん、触手服とどめ、自販機の部位強化のうち二つ以上体験した
+	;A
+	IF ABL:6 + ABL:11 >= 5 && ( GETBIT(CFLAG:819,0) + CFLAG:811 + GETBIT(CFLAG:818,0) ) >= 2
+		LOCAL:(CFLAG:810) = 1
+		CFLAG:810 ++
+	ENDIF
+	;B
+	IF ABL:7 + ABL:11 >= 5 && ( GETBIT(CFLAG:819,1) + CFLAG:812 + GETBIT(CFLAG:818,1) ) >= 2
+		LOCAL:(CFLAG:810) = 2
+		CFLAG:810 ++
+	ENDIF
+	;C
+	IF ABL:8 + ABL:11 >= 5 && ( GETBIT(CFLAG:819,2) + CFLAG:813 + GETBIT(CFLAG:818,2) ) >= 2
+		LOCAL:(CFLAG:810) = 3
+		CFLAG:810 ++
+	ENDIF
+	;V
+	IF ABL:9 + ABL:11 >= 5 && ( GETBIT(CFLAG:819,3) + CFLAG:814 + GETBIT(CFLAG:818,3) ) >= 2
+		LOCAL:(CFLAG:810) = 4
+		CFLAG:810 ++
+	ENDIF
+	
+	SIF CFLAG:810 != 0
+	CFLAG:810 = LOCAL:(RAND:(CFLAG:810)) + 100
+	;埋まってないBを封印
+	SIF CFLAG:810 == 102
+	CFLAG:810 = 0
+ENDIF
+
+;;;;;;;;;;;;;
+;;;;;;;;;;;;;
+
+
+
+
+IF CFLAG:810 != 0
+	;見れる後日譚があるなら見るかどうか確認
+	PRINTFORML 　
+	PRINTFORML 　
+	PRINTFORML 　
+	IF FLAG:AUTOMODE
+		PRINTFORML 　
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 　
+	ENDIF
+	PRINTFORMDL 後日譚を見ますか？
+	PRINTFORMDL [0] 見る
+	PRINTFORMDL [1] 見ない
+	$INPUT_LOOP_SHOW_ENDING
+	INPUT
+	IF RESULT == 0
+		PRINTFORMDL ……
+		IF FLAG:AUTOMODE
+			PRINTFORMDL …………
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW …………
+		ENDIF
+		PRINTFORML 　
+		CALL ENDING_KOJO_10_YS_TXT
+	ELSEIF RESULT == 1
+	;※専用の関数作らんとメンドクサイことになるだろうなあ
+	;ELSEIF RESULT == 9999
+	;PRINTFORMW 隠しコマンド発見！
+	;PRINTFORML 見たいエンディングを選んでください
+	ELSE
+		PRINTFORML 入力し直してください
+		GOTO INPUT_LOOP_SHOW_ENDING
+	ENDIF
+ENDIF
+
+
+
+
+
+
+
+
+
+
+
+
+;ED本文
+@ENDING_KOJO_10_YS_TXT
+;/SS書きでもない癖に長ーくしちゃうのは要領よくまとめられないせい
+SELECTCASE CFLAG:810
+;ペットエンド
+CASE 201
+	SELECTCASE PET:0
+	;サキュバス
+	CASE 41
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あら」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あら」
+		ENDIF
+		;※独白に薄く色をつけてみるテスト
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 部屋に戻る途中、角を曲がった進行方向の反対側、妖精メイド達と談笑する彼女を見つけた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 部屋に戻る途中、角を曲がった進行方向の反対側、妖精メイド達と談笑する彼女を見つけた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML あの迷宮で出会い仲間として同行することになったサキュバス
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW あの迷宮で出会い仲間として同行することになったサキュバス
+		ENDIF
+		PRINTFORML 多くの同胞を裏切ってまで最後まで付いてきてくれた彼女を無碍にするわけにもいかず、
+		IF FLAG:AUTOMODE
+			PRINTFORML こうして紅魔館の一員として迎え入れることになったのだ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW こうして紅魔館の一員として迎え入れることになったのだ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 迷宮を失った今では以前程の力はないようで特に今の所問題も起きてはいない
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 迷宮を失った今では以前程の力はないようで特に今の所問題も起きてはいない
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML もともと淫乱なだけで気さくで話しやすい方らしく、館の住人ともそれなりに仲良くやれている
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW もともと淫乱なだけで気さくで話しやすい方らしく、館の住人ともそれなりに仲良くやれている
+		ENDIF
+		PRINTFORML ただ時々メイド達にちょっかいも出しているようで…あの一人だけ頬を染めているのもそうだろう
+		IF FLAG:AUTOMODE
+			PRINTFORML 最近ちょっと館の風紀が乱れ気味だ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 最近ちょっと館の風紀が乱れ気味だ
+		ENDIF
+		PRINTFORML まあやりすぎないよう注意もしているし
+		IF FLAG:AUTOMODE
+			PRINTFORML 少なくとも取り返しのつかないレベルで魅了されている者はいないはずだ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 少なくとも取り返しのつかないレベルで魅了されている者はいないはずだ
+		ENDIF
+		PRINTFORML 　
+		PRINTFORML 　
+		IF FLAG:AUTOMODE
+			PRINTFORML 　　　…私自身を除いては
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　　　…私自身を除いては
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「…………」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「…………」
+		ENDIF
+		SETCOLOR 255,204,204
+		PRINTFORML そっと背を向け部屋へ向かう私を目ざとく見つけたか
+		IF FLAG:AUTOMODE
+			PRINTFORML 世間話を切り上げた彼女がゆっくりと後をつけてくる気配がする
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 世間話を切り上げた彼女がゆっくりと後をつけてくる気配がする
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 多分その顔にいやらしい笑みを浮かべているのだろう
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 多分その顔にいやらしい笑みを浮かべているのだろう
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML でも振り返って確認する勇気はない
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW でも振り返って確認する勇気はない
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML いつの間にか伏せがちになった自分の顔がどれだけ朱に染まっているかもあまり知りたくない
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW いつの間にか伏せがちになった自分の顔がどれだけ朱に染まっているかもあまり知りたくない
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「はあ……」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「はあ……」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 部屋に入ってそのまま真っ直ぐ奥へ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 部屋に入ってそのまま真っ直ぐ奥へ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 鍵は…彼女がかけた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 鍵は…彼女がかけた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 私が立ち止まれば後は距離が縮まるだ――
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 私が立ち止まれば後は距離が縮まるだ――
+		ENDIF
+		;振動、一回
+		CALL QUAKE(1)
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ひゃっ%UNICODE(0x2665)%！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ひゃっ%UNICODE(0x2665)%！」
+		ENDIF
+		SETCOLOR 255,204,204
+		PRINTFORML 意外と素早く近づいてきてたのか
+		IF FLAG:AUTOMODE
+			PRINTFORML 想像より早いタイミングで後ろから抱きすくめられ思わず声をあげてしまう
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 想像より早いタイミングで後ろから抱きすくめられ思わず声をあげてしまう
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 声に媚びが入っていたのはついでに下半身をまさぐられたからで断じて期待していたからではない
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 声に媚びが入っていたのはついでに下半身をまさぐられたからで断じて期待していたからではない
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML だがそれで気分を良くした彼女の愛撫はよりねっとりとしたものになる
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW だがそれで気分を良くした彼女の愛撫はよりねっとりとしたものになる
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「んぅ…は…ふ…ぅ　ちょっとお…！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「んぅ…は…ふ…ぅ　ちょっとお…！」
+		ENDIF
+		SETCOLOR 255,204,204
+		PRINTFORML 股座をこね回されながら数歩
+		IF FLAG:AUTOMODE
+			PRINTFORML 目の前にはいつも通り完璧に整えられた私のベッド
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 目の前にはいつも通り完璧に整えられた私のベッド
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「いきなり発情してんじゃ…………あ」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「いきなり発情してんじゃ…………あ」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 不意に伸びてきた彼女の左手が私の顎を支え
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 不意に伸びてきた彼女の左手が私の顎を支え
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「待……ぁ…ん、む…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「待……ぁ…ん、む…」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 振り向かされて唇を奪われた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 振り向かされて唇を奪われた
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「はむ…ふ…ぁ…ん……」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「はむ…ふ…ぁ…ん……」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML あの迷宮で何度も身体を捧げているうちに私の身体は彼女に完全に染められてしまった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW あの迷宮で何度も身体を捧げているうちに私の身体は彼女に完全に染められてしまった
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ちゅ、あ…ふあ……ぁ…%UNICODE(0x2665)%」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ちゅ、あ…ふあ……ぁ…%UNICODE(0x2665)%」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML だからこうして唇を交えるだけで強い酒に酔ったように陶酔してしまい
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW だからこうして唇を交えるだけで強い酒に酔ったように陶酔してしまい
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「れろ…じゅ、ちゅる…ふうう」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「れろ…じゅ、ちゅる…ふうう」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 舌まで絡められれば簡単に力が抜けてしまう
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 舌まで絡められれば簡単に力が抜けてしまう
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 抵抗できない
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 抵抗できない
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML そのままベッドへと崩れるように押し倒される
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW そのままベッドへと崩れるように押し倒される
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML …いつもと同じ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW …いつもと同じ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML この瞬間から主人と僕は逆転する
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW この瞬間から主人と僕は逆転する
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あ、スカート、そんなにめくったらはしたな…んちゅううっ！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あ、スカート、そんなにめくったらはしたな…んちゅううっ！」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 迷宮を失った今では以前程の力はない？
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 迷宮を失った今では以前程の力はない？
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ぷあっ、　あう、んう…っ　や、耳舐めちゃ…ひやっ%UNICODE(0x2665)%！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ぷあっ、　あう、んう…っ　や、耳舐めちゃ…ひやっ%UNICODE(0x2665)%！」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML とんでもない。サキュバスが最もその力を発揮するのはベッドの上だと昔から決まっている
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW とんでもない。サキュバスが最もその力を発揮するのはベッドの上だと昔から決まっている
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「だからあ…！　はうっ%UNICODE(0x2665)%　息吹きかけるのも駄目だってばあ…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「だからあ…！　はうっ%UNICODE(0x2665)%　息吹きかけるのも駄目だってばあ…」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML きっと今夜も長い夜になるだろう
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW きっと今夜も長い夜になるだろう
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML たぶん、私もそれを期待している……
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW たぶん、私もそれを期待している……
+		ENDIF
+		PRINTFORML 　
+		;振動、一回
+		CALL QUAKE(1)
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あっ、奥、こりこり……やあああああぁあっ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%！！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あっ、奥、こりこり……やあああああぁあっ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%！！」
+		ENDIF
+		PRINTFORML 　
+		PRINTFORML 　
+		IF FLAG:AUTOMODE
+			PRINTFORMDL －－－－－－－－－－－－－－－－ペット後日譚 No.41　　淫魔>悪魔
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW －－－－－－－－－－－－－－－－ペット後日譚 No.41　　淫魔>悪魔
+		ENDIF
+	CASEELSE
+		;PRINTFORMW 
+		;PRINTFORML 　
+		;PRINTFORML 　
+		;PRINTFORMDW －－－－－－－－－－－－－－－－ペット後日譚No.test　　現在開発中
+	ENDSELECT
+;触手服エンド
+CASE 202
+	;触装or触包
+	IF CFLAG:40 || CFLAG:46
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 私はあまり後悔はしないたちだと思っていた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 私はあまり後悔はしないたちだと思っていた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML マイナスに思考をうずめるよりは楽しむ方がいいと考える方だし
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW マイナスに思考をうずめるよりは楽しむ方がいいと考える方だし
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML そもそも吸血鬼の長い命、細かいことをいちいち悔んでいたら後悔しかない人生だと錯覚してしまう
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW そもそも吸血鬼の長い命、細かいことをいちいち悔んでいたら後悔しかない人生だと錯覚してしまう
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 加えて自分の幼さのせいもあると認識するようになったのはゆっくりでも成長しているということだろうか
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 加えて自分の幼さのせいもあると認識するようになったのはゆっくりでも成長しているということだろうか
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 最も、今となっては――
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 最も、今となっては――
+		ENDIF
+		PRINTFORMDL ……
+		IF FLAG:AUTOMODE
+			PRINTFORMDL …………
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW …………
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML あの触手蠢く迷宮から帰還した日
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW あの触手蠢く迷宮から帰還した日
+		ENDIF
+		PRINTFORML 取るものも取りあえず館へと帰還し自身の無事を伝えた私が次にしたことは
+		IF FLAG:AUTOMODE
+			PRINTFORML 自らを覆う忌々しい触手で出来た衣服を破り捨て焼きつくすことだった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 自らを覆う忌々しい触手で出来た衣服を破り捨て焼きつくすことだった
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 迷宮から離れて力が戻った私と迷宮の庇護を失った触手の塊
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 迷宮から離れて力が戻った私と迷宮の庇護を失った触手の塊
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 力の差は歴然、一撃で灰塵に帰すのは造作もないことだ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 力の差は歴然、一撃で灰塵に帰すのは造作もないことだ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML …焼きつくしたつもりだった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW …焼きつくしたつもりだった
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 仕留めきれず虫の息ながらも生きていたのか
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 仕留めきれず虫の息ながらも生きていたのか
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML それとも攻撃を加えた際飛び散った一部が残っていたのか
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW それとも攻撃を加えた際飛び散った一部が残っていたのか
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 危険を感じた触手が一部を切り離し逃がしていたのか
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 危険を感じた触手が一部を切り離し逃がしていたのか
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML ともかくあの服は生き残り、この館のどこかに潜んだのだ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW ともかくあの服は生き残り、この館のどこかに潜んだのだ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML そして漂う魔力を取り込みながら少しずつ力を取り戻し
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW そして漂う魔力を取り込みながら少しずつ力を取り戻し
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML いや、それどころか数も増え、以前よりもはるかに強大になっていき…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW いや、それどころか数も増え、以前よりもはるかに強大になっていき…
+		ENDIF
+		PRINTFORML 　
+		;振動、二回
+		CALL QUAKE(2)
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「！！！　何事！？　なっ！？　これは――！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「！！！　何事！？　なっ！？　これは――！」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML ある日、館の全てとなり襲ってきた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW ある日、館の全てとなり襲ってきた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 床から、カーペットから、棚の隙間から…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 床から、カーペットから、棚の隙間から…
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 混ざり込み巧妙に擬態していた全ての、大量の触手が一斉に
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 混ざり込み巧妙に擬態していた全ての、大量の触手が一斉に
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 抵抗もした、だが多勢に無勢どころの話ではない
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 抵抗もした、だが多勢に無勢どころの話ではない
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML そもそも自分が着ていた服が真っ先に牙をむいたのだ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW そもそも自分が着ていた服が真っ先に牙をむいたのだ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 状況が理解できる訳もなく力も弱い妖精メイドたちに対抗する術は無かっただろう
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 状況が理解できる訳もなく力も弱い妖精メイドたちに対抗する術は無かっただろう
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 私だって触手に包まれた状態で上手く戦う事などできるはずもない
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 私だって触手に包まれた状態で上手く戦う事などできるはずもない
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML それに…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW それに…
+		ENDIF
+		PRINTFORML 迷宮で触手服に凶悪な責めを施され、淫悦を刻み込まれてしまっていた私の肉体は
+		IF FLAG:AUTOMODE
+			PRINTFORML その服から生まれた触手の手管にそう長くは耐えられなかった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW その服から生まれた触手の手管にそう長くは耐えられなかった
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 結局その日のうちに館は制圧され
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 結局その日のうちに館は制圧され
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 私は大広間の奥、皆が集められ皆が不安げに見守る中で
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 私は大広間の奥、皆が集められ皆が不安げに見守る中で
+		ENDIF
+		;ABCVのうちとどめ食らったものをランダム抽出
+		IF CFLAG:811
+			LOCAL:(LOCAL:10) = 1
+			LOCAL:10 ++
+		ENDIF
+		IF CFLAG:812
+			LOCAL:(LOCAL:10) = 2
+			LOCAL:10 ++
+		ENDIF
+		IF CFLAG:813
+			LOCAL:(LOCAL:10) = 3
+			LOCAL:10 ++
+		ENDIF
+		IF CFLAG:814
+			LOCAL:(LOCAL:10) = 4
+			LOCAL:10 ++
+		ENDIF
+		LOCAL:10 = LOCAL:(RAND:(LOCAL:10))
+		SELECTCASE LOCAL:10
+		CASE 1
+			IF FLAG:AUTOMODE
+				PRINTFORML あの極太の肉団子触手に尻穴を犯されほじくり返されながら
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW あの極太の肉団子触手に尻穴を犯されほじくり返されながら
+			ENDIF
+		CASE 2
+			IF FLAG:AUTOMODE
+				PRINTFORML あの細引きの触手に乳頭から乳房の内側を侵され塗り替えながら
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW あの細引きの触手に乳頭から乳房の内側を侵され塗り替えながら
+			ENDIF
+		CASE 3
+			IF FLAG:AUTOMODE
+				PRINTFORML あのゴム質の触手にクリトリスを磨かれ嬲られながら
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW あのゴム質の触手にクリトリスを磨かれ嬲られながら
+			ENDIF
+		CASE 4
+			IF FLAG:AUTOMODE
+				PRINTFORML あのゼリーのように蕩ける触手で膣内を奥まで舐り躾けられながら
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW あのゼリーのように蕩ける触手で膣内を奥まで舐り躾けられながら
+			ENDIF
+		ENDSELECT
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「おねがい…っ　もう、ゆるして…っ　いうこと…ぜんぶ、きくからあ…！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「おねがい…っ　もう、ゆるして…っ　いうこと…ぜんぶ、きくからあ…！」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 惨めに許しを請い
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 惨めに許しを請い
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ひいっ%UNICODE(0x2665)%　はげしくしちゃ…ああああぁああっ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%！！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ひいっ%UNICODE(0x2665)%　はげしくしちゃ…ああああぁああっ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%！！」
+		ENDIF
+		;振動、一回
+		CALL QUAKE(1)
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 絶頂し、屈服の証を噴き散らした
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 絶頂し、屈服の証を噴き散らした
+		ENDIF
+		PRINTFORML 　
+		IF FLAG:AUTOMODE
+			PRINTFORML その瞬間から、この館の主は館自身となった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW その瞬間から、この館の主は館自身となった
+		ENDIF
+		PRINTFORML 　
+		PRINTFORMDL ……
+		IF FLAG:AUTOMODE
+			PRINTFORMDL …………
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW …………
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 敗北した私たちに待っていたのは気まぐれに弄ばれ辱められる日々
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 敗北した私たちに待っていたのは気まぐれに弄ばれ辱められる日々
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 全員に着せられた触手服が見えない首枷となり私たちを縛る
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 全員に着せられた触手服が見えない首枷となり私たちを縛る
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「命令」に逆らうことは許されず
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「命令」に逆らうことは許されず
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 逆らったり脱ごうとしたり逃げようとすれば自らの服に失神するまでいじめ抜かれる
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 逆らったり脱ごうとしたり逃げようとすれば自らの服に失神するまでいじめ抜かれる
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 館では日夜問わず常にどこかしらで嬌声が響いていた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 館では日夜問わず常にどこかしらで嬌声が響いていた
+		ENDIF
+		SETCOLOR 255,204,102
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ふみゅっ%UNICODE(0x2665)%　ひゃうう%UNICODE(0x2665)%！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ふみゅっ%UNICODE(0x2665)%　ひゃうう%UNICODE(0x2665)%！」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「こんないっぱい出されたら…漏れちゃう…っ　みゃううぅっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「こんないっぱい出されたら…漏れちゃう…っ　みゃううぅっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		ENDIF
+		;振動、一回
+		CALL QUAKE(1)
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あ、あ…また…ぁ……これじゃお掃除終わらないよう……」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あ、あ…また…ぁ……これじゃお掃除終わらないよう……」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 内股になりながらも倒れないようなんとかモップに寄りかかり身体を支え
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 内股になりながらも倒れないようなんとかモップに寄りかかり身体を支え
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 自分たちの愛液と注ぎ続けられる精液で汚れる廊下を延々と掃除する
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 自分たちの愛液と注ぎ続けられる精液で汚れる廊下を延々と掃除する
+		ENDIF
+		SETCOLOR 255,152,52
+		IF FLAG:AUTOMODE
+			PRINTFORML 「リースちゃんやめて！　そんなの挿れたら壊れちゃう！　私のことはいいから…ひいいいい%UNICODE(0x2665)%！！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「リースちゃんやめて！　そんなの挿れたら壊れちゃう！　私のことはいいから…ひいいいい%UNICODE(0x2665)%！！」
+		ENDIF
+		SETCOLOR 230,128,26
+		IF FLAG:AUTOMODE
+			PRINTFORML 「フィカっ！　逆らったら駄目！　私なら大丈夫だから…すぐに終わるから…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「フィカっ！　逆らったら駄目！　私なら大丈夫だから…すぐに終わるから…」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「……いきます…ぐっ、うううっ！ あ、回…うあああっ%UNICODE(0x2665)%%UNICODE(0x2665)%！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「……いきます…ぐっ、うううっ！ あ、回…うあああっ%UNICODE(0x2665)%%UNICODE(0x2665)%！」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 親友を守る為に自ら股を開き太すぎる触手に腰を下ろす
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 親友を守る為に自ら股を開き太すぎる触手に腰を下ろす
+		ENDIF
+		SETCOLOR 25,112,222
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あぶっ、臭いのかけないで！ あ！？　あにゃあああ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あぶっ、臭いのかけないで！ あ！？　あにゃあああ%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%！」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ごめんなさいごめんなさい！　臭いなんて言ってごめんなさいぃ%UNICODE(0x2665)%！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ごめんなさいごめんなさい！　臭いなんて言ってごめんなさいぃ%UNICODE(0x2665)%！」
+		ENDIF
+		SETCOLOR 115,212,26
+		IF FLAG:AUTOMODE
+			PRINTFORML 「やあー%UNICODE(0x2665)% ごしごしつよすぎるの%UNICODE(0x2665)%　おまんこばかになっちゃうよお%UNICODE(0x2665)%」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「やあー%UNICODE(0x2665)% ごしごしつよすぎるの%UNICODE(0x2665)%　おまんこばかになっちゃうよお%UNICODE(0x2665)%」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 触手の沼となった浴槽で全身を擦られ媚粘液をすりつけられる
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 触手の沼となった浴槽で全身を擦られ媚粘液をすりつけられる
+		ENDIF
+		SETCOLOR 255,150,255
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あー%UNICODE(0x2665)%　あーっ%UNICODE(0x2665)%　こんろはおひりれえ…まやいっひゃうう%UNICODE(0x2665)% もうやええ……%UNICODE(0x2665)%%UNICODE(0x2665)%」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あー%UNICODE(0x2665)%　あーっ%UNICODE(0x2665)%　こんろはおひりれえ…まやいっひゃうう%UNICODE(0x2665)% もうやええ……%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 内側全てが触手でできたベッドに裸でくるまり気絶するまで責められることで眠りに落ちる
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 内側全てが触手でできたベッドに裸でくるまり気絶するまで責められることで眠りに落ちる
+		ENDIF
+		SETCOLOR 255,255,120
+		PRINTFORML 「それではお買い物に行ってきます……ひいっ%UNICODE(0x2665)%！
+		IF FLAG:AUTOMODE
+			PRINTFORML 　わ、分かってます！　絶対逃げません！　絶対帰ってきますからあ！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　わ、分かってます！　絶対逃げません！　絶対帰ってきますからあ！」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 外に出ることが許されるのは完全に心が折られ逃げ出す、助けを求めるという考えが出来ない者だけ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 外に出ることが許されるのは完全に心が折られ逃げ出す、助けを求めるという考えが出来ない者だけ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML そんな光景が日常となってしまった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW そんな光景が日常となってしまった
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 不幸中の幸いか、館の中の環境にしか適応できなかった触手たちは幻想郷の他の場所へは進出できないようだ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 不幸中の幸いか、館の中の環境にしか適応できなかった触手たちは幻想郷の他の場所へは進出できないようだ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML しかしそれは逆に誰かに気付いてもらえる可能性も潰してしまっていた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW しかしそれは逆に誰かに気付いてもらえる可能性も潰してしまっていた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 私たちは今日も誰にも気づかれることなく触手たちの玩具として弄ばれている…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 私たちは今日も誰にも気づかれることなく触手たちの玩具として弄ばれている…
+		ENDIF
+		PRINTFORML 　
+		SETCOLOR CFLAG:700
+		PRINTFORML 「……ふ……っ　……」
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML そんな歪な日常の中、私は椅子に座り、テーブルに肘をついた腕で口元を抑え、震えていた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW そんな歪な日常の中、私は椅子に座り、テーブルに肘をついた腕で口元を抑え、震えていた
+		ENDIF
+		SETCOLOR CFLAG:700
+		PRINTFORML 「…っ、ぶ……ふう…っ%UNICODE(0x2665)%」
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 正確には…椅子に"固定されていた"
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 正確には…椅子に"固定されていた"
+		ENDIF
+		SETCOLOR CFLAG:700
+		PRINTFORML 「ふー…う…　ん…　　んっ、んん゛…っ%UNICODE(0x2665)%！」
+		SETCOLOR 255,204,204
+		PRINTFORML 椅子に座った瞬間その表面とスカートの触手が解けるように交わり肌をなぞる様に動き始め…
+		IF FLAG:AUTOMODE
+			PRINTFORML そうして朝から今までずっと服の中にびっしり生えた繊毛に敏感な部分をずっと弄くられ続けた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW そうして朝から今までずっと服の中にびっしり生えた繊毛に敏感な部分をずっと弄くられ続けた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 数え切れないほど絶頂\@ FLAG:522 == 1 ? と失禁 #  \@を繰り返した秘部は軽くさすられるだけで小刻みに震えて達し
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 数え切れないほど絶頂\@ FLAG:522 == 1 ? と失禁 #  \@を繰り返した秘部は軽くさすられるだけで小刻みに震えて達し
+		ENDIF
+		PRINTFORML スカートに染みを広げ椅子にすら水気を滴らせるほどぐぢょぐぢょになった下半身からは
+		IF FLAG:AUTOMODE
+			PRINTFORML 自分自身ですらくらりとしてしまうような淫臭を漂わせていた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 自分自身ですらくらりとしてしまうような淫臭を漂わせていた
+		ENDIF
+		PRINTFORML 口の方も袖から伸びた小さな触手が少しずつ滲む強力な媚薬を口の中に塗り広げ
+		IF FLAG:AUTOMODE
+			PRINTFORML 今ではおぞましい触手だと分かっているのにまるで甘い飴玉のように舌で転がし味わってしまっていた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 今ではおぞましい触手だと分かっているのにまるで甘い飴玉のように舌で転がし味わってしまっていた
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML （う、あ゛…っ%UNICODE(0x2665)%　駄目なのに…気持ちいい…っ）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （う、あ゛…っ%UNICODE(0x2665)%　駄目なのに…気持ちいい…っ）
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 全身が危険な甘美に浸されていく
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 全身が危険な甘美に浸されていく
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML もう長くは持たない、それにだんだんと服の中の動きが激しくなってきた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW もう長くは持たない、それにだんだんと服の中の動きが激しくなってきた
+		ENDIF
+		SETCOLOR CFLAG:700
+		PRINTFORML 「んんー…っ%UNICODE(0x2665)%！　ふぐ、んうううーっ%UNICODE(0x2665)%%UNICODE(0x2665)%！！」
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML じきに耐えきれなくなり今日一番強烈な絶頂に達し…そのまま気絶してしまうだろう
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW じきに耐えきれなくなり今日一番強烈な絶頂に達し…そのまま気絶してしまうだろう
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML そうして意味もなく「お仕置き」を受けさせられるのだ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW そうして意味もなく「お仕置き」を受けさせられるのだ
+		ENDIF
+		SETCOLOR CFLAG:700
+		PRINTFORML 「……っく…………うう……」
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 悔しさに涙が滲む
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 悔しさに涙が滲む
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML あのとき、ちゃんと滅しきったのか確認しておくべきだった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW あのとき、ちゃんと滅しきったのか確認しておくべきだった
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML あのとき、屈するという選択だけはしてはいけなかった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW あのとき、屈するという選択だけはしてはいけなかった
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML どうして、惨めな生活に甘んじるまで弱くなってしまったのか
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW どうして、惨めな生活に甘んじるまで弱くなってしまったのか
+		ENDIF
+		PRINTFORML 　
+		IF FLAG:AUTOMODE
+			PRINTFORML 私はあまり後悔はしないたちだと思っていた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 私はあまり後悔はしないたちだと思っていた
+		ENDIF
+		PRINTFORML 　
+		IF FLAG:AUTOMODE
+			PRINTFORML 最近は、後悔ばかりしている
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 最近は、後悔ばかりしている
+		ENDIF
+		PRINTFORML 　
+		PRINTFORML 　
+		IF FLAG:AUTOMODE
+			PRINTFORMDL －－－－－－－－－－－－－－－－触装後日譚　　触手の棲む館
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW －－－－－－－－－－－－－－－－触装後日譚　　触手の棲む館
+		ENDIF
+	;粘装
+	ELSEIF CFLAG:48
+		SETCOLOR 112,232,133
+		IF FLAG:AUTOMODE
+			PRINTFORML 「お嬢様ー、最近熱っぽいみたいですけどお風邪ですか？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「お嬢様ー、最近熱っぽいみたいですけどお風邪ですか？」
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「…………え？　あ、大丈夫よ…ほんの少しだけだから」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「…………え？　あ、大丈夫よ…ほんの少しだけだから」
+		ENDIF
+		SETCOLOR 184,189,255
+		IF FLAG:AUTOMODE
+			PRINTFORML 「でもでも…お帰りになってからずっとですし……」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「でもでも…お帰りになってからずっとですし……」
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「疲れが出てきちゃっただけよ…少し休めば…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「疲れが出てきちゃっただけよ…少し休めば…
+		ENDIF
+		;振動、二回
+		CALL QUAKE(2)
+		;消去(一列)
+		CLEARLINE 1
+		IF FLAG:AUTOMODE
+			PRINTFORML 「疲れが出てきちゃっただけよ…少し休めば…　あ、くうううぅっ%UNICODE(0x2665)%！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「疲れが出てきちゃっただけよ…少し休めば…　あ、くうううぅっ%UNICODE(0x2665)%！」
+		ENDIF
+		SETCOLOR 112,232,133
+		IF FLAG:AUTOMODE
+			PRINTFORML 「お嬢様！？　どうかなさったんですか！？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「お嬢様！？　どうかなさったんですか！？」
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「んう…%UNICODE(0x2665)%　　へ、平気…何でもない、わ」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「んう…%UNICODE(0x2665)%　　へ、平気…何でもない、わ」
+		ENDIF
+		SETCOLOR 184,189,255
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ほんとにほんとに大丈夫なんですか？　やっぱりお医者さまに掛かったほうが…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ほんとにほんとに大丈夫なんですか？　やっぱりお医者さまに掛かったほうが…」
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「何でもないったらないの！　私は部屋に戻るから…あなた達は仕事に戻ること、分かったわね？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「何でもないったらないの！　私は部屋に戻るから…あなた達は仕事に戻ること、分かったわね？」
+		ENDIF
+		SETCOLOR 112,232,133
+		IF FLAG:AUTOMODE
+			PRINTFORML 「は、はい」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「は、はい」
+		ENDIF
+		SETCOLOR 184,189,255
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あうー…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あうー…」
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ん、分かったのならいいわ…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ん、分かったのならいいわ…
+		ENDIF
+		;振動、一回
+		CALL QUAKE(1)
+		;消去(一列)
+		CLEARLINE 1
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ん、分かったのならいいわ…　　　　…っ%UNICODE(0x2665)%」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ん、分かったのならいいわ…　　　　…っ%UNICODE(0x2665)%」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「それと…私が自分から起きてくるまで起こしに来なくていいってメイド長に伝えておいて」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「それと…私が自分から起きてくるまで起こしに来なくていいってメイド長に伝えておいて」
+		ENDIF
+		SETCOLOR 112,232,133
+		IF FLAG:AUTOMODE
+			PRINTFORML 「分かりました…お休みなさいませ」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「分かりました…お休みなさいませ」
+		ENDIF
+		SETCOLOR 184,189,255
+		IF FLAG:AUTOMODE
+			PRINTFORML 「……お休みなさいませー」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「……お休みなさいませー」
+		ENDIF
+		SETCOLOR 255,204,204
+		IF FLAG:AUTOMODE
+			PRINTFORML 　
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　
+		ENDIF
+		SETCOLOR CFLAG:700
+		IF FLAG:AUTOMODE
+			PRINTFORML 「はあっ、はっ、はっ……はあっ」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「はあっ、はっ、はっ……はあっ」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL おぼつかない足取りで自室へと戻ってきたレミリア
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW おぼつかない足取りで自室へと戻ってきたレミリア
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 歩いてきただけのはずなのに頬は上気し息もあがっている
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 歩いてきただけのはずなのに頬は上気し息もあがっている
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「はああ…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「はああ…」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 閉めた扉に背を当ててようやく一息
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 閉めた扉に背を当ててようやく一息
+		ENDIF
+		PRINTFORML 「心配…かけちゃってるわね」
+		IF FLAG:AUTOMODE
+			PRINTFORML 「もっとしっかりしなくちゃいけないの、に…ぃっ%UNICODE(0x2665)%」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「もっとしっかりしなくちゃいけないの、に…ぃっ%UNICODE(0x2665)%」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「んう…っ」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「んう…っ」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 足腰に力が入らないのかレミリアの身体がそのままゆらりと沈み床に膝をつく
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 足腰に力が入らないのかレミリアの身体がそのままゆらりと沈み床に膝をつく
+		ENDIF
+		PRINTFORML 「はあっ……く、こ…のお！」
+		IF FLAG:AUTOMODE
+			PRINTFORMDL しかしなにを思ったかそのまま着替えも用意せずにドレスを乱暴に脱ぎ出した
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW しかしなにを思ったかそのまま着替えも用意せずにドレスを乱暴に脱ぎ出した
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL いつも着ているドレスも可愛らしい下着も脱ぎ去ればそこには可憐な少女の裸体が
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW いつも着ているドレスも可愛らしい下着も脱ぎ去ればそこには可憐な少女の裸体が
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL いや、違う
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW いや、違う
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL その肌は不自然に灯りを照り返していた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW その肌は不自然に灯りを照り返していた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 胸元から腿にかけて透明な何かに覆われていた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 胸元から腿にかけて透明な何かに覆われていた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 厚さは数センチ程度、水気のある、まるでぬめるゼリーのような…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 厚さは数センチ程度、水気のある、まるでぬめるゼリーのような…
+		ENDIF
+		PRINTFORML 「あく%UNICODE(0x2665)%　あああ…%UNICODE(0x2665)%」
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 空気に触れたのがきっかけか、突如そのぬめりが蠢きレミリアの声がうわずる
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 空気に触れたのがきっかけか、突如そのぬめりが蠢きレミリアの声がうわずる
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そのぬめりは生きていた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そのぬめりは生きていた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL その正体はあの迷宮でレミリアに纏わりつき出来上がったスライムの服だ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW その正体はあの迷宮でレミリアに纏わりつき出来上がったスライムの服だ
+		ENDIF
+		PRINTFORMDL 迷宮の外ならばその内力尽きるだろうと思ったのが失敗だった
+		IF FLAG:AUTOMODE
+			PRINTFORMDL いつの間にやらレミリアの魔力で己を維持できるように変質していたのだろう
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW いつの間にやらレミリアの魔力で己を維持できるように変質していたのだろう
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL こうして迷宮から帰還してからもその身は朽ちることなく、レミリアの生活を侵食し続けていた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW こうして迷宮から帰還してからもその身は朽ちることなく、レミリアの生活を侵食し続けていた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「はああっ%UNICODE(0x2665)%　はあ、ああっ%UNICODE(0x2665)%」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「はああっ%UNICODE(0x2665)%　はあ、ああっ%UNICODE(0x2665)%」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「いつもいつもしつこいい…っ%UNICODE(0x2665)%」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「いつもいつもしつこいい…っ%UNICODE(0x2665)%」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 食事をしているときに勝手に秘穴へと入り膣から子宮まで襞の一本一本に絡みつき…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 食事をしているときに勝手に秘穴へと入り膣から子宮まで襞の一本一本に絡みつき…
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 休もうとしているときにも気まぐれに尻穴をほぐし思うがまま乳房を舐り…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 休もうとしているときにも気まぐれに尻穴をほぐし思うがまま乳房を舐り…
+		ENDIF
+		PRINTFORML 「さっきからあ…！　ぐにぐにぐにぐにい…%UNICODE(0x2665)%！」
+		IF FLAG:AUTOMODE
+			PRINTFORML 「もうおだいじふやけちゃうわよお…！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「もうおだいじふやけちゃうわよお…！」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 今日も朝からずっと、人と話しているところを狙って執拗にクリトリスを扱かれてきたのだ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 今日も朝からずっと、人と話しているところを狙って執拗にクリトリスを扱かれてきたのだ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 度重なる小さな絶頂でぷっくり膨らんでしまった陰核は滲むような快感を常にレミリアに伝えている
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 度重なる小さな絶頂でぷっくり膨らんでしまった陰核は滲むような快感を常にレミリアに伝えている
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「いいかげんにしてよ…おおっ%UNICODE(0x2665)%！？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「いいかげんにしてよ…おおっ%UNICODE(0x2665)%！？」
+		ENDIF
+		;振動、一回
+		CALL QUAKE(1)
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そろそろ絶頂させようとでもいうのか陰核周りの粘液が激しい蠕動を始めた
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そろそろ絶頂させようとでもいうのか陰核周りの粘液が激しい蠕動を始めた
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 粘液の荒波の中で充血したクリトリスがあちらへこちらへとこねくり回されている
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 粘液の荒波の中で充血したクリトリスがあちらへこちらへとこねくり回されている
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「ひいいんっ%UNICODE(0x2665)%　やだ、もう…！　ぐううう……%UNICODE(0x2665)%！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「ひいいんっ%UNICODE(0x2665)%　やだ、もう…！　ぐううう……%UNICODE(0x2665)%！」
+		ENDIF
+		PRINTFORMDL 意味もなく絶頂に抗おうと歯を食いしばるレミリア
+		IF FLAG:AUTOMODE
+			PRINTFORMDL しかし朝から緩やかに練りこまれていた陰核がそうそう耐えられる訳もない
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW しかし朝から緩やかに練りこまれていた陰核がそうそう耐えられる訳もない
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「く、ふぎゅうっ%UNICODE(0x2665)%！
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「く、ふぎゅうっ%UNICODE(0x2665)%！
+		ENDIF
+		;振動、二回
+		CALL QUAKE(2)
+		;消去(一列)
+		CLEARLINE 1
+		IF FLAG:AUTOMODE
+			PRINTFORML 「く、ふぎゅうっ%UNICODE(0x2665)%！　んんんんんーっ%UNICODE(0x2665)%%UNICODE(0x2665)%！！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「く、ふぎゅうっ%UNICODE(0x2665)%！　んんんんんーっ%UNICODE(0x2665)%%UNICODE(0x2665)%！！」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL すぐに食いしばった歯からひときわ大きな嬌声が漏れレミリアの身体がびくりと痙攣した
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW すぐに食いしばった歯からひときわ大きな嬌声が漏れレミリアの身体がびくりと痙攣した
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「かふっ、あ、あー…っ%UNICODE(0x2665)%%UNICODE(0x2665)%　深いい…%UNICODE(0x2665)%」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「かふっ、あ、あー…っ%UNICODE(0x2665)%%UNICODE(0x2665)%　深いい…%UNICODE(0x2665)%」
+		ENDIF
+		PRINTFORMDL 朝から今まで耐えてきたから…それともわざと焦らされていただけなのか
+		IF FLAG:AUTOMODE
+			PRINTFORMDL どちらにせよ溜めこまれた分だけ絶頂が重い
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW どちらにせよ溜めこまれた分だけ絶頂が重い
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「はああ…あ…ああー…%UNICODE(0x2665)%」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「はああ…あ…ああー…%UNICODE(0x2665)%」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 茹であがった膣口が雄を求めぱくぱく蠢くのが粘液越しに透けて見えていた…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 茹であがった膣口が雄を求めぱくぱく蠢くのが粘液越しに透けて見えていた…
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 　
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「くそお…！　毎日、こんなことされて…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「くそお…！　毎日、こんなことされて…」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「悔しいのに…悔しいのに…何にもできないなんて…っ！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「悔しいのに…悔しいのに…何にもできないなんて…っ！」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL ようやく重い絶頂から戻ってこれたレミリアは悔しさにひとりごちる
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW ようやく重い絶頂から戻ってこれたレミリアは悔しさにひとりごちる
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 薄い粘塊ごときにいいようにされているのはプライドが許さない
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 薄い粘塊ごときにいいようにされているのはプライドが許さない
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL しかし打つ手がないのだ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW しかし打つ手がないのだ
+		ENDIF
+		PRINTFORMDL 吸血鬼の生命力でも得たのかこの粘液服はいくら千切っても焼き払ってもすぐに再生する
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 思いつく限りの何をしても無駄だった
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 思いつく限りの何をしても無駄だった
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 有効な解決策がない今はただ耐えるしかない
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 有効な解決策がない今はただ耐えるしかない
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 　
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 　
+		ENDIF
+		PRINTFORML 「…………」
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 嘘だ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 嘘だ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 選ばなければ手はいくつもあるはずだ
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 選ばなければ手はいくつもあるはずだ
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そもそも誰にも彼にもこのことを隠しているのがおかしい
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そもそも誰にも彼にもこのことを隠しているのがおかしい
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 人に知られる羞恥とこの粘装に身体を弄ばれ続ける羞恥
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 人に知られる羞恥とこの粘装に身体を弄ばれ続ける羞恥
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL レミリアの天秤ならばどちらが上に来るかは明瞭なはず
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW レミリアの天秤ならばどちらが上に来るかは明瞭なはず
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL それをしないのは――
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW それをしないのは――
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「……っ」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「……っ」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 考えたくないとでも言うかのようにかぶりを振る
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 考えたくないとでも言うかのようにかぶりを振る
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL そこに辿り着いてしまったらきっと……から
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW そこに辿り着いてしまったらきっと……から
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あっ%UNICODE(0x2665)%　あ、く、今度は、お尻…っ？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あっ%UNICODE(0x2665)%　あ、く、今度は、お尻…っ？」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「んう……あ、ふああ%UNICODE(0x2665)%！！」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「んう……あ、ふああ%UNICODE(0x2665)%！！」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 結局
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 結局
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORMDL レミリアは今日もただただ快楽と絶頂に悦びながら身体を震わせ続けた…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW レミリアは今日もただただ快楽と絶頂に悦びながら身体を震わせ続けた…
+		ENDIF
+		;消去(一列)
+		CLEARLINE 1
+		IF FLAG:AUTOMODE
+			PRINTFORMDL レミリアは今日もただただ『悔しさ』と『羞恥』に『耐え』ながら身体を震わせ続けた…
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW レミリアは今日もただただ『悔しさ』と『羞恥』に『耐え』ながら身体を震わせ続けた…
+		ENDIF
+		PRINTFORML 　
+		PRINTFORML 　
+		IF FLAG:AUTOMODE
+			PRINTFORMDL －－－－－－－－－－－－－－－－粘装後日譚　　お気に入りの下着
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW －－－－－－－－－－－－－－－－粘装後日譚　　お気に入りの下着
+		ENDIF
+	ENDIF
+;部位エンド
+;A
+CASE 101
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ふふふふーんふふ～ん♪」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ふふふふーんふふ～ん♪」
+	ENDIF
+	;/亡き王女の為のセプテット
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 月の綺麗な夜更け
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 月の綺麗な夜更け
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL レミリアはベッドの上で楽しげに鼻歌を歌いながら何か大きな箱の中を漁っていた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW レミリアはベッドの上で楽しげに鼻歌を歌いながら何か大きな箱の中を漁っていた
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「どれにしよーうかなー♪」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「どれにしよーうかなー♪」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 箱の中には様々なモノが並べられていた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 箱の中には様々なモノが並べられていた
+	ENDIF
+	PRINTFORMDL 太い棍棒のようなものや大小の玉が並んだ鞭のようなもの、
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 先端にイボ付きの大球がついたフレイルのようなもの…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 先端にイボ付きの大球がついたフレイルのようなもの…
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL それらが柔らかい素材でできていることを知らなければただの凶器にしか見えないだろう
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW それらが柔らかい素材でできていることを知らなければただの凶器にしか見えないだろう
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 最近始めた"趣味"の為に集めたものだ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 最近始めた"趣味"の為に集めたものだ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「決めた、今日はこれっ♪」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「決めた、今日はこれっ♪」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL その手に取りあげたのは柄のないメイスのようなもの
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW その手に取りあげたのは柄のないメイスのようなもの
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 先端から根元にかけて四方に波打つ突起が造形されているのが特徴だ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 先端から根元にかけて四方に波打つ突起が造形されているのが特徴だ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「それじゃ早速…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「それじゃ早速…」
+	ENDIF
+	PRINTFORMDL スカートに手を入れ、下着を一気に脱ぎ去る
+	IF FLAG:AUTOMODE
+		PRINTFORMDL シミ一つない美しい秘部が晒された
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW シミ一つない美しい秘部が晒された
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「っと、先にナカのを出さないとね。　……んっ」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「っと、先にナカのを出さないとね。　……んっ」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 呟くとレミリアはベッドに伏せて尻を高く上げ、息み始めた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 呟くとレミリアはベッドに伏せて尻を高く上げ、息み始めた
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「はあっ…く……ん…う…っ　あ、来た…っ♪」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「はあっ…く……ん…う…っ　あ、来た…っ♪」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL やがて緩やかに菊門が盛り上がり、円柱状の何か大きなものが顔を出す
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW やがて緩やかに菊門が盛り上がり、円柱状の何か大きなものが顔を出す
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 汚物などではなくもっと硬い固形のそれは腸液に濡れ光りながら少しずつ形を現していく
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 汚物などではなくもっと硬い固形のそれは腸液に濡れ光りながら少しずつ形を現していく
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「このまま…手、使わずに…しよ…んんっ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「このまま…手、使わずに…しよ…んんっ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL レミリアは熱い吐息をこぼしながらそのまま腹に力を込め続け、漆黒の塊をゆっくりとひり出していく
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW レミリアは熱い吐息をこぼしながらそのまま腹に力を込め続け、漆黒の塊をゆっくりとひり出していく
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あっ、ううん%UNICODE(0x2665)%　…ふーっ、ん…　はーっ…　あ、あ…く…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あっ、ううん%UNICODE(0x2665)%　…ふーっ、ん…　はーっ…　あ、あ…く…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「んっ…ああ…ふふ…♪　まだ、はん、ぶん…っ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「んっ…ああ…ふふ…♪　まだ、はん、ぶん…っ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL ずりずりとモノがにじり出るにつれレミリアの声の媚が強くなっていく
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW ずりずりとモノがにじり出るにつれレミリアの声の媚が強くなっていく
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 半分という割に既に七寸近い長さが外に出ている。一体どれだけ長いというのか
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 半分という割に既に七寸近い長さが外に出ている。一体どれだけ長いというのか
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL それにあまりにも太い。人の腕ほどもあるその太さに肛門は限界近くまで大きく広げられている
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW それにあまりにも太い。人の腕ほどもあるその太さに肛門は限界近くまで大きく広げられている
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あは…きつい…っ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あは…きつい…っ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL にも関わらずレミリアの朱が差した顔は甘くふやけていた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW にも関わらずレミリアの朱が差した顔は甘くふやけていた
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「でもあと、ちょっと……ん、ふうううっ！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「でもあと、ちょっと……ん、ふうううっ！」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あ、出る……あああんっ%UNICODE(0x2665)%%UNICODE(0x2665)%！！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あ、出る……あああんっ%UNICODE(0x2665)%%UNICODE(0x2665)%！！」
+	ENDIF
+	;振動、一回
+	CALL QUAKE(1)
+	IF FLAG:AUTOMODE
+		PRINTFORMDL シーツを握りしめたレミリアが絶頂の嬌声を張りあげる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW シーツを握りしめたレミリアが絶頂の嬌声を張りあげる
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL すると同時に腸液塗れの太い円柱が肛内から一気にずり落ち、その全容を現した
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW すると同時に腸液塗れの太い円柱が肛内から一気にずり落ち、その全容を現した
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あ、はあ…っ　イっちゃったあ…%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あ、はあ…っ　イっちゃったあ…%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「この、一番太いとこが通ってずるるって抜けるの、すきい…っ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「この、一番太いとこが通ってずるるって抜けるの、すきい…っ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL その正体は中腹辺りが太くなっている男根状の張形だった
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW その正体は中腹辺りが太くなっている男根状の張形だった
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 男根といってもその長さは一尺を軽く超え、太さも長さもヒトのそれではない
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 男根といってもその長さは一尺を軽く超え、太さも長さもヒトのそれではない
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL そんなモノが丸ごとレミリアの中に入っていたのだ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW そんなモノが丸ごとレミリアの中に入っていたのだ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「でも…こっちはもっと太いもんねえ…%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「でも…こっちはもっと太いもんねえ…%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 排出絶頂の余韻に浸りながら手元に置いていたあのメイス状のものを愛おしそうに撫でる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 排出絶頂の余韻に浸りながら手元に置いていたあのメイス状のものを愛おしそうに撫でる
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL そう、この棒も含めてあの箱の中の凶器の用途はそういうこと
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW そう、この棒も含めてあの箱の中の凶器の用途はそういうこと
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL あの全てが秘密裏に特注した特大のアナルバイブやアナルビーズだ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW あの全てが秘密裏に特注した特大のアナルバイブやアナルビーズだ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 　
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 　
+	ENDIF
+	PRINTFORMDL あの迷宮にてアヌスを何度も執拗なまでに虐め抜かれ続けたせいで
+	IF FLAG:AUTOMODE
+		PRINTFORMDL レミリアはとうとう尻穴の快楽に目覚め、その虜になってしまった
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW レミリアはとうとう尻穴の快楽に目覚め、その虜になってしまった
+	ENDIF
+	PRINTFORMDL 帰還してからも癒えないその疼きに負け、
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 既に十分淫靡に改造されてしまっていた肛内をさらに毎日自ら耕し続けた結果がこれだ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 既に十分淫靡に改造されてしまっていた肛内をさらに毎日自ら耕し続けた結果がこれだ
+	ENDIF
+	PRINTFORMDL 尻穴での自慰も少しずつエスカレートし、
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 今では一日中こういった異物を挿入していなければ落ち着かないくらいになってしまっている
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 今では一日中こういった異物を挿入していなければ落ち着かないくらいになってしまっている
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 　
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 　
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL その証拠というべきか、口を開けるように大きく開いた尻穴の奥には変容した腸内の淫靡な様が広がっていた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW その証拠というべきか、口を開けるように大きく開いた尻穴の奥には変容した腸内の淫靡な様が広がっていた
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL ふっくら柔らかな腸肉にはぷりぷりと瑞々しい襞が並び、
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW ふっくら柔らかな腸肉にはぷりぷりと瑞々しい襞が並び、
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 完全に愛液と化した腸液があちらこちらで粘っこい糸を引いている
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 完全に愛液と化した腸液があちらこちらで粘っこい糸を引いている
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 尻穴に興味が無いものすら引き寄せられそうになるその肉穴はその様に違わぬ淫蕩ぶりで
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 尻穴に興味が無いものすら引き寄せられそうになるその肉穴はその様に違わぬ淫蕩ぶりで
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 太い棒状のものが押し当てられるだけで菊門がねだる様にしゃぶりつき
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 太い棒状のものが押し当てられるだけで菊門がねだる様にしゃぶりつき
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL ひとたび挿入すれば"愛液"を含み濡れた全ての襞が悦び甘え絡みつき
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW ひとたび挿入すれば"愛液"を含み濡れた全ての襞が悦び甘え絡みつき
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 抜こうとすれば抜かないでと駄々をこねるように締まり吸いついてくる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 抜こうとすれば抜かないでと駄々をこねるように締まり吸いついてくる
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL その本来の役目を忘れただひたすらに快楽を貪ろうとする腸内の動きはまさに極上の名器のそれだった
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW その本来の役目を忘れただひたすらに快楽を貪ろうとする腸内の動きはまさに極上の名器のそれだった
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 最もその名器を頂ける幸運な者はいまだおらず
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 最もその名器を頂ける幸運な者はいまだおらず
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 目下、レミリアはこうやって道具ばかりで己を慰めている
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 目下、レミリアはこうやって道具ばかりで己を慰めている
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「いっぱい塗ってー…ふふ、トロトロ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「いっぱい塗ってー…ふふ、トロトロ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL ローションをアナルメイスに塗り広げながらうっとりと呟く
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW ローションをアナルメイスに塗り広げながらうっとりと呟く
+	ENDIF
+	;/アナルメイス。我ながら馬鹿な単語である
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 既に期待で前も後ろも熱く濡れそぼりきゅうきゅうと疼いている
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 既に期待で前も後ろも熱く濡れそぼりきゅうきゅうと疼いている
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あはっ♪　早く挿れたいけど…まずはあ…んうっ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あはっ♪　早く挿れたいけど…まずはあ…んうっ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL まだ閉じきってもいないのに次を要求してひくつく菊門にアナルメイスを少しだけ沈めて軽く捻る
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW まだ閉じきってもいないのに次を要求してひくつく菊門にアナルメイスを少しだけ沈めて軽く捻る
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「きゃんっ%UNICODE(0x2665)%　くん%UNICODE(0x2665)%！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「きゃんっ%UNICODE(0x2665)%　くん%UNICODE(0x2665)%！」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 四方の突起が抉る様に括約筋を押し広げ、その感覚に何度も軽く達する
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 四方の突起が抉る様に括約筋を押し広げ、その感覚に何度も軽く達する
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「んあっ…はあっ%UNICODE(0x2665)%　波になってるトコロがキくう…%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「んあっ…はあっ%UNICODE(0x2665)%　波になってるトコロがキくう…%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「もっと、もっとお…お尻、ぐりぐり、するの…っ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「もっと、もっとお…お尻、ぐりぐり、するの…っ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 何度も出し入れしながら、捻りながら少しずつ奥へとその異物を呑みこんでいく
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 何度も出し入れしながら、捻りながら少しずつ奥へとその異物を呑みこんでいく
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ああん%UNICODE(0x2665)%　太いの、素敵…%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ああん%UNICODE(0x2665)%　太いの、素敵…%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「もうお尻でじゃないと…おっきいのじゃないと満足できないよお…%UNICODE(0x2665)%　ひゃう%UNICODE(0x2665)%！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「もうお尻でじゃないと…おっきいのじゃないと満足できないよお…%UNICODE(0x2665)%　ひゃう%UNICODE(0x2665)%！」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 眉を寄せ、可愛らしい嬌声をあげながら
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 眉を寄せ、可愛らしい嬌声をあげながら
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 下半身ではそれに見合わぬ爛れた肛門自慰が続く
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 下半身ではそれに見合わぬ爛れた肛門自慰が続く
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 自慰が終わる頃にはこの凶器もすっかりその体内に収まっているだろう…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 自慰が終わる頃にはこの凶器もすっかりその体内に収まっているだろう…
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「お尻…気持ちいい…%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「お尻…気持ちいい…%UNICODE(0x2665)%」
+	ENDIF
+	PRINTFORML 　
+	PRINTFORML 　
+	IF FLAG:AUTOMODE
+		PRINTFORMDL －－－－－－－－－－－－－－－－部位後日譚 A　　尻穴狂いの少女
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW －－－－－－－－－－－－－－－－部位後日譚 A　　尻穴狂いの少女
+	ENDIF
+;C
+CASE 103
+	IF FLAG:AUTOMODE
+		PRINTFORML 「…やっと届いたわ」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「…やっと届いたわ」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL ベッドに腰かけたレミリアはゆるく掴んだ小瓶を揺すっている
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW ベッドに腰かけたレミリアはゆるく掴んだ小瓶を揺すっている
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 傍らの小さなアンティークデスクには水の注がれたコップがひとつ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 傍らの小さなアンティークデスクには水の注がれたコップがひとつ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL この中身は粘度の高い薬液…有り体に言ってしまえば媚薬だ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW この中身は粘度の高い薬液…有り体に言ってしまえば媚薬だ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 水に溶かし薄めたものを秘部に塗りつけてやればやがてじりじりと奥底から湧き上がるような淫熱が起こり
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 水に溶かし薄めたものを秘部に塗りつけてやればやがてじりじりと奥底から湧き上がるような淫熱が起こり
+	ENDIF
+	PRINTFORMDL 鋭敏になった感覚がそこを弄りまわす快感をさらに高めてくれる
+	IF FLAG:AUTOMODE
+		PRINTFORMDL それでいて薬が切れれば後には引かず中毒性も低い逸品だ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW それでいて薬が切れれば後には引かず中毒性も低い逸品だ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あはぁ…ん…%UNICODE(0x2665)%　やば…早く…使わないと」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あはぁ…ん…%UNICODE(0x2665)%　やば…早く…使わないと」
+	ENDIF
+	PRINTFORMDL 甘い吐息をこぼし身体を震わせ膝を擦り合わせるレミリア
+	IF FLAG:AUTOMODE
+		PRINTFORMDL こんな薬を求めるのもひとえにこの発作のような発情のせいだ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW こんな薬を求めるのもひとえにこの発作のような発情のせいだ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 自我をも蝕まれかねない深く強い劣情は軽く自慰をした程度では全く治まってくれない
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 自我をも蝕まれかねない深く強い劣情は軽く自慰をした程度では全く治まってくれない
+	ENDIF
+	PRINTFORMDL 特に迷宮で淫らな肉粒に作り変えられたクリトリスの疼きはとても耐えきれるものではなく
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 定期的に陰核自慰で強烈な絶頂を得ることが普段の理性を保つためにも必要だった
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 定期的に陰核自慰で強烈な絶頂を得ることが普段の理性を保つためにも必要だった
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ふふ…%UNICODE(0x2665)%　ひと月ぶりだもの、コップ丸々一杯ぶんは使わないと収まらないわよね…%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ふふ…%UNICODE(0x2665)%　ひと月ぶりだもの、コップ丸々一杯ぶんは使わないと収まらないわよね…%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL しかし今の秘肉を湿らせ熱っぽい笑みを浮かべる彼女にはそんな悲壮感はない
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW しかし今の秘肉を湿らせ熱っぽい笑みを浮かべる彼女にはそんな悲壮感はない
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 既に大分淫熱に冒されてしまっているのだろう
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 既に大分淫熱に冒されてしまっているのだろう
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 衣服を全て脱ぎ去れば期待を隠しきれぬ淫核が包皮から顔を出しぷっくり膨れ上がっているのが露わになった
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 衣服を全て脱ぎ去れば期待を隠しきれぬ淫核が包皮から顔を出しぷっくり膨れ上がっているのが露わになった
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「それじゃあ早速%UNICODE(0x2665)%　よっ…と　……あ」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「それじゃあ早速%UNICODE(0x2665)%　よっ…と　……あ」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 置き場所が悪かったか蓋を開けたはずみでデスクのコップを倒してしまった
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 置き場所が悪かったか蓋を開けたはずみでデスクのコップを倒してしまった
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あちゃー…やっちゃったか」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あちゃー…やっちゃったか」
+	ENDIF
+	PRINTFORMDL 困ったことに今の分でちょうど水差しは空だ
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 服も脱いでしまったし使い道が使い道なだけに人を呼んで替わりを持って来させるのも気が引ける
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 服も脱いでしまったし使い道が使い道なだけに人を呼んで替わりを持って来させるのも気が引ける
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「仕方ない、自分で取ってくるか　……」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「仕方ない、自分で取ってくるか　……」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 蓋をしめなおそうとしてはたと止まる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 蓋をしめなおそうとしてはたと止まる
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL この薬を　直に使えば　どうなるか
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW この薬を　直に使えば　どうなるか
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「でもこれ薄めて使うやつだし…でも…ああ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「でもこれ薄めて使うやつだし…でも…ああ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 一度思ってしまうと発情した頭ではなかなか振り切ることができない
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 一度思ってしまうと発情した頭ではなかなか振り切ることができない
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「……一回だけ…ちょっと使うだけなら…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「……一回だけ…ちょっと使うだけなら…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL とうとう誘惑に負け劇薬をそのまま使うことを選んでしまう…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW とうとう誘惑に負け劇薬をそのまま使うことを選んでしまう…
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 　
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 　
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「こ、このくらいなら平気、薬自体はいつもの分より少ないもんね…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「こ、このくらいなら平気、薬自体はいつもの分より少ないもんね…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 用意した綿棒に薬液をたっぷりと纏わりつかせ瓶から取り出す
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 用意した綿棒に薬液をたっぷりと纏わりつかせ瓶から取り出す
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL あとはこの股座で震える肉真珠に塗りつけてやれば…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW あとはこの股座で震える肉真珠に塗りつけてやれば…
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「……　それじゃあ…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「……　それじゃあ…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 息を飲み、意を決して綿棒を陰核に擦りつけていく
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 息を飲み、意を決して綿棒を陰核に擦りつけていく
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「んっ%UNICODE(0x2665)%　はう…ん%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「んっ%UNICODE(0x2665)%　はう…ん%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「はああ…%UNICODE(0x2665)%　あ、くう%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「はああ…%UNICODE(0x2665)%　あ、くう%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ひゃううっ%UNICODE(0x2665)%%UNICODE(0x2665)%　うあ、芯、弾いちゃったあ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ひゃううっ%UNICODE(0x2665)%%UNICODE(0x2665)%　うあ、芯、弾いちゃったあ…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+	ENDIF
+	PRINTFORMDL 開発済みの淫豆は軽く傾く程度につつかれたり小さな摩擦が起きるだけで甘ったるい声を上げてしまう
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 薬効の出る前からこんなではいざ効果が現れてきたら一体どうなってしまうのか…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 薬効の出る前からこんなではいざ効果が現れてきたら一体どうなってしまうのか…
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ふふ、きっと…すごい気持ちいいわ…%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ふふ、きっと…すごい気持ちいいわ…%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 未知の快楽への好奇心と欲望がレミリアを突き進ませる…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 未知の快楽への好奇心と欲望がレミリアを突き進ませる…
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 　
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 　
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「と…とりあえずはこんなもんかな…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「と…とりあえずはこんなもんかな…」
+	ENDIF
+	PRINTFORMDL 一通り塗り終わるまでに綿棒の刺激だけで二、三度達してしまったがまあいいだろう
+	IF FLAG:AUTOMODE
+		PRINTFORMDL とりあえずベッドに横たわり、安静にする
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW とりあえずベッドに横たわり、安静にする
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL あとは薬が効いてくるのを待――
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW あとは薬が効いてくるのを待――
+	ENDIF
+	;振動、二回
+	CALL QUAKE(2)
+	IF FLAG:AUTOMODE
+		PRINTFORML 「き、ひっ！？　～～～～～～～%UNICODE(0x2665)%%UNICODE(0x2665)%！？」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「き、ひっ！？　～～～～～～～%UNICODE(0x2665)%%UNICODE(0x2665)%！？」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 一瞬股座が弾けたかと錯覚し跳ね起きる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 一瞬股座が弾けたかと錯覚し跳ね起きる
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あ…か…っ%UNICODE(0x2665)%　なにこれ思ってたのと全然違…ひいいんっ%UNICODE(0x2665)%！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あ…か…っ%UNICODE(0x2665)%　なにこれ思ってたのと全然違…ひいいんっ%UNICODE(0x2665)%！」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「熱、あ、うぅ…っ%UNICODE(0x2665)%　あついい…っ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「熱、あ、うぅ…っ%UNICODE(0x2665)%　あついい…っ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL いや、実際それは陰核を焼きつくすような快楽の爆発と言っていいだろう
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW いや、実際それは陰核を焼きつくすような快楽の爆発と言っていいだろう
+	ENDIF
+	PRINTFORMDL しかもその熱は引くこともなく想像以上の苛烈さで肉豆を炙ってくる
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 原液ままの媚薬は迷宮の淫獣の体液にも負けず劣らずの強烈な毒だった
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 原液ままの媚薬は迷宮の淫獣の体液にも負けず劣らずの強烈な毒だった
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「う゛あ゛あ…！　は、早く拭きとらないと…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「う゛あ゛あ…！　は、早く拭きとらないと…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 慌ててシーツを手繰り寄せ秘部へと押し当てる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 慌ててシーツを手繰り寄せ秘部へと押し当てる
+	ENDIF
+	;振動、二回
+	CALL QUAKE(2)
+	IF FLAG:AUTOMODE
+		PRINTFORML 「いぎいっ%UNICODE(0x2665)%%UNICODE(0x2665)%！？　ああぁ…%UNICODE(0x2665)%！？　な、え…%UNICODE(0x2665)%！？」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「いぎいっ%UNICODE(0x2665)%%UNICODE(0x2665)%！？　ああぁ…%UNICODE(0x2665)%！？　な、え…%UNICODE(0x2665)%！？」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL それだけで、先ほど以上の爆発が襲った
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW それだけで、先ほど以上の爆発が襲った
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 目を白黒させ、慌てて手を離しシーツを放り投げるレミリア
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 目を白黒させ、慌てて手を離しシーツを放り投げるレミリア
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 感度の上昇も普段使っている時の比ではないというのか
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 感度の上昇も普段使っている時の比ではないというのか
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 鋭敏過ぎて触れることができない
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 鋭敏過ぎて触れることができない
+	ENDIF
+	;/完全に⑨
+	IF FLAG:AUTOMODE
+		PRINTFORML 「え、や、嘘っ　ど、どうしよ…どうしよ…っ」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「え、や、嘘っ　ど、どうしよ…どうしよ…っ」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL ここにきてようやく自分の愚かしさに焦燥を覚える
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW ここにきてようやく自分の愚かしさに焦燥を覚える
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 洗い流そうにも水差しもコップも空にしてしまったばっかりだ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 洗い流そうにも水差しもコップも空にしてしまったばっかりだ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「これ、どうすれば…ひうっ%UNICODE(0x2665)%　あ、あ゛あ゛%UNICODE(0x2665)%%UNICODE(0x2665)%！？」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「これ、どうすれば…ひうっ%UNICODE(0x2665)%　あ、あ゛あ゛%UNICODE(0x2665)%%UNICODE(0x2665)%！？」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「やだあ、どんどん熱くなってきてるう%UNICODE(0x2665)%　こわ、こわれちゃうう%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「やだあ、どんどん熱くなってきてるう%UNICODE(0x2665)%　こわ、こわれちゃうう%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あついあついあついぃ%UNICODE(0x2665)%　やぐ…うううぅっ%UNICODE(0x2665)%%UNICODE(0x2665)%！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あついあついあついぃ%UNICODE(0x2665)%　やぐ…うううぅっ%UNICODE(0x2665)%%UNICODE(0x2665)%！」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL あまりの辛さに耐えかねて浮かせた腰を中空でカクカクと前後に揺すり少しでも熱を和らげようとする
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW あまりの辛さに耐えかねて浮かせた腰を中空でカクカクと前後に揺すり少しでも熱を和らげようとする
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ふー、ふーっ%UNICODE(0x2665)%　…う、あ…？　あああっ%UNICODE(0x2665)%　うそおっ！　これだけでえぇ%UNICODE(0x2665)%！？」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ふー、ふーっ%UNICODE(0x2665)%　…う、あ…？　あああっ%UNICODE(0x2665)%　うそおっ！　これだけでえぇ%UNICODE(0x2665)%！？」
+	ENDIF
+	PRINTFORMDL なりふり構わぬ無様な痴態だがそれでも煮え立つような疼きは全く中和できず
+	IF FLAG:AUTOMODE
+		PRINTFORMDL すぐにその揺れる空気ですら強烈な愛撫と化してしまう
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW すぐにその揺れる空気ですら強烈な愛撫と化してしまう
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ひやううううぅうぅ%UNICODE(0x2665)%　おかひく…おかしくなるうぅ%UNICODE(0x2665)%　ううあああ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ひやううううぅうぅ%UNICODE(0x2665)%　おかひく…おかしくなるうぅ%UNICODE(0x2665)%　ううあああ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL このまま薬が切れるまで待っていてはその前に気が狂う
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW このまま薬が切れるまで待っていてはその前に気が狂う
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「でも…でもおっ%UNICODE(0x2665)%！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「でも…でもおっ%UNICODE(0x2665)%！」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL だからといってこの過剰に敏感になった淫部に触れてしまったらそれこそどうなってしまうかわからない
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW だからといってこの過剰に敏感になった淫部に触れてしまったらそれこそどうなってしまうかわからない
+	ENDIF
+	PRINTFORMDL そうこうしている間にも赤々と痛々しい程に腫れあがった肉芽はまるで脈動するように大きく痙攣し
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 劣情と疼きの熱湯は止まることなく注がれていく
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 劣情と疼きの熱湯は止まることなく注がれていく
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「うぐ、うう%UNICODE(0x2665)%　うー…うううぅーっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「うぐ、うう%UNICODE(0x2665)%　うー…うううぅーっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「もうお豆いじるっ！　もうどうなってもいいから！　おなにー、するのおっ！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「もうお豆いじるっ！　もうどうなってもいいから！　おなにー、するのおっ！」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL ついに理性と我慢の限界を迎えレミリアはクリトリスへと手を伸ばす
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW ついに理性と我慢の限界を迎えレミリアはクリトリスへと手を伸ばす
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「くう%UNICODE(0x2665)%！　ふー…う…んんっ！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「くう%UNICODE(0x2665)%！　ふー…う…んんっ！」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL その感度はもはや触れるだけで腰を引きたくなるほどに敏感になっていた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW その感度はもはや触れるだけで腰を引きたくなるほどに敏感になっていた
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 一瞬躊躇するものの息を飲み、指先に力を込めた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 一瞬躊躇するものの息を飲み、指先に力を込めた
+	ENDIF
+	;振動、一回
+	CALL QUAKE(1)
+	IF FLAG:AUTOMODE
+		PRINTFORML 「いっ、ぎいいぃいぃいいぃい%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%！！！！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「いっ、ぎいいぃいぃいいぃい%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%%UNICODE(0x2665)%！！！！」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL そんな文字通りの腫れものを一気に捻り上げれば当然その衝撃も凄まじい
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW そんな文字通りの腫れものを一気に捻り上げれば当然その衝撃も凄まじい
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL それでも一度触れてしまった以上もう止めるわけにはいかない、止めることができない
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW それでも一度触れてしまった以上もう止めるわけにはいかない、止めることができない
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ぎゃううっ%UNICODE(0x2665)%！！　うぐああー…%UNICODE(0x2665)%　す、ごおお…おおっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ぎゃううっ%UNICODE(0x2665)%！！　うぐああー…%UNICODE(0x2665)%　す、ごおお…おおっ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 押し潰し、捏ねまわしては扱きあげ、掌で撫でまわし指先で爪弾く…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 押し潰し、捏ねまわしては扱きあげ、掌で撫でまわし指先で爪弾く…
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 脚をを大きく広げ両手全てを使って敏感すぎる陰核を勢いに任せ乱暴に虐め抜く
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 脚をを大きく広げ両手全てを使って敏感すぎる陰核を勢いに任せ乱暴に虐め抜く
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「いいあ゛ぁっ%UNICODE(0x2665)%！　いっかいするだけでなんどもきへるぅ%UNICODE(0x2665)%　ひいいぃん%UNICODE(0x2665)%！！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「いいあ゛ぁっ%UNICODE(0x2665)%！　いっかいするだけでなんどもきへるぅ%UNICODE(0x2665)%　ひいいぃん%UNICODE(0x2665)%！！」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「お゛おあ゛ああ゛ぁ%UNICODE(0x2665)%%UNICODE(0x2665)%　お゛お゛、うわあ゛あぁあ゛ー%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「お゛おあ゛ああ゛ぁ%UNICODE(0x2665)%%UNICODE(0x2665)%　お゛お゛、うわあ゛あぁあ゛ー%UNICODE(0x2665)%%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あひゃまんなかぱちぱちすゆうぅ%UNICODE(0x2665)%　はへえ゛え…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あひゃまんなかぱちぱちすゆうぅ%UNICODE(0x2665)%　はへえ゛え…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 目の前で何度も桃色の閃光が弾けそのたびに膣奥が収縮する
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 目の前で何度も桃色の閃光が弾けそのたびに膣奥が収縮する
+	ENDIF
+	PRINTFORMDL 凄まじい勢いで積み重なっていく絶頂に思考をやられ
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 溢れる唾液も拭うことができず顎をのけ反らせ舌を突き出すその様は正に色狂いの形相だった
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 溢れる唾液も拭うことができず顎をのけ反らせ舌を突き出すその様は正に色狂いの形相だった
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ああがっ%UNICODE(0x2665)%　また…っ%UNICODE(0x2665)%　あつくなっへえぇ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ああがっ%UNICODE(0x2665)%　また…っ%UNICODE(0x2665)%　あつくなっへえぇ%UNICODE(0x2665)%%UNICODE(0x2665)%」
+	ENDIF
+	PRINTFORMDL 股座もその表情に違わぬ状態で
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 膣口からは決壊したように愛液と本気汁が流れ出し潮も派手に噴いている
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 膣口からは決壊したように愛液と本気汁が流れ出し潮も派手に噴いている
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL しかも感度の上昇と疼きの蓄積はまだ続いている
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW しかも感度の上昇と疼きの蓄積はまだ続いている
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「おあっ…ぐ%UNICODE(0x2665)%　まだすごくなるうぅ…%UNICODE(0x2665)%　へお゛%UNICODE(0x2665)%　とまりゃないい…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「おあっ…ぐ%UNICODE(0x2665)%　まだすごくなるうぅ…%UNICODE(0x2665)%　へお゛%UNICODE(0x2665)%　とまりゃないい…%UNICODE(0x2665)%%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「まやきひゃうぅう…はぎゅうう%UNICODE(0x2665)%！　えああっ%UNICODE(0x2665)%　へひー…いいぃ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「まやきひゃうぅう…はぎゅうう%UNICODE(0x2665)%！　えああっ%UNICODE(0x2665)%　へひー…いいぃ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL このままでは本当に自分が壊れてしまう
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW このままでは本当に自分が壊れてしまう
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL そんな思考をする余裕も理性も今のレミリアには残っていなかった…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW そんな思考をする余裕も理性も今のレミリアには残っていなかった…
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 　
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 　
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 　
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 　
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「はー…はー……ん、ふあ……%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「はー…はー……ん、ふあ……%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL どのくらい経っただろうか
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW どのくらい経っただろうか
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL ようやく薬も抜け陰核の熱も引いてきた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW ようやく薬も抜け陰核の熱も引いてきた
+	ENDIF
+	PRINTFORMDL しかし数え切れない絶頂を重ねた身体は気だるく、
+	IF FLAG:AUTOMODE
+		PRINTFORMDL レミリアはいまだ溢れ出てくる愛液を拭い去ることもできず蕩け呆けた顔のまま肩で息をしていた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW レミリアはいまだ溢れ出てくる愛液を拭い去ることもできず蕩け呆けた顔のまま肩で息をしていた
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「はあぁ……は……ふふ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「はあぁ……は……ふふ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「すごかったあ…%UNICODE(0x2665)%　あんなの知っちゃったらもう絶対普通のじゃ満足できなくなっちゃう」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「すごかったあ…%UNICODE(0x2665)%　あんなの知っちゃったらもう絶対普通のじゃ満足できなくなっちゃう」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL あれほど焦燥していたのが嘘のような言葉が放たれる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW あれほど焦燥していたのが嘘のような言葉が放たれる
+	ENDIF
+	PRINTFORMDL たった一度であの強烈すぎる法悦の虜になってしまったのだろう
+	IF FLAG:AUTOMODE
+		PRINTFORMDL それほどにレミリアの身体はあの迷宮で淫蕩なものに変えらていた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW それほどにレミリアの身体はあの迷宮で淫蕩なものに変えらていた
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ん……っと」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ん……っと」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL ひと心地つき、上気した体を起こす
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW ひと心地つき、上気した体を起こす
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「体拭いて、服着て……お風呂も入りたいな、っていうか色々片づけないと」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「体拭いて、服着て……お風呂も入りたいな、っていうか色々片づけないと」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ああでも面倒くさい。　もうこのまま寝ちゃう…のは流石にダメね…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ああでも面倒くさい。　もうこのまま寝ちゃう…のは流石にダメね…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「さてどうしたもんか……な」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「さてどうしたもんか……な」
+	ENDIF
+	PRINTFORMDL 次に何をするか思案しているとふと視界に入ったのはあの小瓶
+	IF FLAG:AUTOMODE
+		PRINTFORMDL その中にはまだたっぷりと薬液を湛えている
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW その中にはまだたっぷりと薬液を湛えている
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「…………」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「…………」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「もうちょっとだけ…しようかな%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「もうちょっとだけ…しようかな%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL その目には再び情欲の炎が灯っていた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW その目には再び情欲の炎が灯っていた
+	ENDIF
+	PRINTFORMDL レミリアはもう一度あの快楽に浸ろうと小瓶と綿棒を手に取る
+	IF FLAG:AUTOMODE
+		PRINTFORML 「大体どんな感じかは分かったんだし…今度は慌てずちゃんと愉しめるはず…よね%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「大体どんな感じかは分かったんだし…今度は慌てずちゃんと愉しめるはず…よね%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 軽く胡坐をかき右手に綿棒を摘み小瓶を掴んだ左手で器用に蓋を捻り…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 軽く胡坐をかき右手に綿棒を摘み小瓶を掴んだ左手で器用に蓋を捻り…
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あ」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あ」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 激しい自慰の余韻で覚束ない手つき、それも片手でやろうとしたせいだろう
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 激しい自慰の余韻で覚束ない手つき、それも片手でやろうとしたせいだろう
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 蓋を開いた瞬間手を滑らせ小瓶を落としてしまった
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 蓋を開いた瞬間手を滑らせ小瓶を落としてしまった
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「あ――？」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「あ――？」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL ひどくスローモーションに見えた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW ひどくスローモーションに見えた
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 手を離れた小瓶は中空で傾きながらその口を震え勃起したクリトリスに向かって――
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 手を離れた小瓶は中空で傾きながらその口を震え勃起したクリトリスに向かって――
+	ENDIF
+	PRINTFORML 　
+	PRINTFORML 　
+	IF FLAG:AUTOMODE
+		PRINTFORMDL －－－－－－－－－－－－－－－－部位後日譚 C　　魔法の小瓶
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW －－－－－－－－－－－－－－－－部位後日譚 C　　魔法の小瓶
+	ENDIF
+;V
+CASE 104
+	IF FLAG:AUTOMODE
+		PRINTFORML 「…あった」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「…あった」
+	ENDIF
+	PRINTFORMDL 図書館の一角、奥深く入り組んだ本棚の陰
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 図書館の主もその使い魔も滅多に訪れないようなその場所でレミリアは目的の書物を発見した
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 図書館の主もその使い魔も滅多に訪れないようなその場所でレミリアは目的の書物を発見した
+	ENDIF
+	PRINTFORML 「よっ、えーと…」
+	PRINTFORMDL 早鐘を鳴らす心臓をそのままにそれを取り出し、ページをめくる
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ああ…　すごいのがいっぱいある」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ああ…　すごいのがいっぱいある」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「これなんて…ふああ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「これなんて…ふああ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 開くごとに表れる求めていた表現の数々に熱っぽい呟きが漏れる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 開くごとに表れる求めていた表現の数々に熱っぽい呟きが漏れる
+	ENDIF
+	PRINTFORMDL レミリアが探し出したそれは淫魔や淫虫を呼び出し使役するための魔術書、それも初歩の初歩に類する物
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 女を効率良く籠絡する、政敵を陥れる、ただ相手がおぞましい快楽にむせび泣く様を眺める…
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 女を効率良く籠絡する、政敵を陥れる、ただ相手がおぞましい快楽にむせび泣く様を眺める…
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL そういった魔術の深遠には興味がない、ただの一手段として欲する者のための書だ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW そういった魔術の深遠には興味がない、ただの一手段として欲する者のための書だ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「これにしよ…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「これにしよ…」
+	ENDIF
+	PRINTFORML 「本はこのあたりに置いて…えっと… ------------------！」
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 呼び出す物を決めたレミリアは魔術書を床に広げると稚拙ながらも結界を張り人除けと音と気配の遮断を行う
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 呼び出す物を決めたレミリアは魔術書を床に広げると稚拙ながらも結界を張り人除けと音と気配の遮断を行う
+	ENDIF
+	PRINTFORMDL この程度の結界ではむしろ異変を察知されかねないが…
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 淫欲に茹だった頭にはそこまで考えが回らなかった
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 淫欲に茹だった頭にはそこまで考えが回らなかった
+	ENDIF
+	PRINTFORML 「よし、次は…」
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 床に置いた書のすぐ上に今度は拘束の魔法陣を用意する
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 床に置いた書のすぐ上に今度は拘束の魔法陣を用意する
+	ENDIF
+	PRINTFORMDL 呼び出したモノが逃げ出さない様にするためだ
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 例えば…あまりの快楽に自分が失神したときにでも大丈夫なように
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 例えば…あまりの快楽に自分が失神したときにでも大丈夫なように
+	ENDIF
+	PRINTFORML 「これで、よし」
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 準備は整った。　召喚の式は書物に記されてるものがそのまま使える
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 準備は整った。　召喚の式は書物に記されてるものがそのまま使える
+	ENDIF
+	PRINTFORML 「すーっ……はーっ……」
+	PRINTFORMDL 一度、深呼吸をして無理やりにでも落ち着く
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 魔術書から少しだけ距離を取り、一呼吸おいて、手を伸ばし
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 魔術書から少しだけ距離を取り、一呼吸おいて、手を伸ばし
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「-------------------！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「-------------------！」
+	ENDIF
+	;振動、二回
+	CALL QUAKE(2)
+	PRINTFORML 「んっ、くう！」
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 詠唱を終えた次の瞬間魔術書から軽い衝撃波とともに十本程の触手が溢れるように出現した！
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 詠唱を終えた次の瞬間魔術書から軽い衝撃波とともに十本程の触手が溢れるように出現した！
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 魔術書から生えるように伸びているそれらはぬらつく身体を揺らめかせ蠢いている
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 魔術書から生えるように伸びているそれらはぬらつく身体を揺らめかせ蠢いている
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ああぁ…おっきい…%UNICODE(0x2665)%　それにすごい臭い…%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ああぁ…おっきい…%UNICODE(0x2665)%　それにすごい臭い…%UNICODE(0x2665)%」
+	ENDIF
+	PRINTFORMDL レミリアの腕くらいに太いその先端は亀頭のような形状になっており鈴口からは濃い粘液を垂らしている
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 拘束の魔法陣に引っかかり一部しか召喚されていないがそれでも辺りを覆う淫臭は凄まじい
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 拘束の魔法陣に引っかかり一部しか召喚されていないがそれでも辺りを覆う淫臭は凄まじい
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「思ってたよりずっとすごい…%UNICODE(0x2665)%　これなら…きっと…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「思ってたよりずっとすごい…%UNICODE(0x2665)%　これなら…きっと…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 間違いなく満たしてくれる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 間違いなく満たしてくれる
+	ENDIF
+	PRINTFORMDL あの迷宮で開発しつくされ、迷宮から脱した後も消えてくれなかった渇きを
+	IF FLAG:AUTOMODE
+		PRINTFORMDL もはや自慰では決して満足できない、この飢えた肉壺を
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW もはや自慰では決して満足できない、この飢えた肉壺を
+	ENDIF
+	PRINTFORML 「下着は…脱がないとね　…ん」
+	IF FLAG:AUTOMODE
+		PRINTFORMDL スカートに手を入れ、逸る気分を抑え下着をわざとゆっくりと下ろしていく
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW スカートに手を入れ、逸る気分を抑え下着をわざとゆっくりと下ろしていく
+	ENDIF
+	PRINTFORML 「っと…　あはは、べちゃべちゃじゃない」
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 脱ぎ去った下着は湯気が立ち上りそうなほど熱い蜜に濡れそぼっていた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 脱ぎ去った下着は湯気が立ち上りそうなほど熱い蜜に濡れそぼっていた
+	ENDIF
+	PRINTFORML 「こんなに濡らして…どれだけ期待してたのよ」
+	IF FLAG:AUTOMODE
+		PRINTFORMDL まるで他人ごとのように嗤いながらそれを脇へ放り投げ歩みを進める
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW まるで他人ごとのように嗤いながらそれを脇へ放り投げ歩みを進める
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL そして触手の揺らめく魔術書の上で跨ぐように立ち止まり大きく足を広げた
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW そして触手の揺らめく魔術書の上で跨ぐように立ち止まり大きく足を広げた
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「さあ…お望みのものよ…♪」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「さあ…お望みのものよ…♪」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 女の、それも発情し濡れそぼった牝の匂いが漂ってきて触手の動きは俄かに激しくなる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 女の、それも発情し濡れそぼった牝の匂いが漂ってきて触手の動きは俄かに激しくなる
+	ENDIF
+	PRINTFORMDL しかし拘束の陣で押しとどめられ高さが足りず、彼女の秘所に触れることは叶わない
+	IF FLAG:AUTOMODE
+		PRINTFORMDL それでも淫触手は目の前の秘花に貪りつこうと身を捩らせ伸び上がり内腿に纏わりつき粘液を塗りたくる
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW それでも淫触手は目の前の秘花に貪りつこうと身を捩らせ伸び上がり内腿に纏わりつき粘液を塗りたくる
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ふふっ♪　あは、あはは、はは…あ、は…っ♪」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ふふっ♪　あは、あはは、はは…あ、は…っ♪」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL スカートの裾を持ち上げてその様子を覗き見ながらレミリアは笑う
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW スカートの裾を持ち上げてその様子を覗き見ながらレミリアは笑う
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 嗤っているのは拘束されていることを理解できず本能のまま間抜けに蠢く触手か
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 嗤っているのは拘束されていることを理解できず本能のまま間抜けに蠢く触手か
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL そんなものにこうして自ら身体を捧げようとしている自分か
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW そんなものにこうして自ら身体を捧げようとしている自分か
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「はあっ…あ、ふ…ふふふっ%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「はあっ…あ、ふ…ふふふっ%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL そんなことは、どうでもいい
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW そんなことは、どうでもいい
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL いま、きもちよければ、それで
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW いま、きもちよければ、それで
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「だから、いいの、よ……%UNICODE(0x2665)%」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「だから、いいの、よ……%UNICODE(0x2665)%」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 誰にともなく呟きながら
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 誰にともなく呟きながら
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL レミリアは
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW レミリアは
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 　　　　　ゆっくりと
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 　　　　　ゆっくりと
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 　　　　　　　　　　膝を曲げ
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 　　　　　　　　　　膝を曲げ
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORMDL 　　　　　　　　　　　　　　しゃがみ込んだ……
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW 　　　　　　　　　　　　　　しゃがみ込んだ……
+	ENDIF
+	PRINTFORML 　
+	PRINTFORML 　
+	IF FLAG:AUTOMODE
+		PRINTFORMDL －－－－－－－－－－－－－－－－部位後日譚 V　　書淫
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMDW －－－－－－－－－－－－－－－－部位後日譚 V　　書淫
+	ENDIF
+ENDSELECT
+	PRINTFORML 　
+
+;予定は未定リスト
+;	いない人がいるED…紅魔関係者のなかから2人以上が行方不明に　これも判定作るの面倒だなあ…
+;	子沢山ED…PTMが全て自分の娘。レズ中毒1以上。孫以降で分岐は流石にめんどい
+;	ちんこ中毒ED…レズ中毒2以上でふたなりが素質になっており、れいぽぅを3回以上した状態でクリア　れいぽぅ以外で判定した方がいいかも
+;	魔法少女ED…服装が魔法少女。淫乱かどうかでさらに分岐もいいなあ

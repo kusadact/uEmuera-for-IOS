@@ -1,0 +1,184 @@
+﻿@PANTSU_NUGASHI(ARG:0, ARGS:0, ARG:1, ARG:2)
+;いつもの服＝ズボン系かどうかのチェック
+;つまりもこたんとリグル、リリカ
+
+IF NO:(ARG:0) == 24 || NO:(ARG:0) == 31 || NO:(ARG:0) == 16
+LOCAL:2 = 1
+ELSE
+ENDIF
+
+;今はいてるのがズボンかどうかのチェック
+IF CFLAG:(ARG:0):501 == 2 || CFLAG:(ARG:0):501 == 4 || CFLAG:(ARG:0):501 == 7 || CFLAG:(ARG:0):501 == 10 || CFLAG:(ARG:0):501 == 16 || CFLAG:(ARG:0):501 == 100 || ( CFLAG:(ARG:0):501 == 1 && LOCAL:2 == 1)
+LOCAL:3 = 1
+ELSE
+ENDIF
+
+;そもそも脱げるかの判定
+CALL CLOTH_TYPE_EFFECT_2(NO:(ARG:0))
+SIF ( RESULT:0 == 1 && RESULT:1 == 1 ) || ( CFLAG:(ARG:0):501 == 8 || CFLAG:(ARG:0):501 == 15 || CFLAG:(ARG:0):501 == 6 || CFLAG:(ARG:0):501 == 23)
+LOCAL:4 = 1
+
+;発動前のCP保存
+LOCAL:5 = BASE:(ARG:0):3
+
+;はいてなかったり服なかったら除外
+IF CFLAG:(ARG:0):44 == 1 || BASE:(ARG:0):3 <= 0
+ELSE
+	LOCAL:1 = RAND:10
+	IF LOCAL:1 <= 4 && LOCAL:4 <= 0
+	PRINTFORML 總算獲得了自由的%ARGS:0%、察覚到了好像被風直接吹過了肌膚。
+		IF LOCAL:3
+		;ズボン系
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%往下半身一看、衣服被脱掉了！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%往下半身一看、衣服被脱掉了！
+ENDIF
+
+		BASE:(ARG:0):3 = LOCAL:5 / 2
+		ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 戦戦兢兢的%ARGS:0%隔着衣服触摸着下半身、沒摸到内裤……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  戦戦兢兢的%ARGS:0%隔着衣服触摸着下半身、沒摸到内裤……
+ENDIF
+
+		BASE:(ARG:0):3 = LOCAL:5 * 3 / 4
+		ENDIF
+		
+		;丸呑みかどうか
+		IF ARG:2
+			SELECTCASE DA:(CFLAG:(ARG:0):20):0
+				CASE 13, 14, 27, 28, 35, 55, 84
+					PRINTFORM 仔細一看、%SAVESTR:(CFLAG:(ARG:0):20)%的体内出現了
+					IF LOCAL:3
+						PRINTFORM 直到剛才%ARGS:0%還穿着的東西
+					ELSE
+						PRINTFORM %ARGS:0%的内裤
+					ENDIF
+IF FLAG:AUTOMODE
+    PRINTFORML ……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ……
+ENDIF
+
+				CASE 82, 89, 90
+					PRINTFORM 仔細一看、%SAVESTR:(CFLAG:(ARG:0):20)%的舌頭上纏着
+						IF LOCAL:3
+							PRINTFORM 直到剛才%ARGS:0%還穿着的東西
+						ELSE
+							PRINTFORM %ARGS:0%的内裤
+						ENDIF
+IF FLAG:AUTOMODE
+    PRINTFORML ……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ……
+ENDIF
+
+				CASE 62, 77
+					PRINTFORM 仔細一看、%SAVESTR:(CFLAG:(ARG:0):20)%的触手上纏着
+						IF LOCAL:3
+							PRINTFORM 直到剛才%ARGS:0%還穿着的東西
+						ELSE
+							PRINTFORM %ARGS:0%的内裤
+						ENDIF
+IF FLAG:AUTOMODE
+    PRINTFORML ……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ……
+ENDIF
+
+				CASEELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 看来、被留在了%SAVESTR:(CFLAG:(ARG:0):20)%的体内……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  看来、被留在了%SAVESTR:(CFLAG:(ARG:0):20)%的体内……
+ENDIF
+
+			ENDSELECT
+		ELSE
+			SELECTCASE DA:(CFLAG:(ARG:0):20):0
+				CASE 9, 10, 29
+					PRINTFORM 仔細一看、%SAVESTR:(CFLAG:(ARG:0):20)%的吸盤上吸附着
+					IF LOCAL:3
+						PRINTFORM 仔細一看%ARGS:0%還穿着的東西
+					ELSE
+						PRINTFORM %ARGS:0%的内裤
+					ENDIF
+IF FLAG:AUTOMODE
+    PRINTFORML ……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ……
+ENDIF
+
+				CASE 45, 46
+					PRINTFORM 仔細一看、%SAVESTR:(CFLAG:(ARG:0):20)%製作的巣穴混雜着
+					IF LOCAL:3
+						PRINTFORM 直到剛才%ARGS:0%還穿着的東西
+					ELSE
+						PRINTFORM %ARGS:0%的内裤
+					ENDIF
+IF FLAG:AUTOMODE
+    PRINTFORML ……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ……
+ENDIF
+
+				CASE 47, 52, 57
+					PRINTFORM 仔細一看、%SAVESTR:(CFLAG:(ARG:0):20)%正咀嚼着
+					IF LOCAL:3
+						PRINTFORM 直到剛才%ARGS:0%還穿着的東西
+					ELSE
+						PRINTFORM %ARGS:0%的内裤
+					ENDIF
+IF FLAG:AUTOMODE
+    PRINTFORML ……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ……
+ENDIF
+
+				CASE 59, 60
+					PRINTFORM 仔細一看、%SAVESTR:(CFLAG:(ARG:0):20)%的牙上穿着
+					IF LOCAL:3
+						PRINTFORM 直到剛才%ARGS:0%還穿着的東西
+					ELSE
+						PRINTFORM %ARGS:0%的内裤
+					ENDIF
+IF FLAG:AUTOMODE
+    PRINTFORML ……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ……
+ENDIF
+
+				CASEELSE
+					PRINTFORM 仔細一看、%SAVESTR:(CFLAG:(ARG:0):20)%
+					SIF CFLAG:(ARG:0):44 >= 2
+					PRINT 炫耀般地
+					PRINT 揮舞着沾満汚垢的
+						IF LOCAL:3
+							PRINTFORM 直到剛才%ARGS:0%還穿着的東西
+						ELSE
+							PRINTFORM %ARGS:0%的内裤
+						ENDIF
+IF FLAG:AUTOMODE
+    PRINTFORML ……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ……
+ENDIF
+
+				ENDSELECT
+		ENDIF
+	CFLAG:(ARG:0):44 = 1
+	ENDIF
+ENDIF

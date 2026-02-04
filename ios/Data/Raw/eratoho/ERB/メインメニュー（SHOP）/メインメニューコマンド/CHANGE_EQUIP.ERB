@@ -1,0 +1,540 @@
+﻿;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;キャラの装備変更
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@CHANGE_EQUIP
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+;PTメンバID格納用
+;ループ処理を容易にするために使用
+
+#DIM MODE
+;処理モード
+;0変更対象未選択状態
+;1装備変更中
+
+#DIM TABN
+;タブ位置
+;0アクセサリ
+;1非消耗武器
+;2消耗武器
+
+#DIM LINEDEL
+;行削除判定
+
+#DIM ITEMID,2
+#DIM 有効,30
+
+#DIM 入力
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+MODE = 0
+TABN = 0
+LINEDEL = 0
+
+WHILE 1
+;＝＝＝描画処理ここから＝＝＝
+REDRAW 2
+
+
+;全体描画ループ2回目以降で1ループ分を行削除
+;装備変更時はPTメンバの装備一覧のみを残して行削除
+IF LINEDEL == 1
+	CLEARLINE 47
+ELSEIF LINEDEL == 2
+	CLEARLINE 36
+ENDIF
+
+
+DRAWLINEFORM =
+
+;---PTメンバの装備状態一覧（10行）---
+;ボタン割り当て1-9
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		;---キャラ名---
+		PRINTFORM %"【"+CALLNAME:(PTID:(LCOUNT))+"】", 15, LEFT% 
+		
+		;---戦闘素質と速度---
+		PRINT （
+		PRINTFORM 戦闘{ABL:(PTID:(LCOUNT)):98}
+		CALL GET_EQUIP_BONUS(PTID:(LCOUNT), 0)
+		IF RESULT
+			PRINTFORM (+{RESULT})
+		ENDIF
+		PRINT  / 
+		PRINTFORM 速度{ABL:(PTID:(LCOUNT)):97}
+		CALL GET_EQUIP_BONUS(PTID:(LCOUNT), 1)
+		IF RESULT
+			PRINTFORM (+{RESULT})
+		ENDIF
+		PRINT ）
+		PRINTL
+		
+		;---装備們---
+		FOR LCOUNT:1, 0, 2
+			
+			IF ((LCOUNT*3) + 1 + LCOUNT:1) == MODE
+				SETCOLOR 0xFFFF70
+			ELSE
+				RESETCOLOR
+			ENDIF
+			
+			PRINTFORM [{(LCOUNT*3) + 1 + LCOUNT:1}] %ITEMNAME:(CFLAG:(PTID:(LCOUNT)):(7+LCOUNT:1)), 20, LEFT% 
+			CALL ITEM_EXPLAIN(PTID:(LCOUNT), LCOUNT:1)
+			PRINTL
+			
+			RESETCOLOR
+			
+		NEXT
+		
+		
+	ELSE
+		PRINTL
+		PRINTL
+		PRINTL
+		
+	ENDIF
+	
+NEXT
+PRINTL
+
+
+
+
+;---所持アイテム一覧（？行）---
+
+IF MODE <= 0
+	SETCOLOR 0x333333
+ENDIF
+
+;---タブ（３行）---
+;ボタン割り当て10-19
+
+;タブ上部
+PRINTFORM 　
+PRINTFORM ┌
+FOR LCOUNT, 0, 3
+	PRINTFORM ───────
+	IF LCOUNT < TABN
+		PRINTFORM ┌
+	ELSE
+		PRINTFORM ┐
+	ENDIF
+NEXT
+PRINTL
+
+
+;タブ中部
+PRINTFORM 　
+PRINTFORM │
+FOR LCOUNT, 0, 3
+	IF MODE > 0
+		SETCOLOR LCOUNT == TABN ? 0xFFFF70 # 0x00FF00
+	ENDIF
+	SELECTCASE LCOUNT
+	CASE 0
+		IF MODE > 0
+			PRINTBUTTON "[10]  装飾品  ",10
+		ELSE
+			PRINT [--]  装飾品
+		ENDIF
+	CASE 1
+		IF MODE > 0
+			PRINTBUTTON "[11]非消耗武器",11
+		ELSE
+			PRINT [--]非消耗武器
+		ENDIF
+	CASE 2
+		IF MODE > 0
+			PRINTBUTTON "[12] 消耗武器 ",12
+		ELSE
+			PRINT [--] 消耗武器 
+		ENDIF
+	ENDSELECT
+	IF MODE > 0
+		RESETCOLOR
+	ENDIF
+	PRINTFORM │
+NEXT
+PRINTL
+
+
+;タブ下部
+PRINTFORM ─
+PRINTFORM \@TABN == 0?┘#┴\@
+FOR LCOUNT, 0, 3
+	PRINTFORM \@LCOUNT == TABN?　　　　　　　#───────\@
+	IF LCOUNT == TABN
+		PRINTFORM └
+	ELSEIF LCOUNT + 1 == TABN
+		PRINTFORM ┘
+	ELSE
+		PRINTFORM ┴
+	ENDIF
+	
+NEXT
+PRINTL ────────────────────────
+
+;---リスト（30行）---
+;ボタン割り当て100-
+
+SELECTCASE TABN
+CASE 0
+;アクセサリ（20-49）
+	ITEMID = 20
+	ITEMID:1 = 49
+	
+CASE 1
+;非消耗武器
+	ITEMID = 10
+	ITEMID:1 = 19
+	
+CASE 2
+;消耗武器
+	ITEMID = 1
+	ITEMID:1 = 9
+
+ENDSELECT
+
+
+
+VARSET 有効
+FOR LCOUNT, 0, 30
+
+	;表示範囲外なら何もしない
+	IF LCOUNT >= ITEMID:1 + 1 - ITEMID
+		PRINTL
+		CONTINUE
+	ENDIF
+	
+	;そのアイテムを持ってるかどうか
+	IF ITEM:(LCOUNT + ITEMID)
+	
+		IF MODE > 0
+			有効:(LCOUNT) = 1
+		ENDIF
+		
+		;0番のキャラを利用して表示を行う
+		CFLAG:0:7 = LCOUNT + ITEMID
+		SIF ITEMID >= 1 && ITEMID <= 9
+			CFLAG:0:17 = ITEM:GET_BULLET_ITEMID(LCOUNT + ITEMID)
+		
+		;ボタン
+		IF MODE > 0
+			PRINTFORM [{LCOUNT + 100}] 
+		ELSE
+			PRINTFORM [---] 
+		ENDIF
+		PRINTFORM %ITEMNAME:(LCOUNT + ITEMID), 20, LEFT% {ITEM:(LCOUNT + ITEMID)}個 
+		CALL ITEM_EXPLAIN(0, 0)
+		
+		PRINTL  
+	ELSE
+		IF MODE > 0
+			SETCOLOR 0x333333
+		ENDIF
+		PRINTPLAINFORM [---] －－－
+		PRINTFORML 
+		IF MODE > 0
+			RESETCOLOR
+		ENDIF
+		
+	ENDIF
+NEXT
+RESETCOLOR
+
+
+PRINTFORML [0]返回
+DRAWLINE
+;---案内---
+IF MODE == 0
+	;未選択状態
+	REUSELASTLINE 請選択要換装備的装備欄。
+ELSE
+	LOCAL:1 = (MODE - 1) / 3
+	LOCAL:2 = (MODE - 1) % 3
+	IF CHANGE_EQUIP_GET_ITEM(PTID:(LOCAL:1), LOCAL:2)
+		REUSELASTLINE 変更装備請直接從一覧中選択要変更的道具、解除装備請直接点撃選択中的装備欄
+	ELSE
+		REUSELASTLINE 請從上面的装備道具一覧中選択要装備的道具。
+	ENDIF
+ENDIF
+
+;＝＝＝入力処理ここから＝＝＝
+REDRAW 1
+
+INPUT
+入力 = RESULT
+
+LINEDEL = 1
+;---戻る---
+IF 入力 == 0
+	BREAK
+
+;---装備位置---
+ELSEIF 入力 >= 1 && 入力 <= 9
+
+	IF MODE == 入力
+		LOCAL:1 = (MODE - 1) / 3
+		LOCAL:2 = (MODE - 1) % 3
+		
+		IF CHANGE_EQUIP_GET_ITEM(PTID:(LOCAL:1), LOCAL:2)
+			;装備解除
+			;魔法杖を外して変身がとける時は行削除しない
+			IF CFLAG:(PTID:(LOCAL:1)):(LOCAL:2 + 7) == 13 && CFLAG:(PTID:(LOCAL:1)):501 == 102
+				LINEDEL = 0
+			;装備無しスロットへの装備外し処理は行削除
+			ELSEIF CFLAG:(PTID:(LOCAL:1)):(LOCAL:2 + 7) != 0
+				LINEDEL = 2
+			ENDIF
+			
+			CALL UNSET_ITEM(PTID:(LOCAL:1), LOCAL:2)
+		ENDIF
+		;MODE = 0
+	ELSE
+		MODE = 入力
+		;TABN = 0
+	ENDIF
+
+;---タブ---
+ELSEIF 入力 == 10 && MODE > 0
+	TABN = 0
+ELSEIF 入力 == 11 && MODE > 0
+	TABN = 1
+ELSEIF 入力 == 12 && MODE > 0
+	TABN = 2
+
+;---アイテム---
+ELSEIF 入力 >= 100 && 入力 <= 129 && ITEM:(入力-100+ITEMID) && MODE > 0
+	
+	LOCAL = 入力 - 100 + ITEMID
+	LOCAL:1 = (MODE - 1) / 3
+	LOCAL:2 = (MODE - 1) % 3
+	
+	;魔法杖の装備時と、外して変身がとける時は行削除しない
+	IF LOCAL == 13 || (CFLAG:(PTID:(LOCAL:1)):(LOCAL:2 + 7) == 13 && CFLAG:(PTID:(LOCAL:1)):501 == 102)
+		LINEDEL = 0
+	;同じものを装備した場合、消耗武器かつ残弾補充時以外は行削除する
+	ELSEIF CFLAG:(PTID:(LOCAL:1)):(LOCAL:2 + 7) == LOCAL
+		LOCAL:9 = GET_MAX_BULLET(LOCAL)
+		SIF CFLAG:(PTID:(LOCAL:1)):(LOCAL:2 + 17) != LOCAL:9
+			LINEDEL = 2
+	ELSE
+		LINEDEL = 2
+	ENDIF
+	
+	;PRINTFORMW {LOCAL},{LOCAL:1},{LOCAL:2},
+	
+	CALL SET_ITEM(PTID:(LOCAL:1), LOCAL:2, LOCAL)
+
+	;MODE = 0
+	;TABN = 0
+
+ENDIF
+;＝＝＝ここまで＝＝＝
+WEND
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;装備着用時の処理
+;ARG:0	対象キャラ
+;ARG:1	装備箇所
+;RETURNF	アイテムID
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@CHANGE_EQUIP_GET_ITEM(ARG:0, ARG:1)
+#FUNCTION
+
+	SIF ARG < 1 || ARG >= CHARANUM
+		RETURNF -1
+		
+	LOCAL = CFLAG:(ARG):(ARG:1 + 7)
+
+RETURNF LOCAL
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;装備着用時の処理
+;ARG:0	対象キャラ
+;ARG:1	装備箇所
+;ITEMID	アイテムID
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@SET_ITEM(ARG:0, ARG:1, ITEMID)
+#DIM LCOUNT,3
+#DIM ITEMID
+
+	SIF ARG < 1 || ARG >= CHARANUM
+		RETURN -1
+		
+	;装備解除
+	CALL UNSET_ITEM(ARG, ARG:1)
+	
+	
+	CFLAG:(ARG):(ARG:1 + 7) = ITEMID
+	CALL ADD_ITEM(ITEMID, -1, 0)
+	
+	;消耗武器
+	IF ITEMID >= 1 && ITEMID <= 9
+		;残っている弾も装着
+		LOCAL = GET_MAX_BULLET(ITEMID)
+		SIF ITEM:(GET_BULLET_ITEMID(ITEMID)) < LOCAL
+			LOCAL = ITEM:(GET_BULLET_ITEMID(ITEMID))
+		CFLAG:(ARG):(ARG:1 + 17) = LOCAL
+		CALL ADD_ITEM(GET_BULLET_ITEMID(ITEMID), -LOCAL, 0)
+	ENDIF
+	
+	;*********魔法少女パッチ**************
+	;魔法杖装備時に変身の処理を追加
+	;変身中でなく浄化力100を消費して変身できる
+	IF ITEMID == 13 && CFLAG:(ARG):501 != 102
+		PRINTFORMDL 装備的魔法杖正淡淡的閃耀着！
+		IF FLAG:6 >= 100
+			PRINTFORMDL 注入浄化力的話好像会発生什麼(浄化力100消費)
+			DRAWLINE
+			PRINTFORML [1] 注入力量
+			PRINTFORML [0] 返回
+			$INPUT_LOOP_MGP
+			INPUT
+			IF RESULT == 1
+				PRINTFORML 從手杖前端飛出了粉紅色的光帯温柔的包裹住了%CALLNAME:(ARG)%的身体！
+				PRINTFORMW %CALLNAME:(ARG)%変身為了魔法少女！
+				BASE:(ARG):3 = 1000
+				CFLAG:(ARG):501 = 102
+				FLAG:6 -= 100
+			ELSEIF RESULT == 0
+				PRINTFORMW 魔法杖発出的光芒稍微有点寂寞…
+			ELSE
+			REUSELASTLINE 輸入値不正確。請重新輸入
+			GOTO INPUT_LOOP_MGP
+			ENDIF
+		ELSE
+			PRINTFORMDW 光芒漸漸変暗然後消失了……
+		ENDIF
+	ENDIF
+	;******************************
+	;*********触手武器追加パッチ**************
+	;触手武器を装備時、触手服を着せられる処理を追加
+	;☆触手使役術
+	IF ITEMID == 17
+		PRINTFORML %CALLNAME:(ARG)%把凝縮了触手的精力、散発着血紅色光芒的宝石戴在胸前的那一瞬間
+		PRINTFORMW 從中飛出了無数極細的触手、順着慘叫的%CALLNAME:(ARG)%的柔軟肌膚蔓延開来！
+		;全裸なら　触　着
+		IF BASE:(ARG):3 <= 0
+			PRINTFORML 已経是触手苗床的%CALLNAME:(ARG)%、与触手服的接触時間、僅僅過了0.05秒。
+			PRINTFORMW 那麼、再看一次触着的過程吧！
+			BASE:(ARG):3 = 100
+			CALL SYOKUSYU_HUKU_B(ARG)
+		;触手服を装備していたなら2人（匹）の心が一つに！
+		ELSEIF CFLAG:(ARG):37 == 1
+			PRINTFORML 触手服内的触手鉆入到身体深処開始了一体化
+			PRINTFORML 讓自身和%CALLNAME:(ARG)%的神経結合在一起、感覚共有化了！
+			PRINTFORMW %CALLNAME:(ARG)%成功控制了触手服的一部分！
+		;普通的衣服ならとり込んで触手化
+		ELSE
+			PRINTFORML 触手瞬間就鉆入了衣服、開始侵食
+			PRINTFORML 讓自身和%CALLNAME:(ARG)%的神経結合在一起、感覚共有化了！
+			PRINTFORMW %CALLNAME:(ARG)%成功的控制了触手！
+			CALL SYOKUSYU_HUKU_B(ARG)
+		ENDIF
+	;☆触手剣
+	ELSEIF ITEMID == 18
+		PRINTFORML %CALLNAME:(ARG)%緊緊握住了帯有鉤爪的触手碎片、舉到眼前的時候
+		PRINTFORMW 從中飛出了無数極細的触手、順着慘叫的%CALLNAME:(ARG)%的柔軟肌膚蔓延開来！
+		;全裸なら　触　着
+		IF BASE:(ARG):3 <= 0
+			PRINTFORML 已経是触手苗床的%CALLNAME:(ARG)%、与触手服的接触時間、僅僅過了0.05秒。
+			PRINTFORMW 那麼、再看一次触着的過程吧！
+			BASE:(ARG):3 = 100
+			CALL SYOKUSYU_HUKU_B(ARG)
+		;触手服を装備していたなら2人（匹）の心が一つに！
+		ELSEIF CFLAG:(ARG):37 == 1
+			PRINTFORML 触手服内的触手鉆入到身体深処開始了一体化
+			PRINTFORML 讓自身和%CALLNAME:(ARG)%的神経結合在一起、感覚共有化了！
+			PRINTFORMW %CALLNAME:(ARG)%成功的控制了触手剣！
+		;普通的衣服ならとり込んで触手化
+		ELSE
+			PRINTFORML 触手瞬間就鉆入了衣服、開始侵食
+			PRINTFORML 讓自身和%CALLNAME:(ARG)%的神経結合在一起、感覚共有化了！
+			PRINTFORMW %CALLNAME:(ARG)%成功的控制了触手剣！
+			CALL SYOKUSYU_HUKU_B(ARG)
+		ENDIF
+	ENDIF
+	;******************************
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;装備を外すときの処理
+;ARG:0	対象キャラ
+;ARG:1	装備箇所
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@UNSET_ITEM(ARG:0, ARG:1)
+#DIM LCOUNT
+#DIM TEMP
+
+	SIF ARG < 1 || ARG >= CHARANUM
+		RETURN 0
+
+	;元々何もないので終了
+	SIF CFLAG:(ARG:0):(ARG:1 + 7) == 0
+		RETURN 0
+		
+	; 装備武器によって外す前に特殊処理が発生
+	SELECTCASE CFLAG:(ARG:0):(ARG:1 + 7)
+	; ☆触手放射器
+	CASE 9
+		; 触手放射器は非戦闘中、装備を外すとリロードできる
+		IF CFLAG:(ARG:0):(ARG:1 + 17) < 30
+			PRINTFORMDW 触手放射器的精力快要耗尽了
+			$INPUT_LOOP_TT
+			PRINTFORMDL ……要做麼？
+			DRAWLINE
+			PRINTFORML [1] 是
+			PRINTFORML [0] 否
+			INPUT
+			IF RESULT == 1
+				CALL PRINT_MESSAGE(ARG:0, 448, 0, CALLNAME:(ARG:0))
+				;搾精回数は対象の自慰＋触手＋射精中毒の合計値からランダム（最低10回）
+				TEMP = 10 + RAND:((ABL:(ARG:0):10) + (ABL:(ARG:0):11) + (ABL:(ARG:0):12))
+				TFLAG:57 = 230
+				TFLAG:63 = 2
+				FOR LCOUNT, 0, TEMP
+					CALL DAMAGE_COMMON(ARG:0, 2, 105*(RAND:30+200) * (TALENT:(ARG:0):(101+TFLAG:63) + 2), 100)
+				NEXT
+				CALL MAKE_ITEM(89, 30)
+				CALL ADD_ABL_EXP(10, ARG:0, RAND:20 + TEMP)
+				CALL ADD_ABL_EXP(11, ARG:0, RAND:20 + TEMP)
+				
+				; 再装填を行った場合、武器を外さずに戻る
+				PRINTFORMDL 補充了触手放射器的精力！
+				RETURN 1
+				
+			ELSEIF RESULT != 0
+				REUSELASTLINE 輸入値不正確。請重新輸入
+				GOTO INPUT_LOOP_TT
+			ENDIF
+		ENDIF
+
+	; 魔法杖
+	CASE 13
+		; 魔法杖をはずすと変身がとける
+		IF CFLAG:(ARG:0):501 == 102
+			PRINTFORMW 取下魔法杖的時候変身解除了、変回了普通的衣服
+			CFLAG:(ARG:0):501 = 0
+		ENDIF
+		
+	; 使魔
+	CASE 22
+		; 使魔を外すとフラグが消える
+		CFLAG:(ARG:0):503 = 0
+	ENDSELECT
+	
+	; 実際に装備品を外す(消耗武器の場合は残弾も外す)
+	CALL ADD_ITEM(CFLAG:(ARG:0):(ARG:1 + 7), 1, 0)
+	IF CFLAG:(ARG:0):(ARG:1 + 7) >= 1 && CFLAG:(ARG:0):(ARG:1 + 7) <= 9
+		CALL ADD_ITEM(GET_BULLET_ITEMID(CFLAG:(ARG:0):(ARG:1 + 7)), -GET_MAX_BULLET(CFLAG:(ARG:0):(ARG:1 + 7)), 0)
+		CALL ADD_ITEM(GET_BULLET_ITEMID(CFLAG:(ARG:0):(ARG:1 + 7)), CFLAG:(ARG:0):(ARG:1 + 17), 0)
+	ENDIF
+	CFLAG:(ARG:0):(ARG:1 + 7) = 0
+	CFLAG:(ARG:0):(ARG:1 + 17) = 0
+		
+RETURN 1
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡

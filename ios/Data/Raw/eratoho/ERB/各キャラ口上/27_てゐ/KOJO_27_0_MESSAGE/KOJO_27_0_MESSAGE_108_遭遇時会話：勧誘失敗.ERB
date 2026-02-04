@@ -1,0 +1,32 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 108 遭遇時会話：勧誘失敗
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_108(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE KOJO_MODE
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ひとりじゃ危ないと思うんだけどね～？　気が変わったらいつでも言って」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あらら、残念」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（ちょっとくらい楽が出来ると思ったけど、アテが外れたわ…）\n"
+	ENDSELECT
+	
+	; このウサギは現金なので相手の強さで追加口上
+	; 相手の初期戦闘素質が高い(50以上
+	IF ABL:(ARG:1):98 < ABL:98
+		CALL KOJO_27_0_ADD_MESSAGE, @"「か弱いウサギを助けてくれないなんて、人でなし～」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（そりゃ強いなら一人でもいんだろうけどさ）\n"
+	ENDIF
+	
+	; キャラクター対応 追加口上
+	SELECTCASE NO:(ARG:1)
+	; 鈴仙
+	CASE 28
+		CALL KOJO_27_0_ADD_MESSAGE, @"「まさか%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(NO:(ARG:1)))%に断られるとは……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「えー、仲間ハズレー？」\n"
+	; 永琳
+	CASE 29
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ちょ、ちょっと待ってよ～！　お師匠様～！」\n"
+	ENDSELECT
+RETURN 1

@@ -1,0 +1,438 @@
+﻿;敵の通常攻撃発動
+@SYSTEM_MESSAGE_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SETCOLOR 0xEE1010
+
+SELECTCASE ARG:1
+	CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML (SYSTEM_MESSAGE_2)コマンドIDが不正です ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  (SYSTEM_MESSAGE_2)コマンドIDが不正です ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+ENDIF
+
+	CASE 100
+		PRINTFORML %ARGS:1%用触手殴打了過来！
+	CASE 101
+		PRINTFORML %ARGS:1%朝着%ARGS:0%、伸出了注射器形状的触手！
+	CASE 102
+		PRINTFORML %ARGS:1%把紫色的触手的前端朝着%ARGS:0%、從那裡噴出了色彩濃艶的液体！
+	CASE 103
+		PRINTFORML %ARGS:1%朝着%ARGS:0%%TACHI()%、揮動了荊棘状的触手！
+	CASE 104
+		PRINTFORML %ARGS:1%不断伸長着極粗的触手、橫掃了%ARGS:0%！
+	CASE 105
+		PRINTFORML %ARGS:1%把無数的触手伸向了%ARGS:0%、全体猛地突刺過去！
+	CASE 106
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%揮動着滴落着各種顔色的粘液的触手！
+		ELSE
+			PRINTFORML %ARGS:1%揮動着滴落着各種顔色的粘液的触手！
+		ENDIF
+	CASE 107
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%連續揮動着滴落着各種顔色的粘液的触手！
+		ELSE
+			PRINTFORML %ARGS:1%連續揮動着滴落着各種顔色的粘液的触手！
+		ENDIF
+	CASE 108
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%大幅度揮動着滴落着各種顔色的粘液的触手！
+		ELSE
+			PRINTFORML %ARGS:1%大幅度揮動着滴落着各種顔色的粘液的触手！
+		ENDIF
+	CASE 109
+		IF (CFLAG:(ARG:2):10 || CFLAG:(ARG:2):20) && CFLAG:(ARG:2):21 == 0
+			PRINTFORML %ARGS:1%的触手纏住了身体無法活動的%ARGS:0%的脖子！
+		ELSE
+			PRINTFORML %ARGS:1%伸長了複数纖細的触手、襲撃了%ARGS:0%！
+		ENDIF
+	CASE 110
+		IF (CFLAG:(ARG:2):10 || CFLAG:(ARG:2):20) && CFLAG:(ARG:2):21 == 0
+			PRINTFORML %ARGS:1%的触手纏住了身体無法活動的%ARGS:0%的脖子！
+		ELSE
+			PRINTFORML %ARGS:1%用触手隨意的擺佈操控着%ARGS:0%！
+		ENDIF
+	CASE 111
+		IF CFLAG:(ARG:2):20 && CFLAG:(ARG:2):21 == 0
+			PRINTFORML %ARGS:1%揮動着蔓藤状的鞭子抽打着%ARGS:0%！
+		ELSEIF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%用蔓藤状的鞭子激烈的抽打着%ARGS:0%的肌膚！
+		ELSE
+			PRINTFORML %ARGS:1%用蔓藤状的鞭子打在了%ARGS:0%的衣服上！
+		ENDIF
+	CASE 113
+		IF CFLAG:(ARG:2):20 && CFLAG:(ARG:2):21 == 0
+			PRINTFORML %ARGS:1%揮動着蔓藤状的鞭子抽打着%ARGS:0%！
+		ELSEIF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%用蔓藤状的鞭子激烈的抽打着%ARGS:0%的肌膚！
+		ELSE
+			PRINTFORML %ARGS:1%用蔓藤状的鞭子打在了%ARGS:0%的衣服上！
+		ENDIF
+	CASE 114
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%用蔓藤状的鞭子多次抽打着%ARGS:0%的肌膚！
+		ELSE
+			PRINTFORML %ARGS:1%多次用蔓藤状的鞭子打在了%ARGS:0%的衣服上！
+		ENDIF
+	CASE 115
+		PRINTFORML %ARGS:1%跳向了%ARGS:0%！
+	CASE 116
+		PRINTFORML %ARGS:1%收縮身体利用反作用力、猛地跳向了%ARGS:0%！
+	CASE 117
+		PRINTFORML %ARGS:1%從下面揮動着那龐大的身軀撞了過来！
+	CASE 118
+		PRINTFORML %ARGS:1%把龐大的身軀掄過頭頂橫掃了過来！
+	CASE 119
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%大幅延長了沾満粘液的湿潤触手！
+		ELSE
+			PRINTFORML %ARGS:1%揮動着沾満粘液的湿潤触手、撃打到了%ARGS:0%的身体！
+		ENDIF
+	CASE 120
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%吸住了赤裸的%ARGS:0%！
+		ELSE
+			PRINTFORML %ARGS:1%用帯着吸盤的触手緊緊勒住了%ARGS:0%！
+		ENDIF
+	CASE 121
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%大幅延長了沾満粘液的湿潤触手！
+		ELSE
+			PRINTFORML %ARGS:1%揮動着沾満粘液的湿潤触手、撃打到了%ARGS:0%的身体！
+		ENDIF
+	CASE 122
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%咬住了赤裸的%ARGS:0%！
+		ELSE
+			PRINTFORML %ARGS:1%用帯着吸盤的触手緊緊勒住了%ARGS:0%！
+		ENDIF
+	CASE 123
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%從纖細的触手前端向%ARGS:0%吐出了紫色的体液！
+		ELSE
+			PRINTFORML %ARGS:1%從纖細的触手前端向%ARGS:0%発射了溶解液！
+		ENDIF
+	CASE 124
+		PRINTFORML %ARGS:1%正在蓄力、沒想到突然用身体直接撞了過来！
+	CASE 125
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%從纖細的触手前端向%ARGS:0%吐出了紫色的体液！
+		ELSE
+			PRINTFORML %ARGS:1%從纖細的触手前端向%ARGS:0%発射了溶解液！
+		ENDIF
+	CASE 126
+		IF FLAG:507 == 0
+			PRINTFORML %ARGS:1%用触手巻起%ARGS:0%、試図拉到身辺！
+		ELSE
+			PRINTFORML %ARGS:1%伸出了注射針一樣的触手、刺入了%ARGS:0%的身体！
+		ENDIF
+	CASE 127
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%的身体大幅度收縮、沒想到突然從地面上跳了起来、猛地撞向了%ARGS:0%！
+		ELSE
+			PRINTFORML %ARGS:1%突然射出了槍状的触手、撲向了%CALLNAME:(TFLAG:54)%！
+		ENDIF
+	CASE 128
+		PRINTFORML %ARGS:1%対的身体大幅拡大、朝着%ARGS:0%%TACHI()%衝撞過去！
+	CASE 129
+		IF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%的身体大幅度收縮、沒想到突然從地面上跳了起来、猛地撞向了%ARGS:0%！
+		ELSE
+			PRINTFORML %ARGS:1%突然射出了槍状的触手、撲向了%CALLNAME:(TFLAG:54)%！
+		ENDIF
+	CASE 130
+		PRINTFORML %ARGS:1%展開了無数的触手、叩撃了%ARGS:0%%TACHI()%！
+	CASE 131
+		IF CFLAG:(ARG:2):20 && CFLAG:(ARG:2):21 == 0
+			PRINTFORML %ARGS:1%高舉起手開始用巴掌拍打%ARGS:0%的身体！
+		ELSEIF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%露出了嗜虐的笑容、殴打%ARGS:0%的身体！
+		ELSE
+			PRINTFORML %ARGS:1%発出尖鋭的叫声把自己的蔓藤当做鞭子抽了過去！
+		ENDIF
+	CASE 132
+		PRINTFORML %ARGS:1%全部的触手一斉撃向了%ARGS:0%！
+	CASE 133
+		IF CFLAG:(ARG:2):20 && CFLAG:(ARG:2):21 == 0
+			PRINTFORML %ARGS:1%高舉起手開始用巴掌拍打%ARGS:0%的身体！
+		ELSEIF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%露出了嗜虐的笑容、殴打%ARGS:0%的身体！
+		ELSE
+			PRINTFORML %ARGS:1%発出尖鋭的叫声把自己的蔓藤当做鞭子抽了過去！
+		ENDIF
+	CASE 134
+		PRINTFORML %ARGS:1%全部的触手一斉撃向了%ARGS:0%！
+	CASE 135
+		PRINTFORML %ARGS:1%大幅揮起触手、打了過去！
+	CASE 136
+		PRINTFORML %ARGS:1%用快速的動作攻撃了%ARGS:0%多次！
+	CASE 137
+		IF FLAG:507 >= 1
+			PRINTFORML %ARGS:1%把自己的手腕変成了鞭子、朝着%ARGS:0%揮下！
+		ELSE
+			PRINTFORML %ARGS:1%朝着%ARGS:0%釋放了弾幕！
+		ENDIF
+	CASE 138
+		IF FLAG:507 >= 1
+			PRINTFORML 圧倒了%ARGS:0%的%ARGS:1%、強行把%ARGS:0%的双手掰到了背後然後緊緊抱住！
+		ELSE
+			PRINTFORML %ARGS:1%朝着%ARGS:0%釋放了大量弾幕！
+		ENDIF
+	CASE 139
+		IF FLAG:507 >= 1
+			PRINTFORML %ARGS:1%把自己的手腕変成了鞭子、朝着%ARGS:0%%TACHI()%揮下！
+		ELSE
+			PRINTFORML %ARGS:1%朝着%ARGS:0%%TACHI()%釋放了無数的弾幕！
+		ENDIF
+	CASE 140
+		IF FLAG:507 >= 1
+			PRINTFORML %ARGS:1%的蔓藤上面長着的花咬住了%ARGS:0%的肌膚緊緊吸住！
+		ELSE
+			PRINTFORML %ARGS:1%的蔓藤爬満了%ARGS:0%的身体！
+		ENDIF
+	CASE 141
+		PRINTFORML %ARGS:1%張開了碩大的羽翼、説着別妨礙我朝着%ARGS:0%射出了羽毛！
+	CASE 142
+		IF FLAG:507 >= 1
+			PRINTFORML %ARGS:1%張開了碩大的羽翼、朝着%ARGS:0%射出了滲入了粘液和鮮血的黑色羽毛！
+		ELSE
+			PRINTFORML %ARGS:1%張開了碩大的羽翼、用滲入了粘液的黑色羽毛攻撃了%ARGS:0%！
+		ENDIF
+	CASE 143
+		IF FLAG:507 >= 1
+			PRINTFORML %ARGS:1%噴出了鮮血的男根状触手朝着%ARGS:0%、把精液当做巨大的砲弾発射出去！
+		ELSE
+			PRINTFORML %ARGS:1%噴出了粘液的男根状触手朝着%ARGS:0%、把卵当做巨大的砲弾発射出去！
+		ENDIF
+	CASE 144
+		IF FLAG:507 >= 1
+			PRINTFORML %ARGS:1%把全身滴着鮮血的触手纏成一股、化作巨大的鞭子橫掃了%ARGS:0%%TACHI()%！
+		ELSE
+			PRINTFORML %ARGS:1%把全身滴着粘液的触手纏成一股、化作巨大的鞭子橫掃了%ARGS:0%%TACHI()%！
+		ENDIF
+	CASE 145
+		IF FLAG:507 > 0
+			PRINTFORML %ARGS:1%背上的隆起了鋭角！
+		ELSE
+			PRINTFORML %ARGS:1%拘束了%ARGS:0%後開始狂暴！
+		ENDIF
+	CASE 146
+		PRINTFORML %ARGS:1%一瞬間縮短了距離把角頂向了%ARGS:0%的腹部！
+	CASE 147
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML %ARGS:1%把超長的尾巴当做鞭子抽向了%ARGS:0%！
+			CASE 1
+				PRINTFORML %ARGS:1%朝着%ARGS:0%揮動着超長的尾巴！
+			CASE 2
+				PRINTFORML %ARGS:1%用超長的尾巴掃向了%ARGS:0%！
+			CASE 3
+				PRINTFORML %ARGS:1%用柔韌的尾巴橫掃了%ARGS:0%！
+		ENDSELECT
+
+	CASE 148
+		IF BASE:(ARG:2):3 > 0
+			PRINTFORML %ARGS:1%的口中伸出了数根像槍一樣鋭利的触手、迫近了%ARGS:0%！
+		ELSE
+			PRINTFORML %ARGS:1%的口中伸出了湿潤的触手朝着%ARGS:0%粗暴的揮動！
+		ENDIF
+	CASE 149
+		IF RAND:3 > 0
+			PRINTFORML %ARGS:1%的口中伸出了数根触手朝着%ARGS:0%粗暴的揮動！
+		ELSE
+			PRINTFORML %ARGS:1%的舌頭朝着%ARGS:0%揮下！
+		ENDIF
+	CASE 150
+		PRINTFORML %ARGS:1%躬下身体、朝着%ARGS:0%突進！
+	CASE 151
+		PRINTFORML %ARGS:1%翻着跟斗撲向%ARGS:0%、後腿着地用9根尾巴打了過去！
+	CASE 152
+		PRINTFORML %ARGS:1%変成了肌肉発們的彪形大漢、用L字的右腕朝着%ARGS:0%突進！
+	CASE 153
+		PRINTFORML %ARGS:1%変成了髒兮兮的大叔、在%ARGS:0%%TACHI()%面前不停撓着自己的胯下！
+	CASE 154
+		PRINTFORML %ARGS:1%蓬鬆起来漂浮在空中、慢慢地被吹向了%ARGS:0%的方向！
+	CASE 155
+		PRINTFORML %ARGS:1%的嘴巴一張一合、突然朝着%ARGS:0%吹出了大量泡沫！
+	CASE 156
+		PRINTFORML %ARGS:1%的其中数匹解除了擬態融入了地板之中！
+	CASE 157
+		IF RAND:2 == 0
+			PRINTFORML %ARGS:1%們身体上長出的触手対準了%ARGS:0%%TACHI()%的脚！
+		ELSE
+			PRINTFORML %ARGS:1%們的触手分成了突撃用和遠距離攻撃用分別襲向了%ARGS:0%%TACHI()%！
+		ENDIF
+	CASE 158
+		PRINTFORM %ARGS:1%被増強的触手発揮着力量、
+		IF RAND:2 == 0
+			PRINTL 殴向了%ARGS:0%！
+		ELSE
+			PRINTL 踢向了%ARGS:0%！
+		ENDIF
+	CASE 159
+		IF FLAG:507 >= 1
+			PRINTFORML %ARGS:1%鎖住了%ARGS:0%的関節、就這樣直接破坏了！
+		ELSE
+			PRINTFORML %ARGS:1%猛然突進、用那満是筋肉的身体撞向%ARGS:0%！
+		ENDIF
+	CASE 160
+		IF FLAG:507 >= 1
+			PRINTFORML %ARGS:1%的触手刺入了%ARGS:0%的身体、開始吸収血液！
+		ELSE
+			PRINTFORML %ARGS:1%使用触手、吸收起%ARGS:0%的力量！
+		ENDIF
+	CASE 161
+		PRINTFORML %ARGS:1%利用龐大的身軀殴向%ARGS:0%！
+	CASE 162
+		PRINTFORML %ARGS:1%突然倒下、圧向了%ARGS:0%%TACHI()%！
+	CASE 163
+		PRINTFORML %ARGS:1%用尾巴橫掃%ARGS:0%%TACHI()%的脚！
+	CASE 164
+		PRINTFORML %ARGS:1%高高舉起鞭子肆意揮下、在%ARGS:0%%TACHI()%的肌膚上刻上了幾道鮮紅的痕跡……！
+	CASE 165
+		PRINTFORML %ARGS:1%対着%ARGS:0%的腹部、給予了強烈一撃！
+	CASE 166
+		PRINTFORML %ARGS:1%奪過了手辺的触手、歐向了%ARGS:0%！
+		PRINTFORML 触手使役術！（物理）
+	CASE 167
+		PRINTFORML %ARGS:1%発射散弾一樣的史莱姆打進了%ARGS:0%的身体！
+	CASE 168
+		PRINTFORML %ARGS:1%用蔓藤踢向地板猛地滾動起来、撲向了%ARGS:0%！
+	CASE 169
+		PRINTFORML %ARGS:1%的表面生長的触手朝着%ARGS:0%的体蜂擁而至！
+	CASE 170
+		PRINTFORML %ARGS:1%的手臂対準了%ARGS:0%！
+	CASE 171
+		PRINTFORML %ARGS:1%的手臂大幅展開、襲向了%ARGS:0%！
+	CASE 172
+		PRINTFORML %ARGS:1%的多数手臂展開、襲向了%ARGS:0%%TACHI()%！
+	CASE 173
+		PRINTFORML %ARGS:1%朝着%ARGS:0%釋放了弾幕！
+	CASE 174
+		PRINTFORML %ARGS:1%朝着%ARGS:0%釋放了大量弾幕！
+	CASE 175
+		PRINTFORML %ARGS:1%朝着%ARGS:0%%TACHI()%釋放了無数的弾幕！
+	CASE 180
+		PRINTFORML %ARGS:1%像要擰坏被捆成粽子似的%ARGS:0%、用力地将触手纏了上去！
+	CASE 181
+		PRINTFORML %ARGS:1%的乳頭和陰蒂化作触手伸長蠕動着、対着%ARGS:0%沈悶地低吼着！
+	CASE 182
+		PRINTFORML %ARGS:1%的触手纏繞住%ARGS:0%……
+	CASE 183
+		PRINTFORML %ARGS:1%抬起了巨大的鎌首状的亀頭、対準了%ARGS:0%、伴隨着脈動射出了大量精液！
+	CASE 184
+		PRINTFORML %ARGS:1%使出了猫猫拳！
+	CASE 185
+		IF FLAG:507
+			PRINTFORML %ARGS:1%殴打了不老実的%ARGS:0%！
+		ELSE
+			PRINTFORML %ARGS:1%軽拍着不老実的%ARGS:0%！
+		ENDIF
+	CASE 186
+		PRINTFORML %ARGS:1%把触手变成像鞭子一样！
+	CASE 187
+		PRINTFORML %ARGS:1%瞄准了%ARGS:0%的脖子！
+	CASE 188
+		PRINTFORML %ARGS:1%用锐利的触手瞄准了%ARGS:0%的身体！
+	CASE 189
+		PRINTFORML %ARGS:1%的触手砍向了%ARGS:0%的身体！
+	CASE 190
+		PRINTFORML %ARGS:1%的触手瞄准了被拘束的%ARGS:0%受伤的部位！
+	CASE 191
+		PRINTFORML %ARGS:1%的一根像钻头一样的触手靠近了被拘束的%ARGS:0%的腹部！
+	
+	
+	CASE 974
+		PRINTFORML %ARGS:1%像嘴一樣張開的触手含住了%ARGS:0%的乳頭！
+	CASE 975
+		IF GET_PENIS(TARGET)
+			PRINTFORML %ARGS:1%像嘴一樣張開的触手含住了%ARGS:0%的陰茎！
+		ELSE
+			PRINTFORML %ARGS:1%像嘴一樣張開的触手含住了%ARGS:0%的陰蒂！
+		ENDIF
+	CASE 976
+		PRINTFORML %ARGS:1%的触手就像鞭子一樣！
+
+	CASE 999
+		PRINTFORML %ARGS:1%朝着%ARGS:0%伸出了触手！
+	
+	CASE 1052
+		PRINTFORML 被%ARGS:1%抓住、%ARGS:0%的四肢变得使不上力了……
+	CASE 1053
+		PRINTFORML %ARGS:1%紧紧咬住了%ARGS:0%
+	CASE 1054
+		PRINTFORML %ARGS:1%戳中了は%ARGS:0%的脸……
+	CASE 1055
+		PRINTFORML %ARGS:1%瞄准了动弹不得的%ARGS:0%的脸……
+	CASE 1056
+		PRINTFORML %ARGS:1%向%ARGS:0%的脸上泼洒了黏液……
+	
+	CASE 1867
+		PRINTFORML %ARGS:1%噴出了被圧縮的洗浄用蒸汽！
+
+
+	CASE 1877
+		IF CFLAG:(ARG:2):20 && CFLAG:(ARG:2):21 == 0
+			PRINTFORML %ARGS:1%高舉起手開始用巴掌拍打%ARGS:0%的身体！
+		ELSEIF BASE:(ARG:2):3 <= 0
+			PRINTFORML %ARGS:1%露出了嗜虐的笑容、殴打%ARGS:0%的身体！
+		ELSE
+			PRINTFORML %ARGS:1%用敏捷的動作一辺玩弄着%ARGS:0%一辺発動了攻撃！
+		ENDIF
+
+
+
+
+	CASE 1906
+		IF RAND:2 == 0
+			PRINTFORML %ARGS:1%、向%ARGS:0%%TACHI()%釋放了高圧電流！
+		ELSE
+			PRINTFORML %ARGS:1%放出的雷球、朝着%ARGS:0%%TACHI()%開始放電！
+		ENDIF
+	CASE 2103
+		PRINTFORML 一根触手迅速从%ARGS:1%上伸出！
+	CASE 2104
+		PRINTFORML %ARGS:1%跳到了%ARGS:0%身边！
+	CASE 2105
+		IF BASE:(ARG:2):0 <= 0
+			PRINTFORML %ARGS:1%的触手逼近以击打%ARGS:0%的身体！
+		ELSE
+			PRINTFORML %ARGS:1%的触手试图拖倒%ARGS:0%的身体！
+		ENDIF
+
+	CASE 2113
+		PRINTFORML %ARGS:1%试图绕到%ARGS:0%的背后！
+
+	CASE 2114
+		PRINTFORML %ARGS:1%将触手伸向%ARGS:0%！
+
+	CASE 2115
+		PRINTFORML %ARGS:1%瞬间拉近了与%ARGS:0%的距离！
+
+	CASE 2116
+		PRINTFORML %ARGS:1%向%ARGS:0%投掷了一连串锋利的剃刀！
+
+	CASE 2117
+		PRINTFORML %ARGS:1%的长发开始沙沙作响、进一步向%ARGS:0%的方向生长着！
+	CASE 2120
+		PRINTFORML 数只%ARGS:1%正缠绕在%ARGS:0%身上……
+
+	CASE 2121
+
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML %ARGS:1%用不规律的动作接近着%ARGS:0%！
+			CASE 1
+				PRINTFORML %ARGS:1%利用它长长的身体攻击着%ARGS:0%！
+			CASEELSE
+
+		ENDSELECT
+
+	CASEELSE
+		PRINTFORML %ARGS:1%的攻撃！
+ENDSELECT
+
+RESETCOLOR
+

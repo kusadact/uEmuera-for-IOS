@@ -1,0 +1,143 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 120 絶頂の瞬間 - 1 汎用口上 部位別 B
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_120_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 追加地の文関数(前)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_BEFORE("KOJO_27_0_SYSTEM_MESSAGE_120_DESCRIPTION_BEFORE")
+	
+	; 睡眠・喪失・諦め
+	SIF CFLAG:25 || CFLAG:29 || TFLAG:16 == 2
+		RETURN 0
+
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			SELECTCASE CFLAG:43
+			CASE 1
+				CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱい、イキましたぁぁ……っ……　嫌あぁっ……、口が勝手にぃ……っ……」\n"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「んううっ……　おっぱい、イったた……ぁっ……　イキましたぁぁ……っ」\n"
+			CASE 2
+				CALL KOJO_27_0_ADD_MESSAGE, @"「きてますっ……　おっぱいに……っ、気持ちいいの……きてますっ……」\n"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「んんっ……　おっぱ……いっ……　絶頂しました……ぁっ」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「んんん……っっ♥　イキました……っ♥♥　おっぱいイキましたぁ……っ♥♥」\n"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱ……ぃ……っ♥　イカせてくれて、ありがとう……ございま……すっ♥♥」\n"
+			ENDSELECT
+			
+			; 乳首勃起時 追加口上
+			IF GET_ERECTION_STATE_B(TARGET)
+				SELECTCASE CFLAG:43
+				CASE 1
+					CALL KOJO_27_0_ADD_MESSAGE, @"「勃起乳首……イキましたぁぁっ……　うあああっ！見るなっ！見るなぁぁぁっ！！」\n"
+				CASE 2
+					CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱい……っ……イキましたっ……　勃起乳首……ガチガチになってます……」\n"
+				CASEELSE
+					CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱい……っ……イキました……っ♥　お勃起乳首イッてるとこ……、見てくださいっ……♥♥」\n"
+				ENDSELECT
+			ENDIF
+			
+			; 追加地の文
+			CALL KOJO_27_0_PARAGRAPH_MESSAGE
+			SELECTCASE CFLAG:43
+			CASE 1
+				CALL KOJO_27_0_ADD_MESSAGE, @"\d催眠状態の%CALLNAME:TARGET%は、強制的に絶頂を報告させられた\d\n"
+			CASE 2
+				CALL KOJO_27_0_ADD_MESSAGE, @"\d催眠状態の%CALLNAME:TARGET%は、顔を上気させながら事務的に絶頂したことを伝えた\d\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"\d催眠状態の%CALLNAME:TARGET%は、ひくひくと痙攣する乳房を突き出しながら絶頂を報告した\d\n"
+			ENDSELECT
+			
+			RETURN 1
+		ENDSELECT
+	ENDIF
+
+	; 通常時
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「とまんにゃいっ♥　おっぱいヒクヒクしてっ、とまんにゃぃぃっ♥♥」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱいっ♥　おっぱいバカになってるぅぅっ♥♥」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あへ……ぁ♥　ひゃ……ぁ♥　胸でイクの……すき……ぃ♥♥」\n"
+		
+		; [淫乳]所持 または りばーす東方触手宮でB感覚LV3以上
+		IF TALENT:76 || (KOJO_27_0_IS_REVERSE() && ABL:7 >= 3)
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あたしの脳みそっ♥　胸イキで幸せしか感じなくなってるぅぅっ♥♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「おﾞっ♥　おﾞおﾞおﾞっ♥　胸イキで、脳みそとけちゃううぅぅ♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「おﾞおﾞへぇっ♥♥　改造おっぱいイキ最高ぉぉ♥♥」\n"
+		ENDIF
+		
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「やあぁぁっ！？　なんでっ、なんでおっぱいでぇっ！？」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱい、こわれちゃう……よぉっ……」\n"
+		
+		; [淫乳]所持 または りばーす東方触手宮でB感覚LV3以上
+		IF TALENT:76 || (KOJO_27_0_IS_REVERSE() && ABL:7 >= 3)
+			CALL KOJO_27_0_ADD_MESSAGE, @"「おﾞへぇぇっ♥♥　胸イキは、ダメぇぇぇっ♥♥　おﾞっ……おﾞおﾞおﾞ……ぉっ♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「とめてぇっ！　おっぱい気持ちイイのとめてええぇぇぇっ！！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんにゃイキかた変だよぉっ♥　やああぁぁっ……♥　おっぱい、壊れてるぅ……♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ひっ……いいっ！？　こんなおっぱい、やだあぁぁっ！！」\n"
+		ENDIF
+	ENDSELECT
+	CALL KOJO_27_0_FIX_MESSAGE
+	
+	; 連続絶頂時 追加口上
+	IF GETBIT(ARG:3, 2)
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「あはぁ……♥　もっとぉ、おっぱいしぼってぇ……♥\n　乳首……がぁ、ひくひくしてぇ、きもちいい……のぉ……♥」\n"
+			
+			; [淫乳]所持 または りばーす東方触手宮でB感覚LV3以上
+			IF TALENT:76 || (KOJO_27_0_IS_REVERSE() && ABL:7 >= 3)
+				CALL KOJO_27_0_ADD_MESSAGE, @"「もっとぉ♥　もっとしてぇ♥♥　変態おっぱいでイキまくりたいのぉ……っ♥♥」\n"
+			ENDIF
+			
+			CALL KOJO_27_0_PARAGRAPH_MESSAGE
+			CALL KOJO_27_0_ADD_MESSAGE, @"\d%CALLNAME:TARGET%は少しでも快感を引き延ばそうと、絶頂したばかりの乳首をこねくり回している…\d\n"
+		
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「イッたままのおっぱいぃぃっ♥　またイクうぅぅっっ♥♥　ごわﾞるﾞうﾞぅぅっ♥♥」\n"
+			; [淫乳]所持 または りばーす東方触手宮でB感覚LV3以上
+			IF TALENT:76 || (KOJO_27_0_IS_REVERSE() && ABL:7 >= 3)
+				CALL KOJO_27_0_ADD_MESSAGE, @"「あﾞあﾞぁぁぁぁっ！！　だずげでえぇぇっ！！　またおっぱいでトぶうぅぅぅっ♥♥♥」\n"
+			ENDIF
+			
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「んいぃぃぃ……ッ！　胸ぇッ、イキっぱなしにされるぅ……ッッ！！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「うあぁ……ッッ！　敏感になってるトコ、責められてぇ……ッ！！」\n"
+			
+			; [淫乳]所持 または りばーす東方触手宮でB感覚LV3以上
+			IF TALENT:76 || (KOJO_27_0_IS_REVERSE() && ABL:7 >= 3)
+				CALL KOJO_27_0_ADD_MESSAGE, @"（あﾞあﾞぁぁぁっ♥♥　おっぱいイキすぎでバカになるぅぅぅっ♥♥♥）\n"
+				CALL KOJO_27_0_ADD_MESSAGE, @"（おっぱいイキとまんないぃぃっ♥♥　のうみそとけちゃうぅぅぅッ♥♥♥）\n"
+			ENDIF
+		ENDSELECT
+	ENDIF
+	CALL KOJO_27_0_FIX_MESSAGE
+	
+	; 多重絶頂時 追加口上
+	IF ARG:3 && !GETBIT(ARG:3, 2)
+
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「他にもイッてるのにぃ♥　おっぱいまでイッちゃったぁぁ……♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱいっ♥　おっぱいもイッちゃうぅっ♥♥」\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（他にイッてるのにっ、胸までえぇっ！？）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「やだぁぁっ♥　もう気持ちよくしないでぇっ♥　おっぱい……までぇぇぇっ♥♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ダメぇっ！　胸もイクっ！　イクううぅぅぅっ！！」\n"
+		ENDSELECT
+	ENDIF
+	CALL KOJO_27_0_FIX_MESSAGE
+RETURN 1

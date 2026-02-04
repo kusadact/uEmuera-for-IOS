@@ -1,0 +1,460 @@
+﻿;こっちもXXをキャラのNoに置き換えること
+;ふたなりの管理。趣味じゃない人はXXを置き換えたら後はYYを適当な数字で埋めて放置でおk
+@FUTANARI_34_0_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+SELECTCASE ARG:0
+	;射精
+	CASE 451
+		;射精中毒３かつ諦め時orMP1/4以下or発情中or深い催眠
+		IF ABL:12 > 2 && (TFLAG:16 == 2 || MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:43 > 1)
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「はっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　はっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORML 　ちんぽから出すの、いいっ……
+					;自慰
+					IF CFLAG:805 == 3
+IF FLAG:AUTOMODE
+    PRINTFORML 　オナニーなんかじゃなく、誰か犯して思う存分中出ししたら、もっとっ……！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　オナニーなんかじゃなく、誰か犯して思う存分中出ししたら、もっとっ……！」
+ENDIF
+
+					ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 　おねがいよぉ、もっとださせてぇ……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　おねがいよぉ、もっとださせてぇ……」
+ENDIF
+
+					ENDIF
+				CASE 1
+					PRINTFORM 「しゅ、すごひぃっ！？　もう、精液出すの、クセになってるぅ……
+					CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+			ENDSELECT
+		;射精中毒＋発情レベルが２以上で初射精ではない
+		ELSEIF (ABL:12 + CFLAG:28) > 1 && EXP:12
+			SELECTCASE RAND:2
+				CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML （だめ、射精気持ちいい……！）
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  （だめ、射精気持ちいい……！）
+ENDIF
+
+				CASE 1
+					IF ABL:12 > 2
+						PRINTFORM 「すごい……もう、クセになってる……
+						CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+					ELSE
+						PRINTFORM 「すごい……クセになりそう……
+						CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+					ENDIF
+			ENDSELECT
+		ELSE
+			;初射精
+			IF EXP:12 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「はっ、うあぁ！？　これ……見かけだけじゃ、ないの？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「はっ、うあぁ！？　これ……見かけだけじゃ、ないの？」
+ENDIF
+
+			;自慰
+			ELSEIF CFLAG:805 == 3
+				PRINTFORML 「んう、うぅっんっ……！
+IF FLAG:AUTOMODE
+    PRINTFORML 　自分で、擦って出すとか……私、何やっているの……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　自分で、擦って出すとか……私、何やっているの……」
+ENDIF
+
+			;諦め時orMP1/4以下or発情中or深い催眠でランダム、ただし自慰は除く
+			ELSEIF (TFLAG:16 == 2 || MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:43 > 1) && RAND:2 == 0
+				PRINTFORMDL 幽香は顔を真っ赤にしながら股間を抑え射精を止めようとするが、
+				PRINTFORMDW その刺激で感じてしまい、更に射精してしまう……
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「う、くぅっ……これじゃ私、ここに化け物たちと変わらないじゃない……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「う、くぅっ……これじゃ私、ここに化け物たちと変わらないじゃない……」
+ENDIF
+
+			ENDIF
+		ENDIF
+
+		;自慰絶頂管理
+		SIF CFLAG:805 == 3
+			CFLAG:805 = 0
+
+	;ふたなり終了
+	CASE 452
+		;射精中毒２以上　賢者タイム
+		IF ABL:12 > 1
+IF FLAG:AUTOMODE
+    PRINTFORML （あぁ……なにかしら、この脱力感……）
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  （あぁ……なにかしら、この脱力感……）
+ENDIF
+
+		ELSE
+			;MPが1/4以下か発情中か妊娠か朦朧
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:36 >= 3 || FLAG:7 >= 11
+IF FLAG:AUTOMODE
+    PRINTFORML 「……ふ、ぅ……こちらは、取れたけれど」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……ふ、ぅ……こちらは、取れたけれど」
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「……ふぅ……この蔦や花も、いつか自然に取れるといいのだけど」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……ふぅ……この蔦や花も、いつか自然に取れるといいのだけど」
+ENDIF
+
+			ENDIF
+		ENDIF
+	;ふたなり時、戦闘中に発情　発情確率は射精中毒×５％
+	CASE 453
+		;射精中毒＋発情レベルが２以上
+		IF (ABL:12 + CFLAG:28) > 1
+			SELECTCASE RAND:2
+				CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML （ふるえ、止まらなっ……しゃせぇ、射精しないと！　わからないけど出したいっ！）
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  （ふるえ、止まらなっ……しゃせぇ、射精しないと！　わからないけど出したいっ！）
+ENDIF
+
+				CASE 1
+					PRINTFORM 「股間、あ、つ……なにこれ
+					CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 　犯したい、犯したい、犯したいぃ……！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　犯したい、犯したい、犯したいぃ……！」
+ENDIF
+
+			ENDSELECT
+		ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「こンの、またっ、体を変にいじってっ……！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「こンの、またっ、体を変にいじってっ……！」
+ENDIF
+
+		ENDIF
+	;ふたなり永久化　必ず射精中毒３
+	CASE 454
+IF FLAG:AUTOMODE
+    PRINTFORML （感じる……しっかり根付いたことが、私のモノになったのが、なぜか伝わって……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  （感じる……しっかり根付いたことが、私のモノになったのが、なぜか伝わって……
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 　でも、別にいいわよね？　気持ちいいのだし、服を着れば完全に隠せるし。
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　でも、別にいいわよね？　気持ちいいのだし、服を着れば完全に隠せるし。
+ENDIF
+
+		PRINTFORM 　私のモノになった以上は、しょうがないから……使ってもいいじゃないの
+		CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+	;性欲発散（最初に襲った）
+	CASE 455
+				SELECTCASE ARG:1
+					;膣で　まだネタ段階
+					CASE 0, 1
+	;					PRINTFORM 「ねぇ、%ARGS:1%？　孕ませてあ・げ・る
+	;					CALL HEARTCB(0xD02830)
+	;					PRINTFORMW 　」
+
+;					PRINTFORMW 
+;					PRINTFORM 「はへっ！？　うえつけられた蔦、震えてるっ！　こっちからも体液出てるぅっ
+;					CALL HEARTCB(0xD02830)
+;					PRINTFORMW 」
+
+					;胸で
+					CASE 5, 6
+	;					PRINTFORMW 
+					;巨乳で
+					CASE 7, 8
+	;					PRINTFORMW 
+					;尻で
+					CASE 10, 11
+	;					PRINTFORMW 
+					;口で
+					CASE 15, 16
+	;					PRINTFORMW 
+				ENDSELECT
+	;性欲発散（便乗して襲いかかった）
+	CASE 456
+				SELECTCASE ARG:1
+					;膣で
+					CASE 0, 1
+	;					PRINTFORMW 
+					;胸で
+					CASE 5, 6
+	;					PRINTFORMW 
+					;尻で
+					CASE 10, 11
+	;					PRINTFORMW 
+					;口で
+					CASE 15, 16
+	;					PRINTFORMW 
+				ENDSELECT
+	;性欲発散（相手が催眠状態）
+	CASE 457
+				SELECTCASE ARG:1
+					;膣で
+					CASE 0
+	;					PRINTFORMW 
+					;胸で
+					CASE 5
+	;					PRINTFORMW 
+					;尻で
+					CASE 10
+	;					PRINTFORMW 
+					;口で
+					CASE 15
+	;					PRINTFORMW 
+				ENDSELECT
+	;ふたなり治療される
+	CASE 459
+				SELECTCASE ARG:1
+					;膣で
+					CASE 0
+	;					PRINTFORMW 
+					;胸で
+					CASE 1
+	;					PRINTFORMW 
+					;尻で
+					CASE 2
+	;					PRINTFORMW 
+					;口で
+					CASE 3
+	;					PRINTFORMW 
+					;手で
+					CASE 4
+	;					PRINTFORMW 
+				ENDSELECT
+	;ふたなりで触手モンスターをおしおきする
+	CASE 460
+
+			SELECTCASE ARG:1
+				;スルー
+				CASE 0
+					PRINTFORMDW 去り際、幽香は相手の触手を盛大に踏みつけていった。
+				;逃がさない　味方全員射精中毒2以上だと発生
+				CASE -1
+IF FLAG:AUTOMODE
+    PRINTFORML 「あ……そうよねぇ……こんな状態じゃ、発散するのが普通……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「あ……そうよねぇ……こんな状態じゃ、発散するのが普通……」
+ENDIF
+
+				;膣で
+				CASE 1
+	;				PRINTFORMW 
+				;胸で
+				CASE 2
+	;				PRINTFORMW 
+				;尻で
+				CASE 3
+	;				PRINTFORMW 
+				;口で
+				CASE 4
+	;				PRINTFORMW 
+				;触手で
+				CASE 5
+	;				PRINTFORMW 
+
+			ENDSELECT
+	;ふたなり治療する
+	CASE 461
+				SELECTCASE ARG:1
+					;膣で
+					CASE 0
+						PRINTFORM 「はぁ、はぁっ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　おいしい、触手ちんぽおいしいっ
+						CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 　ナカに入れるのすきぃっ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　ナカに入れるのすきぃっ！」
+ENDIF
+
+						PRINTFORM 「あ――あっ！　出てる、中出しされてるっ、種付け……されると、私もイっちゃうっ
+						CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+					;胸で
+					CASE 1
+IF FLAG:AUTOMODE
+    PRINTFORML 「んっ、胸の中が熱く……ふふ、逃さないわ、干からびるまで谷間に出しなさい？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「んっ、胸の中が熱く……ふふ、逃さないわ、干からびるまで谷間に出しなさい？」
+ENDIF
+
+						PRINTFORM 「ああ、精液が溢れるくらい溜まってるわ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　……んむっ、れろぉ
+						CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+					;尻で　どっちが変態だか
+					CASE 2
+						PRINTFORM 「ナカを使いたいのかしら？　でもだーめ、貴方にはお尻がお似合いよ……んっ
+						CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+						PRINTFORM 「おっきぃ、お尻でこんなに大きくするなんてっ、あぁんっ
+						CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 　更に射精？　変態」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　更に射精？　変態」
+ENDIF
+
+					;口で
+					CASE 3
+						;精液中毒+発情レベルが2以上
+						IF (ABL:14 + CFLAG:28) >= 2
+							PRINTFORM 「んぶっ！　んんっ……こくっ、こくっ、んむ……ごくっ
+							CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+							PRINTFORM 「もっとぉ……もっといっぱい出して、飲ませなさい
+							CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+						ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「んぶっ！？　げほっ、ごほっ、んげっ……こんなに出すなんて」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「んぶっ！？　げほっ、ごほっ、んげっ……こんなに出すなんて」
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 「そんなに気持ちよかったのかしら、変態……ってこの様子じゃ聞いてないかしら」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「そんなに気持ちよかったのかしら、変態……ってこの様子じゃ聞いてないかしら」
+ENDIF
+
+						ENDIF
+					;手で
+					CASE 4
+						;精液中毒+発情レベルが2以上
+						IF (ABL:14 + CFLAG:28) >= 2
+IF FLAG:AUTOMODE
+    PRINTFORML 「うふふ……他人に擦られて喘ぐなんて、本当みっともないわねぇ？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「うふふ……他人に擦られて喘ぐなんて、本当みっともないわねぇ？」
+ENDIF
+
+							PRINTFORM 「あら、出し始めちゃって。んむっ……精液、おいし
+							CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 　もっと出させてあげる」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　もっと出させてあげる」
+ENDIF
+
+						ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「ふん……他人に擦られて喘ぐなんて、みっともないと思わないの」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ふん……他人に擦られて喘ぐなんて、みっともないと思わないの」
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 「って、いきなり射精し始めるんじゃないわよ。そんなに……気持ちよかったようねぇ、その様子だと？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「って、いきなり射精し始めるんじゃないわよ。そんなに……気持ちよかったようねぇ、その様子だと？」
+ENDIF
+
+						ENDIF
+				ENDSELECT
+ENDSELECT
+	
+RETURN

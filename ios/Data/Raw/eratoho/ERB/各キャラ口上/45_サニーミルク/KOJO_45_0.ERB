@@ -1,0 +1,6289 @@
+﻿;*********************************************************
+;　東方触手宮　サニーミルク口上
+;	大まかな骨組みはパルスィ口上、いくさん口上を、
+;	アイテム取得時は霊夢口上を
+;	マップ表示時は雛ちゃん口上を参考にさせて頂きました
+;		2012/06/20	ver 0.01
+;	～メモ～
+;	CFLAG:800 トラウマ値
+;	CFLAG:801 ソロスタートフラグ
+;	CFLAG:802 トラウマ発動で1に、平常時は0
+;*********************************************************
+
+
+;口上選択時のタイトル
+@KOJO_TITLE_45_0
+RESULTS = 東方触手宮　サニーミルク口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_45_0
+PRINTL ************************************************************************************
+PRINTFORML パルスィ、依玖さん、上海、半霊、霊夢口上、雛ちゃん
+PRINTFORML 以上の口上を参考にさせていただきました。
+PRINTFORML この場を借りて御礼申し上げます。
+PRINTL ************************************************************************************
+PRINTFORML 
+PRINTFORML 原作でサニーちゃんが深刻に追い詰められるシーンがないからかなんだか誰てめえ状態！
+PRINTFORML 触手 ＝　妖精　＝　サニーちゃん
+PRINTFORML 仕方ないよね可愛い女の子は触手に襲われるのがお約束なんだから
+PRINTFORML 攻撃、被ダメと使用する機会の多いコマンドは多めに
+PRINTFORML 処女喪失には愛を込めて
+PRINTFORML 		以下特殊な仕様
+PRINTFORML ※オープニングとエンディングが一人旅時に変化します
+PRINTFORML ※嫌な事が重なるとサニーちゃんが弱気になります
+
+;文字色　オレンジ
+@KOJO_DEFAULT_COLOR_45_0
+RETURN RGBCOLOR(255, 183, 76)
+
+;口上本体
+@KOJO_45_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;地の文はOP、EDを除いて地の文です
+CALL KOJO_45_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;文字色設定
+SETCOLOR CFLAG:700
+
+;*****************************************
+;トラウマ発動中
+;*****************************************
+
+IF CFLAG:800 > 30
+
+	;寝てる
+	IF CFLAG:25 && CFLAG:29 != 1
+	SELECTCASE ARG:0
+		;拘束攻撃
+		CASE 12
+			;痛い
+			IF ARG:2 >= 1500
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「うーんうーん…くんなぁ…くんなぁ…」
+					CASE 1
+						PRINTFORML 「もうイヤ…」
+					CASEELSE
+						PRINTFORML 「……おいかけて…こないでよぉ」
+				ENDSELECT
+			;少し痛い
+			ELSEIF ARG:2 >= 500
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「私なんて虐めても…むにゃ……ひぃぃ…」
+					CASE 1
+						PRINTFORML 「死んじゃう……」
+					CASEELSE
+						PRINTFORML 「……げほっ…けほっげほっ」
+				ENDSELECT
+			;あんまり痛くない
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「……っぅぅ」
+					CASE 1
+						PRINTFORML 「……むにゃむにゃ」
+					CASEELSE
+						PRINTFORML 「もっと…うーん……酷いこと…やめ…」
+				ENDSELECT
+			ENDIF
+		;EPダメージ
+		CASE 14
+			;絶頂時
+			IF BASE:EP < ARG:3
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「んんんーーーッ」
+					CASE 1
+						PRINTFORML 「もっ…もうやだあぁぁぁっ………」
+					CASEELSE
+						PRINTFORMDL サニーはビクビクしながら悩ましげに身体をくねらせるがそれでも眠っている……
+				ENDSELECT
+			;EPダメージ3000以上
+			ELSEIF ARG:3 >= 3000
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「ふぁぁ……」
+					CASEELSE
+						PRINTFORML 「…ぁぁん……」
+				ENDSELECT
+			;EPダメージ3000未満
+			ELSE
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「やんっ…」
+					CASE 1
+						PRINTFORML 「んっ……」
+					CASE 2
+						PRINTFORML 「……あっ」
+					CASEELSE
+						PRINTFORML 「むにゃんっ……」
+				ENDSELECT
+			ENDIF
+		;拘束
+		CASE 15
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「んむっ……ん…んん…」
+				CASE 1
+					PRINTFORML 「おうち…かえして……」
+				CASE 2
+					PRINTFORML 「はなして…はなして……むにゃ…」
+			ENDSELECT
+		;寄生攻撃
+		CASE 16
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ナカ……やだぁ……」
+				CASE 1
+					PRINTFORML 「…おなか……あついっ…………」
+				CASE 2
+					PRINTFORML 「これ…･･･以上…」
+			ENDSELECT
+
+		;喪失
+		;死に口上になっちゃうかな…？
+		CASE 33
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「早くさめて……こんな悪夢…」
+				CASE 1
+					PRINTFORML 「目なんて…覚ましたくない……」
+				CASE 2
+					PRINTFORMDL サニーは一度目を覚ましたもののこれは夢だと自分に言い聞かせるように呟き続けながら意識を失った
+			ENDSELECT
+		
+		;処女喪失
+		CASE 136
+			SELECTCASE ARG:1
+				;処女を嫌悪感しか覚えないような異形な魔物に散らされちゃうサニーちゃんかわいい
+				CASE 0
+					SELECTCASE ARG:3
+						;喪失直前
+						CASE 1
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「ダメッ！ダメッ！」
+								CASE 1
+									PRINTFORML 「いやー！誰か！誰かーー！」
+								CASE 2
+									PRINTFORML 「一回休みヤダ！ヤダ！」
+							ENDSELECT
+								PRINTFORMDL サニーは夢でよほど恐ろしい目に合っているのか寝言を叫びながら暴れ始めた
+						;喪失を防ぐ！のは寝てたらできない
+						CASE 2
+						;
+						;あらあらサニーちゃん気持ちよく寝たたら気持ちよく射精されちゃったね
+						;起きたらおまたからこぼれたドロドロの白濁液が内腿にもべったりでびっくりだね
+						;うふふ、一発でめがさめたんじゃないかな？こんなにたっぷり注ぎ込まれちゃってたら妊娠しちゃったかもね触手さんの赤ちゃん
+						CASEELSE
+							PRINTFORML 「やあぁぁぁあ！」
+							PRINTFORMDL サニーが痛みに顔を歪ませ悲鳴を上げた
+							PRINTFORML 「ごめんなさいごめんなさい許してください……」
+							PRINTFORMDL サニーは寝言とは思えないほど早口で瞳に涙を浮かべ悪夢の主に許しを請いている……
+							PRINTFORMDL 力なく両手足を投げ出し触手に陵辱されているサニーの体は触手に貪られるている間
+							PRINTFORMDL 痛みとわずかの快感に時たま小さな悲鳴を上げた
+							PRINTFORMDL 未だに眠っている彼女の涙の代わりのようにぽつっぽつっと鮮血が滴り落ちていった……
+							PRINTFORMDL サニーの目が一度うっすらと開き、自分の下半身へと視線を向けたように思えたが
+							IF FLAG:AUTOMODE
+								PRINTFORMDL まるで現実に目をそむけるかのすぐに深い眠りへと意識を沈めていった……
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW まるで現実に目をそむけるかのすぐに深い眠りへと意識を沈めていった……
+							ENDIF
+							IF CFLAG:29
+								IF FLAG:AUTOMODE
+									PRINTFORML 「これも夢……おやすみ……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「これも夢……おやすみ……」
+								ENDIF
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+		
+	ENDSELECT
+
+	;通常時
+	ELSE
+
+	SELECTCASE ARG:0
+		
+		CASE 1
+			SELECTCASE ARG:1
+				;防御
+				CASE 1
+					;発情
+					IF CFLAG:28
+						PRINTFORML 「絶対にこっちくるんじゃないわよ！」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (このままじゃおかしくなっちゃう…！)
+							CASE 1
+								PRINTFORMDL 　サニーは珍しく深刻な顔で自分の体を抱いている…
+							CASE 2
+								PRINTFORML 「もう嫌！だれか助けて！」
+						ENDSELECT
+					;全裸
+					ELSEIF !BASE:CP
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「こんな格好じゃ動けないわよ……」
+							CASE 1
+								PRINTFORML 「こんな格好じゃまた……」
+							CASE 2
+								PRINTFORMDL 　サニーは耳まで真っ赤にして自分の体を庇っている
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (とにかく自分の身をまもらなくちゃ……！)
+							CASE 1
+								PRINTFORMDL サニーはビクビクしながら攻撃に備えている
+							CASE 2
+								PRINTFORML 「こっちくんなこっちくんな！」
+						ENDSELECT
+					ENDIF
+				;アイテム
+				CASE 2
+					PRINTFORML 「ど、道具を使えば！」
+				;前進
+				CASE 3
+					IF FLAG:10 || FLAG:15
+						PRINTFORML 「イヤよ！あんなのに近づくのなんて！」
+					ELSE
+						PRINTFORML （至近距離でぶんなぐって速攻で終わらせれば怖い目あわないわよね…？）
+					ENDIF
+				;後退
+				CASE 4
+					PRINTFORML 「無理無理！これ以上近くにいたらやられちゃう！」
+				;逃走
+				CASE 5
+					;発情
+					IF CFLAG:28
+						PRINTFORML 「お願いですから今は見逃してくださいよー！」
+						PRINTFORMDL 　耳まで真っ赤にしたサニーは内股気味で必死に駆け出した！
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「このままじゃ本当におかしくなっちゃう…」
+							CASE 1
+								PRINTFORML 「もう怖いのはやだぁ！」
+							CASE 2
+								PRINTFORMDL サニーは必死の形相で駆け出した
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「もうやだあー！」
+							CASE 1
+								PRINTFORML 「とにかく逃げるのよー！」
+							CASE 2
+								PRINTFORML 「私なんておいしくないわよー！」
+							CASE 3
+								PRINTFORML 「いやぁああああ！誰か助けて！」
+						ENDSELECT
+					ENDIF
+				
+				;弾幕攻撃
+				;弱弾幕
+				CASE 10
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML (なんか…ボーってする……)
+							CASE 1
+								PRINTFORML 「もう…諦めてよ……」
+							CASE 2
+								PRINTFORMDL 弱々しく伸びたサニーの手から細いレーザーが放たれた！
+							CASE 3
+								PRINTFORMDL サニーは弱々しい弾幕を放った……
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「とにかくあてるわ！」
+							CASE 1
+								PRINTFORML （こんな攻撃でもしないよりは…）
+							CASE 2
+								PRINTFORMDL サニーはメチャクチャに小さな弾をばら撒いた
+							CASE 3
+								PRINTFORMDL サニーが手を掲げると四方八方に細いレーザーが放たれる！
+						ENDSELECT
+					ENDIF
+				;中弾幕
+				CASE 11
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「これで倒れてよー！」
+							CASE 1
+								PRINTFORML （これならきっとあたるし…大丈夫……よね？）
+							CASE 2
+								PRINTFORMDL 力ない弾幕がサニーを中心に広がった！
+							CASE 3
+								PRINTFORMDL サニーが両手から弱々しいレーザーを数本放った
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「あたると痛いんだからくんなー！」
+							CASE 1
+								PRINTFORML 「後悔する前にあっちいきなさいよー！」
+							CASE 2
+								PRINTFORMDL それなりの密度の弾幕がサニーを中心に綺麗に広がった！
+							CASE 3
+								PRINTFORMDL サニーが手を掲げると四方八方にレーザーが放たれる！
+						ENDSELECT
+					ENDIF
+				;強弾幕
+				CASE 12
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「こないでーー！！」
+							CASE 1
+								PRINTFORML （これがあたってもダメだったら…）
+							CASE 2
+								PRINTFORML 「スペルカードなら！もう倒れてよお！ダイレクトサンライト！」
+							CASE 3
+								PRINTFORMDL サニーが掲げた両手から頼りない極太レーザーが放たれた！
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「倒れてってば！」
+							CASE 1
+								PRINTFORML 「もうあっちいって！ダイレクトサンライト！」
+							CASE 2
+								PRINTFORML 「スペルカード発動ｯ！アグレッシブサンライト！」
+							CASE 3
+								PRINTFORMDL サニーが手を掲げると無数の極太レーザーが発射される！
+						ENDSELECT
+					ENDIF
+				;溜め撃ち
+				CASE 13
+					;溜め
+					IF CFLAG:31 == 2
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「酷い目に会う前に逃げたほうがいいわよ！」
+							CASE 1
+								PRINTFORML （もしこれでも倒せなかったら…やめやめそんなこと考えるの！）
+						ENDSELECT
+					;発射
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「いっけえ！フェイタルフラーーーッシュ！」
+							CASE 1
+								PRINTFORML 「大人しくなって！きらめけ！ダイアモンドッリング！」
+						ENDSELECT
+					ENDIF
+				;ばら撒き弾
+				CASE 14
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ちーかーよーんーなー！」
+						CASE 1
+							PRINTFORML 「これ以上ちかづくんじゃないわよ！」
+					ENDSELECT
+				;貫通弾
+				CASE 15
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「いっけえ！サンシャインッ！ブラストオーー！！」
+						CASE 1
+							PRINTFORML 「突き刺され！サンッシャインニードルウーー！！」
+						CASE 2
+							PRINTFORML 「やっちゃえ氷すら砕く私のレーザー！」
+						CASE 3
+							PRINTFORML 「全員まとめてどっかいけー！」
+					ENDSELECT
+				;消耗武器
+				;弱攻撃
+				CASE 20
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (なんか…ボーってする……)
+							CASE 1
+								PRINTFORML 「もう…諦めてよ……」
+							CASE 2
+								PRINTFORML 「よらないで…こっちこないで…」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「近づいてきたらもっと痛いわよ！」
+							CASE 1
+								PRINTFORML 「寄るんじゃないわよ！？」
+							CASE 2
+								PRINTFORMDL サニーはメチャクチャに武器を振り回した！
+						ENDSELECT
+					ENDIF
+				;中攻撃
+				CASE 21
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (武器を持つのもやっと……)
+							CASE 1
+								PRINTFORML 「いい加減にしてよお……」
+							CASE 2
+								PRINTFORML 「よらないでってばあ……」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「私を襲ったことを後悔させてやるわ！」
+							CASE 1
+								PRINTFORML 「それそれそこだー！」
+							CASE 2
+								PRINTFORML 「このくらいの出力ならまだまだあつかえるわ！」
+						ENDSELECT
+					ENDIF
+				;強攻撃
+				CASE 22
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (出力最大なら…)
+							CASE 1
+								PRINTFORML 「もうやだー！」
+							CASE 2
+								PRINTFORML サニーは涙目でめちゃくちゃに攻撃を放った！
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「ズガガガガガガガガ♪」
+							CASE 1
+								PRINTFORML 「最大出力ー！やっつけろー！」
+							CASE 2
+								PRINTFORML 「こいつがあればどんな相手にも負ける気がしないわ！」
+						ENDSELECT
+					ENDIF
+				;節約攻撃
+				CASE 23
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (冷静に…落ち着くのよサニー)
+							CASE 1
+								PRINTFORML (こんな時だからこそ無駄遣いはダメね)
+							CASE 2
+								PRINTFORML (弾切れが怖くて全力なんてだせないわよ……)
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「こんなもんで大丈夫かしら」
+							CASE 1
+								PRINTFORML 「三妖精の頭脳の私はこんな計画的な攻撃だってしちゃうのよ！」
+							CASE 2
+								PRINTFORML 「うん、このくらいで充分ね」
+						ENDSELECT
+					ENDIF
+				;みだれうち
+				CASE 24
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「私に近づくなーー！！」
+							CASE 1
+								PRINTFORML 「全員あっちいってよお！」
+							CASE 2
+								PRINTFORMDL サニーは泣きじゃくりながら武器を撃ち続けている！
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「全員まとめて一掃よ！」
+							CASE 1
+								PRINTFORML 「どいつもこいつもやられちゃえばいいのよ！」
+							CASE 2
+								PRINTFORMDL サニーは武器を必死な形相で撃ち続けている！
+						ENDSELECT
+					ENDIF
+				;一点集中
+				CASE 25
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (これで決めないと…！)
+							CASE 1
+								PRINTFORML 「全力でぶつければ…！」
+							CASE 2
+								PRINTFORML 「お願いだから倒れて！」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「散々やられたおかえしよ！」
+							CASE 1
+								PRINTFORML 「弱点を狙うのは頭脳プレイの基本よ！」
+							CASE 2
+								PRINTFORML 「この新必殺技、次の戦闘に使うんだから…」
+						ENDSELECT
+					ENDIF
+				
+				;非消耗武器
+				;弱攻撃
+				CASE 30
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (なんか…ボーってする……)
+							CASE 1
+								PRINTFORML 「もう…諦めてよ……」
+							CASE 2
+								PRINTFORML 「よらないで…こっちこないで…」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「てやーー！」
+							CASE 1
+								PRINTFORML 「こっちくんな！このっこのっ！」
+							CASE 2
+								PRINTFORMDL サニーはメチャクチャに武器を振り回した！
+						ENDSELECT
+					ENDIF
+				;中攻撃
+				CASE 31
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (あれ……この武器こんなに重かったっけ……)
+							CASE 1
+								PRINTFORML 「これ以上怪我したくなかったらあっちいって！」
+							CASE 2
+								PRINTFORMDL サニーは肩で息をしながら振るえる腕で武器をしっかりと構えた
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「しっかり狙って丁寧に振り回せばあたるものなのよ！」
+							CASE 1
+								PRINTFORML 「サニーパンチ！」
+							CASE 2
+								PRINTFORML 「これ以上やらせないわ！」
+						ENDSELECT
+					ENDIF
+				;強攻撃
+				CASE 32
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「こうなったら身体ごと当たって砕けてやる！」
+							CASE 1
+								PRINTFORML (絶対にこれはあてなきゃ…)
+							CASE 2
+								PRINTFORMDL サニーは両手で武器を握ると悲鳴のような叫び声をあげながら力いっぱい武器を振るった
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「両手で持てば威力は単純に１＋１じゃないのよ！」
+								PRINTFORML 「相乗効果で１×１になるってこと教えてあげる！」
+							CASE 1
+								PRINTFORML 「サニーパンチ！サニーキック！サニーアッパー！」
+							CASE 2
+								PRINTFORML 「そのエッチなうねうね、叩ききってやる！」
+						ENDSELECT
+					ENDIF
+					;下段狙い
+				CASE 33
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML (とにかく足をとめればチャンスが…！)
+							CASE 1
+								PRINTFORML (逃げるチャンスをつくるのよサニー！)
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ルナみたいにかっこ悪くころんじゃえ！」
+							CASE 1
+								PRINTFORML 「ほらほら、足元がすっかすかよ♪」
+						ENDSELECT
+					ENDIF
+				;急所狙い
+				CASE 34
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「弱点はそこ！もう諦めて！」
+							CASE 1
+								PRINTFORML (弱点さえつければきっと…)
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「不意打ちにだまし討ち、卑怯な事はお手の物！サニー様の急所狙いよ！」
+							CASE 1
+								PRINTFORML 「それっ！化物だってここを殴られたら痛いでしょ？」
+						ENDSELECT
+					ENDIF
+				
+				;拘束離脱
+				CASE 42
+					IF ARG:3 == 0
+						;丸呑み
+						IF CFLAG:21
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「やだぁ！出して！出してよぉ！！」
+								CASE 1
+									PRINTFORML 「助けて！誰か助けて！ヤダ！食べられたくない！」
+								CASE 2
+									PRINTFORMDL サニーは弱々しくぬめる肉壁に指をかけた…
+								CASE 3
+									PRINTFORML 「イヤイヤイヤイヤイヤ！！」
+									PRINTFORML 「食べられて一回休みなんて絶対にイヤあああ！」
+							ENDSELECT
+							;発情
+							ELSEIF CFLAG:28
+								PRINTFORML (食べられるの…キモチイイ……)
+								PRINTFORML (って何考えてるの私！早くにげないと…！)
+							;その他
+							ELSE
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「出せー！出せってばー！」
+								CASE 1
+									PRINTFORML 「もう怖いのやだ！吐いて！早く吐いてえ！」
+								CASE 2
+									PRINTFORMDL サニーはメチャクチャに手足を振り回し暴れている
+								CASE 3
+									PRINTFORMDL サニーは肉壁をひっかいたりかみついたり思いつく限りの抵抗をしている
+							ENDSELECT
+							ENDIF
+						;拘束
+						ELSE
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「離して！お願いだから！」
+								CASE 1
+									PRINTFORML 「もう酷いことしないでよぉ！」
+								CASE 2
+									PRINTFORMDL 必死に抵抗するサニーの手足から力強さが感じられない……
+								CASE 3
+									PRINTFORML 「充分うっぷんはらしたでしょう？」
+									PRINTFORML 「いい加減はなして…！」
+							ENDSELECT
+							;発情
+							ELSEIF CFLAG:28
+								PRINTFORML (このまま身を任せればなにもわかんなくなって楽に…)
+								PRINTFORML (ううん、そうなる前ににげなくちゃ)
+							;その他
+							ELSE
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「はーなーしーてー！」
+								CASE 1
+									PRINTFORML 「どうしてそんなことばっかりするのよー！」
+								CASE 2
+									PRINTFORMDL サニーはメチャクチャに手足を振り回し暴れている
+								CASE 3
+									PRINTFORMDL サニーは悲痛な悲鳴をあげながら暴れると触手に思い切りかみついた！
+							ENDSELECT
+							ENDIF
+						ENDIF
+					ENDIF
+				;力溜め
+				CASE 43
+					;発情
+					IF CFLAG:28
+						PRINTFORML 「と、とにかくチャンスを…んんっ……」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML (次でなんとしても逃げないと…！)
+							CASE 1
+								PRINTFORML (チャンスを逃したらまた……)
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORMDL サニーは瞳に涙を浮かべながらチャンスを伺っている
+							CASE 1
+								PRINTFORML 「次で…次でにげなくちゃ」
+						ENDSELECT
+					ENDIF
+				
+				;諦め
+				CASE 44
+					
+					SELECTCASE RAND:6
+						CASE 0
+							PRINTFORML 「やっぱり妖精じゃどうしょうもないのね……」
+						CASE 1
+							PRINTFORML 「せめて……はやく楽にして」
+						CASE 2
+							PRINTFORML 「もう怖いのやだよぉ……」
+						CASE 3
+							PRINTFORMDL サニーはぶつぶつと何かを呟いて気を紛らわしている
+						CASE 4
+							PRINTFORMDL サニーはもう一度抵抗を試みようとしたがすぐに抑え込まれてしまった
+						CASE 5
+							PRINTFORMDL 啜り泣くサニーの喉はすぐに悲鳴をあげるために使われることになった
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「目が覚めたら…この夢もおしまいよね…？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「目が覚めたら…この夢もおしまいよね…？」
+							ENDIF
+					ENDSELECT
+				;動けない
+				CASE 45
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「うくっ…」
+						CASE 1
+							PRINTFORML 「う、動けない！」
+					ENDSELECT
+				
+				;Ａを守る
+				CASE 50
+					PRINTFORML 「こんなとこ触んないで！」
+					PRINTFORMDL サニーは必死におしりを庇っている
+				;Ｂを守るなんてとんでもない！
+				;ほらサニーちゃん、お兄さんにミルクをちょうだい
+				CASE 51
+					PRINTFORML 「おっぱいなんてさわんないで！」
+					PRINTFORMDL サニーは胸を守ろうと必死に身をよじった
+				;Ｃを守る
+				CASE 52
+					PRINTFORML 「そこはいやなの！こないで！」
+					PRINTFORMDL サニーは太ももを這い上がる触手の気配に慌てて前を隠した
+				;Ｖを守る
+				;処女を必死に守るサニーちゃんかわいい
+				CASE 53
+					IF TALENT:0
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「ダメよダメ！絶対にそこだけはダメなんだから！！」
+						CASE 1
+							PRINTFORML 「！？！？」
+						CASE 2
+							PRINTFORML 「あんたなんかに絶対にはじめてはあげないわよ！！」
+						CASE 3
+							PRINTFORML 「それだけは本当にイヤなの！やめて！」
+						CASEELSE
+							PRINTFORML 「エッチ！変態！ロリコン！」
+					ENDSELECT
+							PRINTFORMDL 初めてを死守しようとサニーは必死に抵抗している！
+					ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「もうナカに入れるのいやだよぉ！」
+						CASE 1
+							PRINTFORML 「やだやだやだやだやだやだやだ」
+						CASE 2
+							PRINTFORML 「赤ちゃんいらない！赤ちゃんほしくない！」
+					ENDSELECT
+							PRINTFORMDL サニーは必死の形相でアソコを守っている
+					ENDIF
+			ENDSELECT
+		;拘束攻撃
+		CASE 5
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「もう…やめて……」
+					CASE 1
+						PRINTFORMDL サニーは虚ろな瞳のままなすがままだ…
+					CASE 2
+						PRINTFORML 「ごめん…なさい……」
+				ENDSELECT
+			ELSE
+			SELECTCASE ARG:3
+				;拘束
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ひゃっ！うそっ！？」
+						CASE 1
+							PRINTFORML 「こないでこないでこないで！」
+						CASE 2
+							PRINTFORML 「ひいいっ！きもちわるいっ！」
+					ENDSELECT
+				;丸呑み
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「私なんておいしくないのにどうしてなのよぉ！」
+						CASE 1
+							PRINTFORML 「食べられちゃう！食べられちゃう！」
+						CASE 2
+							PRINTFORML 「もうやだぁ！食べられるの怖いよお！」
+					ENDSELECT
+			ENDSELECT
+			ENDIF
+			
+		;寄生攻撃
+		;下のお口からいっぱいいっぱいミルクごくごくしようねー
+		CASE 6
+			;処女はどんどん妊娠させちゃおうねー
+			;喪失中
+			IF CFLAG:29 && TALENT:0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やめ……て……」
+					CASE 1
+						PRINTFORMDL サニーは処女膜を引きちぎり胎内を目指す触手を前にしても抵抗できずにいる…
+					CASE 2
+						PRINTFORML 「………いっそ…一回休みに…」
+				ENDSELECT
+			;ただの処女
+			ELSEIF TALENT:0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「こ、こんどは何をする気なの！？」
+					CASE 1
+						PRINTFORMDL サニーは太股を這い上がる触手の感触に引きつった悲鳴をあげた
+					CASE 2
+						PRINTFORML 「初めてなの･･･ねえ、許して…」
+				ENDSELECT
+			;喪失中
+			ELSEIF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やめ……て……」
+					CASE 1
+						PRINTFORMDL サニーは子宮を欲望で満たそうとする触手を前に何も出来ずにいる
+					CASE 2
+						PRINTFORML 「………ぁぁ…ぁあぁ…」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ひ、ひぃぃいぃ！？」
+					CASE 1
+						PRINTFORML 「いやあああ！もうそれはやめて！」
+					CASE 2
+						PRINTFORMDL サニーは耳を覆いたくなるような悲痛な悲鳴をあげ必死に抵抗を始めた！
+				ENDSELECT
+			ENDIF
+			
+				
+		;HPダメージ
+		CASE 12
+			;HPがないor喪失中
+			IF BASE:HP == 0 || CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「……痛い」
+					CASE 1
+						PRINTFORML 「もう………ゆるして……」
+					CASEELSE
+						PRINTFORML 「あ…ッ…」
+				ENDSELECT
+			;痛い
+			ELSEIF ARG:2 >= 1500
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぎゃっ！」
+					CASE 1
+						PRINTFORML (ぅぅ…このままじゃ意識が…)
+					CASEELSE
+						PRINTFORML 「！？」
+				ENDSELECT
+			;少し痛い
+			ELSEIF ARG:2 >= 500
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「痛いっ！」
+					CASE 1
+						PRINTFORML 「あいたたた…」
+					CASEELSE
+						PRINTFORML 「いったーーい！」
+				ENDSELECT
+			;あんまり痛くない
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「いたたた…」
+					CASE 1
+						PRINTFORML 「ま、まだかすり傷よ！」
+					CASEELSE
+						PRINTFORML 「このくらい痛くないんだから…」
+				ENDSELECT
+			ENDIF
+		;EPダメージ
+		CASE 14
+		;喪失時
+			IF CFLAG:29
+					;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ゆるじでえええ！」
+						CASE 1
+							PRINTFORML 「だずげでぇ！だずげでぇぇ……ぃやだぁぁあ゛あ゛！」
+						CASEELSE
+							PRINTFORMDL サニーは言葉にならない声をあげ全身を痙攣させている……
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「もうおうちかえしてよお……」
+						CASE 1
+							PRINTFORML 「気持ちいいのやだぁ……」
+						CASEELSE
+							PRINTFORML 「ひっく……えっく……」
+					ENDSELECT
+				ENDIF
+			ELSE
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「もうっ！もうっおかしくッーーー」
+						CASE 1
+							PRINTFORML 「気持ちいいっこれ以上……あぁぁ！？」
+						CASEELSE
+							PRINTFORML 「あっ……ーーーーーーーー！？」
+					ENDSELECT
+				;EPダメージ3000以上
+				ELSEIF ARG:3 >= 3000
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ひひゃあぁあ」
+						CASEELSE
+							PRINTFORML 「や、やめれよぉお」
+					ENDSELECT
+				;EPダメージ3000未満
+				ELSE
+					;小ダメージを焦らしと取る感性は発情中
+					IF ( BASE:EP - ARG:3 ) < 3000 && CFLAG:28
+						PRINTFORML 「あとちょっと…あとちょっとなのにぃ…」
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「やんっ…」
+							CASE 1
+								PRINTFORML 「変なトコさわらないで…！」
+							CASE 2
+								PRINTFORML 「もうやめてよ！」
+							CASEELSE
+								PRINTFORML 「ヘンなとこばっかさわんないで！このロリコン！」
+								;サニーちゃんにロリコンって罵られながらも黙々と膨らみかけの揉みがいのないぺったんこの胸を撫で続けて
+								;かまれようがひっかかれようが本能のままにひたすらあえて乳首には触れないように気をつけながら服のうえから触りつづけて
+								;次第に罵り疲れたサニーちゃんが静かになすがままになっていく様をじっくりと観察しつつも手は止めず
+								;段々と頬が怒り以外の理由で興奮し染め上がっていくのを、もどかしそうに腿をすり合わせるのを確認したあたりで
+								;一気に腕を服とスカートの中に突っ込んで直接下と上のぽっちを弄りながら「もしかしてきもちいいの？」って耳元で囁きたい
+						ENDSELECT
+					ENDIF
+				ENDIF
+			ENDIF
+		;拘束攻撃命中
+		;内容はそのうち…
+		CASE 15
+
+		;寄生攻撃命中
+		;だけどV防御中に矛盾でちゃったから一旦封印。そのうちいじろう
+		CASE 16
+			;そう☆しつ
+			IF CFLAG:29
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORMDL サニーは虚ろな瞳で自分の下腹部で脈動する触手を見つめている
+					CASE 1
+						PRINTFORML 「ぁぁ……ぁぁぁ……」
+					CASE 2
+						PRINTFORML 「ぐすっ…ひっく……」
+					CASEELSE
+						PRINTFORMDL ぐったりとしているサニーの股間と触手の隙間から白濁液がこぼれていく…
+				ENDSELECT
+	;		ELSEIF TALENT:0
+	;			SELECTCASE RAND:2
+	;			CASE 0
+	;				PRINTFORML 「え……」
+	;				PRINTFORML 「え…？」
+	;				PRINTFORMDW サニーは自分の下半身を強引に押し広げる異物の感覚に顔を一気に青ざめさせた
+	;				PRINTFORML 「うそ…うそでしょ…？」
+	;				PRINTFORMDL サニーの表情があっというまにぐしゃりと子供のような泣き顔に変わる。
+	;				PRINTFORMDL だが、彼女が泣き出すより早く、突き入れられた触手は容赦なく血の滴る彼女の膣を蹂躙しはじめた…
+	;				PRINTFORML 「痛い痛い痛い！抜いて！はやくそれ抜いてぇ！」
+	;				PRINTFORMDW 今まで以上に激しく抵抗する彼女の反応を面白がるように触手はサニーを陵辱し続ける…
+	;				PRINTFORMW 「やだ！やだ！」
+	;				PRINTFORMW 「化物の赤ちゃんなんていらないのに！」
+	;				PRINTFORMW 「誰か…助けて……」
+	;				PRINTFORMDW 下半身にこびり付いた生暖かさの不快感にサニーは乾いた笑いをこぼした……
+	;				SIF CFLAG:29
+	;					PRINTFORMDW 瞳の光の消えたサニーの抵抗はみるみるうちに弱々しいものとなりやがてピクリとも動かなくなった……
+	;			CASE 1
+	;				PRINTFORML 「痛ーーーいッ！」
+	;				PRINTFORML 「な……なんなの……？なにしてる…の？」
+	;				PRINTFORMDL 自分の下半身に突き刺さった触手を信じられないといった様子で見つめるサニー
+	;				PRINTFORMDW そんな彼女に触手は動きで答えた。
+	;				PRINTFORML 「ひっ…やああ！死んじゃう！痛すぎて死んじゃうよぉ！」
+	;				PRINTFORMDL 泣き叫び暴れるサニーの割れ目をを押し広げ貫いている触手は激しく前後しながら徐々にその太さを増していく…
+	;				PRINTFORMW 「！？」
+	;				PRINTFORMDL 本能的に危機を感じたサニーはなんとしてでも触手を自分の体内から引き抜こうとするが絡みついた触手がそれを許さない
+	;				PRINTFORMDL 触手が激しく脈打つ度に結合部から鮮やかな破瓜血がまざった白濁液がこぼれ、地面へとぽたぽたと滴った
+	;				PRINTFORML 「あ……これって…コイツの赤ちゃんできちゃうの？」
+	;				PRINTFORMDW ズルリと引き抜かれた触手の先端と自らの膣口からドロリとこぼれるゼリー状の液体をサニーは呆然と見つめている
+	;				SIF CFLAG:29
+	;					PRINTFORMDW 瞳の光の消えたサニーの抵抗はみるみるうちに弱々しいものとなりやがてピクリとも動かなくなった……
+	;			ENDSELECT
+			ELSE
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「ナカはダメーー！」
+					CASE 1
+						PRINTFORML 「気持ち悪い！お腹のなか気持ち悪い！ああぁ……お腹のなかに……ナカ……に…」
+					CASE 2
+						PRINTFORML 「あ…あはは……体の中でビクビクしてる……」
+					CASEELSE
+						PRINTFORMDL サニーはボロボロ泣きながら自分の下腹部で脈動する触手を見つめている
+				ENDSELECT
+			ENDIF
+		;攻撃回避
+		CASE 22 TO 25, 27
+			;発情
+			IF CFLAG:28
+				PRINTFORML 「ひゃあっ！今は私に触っちゃダメなんだから！」
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ひっ！？」
+					CASE 1
+						PRINTFORML 「もうこないで！」
+					CASEELSE
+						PRINTFORML (外れてくれた…)
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「きゃっ！？」
+					CASE 1
+						PRINTFORML 「そっちは残像！これ以上無駄だし諦めて！」
+					CASEELSE
+						PRINTFORML 「あ、あぶなかった…」
+				ENDSELECT
+			ENDIF
+		;寄生攻撃回避
+		;つまり防御したとき？
+		CASE 26
+			;処女だから必死だね
+			IF TALENT:0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「いやああ！ヘンなモノ出すなぁ！」
+					CASE 1
+						PRINTFORML 「やだやだやだ！汚いっ！」
+					CASE 2
+						PRINTFORML 「そんなものかけないでよぉ！」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やめて！あんたの子供なんていらない！」
+					CASE 1
+						PRINTFORML 「はぁ…はぁ……なんとかかんとか…」
+					CASE 2
+						PRINTFORML 「だ、大丈夫よね……全部外にでたよね？」
+				ENDSELECT
+			ENDIF
+		;戦意喪失
+		CASE 33
+			;発情
+			IF CFLAG:28
+				PRINTFORML 「ぎもぢいい…きもじいいのぉ……」
+				PRINTFORMDL サニーはヨダレを垂らしながら力なく笑い始めた……
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「誰か助けて……」
+					CASE 1
+						PRINTFORML 「やっぱり妖精じゃ……ダメなのね…」
+					CASEELSE
+						PRINTFORML 「もう………」
+				ENDSELECT
+			ENDIF
+		;服の破れ強度
+		CASE 35
+		;喪失中はだまろうね
+		IF CFLAG:29
+		;
+		ELSE
+			SELECTCASE ARG:1
+			;全裸
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「きゃああ！裸でなんて」
+					CASE 1
+						PRINTFORML 「いやっ！こんな格好してたらまた襲われちゃう！」
+					CASEELSE
+						PRINTFORML 「いやあああ！隠すものなにかないの！？」
+				ENDSELECT
+			;半裸
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「このままじゃ裸にされちゃうっ…」
+					CASE 1
+						PRINTFORML 「下着までボロボロ…早く替えの服みつけなくちゃ…」
+					CASEELSE
+						PRINTFORML 「また裸にされて酷いことされちゃうの…？やだ…そんなの…」
+				ENDSELECT
+			;破れ始め
+			CASE 2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ひぃっ…は、はやくなおさなくちゃ」
+					CASE 1
+						PRINTFORML 「ぎゃー！破けちゃってる……」
+					CASEELSE
+						PRINTFORML 「穴が大きくなる前に着替えないと！」
+				ENDSELECT
+			ENDSELECT
+		ENDIF
+		;アイテム使用時
+		;メッセージはおいおい…
+		CASE 36
+		
+		
+		;寄生された
+		CASE 40
+		;喪失中
+		IF CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もう……しらない……」
+				CASE 1
+					PRINTFORML 「ぁぁぁ…いた………い…」
+				CASEELSE
+					PRINTFORML 「いた…くるし……ぁあ……」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやぁぁ！？お腹の中に何かが！？」
+				CASE 1
+					PRINTFORML 「痛い痛い！押し広げて入ってこないでよぉ！」
+				CASEELSE
+					PRINTFORML 「うえええ…ひどい…どうしてこんなことすんのよお…」
+			ENDSELECT
+		ENDIF
+		
+		;殴られて起きる
+		CASE 41
+			;目が覚めたらぐちょんぐちょん
+			IF CFLAG:20 || CFLAG:21
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「あ、あれ…どうして私捕まって…や、やだ！離してよ！」
+					CASE 1
+						PRINTFORML 「！？」
+						PRINTFORMDL サニーは状況が飲み込みきれないようで目を白黒させている。
+					CASEELSE
+						PRINTFORML 「え…え…？」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「よかった…目が覚めて…」
+					CASE 1
+						PRINTFORML 「ひぃっ！？いつのまに！？」
+					CASEELSE
+						PRINTFORML 「や、やばっ！どうして襲われてるのよ！？」
+				ENDSELECT
+			ENDIF
+
+		;羞恥フラグ
+		CASE 46
+			;拘束中、喪失中は静かにね
+			IF CFLAG:20 || CFLAG:21 || CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「恥ずかしい…」
+					CASE 1
+						PRINTFORML 「ふえぇん…せめて服に困らない生活に戻りたいわ…」
+					CASEELSE
+						PRINTFORML 「あちこちから見られてる気がする…」
+				ENDSELECT
+			ENDIF
+
+		;汚部屋での時間経過
+		CASE 47
+			;拘束中、喪失中は静かにね
+			IF CFLAG:20 || CFLAG:21 || CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「いいかげんにしてよ！このエロ壁！」
+					CASE 1
+						PRINTFORML 「もうやめてってば！」
+					CASEELSE
+						PRINTFORML 「変なとこばっかり触んないでってば…！」
+				ENDSELECT
+			ENDIF
+		
+		;拘束レベルアップ
+		CASE 52
+			;喪失中
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「………」
+					CASE 1
+						PRINTFORML 「……あはは」
+					CASEELSE
+						PRINTFORMDL サニーは苦しそうなうめき声を漏らした…
+				ENDSELECT
+			;丸呑み
+			ELSEIF ARG:2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ちょ、ちょっとシャレになってないわよ！？」
+					CASE 1
+						PRINTFORML 「いやあああ！？やだ！やだ！」
+					CASEELSE
+						PRINTFORML 「やめてよお！出れなくなっちゃう！」
+				ENDSELECT
+			;通常拘束
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ひぃっ！？」
+					CASE 1
+						PRINTFORML 「は、離せってばー！」
+					CASEELSE
+						PRINTFORML 「いやああ！？これ以上くんなあ！」
+				ENDSELECT
+			ENDIF
+		
+		;拘束レベルMAX
+		CASE 53
+			;喪失中
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORMDL サニーの口からはよだれとうめき声がとまらない…
+					CASE 1
+						PRINTFORML 「……もう…おしまい…ね」
+					CASEELSE
+						PRINTFORMDL サニーの瞳から大粒の涙がこぼれ続けている…
+				ENDSELECT
+			;丸呑み
+			ELSEIF ARG:2 && (CFLAG:25 != 1 || CFLAG:29 != 1)
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「このまま消化されちゃうのかしら…」
+					CASE 1
+						PRINTFORML 「……もう…助からないの？」
+					CASEELSE
+						PRINTFORML 「身動きすら取れない…」
+				ENDSELECT
+			;通常拘束
+			ELSEIF CFLAG:25 != 1 || CFLAG:29 != 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML (こんなにからまっちゃったらもう…)
+					CASE 1
+						PRINTFORML 「ねえ…もう満足でしょう？やめてよお…」
+					CASEELSE
+						PRINTFORMDL 身動きが取れなくなったサニーの顔は涙と粘液でぐちゃぐちゃだ…
+				ENDSELECT
+			ENDIF
+		
+		;逃走成功
+		CASE 55
+			;拘束中、喪失中は静かにね
+			IF CFLAG:20 || CFLAG:21 || CFLAG:29
+				;
+			;発情
+			ELSEIF CFLAG:28
+				PRINTFORML 「はーはー…走ったらなんか興奮してきちゃった……」
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「逃げ…きれた……よかったぁ…」
+					CASE 1
+						PRINTFORML 「はぁっ…はぁっ……」
+						PRINTFORML 「ふえええぇえん！もうヤダあ！帰りたいよお！
+					CASEELSE
+						PRINTFORML 「……はぁ…はぁ…こんなに必死になるなんて」
+				ENDSELECT
+			;その他
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ふぅ…もうおいかけてこないわね？」
+				CASE 1
+					PRINTFORML 「はぁ、もう変なことされるのはまっぴらよ」
+				CASEELSE
+					PRINTFORML 「よかった、逃げ切れて…」
+			ENDSELECT
+			ENDIF
+		;!!! v0.05.3で逃走口上の仕様が変わったため、勝手に改変
+		CASE 62
+			PRINTFORML 「%CALLNAME:(ARG:2)%が捕まったのに勝てるわけないわ！撤収よ！撤収！」
+		CASE 63
+			IF TARGET == 1
+				IF CFLAG:21
+					PRINTFORMDL 騒がしかった外が急に静かになった
+					PRINTFORMDL 戦闘がおわったのだろうか？
+					PRINTFORMDL いや、サニーの全身を揉みしだく肉壁の勢いは衰えを少しもみせていない……
+					PRINTFORML (ま、まさかみんな私を置いてにげちゃった……！？)
+					PRINTFORML 「待って！まだ私は生きてるわよー！」
+					IF BASE:CP
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 必死にサニーがもがく度に肉壁と服とが擦れた部分が溶けて肌が晒されてゆく……
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 必死にサニーがもがく度に肉壁と服とが擦れた部分が溶けて肌が晒されてゆく……
+						ENDIF
+					ENDIF
+					PRINTFORML 「置いてかないで！ほんとに食べられちゃう！聞えないの！ねえ！」
+					PRINTFORMDL 肉壁で蠢いていた何本もの触手が伸び、しゅるしゅるとサニーの全身に絡みつき始めた
+					IF FLAG:AUTOMODE
+						PRINTFORML 「やだ！食べられたくない！見捨てないでえええ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「やだ！食べられたくない！見捨てないでえええ！」
+					ENDIF
+				ELSE
+					PRINTFORML 「……ちょ、ちょっと！見捨てていく気！？」
+					PRINTFORML 「酷い！助けて！ねえ！ねえってば！」
+					PRINTFORML 「お願い助けて！助けてよ！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL サニーを嬲る邪魔をする者がいなくなったことを悟った触手が今まで以上の勢いでサニーの身体に迫る…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW サニーを嬲る邪魔をする者がいなくなったことを悟った触手が今まで以上の勢いでサニーの身体に迫る…
+					ENDIF
+					PRINTFORML 「あ…や、やだ……やめて……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 何本もの触手がサニーの反応を悦ぶかのように数度脈打つと小さな体を完全に捕らえるべく一気に襲い掛かった！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 何本もの触手がサニーの反応を悦ぶかのように数度脈打つと小さな体を完全に捕らえるべく一気に襲い掛かった！
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いやあああぁぁぁぁ……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いやあああぁぁぁぁ……！」
+					ENDIF
+				ENDIF
+			ELSE
+				IF CFLAG:21
+					PRINTFORMDL 呑み込まれているサニーの救出を諦めた%CALLNAME:1%はこの場を離れることにした…
+					PRINTFORMDL サニーは自分が捨てられそうなことを察したのか、モンスターの内部で激しくもがき始めた！
+					PRINTFORMDL 悲痛なくぐもった叫びを背中に受けながらも%CALLNAME:1%は逃げることにした
+				ELSE
+					PRINTFORML 「……ちょ、ちょっと！見捨てていく気！？」
+					PRINTFORML 「酷い！助けて！ねえ！ねえってば！」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「お願い助けて！助けてよ！あ…や、やだ……やめて……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「お願い助けて！助けてよ！あ…や、やだ……やめて……」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いやあああぁぁぁぁ……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いやあああぁぁぁぁ……！」
+					ENDIF
+				ENDIF
+			ENDIF
+
+		;戦闘勝利
+		CASE 57
+			;喪失中は静かにしようねえ
+			IF CFLAG:29 || CFLAG:25
+			;戦闘が終わったみたいだけどもうどうでもいいや早く帰りたいこれ以上動けない的な気持ち
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「はぁぁ…倒しても倒してもきりがないわ」
+				CASE 1
+					PRINTFORML 「この調子で倒していけばそのうち怖いのいなくなるかしら…？」
+				CASEELSE
+					PRINTFORML 「はーー…なんとかなったわね」
+			ENDSELECT
+			ENDIF
+		;誰かに会う
+		CASE 101
+			IF ARG:2
+				PRINTFORMDL …？
+				PRINTFORMDL 誰かの弱々しい息遣いが聞えた気がした。
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ひっ？誰かいるの？」
+					CASE 1
+						PRINTFORML （敵！？…じゃなさそうね）
+					CASEELSE
+						PRINTFORML （な、何がいるの！？）
+				ENDSELECT
+			ENDIF
+
+		;別れる
+		CASE 102
+			;喪失キャラ
+			IF ARG:2
+				SELECTCASE NO:(ARG:1)
+				CASE 46
+					PRINTFORML 「こんな場所で寝てるなんてルナったら何やってるのかしら…」
+				CASE 47
+					PRINTFORML 「目を開いて寝てるなんてスターは抜け目がないわね…」
+				CASEELSE
+					PRINTFORML 「元気でたら自力で逃げなさいよ？」
+				ENDSELECT
+			ELSE
+				PRINTFORML (のんびり話をしている場合じゃないわね)
+			ENDIF
+		;雑談
+		CASE 103
+				SELECTCASE NO:(ARG:1)
+					;アリス
+					CASE 14
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「アリスさんがいるなら心強いです」
+							CASE 1
+								PRINTFORML 「外に出たらお祝いにクッキーと紅茶をご馳走してもらっても…ダメですか？」
+						ENDSELECT
+					;ルナ
+					CASE 46
+						SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「随分とげっそりしちゃって」
+						CASE 1
+							PRINTFORML 「はぁ、早く帰りたいわ」
+						ENDSELECT
+					;スター
+					CASE 47
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「スター、なんだかんだで楽しんでない？」
+							CASE 1
+								PRINTFORML 「スターはいいわね、どこに何がいるかわかって…」
+						ENDSELECT
+					CASEELSE
+						SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「妖精は御気楽だなんて言うけれど…これは無理よ無理」
+						CASE 1 
+							PRINTFORML 「おいしいもの…ずっと食べれてないわ」
+						CASE 2
+							PRINTFORML 「たとえ無事に逃げれたとしても夢に見そう…」
+						ENDSELECT
+				ENDSELECT
+		;パーティ加入
+		CASE 109
+			IF CFLAG:29
+				PRINTFORMDL 虚ろな瞳で横たわっているサニーを放っておけない
+				PRINTFORMDL そう思った%CALLNAME:1%はサニーを連れて行くことにした
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「うう…か弱い妖精なので守ってくださいよ？」
+					CASE 1
+						PRINTFORML 「よろしくねー！大人数ならきっと逃げれるわ！」
+					CASEELSE
+						PRINTFORML 「さすがにちょっと心細かったの…」
+				ENDSELECT
+			ENDIF
+		CASE 110
+			;PTメンバーと別れる
+			IF ARG:2
+				IF TARGET == 1
+					;主人公として表示する場合、ARG:1のキャラを見送る
+					PRINTFORML 「ここは二手にわかれましょ！」
+				ELSE
+					;それ以外の場合、自分が抜ける
+					;喪失中
+					IF CFLAG:29
+						PRINTFORMDL ぐったりと力なく床に横たわるサニーを連れながらの探索は難しい
+						PRINTFORMDL そう判断した%CALLNAME:1%はサニーを置いていくことにした
+					ELSE
+						PRINTFORML 「別行動なの…？」
+						PRINTFORML 「うう…何かあったら助けてよね？絶対よ？」
+					ENDIF
+				ENDIF
+			ENDIF
+
+		;アイテム発見
+		CASE 113
+		;喪失中はだまr
+		IF CFLAG:29
+		;
+		ELSE
+			;ARG:1にアイテムID
+			SELECTCASE ARG:1
+				;クロスボウ、魔法の弓矢、クロスボウの弾、魔法の弓矢の弾、マジミサ、ミサ弾
+				CASE 1, 2, 4, 81, 82, 84,
+					IF RAND:2 == 0
+						PRINTFORML 「この程度の武器じゃものたりないわ…」
+					ELSE
+						PRINTFORML 「ないよりはずっとずっとマシだけど…心許ないわね」
+					ENDIF
+				;こんぼう、ナギナタ、白狼刀
+				CASE 10, 11 , 12
+					IF RAND:2 == 0
+						PRINTFORML 「ううー、もっとすごい武器はないの？」
+					ELSE
+						PRINTFORML 「いらないわよこんなよわっちいの！」
+					ENDIF
+				;火炎放射器
+				CASE 3, 83
+					IF RAND:2 == 0
+						PRINTFORML 「草を焼くのには使えそうだけど…」
+					ELSE
+						PRINTFORML 「見た目は派手でもいまいちなのよねえ」
+					ENDIF
+				;苺クロス
+				CASE 5, 85
+					IF RAND:2 == 0
+						PRINTFORML 「んー…いまいち使い方がわからないわねコレ」
+					ELSE
+						PRINTFORML 「とりあえず全力で相手に投げつければいいのかしら…」
+					ENDIF
+				;博麗の御札
+				CASE 6, 86
+					IF RAND:2 == 0
+						PRINTFORML 「これって確か霊夢さんがよく使ってるヤツよね？」
+					ELSE
+						PRINTFORML 「あいつらに襲われてもこれだけ強力なら役に立つわね！」
+					ENDIF
+				;スペルカード
+				CASE 7, 87
+					IF RAND:2 == 0
+						PRINTFORML 「誰の落し物かわからないけど有効に使わせてもらうわよ」
+					ELSE
+						PRINTFORML 「どうしてこんな強力なスペルカードが…うう、考えるのやめやめ」
+					ENDIF
+				;マジカルステッキ
+				CASE 13
+					IF RAND:2 == 0
+						PRINTFORML 「かわいいし強いし優秀ねこれ！」
+					ELSE
+						PRINTFORML 「メルヘンチックだけど意外と戦闘でも使えそう！」
+					ENDIF
+				;ドリル
+				CASE 14
+					IF RAND:2 == 0
+						PRINTFORML 「奴らを穴だらけにしてやる…！」
+					ELSE
+						PRINTFORML 「なんか勝手に動いているのは不気味ね…」
+					ENDIF
+				;陰陽玉
+				CASE 15
+					IF RAND:2 == 0
+						PRINTFORML 「御神体一軍がよかったとか贅沢言ってる場合じゃないわね」
+					ELSE
+						PRINTFORML 「妖怪退治のご利益ある御神体の実力、見せてもらうからね。次点の御神体だけど」
+					ENDIF
+				;緋緋色金の剣
+				CASE 16
+					IF RAND:2 == 0
+						PRINTFORML 「奴らをバッサバッサ気持ちよくきれそうね！」
+					ELSE
+						PRINTFORML 「なんかすごいの見つけちゃった！？」
+					ENDIF
+				;魔導触媒 
+				CASE 20
+					IF RAND:2 == 0
+						PRINTFORML 「んー…？とりあえずお守りみたいにもってればいいのかしらこれ？」
+					ELSE
+						PRINTFORML 「…むー、よくわかんないけど持っておいて損はなさそうね」
+					ENDIF
+				;簡易魔法陣
+				CASE 21
+					IF RAND:2 == 0
+						PRINTFORML 「お、これはあの有名な魔法陣ってやつね！」
+						PRINTFORML 「ところでどう使えばいいの？」
+					ELSE
+						PRINTFORML 「うまく使えばパワーアップが出来ると思うけど…どうつかえばいいやら」
+					ENDIF
+				;使い魔
+				CASE 22
+					IF RAND:2 == 0
+						PRINTFORML 「きゃっ！？て、敵！？…じゃないの？」
+					ELSE
+						PRINTFORML 「むむむむ…これは上手に使えば強力な武器になるかも？」
+					ENDIF
+				;賢者の石
+				CASE 23
+					IF RAND:2 == 0
+						PRINTFORML 「すごく綺麗…見ているだけで嫌なことが忘れられそう…」
+					ELSE
+						PRINTFORML 「素敵な宝石ね…これなら何時間眺めていても飽きないわ」
+					ENDIF
+				;ウイングブーツ
+				CASE 24
+					IF RAND:2 == 0
+						PRINTFORML 「うーん、ぶかぶか…」
+					ELSE
+						PRINTFORML 「上手にはきこなせばもっと機敏にうごけそうね」
+					ENDIF
+				;身代わり人形
+				CASE 25
+					IF RAND:2 == 0
+						PRINTFORML 「アリスさんごめんなさい。こんな状況だから盾に使わせてもらいます」
+					ELSE
+						PRINTFORML 「…アリスさんの人形だと思うけど、私の形してる」
+						PRINTFORML 「私自身を私が身代わりに使えっていうの？」
+					ENDIF
+				;森羅結界
+				CASE 28
+					IF RAND:2 == 0
+						PRINTFORML 「な、なにかしら…なぜかリリーホワイトとの例の事件を思い出したわ…」
+					ELSE
+						PRINTFORML 「ふぁあ…なぜか眠くなるわね」
+					ENDIF
+				;ブラウニー
+				CASE 35
+					IF RAND:2 == 0
+						PRINTFORML 「これもアリスさんの人形なのかしら？」
+					ELSE
+						PRINTFORML 「随分と働きものねえ…疲れないのかしら？」
+					ENDIF
+				;幸運のお守り
+				CASE 36
+					IF RAND:2 == 0
+						PRINTFORML 「お守りかー、いまいち可愛くないのよね」
+					ELSE
+						PRINTFORML 「うーん、ご利益とか言われてもよくわかんないわ」
+					ENDIF
+				;ブラックコーヒー
+				CASE 37
+					IF RAND:2 == 0
+						PRINTFORML 「ミルク！ミルクとお砂糖ないの！？このままじゃ苦くて飲めたもんじゃないわ！」
+					ELSE
+						PRINTFORML 「うええ…このままじゃ苦いわ…。お茶なら苦くても平気なんだけど…」
+					ENDIF
+				;ゴーグル
+				CASE 38
+					IF RAND:2 == 0
+						PRINTFORML 「うーん…メガネの強化版？」
+					ELSE
+						PRINTFORML 「変な形…ご飯炊くのに使うヤツになんとなく似てるわね」
+					ENDIF
+				;日本酒、神酒
+				CASE 52, 53
+					IF RAND:3 == 0
+						PRINTFORML 「きゃー！お酒よお酒！」
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「お酒があるってだけでこんな場所でも心が洗われるわ…」
+					ELSE
+						PRINTFORML 「変な汁とか入ってそうで少しだけ不安…」
+					ENDIF
+				;緑茶、玉露
+				CASE 50, 51
+					IF RAND:2 == 0
+						PRINTFORML 「どうしてあつあつのお茶がこんな場所にあるのよ…」
+					ELSE
+						PRINTFORML 「…か、考えないわよ！どこからどうやって作られたお茶かなんて絶対！」
+					ENDIF
+				;着替えセット
+				CASE 54
+				;全裸
+					IF BASE:3 == 0
+						IF RAND:2 == 0
+							PRINTFORML 「はぁ…やっと服が着れる…」
+						ELSE
+							PRINTFORML 「早く奴らに襲われる前に服を着ないと！」
+						ENDIF
+					ELSE
+						IF RAND:2 == 0
+							PRINTFORML 「これはありがたいわ」
+						ELSE
+							PRINTFORML 「着替えのストックがあるとすごく安心するわね」
+						ENDIF
+					ENDIF
+				CASEELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「お、何か発見！」
+						CASE 1
+							PRINTFORML 「んー？なにかしらコレ？」
+						CASEELSE
+							PRINTFORML 「やった！道具みっけ！」
+					ENDSELECT
+				ENDSELECT
+			ENDIF
+		CASE 125
+			;寄生が進行
+		IF CFLAG:29
+			;寄生が進行
+			IF ARG:1 == 8
+				PRINTFORMDL サニーの体が時々不自然に痙攣している
+			ELSEIF ARG:1 == 4
+				PRINTFORML 「あー…あぁー…」
+				PRINTFORMDL サニーは腹部をしきりに気にしている
+			ELSEIF ARG:1 == 1
+				PRINTFORMDL サニーが突然叫び声をあげ腹部を押えながら地面を転がりまわり始めた！
+				PRINTFORMDL 腹部を押さえ丸くなったサニーはビクビクと激しく痙攣を続けている…
+				PRINTFORMDL 痙攣がおさまる頃には彼女の意識は完全に飛んでいた…
+			ENDIF
+		ELSE
+			IF ARG:1 == 8
+				PRINTFORML 「ひぃ！？お腹の中で何か動いてる…！」
+			ELSEIF ARG:1 == 4
+				PRINTFORML 「もうやだぁ！おなかの中でずっと何かが動いてて…」
+				PRINTFORML 「おなかの中気持ち悪い！ひっ、またぬちゅぬちゅって…！」
+			ELSEIF ARG:1 == 1
+				PRINTFORMDL サニーは頭を抱えると目を大きく見開きボロボロと涙を流し始めた
+				PRINTFORML 「動いてる…動いてる…外に出ようって暴れてる……」
+				PRINTFORML 「どうしよう…このままじゃお腹の中の生き物がでてきちゃう…」
+			ENDIF
+		ENDIF
+		
+		;妊娠が進行
+		CASE 126
+			;喪失中
+			IF CFLAG:29
+				IF ARG:1 == 11
+					PRINTFORML 「……吐き…そう」
+				ELSEIF ARG:1 == 8
+					PRINTFORML 「あははっ……」
+					PRINTFORMDL サニーはお腹を濁った瞳でぼんやりと眺めている
+				ELSEIF ARG:1 == 3
+					PRINTFORML 「もう……産まれる……のね…」
+				ELSEIF ARG:1 == 1
+					PRINTFORMDL サニーは膨らみきった腹部をブツブツと何かを呟きながらずっとさすっている…
+				ENDIF
+			;平常時
+			ELSE
+				IF ARG:1 == 11
+					PRINTFORML 「……この二日酔いみたいな感じ…ううん、そんなはずは」
+				ELSEIF ARG:1 == 8
+						;セーフ
+						IF CFLAG:36 == 1
+							PRINTFORML 「はぁ…変なのいっぱい入れられた心労だったのかしら」
+						;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+						ELSE
+							PRINTFORML 「……お腹の中で動いた」
+							PRINTFORML 「化物の赤ちゃん……できちゃったんだ」
+						ENDIF
+				ELSEIF ARG:1 == 3
+					PRINTFORML 「妖精、諦めも肝心よね…」
+					PRINTFORML 「大人しく育てて大人しく産んでぱぱっとやっつけて……」
+					PRINTFORML 「あ、あれ？どうして涙が…」
+				ELSEIF ARG:1 == 1
+					PRINTFORML 「やっと産まれそうねー。これで楽になれると思うと清々するわ」
+					PRINTFORML 「……産まないで、妊娠しないですめばそれが一番だったんだけどな」
+					PRINTFORMDL サニーは虚ろな瞳で大きく膨らんだ腹部を痛みをごまかすようにさすっている…
+				ENDIF
+			ENDIF
+
+		CASE 127
+			;寄生出産
+			SELECTCASE ARG:1
+				CASE 0
+					PRINTFORML 「痛い痛い痛い痛い痛い痛い！！」
+					PRINTFORML 「お腹っ！破れちゃうっ！暴れないでえ！」
+					PRINTFORMDL サニーはめちゃくちゃに自分の腹部を拳で叩きながら痛い痛いと叫んだ！
+					PRINTFORMDL そんなサニーの事など少しも気にも留めず異形の生物はマイペースに膣口を押し広げ這い出そうと暴れる
+				CASE 1
+					;
+				CASE 2
+					;
+				ENDSELECT
+				
+		CASE 132
+			;部屋を移動（突撃）
+			IF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「とにかく安全な場所に……」
+						CASE 1
+							PRINTFORML (早く外に出たい……)
+						CASEELSE
+							PRINTFORML (お日様をまた見たいわ……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「のんびりしてる時間はないわよ」
+						CASE 1
+							PRINTFORML 「かけあしかけあし」
+						CASEELSE
+							;今最高の　奇跡に
+							PRINTFORML 「のりこめー！」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 133
+			;部屋を移動（慎重）
+			IF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「とにかく安全な場所に……」
+						CASE 1
+							PRINTFORML (早く外に出たい……)
+						CASEELSE
+							PRINTFORML (お日様をまた見たいわ……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「失礼しまーす……」
+						CASE 1
+							PRINTFORML 「そーっとよそーっと……」
+						CASEELSE
+							PRINTFORML (抜き足差し足っと……)
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 134
+			;部屋を移動（待ち伏せ）
+			IF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「とにかく安全な場所に……」
+						CASE 1
+							PRINTFORML (早く外に出たい……)
+						CASEELSE
+							PRINTFORML (お日様をまた見たいわ……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「できれば何もこないといいなあ」
+						CASE 1
+							PRINTFORML 「自分からあえて出て行く必要はないわね」
+						CASEELSE
+							PRINTFORMDL サニーはどこか不安げに身構えている
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 135
+			;部屋を移動（探索）
+			IF TARGET == 1
+			;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「何か…何か状況をよくするものはないの……」
+						CASE 1
+							PRINTFORML (少しでも助けになるものは……)
+						CASEELSE
+							PRINTFORML (罠とかみつけませんように……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「何かないかしら？」
+						CASE 1
+							PRINTFORML 「こっちに何かありそうな予感！」
+						CASEELSE
+							PRINTFORML 「へんなものみつけないといいなあ…」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;処女喪失
+		CASE 136
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE ARG:3
+						CASE 1
+							SELECTCASE RAND:5
+								CASE 0
+									PRINTFORML 「ひっ！？そ、そこだけは」
+								CASE 1
+									PRINTFORML 「！？！？」
+								CASE 2
+									PRINTFORML 「なんてトコ狙ってるのよ！」
+								CASE 3
+									PRINTFORML 「そこだけはご勘弁をー！」
+								CASEELSE
+									PRINTFORML 「絶対にそれだけはダメー！」
+							ENDSELECT
+						CASE 2
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「あ、危なかったー…」
+								CASE 1
+									PRINTFORML 「さきっちょだけだからセーフよね、うん！」
+								CASEELSE
+									PRINTFORML (もうちょっと奥まで入ってたら…)
+							ENDSELECT
+						CASEELSE
+							PRINTFORML 「え……」
+							PRINTFORML 「え…？」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL サニーは自分の下半身を強引に押し広げる異物の感覚に顔を一気に青ざめさせた
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW サニーは自分の下半身を強引に押し広げる異物の感覚に顔を一気に青ざめさせた
+							ENDIF
+							PRINTFORML 「うそ…うそでしょ…？」
+							PRINTFORMDL サニーの表情があっというまにぐしゃりと子供のような泣き顔に変わる。
+							PRINTFORMDL だが、彼女が泣き出すより早く、突き入れられた触手は容赦なく血の滴る彼女の膣を蹂躙しはじめた…
+							PRINTFORML 「痛い痛い痛い！抜いて！はやくそれ抜いてぇ！」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 今まで以上に激しく抵抗する彼女の反応を面白がるように触手はサニーを陵辱し続ける…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 今まで以上に激しく抵抗する彼女の反応を面白がるように触手はサニーを陵辱し続ける…
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「やだ！やだ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「やだ！やだ！」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「化物の赤ちゃんなんていらないのに！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「化物の赤ちゃんなんていらないのに！」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「誰か…助けて……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「誰か…助けて……」
+							ENDIF
+							IF CFLAG:29
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 瞳の光の消えたサニーの抵抗はみるみるうちに弱々しいものとなりやがてピクリとも動かなくなった……
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 瞳の光の消えたサニーの抵抗はみるみるうちに弱々しいものとなりやがてピクリとも動かなくなった……
+								ENDIF
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+		
+		;サニーちゃんとお風呂入りたい
+		;小さくて柔らかい背中をタオルでゴシゴシしたり髪の毛をシャンプーでわしゃわしゃしたり
+		;ゆっくりじっくり丁寧にトリートメントして湯船では抱きしめたままのんびり浸かって…ふふ…ふふふふふへへへほへあへ…
+		CASE 149
+		;サニーちゃんの死に風呂
+		IF CFLAG:29
+		;
+		ELSE
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「お風呂くらいしか楽しみがないわねここ…」
+				CASE 1
+					PRINTFORML 「イヤな出来事の記憶も洗い流せればいいのに」
+				CASE 2
+					PRINTFORML 「さっぱりするわー！」
+				CASE 3
+					PRINTFORML 「はぁ…ベタベタしてないって素晴らしいわね！」
+				CASEELSE
+					PRINTFORMDL サニーは泳いだり沈んだりのんびりしたりと全力で入浴を楽しんでいる
+			ENDSELECT
+		ENDIF
+		
+		;完全捕食
+		;あー…主人公だと相手に関わらず強制的に捕食か…
+		CASE 152
+			SELECTCASE ARG:1
+			CASE 1, 2, 3, 4
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ひっ……！？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ひっ……！？」
+				ENDIF
+				PRINTFORMDL ぐったりとしたまま触手になすがままにされていたサニーだが、
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 突然、まるで全身を包み込むように動きを変えた触手の群れを前に引きつった悲鳴をあげた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 突然、まるで全身を包み込むように動きを変えた触手の群れを前に引きつった悲鳴をあげた。
+				ENDIF
+				PRINTFORMDL 触手の塊はサニーの脚を、腕を、首を、身体を、顔に次々と粘っこい水音を立てながら次々と巻きつき、
+				PRINTFORMDL あっという間にサニーの肌は覆い尽くされたにも関わらずそれでも押し寄せる触手の勢いは止まらない。
+				PRINTFORMDL 甲高い長い悲鳴は何度も何度も繰り返されるが次第に触手の壁に阻まれ細くくぐもったものとなっていく…
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そしてついにはサニーの身体があった場所に胎動する触手のマユのようなものだけが残さた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そしてついにはサニーの身体があった場所に胎動する触手のマユのようなものだけが残さた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL マユの隙間から僅かに覗いていた彼女の羽も、ゆっくりとマユの中へと引き込まれ、見えなくなった…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW マユの隙間から僅かに覗いていた彼女の羽も、ゆっくりとマユの中へと引き込まれ、見えなくなった…
+				ENDIF
+				PRINTFORMDL 
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML (気が…遠く……)
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW (気が…遠く……)
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML (一回休み…だよね？)
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW (一回休み…だよね？)
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「怖い…よお……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「怖い…よお……」
+				ENDIF
+				PRINTFORMDL 
+			ENDSELECT
+		
+		;一回休み
+		CASE 154
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あはは…これは一回休みね……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あはは…これは一回休みね……」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「復活したらお日様みたいな……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「復活したらお日様みたいな……」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML (夢なら覚めて…)
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW (夢なら覚めて…)
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML (もう…こんなとこ出たい……）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW (もう…こんなとこ出たい……）
+			ENDIF
+		
+		;復活！
+		CASE 158
+			SELECTCASE ARG:1
+				;助けてもらった
+				CASE 0
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「…うーん、悪夢はまだ醒めないのね」
+							PRINTFORML 「ちょっとだけ、目が覚めたらいつもの硬い床にいるかもしれないって期待していたのに」
+						CASE 1
+							PRINTFORMDL サニーはふらふらと立ち上がりまだボーっとしている
+						CASE 2
+							PRINTFORML 「ひっ…って安全な場所…？」
+						CASE 3
+							PRINTFORML 「……まだ生きた心地がしないわ」
+						CASEELSE
+							PRINTFORML 「なんだかまだ全身に何か絡み付いてる気がするわ……」
+					ENDSELECT
+				;捨てられた
+				CASE 1
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「ひ、ひぃぃ！」
+							PRINTFORML 「今のうちに……！」
+						CASE 1
+							PRINTFORMDL サニーはふらつく足取りで必死に逃げ出した……
+						CASE 2
+							PRINTFORML (逃げなきゃ…早く逃げなきゃ…)
+						CASE 3
+							PRINTFORML 「まだ……少しでも動けるうちに…」
+						CASEELSE
+							PRINTFORML 「助けて…だれか助けて……」
+					ENDSELECT
+			ENDSELECT
+	;MAP表示時に一言
+	CASE 160
+		;睡眠中は静かにしようね
+		IF CFLAG:25
+		;
+		;喪失時
+		ELSEIF CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「……ぅぅ…ぅぁ」
+				CASE 1
+					PRINTFORML 「………………」
+				CASE 2
+					PRINTFORMDL サニーは虚空を見つめている…
+			ENDSELECT
+		;はじめてのとらうまさん
+		;トラウマ値下がったらまたみれるけどね！
+		ELSEIF CFLAG:802 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ふぇええん…！どうしてこんなに酷い目に遭わなきゃいけないの！？」
+				CASE 1
+					PRINTFORML 「このままじゃ…気が狂いそう…」
+				CASE 2
+					PRINTFORML 「ここに来てから一回休みになったほうがマシな目にばかりあうわ…」
+			ENDSELECT
+			PRINTFORMDL 憔悴しきったサニーからはいつもの元気が感じられない……
+			CFLAG:802 = 1
+		;汎用メッセージ、元気があればあれこれ喋るよ！
+		ELSEIF RAND:3 == 0 && (MAXBASE:MP/4 < BASE:MP || BASE:HP != 0)
+			SELECTCASE RAND:11
+				CASE 0
+					PRINTFORML 「また日当たりのいい場所でお昼寝したい…」
+				CASE 1
+					PRINTFORML 「どこの誰がこんなはた迷惑なものを…」
+				CASE 2
+					PRINTFORML 「うう、いつまでここを探索しないといけないの…」
+				CASE 3
+					PRINTFORML 「！？」
+				CASE 4
+					PRINTFORML 「もうこのにょろにょろ達とも長い付き合いのきがするわ…」
+				CASE 5
+					PRINTFORML 「はあ…」
+				CASE 6
+					PRINTFORML 「そろそろ帰れないかなあ」
+				CASE 7
+					PRINTFORML 「一体今はここに来て何日目なのかしら？」
+				CASE 8
+					PRINTFORML 「帰りたい…」
+				CASE 9
+					PRINTFORML 「外に出たらやりたいこと、いっぱいあるわ」
+				CASEELSE
+					PRINTFORML 「気持ち悪い生き物ばっかり」
+			ENDSELECT
+		
+		;MPが1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もうやだよお…」
+				CASE 1
+					PRINTFORML 「ぐすっ…なんでこんな目に……」
+				CASE 2
+					PRINTFORML 「帰りたい…お日様が恋しい…」
+			ENDSELECT
+		;朦朧
+		ELSEIF FLAG:7 >= 11
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ダメ、目の前が霞む…」
+				CASE 1
+					PRINTFORML 「安全に寝れる場所を急いでみつけなくちゃ…」
+				CASE 2
+					PRINTFORML 「寝なくちゃ逆に危ないわ」
+			ENDSELECT
+		;要睡眠
+		ELSEIF FLAG:7 >= 7
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ねむ……安全な場所ないの？」
+				CASE 1
+					PRINTFORML 「そろそろ寝たい…」
+				CASE 2
+					PRINTFORML 「こんな状態じゃ戦えないわよー」
+			ENDSELECT
+		
+		ELSEIF CFLAG:22
+		;寄生時
+			IF CFLAG:23 == 12
+				PRINTFORML 「…絶対コレなにかいるわよぉ」
+			ELSEIF CFLAG:23 == 8
+				PRINTFORML 「早く取り出さないと手遅れになっちゃう…」
+			ELSEIF CFLAG:23 == 4
+				PRINTFORML 「苦しい……」
+			ELSEIF CFLAG:23 == 2
+				PRINTFORML 「もうだめ…」
+			ELSE
+				PRINTFORML 「？」
+			ENDIF
+		ELSEIF CFLAG:36
+		;妊娠時
+			IF CFLAG:23 == 11
+				PRINTFORML 「嫌な予感がする…」
+			ELSEIF CFLAG:23 == 9
+				PRINTFORML 「なかなか体調がよくならないわねえ」
+			ELSEIF CFLAG:23 == 5
+				PRINTFORML 「赤ちゃん…いらない……」
+			ELSEIF CFLAG:23 == 3
+				PRINTFORML 「お腹、こんなに大きくなっちゃった」
+			ELSEIF CFLAG:23 == 1
+				PRINTFORML 「痛い！死んじゃう！痛い痛い痛い痛い！！」」
+			ENDIF
+		ELSEIF BASE:EP <= 1000 || CFLAG:28
+		;絶頂間際or発情
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML (自分でいじってでも気持ちよくなりたい……)
+				CASE 1
+					PRINTFORML (なんでもいいからだれか気持ちよくして…)
+				CASE 2
+					PRINTFORML 「はぁ…はぁ……」
+			ENDSELECT
+		ELSEIF BASE:CP <= 0
+		;全裸
+			IF ITEM:54
+			;着替えセット所持
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「早く着替えなくっちゃ」
+					CASE 1
+						PRINTFORML 「恥ずかしい…着替えがあるのにどうして私はこんな格好で…」
+					CASE 2
+						PRINTFORML 「たしか着替えはもってたわよねえ」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「着替えは落ちてないの！？」
+					CASE 1
+						PRINTFORML 「こんなかっこじゃ襲われちゃう！」
+					CASE 2
+						PRINTFORML 「もうなんでもいいから着替えになるもの出てきてよぉ」
+				ENDSELECT
+			ENDIF
+		ELSEIF BASE:CP <= MAXBASE:CP / 3
+		;半裸
+			IF ITEM:54
+			;着替えセット所持
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML （そろそろ着替えたいわね）
+					CASE 1
+						PRINTFORML 「こんなボロボロな服を無理に着る必要もないわよね…」
+					CASE 2
+						PRINTFORML 「まだもうちょっと頑張れるような、今すぐにでも着替えたいような…」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「着替えさえあればすぐにでも着替えるのに」
+					CASE 1
+						PRINTFORML 「何かに襲われたらあっというまに裸にされそう…」
+					CASE 2
+						PRINTFORML 「とにかく着替えを見つけないと危ないわ！」
+				ENDSELECT
+			ENDIF
+		;きちゃない
+		ELSEIF BASE:DP >= 100
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ベタベタが多すぎてもうどうしょうもないわ…」
+				CASE 1
+					PRINTFORML 「うう、自分の匂いが気になるほど汚れるなんて女の子として最低ね…」
+				CASE 2
+					PRINTFORML 「お風呂にでも入らないと気が滅入っちゃう」
+			ENDSELECT
+		ELSEIF BASE:DP >= 60
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「落としているつもりでもあちこちにぬるぬるがついてるわね」
+				CASE 1
+					PRINTFORML 「…やつらの臭いがする気がする」
+				CASE 2
+					PRINTFORML (もうそろそろお風呂に入るべきかしら)
+			ENDSELECT
+		ELSEIF BASE:DP >= 30
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ひっ…いつのまにこんな汚れが」
+				CASE 1
+					PRINTFORML 「ちょっときたなくなりはじめてるわね…」
+				CASE 2
+					PRINTFORML 「普段ならこの程度の汚れはきにしないけど…」
+			ENDSELECT
+		;全部ぬけたら(服着ていて元気があって清潔で眠くない)
+		;汎用一言２
+		ELSE
+			SELECTCASE RAND:7
+				CASE 0
+					PRINTFORML 「とにかく前進あるのみね」
+				CASE 1
+					PRINTFORML 「早く出口をみつけなくっちゃ」
+				CASE 2
+					PRINTFORML 「もう酷い目には遭いたくないわ…」
+				CASE 3
+					PRINTFORML 「ん？気のせい？」
+				CASE 4
+					PRINTFORML 「どこかに安全な場所はないかなあ」
+				CASE 5
+					PRINTFORML 「ものすごく長い時間ここにいるようなそれほどでもないような」
+				CASE 6
+					PRINTFORML 「お日様を見れれば元気、でるかしら？」
+				CASEELSE
+					PRINTFORML 「話のネタもつきそう…これは切実な問題よ」
+					;マジで切実
+			ENDSELECT
+		ENDIF
+
+		
+		;好感度でPT離脱
+		CASE 161
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL サニーは突然姿を消したかと思うと軽い足音が遠くへと消えていった
+				CASE 1
+					PRINTFORML 「アンタといたら助かるより先に私が酷い目にあっちゃう！」
+				CASEELSE
+					PRINTFORML 「妖精だからって使い捨てようとしてるのバレバレよ！」
+			ENDSELECT
+
+		;好感度でPT離脱される
+		CASE 162
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「しょうがないでしょ！私が前にでてもどうしょうもないじゃない！」
+				CASE 1
+					PRINTFORML 「まって！私の事見捨てる気なの！？」
+				CASEELSE
+					PRINTFORML 「なんで行っちゃうのよ…バカ！バカ！」
+			ENDSELECT
+		;各種イベント
+		CASE 200
+			;喪失中はs
+			IF CFLAG:29
+			;
+			ELSE
+			SELECTCASE ARG:1
+				;全快、最大値アップ湧き水
+				CASE 130, 132
+					;0飲む？1飲まない？
+					SELECTCASE ARG:2
+						;全回復、最大値＋
+						CASE 0
+							PRINTFORML 「ん…おいしい」
+						CASE 1
+							PRINTFORML 「なんか飲む気が起きないわ…」
+						ENDSELECT
+				CASE 131, 132
+					;0飲む？1飲まない？
+					SELECTCASE ARG:2
+						;EP1
+						CASE 0
+							PRINTFORML 「んげえ！？ぺっぺっぺ…なによこの水！」
+						CASE 1
+							PRINTFORML 「なんか飲む気が起きないわ…」
+						ENDSELECT
+				;澄んだ泉　0で飲む、1で入る、2で無視
+				CASE 133
+					SELECTCASE ARG:2
+						;MP回復
+						CASE 0
+							PRINTFORML 「こんな場所にある泉のクセにおいしいわよね」
+						;EP回復
+						CASE 1
+							PRINTFORML 「はぁ…ひんやり気持ちいい…」
+						;無視
+						CASE 2
+							PRINTFORML 「ん～…今はほっときましょ」
+						ENDSELECT
+				;不思議な泉　0で飲む、1で入る、2で無視
+				CASE 135
+					SELECTCASE ARG:2
+						;HP・MP・EP全快	
+						CASE 0, 1
+							PRINTFORML 「おいしい！なにこれすごい…ってあら？なんでもうないのよー！」
+						;全状態異常治療
+						CASE 1
+							PRINTFORML 「ふぁあ…なんかボーっとして身も心も洗われるようね…」
+						;無視
+						CASE 2
+							PRINTFORML 「むしむし、もう下手なことして怖い目にあうのはまっぴらだわ」
+					ENDSELECT
+				;天井からスライム　1で回避失敗、2で回避成功
+				CASE 136
+					SELECTCASE ARG:2
+						CASE 1
+							IF BASE:CP <= 0
+								PRINTFORML 「残念、あなたの欲しがってる服はもうないのよ」
+							ELSE
+								PRINTFORML 「いやあ！見ないでえ！」
+							ENDIF
+						CASE 2
+							PRINTFORML 「うう、あぶなかった…」
+					ENDSELECT
+				;壁から触手　1で回避失敗、2で回避成功
+				CASE 137
+					SELECTCASE ARG:2
+						CASE 1
+							PRINTFORML 「ひゃあああ！？」
+						CASE 2
+							PRINTFORML 「ひいいい！？危ないわね…なんで壁のクセに襲ってくんのよお…！」
+					ENDSELECT
+				;落とし穴　1で回避失敗、2で回避成功
+				CASE 138
+					SELECTCASE ARG:2
+						CASE 1
+							PRINTFORML 「いやぁあ！？ちょ、ちょっと誰か…引きずりこまれ……やだぁああ！」
+						CASE 2
+							PRINTFORML 「ぎゃっ！？……う、うわぁ落ちなくてよかった」
+					ENDSELECT
+				;桃色ガス　1で回避失敗、2で回避成功
+				CASE 139
+					SELECTCASE ARG:2
+						CASE 1
+							PRINTFORML 「ふぁぁ…ふわふわすりゅわ～…」
+						CASE 2
+							PRINTFORML (な、なんなのよ今度はー！？息するの我慢我慢…)
+					ENDSELECT
+				;蟲
+				;サニーちゃんのお腹がパンパンになるまで卵を産み付けたい
+				CASE 146, 147, 148, 149
+					PRINTFORML 「きゃああああああ！キモイ寄るなくんなこないで…ぁぁああ！？」
+				;落石　1で回避失敗、2で回避成功
+				CASE 150
+					SELECTCASE ARG:2
+						CASE 1
+							PRINTFORML 「………ぅ…ぅぅう…なんで岩なんかが」
+						CASE 2
+							PRINTFORML 「ぎゃあぁあ！？潰れるところだったわ…」
+					ENDSELECT
+			ENDSELECT
+			ENDIF
+		
+		;ワープ
+		CASE 201
+			SELECTCASE ARG:1
+			;飛ぶ前
+				CASE 0
+					PRINTFORML 「きゃっ！？敵襲！？」
+			;飛ぶ後
+				CASE 1
+					PRINTFORML 「みんな無事？」
+					PRINTFORML 「あ…あれ？ここどこ？」
+					PRINTFORML 「私一人でどうしろっていうのよー！？」
+					PRINTFORMDL サニーは膝を抱えてしばらくめそめそと泣いていた…
+			ENDSELECT
+			
+		;遺品
+		;妖精ズはまず遺品を見つけることがなさそうなのでとりあえずパス
+		CASE 202
+			;喪失中
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORMDL サニーは怯えた眼で惨劇の痕に目をやっている…
+					CASE 1
+						PRINTFORML 「やだ……あんなふうになるの……」
+					CASEELSE
+						PRINTFORML 「……怖い…」
+				ENDSELECT
+			ELSE
+			SELECTCASE ARG:1
+				;霊夢
+				CASE 1
+					PRINTFORML 「これってまさか…霊夢さんが…！？」
+					PRINTFORML 「そんな…無理よ無理！霊夢さんがやられちゃうような異変なんて私じゃどうしょうもないわよ！」
+				
+				;魔理沙
+				CASE 2
+					PRINTFORML 「魔理沙さんが持ってたものに似てる気がするけどもしかしてやられちゃった…」
+					PRINTFORML 「だとしたら私でどうこうできることじゃないのかも…」
+				;アリス
+				CASE 14
+					PRINTFORML 「まさかアリスさんが！？」
+					PRINTFORML 「もうクッキーも紅茶も飲めないんだ…」
+				;阿求
+				CASE 48
+					PRINTFORML 「ここでやられたの妖精でうっぷんはらせって言ってた人っぽいわね」
+					PRINTFORML 「嫌なヤツだとおもっていたけどこうなっちゃうと可哀想ね」
+				CASEELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「次は我が身ね…はぁ…」
+						CASE 1
+							PRINTFORML 「きっとこの人も私なんかよりよっぽど強かったんだろうなぁ……」
+						CASEELSE
+							PRINTFORML 「……私はいつまで生き延びれるやら」
+					ENDSELECT
+				ENDSELECT
+			ENDIF
+		
+		CASEELSE
+			;汎用
+	ENDSELECT
+	ENDIF
+
+;*************************************
+;通常時
+;*************************************
+
+ELSE
+
+	;睡姦中…じゃなくて睡眠中限定口上、喪失中は通常口上へ
+	;どこでもどんな状況でも幸せそうに寝れるサニーちゃん可愛い
+	;目覚めた途端恐ろしい現実に気づいて絶望するサニーちゃんはもっと可愛い
+	;目が覚めたらお腹の中のミルクタンクのほうにいっぱいミルクを充填されていて
+	;どろりと入りきらなかったミルクがこぼれているのに気づいてボロボロ泣いちゃうサニーちゃん可愛い
+	;睡眠中に処女喪失していて目覚めたら…みたいなのはどうすればいいのかなぁ、とりあえず文章も思い浮かばないし保留だー
+	;ああでもしっかりふいてあげて本人も知らない間に毎日ミルクを食べさせられててある日、自分のお腹のふくらみが普通じゃないことに気づいて
+	;全く見に覚えがないのに妊娠しちゃってこれは異変よ！ルナ！スター！いくわよー！って元気よくお出かけしちゃうサニーちゃんかわいい…ってあれえ？
+
+	IF CFLAG:25 && CFLAG:29 != 1
+
+	SELECTCASE ARG:0
+		;拘束攻撃
+		CASE 12
+			;痛い
+			IF ARG:2 >= 1500
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「！？」
+					CASE 1
+						PRINTFORML 「げほっ…う、ううーん…」
+					CASEELSE
+						PRINTFORML 「……きゅう」
+				ENDSELECT
+			;少し痛い
+			ELSEIF ARG:2 >= 500
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「や、やめてリリー！私が悪かったわ！謝るから！ひぃいい……」
+						PRINTFORMDL サニーは転がりまわりながら寝言を叫んでいる
+					CASE 1
+						PRINTFORML 「……もう朝？あと１時間だけ……ぐー」
+					CASEELSE
+						PRINTFORML 「むにゃ…お仕置きはやだー……」
+				ENDSELECT
+			;あんまり痛くない
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「？…ぐー…ぐー…」
+					CASE 1
+						PRINTFORML 「痛い……むにゃむにゃ」
+					CASEELSE
+						PRINTFORML 「んー…今日の目覚ましは刺激的ね…zzz」
+				ENDSELECT
+			ENDIF
+		;EPダメージ
+		CASE 14
+			;絶頂時
+			IF BASE:EP < ARG:3
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「んんんーーーッ」
+					CASE 1
+						PRINTFORML 「むにゃっ！？ぁぁっ…おっこちちゃうぅーっ……」
+					CASEELSE
+						PRINTFORMDL サニーはビクビクしながら悩ましげに身体をくねらせるがそれでも眠っている……
+				ENDSELECT
+			;EPダメージ3000以上
+			ELSEIF ARG:3 >= 3000
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「ふぁぁ……」
+					CASEELSE
+						PRINTFORML 「…ぁぁん……えっちぃ」
+				ENDSELECT
+			;EPダメージ3000未満
+			ELSE
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「やんっ…」
+					CASE 1
+						PRINTFORML 「んっ……」
+					CASE 2
+						PRINTFORML 「……あっ」
+					CASEELSE
+						PRINTFORML 「むにゃんっ……」
+				ENDSELECT
+			ENDIF
+		;拘束
+		CASE 15
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「んむっ……ん～？」
+				CASE 1
+					PRINTFORML 「空飛ぶ……まるでメルヘン…むにゃ…」
+				CASE 2
+					PRINTFORML 「ごめんなさーーい！……すぅ…すぅ…」
+			ENDSELECT
+		;寄生攻撃
+		CASE 16
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ふぇ……ふぇあぁ……？」
+				CASE 1
+					PRINTFORML 「…おなか……あついっ…………」
+				CASE 2
+					PRINTFORML 「んん～……なにぃ？…ぁんっ……」
+			ENDSELECT
+
+		;喪失
+		;死に口上になっちゃうかな…？
+		CASE 33
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「早くさめて……こんな悪夢…」
+				CASE 1
+					PRINTFORML 「目なんて…覚ましたくない……」
+				CASE 2
+					PRINTFORMDL サニーは一度目を覚ましたもののこれは夢だと自分に言い聞かせるように呟き続けながら意識を失った
+			ENDSELECT
+		
+		;処女喪失
+		CASE 136
+			SELECTCASE ARG:1
+				;処女を嫌悪感しか覚えないような異形な魔物に散らされちゃうサニーちゃんかわいい
+				CASE 0
+					SELECTCASE ARG:3
+						;喪失直前
+						CASE 1
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「……くしゅぐったいわよぉ…んんっ…もー…zzz」
+								CASE 1
+									PRINTFORML 「やぁん……スターったら酔ってるにょ？…にゃむにゃむ」
+								CASE 2
+									PRINTFORML 「ぐちゅぐちゅぬるぬるぅ～……」
+							ENDSELECT
+								PRINTFORMDL サニーは自身に近づく危機になど少しも気づく様子はない
+						;喪失を防ぐ！のは寝てたらできない
+						CASE 2
+						;
+						;あらあらサニーちゃん気持ちよく寝たたら気持ちよく射精されちゃったね
+						;起きたらおまたからこぼれたドロドロの白濁液が内腿にもべったりでびっくりだね
+						;うふふ、一発でめがさめたんじゃないかな？こんなにたっぷり注ぎ込まれちゃってたら妊娠しちゃったかもね触手さんの赤ちゃん
+						CASEELSE
+							PRINTFORML 「あああぁぁあ……」
+							PRINTFORMDL 薄暗い触手蠢く迷宮内とは思えないような幸せそうな寝顔を浮かべていたサニーが痛みに悲鳴を上げた
+							PRINTFORML 「ふぇ……」
+							PRINTFORMDL サニーは瞳に涙を浮かべ悪夢にうなされている……
+							PRINTFORMDL 力なく両手足を投げ出し触手に陵辱されているサニーの体は触手に貪られるている間
+							PRINTFORMDL 痛みとわずかの快感に時たま小さな悲鳴を上げた
+							PRINTFORMDL 未だに眠っている彼女の涙の代わりのようにぽつっぽつっと鮮血が滴り落ちていった……
+							PRINTFORMDL サニーの目が一度うっすらと開き、自分の下半身へと視線を向けたように思えたが
+							IF FLAG:AUTOMODE
+								PRINTFORMDL まるで現実に目をそむけるかのすぐに深い眠りへと意識を沈めていった……
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW まるで現実に目をそむけるかのすぐに深い眠りへと意識を沈めていった……
+							ENDIF
+							IF CFLAG:29
+								IF FLAG:AUTOMODE
+									PRINTFORML 「これも夢……おやすみ……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「これも夢……おやすみ……」
+								ENDIF
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+		
+	ENDSELECT
+
+	;通常時
+	ELSE
+
+	SELECTCASE ARG:0
+		
+		CASE 1
+			SELECTCASE ARG:1
+				;防御
+				CASE 1
+					;発情
+					IF CFLAG:28
+						PRINTFORML 「い、今はダメー！」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (このままじゃおかしくなっちゃう…！)
+							CASE 1
+								PRINTFORMDL 　サニーは珍しく深刻な顔で自分の体を抱いている…
+							CASE 2
+								PRINTFORML 「もうやだー！」
+						ENDSELECT
+					;全裸
+					ELSEIF !BASE:CP
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「こんな格好じゃ動けないわよ……」
+							CASE 1
+								PRINTFORML 「もー！誰でもいいから早く服を頂戴！」
+							CASE 2
+								PRINTFORML 「こっちみんなエッチ！」
+								PRINTFORMDL 　サニーは耳まで真っ赤にして自分の体を庇っている
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (とにかく自分の身をまもらなくちゃ……！)
+							CASE 1
+								PRINTFORMDL サニーはビクビクしながら攻撃に備えている
+							CASE 2
+								PRINTFORML 「ううー…どうしてこんなことに……」
+						ENDSELECT
+					ENDIF
+				;アイテム
+				CASE 2
+					PRINTFORML 「道具はケチらず使ってこそよ！」
+				;前進
+				CASE 3
+					PRINTFORML 「これだけ近づけばガンガン攻撃できるわね！」
+				;後退
+				CASE 4
+					PRINTFORML 「無理無理！これ以上近くにいたらやられちゃう！」
+				;逃走
+				CASE 5
+					;発情
+					IF CFLAG:28
+						PRINTFORML 「お願いですから今は見逃してくださいよー！」
+						PRINTFORMDL 　耳まで真っ赤にしたサニーは内股気味で必死に駆け出した！
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「このままじゃ本当におかしくなっちゃう…」
+							CASE 1
+								PRINTFORML 「ひぃいい！誰かたすけてー！」
+							CASE 2
+								PRINTFORML 「うわーん！もう家に帰してよお！」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「おたすけー！！」
+							CASE 1
+								PRINTFORML 「困った時はとりあえず逃げるのよ！」
+							CASE 2
+								PRINTFORML 「私達光の三妖精は逃げ足には自信があるの」
+							CASE 3
+								PRINTFORML 「今よっ！退散！」
+						ENDSELECT
+					ENDIF
+				
+				;弾幕攻撃
+				;弱弾幕
+				CASE 10
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML (なんか…ボーってする……)
+							CASE 1
+								PRINTFORML 「もう諦めてよお」
+							CASE 2
+								PRINTFORMDL 弱々しく伸びたサニーの手から細いレーザーが放たれた！
+							CASE 3
+								PRINTFORMDL サニーは弱々しい弾幕を放った……
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「ほらっ！これは避けられないでしょ？」
+							CASE 1
+								PRINTFORML 「当たればいいのよ当たればー！」
+							CASE 2
+								PRINTFORMDL サニーはメチャクチャに小さな弾をばら撒いた
+							CASE 3
+								PRINTFORMDL サニーが手を掲げると四方八方に細いレーザーが放たれる！
+						ENDSELECT
+					ENDIF
+				;中弾幕
+				CASE 11
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「これで倒れてよー！」
+							CASE 1
+								PRINTFORML （これならきっとあたるし…大丈夫……よね？）
+							CASE 2
+								PRINTFORMDL 力ない弾幕がサニーを中心に広がった！
+							CASE 3
+								PRINTFORMDL サニーが両手から弱々しいレーザーを数本放った
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「あたると痛いわよ？」
+							CASE 1
+								PRINTFORML 「妖精だと思ってなめたら後悔するんだから！」
+							CASE 2
+								PRINTFORMDL それなりの密度の弾幕がサニーを中心に綺麗に広がった！
+							CASE 3
+								PRINTFORMDL サニーが手を掲げると四方八方にレーザーが放たれる！
+						ENDSELECT
+					ENDIF
+				;強弾幕
+				CASE 12
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「こないでーー！！」
+							CASE 1
+								PRINTFORML （これがあたってもダメだったら…）
+							CASE 2
+								PRINTFORML 「スペルカードなら！もう倒れてよお！ダイレクトサンライト！」
+							CASE 3
+								PRINTFORMDL サニーが掲げた両手から頼りない極太レーザーが放たれた！
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「光よっ！それっ！」
+							CASE 1
+								PRINTFORML 「くらえっ！ダイレクトサンライト！」
+							CASE 2
+								PRINTFORML 「スペルカード発動ｯ！アグレッシブサンライト！」
+							CASE 3
+								PRINTFORMDL サニーが手を掲げると無数の極太レーザーが発射される！
+						ENDSELECT
+					ENDIF
+				;溜め撃ち
+				CASE 13
+					;溜め
+					IF CFLAG:31 == 2
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ふっふっふ！奥の手を使うわ！」
+							CASE 1
+								PRINTFORML 「妖精の底力ってものを見せてあげるわ！」
+						ENDSELECT
+					;発射
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「いっけえ！フェイタルフラーーーッシュ！」
+							CASE 1
+								PRINTFORML 「魅せてあげる！きらめけ！ダイアモンドッリング！」
+						ENDSELECT
+					ENDIF
+				;ばら撒き弾
+				CASE 14
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ばら撒くのなら得意なのよー！」
+						CASE 1
+							PRINTFORML 「いけいけー！私の弾幕ー！」
+					ENDSELECT
+				;貫通弾
+				CASE 15
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「いっけえ！サンシャインッ！ブラストオーー！！」
+						CASE 1
+							PRINTFORML 「突き刺され！サンッシャインニードルウーー！！」
+						CASE 2
+							PRINTFORML 「やっちゃえ氷すら砕く私のレーザー！」
+						CASE 3
+							PRINTFORML 「全員まとめて相手してあげる！」
+					ENDSELECT
+				;消耗武器
+				;弱攻撃
+				CASE 20
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (なんか…ボーってする……)
+							CASE 1
+								PRINTFORML 「もう諦めてよー」
+							CASE 2
+								PRINTFORML 「よらないで…こっちこないで…」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「それっそれっ♪」
+							CASE 1
+								PRINTFORML 「あはは！踊れ踊れー！」
+							CASE 2
+								PRINTFORMDL サニーはメチャクチャに武器を振り回した！
+						ENDSELECT
+					ENDIF
+				;中攻撃
+				CASE 21
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (武器を持つのもやっと……)
+							CASE 1
+								PRINTFORML 「いい加減にしてよお……」
+							CASE 2
+								PRINTFORML 「よらないでってばあ……」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「これきっもちいいー♪」
+							CASE 1
+								PRINTFORML 「それそれそこだー！」
+							CASE 2
+								PRINTFORML 「このくらいの出力ならまだまだあつかえるわ！」
+						ENDSELECT
+					ENDIF
+				;強攻撃
+				CASE 22
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (出力最大なら…)
+							CASE 1
+								PRINTFORML 「もうやだー！」
+							CASE 2
+								PRINTFORML サニーは涙目でめちゃくちゃに攻撃を放った！
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「ズガガガガガガガガ♪」
+							CASE 1
+								PRINTFORML 「いっけー！最大出力ー！」
+							CASE 2
+								PRINTFORML 「こいつがあればどんな相手にも負ける気がしないわ！」
+						ENDSELECT
+					ENDIF
+				;節約攻撃
+				CASE 23
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (冷静に…落ち着くのよサニー)
+							CASE 1
+								PRINTFORML (こんな時だからこそ無駄遣いはダメね)
+							CASE 2
+								PRINTFORML (弾切れが怖くて全力なんてだせないわよ……)
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「こんなもんで大丈夫かしら」
+							CASE 1
+								PRINTFORML 「三妖精の頭脳の私はこんな計画的な攻撃だってしちゃうのよ！」
+							CASE 2
+								PRINTFORML 「うん、このくらいで充分ね」
+						ENDSELECT
+					ENDIF
+				;みだれうち
+				CASE 24
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「私に近づくなーー！！」
+							CASE 1
+								PRINTFORML 「全員あっちいってよお！」
+							CASE 2
+								PRINTFORMDL サニーは泣きじゃくりながら武器を撃ち続けている！
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「全員まとめて一掃よ！」
+							CASE 1
+								PRINTFORML 「これきもっちいいー♪」
+							CASE 2
+								PRINTFORML 「うふふふ、今の私はどんな敵にだって負ける気がしないわ！」
+						ENDSELECT
+					ENDIF
+				;一点集中
+				CASE 25
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (これで決めないと…！)
+							CASE 1
+								PRINTFORML 「全力でぶつければ…！」
+							CASE 2
+								PRINTFORML 「お願いだから倒れて！」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「二回から目薬をすれば岩をも砕くだっけ？」
+							CASE 1
+								PRINTFORML 「弱点を狙うのは頭脳プレイの基本よ！」
+							CASE 2
+								PRINTFORML 「この新必殺技、また戦争があったら役に立ちそうね！」
+						ENDSELECT
+					ENDIF
+				
+				;非消耗武器
+				;弱攻撃
+				CASE 30
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (なんか…ボーってする……)
+							CASE 1
+								PRINTFORML 「もう…諦めてよ……」
+							CASE 2
+								PRINTFORML 「よらないで…こっちこないで…」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「てやーー！」
+							CASE 1
+								PRINTFORML 「こっちくんな！このっこのっ！」
+							CASE 2
+								PRINTFORMDL サニーはメチャクチャに武器を振り回した！
+						ENDSELECT
+					ENDIF
+				;中攻撃
+				CASE 31
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (あれ……この武器こんなに重かったっけ……)
+							CASE 1
+								PRINTFORML 「これ以上怪我したくなかったらあっちいって！」
+							CASE 2
+								PRINTFORMDL サニーは肩で息をしながら振るえる腕で武器をしっかりと構えた
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「しっかり狙って丁寧に振り回せばあたるものなのよ！」
+							CASE 1
+								PRINTFORML 「サニーパンチ！」
+							CASE 2
+								PRINTFORML 「男の子みたいだけどチャンバラもお手の物！」
+						ENDSELECT
+					ENDIF
+				;強攻撃
+				CASE 32
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「こうなったら身体ごと当たって砕けてやる！」
+							CASE 1
+								PRINTFORML (絶対にこれはあてなきゃ…)
+							CASE 2
+								PRINTFORMDL サニーは両手で武器を握ると悲鳴のような叫び声をあげながら力いっぱい武器を振るった
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「両手で持てば威力は単純に１＋１じゃないのよ！」
+								PRINTFORML 「相乗効果で１×１になるってこと教えてあげる！」
+							CASE 1
+								PRINTFORML 「サニーパンチ！サニーキック！サニーアッパー！」
+							CASE 2
+								PRINTFORML 「今こそ必殺！妖精一刀流奥義よ！」
+						ENDSELECT
+					ENDIF
+					;下段狙い
+				CASE 33
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML (とにかく足をとめればチャンスが…！)
+							CASE 1
+								PRINTFORML (逃げるチャンスをつくるのよサニー！)
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ルナみたいにかっこ悪くころんじゃえ！」
+							CASE 1
+								PRINTFORML 「ほらほら、足元がすっかすかよ♪」
+						ENDSELECT
+					ENDIF
+				;急所狙い
+				CASE 34
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「弱点はそこ！もう諦めて！」
+							CASE 1
+								PRINTFORML (弱点さえつければきっと…)
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「不意打ちにだまし討ち、卑怯な事はお手の物！サニー様の急所狙いよ！」
+							CASE 1
+								PRINTFORML 「それっ！化物だってここを殴られたら痛いでしょ？」
+						ENDSELECT
+					ENDIF
+				
+				;拘束離脱
+				CASE 42
+					IF ARG:3 == 0
+						;丸呑み
+						IF CFLAG:21
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「やだぁ！出して！出してよぉ！！」
+								CASE 1
+									PRINTFORML 「助けて！誰か助けて！ヤダ！食べられたくない！」
+								CASE 2
+									PRINTFORMDL サニーは弱々しくぬめる肉壁に指をかけた…
+								CASE 3
+									PRINTFORML 「イヤイヤイヤイヤイヤ！！」
+									PRINTFORML 「食べられて一回休みなんて絶対にイヤあああ！」
+							ENDSELECT
+							;発情
+							ELSEIF CFLAG:28
+								PRINTFORML (食べられるの…キモチイイ……)
+								PRINTFORML (って何考えてるの私！早くにげないと…！)
+							;その他
+							ELSE
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「出せー！出せってばー！」
+								CASE 1
+									PRINTFORML 「私なんておいしくないし栄養もないんだから！吐き出せー！」
+								CASE 2
+									PRINTFORMDL サニーはメチャクチャに手足を振り回し暴れている
+								CASE 3
+									PRINTFORMDL サニーは肉壁をひっかいたりかみついたり思いつく限りの抵抗をしている
+							ENDSELECT
+							ENDIF
+						;拘束
+						ELSE
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「離せー！おかしくなっちゃいそう！」
+								CASE 1
+									PRINTFORML 「もう酷いことしないでよぉ！」
+								CASE 2
+									PRINTFORMDL 必死に抵抗するサニーの手足から力強さが感じられない……
+								CASE 3
+									PRINTFORML 「充分うっぷんはらしたでしょう？」
+									PRINTFORML 「いい加減許してよお！」
+							ENDSELECT
+							;発情
+							ELSEIF CFLAG:28
+								PRINTFORML (このまま身を任せればエッチなことしてもらえるのよね…)
+								PRINTFORML (それも悪くはないけど…)
+							;その他
+							ELSE
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「はーなーせー！」
+								CASE 1
+									PRINTFORML 「絡みつくなー！えっち！変態！」
+								CASE 2
+									PRINTFORMDL サニーはメチャクチャに手足を振り回し暴れている
+								CASE 3
+									PRINTFORMDL サニーはぎゃーぎゃー騒いだかと思うと触手に思い切りかみついた！
+							ENDSELECT
+							ENDIF
+						ENDIF
+					ENDIF
+				;力溜め
+				CASE 43
+					;発情
+					IF CFLAG:28
+						PRINTFORML 「と、とにかくチャンスを…んんっ……」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML (次でなんとしても逃げないと…！)
+							CASE 1
+								PRINTFORML (冷静になるのよサニー、チャンスは絶対くるわ…絶対……)
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「今にみてなさい！ギャフンと言わせてやるんだから！」
+							CASE 1
+								PRINTFORML 「こんのぉー！」
+						ENDSELECT
+					ENDIF
+				
+				;諦め
+				CASE 44
+					
+					SELECTCASE RAND:6
+						CASE 0
+							PRINTFORML 「妖精じゃどうしょうもないのかしら……」
+						CASE 1
+							PRINTFORML 「せめて……はやく楽にして」
+						CASE 2
+							PRINTFORML 「このまま一回休みかあ……
+						CASE 3
+							PRINTFORMDL サニーはぶつぶつと何かを呟いて気を紛らわしている
+						CASE 4
+							PRINTFORMDL サニーはもう一度抵抗を試みようとしたがすぐに抑え込まれてしまった
+						CASE 5
+							PRINTFORMDL 啜り泣くサニーの喉はすぐに悲鳴をあげるために使われることになった
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 	「復活したらいつものベッドに戻れるかなあ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 	「復活したらいつものベッドに戻れるかなあ……」
+							ENDIF
+					ENDSELECT
+				;動けない
+				CASE 45
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「うくっ…」
+						CASE 1
+							PRINTFORML 「う、動けない！」
+					ENDSELECT
+				
+				;Ａを守る
+				CASE 50
+					PRINTFORML 「こんな汚いトコさわんなー！」
+					PRINTFORMDL サニーは必死におしりを庇っている
+				;Ｂを守るなんてとんでもない！
+				;ほらサニーちゃん、お兄さんにミルクをちょうだい
+				CASE 51
+					PRINTFORML 「どうして人間も妖怪も化物もミルクミルクって！」
+					PRINTFORMDL サニーは胸を守ろうと必死に身をよじった
+				;Ｃを守る
+				CASE 52
+					PRINTFORML 「ちょ、ちょっとタイムタイム！」
+					PRINTFORMDL サニーは太ももを這い上がる触手の気配に慌てて前を隠した
+				;Ｖを守る
+				;処女を必死に守るサニーちゃんかわいい
+				CASE 53
+					IF TALENT:0
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「ダメよダメ！絶対にそこだけはダメなんだから！！」
+						CASE 1
+							PRINTFORML 「！？！？」
+						CASE 2
+							PRINTFORML 「あんたなんかに絶対にはじめてはあげないわよ！！」
+						CASE 3
+							PRINTFORML 「ぎゃー！なんてことしようとしてんのよエッチ!」
+						CASEELSE
+							PRINTFORML 「エッチ！変態！ロリコン！」
+					ENDSELECT
+							PRINTFORMDL 初めてを死守しようとサニーは必死に抵抗している！
+					ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「絶対にアンタの赤ちゃんなんて作らせないんだから！」
+						CASE 1
+							PRINTFORML 「狙うならもっと大人にしなさいよロリコン！」
+						CASE 2
+							PRINTFORML 「ここだけはダメ！ほんとダメ！！」
+					ENDSELECT
+							PRINTFORMDL サニーは必死の形相でアソコを守っている
+					ENDIF
+			ENDSELECT
+		;拘束攻撃
+		CASE 5
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「もう…やめて……」
+					CASE 1
+						PRINTFORMDL サニーは虚ろな瞳のままなすがままだ…
+					CASE 2
+						PRINTFORML 「ごめん…なさい……」
+				ENDSELECT
+			ELSE
+			SELECTCASE ARG:3
+				;拘束
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ひゃっ！うそっ！？」
+						CASE 1
+							PRINTFORML 「離して！離せっててばー！」
+						CASE 2
+							PRINTFORML 「ひいいっ！きもちわるいっ！」
+					ENDSELECT
+				;丸呑み
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「だめーっ！私なんて美味しくないわよー！」
+						CASE 1
+							PRINTFORML 「いやーー！食べられるーー！」
+						CASE 2
+							PRINTFORML 「妖精なんてまずいだけだってばー！」
+					ENDSELECT
+			ENDSELECT
+			ENDIF
+			
+		;寄生攻撃
+		;下のお口からいっぱいいっぱいミルクごくごくしようねー
+		CASE 6
+			;処女はどんどん妊娠させちゃおうねー
+			;喪失中
+			IF CFLAG:29 && TALENT:0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「今度は……なんなのぉ……」
+					CASE 1
+						PRINTFORMDL サニーは処女膜を引きちぎり胎内を目指す触手を前にしても抵抗できずにいる…
+					CASE 2
+						PRINTFORML 「………もう…えっちこと…イヤ…」
+				ENDSELECT
+			;ただの処女
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「こ、こんどは何をする気なの！？」
+					CASE 1
+						PRINTFORMDL サニーは太股を這い上がる触手の感触に引きつった悲鳴をあげた
+					CASE 2
+						PRINTFORML 「そんな汚いところさわろうとしないで！」
+				ENDSELECT
+			;喪失中
+			ELSEIF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やめ……て……」
+					CASE 1
+						PRINTFORMDL サニーは子宮を欲望で満たそうとする触手を前に何も出来ずにいる
+					CASE 2
+						PRINTFORML 「………ナカ…やだぁ…」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ちょ、ちょっとシャレになってないわよ！」
+					CASE 1
+						PRINTFORML 「いやあああ！もうそれはやめて！」
+					CASE 2
+						PRINTFORML 「なんでえっちなことばっかりやりたがるのよー！」
+				ENDSELECT
+			ENDIF
+			
+				
+		;HPダメージ
+		CASE 12
+			;HPがないor喪失中
+			IF BASE:HP == 0 || CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「……痛い」
+					CASE 1
+						PRINTFORML 「もう………ゆるして……」
+					CASEELSE
+						PRINTFORML 「あ…ッ…」
+				ENDSELECT
+			;痛い
+			ELSEIF ARG:2 >= 1500
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぎゃっ！」
+					CASE 1
+						PRINTFORML 「うぎゃっ！？」
+					CASEELSE
+						PRINTFORML 「！？」
+				ENDSELECT
+			;少し痛い
+			ELSEIF ARG:2 >= 500
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「痛いっ！」
+					CASE 1
+						PRINTFORML 「あいたたた…やってくれたわね！」
+					CASEELSE
+						PRINTFORML 「いったーーい！」
+				ENDSELECT
+			;あんまり痛くない
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「いたたた、もう乱暴ね！」
+					CASE 1
+						PRINTFORML 「もうっ！すりむいちゃったじゃない！」
+					CASEELSE
+						PRINTFORML 「こらー！暴力反対！」
+				ENDSELECT
+			ENDIF
+		;EPダメージ
+		CASE 14
+		;喪失時
+			IF CFLAG:29
+					;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ひぃぃいいぃぃいぃぃ！？」
+						CASE 1
+							PRINTFORML 「だれがだずげでぇぇ！？」
+						CASEELSE
+							PRINTFORMDL サニーは言葉にならない声をあげ全身を痙攣させている……
+					ENDSELECT
+					
+				;その他
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「うええ……」
+						CASE 1
+							PRINTFORML 「気持ちいいのやだぁ……」
+						CASEELSE
+							PRINTFORML 「ひっく……えっく……ゆるして……」
+					ENDSELECT
+				ENDIF
+			ELSE
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「やだっ！やだっ！！なんかヘンーーーッ」
+						CASE 1
+							PRINTFORML 「気持ちいいっ気持ちいいっ気持ちいいのおっ」
+						CASEELSE
+							PRINTFORML 「あっ……ーーーーーーーー！？」
+					ENDSELECT
+				;EPダメージ3000以上
+				ELSEIF ARG:3 >= 3000
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ひひゃあぁあ」
+						CASEELSE
+							PRINTFORML 「や、やめれよぉお」
+					ENDSELECT
+				;EPダメージ3000未満
+				ELSE
+					;小ダメージを焦らしと取る感性は発情中
+					IF ( BASE:EP - ARG:3 ) < 3000 && CFLAG:28
+						PRINTFORML 「いじわるしないでぇ…もっと強くっ……」
+					ELSE
+						SELECTCASE RAND:5
+							CASE 0
+								PRINTFORML 「やんっ…」
+							CASE 1
+								PRINTFORML 「こ、こらっ！なんてとこ触ってんのよ！」
+							CASE 2
+								PRINTFORML 「やめてエッチ！」
+							CASE 3
+								PRINTFORML 「ロリコン！ロリコン！」
+							CASEELSE
+								PRINTFORML 「へんなとこさわんなロリコン！」
+								;サニーちゃんにロリコンって罵られながらも黙々と膨らみかけの揉みがいのないぺったんこの胸を撫で続けて
+								;かまれようがひっかかれようが本能のままにひたすらあえて乳首には触れないように気をつけながら服のうえから触りつづけて
+								;次第に罵り疲れたサニーちゃんが静かになすがままになっていく様をじっくりと観察しつつも手は止めず
+								;段々と頬が怒り以外の理由で興奮し染め上がっていくのを、もどかしそうに腿をすり合わせるのを確認したあたりで
+								;一気に腕を服とスカートの中に突っ込んで直接下と上のぽっちを弄りながら「もしかしてきもちいいの？」って耳元で囁きたい
+						ENDSELECT
+					ENDIF
+				ENDIF
+			ENDIF
+		
+		;拘束攻撃命中
+		;内容はそのうち…
+		CASE 15
+
+				
+		;寄生攻撃命中
+		;だけどV防御中に矛盾でちゃったから一旦封印。そのうちいじろう
+		CASE 16
+			;そう☆しつ
+			IF CFLAG:29
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORMDL サニーは虚ろな瞳で自分の下腹部で脈動する触手を見つめている
+					CASE 1
+						PRINTFORML 「ぎゃぁ……ぁぁぁ……」
+					CASE 2
+						PRINTFORML 「ぐすっ…ひっく……」
+					CASEELSE
+						PRINTFORMDL ぐったりとしているサニーの股間と触手の隙間から白濁液がこぼれていく…
+				ENDSELECT
+	;		ELSEIF TALENT:0
+	;			SELECTCASE RAND:2
+	;			CASE 0
+	;				PRINTFORML 「え……」
+	;				PRINTFORML 「え…？」
+	;				PRINTFORMDW サニーは自分の下半身を強引に押し広げる異物の感覚に顔を一気に青ざめさせた
+	;				PRINTFORML 「うそ…うそでしょ…？」
+	;				PRINTFORMDL サニーの表情があっというまにぐしゃりと子供のような泣き顔に変わる。
+	;				PRINTFORMDL だが、彼女が泣き出すより早く、突き入れられた触手は容赦なく血の滴る彼女の膣を蹂躙しはじめた…
+	;				PRINTFORML 「痛い痛い痛い！抜いて！はやくそれ抜いてぇ！」
+	;				PRINTFORMDW 今まで以上に激しく抵抗する彼女の反応を面白がるように触手はサニーを陵辱し続ける…
+	;				PRINTFORMW 「やだ！やだ！」
+	;				PRINTFORMW 「化物の赤ちゃんなんていらないのに！」
+	;				PRINTFORMW 「誰か…助けて……」
+	;				PRINTFORMDW 下半身にこびり付いた生暖かさの不快感にサニーは乾いた笑いをこぼした……
+	;				SIF CFLAG:29
+	;					PRINTFORMDW 瞳の光の消えたサニーの抵抗はみるみるうちに弱々しいものとなりやがてピクリとも動かなくなった……
+	;			CASE 1
+	;				PRINTFORML 「痛ーーーいッ！」
+	;				PRINTFORML 「な……なんなの……？なにしてる…の？」
+	;				PRINTFORMDL 自分の下半身に突き刺さった触手を信じられないといった様子で見つめるサニー
+	;				PRINTFORMDW そんな彼女に触手は動きで答えた。
+	;				PRINTFORML 「ひっ…やああ！死んじゃう！痛すぎて死んじゃうよぉ！」
+	;				PRINTFORMDL 泣き叫び暴れるサニーの割れ目をを押し広げ貫いている触手は激しく前後しながら徐々にその太さを増していく…
+	;				PRINTFORMW 「！？」
+	;				PRINTFORMDL 本能的に危機を感じたサニーはなんとしてでも触手を自分の体内から引き抜こうとするが絡みついた触手がそれを許さない
+	;				PRINTFORMDL 触手が激しく脈打つ度に結合部から鮮やかな破瓜血がまざった白濁液がこぼれ、地面へとぽたぽたと滴った
+	;				PRINTFORML 「あ……これって…コイツの赤ちゃんできちゃうの？」
+	;				PRINTFORMDW ズルリと引き抜かれた触手の先端と自らの膣口からドロリとこぼれるゼリー状の液体をサニーは呆然と見つめている
+	;				SIF CFLAG:29
+	;					PRINTFORMDW 瞳の光の消えたサニーの抵抗はみるみるうちに弱々しいものとなりやがてピクリとも動かなくなった……
+	;			ENDSELECT
+			ELSE
+				SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「ナカはダメなのにーー！」
+				CASE 1
+					PRINTFORML 「気持ち悪い！お腹のなか気持ち悪い！ああぁ……お腹のなかに……ナカ……に…」
+				CASE 2
+					PRINTFORML 「あ…あはは……体の中でビクビクしてる……」
+				CASEELSE
+					PRINTFORMDL サニーはボロボロ泣きながら自分の下腹部で脈動する触手を見つめている
+			ENDSELECT
+			ENDIF
+		;攻撃回避
+		CASE 22 TO 25, 27
+			;発情
+			IF CFLAG:28
+				PRINTFORML 「ひゃあっ！今は私に触っちゃダメなんだから！」
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ひっ！？」
+					CASE 1
+						PRINTFORML 「わ、私なんて狙っても仕方ないわよ！」
+					CASEELSE
+						PRINTFORML (よかった…よけれたみたいね)
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「残念でしたー♪」
+					CASE 1
+						PRINTFORML 「ふふっ、そっちは残像よ！」
+					CASEELSE
+						PRINTFORML 「そんなんじゃ毛玉一匹倒せやしないわよ」
+				ENDSELECT
+			ENDIF
+		;寄生攻撃回避
+		;つまり防御したとき？
+		CASE 26
+			;処女だから必死だね
+			IF TALENT:0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「いやああ！ヘンなモノ出すなぁ！」
+					CASE 1
+						PRINTFORML 「やだやだやだ！汚いっ！」
+					CASE 2
+						PRINTFORML 「一体なにするつもりよ！」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やめて！あんたの子供なんていらない！」
+					CASE 1
+						PRINTFORML 「ナカになんて絶対にださせないわよ！」
+					CASE 2
+						PRINTFORML 「赤ちゃんならもっと大人と作って！」
+				ENDSELECT
+			ENDIF
+		;戦意喪失
+		CASE 33
+			;発情
+			IF CFLAG:28
+				PRINTFORML 「ぎもぢいい…きもじいいのぉ……」
+				PRINTFORMDL サニーはヨダレを垂らしながら力なく笑い始めた……
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「誰か助けて……」
+					CASE 1
+						PRINTFORML 「やっぱり妖精じゃ……ダメなの…？」
+					CASEELSE
+						PRINTFORML 「もう好きにして……」
+				ENDSELECT
+			ENDIF
+			
+		;服の破れ強度
+		CASE 35
+		;喪失中はだまろうね
+		IF CFLAG:29
+		;
+		ELSE
+			SELECTCASE ARG:1
+			;全裸
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぎゃあああ！返せエッチ！」
+					CASE 1
+						PRINTFORML 「ちょっと！こんな格好で動き回れって言うの！？」
+					CASEELSE
+						PRINTFORML 「いやあああ！私だって女の子なのよ！？」
+				ENDSELECT
+			;半裸
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「うわーん！これじゃまだ下着姿のほうがマシよ！」
+					CASE 1
+						PRINTFORML 「この絶妙に隠れてほしいところが隠れない感じが最悪ね…」
+					CASEELSE
+						PRINTFORML 「うう…早く着替えをみつけなくっちゃ…」
+				ENDSELECT
+			;破れ始め
+			CASE 2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「お気に入りなのに酷いわ！」
+					CASE 1
+						PRINTFORML 「ぎゃー！破けちゃってる……」
+					CASEELSE
+						PRINTFORML 「家ならパパッと直せるけどこんな場所じゃ……」
+				ENDSELECT
+			ENDSELECT
+		ENDIF
+
+		;アイテム使用時
+		;メッセージはおいおい…
+		CASE 36
+
+		;寄生された
+		CASE 40
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぁぐっ…………」
+					CASE 1
+						PRINTFORML 「…いた………い…やめ…」
+					CASEELSE
+						PRINTFORML 「や…くるし……」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ひぃっ！？何かがお腹の中で動いてるっ！？」
+					CASE 1
+						PRINTFORML 「いたたたた！大きい何かが今ズルッって…」
+					CASEELSE
+						PRINTFORML 「うええ…なにかお腹の中に張り付いたような…」
+				ENDSELECT
+			ENDIF
+		;殴られて起きる
+		CASE 41
+			;目が覚めたらぐちょんぐちょん
+			IF CFLAG:20 || CFLAG:21
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ひぃっ！？なんで私捕まってるワケ！？」
+					CASE 1
+						PRINTFORML 「ま、まって！寝坊したのは悪かったって思ってるから離してーー！」
+					CASEELSE
+						PRINTFORML 「親切にベッドに運んでくれるって雰囲気じゃないわね…」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ううーん…気持ちよく寝てたのに…」
+					CASE 1
+						PRINTFORML 「もう朝？ってぎゃーーー！？」
+					CASEELSE
+						PRINTFORML 「あら、起こしてくれてありがとう。って言うわけないでしょ！」
+				ENDSELECT
+			ENDIF
+			
+		;羞恥フラグ
+		CASE 46
+			;拘束中、喪失中は静かにね
+			IF CFLAG:20 || CFLAG:21 || CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぅぅぅ、恥ずかしい…」
+					CASE 1
+						PRINTFORML 「こっちむくな変態！」
+					CASEELSE
+						PRINTFORMDL 光の屈折で集められた強い光が大切な部分を隠してはいるが恥ずかしそうだ
+				ENDSELECT
+			ENDIF
+		
+		;汚部屋での時間経過
+		CASE 47
+			;拘束中、喪失中は静かにね
+			IF CFLAG:20 || CFLAG:21 || CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ひゃあぁ！？壁のクセになにすんのよ！」
+					CASE 1
+						PRINTFORML 「こ、このっ！邪魔しないで！」
+					CASEELSE
+						PRINTFORML 「覚えてなさいよ！そのうち浄化してやんだから！」
+				ENDSELECT
+			ENDIF
+		;拘束レベルアップ
+		CASE 52
+			;喪失中
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「………」
+					CASE 1
+						PRINTFORML 「……バカ」
+					CASEELSE
+						PRINTFORMDL サニーは苦しそうなうめき声を漏らした…
+				ENDSELECT
+			;丸呑み
+			ELSEIF ARG:2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぎゃー！ズルっていったぁ！？」
+					CASE 1
+						PRINTFORML 「これって大ピンチって奴じゃ…」
+					CASEELSE
+						PRINTFORML 「どんどん呑み込まれてないコレ！？」
+				ENDSELECT
+			;通常拘束
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ちょっとちょっと！もう捕まってるのみてわかんないの！？」
+					CASE 1
+						PRINTFORML 「はなせー！」
+					CASEELSE
+						PRINTFORML 「絡まるぅ！？」
+				ENDSELECT
+			ENDIF
+
+		;拘束レベルMAX
+		CASE 53
+			;喪失中
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「………」
+					CASE 1
+						PRINTFORML 「……助からない…のかな」
+					CASEELSE
+						PRINTFORMDL サニーの瞳から大粒の涙がこぼれ続けている…
+				ENDSELECT
+			;丸呑み
+			ELSEIF ARG:2 && (CFLAG:25 != 1 || CFLAG:29 != 1)
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぎゃー！これってもう体のかなり奥じゃない！？」
+					CASE 1
+						PRINTFORML 「ううう…動けない…どうしよう」
+					CASEELSE
+						PRINTFORML 「こうなったらまだ動く頭を駆使するのよサニー」
+				ENDSELECT
+			;通常拘束
+			ELSEIF CFLAG:25 != 1 || CFLAG:29 != 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ちょっとー！これアンタ達はほどけるの！？」
+					CASE 1
+						PRINTFORML (手足すら動かせないなんて大ピンチかも…)
+					CASEELSE
+						PRINTFORMDL 身動きが取れなくなったサニーは声を張り上げ身をよじっている
+				ENDSELECT
+			ENDIF
+
+
+		;逃走成功
+		CASE 55
+			;拘束中、喪失中は静かにね
+			IF CFLAG:20 || CFLAG:21 || CFLAG:29
+				;
+			;発情
+			ELSEIF CFLAG:28
+				PRINTFORML 「はーはー…走ったらなんか興奮してきちゃった……」
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「よ、よかった……逃げ切れた……」
+					CASE 1
+						PRINTFORML 「はぁっ…はぁっ…さすがに今回はひやっとしたわ…」
+					CASEELSE
+						PRINTFORML 「まいた…のよね？」
+				ENDSELECT
+			;その他
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「よしっ！もうおいかけてこないわね！」
+				CASE 1
+					PRINTFORML 「ふふーん、逃げることに関しては右に出るものはいないのよ」
+				CASEELSE
+					PRINTFORML 「ふふっ、ちょろいちょろい」
+			ENDSELECT
+			ENDIF
+		;!!! v0.05.3で逃走口上の仕様が変わったため、勝手に改変
+		CASE 62
+			PRINTFORML 「こっちを見てない今がチャンス！撤退よ撤退！」
+		CASE 63
+			IF TARGET == 1
+				IF CFLAG:21
+					PRINTFORMDL 騒がしかった外が急に静かになった
+					PRINTFORMDL 戦闘がおわったのだろうか？
+					PRINTFORMDL いや、サニーの全身を揉みしだく肉壁の勢いは衰えを少しもみせていない……
+					PRINTFORML 「うう…これは自分の力で何とかしないとヤバそうね…」
+					IF BASE:CP
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 必死にサニーはもがくがその度に肉壁と服とが擦れた部分が溶けて肌が晒されてゆく……
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 必死にサニーはもがくがその度に肉壁と服とが擦れた部分が溶けて肌が晒されてゆく……
+						ENDIF
+					ENDIF
+					PRINTFORML 「だせー！こらー！噛むぞー！引っかくわよー！」
+					PRINTFORMDL 肉壁で蠢いていた何本もの触手がうるさいと言わんばかりにサニーの口へと押し込まれた
+					IF FLAG:AUTOMODE
+						PRINTFORML 「むー！むぐーぐーむぐぐぐーー！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「むー！むぐーぐーむぐぐぐーー！？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 涙目でイヤイヤと首を振るサニーの全身に次々と触手が絡み付いてゆく…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 涙目でイヤイヤと首を振るサニーの全身に次々と触手が絡み付いてゆく…
+					ENDIF
+				ELSE
+					PRINTFORML 「ちょっとー！見捨てるとかさすがに酷くない！？」
+					PRINTFORML 「ほら！まだ頑張れば助けられるわよ！」
+					PRINTFORML 「こらー！聞けー！助けろー！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL サニーを嬲る邪魔をする者がいなくなったことを悟った触手が今まで以上の勢いでサニーの身体に迫る…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW サニーを嬲る邪魔をする者がいなくなったことを悟った触手が今まで以上の勢いでサニーの身体に迫る…
+					ENDIF
+					PRINTFORML 「ひぃい！ちょ、ちょっとほんとにまずいって！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 数本の触手がサニーの手足に巻きつき自由を完全に封じると残りの触手がサニーを食い尽くすべく一斉に襲い掛かった！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 数本の触手がサニーの手足に巻きつき自由を完全に封じると残りの触手がサニーを食い尽くすべく一斉に襲い掛かった！
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「みぎゃあぁああああ……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「みぎゃあぁああああ……！」
+					ENDIF
+				ENDIF
+			ELSE
+				IF CFLAG:21
+					PRINTFORMDL 呑み込まれているサニーの救出を諦めた%CALLNAME:1%はこの場を離れることにした…
+					PRINTFORMDL サニーは身の危険を感じてかモンスターの内部で激しく暴れ始めた！
+					PRINTFORMDL どことなく賑やかなくぐもった叫びを背中に受けながらも%CALLNAME:1%は逃げることにした
+				ELSE
+					PRINTFORML 「ちょっとー！見捨てるとかさすがに酷くない！？」
+					PRINTFORML 「ほら！まだ頑張れば助けられるわよ！」
+					PRINTFORML 「こらー！聞けー！助けろー！」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「みぎゃあぁああああ……！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「みぎゃあぁああああ……！」
+					ENDIF
+				ENDIF
+			ENDIF
+
+		;戦闘勝利
+		CASE 57
+			;喪失中は静かにしようねえ
+			IF CFLAG:29 || CFLAG:25
+			;戦闘が終わったみたいだけどもうどうでもいいや早く帰りたいこれ以上動けない的な気持ち
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ふふん！こんなものかしら？」
+				CASE 1
+					PRINTFORML 「これが妖精の底力よ！」
+				CASEELSE
+					PRINTFORML 「はい、一丁あがりってね♪」
+			ENDSELECT
+			ENDIF
+		;誰かに会う
+		CASE 101
+			IF ARG:2
+				PRINTFORMDL …？
+				PRINTFORMDL 誰かの弱々しい息遣いが聞えた気がした。
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ん？誰かいるの？」
+					CASE 1
+						PRINTFORML （敵かな？人かな？）
+					CASEELSE
+						PRINTFORML （わわわ！誰かいる！？）
+				ENDSELECT
+			ENDIF
+
+		;別れる
+		CASE 102
+			;喪失キャラ
+			IF ARG:2
+				SELECTCASE NO:(ARG:1)
+				CASE 46
+					PRINTFORML 「こんな場所で寝てるなんてルナったら何やってるのかしら…」
+				CASE 47
+					PRINTFORML 「目を開いて寝てるなんてスターは抜け目がないわね…」
+				CASEELSE
+					PRINTFORML 「元気でたら自力で逃げなさいよ？」
+				ENDSELECT
+			ELSE
+				PRINTFORML (のんびり話をしている場合じゃないわね)
+			ENDIF
+		;雑談
+		CASE 103
+				SELECTCASE NO:(ARG:1)
+					;アリス
+					CASE 14
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「アリスさんがいるなら心強いです」
+							CASE 1
+								PRINTFORML 「外に出たらお祝いにクッキーと紅茶をご馳走してもらっても…ダメですか？」
+						ENDSELECT
+					;ルナ
+					CASE 46
+						SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「随分とげっそりしちゃって」
+						CASE 1
+							PRINTFORML 「さすがにこのかくれんぼはスリリング過ぎよね」
+						ENDSELECT
+					;スター
+					CASE 47
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「スター、なんだかんだで楽しんでない？」
+							CASE 1
+								PRINTFORML 「妖怪だかなんだかよくわかんないものに追い回されるのは慣れないわね」
+						ENDSELECT
+					CASEELSE
+						SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「壁から生えてる触手にたまにおいしそうな形のものがあるのよね。罠かしら」
+						CASE 1 
+							PRINTFORML 「私達妖精は食べなくても大丈夫だけど他の人はお腹すくわよね」
+						CASE 2
+							PRINTFORML 「私だってさすがにこれは楽しめないわよー！」
+						ENDSELECT
+				ENDSELECT
+		;パーティ加入
+		CASE 109
+			IF CFLAG:29
+				PRINTFORMDL 虚ろな瞳で横たわっているサニーを放っておけない
+				PRINTFORMDL そう思った%CALLNAME:1%はサニーを連れて行くことにした
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「光の屈折ならお任せあれ！」
+						PRINTFORML 「といってもこう薄暗いとねー…」
+					CASE 1
+						PRINTFORML 「よろしくねー！私がいれば百人力よ！」
+					CASEELSE
+						PRINTFORML 「さあさっそく行くわよー！」
+						PRINTFORML 「お日様が私たちをよんでるわ！」
+				ENDSELECT
+			ENDIF
+		CASE 110
+			;PTメンバーと別れる
+			IF ARG:2
+				IF TARGET == 1
+					;主人公として表示する場合、ARG:1のキャラを見送る
+					PRINTFORML 「ここは二手にわかれましょ！」
+				ELSE
+					;それ以外の場合、自分が抜ける
+					;喪失中
+					IF CFLAG:29
+						PRINTFORMDL ぐったりと力なく床に横たわるサニーをこれ以上連れてはいけない
+						PRINTFORMDL そう判断した%CALLNAME:1%はサニーを置いていくことにした
+					ELSE
+						PRINTFORML 「えー、別行動？仕方ないわねえ……」
+						PRINTFORML 「何かあったら助けてよね？じゃっまたね！」
+					ENDIF
+				ENDIF
+			ENDIF
+			
+		;アイテム発見
+		CASE 113
+		IF CFLAG:29
+		;
+		ELSE
+			;ARG:1にアイテムID
+			SELECTCASE ARG:1
+				;クロスボウ、魔法の弓矢、クロスボウの弾、魔法の弓矢の弾、マジミサ、ミサ弾
+				CASE 1, 2, 4, 81, 82, 84,
+					IF RAND:2 == 0
+						PRINTFORML 「これって弾幕がかってにでるのね！すごーい！」
+					ELSE
+						PRINTFORML 「私の弾幕とどっちが強いのかしら？」
+					ENDIF
+				;こんぼう、ナギナタ、白狼刀
+				CASE 10, 11 , 12
+					IF RAND:2 == 0
+						PRINTFORML 「長い棒って持つとついつい振り回したくなるのよね！とりゃ！てやっ！」
+					ELSE
+						PRINTFORML 「ふふふ、なんだか急に強くなった気がするわ！」
+					ENDIF
+				;火炎放射器
+				CASE 3, 83
+					IF FLAG:10 == 4 || FLAG:10 == 5 || FLAG:11 == 4 || FLAG:11 == 5
+						PRINTFORML 「この火が出る機械があればチルノも一瞬で水に…なんて冗談よ冗談！」
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「わぁ、火が出る道具なのね！料理には…ちょっと使いづらそう」
+					ELSE
+						PRINTFORML 「ルナが拾ってきた本にでてたわこれ！汚物を消毒する機械でしょ？」
+					ENDIF
+				;苺クロス
+				CASE 5, 85
+					IF RAND:2 == 0
+						PRINTFORML 「んー…いまいち使い方がわからないわねコレ」
+					ELSE
+						PRINTFORML 「とりあえず全力で相手に投げつければいいのかしら…」
+					ENDIF
+				;博麗の御札
+				CASE 6, 86
+					IF RAND:2 == 0
+						PRINTFORML 「これって確か霊夢さんがよく使ってるヤツよね？」
+					ELSE
+						PRINTFORML 「これをいっぱい集めて持って帰ればこれを使って私も異変解決できちゃったりして…ふふふ…」
+					ENDIF
+				;スペルカード
+				CASE 7, 87
+					IF RAND:2 == 0
+						PRINTFORML 「んー、これって誰のカードなのかしら？」
+					ELSE
+						PRINTFORML 「随分と強力なスペルカードね。すごい人が落としたのねきっと」
+					ENDIF
+				;マジカルステッキ
+				CASE 13
+					IF RAND:2 == 0
+						PRINTFORML 「わ！かわいいー！」
+					ELSE
+						PRINTFORML 「すごい！このスイッチ押すと音がなって光るの！外に出れたら宝物入れ行きね！」
+					ENDIF
+				;ドリル
+				CASE 14
+					IF RAND:2 == 0
+						PRINTFORML 「…え？なにこれ？」
+					ELSE
+						PRINTFORML 「しょ、触手！？なんかぐるぐるしてるけど…」
+					ENDIF
+				;陰陽玉
+				CASE 15
+					IF RAND:2 == 0
+						PRINTFORML 「これは確か御神体予備軍だったっけ？」
+					ELSE
+						PRINTFORML 「妖怪退治の御神体候補でもこれだけ強そうならあの鏡とかはもっとヤバイものだったのよね」
+					ENDIF
+				;緋緋色金の剣
+				CASE 16
+					IF RAND:2 == 0
+						PRINTFORML 「わわわわわ！？なんかすごいのみつけちゃった！」
+					ELSE
+						PRINTFORML 「これが宝探しだったら間違いなく私の優勝ね！」
+					ENDIF
+				;魔導触媒 
+				CASE 20
+					IF RAND:2 == 0
+						PRINTFORML 「んー…？とりあえずお守りみたいにもってればいいのかしらこれ？」
+					ELSE
+						PRINTFORML 「…むー、よくわかんないけど持っておいて損はなさそうね」
+					ENDIF
+				;簡易魔法陣
+				CASE 21
+					IF RAND:2 == 0
+						PRINTFORML 「お、これはあの有名な魔法陣ってやつね！」
+						PRINTFORML 「ところでどう使えばいいの？」
+					ELSE
+						PRINTFORML 「うまく使えばパワーアップが出来ると思うけど…どうつかえばいいやら」
+					ENDIF
+				;使い魔
+				CASE 22
+					IF RAND:2 == 0
+						PRINTFORML 「きゃっ！？て、敵！？…じゃないの？」
+					ELSE
+						PRINTFORML 「わー！これ面白い！自由自在に動かせるのね！」
+					ENDIF
+				;賢者の石
+				CASE 23
+					IF RAND:2 == 0
+						PRINTFORML 「わぁ…綺麗な宝石…持ってかえって部屋に飾ろうっと♪」
+					ELSE
+						PRINTFORML 「素敵な宝石ね…これなら何時間眺めていても飽きないわ」
+					ENDIF
+				;ウイングブーツ
+				CASE 24
+					IF RAND:2 == 0
+						PRINTFORML 「うーん、ぶかぶか…」
+					ELSE
+						PRINTFORML 「わわ、不思議！この靴浮いてる！」
+					ENDIF
+				;身代わり人形
+				CASE 25
+					IF RAND:2 == 0
+						PRINTFORML 「かわいいー！これアリスさんの人形よね！」
+					ELSE
+						PRINTFORML 「…アリスさんの人形だと思うけど、私の形してる」
+						PRINTFORML 「私自身を私が身代わりに使えっていうの？」
+					ENDIF
+				;森羅結界
+				CASE 28
+					IF RAND:2 == 0
+						PRINTFORML 「な、なにかしら…なぜかリリーホワイトとの例の事件を思い出したわ…」
+					ELSE
+						PRINTFORML 「ふぁあ…なぜか眠くなるわね」
+					ENDIF
+				;ブラウニー
+				CASE 35
+					IF RAND:2 == 0
+						PRINTFORML 「これもアリスさんの人形なのかしら？」
+					ELSE
+						PRINTFORML 「随分と働きものねえ…疲れないのかしら？」
+					ENDIF
+				;幸運のお守り
+				CASE 36
+					IF RAND:2 == 0
+						PRINTFORML 「お守りかー、いまいち可愛くないのよね」
+					ELSE
+						PRINTFORML 「うーん、ご利益とか言われてもよくわかんないわ」
+					ENDIF
+				;ブラックコーヒー
+				CASE 37
+					IF RAND:2 == 0
+						PRINTFORML 「ミルク！ミルクとお砂糖ないの！？このままじゃ苦くて飲めたもんじゃないわ！」
+					ELSE
+						PRINTFORML 「うええ…このままじゃ苦いわ…。お茶なら苦くても平気なんだけど…」
+					ENDIF
+				;ゴーグル
+				CASE 38
+					IF RAND:2 == 0
+						PRINTFORML 「うーん…メガネの強化版？」
+					ELSE
+						PRINTFORML 「変な形…ご飯炊くのに使うヤツになんとなく似てるわね」
+					ENDIF
+				;日本酒、神酒
+				CASE 52, 53
+					IF RAND:3 == 0
+						PRINTFORML 「きゃー！お酒よお酒！」
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「いつでもどこでもお酒の味は変わらないわ！うふふ♪」
+					ELSE
+						PRINTFORML 「このお酒はどんな味かしら？おいしいわねきっと！」
+					ENDIF
+				;緑茶、玉露
+				CASE 50, 51
+					IF RAND:2 == 0
+						PRINTFORML 「どうしてあつあつのお茶がこんな場所にあるのよ…」
+					ELSE
+						PRINTFORML 「お茶請けはどこに…さすがにそこまでサービスよくはないのね」
+					ENDIF
+				;着替えセット
+				CASE 54
+				;全裸
+					IF BASE:3 == 0
+						IF RAND:2 == 0
+							PRINTFORML 「や、やった！着替えだわ！」
+						ELSE
+							PRINTFORML 「はぁ…まさか服をこんなにありがたく感じる日が来るとは思わなかったわ」
+						ENDIF
+					ELSE
+						IF RAND:2 == 0
+							PRINTFORML 「これはありがたいわ」
+						ELSE
+							PRINTFORML 「着替えのストックがあるとすごく安心するわねー」
+						ENDIF
+					ENDIF
+				CASEELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「お、何か発見！」
+						CASE 1
+							PRINTFORML 「んー？なにかしらコレ？」
+						CASEELSE
+							PRINTFORML 「やった！私が見つけたのよ！」
+					ENDSELECT
+				ENDSELECT
+			ENDIF
+
+		CASE 125
+		;喪失中
+		IF CFLAG:29
+			;寄生が進行
+			IF ARG:1 == 8
+				PRINTFORMDL サニーの体が時々不自然に痙攣している
+			ELSEIF ARG:1 == 4
+				PRINTFORML 「あー…あぁー…」
+				PRINTFORMDL サニーは腹部をしきりに気にしている
+			ELSEIF ARG:1 == 1
+				PRINTFORMDL サニーが突然叫び声をあげ腹部を押えながら地面を転がりまわり始めた！
+				PRINTFORMDL 腹部を押さえ丸くなったサニーはビクビクと激しく痙攣を続けている…
+				PRINTFORMDL 痙攣がおさまる頃には彼女の意識は完全に飛んでいた…
+			ENDIF
+		ELSE
+			;寄生が進行
+			IF ARG:1 == 8
+				PRINTFORML (なんかお腹の中が苦しいような…)
+			ELSEIF ARG:1 == 4
+				PRINTFORML 「ひっ！？」
+				PRINTFORML 「あ、うん。気のせいだったみたい」
+				PRINTFORML (お腹の中で何かが動いてる…！？)
+			ELSEIF ARG:1 == 1
+				PRINTFORMDL サニーは突然ぺたんと地面に座り込んだ
+				PRINTFORML 「ひっく…どうしよう……お腹がヘンなの……」
+				PRINTFORML 「誰が取ってよ…ねえ…誰か……」
+			ENDIF
+		ENDIF
+		
+		;妊娠が進行
+		CASE 126
+			;喪失中
+			IF CFLAG:29
+				IF ARG:1 == 11
+					PRINTFORML 「……吐き…そう」
+				ELSEIF ARG:1 == 8
+					PRINTFORML 「あははっ……」
+					PRINTFORMDL サニーはお腹を濁った瞳でぼんやりと眺めている
+				ELSEIF ARG:1 == 3
+					PRINTFORML 「もう……産まれる……のね…」
+				ELSEIF ARG:1 == 1
+					PRINTFORMDL サニーは膨らみきった腹部をブツブツと何かを呟きながらずっとさすっている…
+				ENDIF
+			;平常時
+			ELSE
+				IF ARG:1 == 11
+					PRINTFORML 「……ヘンなもの食べたっけ？気持ち悪い」
+					PRINTFORML 「体の中にヘンなものたくさんいれられたからかしら…」
+				ELSEIF ARG:1 == 8
+						;セーフ
+						IF CFLAG:36 == 1
+							PRINTFORML 「んー！お日様がなくても完全復活よー！」
+						;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+						ELSE
+							PRINTFORML 「うぐぐ……お腹が重くて動きづらいわ……」
+							PRINTFORML 「一体なんだっていうのよ！もう！」
+							PRINTFORMDL サニーは定期的に膨らんだお腹をさすっている
+						ENDIF
+				ELSEIF ARG:1 == 3
+					PRINTFORML 「うう、何かお腹に大きい生き物がいて時々暴れる感じ…」
+					PRINTFORML 「妖精なのに妊娠したとか……妊娠しちゃった！？」
+					PRINTFORML 「ダ、ダメよそんなの！相手化物だし！」
+					PRINTFORMDL サニーはお腹を殴ろうと拳を振り上げたが、しばらくすると渋々といった様子で手を下ろした
+					PRINTFORML 「…もう、満足したらとっとと出て行ってよね」
+				ELSEIF ARG:1 == 1
+					PRINTFORML 「痛いー…勝手に人の体使ってるんだからせめて大人しくしなさいよー！」
+					PRINTFORML 「子供なら親の言うことは聞くものなのよ！よく知らないけど」
+					PRINTFORML 「ぅぅぅ……早く産んで楽になりたい」
+				ENDIF
+			ENDIF
+
+		CASE 127
+			;寄生出産
+			SELECTCASE ARG:1
+				CASE 0
+					PRINTFORML 「痛い痛い痛い痛い痛い痛い！！」
+					PRINTFORML 「お腹っ！破れちゃうっ！暴れないでえ！」
+					PRINTFORMDL サニーはめちゃくちゃに自分の腹部を拳で叩きながら痛い痛いと叫んだ！
+					PRINTFORMDL そんなサニーの事など少しも気にも留めず異形の生物はマイペースに膣口を押し広げ這い出そうと暴れる
+				CASE 1
+					;
+				CASE 2
+					;
+				ENDSELECT
+
+		CASE 129
+			;妊娠出産
+			SELECTCASE ARG:1
+				CASE 0
+					;
+				CASE 1
+					;
+				CASE 2
+					;
+				ENDSELECT
+
+				
+		CASE 132
+			;部屋を移動（突撃）
+			IF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「とにかく安全な場所に……」
+						CASE 1
+							PRINTFORML (早く外に出たい……)
+						CASEELSE
+							PRINTFORML (お日様をまた見たいわ……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「突入ー！」
+						CASE 1
+							PRINTFORML 「たのもー！」
+						CASEELSE
+							;今最高の　奇跡に
+							PRINTFORML 「のりこめー！」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 133
+			;部屋を移動（慎重）
+			IF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「とにかく安全な場所に……」
+						CASE 1
+							PRINTFORML (早く外に出たい……)
+						CASEELSE
+							PRINTFORML (お日様をまた見たいわ……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「失礼しまーす……」
+						CASE 1
+							PRINTFORML 「そーっとよそーっと……」
+						CASEELSE
+							PRINTFORML (抜き足差し足っと……)
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 134
+			;部屋を移動（待ち伏せ）
+			IF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「とにかく安全な場所に……」
+						CASE 1
+							PRINTFORML (早く外に出たい……)
+						CASEELSE
+							PRINTFORML (お日様をまた見たいわ……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ほらほらー！くるならきなさーい！」
+						CASE 1
+							PRINTFORML 「こっちは迎え撃つ準備は完璧よ！」
+						CASEELSE
+							PRINTFORMDL サニーは楽しそうにどこかで拾った棒のようなものを振り回している。
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 135
+			;部屋を移動（探索）
+			IF TARGET == 1
+			;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「何か…何か状況をよくするものはないの……」
+						CASE 1
+							PRINTFORML (少しでも助けになるものは……)
+						CASEELSE
+							PRINTFORML (罠とかみつけませんように……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「何かないかしら？」
+						CASE 1
+							PRINTFORML 「こっちに何かありそうな予感！」
+						CASEELSE
+							PRINTFORML 「こんな状況でも探検は楽しいわね♪」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;処女喪失
+		CASE 136
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE ARG:3
+						CASE 1
+							SELECTCASE RAND:5
+								CASE 0
+									PRINTFORML 「ひっ！？そ、そこだけは」
+								CASE 1
+									PRINTFORML 「！？！？」
+								CASE 2
+									PRINTFORML 「なんてトコ狙ってるのよ！」
+								CASE 3
+									PRINTFORML 「そこだけはご勘弁をー！」
+								CASEELSE
+									PRINTFORML 「絶対にそれだけはダメー！」
+							ENDSELECT
+						CASE 2
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「あ、危なかったー…」
+								CASE 1
+									PRINTFORML 「さきっちょだけだからセーフよね、うん！」
+								CASEELSE
+									PRINTFORML (もうちょっと奥まで入ってたら…)
+							ENDSELECT
+						CASEELSE
+							PRINTFORML 「え……」
+							PRINTFORML 「え…？」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL サニーは自分の下半身を強引に押し広げる異物の感覚に顔を一気に青ざめさせた
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW サニーは自分の下半身を強引に押し広げる異物の感覚に顔を一気に青ざめさせた
+							ENDIF
+							PRINTFORML 「うそ…うそでしょ…？」
+							PRINTFORMDL サニーの表情があっというまにぐしゃりと子供のような泣き顔に変わる。
+							PRINTFORMDL だが、彼女が泣き出すより早く、突き入れられた触手は容赦なく血の滴る彼女の膣を蹂躙しはじめた…
+							PRINTFORML 「痛い痛い痛い！抜いて！はやくそれ抜いてぇ！」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 今まで以上に激しく抵抗する彼女の反応を面白がるように触手はサニーを陵辱し続ける…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 今まで以上に激しく抵抗する彼女の反応を面白がるように触手はサニーを陵辱し続ける…
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「やだ！やだ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「やだ！やだ！」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「化物の赤ちゃんなんていらないのに！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「化物の赤ちゃんなんていらないのに！」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「誰か…助けて……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「誰か…助けて……」
+							ENDIF
+							IF CFLAG:29
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 瞳の光の消えたサニーの抵抗はみるみるうちに弱々しいものとなりやがてピクリとも動かなくなった……
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 瞳の光の消えたサニーの抵抗はみるみるうちに弱々しいものとなりやがてピクリとも動かなくなった……
+								ENDIF
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+		
+		;サニーちゃんとお風呂入りたい
+		;小さくて柔らかい背中をタオルでゴシゴシしたり髪の毛をシャンプーでわしゃわしゃしたり
+		;ゆっくりじっくり丁寧にトリートメントして湯船では抱きしめたままのんびり浸かって…ふふ…ふふふふふへへへほへあへ…
+		CASE 149
+		;サニーちゃんの死に風呂
+		IF CFLAG:29
+		;
+		ELSE
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「はぁぁぁ…生き返るわー…」
+				CASE 1
+					PRINTFORML 「ふあぁ…このまま一生浸かっていたい」
+				CASE 2
+					PRINTFORML 「さっぱりするわー！」
+				CASE 3
+					PRINTFORML 「はぁ…ベタベタしてないって素晴らしいわね！」
+				CASEELSE
+					PRINTFORMDL サニーは泳いだり沈んだりのんびりしたりと全力で入浴を楽しんでいる
+			ENDSELECT
+		ENDIF
+		
+		;完全捕食
+		;あー…主人公だと相手に関わらず強制的に捕食か…
+		CASE 152
+			SELECTCASE ARG:1
+			CASE 1, 2, 3, 4
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ひっ……！？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ひっ……！？」
+				ENDIF
+				PRINTFORMDL ぐったりとしたまま触手になすがままにされていたサニーだが、
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 突然、まるで全身を包み込むように動きを変えた触手の群れを前に引きつった悲鳴をあげた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 突然、まるで全身を包み込むように動きを変えた触手の群れを前に引きつった悲鳴をあげた。
+				ENDIF
+				PRINTFORMDL 触手の塊はサニーの脚を、腕を、首を、身体を、顔に次々と粘っこい水音を立てながら次々と巻きつき、
+				PRINTFORMDL あっという間にサニーの肌は覆い尽くされたにも関わらずそれでも押し寄せる触手の勢いは止まらない。
+				PRINTFORMDL 甲高い長い悲鳴は何度も何度も繰り返されるが次第に触手の壁に阻まれ細くくぐもったものとなっていく…
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そしてついにはサニーの身体があった場所に胎動する触手のマユのようなものだけが残さた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そしてついにはサニーの身体があった場所に胎動する触手のマユのようなものだけが残さた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL マユの隙間から僅かに覗いていた彼女の羽も、ゆっくりとマユの中へと引き込まれ、見えなくなった…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW マユの隙間から僅かに覗いていた彼女の羽も、ゆっくりとマユの中へと引き込まれ、見えなくなった…
+				ENDIF
+				PRINTFORMDL 
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML (気が…遠く……)
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW (気が…遠く……)
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML (一回休み…だよね？)
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW (一回休み…だよね？)
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「怖い…よお……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「怖い…よお……」
+				ENDIF
+				PRINTFORMDL 
+			ENDSELECT
+		
+		;一回休み
+		CASE 154
+			IF FLAG:AUTOMODE
+				PRINTFORML 「うぅ…これは一回休みね……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「うぅ…これは一回休みね……」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「うう…どうしてこんなことに…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「うう…どうしてこんなことに…」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML (夢なら覚めて…)
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW (夢なら覚めて…)
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML (もう…こんなとこ出たい……）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW (もう…こんなとこ出たい……）
+			ENDIF
+		
+		;復活！
+		CASE 158
+			SELECTCASE ARG:1
+				;助けてもらった
+				CASE 0
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「…助かったの？」
+							PRINTFORML 「うう、結局お日様の見える場所じゃないのね」
+						CASE 1
+							PRINTFORMDL サニーはふらふらと立ち上がりまだボーっとしている
+						CASE 2
+							PRINTFORML 「あ、あれ……私どうしてこんな場所に？」
+						CASE 3
+							PRINTFORML 「ああもう、助かってもこれじゃ生きた心地がしないわ」
+						CASEELSE
+							PRINTFORML 「なんだかまだ全身に何か絡み付いてる気がするわ……」
+					ENDSELECT
+				;捨てられた
+				CASE 1
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「ひ、ひぃぃ！」
+							PRINTFORML 「今のうちに……！」
+						CASE 1
+							PRINTFORMDL サニーはふらつく足取りで必死に逃げ出した……
+						CASE 2
+							PRINTFORML (逃げなきゃ…早く逃げなきゃ…)
+						CASE 3
+							PRINTFORML 「うう……少しでも動けるうちに逃げるのよサニー…」
+						CASEELSE
+							PRINTFORML 「助けてー！だれか助けてよー！」
+					ENDSELECT
+			ENDSELECT
+
+	;MAP表示時に一言
+	CASE 160
+		;開始時
+		IF DAY == 1 && TIME:0 == 0
+			PRINTFORML 「とりあえず探索して情報を集めるのが賢い方法よね」
+		
+		;睡眠中は静かにしようね
+		ELSEIF CFLAG:25
+		;
+		ELSEIF CFLAG:29
+		;喪失時
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「……ぅぅ…ぅぁ」
+				CASE 1
+					PRINTFORML 「………………」
+				CASE 2
+					PRINTFORMDL サニーは虚空を見つめている…
+			ENDSELECT
+		;MPが1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もうやだよお…」
+				CASE 1
+					PRINTFORML 「ぐすっ…なんでこんな目に……」
+				CASE 2
+					PRINTFORML 「帰りたい…お日様が恋しい…」
+			ENDSELECT
+
+		;元気取り戻した
+		;トラウマから復帰
+		ELSEIF CFLAG:802 == 1 && CFLAG:800 < 20
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「よし！あんまりへこたれていてもダメね！」
+				CASE 1
+					PRINTFORML 「このサニー様としたことがちょっと元気なくしちゃってたたわ！」
+				CASE 2
+					PRINTFORML 「気合入ってきた！絶対にこんな場所から出てやるんだから！」
+			ENDSELECT
+			PRINTFORMDL どうやらサニーは元気を取り戻してきたようだ
+			CFLAG:802 = 0
+
+		;汎用メッセージ、元気があればあれこれ喋るよ！
+		ELSEIF RAND:3 == 0 && (MAXBASE:MP/4 < BASE:MP || BASE:HP != 0)
+			SELECTCASE RAND:11
+				CASE 0
+					PRINTFORML 「早く日当たりのいい場所でお昼寝したいなー」
+				CASE 1
+					PRINTFORML 「一体誰がこんな洞窟を作ったのかしらねー」
+				CASE 2
+					PRINTFORML 「もっと安全な探検がよかったわ」
+				CASE 3
+					PRINTFORML 「！？…って気のせいね」
+				CASE 4
+					PRINTFORML 「壁にうねうね障子もにょろり、歩く姿は触手のよう」
+				CASE 5
+					PRINTFORML 「まるでここはビックリ箱ね」
+				CASE 6
+					PRINTFORML 「自然があるようなないような変な場所」
+				CASE 7
+					PRINTFORML 「もう何日くらいここにいるのかしら…」
+				CASE 8
+					PRINTFORML 「帰りたいなあ」
+				CASE 9
+					PRINTFORML 「ぎゃーてーぎゃーてー♪縁日にまた行きたいてー♪」
+				CASEELSE
+					PRINTFORML 「図鑑でも見たことない生き物ばっかり」
+			ENDSELECT
+		
+		;朦朧
+		ELSEIF FLAG:7 >= 11
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「あ…あれ…？天井ぐるぐる……」
+				CASE 1
+					PRINTFORML 「なんだか空飛んでるみたい…」
+				CASE 2
+					PRINTFORML 「ぐー……！？ね、寝てないわよ」
+			ENDSELECT
+		;要睡眠
+		;サニーちゃんはおねむの時間です
+		ELSEIF FLAG:7 >= 7
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ふぁぁあああああ…ねむ……」
+				CASE 1
+					PRINTFORML 「そろそろ寝たい…」
+				CASE 2
+					PRINTFORML 「ベッドどこー？」
+			ENDSELECT
+		
+		ELSEIF CFLAG:22
+		;寄生時
+			IF CFLAG:23 == 12
+				PRINTFORML （おなかの中がくすぐったい…）
+			ELSEIF CFLAG:23 == 8
+				PRINTFORML 「なんだかお腹がはって…嫌な感じ」
+			ELSEIF CFLAG:23 == 4
+				PRINTFORML (うう、苦しい…)
+			ELSEIF CFLAG:23 == 2
+				PRINTFORML 「はぁ……はぁ……休憩したい…」
+			ELSE
+				PRINTFORML 「？」
+			ENDIF
+		ELSEIF CFLAG:36
+		;妊娠時
+			IF CFLAG:23 == 11
+				PRINTFORML 「なんかだるいわねー…歳かしら？ってそれはないわね」
+			ELSEIF CFLAG:23 == 9
+				PRINTFORML (横になりたなぁ…)
+			ELSEIF CFLAG:23 == 5
+				PRINTFORML 「気のせいでなく体が重いわ…」
+			ELSEIF CFLAG:23 == 3
+				PRINTFORML 「一体なんなのよもうー」
+			ELSEIF CFLAG:23 == 1
+				PRINTFORML 「痛たたたたたた！痛い！痛いっ！！」
+			ENDIF
+		ELSEIF BASE:EP <= 1000 || CFLAG:28
+		;絶頂間際or発情
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML (頭の中がぐらんぐらんするわー…)
+				CASE 1
+					PRINTFORML (もうえっちなことで頭がいっぱい…)
+				CASE 2
+					PRINTFORML 「はぁ…はぁ……」
+			ENDSELECT
+		ELSEIF BASE:CP <= 0
+		;全裸
+			IF ITEM:54
+			;着替えセット所持
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「早く着替えなくっちゃ」
+					CASE 1
+						PRINTFORML 「恥ずかしい…こんな格好で歩く必要ないような…」
+					CASE 2
+						PRINTFORML 「たしか着替えはもってたような気がする」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「着替えはどこなのよー！」
+					CASE 1
+						PRINTFORML 「いつまでこんな格好でいればいいのよ…」
+					CASE 2
+						PRINTFORML 「そろそろ何でもいいから体を隠すものがみつからないかしら…」
+				ENDSELECT
+			ENDIF
+		ELSEIF BASE:CP <= MAXBASE:CP / 3
+		;半裸
+			IF ITEM:54
+			;着替えセット所持
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「もう服がボロボロ。そろそろ着替え時かしら？」
+					CASE 1
+						PRINTFORML 「あーあ、気に入ってたのになあ」
+					CASE 2
+						PRINTFORML 「服は破くものじゃないのに酷いことするわね」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「着替えさえあればそろそろ着替えるのに」
+					CASE 1
+						PRINTFORML 「ぎゃあ！後ろから丸見えじゃない！」
+					CASE 2
+						PRINTFORML 「今は武器より宝物よりお酒よりも着替えよ着替えー！」
+				ENDSELECT
+			ENDIF
+		;きちゃない
+		ELSEIF BASE:DP >= 100
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「髪も肌もベタベタだらけで気持ち悪い…」
+				CASE 1
+					PRINTFORML 「うう、自分の匂いが気になるほど汚れるなんて女の子として最低ね…」
+				CASE 2
+					PRINTFORML 「お風呂ー！早くお風呂にはいりたーい！」
+			ENDSELECT
+		ELSEIF BASE:DP >= 60
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「うええ…こんな場所に、ひゃ！？ここにもねばねばがついてる！」
+				CASE 1
+					PRINTFORML 「…もしかしてこの変なにおい私からしてるの？」
+				CASE 2
+					PRINTFORML 「そろそろお風呂に入ってさっぱりしたいなあ」
+			ENDSELECT
+		ELSEIF BASE:DP >= 30
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「なんとなくあちこちがべたつくような」
+				CASE 1
+					PRINTFORML 「ちょっと汚れちゃったわね」
+				CASE 2
+					PRINTFORML 「こんな状況じゃなければお風呂か水浴びしたい」
+			ENDSELECT
+		;全部ぬけたら(服着ていて元気があって清潔で眠くない)
+		;汎用一言２
+		ELSE
+			SELECTCASE RAND:7
+				CASE 0
+					PRINTFORML 「それそれ進めー♪」
+				CASE 1
+					PRINTFORML 「この洞窟の謎を解明してやるのよ！」
+				CASE 2
+					PRINTFORML 「ちょっとスリリングすぎるのが玉に致命傷よねー」
+				CASE 3
+					PRINTFORML 「？…なんだ気のせいか」
+				CASE 4
+					PRINTFORML 「どこかの部屋の出入り口を塞いで篭城すれば安全かも？」
+				CASE 5
+					PRINTFORML 「ものすごく長い時間ここにいるようなそれほどでもないような」
+				CASE 6
+					PRINTFORML 「そろそろ日光を浴びないと元気なくなりそう…」
+				CASEELSE
+					PRINTFORML 「話のネタもつきそう…これは切実な問題よ！」
+					;マジで切実
+			ENDSELECT
+		ENDIF
+
+
+		
+		;好感度でPT離脱
+		CASE 161
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL サニーは突然姿を消したかと思うと軽い足音が遠くへと消えていった
+				CASE 1
+					PRINTFORML 「妖精使いが荒すぎるわ！こんななら一人のほうがマシよマシ！」
+				CASEELSE
+					PRINTFORML 「妖精は怪我しても大丈夫だからって雑に使っていいもんじゃないんだからね！」
+			ENDSELECT
+
+		;好感度でPT離脱される
+		CASE 162
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「えー、どうして行っちゃうの！？」
+				CASE 1
+					PRINTFORML 「ケチー！心が狭い！」
+				CASEELSE
+					PRINTFORML 「なんで行っちゃうのよー！もうしらないっ！」
+			ENDSELECT
+		;各種イベント
+		CASE 200
+			;喪失中はs
+			IF CFLAG:29
+			;
+			ELSE
+			SELECTCASE ARG:1
+				;全快、最大値アップ湧き水
+				CASE 130, 132
+					;0飲む？1飲まない？
+					SELECTCASE ARG:2
+						;全回復、最大値＋
+						CASE 0
+							PRINTFORML 「んー！おーいしーい♪」
+						CASE 1
+							PRINTFORML 「別に喉かわいてないしほっとこ」
+						ENDSELECT
+				CASE 131, 132
+					;0飲む？1飲まない？
+					SELECTCASE ARG:2
+						;EP1
+						CASE 0
+							PRINTFORML 「んげえ！？ぺっぺっぺ…なによこの水！」
+						CASE 1
+							PRINTFORML 「別に喉かわいてないしほっとこ」
+						ENDSELECT
+				;澄んだ泉　0で飲む、1で入る、2で無視
+				CASE 133
+					SELECTCASE ARG:2
+						;MP回復
+						CASE 0
+							PRINTFORML 「こんな場所にある泉のクセにおいしいわー♪ちょっと持って帰ろうかな」
+						;EP回復
+						CASE 1
+							PRINTFORML 「ひんやり気持ちいい～♪ちょっと泳いじゃおうっと、ふふっ♪」
+						;無視
+						CASE 2
+							PRINTFORML 「今は水遊びしてる場合じゃない事くらい私でもわかるけど…うずうず」
+						ENDSELECT
+				;不思議な泉　0で飲む、1で入る、2で無視
+				CASE 135
+					SELECTCASE ARG:2
+						;HP・MP・EP全快	
+						CASE 0, 1
+							PRINTFORML 「この水を使えばすっごいおいしいお酒が造れそう！…え？あれ？泉は？」
+						;全状態異常治療
+						CASE 1
+							PRINTFORML 「ふぁぁ…なんか幸せな感じ…」
+						;無視
+						CASE 2
+							PRINTFORML 「なんか変わった泉ね～。ほっとこ」
+					ENDSELECT
+				;天井からスライム　1で回避失敗、2で回避成功
+				CASE 136
+					SELECTCASE ARG:2
+						CASE 1
+							IF BASE:CP <= 0
+								PRINTFORML 「うー、実害はなくても気持ちのいいものじゃないわね」
+							ELSE
+								PRINTFORML 「ぎゃー！服吐き出せー！やめてー！話きけー！」
+								PRINTFORML 「ううぅ…結局全部食べられちゃった…」
+							ENDIF
+						CASE 2
+							PRINTFORML 「しっし！もう二度とくるんじゃないわよ！」
+					ENDSELECT
+				;壁から触手　1で回避失敗、2で回避成功
+				CASE 137
+					SELECTCASE ARG:2
+						CASE 1
+							PRINTFORML 「待って待って！みぎゃぁあ！？」
+						CASE 2
+							PRINTFORML 「もう、油断も隙もあったもんじゃないわね…」
+					ENDSELECT
+				;落とし穴　1で回避失敗、2で回避成功
+				CASE 138
+					SELECTCASE ARG:2
+						CASE 1
+							PRINTFORML 「ぎゃあ！は、早く出ないとひぃい！？やめっ…」
+						CASE 2
+							PRINTFORML 「ぎゃっ！？…ひええ…これは落ちたらオシマイだったわね」
+					ENDSELECT
+				;桃色ガス　1で回避失敗、2で回避成功
+				CASE 139
+					SELECTCASE ARG:2
+						CASE 1
+							PRINTFORML 「ふぁぁ…ふわふわすりゅわ～…」
+						CASE 2
+							PRINTFORML (な、なんなのよ今度はー！？息するの我慢我慢…)
+					ENDSELECT
+				;蟲
+				;サニーちゃんのお腹がパンパンになるまで卵を産み付けたい
+				CASE 146, 147, 148, 149
+					PRINTFORML 「キモイキモイキモイ！あんた達みたいなキモイだけの虫は好きじゃないの！」
+				;落石　1で回避失敗、2で回避成功
+				CASE 150
+					SELECTCASE ARG:2
+						CASE 1
+							PRINTFORML 「………きゅぅ…生きてるの私？」
+						CASE 2
+							PRINTFORML 「のわあぁあ！？あっぶないわね！壁くらいしっかりつくりなさいよ！」
+					ENDSELECT
+			ENDSELECT
+			ENDIF
+		
+		;ワープ
+		CASE 201
+			SELECTCASE ARG:1
+			;飛ぶ前
+				CASE 0
+					PRINTFORML 「わ！？何事！？」
+			;飛ぶ後
+				CASE 1
+					PRINTFORML 「あら？どこココ？」
+					PRINTFORML 「すごーい！瞬間移動しちゃったの！？ねえ見た見た？」
+					PRINTFORML 「ってあれ？みんなは？」
+					PRINTFORML 「うーん？まあ考えても仕方ないわね」
+			ENDSELECT
+			
+		;遺品
+		;妖精ズはまず遺品を見つけることがなさそうなのでとりあえずパス
+		CASE 202
+			;喪失中
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORMDL サニーは怯えた眼で惨劇の痕に目をやっている…
+					CASE 1
+						PRINTFORML 「ああは……なりたくない……」
+					CASEELSE
+						PRINTFORML 「……なにがあったの…」
+				ENDSELECT
+			ELSE
+			SELECTCASE ARG:1
+				;霊夢
+				CASE 1
+					PRINTFORML 「これってまさか霊夢さんが？」
+					PRINTFORML 「巫女がやられたなら私達が異変を解決するしかないわね！ふっふっふ…」
+				
+				;魔理沙
+				CASE 2
+					PRINTFORML 「魔理沙さんが持ってたものに似てる気がするけどもしかしてやられちゃったのかしら？」
+					PRINTFORML 「まあ魔理沙さんのことだからどうせ生きてるだろうけど」
+				;アリス
+				CASE 14
+					PRINTFORML 「ここら辺に散らばってるの、アリスさんのものよね」
+					PRINTFORML 「まさかアリスさんが…ってそんなわけないか」
+				;阿求
+				CASE 48
+					PRINTFORML 「ここでやられたのは妖精でうっぷんを晴らす方法とか本に書いたヤツ！」
+					PRINTFORML 「ざまあみろ！とはこんな状況だし言わないけど…」
+					PRINTFORML 「ざまあみなさい！バチがあったたのよ！」
+				CASEELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ひええええ…酷い状況ね」
+						CASE 1
+							PRINTFORML 「おお怖い怖い…」
+						CASEELSE
+							PRINTFORML 「やだやだ、こうはなりたくないわ」
+					ENDSELECT
+				ENDSELECT
+			ENDIF
+		
+		CASEELSE
+			;汎用
+	ENDSELECT
+	ENDIF
+ENDIF
+
+;オープニングとエンディング
+	SELECTCASE ARG:0
+		;オープニング
+		;あるぇ？地の文スキップさせて全部ここに書けばよかったんじゃね？
+		CASE 203
+			IF CHARANUM <= 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「うーん…一体何だって言うのよ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「うーん…一体何だって言うのよ…」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 突然体を何かに引っ張られたこと、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 突然体を何かに引っ張られたこと、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 体が柔らかく生暖かい何かにぶつかるたびに元気な悲鳴をあげたことは覚えている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 体が柔らかく生暖かい何かにぶつかるたびに元気な悲鳴をあげたことは覚えている…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 「そもそもどこよここ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 「そもそもどこよここ…」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 見上げると空のかわりに触手がのた打ち回る天井が…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 見上げると空のかわりに触手がのた打ち回る天井が…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 横を向けば獲物を求め蠢く触手が生えた壁が…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 横を向けば獲物を求め蠢く触手が生えた壁が…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 俯けば足元を掬おうと波打つ触手だらけの床が…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 俯けば足元を掬おうと波打つ触手だらけの床が…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「本当にどこなのよここはー！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「本当にどこなのよここはー！！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ルナーー？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ルナーー？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ルナー…ルナー……と声が虚しくこだまする。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ルナー…ルナー……と声が虚しくこだまする。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「スター？いないのーー？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「スター？いないのーー？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 相変わらず声がこだまするだけである。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 相変わらず声がこだまするだけである。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あーー！私の虫取り網！？虫かご！？どこいっちゃったの！？クワガタ捕まえたのに！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あーー！私の虫取り網！？虫かご！？どこいっちゃったの！？クワガタ捕まえたのに！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 二人が近くにいないだけでなく、さっきまで使っていた愛用の道具と可愛がる予定だったクワガタもいない事に気づくサニー。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 二人が近くにいないだけでなく、さっきまで使っていた愛用の道具と可愛がる予定だったクワガタもいない事に気づくサニー。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 慌てて座り込みどこかに虫取り網と虫かごがないか探し始める彼女の手足をチャンスとばかりに触手が巻きつきはじめた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 慌てて座り込みどこかに虫取り網と虫かごがないか探し始める彼女の手足をチャンスとばかりに触手が巻きつきはじめた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 悲鳴をあげてサニーは慌ててそれを振りほどきその場を離れやっと自分が危険な状況にあることを理解し始めた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 悲鳴をあげてサニーは慌ててそれを振りほどきその場を離れやっと自分が危険な状況にあることを理解し始めた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「よく分からないけどとにかくここに居続けるのはあまりよくなさそうね。お日様見えないし」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「よく分からないけどとにかくここに居続けるのはあまりよくなさそうね。お日様見えないし」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「出口、探さなくちゃ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「出口、探さなくちゃ！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL こうして最初の犠牲者候補、サニーミルクは何も分からないまま不気味な迷宮を彷徨い始めた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW こうして最初の犠牲者候補、サニーミルクは何も分からないまま不気味な迷宮を彷徨い始めた…
+				ENDIF
+
+				;ソロスタートフラグ
+				CFLAG:801 = 1
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「うーん…一体何だって言うのよ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「うーん…一体何だって言うのよ…」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 突然体を何かに引っ張られたこと、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 突然体を何かに引っ張られたこと、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 体が柔らかく生暖かい何かにぶつかるたびに元気な悲鳴をあげたことは覚えている…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 体が柔らかく生暖かい何かにぶつかるたびに元気な悲鳴をあげたことは覚えている…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL サニーは腕を組みしばらくの間難しい顔で考え込む…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW サニーは腕を組みしばらくの間難しい顔で考え込む…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 10秒ほど考え込んだ彼女はひらめいたとぽんっと拳で手のひらを叩いた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 10秒ほど考え込んだ彼女はひらめいたとぽんっと拳で手のひらを叩いた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「わかったわ！これが神隠しの正体ね！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「わかったわ！これが神隠しの正体ね！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「そうと分かれば証拠にこの壁にはえてるうねうねの一本でも持って帰って…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「そうと分かれば証拠にこの壁にはえてるうねうねの一本でも持って帰って…」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL サニーが壁から伸びる一本の巨大なミミズのようなものを掴もうと手を伸ばすや否や、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW サニーが壁から伸びる一本の巨大なミミズのようなものを掴もうと手を伸ばすや否や、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そのミミズのようなものは彼女の腕を捕らえようと身を唸らせるのでサニーは慌てて腕を引っ込めた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そのミミズのようなものは彼女の腕を捕らえようと身を唸らせるのでサニーは慌てて腕を引っ込めた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL それどころか、床から生えたぬめったミミズ達がサニーの足に巻きつきはじめる感覚にサニーは鳥肌と引きつった悲鳴を立てるとあわててそれを振りほどいた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW それどころか、床から生えたぬめったミミズ達がサニーの足に巻きつきはじめる感覚にサニーは鳥肌と引きつった悲鳴を立てるとあわててそれを振りほどいた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「うーん、持って帰るのは無理そうね。ていうか…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「うーん、持って帰るのは無理そうね。ていうか…」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 見上げると空のかわりに触手がのた打ち回る天井が…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 見上げると空のかわりに触手がのた打ち回る天井が…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 横を向けば獲物を求め蠢く触手が生えた壁が…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 横を向けば獲物を求め蠢く触手が生えた壁が…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 俯けば足元を掬おうと波打つ触手だらけの床が…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 俯けば足元を掬おうと波打つ触手だらけの床が…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「なんかピンチじゃない？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「なんかピンチじゃない？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 少しだけ深刻な表情になるサニーだが、すぐにいつもの自信満々な笑顔を取り戻す。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 少しだけ深刻な表情になるサニーだが、すぐにいつもの自信満々な笑顔を取り戻す。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「まあそんなことはこの際どうでもいいわ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「まあそんなことはこの際どうでもいいわ！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「今、大切なのはこの異変に私が参加していること！そして」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「今、大切なのはこの異変に私が参加していること！そして」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「異変解決に妖精が一役買って妖精の地位向上が狙えるってことよ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「異変解決に妖精が一役買って妖精の地位向上が狙えるってことよ！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML サニーは上機嫌で出口も分からない迷宮の奥だか出口だか分からない場所目指して歩き始めた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW サニーは上機嫌で出口も分からない迷宮の奥だか出口だか分からない場所目指して歩き始めた…
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML これから自分に襲い掛かることなど少しも知らずに……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW これから自分に襲い掛かることなど少しも知らずに……
+				ENDIF
+			ENDIF
+		
+		;見捨てて逃げる
+		CASE 204
+		;娘を見捨てて逃げる(ソロスタート時)
+		;って最初からリセットカラーつかえばよかったー！もう今更いいや…
+		IF CFLAG:801 == 1
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 出口を見つけたものの、そこを守る魔物は強く、サニーの力ではどうしようもない
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 出口を見つけたものの、そこを守る魔物は強く、サニーの力ではどうしようもない
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 歯がみするサニーに、捕らえられた娘達が覚悟を決めたように話しかける
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 歯がみするサニーに、捕らえられた娘達が覚悟を決めたように話しかける
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ──私達が囮になっている間に、お母さんだけでも逃げて欲しい──
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ──私達が囮になっている間に、お母さんだけでも逃げて欲しい──
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ──自分達は大丈夫、半分はこちら側なのだから──
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ──自分達は大丈夫、半分はこちら側なのだから──
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ああ、そっか。なら大丈夫ね。二人ともありがとう！と元気よく二人に手を振るサニー
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ああ、そっか。なら大丈夫ね。二人ともありがとう！と元気よく二人に手を振るサニー
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 外にでたら絶対に遊びに行くからと悲鳴混じりに答える二人を置いて、サニーは出口へと走った……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 外にでたら絶対に遊びに行くからと悲鳴混じりに答える二人を置いて、サニーは出口へと走った……
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL なんとか逃げ出したサニーは、しばらくの間は娘のことを気にかけてはいたものの数日後にはすっかり忘れてしまった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW なんとか逃げ出したサニーは、しばらくの間は娘のことを気にかけてはいたものの数日後にはすっかり忘れてしまった
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL いつもの平和な日常、賑やかな遊び、神隠しがおきているなんて噂も彼女達には関係なかった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW いつもの平和な日常、賑やかな遊び、神隠しがおきているなんて噂も彼女達には関係なかった
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そんなある日、サニーが朝遅く目覚めると家が妙に静かだった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そんなある日、サニーが朝遅く目覚めると家が妙に静かだった
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ルナとスターはサニーを置いてどこかへ出かけてしまったのだろうか？
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ルナとスターはサニーを置いてどこかへ出かけてしまったのだろうか？
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 酷いなあと思いながらサニーが自分の部屋から出るなり鼻を突く生臭い臭いにサニーは眉をひそめた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 酷いなあと思いながらサニーが自分の部屋から出るなり鼻を突く生臭い臭いにサニーは眉をひそめた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 『あ、お母さんおはよう』
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 『あ、お母さんおはよう』
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 『私達は先に朝ごはんをすませたわ』
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 『私達は先に朝ごはんをすませたわ』
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 目の前には懐かしい娘達と大量の粘液に塗れ虚ろな瞳で床に横たわるルナとスターがいた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 目の前には懐かしい娘達と大量の粘液に塗れ虚ろな瞳で床に横たわるルナとスターがいた…
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		;ルナとスターを見捨てる
+		ELSEIF (FLAG:10 == 46 && FLAG:11 == 47) || (FLAG:10 == 47 && FLAG:11 == 46)
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 出口を見つけたものの、そこを守る魔物は強く、自分達ではどうしようもない
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 出口を見つけたものの、そこを守る魔物は強く、自分達ではどうしようもない
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 必死の抵抗も空しく、%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%は敵に拘束され、激しい凌辱を受けている
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 必死の抵抗も空しく、%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%は敵に拘束され、激しい凌辱を受けている
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そんな中で、%ARGS:0%はふとある事に気付いた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そんな中で、%ARGS:0%はふとある事に気付いた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ──どうせ二人ともすぐに復活するしほっといてもいいじゃない！──
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ──どうせ二人ともすぐに復活するしほっといてもいいじゃない！──
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 確かに先程からあの魔物は殆どこちらに手を出してこない
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 確かに先程からあの魔物は殆どこちらに手を出してこない
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そのことに気付いた%ARGS:0%は、ちゃんと帰って来るのよー！と言い残し、出口へと向かって駆け出した……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そのことに気付いた%ARGS:0%は、ちゃんと帰って来るのよー！と言い残し、出口へと向かって駆け出した……
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 神社の巨木で今日も光の三妖精は優雅に朝食に舌鼓を打っていた。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 神社の巨木で今日も光の三妖精は優雅に朝食に舌鼓を打っていた。
+			ENDIF
+			CALL PRINTCOLORW(RGBCOLOR(0, 191, 255), "『はい、今日もタコヤキと蠢くサラダよ』")
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 大冒険の末にあまり口にしたくない食材を大量に抱えてケロリと帰ってきたスター
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 大冒険の末にあまり口にしたくない食材を大量に抱えてケロリと帰ってきたスター
+			ENDIF
+			CALL PRINTCOLORW(RGBCOLOR(255, 239, 133), "『いい加減にこの料理やめてよよスター！私達があいつらに何されたか忘れちゃったの！？』")
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 10回以上の一回休みを経験しすっかり迷宮での出来事がトラウマになってしまったルナ
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 10回以上の一回休みを経験しすっかり迷宮での出来事がトラウマになってしまったルナ
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「料理に罪はないわ。ほら、冷める前に食べましょ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「料理に罪はないわ。ほら、冷める前に食べましょ」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL タコヤキを口の中にほうりいれ、熱さにわたわたするサニー
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW タコヤキを口の中にほうりいれ、熱さにわたわたするサニー
+			ENDIF
+			CALL PRINTCOLORW(RGBCOLOR(255, 239, 133), "『ねえ、二人とも。今回の異変っていつになったら解決するのかしら？』")
+			CALL PRINTCOLORW(RGBCOLOR(0, 191, 255), "『さあ？そのうち霊夢さんが解決するんじゃない？』")
+			CALL PRINTCOLORW(RGBCOLOR(255, 239, 133), "『でもどんどん神隠しの被害者増えてるみたいよ？』")
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あつっ、あつっ…ごっくん。そうだ！なら私達でこの異変を解決しちゃいましょうよ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あつっ、あつっ…ごっくん。そうだ！なら私達でこの異変を解決しちゃいましょうよ！」
+			ENDIF
+			CALL PRINTCOLORW(RGBCOLOR(0, 191, 255), "『面白そう！それじゃあまずは神隠しが多い場所で調査ね！』")
+			CALL PRINTCOLORW(RGBCOLOR(255, 239, 133), "『待って！同じことやって私達酷い目にあった気がするわ！』")
+			IF FLAG:AUTOMODE
+				PRINTFORML 「そうだっけ？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「そうだっけ？」
+			ENDIF
+			CALL PRINTCOLORW(RGBCOLOR(255, 239, 133), "『…違ったっけ？』")
+			IF FLAG:AUTOMODE
+				PRINTFORML 「違うわよ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「違うわよ」
+			ENDIF
+			CALL PRINTCOLORW(RGBCOLOR(255, 239, 133), "『なら違う…のかなぁ…』")
+			CALL PRINTCOLORW(RGBCOLOR(0, 191, 255), "『ねえ、ただ調査するだけじゃつまらないわ』")
+			CALL PRINTCOLORW(RGBCOLOR(0, 191, 255), "『神隠しにあった人を一番多く見つけた人が今日の夕飯のメニューを決められるってどうかしら？』")
+			IF FLAG:AUTOMODE
+				PRINTFORML 「俄然やる気でてきたわ！ご飯食べ終わったら準備して出発よ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「俄然やる気でてきたわ！ご飯食べ終わったら準備して出発よ！」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 以上が彼女達が薄暗い洞窟の中で後悔するほんの数分前の出来事である……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 以上が彼女達が薄暗い洞窟の中で後悔するほんの数分前の出来事である……
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+
+		;仲良しPT
+		ELSEIF (CFLAG:(FLAG:10):5 + CFLAG:(FLAG:11):5) >= 500
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 出口を見つけたものの、そこを守る魔物は強く、自分達ではどうしようもない
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 出口を見つけたものの、そこを守る魔物は強く、自分達ではどうしようもない
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 歯がみするサニーに、%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%が覚悟を決めたように話しかける
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 歯がみするサニーに、%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%が覚悟を決めたように話しかける
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ──私達が囮になっている間に、なんとか脱出し助けを呼んで欲しい──
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ──私達が囮になっている間に、なんとか脱出し助けを呼んで欲しい──
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ──今ならこの魔物は私たちの事しか見えていないはずだから、%ARGS:0%だけなら逃げられるはずだ──
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ──今ならこの魔物は私たちの事しか見えていないはずだから、%ARGS:0%だけなら逃げられるはずだ──
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL それは名案ね！と二人が呆然とするほどあっさりとその提案を受け入れるサニー
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW それは名案ね！と二人が呆然とするほどあっさりとその提案を受け入れるサニー
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 背後から聞こえてくる二人のどこか非難の色の混じった悲鳴など微塵も気にせずサニーは全力で出口へと走った……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 背後から聞こえてくる二人のどこか非難の色の混じった悲鳴など微塵も気にせずサニーは全力で出口へと走った……
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL なんとか逃げ出したサニーは、それから集められるだけの仲間を集めた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW なんとか逃げ出したサニーは、それから集められるだけの仲間を集めた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 必死の呼びかけもあって、かつての大戦争の時のように多くの仲間が面白半分で集まったのだ
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 必死の呼びかけもあって、かつての大戦争の時のように多くの仲間が面白半分で集まったのだ
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 巧妙に隠匿されていた忌まわしい迷宮も、唯一の生還者であるサニーの情報を元に瞬く間に発見された
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 巧妙に隠匿されていた忌まわしい迷宮も、唯一の生還者であるサニーの情報を元に瞬く間に発見された
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL これで%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%を助けられるとサニーは確信し、迷宮へ再び足を踏み入れた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW これで%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%を助けられるとサニーは確信し、迷宮へ再び足を踏み入れた…
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 今度は数多くの仲間が居る！妖精の力が弱いなら数の暴力で押し切ればいい！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 今度は数多くの仲間が居る！妖精の力が弱いなら数の暴力で押し切ればいい！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 戦力の半分近くを失った気もするがガーディアンを撃破したサニーはこの調子なら自分達で異変解決も夢じゃない！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 戦力の半分近くを失った気もするがガーディアンを撃破したサニーはこの調子なら自分達で異変解決も夢じゃない！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 一回休みになった仲間達と白濁液に塗れ床に転がっている不幸な%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%の為にも絶対に解決してやる！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 一回休みになった仲間達と白濁液に塗れ床に転がっている不幸な%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%の為にも絶対に解決してやる！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL サニーをリーダーに擁する妖精一味は雄たけびをあげながら迷宮の奥深くへと雪崩れ込んでいった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW サニーをリーダーに擁する妖精一味は雄たけびをあげながら迷宮の奥深くへと雪崩れ込んでいった
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL また一人、不幸な犠牲者が神隠しにあった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW また一人、不幸な犠牲者が神隠しにあった
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 彼女が状況を理解しようと周囲を見回すなり、恐怖に引きつった悲鳴を上げた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 彼女が状況を理解しようと周囲を見回すなり、恐怖に引きつった悲鳴を上げた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 薄暗い部屋のあちこちに妖精を核としたバイオプラントが所狭しとあるではないか…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 薄暗い部屋のあちこちに妖精を核としたバイオプラントが所狭しとあるではないか…
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 彼女を歓迎するかのようにそのいくつかから触手をもった生物が産まれ、プラント自身も触手を伸ばす…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 彼女を歓迎するかのようにそのいくつかから触手をもった生物が産まれ、プラント自身も触手を伸ばす…
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL こうしてまた一つ新しい苗床が完成するのであった…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW こうしてまた一つ新しい苗床が完成するのであった…
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			
+		;別に仲良くないし
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 出口を見つけたものの、そこを守る魔物は強く、自分達ではどうしようもない
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 出口を見つけたものの、そこを守る魔物は強く、自分達ではどうしようもない
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 必死の抵抗も空しく、%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%は敵に拘束され、激しい凌辱を受けている
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 必死の抵抗も空しく、%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%は敵に拘束され、激しい凌辱を受けている
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そんな中で、サニーはふとある事に気付いた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そんな中で、サニーはふとある事に気付いた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ──今なら敵はあの二人に夢中になっている　　自分だけなら逃げられるのではないか──
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ──今なら敵はあの二人に夢中になっている　　自分だけなら逃げられるのではないか──
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 確かに先程からあの魔物は殆どこちらに手を出してこない
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 確かに先程からあの魔物は殆どこちらに手を出してこない
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そのことに気付いたサニーは、ラッキーと胸の中で小躍りしながら出口へと向かって駆け出した……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そのことに気付いたサニーは、ラッキーと胸の中で小躍りしながら出口へと向かって駆け出した……
+			ENDIF
+			PRINTFORMDL 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL なんとか逃げ出したサニーは、自分があった恐ろしいこと、これが異変の原因だと自分が見つけたんだと言ってまわった。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW なんとか逃げ出したサニーは、自分があった恐ろしいこと、これが異変の原因だと自分が見つけたんだと言ってまわった。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そのことが一部の正義感の強い人妖の耳にも入りサニーは迷宮への道案内を頼まれることになった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そのことが一部の正義感の強い人妖の耳にも入りサニーは迷宮への道案内を頼まれることになった
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 妖精の自分が異変解決に参加できる！嬉しくて仕方がないサニーははしゃぎながら案内をするが迷宮のあった場所で途方にくれることになる
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 妖精の自分が異変解決に参加できる！嬉しくて仕方がないサニーははしゃぎながら案内をするが迷宮のあった場所で途方にくれることになる
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %ARGS:0%が通ってきたはずの出入り口は既に無く、迷宮は影も形も無くなっていたのだ…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %ARGS:0%が通ってきたはずの出入り口は既に無く、迷宮は影も形も無くなっていたのだ…
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL あれからかなりの月日が過ぎたが、未だに自分以外の生還者は見つかっていない
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW あれからかなりの月日が過ぎたが、未だに自分以外の生還者は見つかっていない
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 嘘つきの汚名を払拭しようと必死に出入り口を探すもそれすら見つかりそうにない
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 嘘つきの汚名を払拭しようと必死に出入り口を探すもそれすら見つかりそうにない
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL サニーは今日も一人で迷宮の出入り口を探してあちこちを駆け回る
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW サニーは今日も一人で迷宮の出入り口を探してあちこちを駆け回る
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 迷宮は逃がした獲物が余計なことをする前に消してしまおうと忍び寄る…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 迷宮は逃がした獲物が余計なことをする前に消してしまおうと忍び寄る…
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「むむむ！このベタベタはもしかして…ということはこの辺りに…？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「むむむ！このベタベタはもしかして…ということはこの辺りに…？」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…え？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…え？」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 獣すら通らないような寂れた場所に、赤いリボンだけが残された…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 獣すら通らないような寂れた場所に、赤いリボンだけが残された…
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ENDIF
+	;ガーディアン撃破
+	CASE 206
+		;一人でスタート
+		IF CFLAG:801 == 1
+			IF FLAG:AUTOMODE
+				PRINTFORMDL サニーの攻撃が、ついにガーディアンの巨大な目玉を貫いた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW サニーの攻撃が、ついにガーディアンの巨大な目玉を貫いた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 地面に倒れ、断末魔の悲鳴をあげながら悶えていたガーディアンは、やがて完全に動きを止める
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 地面に倒れ、断末魔の悲鳴をあげながら悶えていたガーディアンは、やがて完全に動きを止める
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL よくわかんないけどとりあえず出口は見つけられたようだ
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW よくわかんないけどとりあえず出口は見つけられたようだ
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう思ったのも束の間、まるで迷宮自体が意思を持っているかのように、出口が音を立てて閉じ始めた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう思ったのも束の間、まるで迷宮自体が意思を持っているかのように、出口が音を立てて閉じ始めた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL このままじゃ閉じ込められちゃう！とサニーは慌てて出口目掛けて駆け出した……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW このままじゃ閉じ込められちゃう！とサニーは慌てて出口目掛けて駆け出した……
+			ENDIF
+			PRINTFORMDL 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL {DAY}日振りの外の空気をサニーは思い切り吸い込むと幸せそうなため息を吐き出した
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW {DAY}日振りの外の空気をサニーは思い切り吸い込むと幸せそうなため息を吐き出した
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 色々と怖い目やエッチな目や嫌な思いもしたけれども、もうそんなことも二度と起こらないだろう。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 色々と怖い目やエッチな目や嫌な思いもしたけれども、もうそんなことも二度と起こらないだろう。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 「そうだ！私の虫取り網とクワガタ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 「そうだ！私の虫取り網とクワガタ！」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL サニーは多分見つからないだろうと半分諦めながらも辺りを見回し、信じられないことに気づいた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW サニーは多分見つからないだろうと半分諦めながらも辺りを見回し、信じられないことに気づいた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 先ほど待ってあった出入り口が閉じているどころか、迷宮があった形跡すらのこっていないのだ
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 先ほど待ってあった出入り口が閉じているどころか、迷宮があった形跡すらのこっていないのだ
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 「あれ？たしかにこの辺りから出てきたんだけどなあ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 「あれ？たしかにこの辺りから出てきたんだけどなあ…」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 「まあいいわ。帰りましょ…クワガタ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 「まあいいわ。帰りましょ…クワガタ…」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL サニーはしょんぼりしながら懐かしい家路へと足を向けた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW サニーはしょんぼりしながら懐かしい家路へと足を向けた
+			ENDIF
+			PRINTFORMDL 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL それから暫くして、神隠しに会う人が突然増える事件が発生した
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW それから暫くして、神隠しに会う人が突然増える事件が発生した
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL その被害者には妖精も含まれているという
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW その被害者には妖精も含まれているという
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL サニーはそんな危険な異変には関わりたくないと今日も楽しくルナとスターと遊びまわるのであった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW サニーはそんな危険な異変には関わりたくないと今日も楽しくルナとスターと遊びまわるのであった
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 彼女はよもや自分が被害者の一人目だとは夢にも思ってはいない…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 彼女はよもや自分が被害者の一人目だとは夢にも思ってはいない…
+			ENDIF
+
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		;ルナとスターがいる
+		ELSEIF (FLAG:10 == 46 && FLAG:11 == 47) || (FLAG:10 == 47 && FLAG:11 == 46)
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 光の三妖精の絶妙な連携によって、ついにガーディアンの巨大な目玉が光を失った
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 光の三妖精の絶妙な連携によって、ついにガーディアンの巨大な目玉が光を失った
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 地面に倒れ、断末魔の悲鳴をあげながら悶えていたガーディアンは、やがて完全に動きを止める
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 地面に倒れ、断末魔の悲鳴をあげながら悶えていたガーディアンは、やがて完全に動きを止める
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 自分達の勝利を確信した三人はお互いに抱き合い、小躍りしながら喜びあう！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 自分達の勝利を確信した三人はお互いに抱き合い、小躍りしながら喜びあう！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL この素晴らしい勝利を他の少女達にも伝えようと三人が拳を振り上げるも束の間
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW この素晴らしい勝利を他の少女達にも伝えようと三人が拳を振り上げるも束の間
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL まるで迷宮自体が意思を持っているかのように、出口が音を立てて閉じ始めた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW まるで迷宮自体が意思を持っているかのように、出口が音を立てて閉じ始めた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL このままでは自分達が脱出ができなくなってしまう
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW このままでは自分達が脱出ができなくなってしまう
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 自慢だとか勝利だとか言っている場合ではないと、三人は悲鳴をあげながら賑やかに出口へ向かって駆け出した……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 自慢だとか勝利だとか言っている場合ではないと、三人は悲鳴をあげながら賑やかに出口へ向かって駆け出した……
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL {DAY}日振りの外の空気に、三人は安堵の溜息を漏らす
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW {DAY}日振りの外の空気に、三人は安堵の溜息を漏らす
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 出入り口は閉じてしまったようだが、もう二度とここには近づかないし関係ないという結論に至る
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 出入り口は閉じてしまったようだが、もう二度とここには近づかないし関係ないという結論に至る
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう思ってふと後ろを振り返った所で、三人は驚愕に包まれた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう思ってふと後ろを振り返った所で、三人は驚愕に包まれた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 出入り口が閉じているどころか、そこには何の変哲もない空間がただ広がっているだけだった…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 出入り口が閉じているどころか、そこには何の変哲もない空間がただ広がっているだけだった…
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 今まで三人で同じ夢でも見ていたのだろうか？
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 今まで三人で同じ夢でも見ていたのだろうか？
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 三人はもやもやを胸に家へと向かって足を進めた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 三人はもやもやを胸に家へと向かって足を進めた
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL それから暫くして、三人は迷宮のことなど完全に忘れて今日も遊びに夢中になっている。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW それから暫くして、三人は迷宮のことなど完全に忘れて今日も遊びに夢中になっている。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 自分達と同じようにガーディアンを倒して脱出してきたという少女が少しずつ現れていることも
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 自分達と同じようにガーディアンを倒して脱出してきたという少女が少しずつ現れていることも
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 今では姿を消す人数に負けず劣らず、生還する人数も増えていることも彼女達の興味を少しも引かなかった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 今では姿を消す人数に負けず劣らず、生還する人数も増えていることも彼女達の興味を少しも引かなかった
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 次に彼女達がこの迷宮のことを思い出すのはおそらく異変が解決したという噂が耳に入る頃だろう
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 次に彼女達がこの迷宮のことを思い出すのはおそらく異変が解決したという噂が耳に入る頃だろう
+			ENDIF
+
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %ARGS:0%%TACHI()%の攻撃が、ついにガーディアンの巨大な目玉を貫いた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %ARGS:0%%TACHI()%の攻撃が、ついにガーディアンの巨大な目玉を貫いた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 地面に倒れ、断末魔の悲鳴をあげながら悶えていたガーディアンは、やがて完全に動きを止める
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 地面に倒れ、断末魔の悲鳴をあげながら悶えていたガーディアンは、やがて完全に動きを止める
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL これで出口は確保できた。　あとはとっとと逃げるだけ──
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW これで出口は確保できた。　あとはとっとと逃げるだけ──
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう思ったのも束の間、まるで迷宮自体が意思を持っているかのように、出口が音を立てて閉じ始めた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう思ったのも束の間、まるで迷宮自体が意思を持っているかのように、出口が音を立てて閉じ始めた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL このままでは脱出ができなくなってしまう！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW このままでは脱出ができなくなってしまう！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL サニーは騒がしく悲鳴をあげながら必死で出口に向かって駆け出した……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW サニーは騒がしく悲鳴をあげながら必死で出口に向かって駆け出した……
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL {DAY}日振りの外の空気に、%ARGS:0%%TACHI()%は安堵の溜息を漏らす
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW {DAY}日振りの外の空気に、%ARGS:0%%TACHI()%は安堵の溜息を漏らす
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 出入り口は閉じてしまったようだが、もう二度とここには近づかないし関係ないという結論に至る
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 出入り口は閉じてしまったようだが、もう二度とここには近づかないし関係ないという結論に至る
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう思ってふと後ろを振り返った所で、サニーは驚愕に包まれた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう思ってふと後ろを振り返った所で、サニーは驚愕に包まれた
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 出入り口が閉じているどころか、そこには何の変哲もない空間がただ広がっているだけだった…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 出入り口が閉じているどころか、そこには何の変哲もない空間がただ広がっているだけだった…
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 今まで夢でも見ていたのだろうか？
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 今まで夢でも見ていたのだろうか？
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL サニーは首をかしげながら、家路に着くが、家に着いたときにはそんな出来事など完全に忘れていた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW サニーは首をかしげながら、家路に着くが、家に着いたときにはそんな出来事など完全に忘れていた
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL それから暫くして、サニーは迷宮のことなど完全に忘れて今日も遊びに夢中になっている。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW それから暫くして、サニーは迷宮のことなど完全に忘れて今日も遊びに夢中になっている。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 自分と同じようにガーディアンを倒して脱出してきたという少女が少しずつ現れていることも
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 自分と同じようにガーディアンを倒して脱出してきたという少女が少しずつ現れていることも
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 今では姿を消す人数に負けず劣らず、生還する人数も増えていることもサニーの興味を少しも引かなかった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 今では姿を消す人数に負けず劣らず、生還する人数も増えていることもサニーの興味を少しも引かなかった
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL おそらく異変が解決したという噂が耳に入る頃になれば異変のことを思い出し
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW おそらく異変が解決したという噂が耳に入る頃になれば異変のことを思い出し
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 「私も生還したのよ！」なんて酔っ払って豪語するのだろう…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 「私も生還したのよ！」なんて酔っ払って豪語するのだろう…
+			ENDIF
+
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ENDIF
+	ENDSELECT
+
+	CALL KOJO_45_0_TORAUMA(ARG:0, ARG:1, ARG:2, ARG:3, ARG:4)
+
+RESETCOLOR
+
+;口上記入済み
+RETURN 1
+
+

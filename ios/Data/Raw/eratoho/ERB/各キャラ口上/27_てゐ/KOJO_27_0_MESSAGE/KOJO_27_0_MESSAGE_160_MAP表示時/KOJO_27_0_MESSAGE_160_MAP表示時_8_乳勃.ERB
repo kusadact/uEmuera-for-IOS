@@ -1,0 +1,98 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 8 乳勃
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_8(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 乳勃じゃないなら帰る
+	SIF !(TALENT:159 && GET_ERECTION_STATE_B(TARGET))
+		RETURN 0
+	
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 通常時
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（えへへ……♥　あたしの陥没ちくび、興奮しっぱなしだぁ♥）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（あはぁ……っ♥　発情ちくびぃ……気持ちいいの欲しがってる……ぅ♥）\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（やだぁ……っ♥　おっぱい……っ、さきっぽがぁっ……じんじんするぅ……っ♥）\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"（乳首……弱いんだからぁ……　はやく……鎮まってよぉ……）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（こんな場所で乳首とがらせてっ！　……これじゃ弱点むきだしじゃない！）\n"
+	ENDSELECT
+	
+	; 着衣状態
+	IF BASE:CP
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あはっ♥　あたしの乳首、服の上からでもビンビンになってるの丸見えっ♥）\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（だめ……ぇ……、勃った乳首……服に擦れて感じちゃう……っ）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（勃起乳首……、服に擦れて……ぇ……）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（乳首勃ってるの、服の上からでもわかるよぉ……）\n"
+		ENDSELECT
+	; 裸
+	ELSEIF BASE:CP <= 0
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（こんな格好じゃ、おっぱいの先っぽビンビンになってるの丸見えだよぉ♥）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（早く服着なきゃ！　えっちなおっぱい、見られちゃう！）\n"
+		ENDSELECT
+	ENDIF
+	
+	; [淫乳]所持 または りばーす東方触手宮でB感覚LV3以上
+	IF TALENT:76 || (KOJO_27_0_IS_REVERSE() && ABL:7 >= 3)
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あたしのおっぱい、バカみたいに勃起してイカされるの待ってるぅ♥）\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（おっぱいの感度壊れちゃってる……っ♥　やだぁ……勝手に勃起して……ぇっ♥）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（おっぱいの先っぽ……完全に壊れちゃってる……　バカみたいにおっきいし、すぐに勃起するし……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（おっぱいの先っぽ勝手に勃ってる……　触ったら気持ちよくなっちゃうし、どうしろって言うのよ……）\n"
+		ENDSELECT
+	ENDIF
+	
+	; 自慰中毒LV3以上
+	IF ABL:10 >= 3
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（おなにーしたい♥　勃起ちくび思いっきりコリコリしたいっ♥♥）\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（手……とめなきゃ……♥　乳首弄って……気持ちよくなるの……とめなきゃ……♥♥）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（この尖った乳首でオナニーしたら、絶対きもちいい……っ）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ビンビンになった乳首……っ、思いっきりいじりたいっ……！！）\n"
+		ENDSELECT
+		
+		; PT人数は2人以上
+		IF GET_MEMBER_SUM() >= 2
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"（一緒に行動してる仲間だもん、気付かれちゃってるよね……♥\n　オナニーしたくてビンビンになってる、あたしのお勃起ちくび♥）\n"
+			CASE "発情"
+				CALL KOJO_27_0_ADD_MESSAGE, @"（乳首こりこりしてるの……　周りの人に気付かれてない……よね……？）\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"（勃起乳首オナニー……　一人で行動してたら、絶対我慢できなくなってる……）\n"
+			ENDSELECT
+		ENDIF
+	ENDIF
+RETURN 1

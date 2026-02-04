@@ -1,0 +1,1508 @@
+﻿
+;=================================================
+;お花摘み可能かどうかチェック
+;RESULT:0 判定結果(0:可能 -1:不可)
+;=================================================
+@CHECK_OHANATSUMI(処理ID = 0)
+#DIM LCOUNT,3	;ループ用
+#DIM 処理ID
+	;0:判定だけ
+	;1:理由メッセージも表示
+#DIM PTID,3
+#DIM PTSUM
+
+#DIM 敵フラグ
+#DIM 結界部屋フラグ
+#DIM 尿意フラグ
+#DIM 全員睡眠フラグ
+#DIM 全員動けずフラグ
+#DIM スピーチキャラ
+	
+	SIF FLAG:522 == 2
+		RETURN -1
+	
+	;PTID更新
+	VARSET PTID
+	PTSUM = GET_MEMBER_SUM()
+	FOR LCOUNT,0 , PTSUM
+		PTID:(LCOUNT) = GET_MEMBER(LCOUNT)
+	NEXT
+
+	;===チェック===
+	
+	;現在地が結界部屋
+	IF FLAG:5 == FLAG:98
+		結界部屋フラグ = 1
+	ELSE
+		結界部屋フラグ = 0
+	ENDIF
+	
+
+	;敵チェック
+	敵フラグ = 0
+	FOR LCOUNT, 1, FLAG:1
+		;現在位置が被ってる敵
+		IF FLAG:5 == DA:(LCOUNT):4
+			
+			;死体は除外
+			SIF DA:(LCOUNT):1 <= 0
+				CONTINUE
+				
+			;擬態は除外
+			SIF DA:(LCOUNT):0 == 18 || DA:(LCOUNT):45 == 0
+				CONTINUE
+			
+			敵フラグ = 1
+			
+			BREAK
+		ENDIF
+	NEXT
+
+	;PTチェック
+	尿意フラグ = 0
+	全員睡眠フラグ = 1
+	全員動けずフラグ = 1
+	スピーチキャラ = 0
+	FOR LCOUNT, 0, 3
+		IF BASE:(PTID:(LCOUNT)):NP > 0
+			尿意フラグ = 1
+		ENDIF
+		
+		IF CFLAG:(PTID:(LCOUNT)):25 == 0
+			全員睡眠フラグ = 0
+		ENDIF
+		
+		IF CFLAG:(PTID:(LCOUNT)):25 == 0 || CFLAG:(PTID:(LCOUNT)):29 == 0
+			全員動けずフラグ = 0
+			IF スピーチキャラ == 0
+				スピーチキャラ = LCOUNT
+			ENDIF
+		ENDIF
+		
+	NEXT
+
+	;===判定===
+	
+	IF 全員睡眠フラグ == 1
+		IF 処理ID == 1
+			PRINTFORMW %CALLNAME:(PTID:0)%\@ PTID:1 > 0 ? 們 # \@夢見了去上廁所的事…
+		ENDIF
+		RETURN -1
+	ELSEIF 全員動けずフラグ == 1
+		IF 処理ID == 1
+			PRINTFORMW %CALLNAME:(PTID:0)%\@ PTID:1 > 0 ? 們 # \@沒有任何動作…
+		ENDIF
+		RETURN -1
+	ELSEIF 尿意フラグ == 0
+		IF 処理ID == 1
+			PRINTFORMW %CALLNAME:(スピーチキャラ)%提議去上廁所但是誰都沒有尿意…
+		ENDIF
+		RETURN -1
+	ELSEIF 結界部屋フラグ == 0 && 敵フラグ == 1
+		IF 処理ID == 1
+			PRINTFORMW 同一部屋有敵人存在的状態下不能做那樣的事情！
+		ENDIF
+		RETURN -1
+		
+	ENDIF
+RETURN 1
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み処理
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+#DIM PTSUM
+#DIM PTトイレ済みフラグ
+#DIM おもらしメンバ
+#DIM UNKおもらしメンバ
+#DIM キャラID
+#DIM FLAG観測者
+#DIM FLAG襲撃
+#DIMS UNK_おもらしチェック
+
+;-MEMO-
+
+
+
+	;-----PTID更新-----
+	VARSET PTID
+	PTSUM = GET_MEMBER_SUM()
+	FOR LCOUNT,0, PTSUM
+		PTID:(LCOUNT) = GET_MEMBER(LCOUNT)
+	NEXT
+	
+	;-----観測者がいるかチェック-----
+	FLAG観測者 = 0
+	FOR LCOUNT, 1, FLAG:1
+		;現在位置が被ってる敵
+		IF FLAG:5 == DA:(LCOUNT):4
+			
+			;死体は除外
+			SIF DA:(LCOUNT):1 <= 0
+				CONTINUE
+				
+			;観測者以外は除外
+			SIF DA:(LCOUNT):0 != 97
+				CONTINUE
+			
+			FLAG観測者 = 1
+			BREAK
+		ENDIF
+	NEXT
+	
+	;-----漏らしそうなメンバを抽出-----
+	おもらしメンバ = 0
+	FOR LCOUNT, 0, PTSUM
+		IF PTID:(LCOUNT) > 0
+			キャラID = PTID:(LCOUNT)
+			IF BASE:(キャラID):NP > 60
+				おもらしメンバ |= POWER(2, LCOUNT)
+				;整理中の為一時無効化
+				;CALL PRINT_MESSAGE(キャラID, 506, 6, CALLNAME:(キャラID), "",1)
+			ELSE
+				;整理中の為一時無効化
+				;CALL PRINT_MESSAGE(キャラID, 506, 6, CALLNAME:(キャラID), "",0)
+			ENDIF
+		ENDIF
+	NEXT
+	;便意処理
+	UNKおもらしメンバ = 0
+	FOR LCOUNT, 0, PTSUM
+		IF PTID:(LCOUNT) > 0
+			キャラID = PTID:(LCOUNT)
+			IF UNK_おもらしチェック(キャラID)
+				UNKおもらしメンバ |= POWER(2, LCOUNT)
+			ELSE
+			ENDIF
+		ENDIF
+	NEXT
+	おもらしメンバ |= UNKおもらしメンバ
+	
+	
+	;＝＝＝お花摘み前イベント「観測者の視線（伏線）」＝＝＝
+	IF FLAG観測者 == 1
+		
+		PRINTFORMW %CALLNAME:PTID%\@ PTSUM > 1 ? 們 # \@好像感覚到了什麼東西的視線
+		PRINTL [0] 直接折回
+		PRINTL [1] 当做錯覚
+		PRINTL
+		
+		$INPUT_w0
+		INPUT
+		IF RESULT == 0
+			PRINTFORMW 有不好預感的%CALLNAME:PTID%\@ PTSUM > 1 ? 們 # \@直接返回了。
+			;お花摘み中断
+			RETURN -1
+			
+		ELSEIF RESULT == 1
+			PRINTFORMW %CALLNAME:PTID%\@ PTSUM > 1 ? 們 # \@認為那只是錯覚。
+			
+		ELSE
+			CLEARLINE 1
+			REUSELASTLINE ※無効な入力です！※
+			GOTO INPUT_w0
+		ENDIF
+
+
+	;＝＝＝お花摘み前イベント「漏らす」＝＝＝
+	ELSEIF おもらしメンバ || UNKおもらしメンバ
+		PRINTFORMW 在尋找着合適地点的途中%GET_NYOU_名前(おもらしメンバ)%突然当場蹲下了！
+		PRINTFORMW 衣服上的汚漬和脚下拡散的水窪説明了発生了什麼、看来是已経来不及了…
+		
+		;-----おもらし処理----
+		LOCAL = 0	;はいてない取得メンバ
+		FOR LCOUNT, 0, PTSUM
+			IF PTID:(LCOUNT) > 0
+				IF おもらしメンバ & POWER(2, LCOUNT)
+					BASE:(PTID:(LCOUNT)):NP = 0
+					EXP:(PTID:(LCOUNT)):失禁経験 += 1
+					CALL CHANGE_TP(PTID:(LCOUNT), 21)
+					CALL CHECK_GET_OMORASHI(PTID:(LCOUNT))
+					
+					CALL SET_はいてない(PTID:(LCOUNT))
+					;触手服メンバは除外
+					IF RESULT == 1 && CFLAG:(PTID:(LCOUNT)):40 == 0
+						LOCAL |= POWER(2, LCOUNT)
+					ENDIF
+					
+				ENDIF
+			ENDIF
+		NEXT
+		WAIT
+		
+		
+		
+		PRINTFORM %GET_NYOU_名前(おもらしメンバ)%満臉通紅的做着善後工作
+		IF LOCAL 
+			PRINTFORML 、
+			PRINTFORMW %GET_NYOU_名前(LOCAL)%脱掉了完全湿透的無法再接着穿下去的内衣…
+		ELSE
+			PRINTFORMW た。
+		ENDIF
+		
+		;-----便意-----
+		;便意ありだと漏れろ 処理が面倒なので強制的に漏れろ
+		IF CFLAG:(キャラID):49
+			CALL UNK_OMORASHI(キャラID, 100, 0, 0, 0)
+		ENDIF
+		
+		;-----メッセージ-----
+		FOR LCOUNT, 0, PTSUM
+			IF PTID:(LCOUNT) > 0
+				キャラID = PTID:(LCOUNT)
+				IF LOCAL & POWER(2, LCOUNT)
+					;整理中の為一時無効化
+					;CALL PRINT_MESSAGE(キャラID, 506, 7, CALLNAME:(キャラID), "",1)
+				ELSE
+					;整理中の為一時無効化
+					;CALL PRINT_MESSAGE(キャラID, 506, 7, CALLNAME:(キャラID), "",0)
+				ENDIF
+			ENDIF
+		NEXT
+		
+		;-----尿意の残っているキャラをチェック-----
+		LOCAL = 0
+		FOR LCOUNT, 0, PTSUM
+			IF PTID:(LCOUNT) > 0
+				IF BASE:(PTID:(LCOUNT)):NP > 0
+					LOCAL = 1
+					BREAK
+				ENDIF
+			ENDIF
+		NEXT
+		
+		;-----全員尿意が無ければお花摘み終了-----
+		IF LOCAL == 0
+			;トイレを済ませた。(意味深)
+			PRINTFORMW %CALLNAME:PTID%\@ PTSUM > 1 ? 們 # \@上完了廁所。
+			RETURN 1
+		ENDIF
+		
+	ENDIF
+	;＝＝＝お花摘み前イベントここまで＝＝＝
+
+	;---襲撃判定---
+	FLAG襲撃 = 0
+	IF FLAG:(CFLAG:1:4 + 50) < 40
+	ELSEIF FLAG:(CFLAG:1:4 + 50) < 70
+		IF RAND:4 == 0
+			FLAG襲撃 = 1
+		ENDIF
+	ELSEIF FLAG:(CFLAG:1:4 + 50) < 100
+		IF RAND:3 == 0
+			FLAG襲撃 = 1
+		ENDIF
+	ELSE
+		IF RAND:2 == 0
+			FLAG襲撃 = 1
+		ENDIF
+	ENDIF
+
+	
+	PRINTFORMDW 找到了合適地方的%CALLNAME:PTID%\@ PTSUM > 1 ? 們 # \@迅速的上完了廁所…
+	;お花摘み画像表示用
+	CALL PRINT_MESSAGE(PTID:0, 506, 99, CALLNAME:(PTID:0), "", 0)
+	PRINTFORMDW ……
+	IF FLAG観測者 == 1
+		;＝＝＝観測者有り＝＝＝
+
+		
+		;-----尿意・便意クリア-----
+		FOR LCOUNT, 0, PTSUM
+			IF PTID:(LCOUNT) > 0
+				BASE:(PTID:(LCOUNT)):NP = 0
+				CFLAG:(PTID:(LCOUNT)):49 = 0
+			ENDIF
+		NEXT
+		
+		
+		
+		IF FLAG襲撃
+			CALL OHANATSUMI_SHUGEKI2
+		ELSE
+
+
+			;PT全体の気配察知合計が3以上なら見つける
+			LOCAL = 0
+			FOR LCOUNT, 0, PTSUM
+				IF PTID:(LCOUNT) > 0
+					LOCAL += ABL:(PTID:(LCOUNT)):1
+				ENDIF
+			NEXT
+
+			IF LOCAL >= 3
+				PRINTFORML 部屋的角落小声響起水声的時候、%CALLNAME:PTID%\@ PTSUM > 1 ? 們 # \@周囲的墻壁突然睜開了眼睛
+				PRINTFORMW 注意到了緊貼在墻上的観測者正凝視着這辺！
+				PRINTL
+				;水の種類
+				IF FLAG:522 == 1
+					;黄金水
+					PRINTFORML 観測者的四周大屏的顕示出了從各種各樣的角度記録
+					PRINTFORMW 下来的%CALLNAME:PTID%\@ PTSUM > 1 ? 們 # \@的排泄行為的実況映像、
+					PRINTL
+					PRINTFORML 意識到排泄行為"被看見了"的%CALLNAME:PTID%\@ PTSUM > 1 ? 們 # \@
+					PRINTFORML 正慌慌張張地打算站起来的時候
+					PRINTFORMW 從秘部排出的液体量増加了、導致無法中断這個行為…
+					PRINTL
+					PRINTFORML 結果%CALLNAME:PTID%\@ PTSUM > 1 ? 們 # \@直到最後也無法停下放尿演出
+					PRINTFORMW 等到整理姿勢的時候撮影者已経不知道逃到哪裡去了…
+					
+				ELSEIF FLAG:522 == 0
+					;愛液
+					PRINTFORML 正在這時從秘部流出的体液量増加了所以無法動作……
+					PRINTFORMW 這個行為一直被看到了最後然後在整理姿勢的時候偸窺者已経不知道逃到哪裡去了……
+					PRINTL
+				ENDIF
+			ELSE
+				PRINTFORML 部屋的角落小声響起水声的時、想要過度短暫的安息時間的%CALLNAME:PTID%\@ PTSUM > 1 ? 們 # \@
+				PRINTFORMW 總感覚從部屋的某処傳来的視線、反而変得更累了……
+				PRINTL
+			ENDIF
+
+
+			;効果はTP・MPダウン
+			FOR LCOUNT, 0, PTSUM
+				IF PTID:(LCOUNT) > 0
+					IF TALENT:(PTID:(LCOUNT)):36
+						;不知羞恥ならダメージなし
+						LOCAL = 0
+					ELSEIF TALENT:(PTID:(LCOUNT)):35
+						;害羞なら２倍
+						LOCAL = MAXBASE:(PTID:(LCOUNT)):MP * (5 + RAND:11) / 1000
+					ELSE
+						LOCAL = MAXBASE:(PTID:(LCOUNT)):MP * (3 + RAND:5) / 1000
+					ENDIF
+					BASE:(PTID:(LCOUNT)):MP = MAX(1, BASE:(PTID:(LCOUNT)):MP - LOCAL)
+					BASE:(PTID:(LCOUNT)):TP = MAX(0, BASE:(PTID:(LCOUNT)):TP - LOCAL)
+					CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 2000, CALLNAME:(PTID:(LCOUNT)), "",0)
+				ENDIF
+			NEXT
+			
+			
+			
+		ENDIF
+		
+		
+	ELSE
+		;＝＝＝通常＝＝＝
+		
+		
+		
+		;-----尿意・便意クリア-----
+		FOR LCOUNT, 0, PTSUM
+			IF PTID:(LCOUNT) > 0
+				BASE:(PTID:(LCOUNT)):NP = 0
+				CFLAG:(PTID:(LCOUNT)):49 = 0
+			ENDIF
+		NEXT
+		
+		
+		
+		IF FLAG襲撃
+			CALL OHANATSUMI_SHUGEKI
+		ELSE
+			PRINTFORMDW スッキリした！
+		ENDIF
+		
+		
+	ENDIF
+
+
+;=================================================
+;◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+;襲撃イベ達
+;PRINT_MESSAGE引数
+;ARG:0＿状況ID、506固定
+;ARG:1＿イベント番号、一つのイベント（関数）につき一つの値を割り当てる
+;	1000~1999：通常お花摘み襲撃
+;	2000~2999：観測者付お花摘み襲撃（予定）
+;ARGS:0＿内容は各イベントに委任
+;ARGS:1＿内容は各イベントに委任
+;ARG:2＿イベント内の呼び出し位置、各イベント参照
+;ARG:3,4,5,6＿内容は各イベントに委任
+;◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI
+RESULT = -1
+;結構適当
+
+
+
+IF RESULT == -1 && RAND:10 == 0
+	CALL OHANATSUMI_SHUGEKI_EV1001()
+ENDIF
+IF RESULT == -1 && RAND:10 == 0
+	CALL OHANATSUMI_SHUGEKI_EV1002()
+ENDIF
+IF RESULT == -1 && RAND:10 == 0
+	CALL OHANATSUMI_SHUGEKI_EV1003()
+ENDIF
+IF RESULT == -1 && RAND:10 == 0
+	CALL OHANATSUMI_SHUGEKI_EV1004()
+ENDIF
+IF RESULT == -1 && RAND:10 == 0
+	CALL OHANATSUMI_SHUGEKI_EV1005()
+ENDIF
+
+
+
+IF RESULT == -1 && RAND:4 == 0
+	CALL OHANATSUMI_SHUGEKI_EV4()
+ENDIF
+IF RESULT == 0
+	RETURN
+ELSEIF RAND:3 == 0
+	CALL OHANATSUMI_SHUGEKI_EV3()
+ELSEIF RAND:2 == 0
+	CALL OHANATSUMI_SHUGEKI_EV2()
+ELSE
+	CALL OHANATSUMI_SHUGEKI_EV1()
+ENDIF
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI2
+RESULT = -1
+;そのうち増やす…つもり
+
+
+
+
+
+CALL OHANATSUMI_SHUGEKI_EV2000()
+
+
+
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;各部位
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV1(ARG = 0)
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+;特に無し
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+
+PRINTFORMW 毫無防備暴露着秘所的%CALLNAME:(PTID)%%TACHI()%、被從墻壁和地板伸出的触手襲撃了！
+PRINTFORML 
+
+;ダメージとか属性とかの設定
+;属性はACVのいずれか
+TFLAG:63 = RAND:3
+IF TFLAG:63 >=1
+	TFLAG:63 += 1
+ENDIF
+
+
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		LOCAL = CALC_SENSITIVITY(PTID:(LCOUNT), TFLAG:63, (RAND:100)+400)
+		CALL DAMAGE_COMMON(PTID:(LCOUNT), 2, LOCAL, 2000)
+	ENDIF
+NEXT
+
+;片づけ
+TFLAG:63 = 0
+
+
+PRINTFORML 狠狠地侵犯了%CALLNAME:(PTID)%%TACHI()%的触手好像什麼事都沒有発生一樣縮回去了…
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 8, CALLNAME:(PTID:(LCOUNT)), CALLNAME:(PTID:(LCOUNT)))
+	ENDIF
+NEXT
+WAIT
+	
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;寄生
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV2(ARG = 0)
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+;特に無し
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+
+
+PRINTFORMW 毫無防備暴露着秘所的%CALLNAME:(PTID)%%TACHI()%、被不知從哪湧出的淫蟲的襲撃了！
+PRINTFORML 
+
+TFLAG:63 = 3
+
+
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		LOCAL = CALC_SENSITIVITY(PTID:(LCOUNT), TFLAG:63, (RAND:100)+400)
+		CALL DAMAGE_COMMON((PTID:(LCOUNT)), 2, LOCAL * 10 * (TALENT:(PTID:(LCOUNT)):103 + 2), 500)
+		IF RAND:6 == 0 && CFLAG:(PTID:(LCOUNT)):22 == 0
+			CFLAG:(PTID:(LCOUNT)):22 = 5 + RAND:12
+			CFLAG:(PTID:(LCOUNT)):23 = 4 + RAND:5 + RAND:5 + RAND:3
+			PRINTFORML %CALLNAME:(PTID:(LCOUNT))%被什麼東西【寄生】了！
+		ENDIF
+	ENDIF
+NEXT
+
+
+TFLAG:63 = 0
+
+PRINTFORMW 狠狠地侵犯完%CALLNAME:(PTID)%%TACHI()%的淫蟲們、就這樣直接離開了…
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 9, CALLNAME:(PTID:(LCOUNT)), CALLNAME:(PTID:(LCOUNT)))
+	ENDIF
+NEXT
+WAIT
+	
+	
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;発情
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV3(ARG)
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+;特に無し
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+
+
+PRINTFORML 不知何時出現的触手、在毫無防備暴露出来的%CALLNAME:(PTID)%%TACHI()%的陰唇和很淺的膣道内塗上了粘液！
+PRINTFORML 那個部分漸漸的疼了起来、%CALLNAME:(PTID)%%TACHI()%的臉変得通紅…
+PRINTFORML 隊伍全員陷入了【発情】状態！
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0 && CFLAG:(PTID:(LCOUNT)):発情 <= 5
+		CFLAG:(PTID:(LCOUNT)):発情 += 1
+	ENDIF
+NEXT
+
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 10, CALLNAME:(PTID:(LCOUNT)), CALLNAME:(PTID:(LCOUNT)))
+	ENDIF
+NEXT
+WAIT
+	
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;はいてない取得
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV4(ARG)
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+;全員「はいてない」だとダメ
+LOCAL = 0
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0 && CFLAG:(PTID:(LCOUNT)):44 == 0
+		LOCAL = 1
+	ENDIF
+NEXT
+SIF LOCAL == 0
+	RETURN -1
+	
+
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+	
+	
+PRINTFORML 不知從哪湧出的触手、緊緊的捲住了%CALLNAME:(PTID)%%TACHI()%半脱的内衣！
+PRINTFORML 無論怎麼使力都解不開触手、%CALLNAME:(PTID)%%TACHI()%只能放棄内衣離開了那裡…
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0 && CFLAG:(PTID:(LCOUNT)):44 == 0
+		CFLAG:(PTID:(LCOUNT)):44 = 1
+	ENDIF
+NEXT
+
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 11, CALLNAME:(PTID:(LCOUNT)), CALLNAME:(PTID:(LCOUNT)))
+	ENDIF
+NEXT
+WAIT
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV1000(ARG)
+;標準的なV攻撃シチュ
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+;特に無し
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+
+PRINTFORML 正上廁所的時候、突然從周囲的地面跳出了触手
+PRINTFORMW 瞬間%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@就以蹲着的姿勢被拘束了…
+PRINTL
+PRINTFORML 掙扎着想要解開拘束的
+PRINTFORML %CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@的正下方慢慢爬来了比其他触手更粗的触手
+PRINTFORMW 那触手的前頭頂住秘縫直接擠了進去…
+PRINTL
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		;CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 1000, CALLNAME:(PTID:(LCOUNT)), "",0)
+		CALL LOST_VIRGIN(PTID:(LCOUNT), 2, 4, 0)
+		;CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 1000, CALLNAME:(PTID:(LCOUNT)), "",1)
+	ENDIF
+NEXT
+
+PRINTFORML 只能扭動着身体無法做出抵抗的%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@眼看着自己的秘所
+PRINTFORMW 被整個触手插了進去、接着触手就開始激烈的抽插起来…
+
+PRINTL
+TFLAG:63 = 3
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		LOCAL = CALC_SENSITIVITY(PTID:(LCOUNT), TFLAG:63, (RAND:100)+400)
+		FOR LCOUNT:1, 0, 10
+			CALL DAMAGE_COMMON(PTID:(LCOUNT), 2, LOCAL + RAND:(LOCAL), 100)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 1000, CALLNAME:(PTID:(LCOUNT)), "",2)
+		PRINTL
+	ENDIF
+NEXT
+TFLAG:63 = 0
+PRINTL
+
+PRINTFORML 嬌喘着掙扎的%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@的脚下滴落的各種液体
+PRINTFORMW 在地面形成了巨大的水窪……
+PRINTL
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV1001(ARG)
+;羞恥シチュ、害羞持ちで仲間持ち限定(PTID:0に害羞の人をセット)、黄金水限定
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+;黄金水かどうか
+SIF FLAG:522 != 1
+	RETURN -1
+
+;害羞所持者チェック
+VARSET LOCAL
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0 && TALENT:(PTID:(LCOUNT)):害羞 > 0
+		LOCAL++
+	ENDIF
+NEXT
+SIF LOCAL == 0
+	RETURN -1
+
+;複数いた場合はランダムで一人
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0 && TALENT:(PTID:(LCOUNT)):害羞 > 0
+		IF RAND:(LOCAL+1) == 0
+			LOCAL:1 = PTID:(LCOUNT)
+			BREAK
+		ELSE
+			LOCAL--
+		ENDIF
+	ENDIF
+NEXT
+IF FLAG:10 && LOCAL:1 == FLAG:10
+	PTID:0 = FLAG:10
+	PTID:1 = 1
+	PTID:2 = FLAG:11
+	
+ELSEIF FLAG:11 && LOCAL:1 == FLAG:11
+	PTID:0 = FLAG:11
+	PTID:1 = 1
+	PTID:2 = FLAG:10
+	
+ENDIF
+
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+
+	
+PRINTFORMW …対一起上廁所感到難為情的%CALLNAME:(PTID)%移動到了其他同伴看不見的有点距離的地方、
+PRINTFORMW 暴露出秘所的%CALLNAME:(PTID)%深蹲下去讓身体看起来像個小球、一辺小心翼翼的注意着四周一辺放鬆了身体…
+;CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 1001, CALLNAME:(PTID:(LCOUNT)), "",0)
+PRINTFORMW …
+PRINTFORMW 聽着滴落到地面的水声、双手抱膝的%CALLNAME:(PTID)%把変紅的臉埋在了膝蓋上
+PRINTFORMW 但是突然、從周囲飛出的触手纏住了%CALLNAME:(PTID)%的腰！
+;CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 1001, CALLNAME:(PTID:(LCOUNT)), "",1)
+PRINTFORMW 吃驚打算逃走的%CALLNAME:(PTID)%怎麼也解不開緊緊捲住的触手、腰部和腿被纏在一起無法分開
+PRINTFORMW %CALLNAME:(PTID)%呼喚同伴来救助、触手直接翻転了%CALLNAME:(PTID)%和膝蓋捆在一起的身体
+PRINTFORMW 背部接触到地面変成了"屈膝位"姿勢的%CALLNAME:(PTID)%秘所和臀部周囲爬上了大量纖細的触手
+PRINTFORMW 拡張了陰唇和菊穴、像是在調查一樣有好幾根触手開始撫摸着内部…
+;CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 1001, CALLNAME:(PTID:(LCOUNT)), "",2)
+PRINTFORMW 変成了這種樣子的%CALLNAME:(PTID)%、用手擋住了像是着火一樣通紅的臉、
+PRINTFORMW 希望能尽早擺脱這麼羞恥的事情、一直祈禱着同伴不要過来……
+
+
+PRINTL
+FOR LCOUNT, 0, 10
+	;属性はACVのいずれか
+	TFLAG:63 = RAND:3
+	IF TFLAG:63 >=1
+		TFLAG:63 += 1
+	ENDIF
+	
+	;紳士的な低ダメ触手さん
+	LOCAL = CALC_SENSITIVITY(PTID, TFLAG:63, (RAND:100)+200)
+	CALL DAMAGE_COMMON(PTID, 2, LOCAL + RAND:(LOCAL), 100)
+	;CALL PRINT_MESSAGE(PTID:(LCOUNT), 506, 1001, CALLNAME:(PTID:(LCOUNT)), "",3)
+NEXT
+TFLAG:63 = 0
+PRINTL
+
+
+PRINTFORMW …
+PRINTFORMW 被触手解放的%CALLNAME:(PTID)%被会和的同伴詢問道発生了什麼
+PRINTFORMW 低着発熱変紅的臉、回答道什麼也沒有発生結束了話題……
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV1002(ARG)
+;一人用、汚染度の高い部屋用
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+;複数はダメ
+SIF FLAG:10 > 0
+	RETURN -1
+
+;汚染度が高くないとダメ
+SIF FLAG:((CFLAG:1:現在位置)+50) < 80
+	RETURN -1
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+
+
+;長い…
+PRINTFORMW 這個部屋被触手汚染的非常厳重、不止墻壁和天花板上就連地面都満是触手
+PRINTFORMW 哪怕是這樣的状態也沒有打算放棄的%CALLNAME:(PTID)%、張開双腿蹲了下去
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",0)
+PRINTFORMW 於是突然被襲撃的%CALLNAME:(PTID)%感覚自己的秘所被什麼舔舐着
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",1)
+PRINTFORMW 吃驚的%CALLNAME:(PTID)%立刻跳了起来後退了幾歩、察看着自己尿尿的地方
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",2)
+PRINTFORMW 然後在那裡、%CALLNAME:(PTID)%発現了有前端流着粘液和其他触手顔色不一樣的触手搖動着
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",3)
+PRINTFORMW %CALLNAME:(PTID)%怒瞪着那個触手做好了攻撃的準備…
+PRINTFORMW 但是、正要放出弾幕的時候、%CALLNAME:(PTID)%感覚下腹部有点不太対勁
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",4)
+PRINTFORMW %CALLNAME:(PTID)%低頭看見有透明的液体不停的滴落到脚下
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",5)
+PRINTFORMW 不由得按住了下面的%CALLNAME:(PTID)%的手、感覚到了秘所正在発燙并不断的流出愛液
+PRINTFORMW 看来是被舔舐秘所的時候中了毒
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",6)
+PRINTFORMW %CALLNAME:(PTID)%用鋭利的眼神往前一看、但塗毒的犯人的身影已経從眼前消失了
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",7)
+PRINTFORMW 環顧四周也沒有発現、在這期間下腹部越来越燙而且熱度拡散到了全身
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",8)
+PRINTFORMW 隨着熱度的拡散、因為感覚意識逐漸遠去而恐懼的%CALLNAME:(PTID)%、邁歩打算離開這個地方
+PRINTFORMW 顫抖的膝蓋沒能支撐住%CALLNAME:(PTID)%的身体、失去平衡当場跪下了
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",9)
+PRINTFORMW 在抱着自己的身体、拼命忍耐的%CALLNAME:(PTID)%的眼前
+PRINTFORMW 発現了手指粗細的触手迅速移動聚合成了枕頭一樣的肉塊
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",10)
+PRINTFORMW 纖細的触手們発現了%CALLNAME:(PTID)%、像海胆一樣伸長了触手、不断扭動着進行着威嚇
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",11)
+PRINTFORMW 用熱情的射線注視着那下流的動作的%CALLNAME:(PTID)%被吸引住把身体貼近、
+PRINTFORMW 分開膝蓋跨立在肉枕之上、呼吸粗乱的用双手分開了屁股和股間的秘縫、慢慢地坐下了下去…
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",12)
+
+PRINTL
+FOR LCOUNT, 0, 3
+	;属性はACVのいずれか
+	LOCAL = RAND:3
+	IF LOCAL >=1
+		LOCAL += 1
+	ENDIF
+	CALL NYOU_簡易ダメ(PTID, LOCAL, (RAND:100)+200)
+NEXT
+PRINTL
+
+IF GET_PENIS(PTID)
+	PRINTFORMW 被%CALLNAME:(PTID)%圧住的肉枕、触手前端緊貼着%CALLNAME:(PTID)%的肉棒和陰唇、臀部的花蕾開始不断的愛撫
+ELSE
+	PRINTFORMW 被%CALLNAME:(PTID)%圧住的肉枕、触手前端緊貼着%CALLNAME:(PTID)%的陰蒂和陰唇、臀部的花蕾開始不断的愛撫
+ENDIF
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",13)
+PRINTFORMW %CALLNAME:(PTID)%沈溺于臀部和下腹部被撫摸的快感、為了更加舒服用大腿緊緊地把肉枕夾在了胯下…
+
+PRINTL
+FOR LCOUNT, 0, 5
+	;属性はACVのいずれか
+	LOCAL = RAND:3
+	IF LOCAL >=1
+		LOCAL += 1
+	ENDIF
+	CALL NYOU_簡易ダメ(PTID, LOCAL, (RAND:200)+300)
+NEXT
+PRINTL
+
+PRINTFORMW 因%CALLNAME:(PTID)%的圧迫而有些痛苦的肉枕解開了部分触手的束縛然後接連的進入了%CALLNAME:(PTID)%的菊花和陰道内部
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",14)
+PRINTFORM 膣内和腸内被触手們填満、那種圧迫感和被媚毒提高了敏感度的内壁被激烈摩擦的感触
+PRINTFORMW 讓%CALLNAME:(PTID)%発出高昂的嬌喘声并露出了恍惚的表情、而且為了更多的快感玩弄起自己的胸部…
+
+PRINTL
+FOR LCOUNT, 0, 15
+	CALL NYOU_簡易ダメ(PTID, RAND:4, (RAND:1000)+2000)
+NEXT
+PRINTL
+
+PRINTFORMW %CALLNAME:(PTID)%無法完全処理被送来的快感、身体痙攣着当場倒下了
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",15)
+PRINTFORMW 那膨脹的下腹部依然被触手們粗暴的侵犯着、被大大拡張的洞口持續噴出着各種各樣的液体
+
+PRINTL
+FOR LCOUNT, 0, 15
+	CALL NYOU_簡易ダメ(PTID, RAND:4, (RAND:1000)+2000)
+NEXT
+PRINTL
+
+PRINTFORMW ……
+PRINTFORMW %CALLNAME:(PTID)%発覚自己趴在了部屋的角落
+;CALL PRINT_MESSAGE(PTID, 506, 1002, CALLNAME:(PTID), "",16)
+PRINTFORMW 身体的熱度已経平息了、因為毒的副作用%CALLNAME:(PTID)%怎麼也想不起為什麼会走到這種地方
+PRINTFORMW 想着到底為什麼会倒在房間内的%CALLNAME:(PTID)%露出詫異的表情撓着頭、然後離開了這裡……
+
+
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV1003(ARG)
+;仲間あり、汚染度の高い部屋用
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+
+
+SIF PTID:1 == 0
+	RETURN -1
+
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+
+
+
+PRINTFORMW %CALLNAME:(PTID)%們方便的時候、突然從周囲飛出了大量触手、集聚到了下半身
+PRINTFORMW %CALLNAME:(PTID)%們拼命的拽開接二連三地纏繞到脚和腰的触手、但是寡不敵衆
+PRINTFORMW 然後主人公們被擺成了把尿的姿勢、肚臍下面被触手包裹成了半球状…
+;CALL PRINT_MESSAGE(PTID:0, 506, 1003, "", "",0)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1003, "", "",0)
+;CALL PRINT_MESSAGE(PTID:2, 506, 1003, "", "",0)
+
+PRINTFORMW 在想辦法掙扎的%CALLNAME:(PTID)%眼前、%CALLNAME:(PTID:1)%\@PTID:2?們#\@那包裹着触手的形状扭曲的下半身、開始蠕動起来
+;CALL PRINT_MESSAGE(PTID:0, 506, 1003, "", "",1)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1003, "", "",1)
+;CALL PRINT_MESSAGE(PTID:2, 506, 1003, "", "",1)
+
+PRINTFORMW \@PTID:2?二人#%CALLNAME:(PTID:1)%\@は助けを求める目でこちらを見ていたが、突然何かに突き上げられたように体を跳ね上げさせると大きな嬌声をあげた
+FOR LCOUNT, 1, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 3
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 0, (RAND:100)+400)
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 3, (RAND:100)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1003, "", "",2)
+	ENDIF
+NEXT
+PRINTFORMW 身体上下搖動的\@PTID:2?二人#%CALLNAME:(PTID:1)%\@咬着牙拼命的忍耐着什麼
+FOR LCOUNT, 1, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 5
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 0, (RAND:100)+400)
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 3, (RAND:100)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1003, "", "",3)
+	ENDIF
+NEXT
+PRINTFORMW \@PTID:2?二人#%CALLNAME:(PTID:1)%\@の触手の束からは複数の淫猥な抽挿音が聞こえてくる
+FOR LCOUNT, 1, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 5
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 0, (RAND:100)+400)
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 3, (RAND:100)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1003, "", "",4)
+	ENDIF
+NEXT
+PRINTFORMW \@PTID:2?二人#%CALLNAME:(PTID:1)%\@の触手の束が一層大きく蠢くと
+PRINTFORMW \@PTID:2?二人#%CALLNAME:(PTID:1)%\@は顔を伏せ、口を開けて涎をたらしながらビクビクと身体を震わせた
+FOR LCOUNT, 1, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 3
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 0, (RAND:500)+500)
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 3, (RAND:500)+500)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1003, "", "",5)
+	ENDIF
+NEXT
+PRINTFORMW 流着泪的\@PTID:2?二人#%CALLNAME:(PTID:1)%\@被触手包裹的地方越発膨脹起来
+FOR LCOUNT, 1, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 5
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 0, (RAND:100)+400)
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 3, (RAND:100)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1003, "", "",6)
+	ENDIF
+NEXT
+PRINTFORMW 膨脹停止了、包裹着\@PTID:2?二人#%CALLNAME:(PTID:1)%\@下半身的触手崩壊了、從地面上消失了
+PRINTFORMW 終於被解放出来的\@PTID:2?二人#%CALLNAME:(PTID:1)%\@像出産前的孕婦一樣厳重膨脹的下腹部的表面正詭異的蠢動着
+PRINTFORMW \@PTID:2?二人#%CALLNAME:(PTID:1)%\@安心的就這樣倒在了地上、從腿間被大量触手拡大的兩個洞穴
+PRINTFORMW 正不停的流出着粘稠的白濁液
+
+
+;CALL PRINT_MESSAGE(PTID:0, 506, 1003, "", "",7)
+PRINTFORMW 二つの穴からは仕事を終え帰宅の途に就こうとする触手們が次々と這い出てきており
+PRINTFORMW 触手們從被拡大的穴口通過的時候、\@PTID:2?二人#%CALLNAME:(PTID:1)%\@劇烈顫抖着身体高潮了、
+PRINTFORMW 伴隨着下流的声音大量的触手和液体從腿間灑落
+
+
+;CALL PRINT_MESSAGE(PTID:0, 506, 1003, "", "",8)
+PRINTFORMW 看到這悪夢一般的場景陷入了呆然的%CALLNAME:(PTID)%、下半身的触手之束又開始了蠢動
+;CALL PRINT_MESSAGE(PTID:0, 506, 1003, "", "",9)
+PRINTFORMW 理解了還要重現剛才的事情的%CALLNAME:(PTID)%、流着泪露出了微笑……
+
+FOR LCOUNT, 0, 20
+	CALL NYOU_簡易ダメ(PTID:0, 0, (RAND:100)+400)
+	CALL NYOU_簡易ダメ(PTID:0, 3, (RAND:100)+400)
+NEXT
+
+PRINTFORMW ……安静的部屋的角落内有\@PTID:2?３位#２位\@少女躺在地上、
+PRINTFORMW 每個人的腹部都厳重膨脹着、從腿間不断的吐出着各種各樣的液体和触手之塊
+;CALL PRINT_MESSAGE(PTID:0, 506, 1003, "", "",10)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1003, "", "",10)
+;CALL PRINT_MESSAGE(PTID:2, 506, 1003, "", "",10)
+
+
+PRINTFORMW 全部的触手終於離開的%CALLNAME:(PTID)%們、安心了下来但還是暫時無法移動身体
+PRINTFORMW 調整好呼吸、踉踉蹌蹌的站了起来、互相支撐着顫抖的身体一起離開了這裡……
+
+
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV1004(ARG)
+;肛虐
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+
+
+
+
+
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+
+
+
+PRINTFORMW 上廁所的%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@的脚下突然出現了触手、襲撃了過来！
+PRINTFORMW 触手纏住了%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@的腰部然後用和人手臂一樣粗細的触手深深的插入了毫無防備暴露出来的菊穴
+;CALL PRINT_MESSAGE(PTID:0, 506, 1004, "", "", 0)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1004, "", "", 0)
+;CALL PRINT_MESSAGE(PTID:2, 506, 1004, "", "", 0)
+
+PRINTFORMW 突然被插入了菊穴的%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@用顫抖的手想要抜出触手、
+PRINTFORMW 触手在%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@的内部吐出了什麼後自己迅速地抽了出来、從地面上消失了
+;CALL PRINT_MESSAGE(PTID:0, 506, 1004, "", "", 1)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1004, "", "", 1)
+;CALL PRINT_MESSAGE(PTID:2, 506, 1004, "", "", 1)
+
+PRINTFORMW 被告訴侵犯了菊穴的%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@、暫時按住了屁股蹲在那裡、然後從内部感覚到了違和感
+;CALL PRINT_MESSAGE(PTID:0, 506, 1004, "", "", 2)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1004, "", "", 2)
+;CALL PRINT_MESSAGE(PTID:2, 506, 1004, "", "", 2)
+
+PRINTFORMW 剛才被触手在体内吐出的什麼東西正在急速的増大体積、圧迫着腸内
+PRINTFORMW %CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@的身体為了排出圧迫腸道的異物、蠕動着腸道把它推向了出口
+;CALL PRINT_MESSAGE(PTID:0, 506, 1004, "", "", 3)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1004, "", "", 3)
+;CALL PRINT_MESSAGE(PTID:2, 506, 1004, "", "", 3)
+
+PRINTFORMW %CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@按住了腹部猛地收緊了臀部、從内部排出的異物慢慢地拡大了菊穴
+PRINTFORMW 從菊蕾的表情出現了滲透着粘液的透明黏膠状物体
+;CALL PRINT_MESSAGE(PTID:0, 506, 1004, "", "", 4)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1004, "", "", 4)
+;CALL PRINT_MESSAGE(PTID:2, 506, 1004, "", "", 4)
+
+PRINTFORMW 那個粘液含有着媚薬的成分、被異物塗上粘液的部分都変得敏感了、
+PRINTFORMW 和從菊蕾排出的異物那微小的摩擦都讓%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@感覚到了巨大的快感
+;CALL PRINT_MESSAGE(PTID:0, 506, 1004, "", "", 5)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1004, "", "", 5)
+;CALL PRINT_MESSAGE(PTID:2, 506, 1004, "", "", 5)
+
+PRINTFORMW 流着泪的%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@顫抖着用力讓菊蕾那露出了一半的異物從屁股内飛了出去
+PRINTFORMW 那一瞬間、激烈的摩擦讓%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@從菊蕾那得到了好幾倍的誇張的快感、立刻高潮了
+CALL EXTASY(PTID:0, 0, 100, 100)
+;CALL PRINT_MESSAGE(PTID:0, 506, 1004, "", "", 6)
+IF PTID:1 > 0
+	CALL EXTASY(PTID:1, 0, 100, 100)
+	;CALL PRINT_MESSAGE(PTID:1, 506, 1004, "", "", 6)
+ENDIF
+IF PTID:2 > 0
+	CALL EXTASY(PTID:2, 0, 100, 100)
+	;CALL PRINT_MESSAGE(PTID:2, 506, 1004, "", "", 6)
+ENDIF
+
+PRINTFORMW %CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@高潮了之後、從放鬆下来的屁股那開始不断地溢出大量的異物
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 3
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 0, (RAND:100)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1004, "", "", 7)
+		PRINTL
+	ENDIF
+NEXT
+
+
+PRINTFORMW %CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@排出的異物的表面有着大量的突起、
+PRINTFORMW 異物通過菊穴的時候、那突起和菊蕾辺緣的摩擦讓%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@的感覚更加刺激了
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 5
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 0, (RAND:500)+500)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1004, "", "", 8)
+		PRINTL
+	ENDIF
+NEXT
+
+
+PRINTFORMW %CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@蹲了下来為了停止那疑似排泄的行為夾緊了屁股、
+PRINTFORMW 雖然打算夾緊菊穴、但是吐出的異物和菊穴的大力摩擦的結果
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 3
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 0, (RAND:1000)+2000)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1004, "", "", 9)
+		PRINTL
+	ENDIF
+NEXT
+
+
+PRINTFORMW 讓%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@只能哭泣着懇求着還沒有停止増殖的異物的饒恕……
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 10
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), 0, (RAND:500)+1500)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1004, "", "", 10)
+		PRINTL
+	ENDIF
+NEXT
+
+
+PRINTFORMW …在全部結束的手、%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@変成了只能趴在地上不断顫抖的状態
+PRINTFORMW 糟糕的是、持續受到了長時間的肛虐的%CALLNAME:(PTID)%\@ PTID:1 ? 們 # \@的菊蕾一直保持着被拡張的形状……
+
+
+
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV1005(ARG)
+;前提：二人用、超仲良しでレズ気がある
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+
+SIF PTID:1 == 0 || PTID:2 > 0
+	RETURN -1
+	
+SIF CFLAG:(PTID:1):5 < 500 || ABL:(PTID:1):百合中毒 < 1
+	RETURN -1
+	
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+
+
+
+PRINTFORMW %CALLNAME:(PTID)%們並排蹲着、突然從地面上冒出了触手、捲住了兩人的脚
+PRINTFORMW 兩人慌忙的打算解開捲緊的触手、但是那触手有着和外表不符的怪力、完全無法解開…
+;CALL PRINT_MESSAGE(PTID:0, 506, 1005, "", "", 0)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1005, "", "", 0)
+
+PRINTFORMW 兩人束手無策、這時地面上的触手伸長了、纏住了兩人的身体
+PRINTFORMW 用粘滑的表面緊貼着兩人的乳房臀部和股間、温柔的愛撫着兩人的身体
+;CALL PRINT_MESSAGE(PTID:0, 506, 1005, "", "", 1)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1005, "", "", 1)
+
+PRINTFORMW 全身都像被舌頭舔着的感覚讓兩人的身体発顫
+PRINTFORMW 然後為了守護彼此的身体互相抱在一起
+FOR LCOUNT, 0, 2
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 3
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), RAND:4, (RAND:100)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1005, "", "", 2)
+		PRINTL
+	ENDIF
+NEXT
+
+PRINTFORMW 持續被粘糊糊的触手愛撫着讓兩人的身体也興奮了起来
+PRINTFORMW 到們極限的兩人抱緊了彼此的身体、高声嬌喘着身体也不断地顫抖
+FOR LCOUNT, 0, 2
+	IF PTID:(LCOUNT) > 0
+		CALL EXTASY(PTID:LCOUNT, 2, 100, 100)
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1005, "", "", 3)
+		PRINTL
+	ENDIF
+NEXT
+
+PRINTFORMW 從顫抖着高潮的兩人正在排泄的股間噴出了大量液体
+;CALL PRINT_MESSAGE(PTID:0, 506, 1005, "", "", 4)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1005, "", "", 4)
+
+PRINTFORMW 呼吸粗乱的兩人抱在一起沈浸在高潮的余韻之中
+PRINTFORMW 已経満足的触手解開了兩人的拘束從地面上消失了
+;CALL PRINT_MESSAGE(PTID:0, 506, 1005, "", "", 5)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1005, "", "", 5)
+
+PRINTFORMW 從触手的拘束中解放出来的兩人身体分開、在脚下形成了一片巨大的水窪
+PRINTFORMW 兩人理解了彼此的痴態完全暴露在了対方的眼中、一起露出了羞澀的微笑
+PRINTFORMW 然後彼此還残留着顫動的身体再次擁抱到一起、染上紅霞的臉慢慢靠近、静静的吻在一起
+;CALL PRINT_MESSAGE(PTID:0, 506, 1005, "", "", 6)
+;CALL PRINT_MESSAGE(PTID:1, 506, 1005, "", "", 6)
+
+FOR LCOUNT, 0, 2
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 3
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), RAND:2 + 1, (RAND:101)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1005, "", "", 7)
+		PRINTL
+	ENDIF
+NEXT
+PRINTFORMW %CALLNAME:(PTID)%們一辺摩擦着対方的秘所一辺温柔的舔取着対方胸部上的触手的粘液…
+
+FOR LCOUNT, 0, 2
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 3
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), RAND:2 + 1, (RAND:101)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1005, "", "", 8)
+		PRINTL
+	ENDIF
+NEXT
+PRINTFORMW %CALLNAME:(PTID)%們用手指玩弄着対方的肚臍并舔着対方的脖子…
+
+FOR LCOUNT, 0, 2
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 3
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), RAND:2 + 1, (RAND:101)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1005, "", "", 9)
+		PRINTL
+	ENDIF
+NEXT
+PRINTFORMW %CALLNAME:(PTID)%們互相揉搓着対方的胸部…
+
+FOR LCOUNT, 0, 2
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 3
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), RAND:2 + 1, (RAND:101)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 1005, "", "", 10)
+		PRINTL
+	ENDIF
+NEXT
+PRINTFORMW %CALLNAME:(PTID)%們最後仔細的体会着舌吻的感覚直到満足
+PRINTFORMW 牽着手一起站了起来、依偎着離開了這裡……
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+
+
+
+
+
+
+;下半身から与えられる刺激に身体を打ち震わせる二人は
+;お互いの舌を絡ませながら背筋や乳房に細い指を這わせ合い、快楽をむさぼっている
+
+
+
+;わんこそば
+;もう何度目かわからない、おかわりをそそがれた主人公
+
+
+;卑猥な排泄音と共に大量の触手を吐き出している
+
+
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+;観測者有り襲撃2000～
+;◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;お花摘み時襲われ
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@OHANATSUMI_SHUGEKI_EV2000(ARG)
+;標準
+#DIM LCOUNT,3	;ループ用
+#DIM PTID,3
+
+
+PTID:0 = 1
+PTID:1 = FLAG:10
+PTID:2 = FLAG:11
+
+
+;＝＝＝＝＝＝＝前提チェック＝＝＝＝＝＝＝
+
+
+
+
+;＝＝＝＝＝＝＝イベント処理＝＝＝＝＝＝＝
+;チェック用
+SIF ARG == 1
+	RETURN 0
+;-----
+
+
+PRINTFORMW %CALLNAME:(PTID)%%TACHI()%上廁所的地方突然從地面冒出了触手們、身体被拘束住了！
+;CALL PRINT_MESSAGE(PTID:0, 506, 2000, "", "", 0)
+;CALL PRINT_MESSAGE(PTID:1, 506, 2000, "", "", 0)
+;CALL PRINT_MESSAGE(PTID:2, 506, 2000, "", "", 0)
+PRINTL
+
+PRINTFORMW 不顧正拼命抵抗的%CALLNAME:(PTID)%%TACHI()%、触手們直接愛撫玩弄起了那柔軟的肌膚…
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 3
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), RAND:4, (RAND:100)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 2000, "", "", 1)
+		PRINTL
+	ENDIF
+NEXT
+
+PRINTFORMW 持續進行着無用的抵抗的%CALLNAME:(PTID)%%TACHI()%抬頭一看、
+PRINTFORMW 在視線的前方有着用好奇的目光注視着這辺的観測者的身影
+PRINTFORMW 観測者抓住了%CALLNAME:(PTID)%%TACHI()%被拘束而無法行動的機会、
+PRINTFORMW 仔細地拍攝着眼前的%CALLNAME:(PTID)%%TACHI()%被触手們玩弄的樣子…
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 5
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), RAND:4, (RAND:100)+400)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 2000, "", "", 2)
+		PRINTL
+	ENDIF
+NEXT
+
+PRINTFORMW %CALLNAME:(PTID)%%TACHI()%為了不出洋相努力的装作平静的樣子
+PRINTFORMW 突然触手們抬起了%CALLNAME:(PTID)%%TACHI()%的腿并大幅拉開、
+PRINTFORMW 触手集中到了毫無防備暴露出来的秘所和菊穴、把洞口拡張讓内部的樣子展現了出来…
+;CALL PRINT_MESSAGE(PTID:0, 506, 2000, "", "", 3)
+;CALL PRINT_MESSAGE(PTID:1, 506, 2000, "", "", 3)
+;CALL PRINT_MESSAGE(PTID:2, 506, 2000, "", "", 3)
+PRINTL
+
+PRINTFORMW 因為突然暴露在外接触到部屋内寒冷的空気的膣内和腸内、吃驚的想要收縮着内壁
+PRINTFORMW 這個樣子也被観測者從各種角度記録了下来、放映在%CALLNAME:(PTID)%%TACHI()%眼前…
+;CALL PRINT_MESSAGE(PTID:0, 506, 2000, "", "", 4)
+;CALL PRINT_MESSAGE(PTID:1, 506, 2000, "", "", 4)
+;CALL PRINT_MESSAGE(PTID:2, 506, 2000, "", "", 4)
+PRINTL
+
+PRINTFORMW %CALLNAME:(PTID)%%TACHI()%満臉通紅、背過鏡頭拼命的忍耐着羞恥
+PRINTFORMW 触手們分泌出含着媚薬的粘液塗満了体表、然後慢慢地開始撫摸着%CALLNAME:(PTID)%%TACHI()%的恥部…
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 5
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), RAND:4, (RAND:100)+800)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 2000, "", "", 5)
+		PRINTL
+	ENDIF
+NEXT
+
+PRINTFORMW 触手們在%CALLNAME:(PTID)%%TACHI()%菊穴内側的皺溝和陰唇的内側也細心塗抹着粘液
+PRINTFORMW 嬌喘的%CALLNAME:(PTID)%%TACHI()%在鏡頭前持續表演着下流的動作…
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		FOR LCOUNT:1, 0, 8
+			CALL NYOU_簡易ダメ(PTID:(LCOUNT), RAND:4, (RAND:500)+1000)
+		NEXT
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 2000, "", "", 6)
+		PRINTL
+	ENDIF
+NEXT
+
+PRINTFORMW %CALLNAME:(PTID)%%TACHI()%的動作迎来最高潮的時候、触手們用前端一斉愛撫着%CALLNAME:(PTID)%%TACHI()%的全身
+PRINTFORMW 因粘液内的媚薬変得敏感的身体被一斉刺激、讓忍不住的%CALLNAME:(PTID)%%TACHI()%的身体激烈的跳動着…
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		CALL EXTASY(PTID:LCOUNT, RAND:4, 100, 100)
+		;CALL PRINT_MESSAGE(PTID:LCOUNT, 506, 2000, "", "", 7)
+		PRINTL
+	ENDIF
+NEXT
+
+PRINTFORMW 顫抖着高潮的%CALLNAME:(PTID)%%TACHI()%在鏡頭前面從秘所噴出了形成了弧線的大量液体…
+;CALL PRINT_MESSAGE(PTID:0, 506, 2000, "", "", 8)
+;CALL PRINT_MESSAGE(PTID:1, 506, 2000, "", "", 8)
+;CALL PRINT_MESSAGE(PTID:2, 506, 2000, "", "", 8)
+
+
+
+PRINTFORMW …
+PRINTFORMW 触手們離去之後、還処于高潮的余韻中的%CALLNAME:(PTID)%%TACHI()%感到非常的羞恥、
+PRINTFORMW 像小狗一樣在部屋的角落里顫抖着身体、持續的哭泣了一会……
+
+
+
+
+;TP・MPダウン
+FOR LCOUNT, 0, 3
+	IF PTID:(LCOUNT) > 0
+		IF TALENT:(PTID:(LCOUNT)):36
+			;不知羞恥ならダメージなし
+			LOCAL = 0
+		ELSEIF TALENT:(PTID:(LCOUNT)):35
+			;害羞なら２倍
+			LOCAL = MAXBASE:(PTID:(LCOUNT)):MP * (5 + RAND:11) / 1000
+		ELSE
+			LOCAL = MAXBASE:(PTID:(LCOUNT)):MP * (3 + RAND:5) / 1000
+		ENDIF
+		BASE:(PTID:(LCOUNT)):MP = MAX(1, BASE:(PTID:(LCOUNT)):MP - LOCAL)
+		BASE:(PTID:(LCOUNT)):TP = MAX(0, BASE:(PTID:(LCOUNT)):TP - LOCAL)
+	ENDIF
+NEXT
+
+
+

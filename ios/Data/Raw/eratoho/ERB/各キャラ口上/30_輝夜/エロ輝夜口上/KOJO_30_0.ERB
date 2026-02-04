@@ -1,0 +1,2347 @@
+﻿;妹紅と絡ませてレズエロっぽいネタが書きたくなったので書いた
+;ただし、ゲームシステム的に絡ませられないので、かなり適当
+;こちらも誰手前ぇ状態
+;輝夜は妹紅がお気に入り
+;口上用に、CFLAG:800を利用します
+
+@KOJO_TITLE_30_0
+RESULTS = エロ輝夜口上
+
+@KOJO_DETAIL_30_0
+PRINTFORML 妹紅といると楽しくなるかも
+PRINTFORML エロメイン
+
+
+;デフォルトの文字色設定が面倒な場合、関数自体を消せばOKです
+@KOJO_DEFAULT_COLOR_30_0
+;ただのピンクじゃなくて、石竹色
+RETURN RGBCOLOR(229,152,197)
+
+;口上本体
+@KOJO_30_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;娘口上はいつか作るかも知れないけど、今はナッシン
+SIF CFLAG:104
+	RETURN 0
+;妹紅が仲間にいるときの細かい判定
+IF ((NO == 31 && !CFLAG:1:25 && !CFLAG:1:29 && !CFLAG:1:20 && !CFLAG:1:21 && !CFLAG:1:104) || (NO:(FLAG:10) == 31 && !CFLAG:(FLAG:10):20 && !CFLAG:(FLAG:10):21 && !CFLAG:(FLAG:10):25 && !CFLAG:(FLAG:10):29 && !CFLAG:(FLAG:10):104) || (NO:(FLAG:11) == 31 && !CFLAG:(FLAG:11):20 && !CFLAG:(FLAG:11):21 && !CFLAG:(FLAG:11):25 && !CFLAG:(FLAG:11):29 && !CFLAG:(FLAG:11):104))
+	CFLAG:800 = 1
+ELSE
+	CFLAG:800 = 0
+ENDIF
+
+;今後地の文は作る予定
+;CALL KOJO_30_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;システム側の地の文
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;そのキャラの口上の文字色を反映します
+SETCOLOR CFLAG:700
+
+
+
+;↓↓↓　　ここから口上のメイン処理　　↓↓↓
+
+;ARG:0 や ARG:1 の内容で分岐をかけます
+;それぞれの値の意味は「資料とか\PRINT_MESSAGE(口上)フラグ一覧.txt」を参照してください
+SELECTCASE ARG:0
+	;攻撃
+	CASE 1
+		SELECTCASE ARG:1
+			;防御
+			CASE 1
+				PRINTFORML 
+			;アイテム使用
+			CASE 2
+			;前に出る
+			CASE 3
+				IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+				ENDIF
+			;後退
+			CASE 4
+				IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+				ENDIF
+			;逃走　成功したら55
+			CASE 5
+				PRINTFORML 
+			;弱攻撃(全)
+			CASE 10,20,30
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			;中攻撃(全)
+			CASE 11,21,31
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			;強攻撃(全)
+			CASE 12,22,32
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			;溜め(弾)
+			CASE 13
+			;ばらまき（弾）
+			CASE 14
+			;全体攻撃(弾,消)
+			CASE 15,34
+			;下段攻撃(武)
+			CASE 23
+			;急所攻撃(武)
+			CASE 24
+			;カウンター(武)
+			CASE 25
+			;節約攻撃(消)
+			CASE 33
+			;集中攻撃(消)
+			CASE 35
+			; *---拘束中---*
+			CASE 42
+			;拘束からの離脱
+				IF CFLAG:TARGET:35 != 0
+				;絶頂中
+				ELSE
+					IF CFLAG:TARGET:21 != 0
+					ELSE
+					ENDIF
+				ENDIF
+			;力溜め
+			CASE 43
+			;諦める
+			CASE 44
+				;味方に妹紅本人が居て、非昏睡かつ非喪失かつ、非捕食＆非拘束
+				IF CFLAG:800 == 1
+					;喪失OR諦め
+					IF CFLAG:29 != 0 || TFLAG:16 == 2
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「ん……もこう……」
+								PRINTFORML 力が抜けきった輝夜は、妹紅に視線を向けた
+							CASE 1
+								PRINTFORML 「――――は、ん」
+								PRINTFORML 絶望にこごった瞳で、輝夜は妹紅に笑いかける
+							CASE 2
+								PRINTFORML 「もこうも、あきらめ、ましょう……」
+								PRINTFORML 口の端に笑みを上らせ、輝夜はただ妹紅を誘う
+						ENDSELECT
+					;異常なし
+					ELSE
+						PRINTFORML 「……わるいわね、妹紅……、もう遊んであげ、られない……」
+					ENDIF
+				;喪失OR諦め
+				ELSEIF CFLAG:29 != 0 || TFLAG:16 == 2
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「……ん……」
+						CASE 1
+							PRINTFORML 「――は――」
+						CASE 2
+							PRINTFORML 「ぅ、く」
+					ENDSELECT
+				;異常なし
+				ELSE
+					PRINTFORML 「しょうが、ない、わよ」
+				ENDIF
+			;何もしない
+			CASE 45
+				PRINTFORML 「ふぅ……んぅ……ふぁん……」
+			;強制自慰
+			CASE 46
+				;味方に妹紅本人が居て、非昏睡かつ非喪失かつ、非捕食＆非拘束
+				IF CFLAG:800 == 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ん……指、動くの……、だめ見ないで……、せめて、とめてちょうだい、な」
+							PRINTFORML 縋るような表情を向ける輝夜に、妹紅は視線を逸らして答えようとしない
+						CASE 1
+							PRINTFORML 「ん、あふ、く、気持ち、いい……、妹紅、あなたも、どう、かしら」
+							PRINTFORML 自慰に耽る輝夜の言葉に、妹紅が赤くなった顔を背けた
+						CASE 2
+							PRINTFORML 「はぁはぁ……、我慢できない……、いっそ、お相手、してくれない、かしら」
+							PRINTFORML 自らを慰めながらすり寄る輝夜を、妹紅は強引に払いのけた
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「はぁはぁ、んくっ、あふっ、気持ち良いけど、だれか止めて……」
+						CASE 1
+							PRINTFORML 「んっ、ふぁっ、だめなのに、きもち、よくてぇ……」
+						CASE 2
+							PRINTFORML 「あは……、良いわ、これ、とても、いいわ……」
+					ENDSELECT
+				ENDIF
+			;A防御
+			CASE 50
+			;B防御
+			CASE 51
+			;C防御
+			CASE 52
+			;V防御
+			CASE 53
+				;処女
+				IF TALENT:TARGET:0
+				ENDIF
+		ENDSELECT
+	;味方の攻撃（命中）
+	CASE 11
+	;敵の通常攻撃(HP攻撃)が当たった
+	CASE 12
+		;味方に妹紅本人が居て、非昏睡かつ非喪失かつ、非捕食＆非拘束
+		IF CFLAG:800 == 1
+			;喪失OR諦め
+			IF CFLAG:29 != 0 || TFLAG:16 == 2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「…………」
+						PRINTFORML びくびくと痛みに体を震わせる輝夜に、妹紅が舌打ちしている
+					CASE 1
+						PRINTFORML 「――――」
+						PRINTFORML 痛みに抗おうとしない輝夜に、妹紅が小さく舌打ちしている
+					CASE 2
+						PRINTFORML 「ぁ……」
+						PRINTFORML びくんと体を震わせる輝夜を、いらだたしげに妹紅が見つめている
+				ENDSELECT
+			;異常なし
+			ELSEIF CFLAG:25 == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「痛ぁ……、この私に手を出すなんて永遠に早いわよっ！」
+						PRINTFORML 意味がわからないだろとツッコむ妹紅は無視した
+					CASE 1
+						PRINTFORML 「つっっ！　化け物の分際でっ！」
+						PRINTFORML お似合いだろうと呟く妹紅に、痛みを堪えて視線を向けた
+					CASE 2
+						PRINTFORML 「いたいわねっ！　行け火炎放射器っ！」
+						PRINTFORML 先にそっちを燃やそうかと、妹紅が呟く
+				ENDSELECT
+			;睡眠
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 痛みに顔を顰めてそれでも眼を覚まさない輝夜を、妹紅は呆れた表情でチラ見している
+					CASE 1
+						PRINTFORML 痛撃に体を痙攣させ、まだ起きない輝夜に、溜め息を吐きながら妹紅は敵を睨む
+					CASE 2
+						PRINTFORML 傷つけられても起きない輝夜に、さっさと起きろと妹紅が呟いている
+				ENDSELECT
+			ENDIF
+		;喪失OR諦め
+		ELSEIF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「……ん……」
+				CASE 1
+					PRINTFORML 「――は――」
+				CASE 2
+					PRINTFORML 「ぅ、く」
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「くっ……、この珠の肌に傷をつけるなんて」
+				CASE 1
+					PRINTFORML 「痛っ！　……ふぅふぅ……こういうのは嫌いよ」
+				CASE 2
+					PRINTFORML 「いたいっ！　くぅ……、許さないんだから」
+			ENDSELECT
+		;睡眠
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 眠っている輝夜は、叩き付けられる痛みに顔を顰めている
+				CASE 1
+					PRINTFORML 痛みをぶつけられても、輝夜は眼を覚まそうとしない
+				CASE 2
+					PRINTFORML 苦痛に眉を顰める輝夜だが、その瞼は開く様子を見せない
+			ENDSELECT
+		ENDIF
+	;敵の衣服攻撃（命中）(CP０時はエロモード)属性（0＝A攻撃　1＝B攻撃　2＝C攻撃　3＝V攻撃）
+	CASE 13
+		;味方に妹紅本人が居て、非昏睡かつ非喪失かつ、非捕食＆非拘束
+		IF CFLAG:800 == 1
+			;喪失OR諦め
+			IF CFLAG:29 != 0 || TFLAG:16 == 2
+				IF BASE:3 > 0
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「……ん……ぅ」
+							PRINTFORML びくびくと震えながらも、衣服を守ろうともしない輝夜に、妹紅が冷めた視線を向けてくる
+						CASE 1
+							PRINTFORML 「――――ぁ」
+							PRINTFORML 肌が見えても反応しない輝夜を、不愉快そうに妹紅が見つめている
+					ENDSELECT
+				ELSE
+					SELECTCASE ARG:2
+						CASE 0
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML されるがまま、尻を突き出し肛虐を受け入れる輝夜を、妹紅が睨んでいる
+								CASE 1
+									PRINTFORML 自ら腰を揺らし菊座への刺激に喘ぐ輝夜に、妹紅がいらだたしげな表情を浮かべている
+							ENDSELECT
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 乳房への刺激に、自ら胸を差し出す輝夜を睨み、妹紅が拳を握り締めている
+								CASE 1
+									PRINTFORML 乳首を弄られる度、甘い声をあげる輝夜を、妹紅は歯を食いしばって睨んでいる
+							ENDSELECT
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 秘豆を弄られ声を上げる輝夜を悔しそうに妹紅が見つめている
+								CASE 1
+									PRINTFORML クリを刺激され嬌声を漏らす輝夜を、唇を噛み締めて睨んでいる
+							ENDSELECT
+						CASE 3
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 輝夜は自ら陰唇を割り開き膣腔からの悦楽に酔い痴れている
+									PRINTFORML 妹紅の強烈な視線に気付いて、輝夜は見せつけるように腰を揺らし始めた
+								CASE 1
+									PRINTFORML 膣奧に感じる悦楽に、甘い悲鳴を上げる輝夜
+									PRINTFORML 睨み付ける妹紅に、共に楽しもうと手招きしながら、きゅんっと膣を締め付けた
+							ENDSELECT
+					ENDSELECT
+				ENDIF
+			;異常なし
+			ELSEIF CFLAG:25 == 0
+				IF BASE:3 > 0
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「っっ！！　私の服に手を出して良いのは、私が気に入ってるものだけよっ！」
+							PRINTFORML 叫びつつ妹紅に視線を向け、呆れた表情を浮かべられた
+						CASE 1
+							PRINTFORML 「私の珠の肌を見たいなんて、万年てか億年ていうより光年早いわよっっ！！」
+							PRINTFORML 光年は距離だろと、ツッコミを入れる妹紅は無視した
+					ENDSELECT
+				ELSE
+					SELECTCASE ARG:2
+						CASE 0
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 「や、やめなさいっ！　そんなところ、お尻なんてっ！！」
+									PRINTFORML ずにゅりと尻穴を蹂躙され悲鳴をあげる輝夜に、妹紅は顔を赤くして視線を逸らす
+								CASE 1
+									PRINTFORML 「くぁっ！　ひぅっ！　こ、このぉっ！」
+									PRINTFORML 必死に尻を揺らしながらも肛虐を避けきれない輝夜に、妹紅がゴクリと生唾を飲み込む
+							ENDSELECT
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 「んくっ、ふぁっ！　おっぱいに触らないでくれるっ！！　型崩れするじゃないっ！！」
+									PRINTFORML そんなちっさいのが型崩れしないだろうとツッコむ妹紅を、じろりと睨んだ
+								CASE 1
+									PRINTFORML 「あふっ！　んっ、ふぁっ！　ひんっ！　や、この先っぽ、やめてっ！！」
+									PRINTFORML 固くしこった乳首を弄られる感触に悲鳴を上げ、妹紅が赤い顔で視線を逸らす
+							ENDSELECT
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 「んくっ！　ふぁ、んっっ！　クリ、やめてっ、てば」
+									PRINTFORML 秘豆を嬲られ、不愉快さに眉を顰める輝夜を、妹紅が僅かに羨ましげに見ている
+								CASE 1
+									PRINTFORML 「ひぁっ！　も、鬱陶しいっ！」
+									PRINTFORML 感じた様子も見せずに叫ぶ輝夜に、鈍感は良いねと妹紅が呟いている
+							ENDSELECT
+						CASE 3
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORM 「はぁ、ん
+									CALL HEARTCB(0xD02830)
+									PRINTFORM 　いいわ、これぇ
+									CALL HEARTCB(0xD02830)
+									PRINTFORM 　もっと、もっとしてぇ
+									CALL HEARTCB(0xD02830, 2)
+									PRINTFORM 　もっとこすってよぉねえ、もっとぉ
+									CALL HEARTCB(0xD02830, 2)
+									PRINTFORML 」
+									PRINTFORML 膣内を擦り立てられる快楽に、輝夜は甘い啼き声を上げる
+									PRINTFORML あまりにも蕩けた表情を浮かべる輝夜に、妹紅が視線を逸らした
+								CASE 1
+									PRINTFORM 「っっ
+									CALL HEARTCB(0xD02830, 2)
+									PRINTFORM 　……っ……っ
+									CALL HEARTCB(0xD02830, 2)
+									PRINTFORM 　――――
+									CALL HEARTCB(0xD02830, 2)
+									PRINTFORM 　～～～～～～～～
+									CALL HEARTCB(0xD02830, 2)
+									PRINTFORML 」
+									PRINTFORML 胎を嬲られる快楽に、舌を突き出し声にならない声を上げる輝夜
+									PRINTFORML その様子に、妹紅がゴクリと唾を飲み込んでいる
+							ENDSELECT
+					ENDSELECT
+				ENDIF
+			;睡眠
+			ELSE
+				IF BASE:3 > 0
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE ARG:2
+						CASE 0
+							SELECTCASE RAND:3
+								CASE 0
+								CASE 1
+								CASE 2
+							ENDSELECT
+						CASE 1
+							SELECTCASE RAND:3
+								CASE 0
+								CASE 1
+								CASE 2
+							ENDSELECT
+						CASE 2
+							SELECTCASE RAND:3
+								CASE 0
+								CASE 1
+								CASE 2
+							ENDSELECT
+						CASE 3
+							SELECTCASE RAND:3
+								CASE 0
+								CASE 1
+								CASE 2
+							ENDSELECT
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;喪失OR諦め
+		ELSEIF CFLAG:29 != 0 || TFLAG:16 == 2
+			IF BASE:3 > 0
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ELSE
+				SELECTCASE ARG:2
+					CASE 0
+						SELECTCASE RAND:2
+							CASE 0
+							CASE 1
+						ENDSELECT
+					CASE 1
+						SELECTCASE RAND:2
+							CASE 0
+							CASE 1
+						ENDSELECT
+					CASE 2
+						SELECTCASE RAND:2
+							CASE 0
+							CASE 1
+						ENDSELECT
+					CASE 3
+						SELECTCASE RAND:2
+							CASE 0
+							CASE 1
+						ENDSELECT
+				ENDSELECT
+			ENDIF
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			IF BASE:3 > 0
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			ELSE
+				SELECTCASE ARG:2
+					CASE 0
+						SELECTCASE RAND:3
+							CASE 0
+							CASE 1
+							CASE 2
+						ENDSELECT
+					CASE 1
+						SELECTCASE RAND:3
+							CASE 0
+							CASE 1
+							CASE 2
+						ENDSELECT
+					CASE 2
+						SELECTCASE RAND:3
+							CASE 0
+							CASE 1
+							CASE 2
+						ENDSELECT
+					CASE 3
+						SELECTCASE RAND:3
+							CASE 0
+							CASE 1
+							CASE 2
+						ENDSELECT
+				ENDSELECT
+			ENDIF
+		;睡眠
+		ELSE
+			IF BASE:3 > 0
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			ELSE
+				SELECTCASE ARG:2
+					CASE 0
+						SELECTCASE RAND:3
+							CASE 0
+							CASE 1
+							CASE 2
+						ENDSELECT
+					CASE 1
+						SELECTCASE RAND:3
+							CASE 0
+							CASE 1
+							CASE 2
+						ENDSELECT
+					CASE 2
+						SELECTCASE RAND:3
+							CASE 0
+							CASE 1
+							CASE 2
+						ENDSELECT
+					CASE 3
+						SELECTCASE RAND:3
+							CASE 0
+							CASE 1
+							CASE 2
+						ENDSELECT
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;敵の性攻撃(EP攻撃)が当たった
+	;性攻撃などの場合、ARG:2に属性（0＝A攻撃　1＝B攻撃　2＝C攻撃　3＝V攻撃）が入っています
+	CASE 14
+		;味方に妹紅が居て、非昏睡かつ非喪失かつ、非捕食＆非拘束
+		IF CFLAG:800
+			;喪失OR諦め
+			IF CFLAG:29 != 0 || TFLAG:16 == 2
+				SELECTCASE ARG:2
+					CASE 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML されるがまま、尻を突き出し肛虐を受け入れる輝夜を、妹紅が睨んでいる
+							CASE 1
+								PRINTFORML 自ら腰を揺らし菊座への刺激に喘ぐ輝夜に、妹紅がいらだたしげな表情を浮かべている
+						ENDSELECT
+					CASE 1
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 乳房への刺激に、自ら胸を差し出す輝夜を睨み、妹紅が拳を握り締めている
+							CASE 1
+								PRINTFORML 乳首を弄られる度、甘い声をあげる輝夜を、妹紅は歯を食いしばって睨んでいる
+						ENDSELECT
+					CASE 2
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 秘豆を弄られ声を上げる輝夜を悔しそうに妹紅が見つめている
+							CASE 1
+								PRINTFORML くりを刺激され嬌声を漏らす輝夜を、唇を噛み締めて睨んでいる
+						ENDSELECT
+					CASE 3
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 輝夜は自ら陰唇を割り開き膣腔からの悦楽に酔い痴れている
+								PRINTFORML 妹紅の強烈な視線に気付いて、輝夜は見せつけるように腰を揺らし始めた
+							CASE 1
+								PRINTFORML 膣奧に感じる悦楽に、甘い悲鳴を上げる輝夜
+								PRINTFORML 睨み付ける妹紅に、共に楽しみたいと手招きしながら、きゅんっと膣を締め付けた
+						ENDSELECT
+				ENDSELECT
+			;異常なし
+			ELSEIF CFLAG:25 == 0
+				SELECTCASE ARG:2
+					CASE 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「や、やめなさいっ！　そんなところ、お尻なんてっ！！」
+								PRINTFORML ずにゅりと尻穴を蹂躙され悲鳴をあげる輝夜に、妹紅は顔を赤くして視線を逸らす
+							CASE 1
+								PRINTFORML 「くぁっ！　ひぅっ！　こ、このぉっ！」
+								PRINTFORML 必死に尻を揺らしながらも肛虐を避けきれない輝夜に、妹紅がゴクリと生唾を飲み込む
+						ENDSELECT
+					CASE 1
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「んくっ、ふぁっ！　おっぱいに触らないでくれるっ！！　型崩れするじゃないっ！！」
+								PRINTFORML そんなちっさいのが型崩れしないだろうとツッコむ妹紅を、じろりと睨んだ
+							CASE 1
+								PRINTFORML 「あふっ！　んっ、ふぁっ！　ひんっ！　や、この先っぽ、やめてっ！！」
+								PRINTFORML 固くしこった乳首を弄られる感触に悲鳴を上げ、妹紅が赤い顔で視線を逸らす
+						ENDSELECT
+					CASE 2
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「んくっ！　ふぁ、んっっ！　クリ、やめてっ、てば」
+								PRINTFORML 秘豆を嬲られ、不愉快さに眉を顰める輝夜を、妹紅が僅かに羨ましげに見ている
+							CASE 1
+								PRINTFORML 「ひぁっ！　も、鬱陶しいっ！」
+								PRINTFORML 感じた様子も見せずに叫ぶ輝夜に、鈍感は良いねと妹紅が呟いている
+						ENDSELECT
+					CASE 3
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORM 「はぁ、ん
+								CALL HEARTCB(0xD02830)
+								PRINTFORM 　いいわ、これぇ
+								CALL HEARTCB(0xD02830)
+								PRINTFORM 　もっと、もっとしてぇ
+								CALL HEARTCB(0xD02830, 2)
+								PRINTFORM 　もっとこすってよぉねえ、もっとぉ
+								CALL HEARTCB(0xD02830, 2)
+								PRINTFORML 」
+								PRINTFORML 膣内を擦り立てられる快楽に、輝夜は甘い啼き声を上げる
+								PRINTFORML あまりにも蕩けた表情を浮かべる輝夜に、妹紅が視線を逸らした
+							CASE 1
+								PRINTFORM 「っっ
+								CALL HEARTCB(0xD02830, 2)
+								PRINTFORM 　……っ……っ
+								CALL HEARTCB(0xD02830, 2)
+								PRINTFORM 　――――
+								CALL HEARTCB(0xD02830, 2)
+								PRINTFORM 　～～～～～～～～
+								CALL HEARTCB(0xD02830, 2)
+								PRINTFORML 」
+								PRINTFORML 胎を嬲られる快楽に、舌を突き出し声にならない声を上げる輝夜
+								PRINTFORML その様子に、妹紅がゴクリと唾を飲み込んでいる
+						ENDSELECT
+				ENDSELECT
+			;睡眠
+			ELSE
+			ENDIF
+		;喪失OR諦め
+		ELSEIF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE ARG:2
+				CASE 0
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 2
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			IF ARG:2 == 0
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ELSEIF ARG:2 == 1
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ELSEIF ARG:2 == 2
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ENDIF
+		;睡眠
+		ELSE
+			IF ARG:2 == 0
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ELSEIF ARG:2 == 1
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ELSEIF ARG:2 == 2
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ELSEIF ARG:2 == 3
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;敵の拘束攻撃（命中）
+	CASE 15
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			;ARG:1にコマンドID　ARG:2に丸呑みフラグ
+			;蔦タコイカ木娘変化●
+			IF ARG:2 == 0
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			;それ以外（ドッペル含む）
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ENDIF
+		;睡眠
+		ELSE
+			IF ARG:2 == 0
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+					CASE 1
+					CASE 2
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;敵の寄生攻撃（命中）
+	CASE 16
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;睡眠
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		ENDIF
+	;敵のその他攻撃（命中）
+	CASE 17
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			;その他攻撃の種類
+			SELECTCASE ARG:1
+				CASE 1
+				CASE 10
+				CASE 11
+				CASE 12,14
+				CASE 13,15
+				CASE 16,20
+				CASE 17
+				CASE 18
+				CASE 19
+				CASE 21
+			ENDSELECT
+		;睡眠
+		ELSE
+			SELECTCASE ARG:1
+				CASE 13,15,16,20,21
+				CASEELSE
+			ENDSELECT
+		ENDIF
+	;味方の攻撃（回避）
+	CASE 21
+	;敵の攻撃を避けた（22～27が避けた時の処理なので、全部まとめて処理）
+	CASE 22 TO 27
+		SELECTCASE RAND:3
+			CASE 0
+			CASE 1
+			CASEELSE
+		ENDSELECT
+	;敵を撃破
+	;ARG:1に敵ID
+	CASE 31
+	;HPが0になった
+	CASE 32
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;睡眠
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		ENDIF
+	;MPが0（戦意喪失）になった
+	CASE 33
+		;異常なし
+		IF CFLAG:25 == 0
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;睡眠
+		ELSE
+		ENDIF
+	;EPが0になった
+	;ARG:1に絶頂部位　ARG:2で細かい状況を分岐させる予定　※絶頂の瞬間とはまた別 絶頂メッセージは120
+	CASE 34
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+		;睡眠
+		ELSE
+		ENDIF
+	;CPが減少した
+	;ARG:1に破れ強度　（ARG:1が　0：全裸になった　1：半裸になった　2：破れ始めた）
+	CASE 35
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE ARG:1
+				CASE 2
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 0
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+			ENDSELECT
+		;睡眠
+		ELSE
+			SELECTCASE ARG:1
+				CASE 2
+				CASE 1
+				CASE 0
+			ENDSELECT
+		ENDIF
+	;戦闘中にアイテムを使って貰った
+	;ARG:1にアイテムID　ARG:2にアイテム使用キャラID
+	CASE 36
+	;敵IDに丸呑みされていて届かない（呑まれている側口上）
+	;ARG:1に敵ID
+	CASE 37
+	;敵IDに丸呑みされていて届かない（行動した側口上）
+	;ARG:1に敵ID
+	CASE 38
+	;通常攻撃を受けてひるんだ
+	CASE 39
+	;寄生された
+	;ARG:1に敵ID
+	CASE 40
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;睡眠
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		ENDIF
+	;攻撃されて起きた
+	;ARG:1に敵ID　ARG:2に攻撃の種類　ARG:3に部位（0＝A　1＝B　2＝C　3＝V）
+	CASE 41
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSE
+			SELECTCASE ARG:3
+				CASE 0
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 2
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	;敵から解放された
+	;ARG:1に敵ID
+	CASE 42
+	;時間経過で起きた
+	CASE 43
+	;煙幕が治った
+	CASE 44
+	;砂煙が治った
+	CASE 45
+	;裸で時間経過
+	;ARG:1に羞恥フラグ（ARG:1が　0：恥薄い　1：通常　2：恥じらい）　ARG:2にMPダメージ
+	CASE 46
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;睡眠
+		ELSE
+		ENDIF
+	;重度汚染部屋で時間経過
+	;ARG:1に部位(0＝A　1＝B　2＝C　3＝V)　ARG:2にEPダメージ
+	CASE 47
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+				ENDSELECT
+				CASE 2
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 2
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+			ENDSELECT
+		;睡眠
+		ELSE
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 2
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	;ターン終了時自慰発生
+	CASE 48
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;睡眠
+		ELSE
+		ENDIF
+	;眠り継続
+	CASE 49
+	;カウンター中
+	CASE 50
+	;カウンター発動
+	CASE 51
+	;拘束レベルアップ
+	;ARG:1に拘束レベル　ARG:2に丸呑みフラグ
+	CASE 52
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			IF ARG:2 != 0
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			ENDIF
+		;睡眠
+		ELSE
+			IF ARG:2 != 0
+			ELSE
+			ENDIF
+		ENDIF
+	;拘束レベルMAX継続　ARG:2に丸呑みフラグ
+	CASE 53
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			IF ARG:2 != 0
+			ELSE
+			ENDIF
+		;睡眠
+		ELSE
+			IF ARG:2 != 0
+			ELSE
+			ENDIF
+		ENDIF
+	;戦闘開始時
+	;ARG:1にイベントID（ARG:1が　0：通常戦闘　1～：ボスなどの特殊戦闘 詳細はTBD）
+	CASE 54
+	;戦闘から逃げた　
+	CASE 55
+	;戦闘で敗北　※ゲームオーバーは157
+	;ARG:1にイベントID
+	CASE 56
+		IF CFLAG:25 == 0
+		ELSE
+		ENDIF
+	;敵に勝った
+	CASE 57
+	;拘束攻撃が当たったが、先客が居たので何とかなった
+	;ARG:1に敵ID
+	CASE 58
+	;戦闘中に敵に捕食されている
+	CASE 59
+	;先制攻撃・不意打ち発生　ARG:2に先制状況
+	;ARG:1にイベントID
+	CASE 60
+	;敵との初遭遇　ARG:1に敵種族
+	CASE 61
+	;仲間を見捨てた
+	CASE 62
+		SELECTCASE RAND:2
+			CASE 0
+			CASE 1
+		ENDSELECT
+	;仲間に見捨てられた
+	CASE 63
+		SELECTCASE RAND:2
+			CASE 0
+			CASE 1
+		ENDSELECT
+	;迷宮内で誰か(ARG:1)に会った
+	CASE 101
+	;遭遇時会話：別れた
+	;ARG:1に遭遇キャラ
+	CASE 102
+	;遭遇時会話：雑談
+	;ARG:1に遭遇キャラ　ARG:2にMP回復量
+	CASE 103
+	;遭遇時会話：情報交換
+	;ARG:1に遭遇キャラ　ARG:2に浄化フラグ
+	CASE 104
+	;遭遇時会話：アイテム強請り成功
+	;ARG:1に遭遇キャラ　ARG:2にアイテムID
+	CASE 105
+	;遭遇時会話：アイテム強請り失敗
+	;ARG:1に遭遇キャラ
+	CASE 106
+	;遭遇時会話：勧誘成功
+	;ARG:1に遭遇キャラ
+	CASE 107
+	;遭遇時会話：勧誘失敗
+	;ARG:1に遭遇キャラ
+	CASE 108
+	;PTに加入した
+	CASE 109
+	;PTメンバーと別れる
+	CASE 110
+		;主人公として表示する場合、ARG:1のキャラを見送る
+		IF TARGET == 1
+		;それ以外の場合、自分が抜ける
+		ELSE
+		ENDIF
+	;遭遇時逆襲：アイテム取られる　ARG:2にアイテムID
+	;ARG:1に遭遇キャラ
+	CASE 111
+	;遭遇時逆襲：攻撃される
+	;ARG:1に遭遇キャラ
+	CASE 112
+	;探索でアイテムを見つけた
+	;ARG:1にアイテムID
+	CASE 113
+	;睡眠開始
+	;ARG:1に状態　（ARG:1が　0：見張り無し　1：PTで見張り　2：ARG:2のキャラが見張り）
+	;ARG:2に見張りNPC
+	CASE 114
+		;異常なし
+		IF CFLAG:29 == 0
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+				CASE 2
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	;重度汚染部屋で睡眠開始　主人公のみ口上発生
+	CASE 115
+		;異常なし
+		IF CFLAG:29 == 0
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		ENDIF
+	;重度汚染部屋で睡眠
+	;ARG:1に部位（0＝A　1＝B　2＝C　3＝V）　ARG:2にEPダメージ
+	CASE 116
+		SELECTCASE ARG:1
+			CASE 0
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			CASE 1
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			CASE 2
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			CASE 3
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+		ENDSELECT
+	;睡眠時自慰発生
+	CASE 117
+		SELECTCASE RAND:2
+			CASE 0
+			CASE 1
+		ENDSELECT
+	;自慰メッセージ
+	;ARG:1に部位　ARG:2に道具ありフラグ
+	CASE 118
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 2
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE ARG:1
+				CASE 0
+					IF ARG:2
+						SELECTCASE RAND:2
+							CASE 0
+								IF ABL:10 >= 2
+								ENDIF
+							CASE 1
+								IF ABL:10 >= 2
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF ABL:10 >= 2
+								ENDIF
+							CASE 1
+								IF ABL:10 >= 2
+								ENDIF
+						ENDSELECT
+					ENDIF
+				CASE 1
+					IF ARG:2
+						SELECTCASE RAND:2
+							CASE 0
+								IF ABL:10 >= 2
+								ENDIF
+							CASE 1
+								IF ABL:10 >= 2
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF ABL:10 >= 2
+								ENDIF
+							CASE 1
+								IF ABL:10 >= 2
+								ENDIF
+						ENDSELECT
+					ENDIF
+				CASE 2
+					IF ARG:2
+						SELECTCASE RAND:2
+							CASE 0
+								IF ABL:10 >= 2
+								ENDIF
+							CASE 1
+								IF ABL:10 >= 2
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF ABL:10 >= 2
+								ENDIF
+							CASE 1
+								IF ABL:10 >= 2
+								ENDIF
+						ENDSELECT
+					ENDIF
+				CASE 3
+					IF ARG:2
+						SELECTCASE RAND:2
+							CASE 0
+								IF ABL:10 >= 2
+								ENDIF
+							CASE 1
+								IF ABL:10 >= 2
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF ABL:10 >= 2
+								ENDIF
+							CASE 1
+								IF ABL:10 >= 2
+								ENDIF
+						ENDSELECT
+					ENDIF
+			ENDSELECT
+		;睡眠
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+				CASE 1
+			ENDSELECT
+		ENDIF
+	;自慰で絶頂失敗
+	;ARG:1に部位（0＝A　1＝B　2＝C　3＝V）
+	CASE 119
+		SELECTCASE ARG:1
+			CASE 0
+			CASE 1
+			CASE 2
+			CASE 3
+		ENDSELECT
+	;絶頂の瞬間
+	;ARG:1に部位　ARG:2にMPダメージ
+	CASE 120
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 2
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+				CASE 2
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+			ENDSELECT
+		;睡眠
+		ELSE
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+				CASE 2
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+				CASE 3
+					SELECTCASE RAND:3
+						CASE 0
+						CASE 1
+						CASE 2
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	;発情がおさまった
+	;ARG:1に部位
+	CASE 121
+	;戦意喪失中に絶頂
+	;ARG:1に部位
+	CASE 122
+		SELECTCASE ARG:1
+			CASE 0
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			CASE 1
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			CASE 2
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+			CASE 3
+				SELECTCASE RAND:2
+					CASE 0
+					CASE 1
+				ENDSELECT
+		ENDSELECT
+	;母乳を吸われる
+	;ARG:1に敵ID　ARG:2に回復量
+	CASE 123
+	;寄生が進行
+	;ARG:1に残り時間
+	CASE 125
+	;妊娠が進行
+	;ARG:1に残り時間
+	CASE 126
+	;寄生・出産イベント
+	;ARG:1に状況　（ARG:1が　0：最初　1：産まれた　2：吸われた）
+	CASE 127
+	;妊娠・出産イベント
+	;ARG:1に状況　（ARG:1が　0：最初　1：産まれた　2：吸われた）　ARG:2に子供の種類
+	CASE 129
+	;部屋の浄化実行
+	CASE 130
+	;眠気が進行
+	;ARG:1に眠気
+	CASE 131
+	;部屋を移動：突撃
+	CASE 132
+	;部屋を移動：慎重
+	CASE 134
+	;探索開始
+	CASE 135
+	;処女喪失（ARG:1は喪失原因　0：敵の攻撃　1：自慰　2：出産）　ARG:2にMP減少量　ARG:3が1の場合、喪失の直前　2の場合、喪失を防いだ
+	CASE 136
+		IF ARG:3 == 1
+			;防御
+			IF LOST_VIRGIN_CHECK(TARGET)
+			;失敗
+			ELSE
+			ENDIF
+		;無抵抗
+		ELSE
+		ENDIF
+	;遭遇時会話：固定イベント情報取得
+	;ARG:1に遭遇キャラ　ARG:2にイベントID
+	CASE 137
+	;遭遇時会話：アイテム強請り開始
+	;ARG:1に遭遇キャラ　ARG:2に喪失キャラフラグ
+	CASE 138
+	;遭遇時会話：アイテムを強請られた
+	;ARG:1にアイテムID　（ARG:1は渡したアイテム。0なら失敗）
+	;※主人公ではなく、強請られた側のキャラの口上　喪失中のアイテム盗難はCFLAG:29をチェック
+	CASE 139
+	;PTに勧誘された
+	;ARG:1に状況　（ARG:1が0：通常　1：共闘）　ARG:2が0：失敗　1：成功
+	CASE 140
+	;遭遇時逆襲：襲い掛かられた
+	;ARG:1に遭遇キャラ　ARG:2が1なら実はドッペル
+	CASE 141
+	;遭遇時逆襲：襲い掛かった
+	;ARG:2が1なら実はドッペル
+	;※主人公ではなく、襲った側のキャラの口上
+	CASE 142
+	;遭遇時会話：喪失キャラに気付け薬を使った
+	;ARG:1に遭遇キャラ　ARG:2が0：使った時　1：仲間にした　2：仲間入りを断った
+	CASE 143
+	;遭遇時会話：喪失中に気付け薬を使われた
+	;ARG:1に状況　（ARG:1が0：そのまま立ち去る　1：仲間に入りたい　2：仲間に入った　3：断られた）
+	;※主人公ではなく、助けられた側のキャラの口上
+	CASE 144
+	;寄生が進行　ARG:2に寄生されているキャラ　※寄生された本人以外の口上
+	CASE 145
+	;妊娠が進行　ARG:2に妊娠しているキャラ　※妊娠した本人以外の口上
+	CASE 146
+	;寄生・出産イベント　（ARG:1が　0：最初　1：産まれた　2：吸われた）　ARG:2に寄生されているキャラ　※寄生された本人以外の口上
+	CASE 147
+	;妊娠・出産イベント　（ARG:1が　0：最初　1：産まれた　2：吸われた）　ARG:2に妊娠しているキャラ　ARG:3に子供の種類　※妊娠した本人以外の口上
+	CASE 148
+	;捕食開始
+	;ARG:1に敵ID
+	CASE 150
+	;捕食されている
+	;ARG:1に敵ID　ARG:2に丸呑みフラグ
+	CASE 151
+	;捕食されきった（リタイア）
+	CASE 152
+	;リザレクション発生（蓬莱人）
+	CASE 153
+	;一回休み発生（妖精）
+	CASE 154
+	;不死身発生
+	CASE 155
+	;敵ランクアップ
+	;ARG:1に敵種類
+	CASE 156
+	;ゲームオーバー
+	;ARG:1に敵種類
+	CASE 157
+	;主人公復活　（ARG:1が　0：助けてもらって復活　1：打ち捨てられて復活）
+	CASE 158
+	;ゲーム開始時（各種設定が終わって、MAPが表示される直前に全キャラに対して実行　口上独自の設定などにどうぞ）
+	CASE 159
+	;MAP表示時（日常？のつぶやきなどにどうぞ）
+	CASE 160
+	;PTキャラ離脱（本人）
+	CASE 161
+	;PTキャラ離脱（仲間）
+	CASE 162
+	;遭遇キャラ	遭遇時会話：固定イベント情報取
+	CASE 165
+	;ランダムイベント発生
+	;ARG:1にイベントID　ARG:2で同じイベントの詳細分岐
+	;※イベントIDは固定イベントIDと同一
+	CASE 200
+		;喪失OR諦め
+		IF CFLAG:29 != 0 || TFLAG:16 == 2
+			SELECTCASE RAND:3
+				CASE 0
+				CASE 1
+				CASE 2
+			ENDSELECT
+		;異常なし
+		ELSEIF CFLAG:25 == 0
+			SELECTCASE ARG:1
+				;不死鳥の羽（64）入手
+				CASE 112
+				;●特殊イベント系
+				;湧き水　飲むとHP・MP・EP全快　飲まなかった場合は残る
+				CASE 130
+				;湧き水　飲むとEPが1になる　飲まなかった場合は残る
+				CASE 131
+				;湧き水　飲むと最大HPが+500　飲まなかった場合は残る
+				CASE 132
+				;澄んだ泉　飲むとMP25％回復、入るとEP50％回復　拠点にすることを想定
+				CASE 133
+					SELECTCASE ARG:2
+						;MP回復
+						CASE 0
+						;EP回復
+						CASE 1
+						;無視
+						CASE 2
+					ENDSELECT
+				;白濁した泉　133とは違う場所　飲むとMP全快or発情　入ると速度+5or寄生（種類はランダム）
+				CASE 134
+					SELECTCASE ARG:2
+						;MP全回復
+						CASE 0
+						;眠気
+						CASE 1
+						;発情
+						CASE 2
+						;速度+
+						CASE 3
+						;寄生
+						CASE 4
+					ENDSELECT
+				;不思議な泉　飲むとHP・MP・EP全快　入ると寄生を含む全状態異常治療　処女モードの場合処女も回復
+				CASE 135
+					SELECTCASE ARG:2
+						;HP・MP・EP全快
+						CASE 0
+						;全状態異常治療
+						CASE 1
+						;無視
+						CASE 2
+					ENDSELECT
+				;天井からスライム　危機回避判定失敗でCPが0に
+				CASE 136
+					SELECTCASE ARG:2
+						;回避失敗
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;回避成功
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+					ENDSELECT
+				;壁から触手　危機回避判定失敗で数回ランダム箇所絶頂
+				CASE 137
+					SELECTCASE ARG:2
+						;回避失敗
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;回避成功
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+					ENDSELECT
+				;落とし穴に触手　危機回避判定（易しめ）失敗で多数ランダム絶頂＋寄生
+				CASE 138
+					SELECTCASE ARG:2
+						;回避失敗
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;回避成功
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;回避失敗&寄生　CASE 1から連続で発生するので注意
+						CASE 3
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+					ENDSELECT
+				;桃色のガス　自慰中毒判定失敗で強制自慰
+				CASE 139
+					SELECTCASE ARG:2
+						;回避失敗
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;回避成功
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+					ENDSELECT
+				;誰かの荷物　荷物袋が落ちている　開けると着替えセット（54）と日本酒（52）を入手　無視した場合は残る
+				CASE 140
+				;誰かの荷物　荷物袋が落ちている　開けると中から触手　雑魚を１匹生成して、敵の先制で強制戦闘　無視した場合は残る
+				CASE 141
+				;喋れる触手　各部位の感覚Lv3を連れて行くとネチョる代わりにレアアイテムをくれる　コンプリートで全武器１つずつ＋イベント消滅
+				CASE 142
+					SELECTCASE ARG:2
+						;A
+						CASE 0
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;B
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;C
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;V
+						CASE 3
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;だが断る
+						CASE 4
+						;コンプ
+						CASE 5
+					ENDSELECT
+				CASE 143
+					;不思議なガス　危機回避判定失敗で　眠気+2/全員発情/全員強制自慰/全員TP200/全員TP0　のいずれか
+					SELECTCASE ARG:2
+						;眠気
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;発情
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;自慰
+						CASE 3
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;テンション上昇
+						CASE 4
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;テンション下降
+						CASE 5
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;回避
+						CASE 6
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+					ENDSELECT
+				CASE 144
+					;柔らかい壁　壁の無い部屋で発生したら即終了＋再配置　高難易度　体当たりすると崩れて通路追加orネチョ　ネチョか放置の場合は残る
+					SELECTCASE ARG:2
+						;あっさり崩れた
+						CASE 1
+						;ヤられた
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+					ENDSELECT
+				;スッキリ草　眠気を０にしてくれる薬草　効果は必ず分かってOK　使わなかった場合は残る
+				CASE 145
+					SELECTCASE ARG:2
+						;使った
+						CASE 1
+						;放置
+						CASE 2
+					ENDSELECT
+				;淫蟲の大群　A属性EPダメージ　絶頂時MPダメージ大
+				CASE 146
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				;淫蟲の大群　B属性EPダメージ　母乳体質時EP・MPダメージ倍
+				CASE 147
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				;淫蟲の大群　C属性EPダメージ　それなりの確率で発情
+				CASE 148
+					SELECTCASE ARG:2
+						;受けた時
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;発情　↑から連続で発生するので被りに注意
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+					ENDSELECT
+				;淫蟲の大群　V属性EPダメージ　稀に寄生
+				CASE 149
+					SELECTCASE ARG:2
+						;受けた時
+						CASE 1
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+						;寄生　↑から連続で発生するので被りに注意
+						CASE 2
+							SELECTCASE RAND:2
+								CASE 0
+								CASE 1
+							ENDSELECT
+					ENDSELECT
+				;落石　危機回避判定失敗でHPダメージ
+				CASE 150
+					SELECTCASE ARG:2
+					;回避失敗
+					CASE 1
+					;回避成功
+					CASE 2
+					ENDSELECT
+				;不意打ち　強めの雑魚を１匹生成して、敵の先制で強制戦闘
+				CASE 151
+				;自販機イベント
+				CASE 160
+					SELECTCASE ARG:2
+						CASE 0
+						CASE 1
+							SELECTCASE ARG:3
+								CASE 0
+								CASE 1
+							ENDSELECT
+						CASE 2
+							SELECTCASE ARG:3
+								CASE 0
+								CASE 1
+							ENDSELECT
+						CASE 3
+							SELECTCASE ARG:3
+								CASE 0
+								CASE 1
+							ENDSELECT
+						CASE 4
+							SELECTCASE ARG:3
+								CASE 0
+								CASE 1
+								CASE 2
+							ENDSELECT
+						CASE 5
+							SELECTCASE ARG:3
+								CASE 0
+								CASE 1
+								CASE 2
+								CASE 3
+							ENDSELECT
+						CASE 6
+							SELECTCASE ARG:3
+								CASE 0
+								CASE 1
+							ENDSELECT
+						CASE 7
+						CASE 8
+					ENDSELECT
+				;ふたなり襲われ
+				CASE 161
+					SELECTCASE ARG:2
+						CASE 0
+							SELECTCASE ARG:3
+								CASE 0
+								CASE 1
+								CASE 2
+							ENDSELECT
+						CASE 1
+							SELECTCASE ARG:3
+								CASE 0
+								CASE 1
+								CASE 2
+							ENDSELECT
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	;EXイベント1（PT分断テレポート）　（ARG:1が　0：飛ばされる前　1：飛ばされた後）
+	CASE 201
+	;固定イベントID190～200専用　ARG:1のキャラの遺品（着替えセット＝服の一部とか替えの服）を入手　キャラ番号を見るならNO:(ARG:1)を見る事
+	CASE 202
+	;オープニング
+	CASE 203
+		PRINTFORML 
+		PRINTFORML 「……確かに、最近退屈してはいたけど、こういうのは苦手なのよね」
+		PRINTFORML 「こんなのは、ばかもこー辺りにやらせておけば良いのに」
+		IF FLAG:AUTOMODE
+			PRINTFORML 呟きながら、そういえばと思い出す
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 呟きながら、そういえばと思い出す
+		ENDIF
+		PRINTFORML ここしばらく妹紅の姿を見かけていない
+		PRINTFORML 「……もしかして、あいつもここに来てるのかしら」
+		PRINTFORML なら、探索するついでに助け出して、恩を着せるのも良いかもしれない
+		PRINTFORML その思いに、輝夜は笑みを浮かべた
+		IF FLAG:AUTOMODE
+			PRINTFORML 
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 
+		ENDIF
+	;エンディング１・仲間を囮にして逃げる　※主人公側
+	CASE 204
+		IF NO:(FLAG:10) == 31 || NO:(FLAG:11) == 31
+			IF (CFLAG:(FLAG:10):5 + CFLAG:(FLAG:11):5) >= 500
+				PRINTFORML \@ NO:(FLAG:10) != 31 ? %CALLNAME:(FLAG:10)% # %CALLNAME:(FLAG:11)% \@に駆けよる仲間達を横目に、輝夜は虚ろな瞳の妹紅に近寄る
+				PRINTFORML 「……ごめん、ごめんなさい、妹紅」
+				PRINTFORML 蓬莱人だから、きっと大丈夫だと勝手に思い込んでいた
+				PRINTFORML 妹紅が居れば、\@ NO:(FLAG:10) != 31 ? %CALLNAME:(FLAG:10)% # %CALLNAME:(FLAG:11)% \@もきっと何とかなる、そう勝手に考えていた
+				IF FLAG:AUTOMODE
+					PRINTFORML だから、逃げ出したのに
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW だから、逃げ出したのに
+				ENDIF
+				PRINTFORML 「ごめん、なさい……」
+				PRINTFORML 体をそっと起こして、ぎゅっと抱き締める
+				PRINTFORML ”何やってんだ、バカ！　触るな、気持ち悪いっ！！”
+				PRINTFORML いつもなら返ってくるはずの罵声がない、それがあまりにも哀しくて
+				IF FLAG:AUTOMODE
+					PRINTFORML ただ涙をこぼして、妹紅を抱き締めた
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ただ涙をこぼして、妹紅を抱き締めた
+				ENDIF
+				PRINTFORML 
+			;バッドエンドを更にバッド化してどうする
+			ELSE
+				PRINTFORML 「……はぁ」
+				PRINTFORML 妹紅なら、大丈夫だろう
+				PRINTFORML ひょっこり返ってくるかも知れない
+				PRINTFORML そう思いながら、輝夜は月を見上げる
+				IF FLAG:AUTOMODE
+					PRINTFORML ここ数十年で、幻想郷もやけに静かになってきた気がする
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ここ数十年で、幻想郷もやけに静かになってきた気がする
+				ENDIF
+				PRINTFORML 「あそこで、見捨てたのが」
+				PRINTFORML ぽつりと呟き、もう一度深い溜め息を吐く
+				PRINTFORML その輝夜の足下に、淡い光の渦が生まれていく
+				PRINTFORML その事に気付くよりも早く、輝夜の意識が暗転する
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+				PRINTFORML 眼を覚ました輝夜の前にいたのは、妹紅だった
+				PRINTFORML ……下半身が巨大な触手の山に繋がり、幻想郷の少女達を嬲っている
+				PRINTFORML その左右にそびえる触手柱にも、少女達が取り込まれていて
+				PRINTFORML 「っ！」
+				IF FLAG:AUTOMODE
+					PRINTFORML その全員の瞳が、一斉に輝夜を捉える
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW その全員の瞳が、一斉に輝夜を捉える
+				ENDIF
+				PRINTFORML お前のせいだと、あの時お前だけが逃げたからだと
+				PRINTFORML 理性の欠片も見えない、けだものの様な瞳に、ただ一つ怨を浮かべて睨まれる
+				PRINTFORML 「あ、は……」
+				PRINTFORML ぞろりと、触手の山が崩れ、陰門と菊座を埋められたまま少女達が解放された
+				PRINTFORML 一斉に殺しにかかってきた少女達を見ながら、輝夜は笑う
+				IF FLAG:AUTOMODE
+					PRINTFORML 自分を冷たく見下ろす妹紅が、満足するのであればこれでも良いと
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 自分を冷たく見下ろす妹紅が、満足するのであればこれでも良いと
+				ENDIF
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+			ENDIF
+		ELSE
+			IF (CFLAG:(FLAG:10):5 + CFLAG:(FLAG:11):5) >= 500
+				PRINTFORML 「……なんで、なのよ」
+				PRINTFORML きっと救える、そう信じてここまで来た
+				PRINTFORML 普段なら他の連中が動くのに任せていた自分が動いたのは、このためだったのに
+				IF FLAG:AUTOMODE
+					PRINTFORML 「なんで、救えないのよ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「なんで、救えないのよ……」
+				ENDIF
+				PRINTFORML ぴくりともしない%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%を見ながら、項垂れる輝夜
+				PRINTFORML 周りにいた仲間達が、可能な限りの大人数で洞窟の奧へ向かう
+				IF FLAG:AUTOMODE
+					PRINTFORML 残った数人とともに、%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%を連れて外へ向かった
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 残った数人とともに、%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%を連れて外へ向かった
+				ENDIF
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+			;バッドエンドを更にバッド化してどうする
+			ELSE
+				PRINTFORML ……助けられなかった
+				PRINTFORML その悔恨に苛まされていた輝夜は、気がつけばまたあの洞窟の中へと呼び込まれていた
+				PRINTFORML 「今度こそ……っ！？」
+				IF FLAG:AUTOMODE
+					PRINTFORML いきなり背後から襲い掛かってきた触手に、しがみつかれ慌てて振り返る
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW いきなり背後から襲い掛かってきた触手に、しがみつかれ慌てて振り返る
+				ENDIF
+				PRINTFORML 幾度も見かけたバイオプラント、その中にいるのは、%CALLNAME:(FLAG:10)%と%CALLNAME:(FLAG:11)%
+				PRINTFORML 快楽に濁った瞳で、それでもゆっくりと手招きをしている
+				PRINTFORML 「ふ、ふふ……」
+				PRINTFORML 抵抗できずに、バイオプラントに引きずり込まれながら、輝夜は笑う
+				IF FLAG:AUTOMODE
+					PRINTFORML 二人の股間に取り付いた触手が男根と化した
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 二人の股間に取り付いた触手が男根と化した
+				ENDIF
+				PRINTFORML 「はは……あはははは」
+				PRINTFORML あの二人に犯され続ける、それが理解できれば十分だった
+				PRINTFORML きっとそれが輝夜に許された唯一の贖罪だから
+				PRINTFORML 「あはははははははははははははははは」
+				IF FLAG:AUTOMODE
+					PRINTFORML 狂った笑い声を残して、輝夜はバイオプラントの中に取り込まれた
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 狂った笑い声を残して、輝夜はバイオプラントの中に取り込まれた
+				ENDIF
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+			ENDIF
+		ENDIF
+	;エンディング１・仲間を囮にして逃げる　※仲間側の口上
+	CASE 205
+		IF NO:1 == 31
+			IF (CFLAG:(FLAG:10):5 + CFLAG:(FLAG:11):5) >= 500
+				PRINTFORML 「もこー」
+				PRINTFORML 『ん？』
+				PRINTFORML 「もこー」
+				PRINTFORML 『ああ、ここに居るぞ』
+				PRINTFORML 「すきーもこー」
+				PRINTFORML 『ああ、そうか』
+				PRINTFORML 「もこー」
+				PRINTFORML 『ん』
+				PRINTFORML 「すきー」
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+				PRINTFORML 
+			ENDIF
+		ENDIF
+	;エンディング２・ガーディアン撃破　※主人公側
+	CASE 206
+		IF NO:(FLAG:10) == 31 || NO:(FLAG:11) == 31
+			PRINTFORML 永遠亭の縁側で、輝夜は新聞を手に座っていた
+			PRINTFORML 「……妹紅」
+			PRINTFORML 『ん』
+			PRINTFORML またもう一人あそこから帰ってきたと報じる新聞
+			IF FLAG:AUTOMODE
+				PRINTFORML それを片手に、隣に腰を落ち着ける妹紅に視線を向ける
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW それを片手に、隣に腰を落ち着ける妹紅に視線を向ける
+			ENDIF
+			PRINTFORML 「結局、あれはなんだったのかしらね」
+			PRINTFORML 『さあね』
+			PRINTFORML そう呟く妹紅が、こちらを見つめてきた
+			PRINTFORML その瞳に映る期待と情欲に、苦笑が浮かぶ
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ふふ、あんたがこういうのにハマるとは思わなかったわね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ふふ、あんたがこういうのにハマるとは思わなかったわね」
+			ENDIF
+			PRINTFORML 『ちっ…………、別にいいだろ』
+			PRINTFORML そう言って視線を逸らす妹紅の顔が、名前のように紅い
+			PRINTFORML それが楽しくて、輝夜は懐に呑んでおいたガラス玉を取り出す
+			PRINTFORML 「それじゃ、今日も楽しみましょうか」
+			IF FLAG:AUTOMODE
+				PRINTFORML それを、庭に向かって放り投げて割った
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW それを、庭に向かって放り投げて割った
+			ENDIF
+			PRINTFORML 『……ふふ』
+			PRINTFORML 静かに立ち上がり衣服を脱ぐ妹紅に、自身もそうしながら輝夜は思う
+			IF FLAG:AUTOMODE
+				PRINTFORML ぬろりと立ち上がる”安全な”触手に、こう言う刺激も悪くないなと
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW ぬろりと立ち上がる”安全な”触手に、こう言う刺激も悪くないなと
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ELSE
+			PRINTFORML 今日もあの洞窟から帰ってきた者が居る
+			PRINTFORML そう告げる新聞を読みながら、輝夜は小さく溜め息を吐いた
+			PRINTFORML もうすこし、あそこで遊ぶのも良かったかも知れない
+			IF FLAG:AUTOMODE
+				PRINTFORML そう思いながら、手にした新聞を投げ捨てた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW そう思いながら、手にした新聞を投げ捨てた
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ENDIF
+	;エンディング４・クイーン撃破　※主人公側
+	CASE 210
+		IF NO:(FLAG:10) == 31 || NO:(FLAG:11) == 31
+			PRINTFORML 「……で、その結果が、これなのよねぇ……」
+			PRINTFORML 『……ん』
+			PRINTFORML 宴会の最中、誰かが持ってきた酒瓶が、触手の擬態したもので、
+			IF FLAG:AUTOMODE
+				PRINTFORML 滅びる寸前の最後の抵抗の意味でもあったのか、周囲の酒を強烈な発情酒に変えたのだ
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 滅びる寸前の最後の抵抗の意味でもあったのか、周囲の酒を強烈な発情酒に変えたのだ
+			ENDIF
+			PRINTFORML あちらこちらで、口づけを交わしたり身を絡ませ合う少女達
+			PRINTFORML くちっ、と手元から響く音に、溜め息を吐いた
+			PRINTFORML 『んっ、もっと……もっとして……』
+			IF FLAG:AUTOMODE
+				PRINTFORML 蕩けた瞳で、身をすり寄せてくる妹紅
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 蕩けた瞳で、身をすり寄せてくる妹紅
+			ENDIF
+			PRINTFORML 輝夜の手を自身の秘処と菊座に導き、こちらの胸や秘処を嬲ってくる
+			PRINTFORML 「んくっ……もう、しょうがないんだから」
+			PRINTFORML 酒が抜けたあと、自己嫌悪に陥る妹紅と、それ理由に散々イジリ倒せる楽しみ、
+			IF FLAG:AUTOMODE
+				PRINTFORML そして妹紅に堂々と悪戯出来る喜びに、輝夜は笑みを浮かべた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW そして妹紅に堂々と悪戯出来る喜びに、輝夜は笑みを浮かべた
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ELSE
+			PRINTFORML 誰かが持ち込んだ発情酒の入った触手の擬態した酒瓶
+			PRINTFORML しかも周囲の普通の酒まで発情酒に変えられてしまった
+			PRINTFORML それに気付かず、全員が手をつけてしまった結果の乱交……、ならまだ笑えた
+			IF FLAG:AUTOMODE
+				PRINTFORML 「んっ、ふぁっ！　ちょ、なんで、私に群がってっっ！？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「んっ、ふぁっ！　ちょ、なんで、私に群がってっっ！？」
+			ENDIF
+			PRINTFORML けれど、殊勲者を褒めようと誰かが言った結果、輝夜が全員から嬲られているのだ
+			PRINTFORML 「あひっ！　んっっ！　ふぁっ！　や、やめっっ！！」
+			PRINTFORML 前後左右から同時に乳房をなで回され、乳首をかりこりと擦られる
+			IF FLAG:AUTOMODE
+				PRINTFORML 太ももの内側を細い指が何本もこそばし、足や手の指先が舐めしゃぶられる
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 太ももの内側を細い指が何本もこそばし、足や手の指先が舐めしゃぶられる
+			ENDIF
+			PRINTFORML 耳を擦られ、腋や臍、おなかや尻に至るまでくすぐられ揉みたくられる
+			PRINTFORML そして、秘豆に、陰門に、菊座に、代わる代わる指が襲い掛かってくる
+			PRINTFORML 誰かの指が動く度、体が勝手に跳ねて、イッてしまう輝夜
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ちょ、あんた達ねぇっっ！！　ひあんっっ！　あふんっっ！！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ちょ、あんた達ねぇっっ！！　ひあんっっ！　あふんっっ！！」
+			ENDIF
+			PRINTFORML あの迷宮の中、散々嬲られて敏感になった体は、絶頂から降りることを許さない
+			PRINTFORML 「ばかばかばかっっっ！　あひんっっっっ！！」
+			PRINTFORML ……酒が抜けたら、全員まとめて弾幕でなぎ払う
+			IF FLAG:AUTOMODE
+				PRINTFORML そう心の奥底で決意しながら、輝夜は絶頂の啼き声を上げ続けた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW そう心の奥底で決意しながら、輝夜は絶頂の啼き声を上げ続けた
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+		ENDIF
+	;エンディング５・クイーンソロ撃破　※主人公
+	CASE 212
+		;思いっきりノッてみる
+		IF CHARANUM <= 2
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ふふふ、あはははははっっっ！！　この蓬莱山輝夜に、敵う者などいないのよ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ふふふ、あはははははっっっ！！　この蓬莱山輝夜に、敵う者などいないのよ！」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「どれだけ現れたって、月に変わってお仕置きしてあげるから、覚悟なさいっ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「どれだけ現れたって、月に変わってお仕置きしてあげるから、覚悟なさいっ！」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML どや顔ダブルピースを決めポーズに、輝夜は迷宮を後にした
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW どや顔ダブルピースを決めポーズに、輝夜は迷宮を後にした
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…………」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…………」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 感情の消えた能面のような表情で、輝夜はゆっくりと立ち上がる
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 感情の消えた能面のような表情で、輝夜はゆっくりと立ち上がる
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 蹌踉とした足取りで、歩き始めた
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 蹌踉とした足取りで、歩き始めた
+			ENDIF
+		ENDIF
+	;転移門(光の渦)・ラスボス部屋
+	CASE 213
+	;転移門(光の渦)・触手の巣
+	CASE 214
+	;ふたなり射精
+	CASE 455
+
+	;ここでは別に何もしなくてもOKです
+	CASEELSE
+ENDSELECT
+
+
+;↑↑↑　　ここまで口上のメイン処理　　↑↑↑
+
+
+RESETCOLOR
+
+;今の所汎用口上の概念が無いので、RETURN 0 が必要になる事は無いと思います
+RETURN 1
+
+
+
+
+;地の文制御(関数の名前は適当です　他のキャラと被らなければ何でも良いでしょう)
+@KOJO_30_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)

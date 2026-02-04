@@ -1,0 +1,64 @@
+﻿;***********************************************************************
+;		ルーミア口上地の文
+;***********************************************************************
+
+@KOJO_3_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;ARG:0　おおまかなケース　ARG:1　技番号  ARG:2　部位？
+;PRINTFORML {ARG:0}と{ARG:1}と{ARG:2}と{ARG:3}
+
+
+SELECTCASE ARG:1
+
+	CASE 304,309,313,319,329,332,335,339,359,363,369,375,604,609,613,619,629,632,635,639,659,663,669,675
+		;IF CFLAG:841 == 1
+		; ●ARG:0 4発動　　14命中　　全部がこれになると逆に寂しいかな。確率にしよう
+		IF CFLAG:841 == 1 && ARG:0 == 4 && RAND:3 == 0
+
+			;CALL KOJO_DEFAULT(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			;●追加　えーと、発動時と命中時でこの部分が合計２回呼び出される？
+
+
+			;●衣服０時？
+			;IF BASE:(ARG:2):3 <= 0
+			IF BASE:3 <= 0
+				PRINTFORML %ARGS:0%の足元に忍び寄っていた触手が跳ね上がり、尿道へと飛びついてきた！
+			ELSE
+				PRINTFORML 指先程度の触手が%ARGS:0%の尿道へ狙いを定め、一直線に襲い掛かった！
+			ENDIF
+		ELSE
+			CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		ENDIF
+		
+
+
+	
+	;●こうかな？その他は通常の地の文
+	CASEELSE
+		CALL SYSTEM_MESSAGE(ARG:0,ARG:1,ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+ENDSELECT
+
+
+;●こうかな？
+RETURN
+
+
+
+
+SELECTCASE ARG:0
+
+
+
+	
+	;その他は通常の地の文
+	CASEELSE
+		CALL SYSTEM_MESSAGE(ARG:0,ARG:1,ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+ENDSELECT
+
+
+
+

@@ -1,0 +1,3723 @@
+﻿[SKIPSTART]
+IF GETBIT (CFLAG:800,1)
+	SELECTCASE RAND:2
+		CASE 0
+		CASE 1
+	ENDSELECT
+ELSEIF GETBIT (CFLAG:800,2)
+	SELECTCASE RAND:2
+		CASE 0
+		CASE 1
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+		CASE 1
+	ENDSELECT
+ENDIF
+[SKIPEND]
+;使う方の戦闘行動ファイルの31をキャラのNoに置き換え、使わない戦闘行動ファイルを削除する
+;ARG:0 == 1の管理
+@BATTLE_MIKATA_KOUDOU_HATUDOU_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	IF ARG:1 < 10
+		CALL BATTLE_MIKATA_KOUDOU_SONOTA_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 35
+		CALL BATTLE_MIKATA_KOUDOU_KOUGEKI_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 54
+		CALL BATTLE_MIKATA_KOUDOU_KOUSOKU_NOW_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 59
+		CALL BATTLE_MIKATA_KOUDOU_ONEDARI_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 62
+		CALL BATTLE_MIKATA_KOUDOU_SOUBI_USE_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 90
+		CALL BATTLE_MIKATA_KOUDOU_SAIMIN_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 100
+		CALL BATTLE_MIKATA_KOUDOU_RAPE_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ENDIF
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_SONOTA_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE ARG:1
+		;防御
+		CASE 1
+			;身を守る
+			IF ARG:2 == 0
+				IF MAXBASE:MP/4 >= BASE:MP || CFLAG:20
+					IF GETBIT (CFLAG:800,1)
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「もういやぁ」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 泣き言を呟き、身を丸める妹紅に輝夜が眉を顰めている
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 泣き言を呟き、身を丸める妹紅に輝夜が眉を顰めている
+								ENDIF
+							CASE 1
+								PRINTFORML 「やめて、こんなのもう」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL かがみ込みただ身を守る妹紅を、いたわしげに輝夜が見つめている
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW かがみ込みただ身を守る妹紅を、いたわしげに輝夜が見つめている
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「……っ、もう、いや……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「……っ、もう、いや……」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「もう、やめて……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「もう、やめて……」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ELSEIF MAXBASE:HP/4 >= BASE:HP
+					IF GETBIT (CFLAG:800,1)
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「くそっ、勝手に笑ってろバカ」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 身を守る事を優先する妹紅を、輝夜は小馬鹿にした表情で見つめている
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 身を守る事を優先する妹紅を、輝夜は小馬鹿にした表情で見つめている
+								ENDIF
+							CASE 1
+								PRINTFORML 「体力さえあれば、この程度で」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 必死に身を守る妹紅に、輝夜が笑みを浮かべている
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 必死に身を守る妹紅に、輝夜が笑みを浮かべている
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「はぁはぁ……、腕一本捨てるか」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「はぁはぁ……、腕一本捨てるか」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「動けさえすれば、多少の怪我は……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「動けさえすれば、多少の怪我は……」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ELSE
+					IF GETBIT (CFLAG:800,1)
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「楽しげに見てる場合じゃないだろっ！」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL ニヤニヤ笑う輝夜に言葉を投げつけ、妹紅は身を守っている
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW ニヤニヤ笑う輝夜に言葉を投げつけ、妹紅は身を守っている
+								ENDIF
+							CASE 1
+								PRINTFORML 「手前ぇはこっちばっかりみるなっっ！！」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 思い切り輝夜に怒鳴りながら、妹紅は守りを固めた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 思い切り輝夜に怒鳴りながら、妹紅は守りを固めた
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「守りは苦手だけど、言ってられないか」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「守りは苦手だけど、言ってられないか」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「くっ、今は守りに入るか」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「くっ、今は守りに入るか」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ENDIF
+				;リロードフラグ洗浄
+				SIF CFLAG:805 == 5
+					CFLAG:805 = 0
+			;リロード
+			ELSEIF ARG:2 == 1
+				;リロード二刀流
+				IF CFLAG:805 == 5
+					CFLAG:805 = 0
+				;一回目
+				ELSE
+					CFLAG:805 = 5
+				ENDIF
+
+			ENDIF
+		;アイテム
+		CASE 2
+			SELECTCASE ARG:2
+				CASE 50 TO 53
+					IF ARG:3 == 31
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「少しでも回復しないと」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「少しでも回復しないと」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「一気に飲まないと」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「一気に飲まないと」
+								ENDIF
+						ENDSELECT
+					ELSEIF ARG:3 == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「お前に渡すのは癪だけど」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL いやいや投げ渡す妹紅に、笑顔で輝夜が礼を告げた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW いやいや投げ渡す妹紅に、笑顔で輝夜が礼を告げた
+								ENDIF
+							CASE 1
+								PRINTFORML 「今だけは、死なれちゃ困るからな」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 厭味を乗せた言葉に、くすりと笑いながら輝夜が受け取った
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 厭味を乗せた言葉に、くすりと笑いながら輝夜が受け取った
+								ENDIF
+						ENDSELECT
+					ELSEIF ARG:3 == 26
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音、大丈夫？　これ使って！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音、大丈夫？　これ使って！」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音早くこれを！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音早くこれを！」
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「はい」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「はい」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使って」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使って」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				CASE 54
+					IF ARG:3 == 31
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「早く着替えないと」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「早く着替えないと」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「とりあえず羽織っとこう」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「とりあえず羽織っとこう」
+								ENDIF
+						ENDSELECT
+					ELSEIF ARG:3 == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ほらよ、その貧相な体覆っとけ」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 妹紅の言葉に、顔を赤くして文句を言いながら輝夜が服を手早く纏う
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 妹紅の言葉に、顔を赤くして文句を言いながら輝夜が服を手早く纏う
+								ENDIF
+							CASE 1
+								PRINTFORML 「お前の裸なんて見たくないからな」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 傾城の美姫を馬鹿にするなと文句を言いつつ、妹紅を睨んだ輝夜が服を着た
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 傾城の美姫を馬鹿にするなと文句を言いつつ、妹紅を睨んだ輝夜が服を着た
+								ENDIF
+						ENDSELECT
+					ELSEIF ARG:3 == 26
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音、よかったら使って」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音、よかったら使って」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「はい、代わりの服」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「はい、代わりの服」
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「はい」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「はい」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使って」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使って」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				CASE 55
+					IF ARG:3 == 31
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「少し、気を落ち着けないと」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「少し、気を落ち着けないと」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ん……、ちょっとは落ち着いたな」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ん……、ちょっとは落ち着いたな」
+								ENDIF
+						ENDSELECT
+					ELSEIF ARG:3 == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「お前が飲んでも、効果無いと思うけどな」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 顔を赤くして文句を言いながら、輝夜がクスリを飲み込んだ
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 顔を赤くして文句を言いながら、輝夜がクスリを飲み込んだ
+								ENDIF
+							CASE 1
+								PRINTFORML 「永琳並みに冷静になったらどう？　ま、無理だろうけど」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL そんな厭味に唇を尖らせて、口に含んだクスリを輝夜は飲み下した
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW そんな厭味に唇を尖らせて、口に含んだクスリを輝夜は飲み下した
+								ENDIF
+						ENDSELECT
+					ELSEIF ARG:3 == 26
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音、これで少しでも落ち着いて」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音、これで少しでも落ち着いて」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「大丈夫、慧音。これで、少しは楽に」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「大丈夫、慧音。これで、少しは楽に」
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「はい」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「はい」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使って」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使って」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				CASE 56
+					IF ARG:3 == 31
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使いたくない……。けど、背に腹は代えられないか」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使いたくない……。けど、背に腹は代えられないか」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「こんなの、要らないのに」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「こんなの、要らないのに」
+								ENDIF
+						ENDSELECT
+					ELSEIF ARG:3 == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「輝夜、良いものやるよ」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL にやりと笑いながら投げつける妹紅に、訝りながら輝夜がそれを飲み下した
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW にやりと笑いながら投げつける妹紅に、訝りながら輝夜がそれを飲み下した
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「これでも飲んでろ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「これでも飲んでろ」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORMDL そう言って渡されたものを、輝夜は小首を傾げながら飲み下した
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW そう言って渡されたものを、輝夜は小首を傾げながら飲み下した
+								ENDIF
+						ENDSELECT
+					ELSEIF ARG:3 == 26
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ごめん、慧音」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ごめん、慧音」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「悪い、慧音」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「悪い、慧音」
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「はい」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「はい」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使って」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使って」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				CASE 57
+					IF ARG:3 == 31
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「これがあれば」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「これがあれば」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「これで、なんとか」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「これで、なんとか」
+								ENDIF
+						ENDSELECT
+					ELSEIF ARG:3 == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「お前には勿体ないけどしょうがないな」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 妹紅は思い切りイヤそうな顔をして、輝夜に投げつけた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 妹紅は思い切りイヤそうな顔をして、輝夜に投げつけた
+								ENDIF
+							CASE 1
+								PRINTFORML 「仕方ないから使わせてやる、ありがたく思え」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL その言葉に、にっこり笑って輝夜が罵詈雑言を投げつけてきた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW その言葉に、にっこり笑って輝夜が罵詈雑言を投げつけてきた
+								ENDIF
+						ENDSELECT
+					ELSEIF ARG:3 == 26
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音。これ使って」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音。これ使って」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音、はい。これで大丈夫だから」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音、はい。これで大丈夫だから」
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「はい」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「はい」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「使って」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「使って」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				CASE 58
+					IF !CFLAG:(ARG:3):29
+						PRINTFORML 意識があるのに勿体ないけどと言いながら、%CALLNAME:(ARG:3)%は飲み込んだ
+					ELSE
+						PRINTFORML 口に含ませても飲み込まない%CALLNAME:(ARG:3)%に、妹紅は口移しで飲み込ませた
+						IF ARG:3 == 30
+							SELECTCASE RAND:2
+								CASE 0
+									PRINTFORML 「あー、気持ち悪い」
+									IF FLAG:AUTOMODE
+										PRINTFORMDL イヤそうな表情の妹紅と裏腹に、輝夜が頬を朱に染めている
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMDW イヤそうな表情の妹紅と裏腹に、輝夜が頬を朱に染めている
+									ENDIF
+								CASE 1
+									PRINTFORML 「ホントに不愉快」
+									IF FLAG:AUTOMODE
+										PRINTFORMDL でも私は愉快と返す輝夜に、妹紅は溜め息を吐いた
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMDW でも私は愉快と返す輝夜に、妹紅は溜め息を吐いた
+									ENDIF
+							ENDSELECT
+						ELSEIF ARG:3 == 26
+							SELECTCASE RAND:2
+								CASE 0
+									IF FLAG:AUTOMODE
+										PRINTFORML 「大丈夫？　もう平気？」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「大丈夫？　もう平気？」
+									ENDIF
+								CASE 1
+									IF FLAG:AUTOMODE
+										PRINTFORML 「慧音、大丈夫、気がついた？」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「慧音、大丈夫、気がついた？」
+									ENDIF
+							ENDSELECT
+						ELSE
+							SELECTCASE RAND:2
+								CASE 0
+									IF FLAG:AUTOMODE
+										PRINTFORML 「悪かったね」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「悪かったね」
+									ENDIF
+								CASE 1
+									IF FLAG:AUTOMODE
+										PRINTFORML 「ごめん」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「ごめん」
+									ENDIF
+							ENDSELECT
+						ENDIF
+					ENDIF
+				CASE 59
+					IF !FLAG:10
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「道具に頼るのは趣味じゃ無いけど」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「道具に頼るのは趣味じゃ無いけど」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「一旦体勢を立て直さないと」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「一旦体勢を立て直さないと」
+								ENDIF
+						ENDSELECT
+					ELSE
+						IF FLAG:11 && (CFLAG:(FLAG:11):20 || CFLAG:(FLAG:11):21 || CFLAG:(FLAG:11):29)
+							IF NO:(FLAG:11) == 30
+								PRINTFORML 「いい気味だ、……壊れてなかったら、助けてやるよ」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 儚げに微笑む輝夜の姿が、煙に紛れて見えなくなった
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 儚げに微笑む輝夜の姿が、煙に紛れて見えなくなった
+								ENDIF
+							ELSEIF NO:(FLAG:11) == 26
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ゴメン慧音……、必ず助けに来るから」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ゴメン慧音……、必ず助けに来るから」
+								ENDIF
+							ELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「……ごめん」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「……ごめん」
+								ENDIF
+							ENDIF
+						ELSEIF FLAG:10 && (CFLAG:(FLAG:10):20 || CFLAG:(FLAG:10):21 || CFLAG:(FLAG:10):29)
+							IF NO:(FLAG:10) == 30
+								PRINTFORML 「いい気味だ、……壊れてなかったら、助けてやるよ」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 儚げに微笑む輝夜の姿が、煙に紛れて見えなくなった
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 儚げに微笑む輝夜の姿が、煙に紛れて見えなくなった
+								ENDIF
+							ELSEIF NO:(FLAG:10) == 26
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ゴメン慧音……、必ず助けに来るから」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ゴメン慧音……、必ず助けに来るから」
+								ENDIF
+							ELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「……ごめん」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「……ごめん」
+								ENDIF
+							ENDIF
+						ELSE
+							IF FLAG:11
+								IF NO:(FLAG:11) == 30
+									PRINTFORML 「ちっ、お前も煙にまかれりゃ良かったのに」
+									IF FLAG:AUTOMODE
+										PRINTFORMDL そんなに都合良く行くわけ無いかと、苦笑を浮かべる妹紅
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMDW そんなに都合良く行くわけ無いかと、苦笑を浮かべる妹紅
+									ENDIF
+								ELSEIF NO:(FLAG:11) == 26
+									IF FLAG:AUTOMODE
+										PRINTFORML 「慧音、行こう」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「慧音、行こう」
+									ENDIF
+								ELSE
+									IF FLAG:AUTOMODE
+										PRINTFORML 「大丈夫」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「大丈夫」
+									ENDIF
+								ENDIF
+							ELSE
+								IF NO:(FLAG:10) == 30
+									PRINTFORML 「なんでお前もついてきてるんだよ」
+									IF FLAG:AUTOMODE
+										PRINTFORMDL 同じパーティーでしょとニヤニヤ笑う輝夜に、ただ溜め息だけをついた
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMDW 同じパーティーでしょとニヤニヤ笑う輝夜に、ただ溜め息だけをついた
+									ENDIF
+								ELSEIF NO:(FLAG:10) == 26
+									IF FLAG:AUTOMODE
+										PRINTFORML 「早く行こう、慧音」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「早く行こう、慧音」
+									ENDIF
+								ELSE
+									IF FLAG:AUTOMODE
+										PRINTFORML 「お疲れ」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「お疲れ」
+									ENDIF
+								ENDIF
+							ENDIF
+						ENDIF
+					ENDIF
+			ENDSELECT
+		;前進
+		CASE 3
+			IF GETBIT (CFLAG:800,1)
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「私が出てやるんだ、ありがたく思え」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 厭味を込めた言葉に、輝夜がニヤニヤ笑っている
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 厭味を込めた言葉に、輝夜がニヤニヤ笑っている
+						ENDIF
+					CASE 1
+						PRINTFORML 「手前ぇも前に出たらどうだ」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 前に出ながら呟く妹紅に、深窓の姫君に無茶言わないでと苦笑する輝夜
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 前に出ながら呟く妹紅に、深窓の姫君に無茶言わないでと苦笑する輝夜
+						ENDIF
+				ENDSELECT
+			ELSEIF GETBIT (CFLAG:800,2)
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「慧音は下がってて」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「慧音は下がってて」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「私が前に出るから」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「私が前に出るから」
+						ENDIF
+				ENDSELECT
+			ELSEIF FLAG:10
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「下がってて」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「下がってて」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「私に任せて」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「私に任せて」
+						ENDIF
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「やってやる」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「やってやる」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「燃やしてやるよ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「燃やしてやるよ」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		;後退
+		CASE 4
+			IF GETBIT (CFLAG:800,1)
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「何笑ってやがる」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 後退する妹紅に、ニヤニヤ笑う輝夜は何も答えない
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 後退する妹紅に、ニヤニヤ笑う輝夜は何も答えない
+						ENDIF
+					CASE 1
+						PRINTFORML 「ちっ、今度はお前が出れば良いだろ」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 冗談は顔だけにしてと呟く輝夜を、思いきり睨み付けた
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 冗談は顔だけにしてと呟く輝夜を、思いきり睨み付けた
+						ENDIF
+				ENDSELECT
+			ELSEIF GETBIT (CFLAG:800,2)
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ゴメン慧音、ちょっと下がらせて」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ゴメン慧音、ちょっと下がらせて」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「悪い慧音、少し下がるから」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「悪い慧音、少し下がるから」
+						ENDIF
+				ENDSELECT
+			ELSEIF FLAG:10
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「悪いね」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「悪いね」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ごめん」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ごめん」
+						ENDIF
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ここは一旦下がるか」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ここは一旦下がるか」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「さすがに、ちょっと退かないと不味い」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「さすがに、ちょっと退かないと不味い」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		;逃走
+		CASE 5
+			IF ARG:2 == 0
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ちっ！　足手まといのせいで逃げれなかったじゃないか」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 自分の事を棚に上げるなと文句を言いつつ、輝夜が身構えるのが見えた
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 自分の事を棚に上げるなと文句を言いつつ、輝夜が身構えるのが見えた
+							ENDIF
+						CASE 1
+							PRINTFORML 「トロいっ！　逃げ切れなかっただろっ！」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL トロいのはあんただと、言い返してくる輝夜を睨み付けた
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW トロいのはあんただと、言い返してくる輝夜を睨み付けた
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音は先にっ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音は先にっ！」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ちっ！　慧音に手を出すなっ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ちっ！　慧音に手を出すなっ！」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ちっ、逃げれなかったか」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ちっ、逃げれなかったか」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「くっ、あと少しだったのに」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「くっ、あと少しだったのに」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ELSEIF ARG:2 == 1
+				IF FLAG:11 && (CFLAG:(FLAG:11):20 || CFLAG:(FLAG:11):21 || CFLAG:(FLAG:11):29)
+					IF NO:(FLAG:11) == 30
+						PRINTFORML 「いい気味だ、……壊れてなかったら、助けてやるよ」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 儚げに微笑む輝夜に、背中を向けて走り出した
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 儚げに微笑む輝夜に、背中を向けて走り出した
+						ENDIF
+					ELSEIF NO:(FLAG:11) == 26
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ゴメン慧音……、必ず助けに来るから」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ゴメン慧音……、必ず助けに来るから」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「……ごめん」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「……ごめん」
+						ENDIF
+					ENDIF
+				ELSEIF FLAG:10 && (CFLAG:(FLAG:10):20 || CFLAG:(FLAG:10):21 || CFLAG:(FLAG:10):29)
+					IF NO:(FLAG:10) == 30
+						PRINTFORML 「いい気味だ、……壊れてなかったら、助けてやるよ」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 儚げに微笑む輝夜に、背中を向けて走り出した
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 儚げに微笑む輝夜に、背中を向けて走り出した
+						ENDIF
+					ELSEIF NO:(FLAG:10) == 26
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ゴメン慧音……、必ず助けに来るから」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ゴメン慧音……、必ず助けに来るから」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「……ごめん」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「……ごめん」
+						ENDIF
+					ENDIF
+				ENDIF
+			ENDIF
+	ENDSELECT
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_KOUGEKI_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;攻撃系
+	;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+	IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+		SELECTCASE ARG:1
+			;弾幕・消耗武器
+			;弱、節約
+			CASE 10, 20, 23
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「はぁ……はぁ……、すこしでも、削って……やる」
+
+					CASE 1
+						PRINTFORM 「ん、くっ……やられて、たまるか」
+					CASE 2
+						PRINTFORM 「このていど、でも、こうかは、あるだろ」
+				ENDSELECT
+			;溜め撃ち
+			CASE 13
+				;溜め
+				IF CFLAG:31 == 2
+					PRINTFORM 「あつまれ……はやく、はや、く……」
+				ELSE
+					PRINTFORM 「もえつきろ……、おねがいっ」
+				ENDIF
+			;貫通弾
+			CASE 15
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「まとめて、もえつきろ……」
+					CASE 1
+						PRINTFORM 「ぜんぶもやして、やる……」
+				ENDSELECT
+			;乱れ打ち
+			CASE 24
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「まとめて、つぶれろ……」
+					CASE 1
+						PRINTFORM 「ぜんぶ、こわれろ……っ！」
+				ENDSELECT
+			;非消耗武器
+			;弱攻撃、中攻撃、強攻撃
+			CASE 30, 31, 32
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「重、い……」
+					CASE 1
+						PRINTFORM 「くぅっ……」
+					CASE 2
+						PRINTFORM 「切れ、ろっ！」
+				ENDSELECT
+			;下段狙い、急所狙い
+			CASE 33, 34
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「くらえ……っ」
+					CASE 1
+						PRINTFORM 「はぁはぁ……、はっ！」
+					CASE 2
+						PRINTFORM 「くぅ……、そこっ！」
+				ENDSELECT
+			;その他
+			CASEELSE
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORM 「このぉ」
+					CASE 1
+						PRINTFORM 「しねっ」
+					CASE 2
+						PRINTFORM 「くっ」
+					CASE 3
+						PRINTFORM 「はぁっ」
+				ENDSELECT
+		ENDSELECT
+		IF GETBIT (CFLAG:800,1)
+			PRINTL 
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 心配そうに横目で見つめてくる輝夜には、気付かないふりをした
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 心配そうに横目で見つめてくる輝夜には、気付かないふりをした
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 輝夜の心配そうな表情を無視して、妹紅は敵を睨んだ
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 輝夜の心配そうな表情を無視して、妹紅は敵を睨んだ
+					ENDIF
+			ENDSELECT
+		ELSEIF GETBIT (CFLAG:800,2)
+			PRINTL 
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 慧音の気遣わしげな目線に、なんとか笑みを浮かべて見せた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 慧音の気遣わしげな目線に、なんとか笑みを浮かべて見せた
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 大丈夫かと目で問い掛けてくる慧音に、妹紅は辛さを隠して頷いた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 大丈夫かと目で問い掛けてくる慧音に、妹紅は辛さを隠して頷いた
+					ENDIF
+			ENDSELECT
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+	ELSE
+		SELECTCASE ARG:1
+			;弾幕・消耗武器
+			;弱、節約
+			CASE 10, 20, 23
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「いたぶってやるよ！」
+					CASE 1
+						PRINTFORM 「弱いので十分だ」
+					CASE 2
+						PRINTFORM 「本気なんて、必要ないね」
+				ENDSELECT
+			;中
+			CASE 11, 21
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORM 「これでも食らえ！」
+					CASE 1
+						PRINTFORM 「さっさと死ねっ！」
+					CASE 2
+						PRINTFORM 「消えろっ！」
+					CASE 3
+						PRINTFORM 「鬱陶しいっ！」
+				ENDSELECT
+			;強
+			CASE 12, 22
+				;拘束状態で強弾幕。つまり、霊撃
+				IF (CFLAG:10 || CFLAG:20) && ARG:1 == 12
+					PRINTFORM 「……離れろぉっっ！！」
+				ELSE
+					IF RAND:3 == 0
+						PRINTFORM 「これで、終われぇっ！！」
+					ELSEIF RAND:2 == 0
+						PRINTFORM 「消え失せろぉっっ！！」
+					ELSE
+						PRINTFORM 「さっさとしねぇえっっ！！」
+					ENDIF
+				ENDIF
+			;溜め撃ち
+			CASE 13
+				;溜め
+				IF CFLAG:31 == 2
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORM 「すぅ……はぁ……」
+						CASE 1
+							PRINTFORM 「集まれ……、集まれ……」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORM 「燃え尽きろぉおおっっっ！！！」
+						CASE 1
+							PRINTFORM 「焼却してやるっっっ！！」
+					ENDSELECT
+				ENDIF
+			;ばら撒き弾
+			CASE 14
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「逃げ場はないぞっ」
+					CASE 1
+						PRINTFORM 「そらそらそらっ」
+				ENDSELECT
+			;貫通弾
+			CASE 15
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「まとめて燃やしてやるっ！」
+					CASE 1
+						PRINTFORM 「まとめて消えろっ！」
+				ENDSELECT
+			;乱れ打ち
+			CASE 24
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「連打でも食らえっ！」
+					CASE 1
+						PRINTFORM 「まとめて食らえっ！」
+				ENDSELECT
+			;一点集中
+			CASE 25
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「死ね死ね死ねっ！」
+					CASE 1
+						PRINTFORM 「消えろ消えろ消えろっ！」
+				ENDSELECT
+			;ここから非消耗
+			;弱攻撃
+			CASE 30
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「こういうのも得意なんでね」
+					CASE 1
+						PRINTFORM 「こういうのはどう」
+					CASE 2
+						PRINTFORM 「躱せるかい？」
+				ENDSELECT
+			;中攻撃
+			CASE 31
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「逃がすもんかっ」
+					CASE 1
+						PRINTFORM 「さっさと食らえっ」
+					CASE 2
+						PRINTFORM 「これでどうっ」
+				ENDSELECT
+			;強攻撃
+			CASE 32
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「さっさと死ねぇっ！」
+					CASE 1
+						PRINTFORM 「これで、終われぇっ！」
+				ENDSELECT
+			;下段狙い
+			CASE 33
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「足下がお留守だよっ！」
+					CASE 1
+						PRINTFORM 「これで動けないだろっ！」
+				ENDSELECT
+			;急所狙い
+			CASE 34
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「そこぉっっ！！」
+					CASE 1
+						PRINTFORM 「死ねぇっっ！！」
+				ENDSELECT
+			ENDSELECT
+			IF GETBIT (CFLAG:800,1)
+				PRINTL 
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 妹紅の様子に笑みを浮かべて、輝夜が触手へ目を向けた
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 妹紅の様子に笑みを浮かべて、輝夜が触手へ目を向けた
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORMDL それでこそ妹紅と曰う輝夜を、横目で睨み付けた
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW それでこそ妹紅と曰う輝夜を、横目で睨み付けた
+						ENDIF
+				ENDSELECT
+			ELSEIF GETBIT (CFLAG:800,2)
+				PRINTL 
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORMDL こちらをちらりと見た慧音が、僅かにほっとした表情を浮かべた
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW こちらをちらりと見た慧音が、僅かにほっとした表情を浮かべた
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 妹紅の様子に、慧音の口元が僅かに綻んだ
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 妹紅の様子に、慧音の口元が僅かに綻んだ
+						ENDIF
+				ENDSELECT
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+			ENDIF
+	ENDIF
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_KOUSOKU_NOW_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE ARG:1
+
+		;拘束離脱
+		CASE 42
+			;コマンド使用時
+			IF ARG:3 == 0
+				IF ARG:2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「喰われて堪るかっ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「喰われて堪るかっ！」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「このっ！　離せっ！　離してっ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「このっ！　離せっ！　離してっ！」
+					ENDIF
+				ENDIF
+			ELSEIF ARG:3 == 1
+				PRINTFORML 「んぅっ……、力が、ぬけ、……あふっ」
+				IF GETBIT (CFLAG:800,1)
+					IF ARG:2
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 妹紅の手が僅かにのぞきまた、飲み込まれる光景に輝夜が顔色を変える
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 妹紅の手が僅かにのぞきまた、飲み込まれる光景に輝夜が顔色を変える
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORMDL びくびくと震えて引き込まれていく妹紅に、輝夜は顔を赤くする
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW びくびくと震えて引き込まれていく妹紅に、輝夜は顔を赤くする
+						ENDIF
+					ENDIF
+				ELSEIF GETBIT (CFLAG:800,2)
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 妹紅の様子に、慧音は顔を赤くしている
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 妹紅の様子に、慧音は顔を赤くしている
+					ENDIF
+				ENDIF
+			ELSEIF ARG:3 == 2
+				PRINTFORML 「さっさと離れろっっ！！」
+				IF GETBIT (CFLAG:800,1)
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 妹紅が解放されたことに、安堵の表情を浮かべる輝夜
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 妹紅が解放されたことに、安堵の表情を浮かべる輝夜
+					ENDIF
+				ELSEIF GETBIT (CFLAG:800,2)
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 慧音は、妹紅が解放されたことに喜んでいる
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 慧音は、妹紅が解放されたことに喜んでいる
+					ENDIF
+				ENDIF
+			ELSEIF ARG:3 == 3
+				PRINTFORML 「ちっ！　まだ、離れないかっ！」
+				IF GETBIT (CFLAG:800,1)
+					IF FLAG:AUTOMODE
+						PRINTFORMDL もっと気合いを入れろと、輝夜が無責任にヤジを飛ばす
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW もっと気合いを入れろと、輝夜が無責任にヤジを飛ばす
+					ENDIF
+				ELSEIF GETBIT (CFLAG:800,2)
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 慧音が心配そうな表情で見つめてくる
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 慧音が心配そうな表情で見つめてくる
+					ENDIF
+				ENDIF
+			ELSEIF ARG:3 == 4
+				PRINTFORML 「くそっ！　離せっ離せってばっ！」
+				IF GETBIT (CFLAG:800,1)
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 助けた方が良いかしらと、のんきな表情で輝夜が呟いている
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 助けた方が良いかしらと、のんきな表情で輝夜が呟いている
+					ENDIF
+				ELSEIF GETBIT (CFLAG:800,2)
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 助けようと手を伸ばす慧音に、妹紅は慌てて首を横に振った
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 助けようと手を伸ばす慧音に、妹紅は慌てて首を横に振った
+					ENDIF
+				ENDIF
+			ENDIF
+		;力溜め
+		CASE 43
+			;コマンド使用時
+			IF ARG:2 == 0
+				PRINTFORML 「すぅ……はぁ……、すぅ……」
+			ELSEIF ARG:2 == 1
+				PRINTFORML 「ふぁ、んっ……だめ……ちから、が……んくぅ……」
+			ENDIF
+		;諦め
+		CASE 44
+			;コマンド使用時
+			IF ARG:2 == 0
+				PRINTFORML 「……は、はは」
+				PRINTFORMDL もはや抗えない、それをさとって、妹紅は体から力を抜いた
+				IF FLAG:11
+					IF NO:(FLAG:11) == 31 || NO:(FLAG:10) == 31
+						PRINTFORMDL 同じように触手に嬲られている輝夜が、諦念に染まった笑みを浮かべる
+					ELSEIF NO:(FLAG:11) == 26 || NO:(FLAG:10) == 26
+						PRINTFORMDL 触手に蹂躙される慧音が、必死に逃げてくれと叫んでいる
+					ENDIF
+				ELSEIF FLAG:10
+					IF NO:(FLAG:10) == 31
+						PRINTFORMDL 同じように触手に嬲られている輝夜が、諦念に染まった笑みを浮かべる
+					ELSEIF NO:(FLAG:10) == 26
+						PRINTFORMDL 触手に蹂躙される慧音が、必死に逃げてくれと叫んでいる
+					ENDIF
+				ENDIF
+				PRINTFORML 「どうせ、死なないんだ……、なら、好きにすればいい」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL もはや、抗う意志を見せない妹紅に、触手達が殺到する
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW もはや、抗う意志を見せない妹紅に、触手達が殺到する
+				ENDIF
+			ENDIF
+		;何もしない
+		CASE 45
+			IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「はっ……はっ……、あつ……ぅ……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL ぴくぴくと体を震わせ何もしない妹紅に、輝夜が戸惑いを浮かべている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW ぴくぴくと体を震わせ何もしない妹紅に、輝夜が戸惑いを浮かべている
+							ENDIF
+						CASE 1
+							PRINTFORML 「ん……ふぁ……んくぅ……やぁ……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 悦楽に身を任せ、身動きしない妹紅を、唇を噛んだ輝夜が見つめている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 悦楽に身を任せ、身動きしない妹紅を、唇を噛んだ輝夜が見つめている
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……慧……音？　……ん」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……慧……音？　……ん」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……だい、じょうぶ……けい、ね？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……だい、じょうぶ……けい、ね？」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「はぁはぁ……んく……はぁ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「はぁはぁ……んく……はぁ……」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ふぅふぅ……んぅ……ふぁっ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ふぅふぅ……んぅ……ふぁっ……」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「……はぁはぁ……くっ」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 疲れた表情で何もしない妹紅に、輝夜が不思議そうな視線を向けてくる
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 疲れた表情で何もしない妹紅に、輝夜が不思議そうな視線を向けてくる
+							ENDIF
+						CASE 1
+							PRINTFORML 「つっ……くぅ……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 呼吸を整える妹紅を、輝夜がいらだたしげに見つめている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 呼吸を整える妹紅を、輝夜がいらだたしげに見つめている
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ゴメン、慧音……、ちょっと動けない」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ゴメン、慧音……、ちょっと動けない」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音……、少し、待って……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音……、少し、待って……」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「はぁはぁ……んく……はぁ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「はぁはぁ……んく……はぁ……」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ふぅふぅ……んぅ……ふぁっ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ふぅふぅ……んぅ……ふぁっ……」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;強制自慰
+		CASE 46
+			IF CFLAG:43
+				IF FLAG:526 == 1
+					IF GETBIT (CFLAG:800,1)
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「……ん、ここ熱くて切ないな……」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「……ん、ここ熱くて切ないな……」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 呟きながら自慰を始める妹紅に、輝夜が顔を赤くしている
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 呟きながら自慰を始める妹紅に、輝夜が顔を赤くしている
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「私のＨなところ、そんなに見たいんだ？　なら良いよ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「私のＨなところ、そんなに見たいんだ？　なら良いよ」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 生唾を飲み込む見つめる輝夜を無視して、妹紅は自慰を始める
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 生唾を飲み込む見つめる輝夜を無視して、妹紅は自慰を始める
+								ENDIF
+						ENDSELECT
+					ELSEIF GETBIT (CFLAG:800,2)
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ん……、オナニー見たいの？　いいよ、見て。慧音も一緒に」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ん……、オナニー見たいの？　いいよ、見て。慧音も一緒に」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音も一緒にしようよ……、気持ちいいんだよ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音も一緒にしようよ……、気持ちいいんだよ」
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「んっ、ふぁっ、堪らない。オナニーしたいな」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「んっ、ふぁっ、堪らない。オナニーしたいな」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「がまん、できないや。オナニーして、ガマンしないと」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「がまん、できないや。オナニーして、ガマンしないと」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ELSEIF FLAG:526 == 2
+					IF GETBIT (CFLAG:800,1)
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ふふ、そんなに見たい？　いいよ、見てても」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL くすくすと笑いながら自慰を始める妹紅に、輝夜は恥ずかしげに視線を逸らした
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW くすくすと笑いながら自慰を始める妹紅に、輝夜は恥ずかしげに視線を逸らした
+								ENDIF
+							CASE 1
+								PRINTFORML 「ん、ふふ、そんなにみたいなら見せてあげる。ううん、一緒にしようよ？」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 笑みを向けられた輝夜が、顔を赤くして俯いている
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 笑みを向けられた輝夜が、顔を赤くして俯いている
+								ENDIF
+						ENDSELECT
+					ELSEIF GETBIT (CFLAG:800,2)
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音も一緒にしよ、見せ合いっこしたいなぁ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音も一緒にしよ、見せ合いっこしたいなぁ」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音のオナニーも、見せてよ。私のだって見せてあげるからさ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音のオナニーも、見せてよ。私のだって見せてあげるからさ」
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ん、気持ち良くなりたいな。一人でやるの、少しつまらないけど」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ん、気持ち良くなりたいな。一人でやるの、少しつまらないけど」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ああ、だれか気持ち良くしてよ。……ちぇっ、一人でやろ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ああ、だれか気持ち良くしてよ。……ちぇっ、一人でやろ」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ELSE
+					IF GETBIT (CFLAG:800,1)
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ん、輝夜もしたいの？　それとも輝夜は私としたい？」
+								PRINTFORML （なんで、こんなこと……、輝夜なんて、嫌いなのに……）
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 虚ろな目で笑いながら、妹紅は輝夜に自慰を見せつける
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 虚ろな目で笑いながら、妹紅は輝夜に自慰を見せつける
+								ENDIF
+							CASE 1
+								PRINTFORML 「輝夜、んっ……、輝夜がしてくれないから、やってるんだからね」
+								PRINTFORML （違うっ！　私は輝夜のことなんて何とも思ってないっ！）
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 妹紅の言葉に、輝夜が目を輝かせている
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 妹紅の言葉に、輝夜が目を輝かせている
+								ENDIF
+						ENDSELECT
+					ELSEIF GETBIT (CFLAG:800,2)
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「慧音、見て、私のＨな所全部見てよぉ」
+								IF FLAG:AUTOMODE
+									PRINTFORML （お願い、見ないで慧音っ！　こんなの、いや！）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （お願い、見ないで慧音っ！　こんなの、いや！）
+								ENDIF
+							CASE 1
+								PRINTFORML 「慧音、慧音、慧音ぇ、全部、全部見せてあげるから、慧音も見せてよ」
+								IF FLAG:AUTOMODE
+									PRINTFORML （慧音の……、って違うっ！　そんなこと言ってる場合じゃないのに！）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （慧音の……、って違うっ！　そんなこと言ってる場合じゃないのに！）
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「はぁはぁ、熱いよ、気持ち良くなりたいよぉ」
+								IF FLAG:AUTOMODE
+									PRINTFORML （っ！　な、なんで体勝手にこんなっ！？）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （っ！　な、なんで体勝手にこんなっ！？）
+								ENDIF
+							CASE 1
+								PRINTFORML 「弄りたいおまんこくちゅくちゅしたいっ！」
+								IF FLAG:AUTOMODE
+									PRINTFORML （やだっ！　いやなのに、なんで体がっ！？）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （やだっ！　いやなのに、なんで体がっ！？）
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁはぁ……熱い、体が、熱い……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁはぁ……熱い、体が、熱い……」
+				ENDIF
+			ENDIF
+		;ガード
+		CASE 50 TO 53
+			IF GETBIT (CFLAG:800,1)
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「くぅ……、この離せっ！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 必死に身をよじる妹紅に、輝夜が生唾を飲み込んでいる
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 必死に身をよじる妹紅に、輝夜が生唾を飲み込んでいる
+						ENDIF
+					CASE 1
+						PRINTFORML 「やめ、そこはやめろぉっ！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 触手の攻めを躱そうとする妹紅に、輝夜が生ぬるい声援を投げかけてきた
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 触手の攻めを躱そうとする妹紅に、輝夜が生ぬるい声援を投げかけてきた
+						ENDIF
+				ENDSELECT
+			ELSEIF GETBIT (CFLAG:800,2)
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「このっ！　やっ！　慧音見ないでっ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「このっ！　やっ！　慧音見ないでっ！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「やめろっ！　っ！？　慧音、こっちみないでっ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「やめろっ！　っ！？　慧音、こっちみないでっ！」
+						ENDIF
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「くっ！　触らせて堪るかっ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「くっ！　触らせて堪るかっ！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「このっ！　気持ち悪いんだよっ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「このっ！　気持ち悪いんだよっ！」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		;胸ガード
+		;CASE 51
+		;Cガード
+		;CASE 52
+		;挿入ガード
+		;CASE 53
+	ENDSELECT
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_ONEDARI_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;Aおねだり
+		CASE 54
+			;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+			IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「あついの、お尻が熱くてしかたないの、お願い埋めて、ここに太いの入れてよぉ」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 自ら尻たぶを割り開き、尻穴をさらけ出す妹紅に、頬を朱に染める輝夜
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 自ら尻たぶを割り開き、尻穴をさらけ出す妹紅に、頬を朱に染める輝夜
+							ENDIF
+						CASE 1
+							PRINTFORML 「おねがい、ここずぼずぼしてよぉ……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 自らの菊座を指で弄りながら啼き声を上げる妹紅を、輝夜が辛そうに見つめてくる
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 自らの菊座を指で弄りながら啼き声を上げる妹紅を、輝夜が辛そうに見つめてくる
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あはぁ、お尻気持ち良くしてぇ……、慧音でも、良いからさぁ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あはぁ、お尻気持ち良くしてぇ……、慧音でも、良いからさぁ」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音でも触手でも良いよぉ、お尻弄ってぇ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音でも触手でも良いよぉ、お尻弄ってぇ……」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ん、お尻っお尻熱いのっ！　お願い、ちょうだいっ！　お尻に太いのちょうだいっ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ん、お尻っお尻熱いのっ！　お願い、ちょうだいっ！　お尻に太いのちょうだいっ！」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お尻に入れてぇ、熱くて、固いの、入れてよぉ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お尻に入れてぇ、熱くて、固いの、入れてよぉ……」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「……好きに、すれば良いよ」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 輝夜の戸惑いを無視して、妹紅は自ら尻を突き出した
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 輝夜の戸惑いを無視して、妹紅は自ら尻を突き出した
+							ENDIF
+						CASE 1
+							PRINTFORML 「……私さえ、ガマンすれば」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 輝夜と触手の間に割って入り尻穴をさらけ出した
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 輝夜と触手の間に割って入り尻穴をさらけ出した
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音は下がってて……、食えるもんなら食ってみろ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音は下がってて……、食えるもんなら食ってみろ」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音は後に。……こっちの方が美味しいぞ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音は後に。……こっちの方が美味しいぞ」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……望んでない、仕方が無いんだ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……望んでない、仕方が無いんだ……」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ん……、しょうがない、んだから」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ん……、しょうがない、んだから」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;Bおねだり
+		CASE 55
+			;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+			IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「はぁはぁ、おっぱい、触って。おねがい気持ち良くして」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 体を揺すり乳房を揺らす妹紅を、輝夜は不愉快そうに見つめている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 体を揺すり乳房を揺らす妹紅を、輝夜は不愉快そうに見つめている
+							ENDIF
+						CASE 1
+							PRINTFORML 「んっ……乳首ピンピンになってるの、お願い吸って、こりこりしてよぉ」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 妹紅の淫猥な仕草を、顔を赤くした輝夜がじっと見つめている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 妹紅の淫猥な仕草を、顔を赤くした輝夜がじっと見つめている
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「おっぱいさわって……、慧音でもいいの、お願い、おねがいだからぁ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「おっぱいさわって……、慧音でもいいの、お願い、おねがいだからぁ……」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「乳首、吸って、舐めて、噛んで、擦って……、慧音、お願い、けいねぇ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「乳首、吸って、舐めて、噛んで、擦って……、慧音、お願い、けいねぇ……」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「んっ、おっぱい、おっぱいさわって、おっぱいさわってよぉ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「んっ、おっぱい、おっぱいさわって、おっぱいさわってよぉ」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ちくび、あついの、ぴんぴんでかゆいのぉ、お願いもっと、もっとしてよぉ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ちくび、あついの、ぴんぴんでかゆいのぉ、お願いもっと、もっとしてよぉ」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「……お前じゃ、無理だもんな」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 輝夜が不快そうに眉を顰めるのを尻目に、妹紅は乳房を強調する
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 輝夜が不快そうに眉を顰めるのを尻目に、妹紅は乳房を強調する
+							ENDIF
+						CASE 1
+							PRINTFORML 「お前の方が、向いてるだろ……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 乳首を強調する様に胸に手を添える妹紅を、輝夜がにやりと笑って傍観している
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 乳首を強調する様に胸に手を添える妹紅を、輝夜がにやりと笑って傍観している
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音は下がって。……ほら、胸でもなんでも好きにしろ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音は下がって。……ほら、胸でもなんでも好きにしろ」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音はしなくて良いから。……んっ、乳首弄ってみろってば」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音はしなくて良いから。……んっ、乳首弄ってみろってば」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……いや、なのに……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……いや、なのに……」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「くっ、なんでこんな……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「くっ、なんでこんな……」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;Cおねだり
+		CASE 56
+			;発情時・MP1/4時・HP0時・妊娠時・朦朧時＋ふたなり時
+			IF (CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11) && (CFLAG:42 || TALENT:121)
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							GETFONT
+							PRINTFORM 「はー、はー
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　おちんちんあついの
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　おねがい、こすって！　ださせてぇ
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							PRINTFORML 」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 口の端から涎をこぼし、擬根を突き出す妹紅に、輝夜が生唾を飲み込んでいる
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 口の端から涎をこぼし、擬根を突き出す妹紅に、輝夜が生唾を飲み込んでいる
+							ENDIF
+						CASE 1
+							GETFONT
+							PRINTFORM 「んっ！　おねがい、おねがいぃ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　おちんちん、きもちよくしてぇ
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							PRINTFORML 」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 腰を振って、擬根を揺らす妹紅に、輝夜はただ顔を赤くしている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 腰を振って、擬根を揺らす妹紅に、輝夜はただ顔を赤くしている
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							GETFONT
+							PRINTFORM 「はぁはぁ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　おちんちん、きもちよくしてほしいよぉ
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							PRINTFORM 　慧音にも、してほしいのぉ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							IF FLAG:AUTOMODE
+								PRINTFORML 」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 」
+							ENDIF
+						CASE 1
+							GETFONT
+							PRINTFORM 「んっっ！！　や、熱いの
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　おちんちん、熱いのぉっ
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							PRINTFORM 　慧音、……お願い出させてよぉ
+							CALL HEARTCB(0xD02830,3 , RESULTS:0)
+							IF FLAG:AUTOMODE
+								PRINTFORML 」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							GETFONT
+							PRINTFORM 「んぅ、おちんちん、あつい
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　あついよぉ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							IF FLAG:AUTOMODE
+								PRINTFORML 」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 」
+							ENDIF
+						CASE 1
+							GETFONT
+							PRINTFORM 「おねがいぃ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　おちんちん、こすってぇ……、気持ち良くしてよぉ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							IF FLAG:AUTOMODE
+								PRINTFORML 」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+			ELSEIF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							GETFONT
+							PRINTFORM 「ひんっ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　おねがいっ！　ここ弄ってっ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM あついの、クリトリス熱いからぁっ
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							PRINTFORML 」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 泣き叫び、腰を突き出す妹紅に、輝夜はただ顔を赤らめる
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 泣き叫び、腰を突き出す妹紅に、輝夜はただ顔を赤らめる
+							ENDIF
+						CASE 1
+							GETFONT
+							PRINTFORM 「んきゅっ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　あついよ、あついよぉ
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							PRINTFORM おねがい、おねがい弄って、クリトリス弄ってぇ
+							CALL HEARTCB(0xD02830,3 , RESULTS:0)
+							PRINTFORML 」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 輝夜は蕩けた瞳で腰を揺らす妹紅を、羨ましげに見つめている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 輝夜は蕩けた瞳で腰を揺らす妹紅を、羨ましげに見つめている
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							GETFONT
+							PRINTFORM 「あついの
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　慧音っ
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							PRINTFORM 　お願いしてぇ
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							IF FLAG:AUTOMODE
+								PRINTFORML 」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 」
+							ENDIF
+						CASE 1
+							GETFONT
+							PRINTFORM 「はぁはぁ、あついのぉ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM 　慧音ぇ、あついよぉ
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							IF FLAG:AUTOMODE
+								PRINTFORML 」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							GETFONT
+							PRINTFORM 「はぁはぁ
+							CALL HEARTCB(0xD02830, , RESULTS:0)
+							PRINTFORM ガマン、でき、ない
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							IF FLAG:AUTOMODE
+								PRINTFORML 」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 」
+							ENDIF
+						CASE 1
+							GETFONT
+							PRINTFORM 「弄って、お願い弄って
+							CALL HEARTCB(0xD02830,2 , RESULTS:0)
+							IF FLAG:AUTOMODE
+								PRINTFORML 」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「くっ、や、やなのに、熱い、熱いよ……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 口の端から涎をこぼし腰を突き出す妹紅に、自分がしてあげると囁く輝夜
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 口の端から涎をこぼし腰を突き出す妹紅に、自分がしてあげると囁く輝夜
+							ENDIF
+						CASE 1
+							PRINTFORML 「みるな、輝夜、みないで……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 弱音を吐きながら、愛撫を待つ妹紅を、輝夜は羨ましげに見つめている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 弱音を吐きながら、愛撫を待つ妹紅を、輝夜は羨ましげに見つめている
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音、お願い下がって、お願いだから」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音、お願い下がって、お願いだから」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音に手を出すな……、私にだったら、何をしても良いから」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音に手を出すな……、私にだったら、何をしても良いから」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「私さえ、がまん、すれば……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「私さえ、がまん、すれば……」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「これで、良い？　私だけで良いだろ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「これで、良い？　私だけで良いだろ」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;Vおねだり
+		CASE 57
+			;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+			IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「はぁはぁ……ん、ここにいれて……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 僅かに頬を染める妹紅に、輝夜が不機嫌そうな表情を浮かべている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 僅かに頬を染める妹紅に、輝夜が不機嫌そうな表情を浮かべている
+							ENDIF
+						CASE 1
+							PRINTFORML 「ん、くぅ……、はぁ……ん、ここに、ちょうだい」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 目を潤ませて呟く妹紅を、いらだたしげに輝夜が睨んでいる
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 目を潤ませて呟く妹紅を、いらだたしげに輝夜が睨んでいる
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……ここにほしいの。……慧音にもしてほしいな」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……ここにほしいの。……慧音にもしてほしいな」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ここに、きて……、慧音も、して」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ここに、きて……、慧音も、して」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「んぅ……、ここに、欲しいの」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「んぅ……、ここに、欲しいの」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……ここに、ちょうだい」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……ここに、ちょうだい」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「……はぁ。ほら、好きに使いなよ」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL イヤイヤ秘処を晒す妹紅に、なぜか輝夜が生唾を飲み込んでいる
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW イヤイヤ秘処を晒す妹紅に、なぜか輝夜が生唾を飲み込んでいる
+							ENDIF
+						CASE 1
+							PRINTFORML 「ふんっ、こういうのはあっちの方が似合ってるのにな」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL じろりと輝夜を睨んだ妹紅は、渋々秘処をさらけ出した
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW じろりと輝夜を睨んだ妹紅は、渋々秘処をさらけ出した
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音には手を出すな……、私には何をしても構わないから」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音には手を出すな……、私には何をしても構わないから」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「おねがい、慧音は下がって」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「おねがい、慧音は下がって」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……好きにしなよ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……好きにしなよ」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「どうせ、気持ち良くないし」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「どうせ、気持ち良くないし」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;その他おねだり
+		CASE 58
+			;発情時・MP1/4時・HP0時・妊娠時・朦朧時
+			IF CFLAG:28 || MAXBASE:MP/4 >= BASE:MP || BASE:HP <= 0 || CFLAG:36 >= 3 || FLAG:7 >= 11
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「はぁはぁ……、なんでも良いから、どうにでもして……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL そんな妹紅の呟きに、輝夜がいらだたしげな表情を浮かべている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW そんな妹紅の呟きに、輝夜がいらだたしげな表情を浮かべている
+							ENDIF
+						CASE 1
+							PRINTFORML 「んくっ……はぁ……ん……、おねがい、気持ち良くして……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 涙目で呟く妹紅を、気に入らないと言いたげな輝夜が睨んでいる
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 涙目で呟く妹紅を、気に入らないと言いたげな輝夜が睨んでいる
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……気持ち良くして欲しいの、……慧音でもいいからさ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……気持ち良くして欲しいの、……慧音でもいいからさ」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「お願い気持ち良くして、慧音がしてくれてもいいから……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「お願い気持ち良くして、慧音がしてくれてもいいから……」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ん……、気持ち良くして、お願い」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ん……、気持ち良くして、お願い」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……何もしないから、気持ち良くしてよ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……何もしないから、気持ち良くしてよ」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「……なんで、私がこんな目に……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 文句を言いながら体から力を抜く妹紅に、輝夜が笑みを浮かべている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 文句を言いながら体から力を抜く妹紅に、輝夜が笑みを浮かべている
+							ENDIF
+						CASE 1
+							PRINTFORML 「……今度は、お前がやれよ」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 涙目で輝夜を睨み、妹紅は触手にその身を差し出した
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 涙目で輝夜を睨み、妹紅は触手にその身を差し出した
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音は、下がってて。ほら、私は食べ甲斐があるぞ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音は、下がってて。ほら、私は食べ甲斐があるぞ」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「食えるものなら食ってみろ。慧音は下がって」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「食えるものなら食ってみろ。慧音は下がって」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……はぁ……、好きにしなよ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……はぁ……、好きにしなよ」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……ふぅ、勝手にしろ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……ふぅ、勝手にしろ」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ENDIF
+	ENDSELECT
+RETURN
+
+
+;装備品使用。一応区分しているが恐らく現状ぶっちぎりの死に口上
+@BATTLE_MIKATA_KOUDOU_SOUBI_USE_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		;ARG:2はアイテムIDに対応する
+		SELECTCASE ARG:2
+			;ボム
+			CASE 20 TO 23
+
+			;風
+			CASE 25
+
+			;以下、現状では何も起きない
+			CASE 26
+
+			CASE 27
+
+			CASE 32, 36
+
+			CASEELSE
+		ENDSELECT
+RETURN
+
+;催眠系行動。キス以降は特定条件で平常でも使用可能。
+@BATTLE_MIKATA_KOUDOU_SAIMIN_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;平常行動
+		CASE 71
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ん、ふふ、こんなのが好きなんだ？　いいよ、もっとしてあげる」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 虚ろな瞳の妹紅が触手に唇を押し付けるのを、羨ましげに輝夜が見つめている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 虚ろな瞳の妹紅が触手に唇を押し付けるのを、羨ましげに輝夜が見つめている
+							ENDIF
+						CASE 1
+							PRINTFORML 「ふふ、こんなキスされて喜ぶなんて、可愛いな」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 口元に笑みを浮かべる妹紅に、輝夜が僅かに涙を浮かべている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 口元に笑みを浮かべる妹紅に、輝夜が僅かに涙を浮かべている
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ん、可愛いね、こんなことで喜ぶなんて、あ、慧音も混ざる？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ん、可愛いね、こんなことで喜ぶなんて、あ、慧音も混ざる？」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ふふ、ほら、こうすれば良いんだろう？　慧音も一緒にどう？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ふふ、ほら、こうすれば良いんだろう？　慧音も一緒にどう？」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「ふふ、どう、気持ちいい？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「ふふ、どう、気持ちいい？」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「可愛いね、ホント、可愛い」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「可愛いね、ホント、可愛い」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「……あーと、迷ってない人間は、いないかな」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL うつろな表情で呟く妹紅を、輝夜が驚きの表情で見つめている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW うつろな表情で呟く妹紅を、輝夜が驚きの表情で見つめている
+							ENDIF
+						CASE 1
+							PRINTFORML 「ああ、そろそろ筍が出てくる時期だよな……」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 地面に生える触手を見ながらの妹紅の呟きに、輝夜が青ざめている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 地面に生える触手を見ながらの妹紅の呟きに、輝夜が青ざめている
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「慧音、今日は寺子屋はどうしたの？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「慧音、今日は寺子屋はどうしたの？」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あ、慧音。一緒に筍でも採らない？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あ、慧音。一緒に筍でも採らない？」
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「……えーと、あ、アレしないと……、えーと、アレ？　なんだっけ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「……えーと、あ、アレしないと……、えーと、アレ？　なんだっけ」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「あー、筍のあく抜きしないと……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「あー、筍のあく抜きしないと……」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「……ん、釣りでもしようかな」
+							PRINTFORML （違う、今はそんな事してる場合じゃないのに、なんでこんな）
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 妹紅が有りもしない竹竿を握る姿勢に、輝夜が混乱した表情を浮かべている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 妹紅が有りもしない竹竿を握る姿勢に、輝夜が混乱した表情を浮かべている
+							ENDIF
+						CASE 1
+							PRINTFORML 「ん、今日も良い感じだな」
+							PRINTFORML （何もないのに、何してるんだ、私は）
+							IF FLAG:AUTOMODE
+								PRINTFORMDL おままごとのように見えない鍋を掻き回す妹紅を、輝夜は呆然と眺めている
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW おままごとのように見えない鍋を掻き回す妹紅を、輝夜は呆然と眺めている
+							ENDIF
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「はは、慧音も呑む？　美味しいんだよ、この酒」
+							IF FLAG:AUTOMODE
+								PRINTFORML （何言ってるんだ、酒なんてのんでないのに！　慧音助けて！）
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW （何言ってるんだ、酒なんてのんでないのに！　慧音助けて！）
+							ENDIF
+						CASE 1
+							PRINTFORML 「慧音、一緒に御飯食べようか？　今日は筍御飯なんだけど」
+							IF FLAG:AUTOMODE
+								PRINTFORML （そんな目で見ないで慧音。私の意志じゃない、こんな事したいわけじゃないっ！）
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW （そんな目で見ないで慧音。私の意志じゃない、こんな事したいわけじゃないっ！）
+							ENDIF
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ん、ふふ、今日も良い天気だな」
+							IF FLAG:AUTOMODE
+								PRINTFORML （天井しかない、天井しかないのに、なんでそんな風に思うんだっ！？）
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW （天井しかない、天井しかないのに、なんでそんな風に思うんだっ！？）
+							ENDIF
+						CASE 1
+							PRINTFORML 「はは、良い月が出てるな。月見酒も良いかも」
+							IF FLAG:AUTOMODE
+								PRINTFORML （いやだっ！　こんなの私のすることじゃないだろっ！　くそっ！）
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW （いやだっ！　こんなの私のすることじゃないだろっ！　くそっ！）
+							ENDIF
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;催眠自慰
+		CASE 72
+		;仲間を襲う
+		CASE 73
+			IF FLAG:526 == 1
+				IF CFLAG:42 || TALENT:121
+					IF NO:(ARG:2) == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「お前が悪いんだ、こんなＨなおまんこしてるんだから」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 背後からのしかかり耳元で囁く妹紅に、輝夜は顔を真っ赤にしている
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 背後からのしかかり耳元で囁く妹紅に、輝夜は顔を真っ赤にしている
+								ENDIF
+							CASE 1
+								PRINTFORML 「そんな体をして誘ってるんだろ、ほらおちんちんいれてやるよ」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 遠慮すると囁きながらも、輝夜は嬉しそうな笑みを浮かべ体から力を抜いた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 遠慮すると囁きながらも、輝夜は嬉しそうな笑みを浮かべ体から力を抜いた
+								ENDIF
+						ENDSELECT
+					ELSEIF NO:(ARG:2) == 26
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音、欲しいよ。慧音の全部、おねがいだから私にちょうだい」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音、欲しいよ。慧音の全部、おねがいだから私にちょうだい」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音のおまんこ、私のおちんちんとぴったりだよ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音のおまんこ、私のおちんちんとぴったりだよ」
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「ふふ、私のおちんちんで気持ち良くしてあげる」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「ふふ、私のおちんちんで気持ち良くしてあげる」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「%ARGS:1%のおまんこ、おつゆ一杯だね、そんなに欲しい？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「%ARGS:1%のおまんこ、おつゆ一杯だね、そんなに欲しい？」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ELSE
+					IF NO:(ARG:2) == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「はーはー、おまんこ切ないの、おねがい輝夜、一緒に気持ち良くなって」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 顔を真っ赤にする輝夜を押し倒し、秘処を擦り合わせた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 顔を真っ赤にする輝夜を押し倒し、秘処を擦り合わせた
+								ENDIF
+							CASE 1
+								PRINTFORML 「輝夜、輝夜輝夜っ！」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 頬を朱に染めて体の力を抜く輝夜の秘処に、必死に自身のそれを押し付ける妹紅
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 頬を朱に染めて体の力を抜く輝夜の秘処に、必死に自身のそれを押し付ける妹紅
+								ENDIF
+						ENDSELECT
+					ELSEIF NO:(ARG:2) == 26
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音すきなの、すきだからいいよね。おまんこ擦って、慧音もうごいてよぉ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音すきなの、すきだからいいよね。おまんこ擦って、慧音もうごいてよぉ」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「慧音、お願い慧音もきもちよくなって、おまんここすれて、気持ちいいよぉ」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「慧音、お願い慧音もきもちよくなって、おまんここすれて、気持ちいいよぉ」
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「%ARGS:1%も一緒にきもちよくなろ、ほらおまんこ擦るの気持ちいいよね」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「%ARGS:1%も一緒にきもちよくなろ、ほらおまんこ擦るの気持ちいいよね」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「おまんこ熱いの、%ARGS:1%も一緒にね」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「おまんこ熱いの、%ARGS:1%も一緒にね」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				GETFONT
+				IF CFLAG:42 || TALENT:121
+					IF NO:(ARG:2) == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORM 「かぐやぁ、いいことしようよぉ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　おまんこおちんちんでぐぽぐぽしてあげるからさぁ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 蕩けた瞳で口の端から唾液をこぼす妹紅は、呆然とする輝夜に抱き付き、そのまま押し倒す
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 蕩けた瞳で口の端から唾液をこぼす妹紅は、呆然とする輝夜に抱き付き、そのまま押し倒す
+								ENDIF
+								PRINTFORM 「だいすきだから
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　おなかのおくまであいしてあげるからぁ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 耳元で囁く妹紅に、輝夜が嬉しげな表情になった
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 耳元で囁く妹紅に、輝夜が嬉しげな表情になった
+								ENDIF
+							CASE 1
+								PRINTFORM 「かぐや
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　かぐやっ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　かぐやぁ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　いれさせておまんこにおちんちんいれさせてぇ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 戸惑いで動けない輝夜に、固くそそり立った擬根を押し付ける妹紅
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 戸惑いで動けない輝夜に、固くそそり立った擬根を押し付ける妹紅
+								ENDIF
+								PRINTFORM 「もうがまんできないから
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　かぐやもきもちよくしてあげるからぁ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 涙目で叫ぶ妹紅を、輝夜が笑みを浮かべて抱き締めてきた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 涙目で叫ぶ妹紅を、輝夜が笑みを浮かべて抱き締めてきた
+								ENDIF
+						ENDSELECT
+					ELSEIF NO:(ARG:2) == 26
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORM 「けいねぇ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　いいよね、いつもどおりしても
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　すきだよ、けいね
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 戸惑いに身を固くする慧音に、蕩けた瞳で囁きながら妹紅は腰を動かし始めた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 戸惑いに身を固くする慧音に、蕩けた瞳で囁きながら妹紅は腰を動かし始めた
+								ENDIF
+							CASE 1
+								PRINTFORM 「けいね、ほらきもちいいよね
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　わたしも、きもちいいよ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM だから、もっと
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM もっとぉ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 甘えるように囁きながら腰を振り始める妹紅に、慧音は僅かに身をよじった
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 甘えるように囁きながら腰を振り始める妹紅に、慧音は僅かに身をよじった
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORM 「はーはー
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　%ARGS:1%もきもちよくなろうよ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+							CASE 1
+								PRINTFORM 「はぁはぁ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　はぁ、んぅ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　おかして、あげる
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　%ARGS:1%も、きもち、いいよね
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+						ENDSELECT
+					ENDIF
+				ELSE
+					IF NO:(ARG:2) == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORM 「かぐやぁ、おまんこくちゅくちゅしよ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　おまんこせつないの、せつないのぉ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 腰を押し付ける妹紅に、輝夜も腰を揺らし始める
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 腰を押し付ける妹紅に、輝夜も腰を揺らし始める
+								ENDIF
+								PRINTFORM 「あは
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　そうだよね
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　かぐやもＨすきだもんね
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 甘い声を上げ始める輝夜に、妹紅も舌を突き出しひたすら喘いだ
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 甘い声を上げ始める輝夜に、妹紅も舌を突き出しひたすら喘いだ
+								ENDIF
+							CASE 1
+								PRINTFORM 「かぐやのおまんこ、とろとろできもちいいよぉ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM だからもっと、もっとぉ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 戸惑う輝夜の胸元に顔を埋め、甘えた声で妹紅が囁く
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 戸惑う輝夜の胸元に顔を埋め、甘えた声で妹紅が囁く
+								ENDIF
+								PRINTFORM 「ねえかぐやも、きもちいいよね
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　だから、うごいて
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　かぐやもうごいてよぉ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 涙目で見つめる妹紅の姿に、輝夜も腰を動かし始めた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 涙目で見つめる妹紅の姿に、輝夜も腰を動かし始めた
+								ENDIF
+						ENDSELECT
+					ELSEIF NO:(ARG:2) == 26
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORM 「けいねっ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　きもちよくなろうよ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　けいねとおまんこくちゅくちゅさせたいの
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 嬉しげに囁く妹紅に、慧音は困ったように笑みを浮かべている
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 嬉しげに囁く妹紅に、慧音は困ったように笑みを浮かべている
+								ENDIF
+							CASE 1
+								PRINTFORM 「けいね
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　けいねぇ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　だいすきだよぉ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 完全に蕩けきった表情を浮かべ腰を揺らす妹紅を、慧音はそっと抱き締めた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 完全に蕩けきった表情を浮かべ腰を揺らす妹紅を、慧音はそっと抱き締めた
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORM 「%ARGS:1%
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　いっしょに、きもちよくなろ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　おまんこくちゅくちゅしてきもちよくなろうよ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+							CASE 1
+								PRINTFORM 「%ARGS:1%も、きもちいいよね
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　だからしよ
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORM 　ね
+								CALL HEARTCB(0xD02830,2 , RESULTS:0)
+								PRINTFORML 」
+						ENDSELECT
+					ENDIF
+				ENDIF
+			ELSE
+				IF CFLAG:42 || TALENT:121
+					IF NO:(ARG:2) == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ふふ、輝夜のおまんこ、気持ちいいよ。私のおちんちんはどう？」
+								PRINTFORML （いやだっ！　こんなこと輝夜になんてっっ！！）
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 笑顔を浮かべる妹紅に、輝夜も嬉しげに笑みを浮かべた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 笑顔を浮かべる妹紅に、輝夜も嬉しげに笑みを浮かべた
+								ENDIF
+							CASE 1
+								PRINTFORML 「んっ、気持ちいい？　そう、私も気持ちいいよ」
+								PRINTFORML （このっ！　離れろっ！　はなれろっ！！　なんで言うこと聞かないんだっ！！）
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 擬根に感じる膣腔の感覚に、笑みを浮かべた妹紅は輝夜に口づけを落とした
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 擬根に感じる膣腔の感覚に、笑みを浮かべた妹紅は輝夜に口づけを落とした
+								ENDIF
+						ENDSELECT
+					ELSEIF NO:(ARG:2) == 26
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「慧音気持ちいいよね？　ふふ、私も気持ちいいよ」
+								IF FLAG:AUTOMODE
+									PRINTFORML （ゴメン慧音ゴメン慧音ゴメン慧音……）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （ゴメン慧音ゴメン慧音ゴメン慧音……）
+								ENDIF
+							CASE 1
+								PRINTFORML 「慧音のおまんこ気持ちいいよ、私のおちんちんも気持ちいいよね」
+								IF FLAG:AUTOMODE
+									PRINTFORML （いやだいやだいやだっ！　こんな慧音を傷つけるようなことなんていやなのにっ！！）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （いやだいやだいやだっ！　こんな慧音を傷つけるようなことなんていやなのにっ！！）
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ふふ、%ARGS:1%のおまんこきゅんきゅん締め付けてきてる、そんなに良い？」
+								IF FLAG:AUTOMODE
+									PRINTFORML （くそっ！　こんなの、したくないのに）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （くそっ！　こんなの、したくないのに）
+								ENDIF
+							CASE 1
+								PRINTFORML 「%ARGS:1%もきもちいいよね、私のおちんちん。ほらもっと腰動かして」
+								IF FLAG:AUTOMODE
+									PRINTFORML （っっ！　なんで、勝手に動くんだよこの体はっ！！）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （っっ！　なんで、勝手に動くんだよこの体はっ！！）
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ELSE
+					IF NO:(ARG:2) == 30
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ふふ、輝夜のおまんこ、気持ちいい。そっちもそうだよね」
+								PRINTFORML （いやだいやだいやだっ！　輝夜となんてそんなのっ！）
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 妹紅の言葉に、コクンと頷いて輝夜が腰を揺らし始めた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 妹紅の言葉に、コクンと頷いて輝夜が腰を揺らし始めた
+								ENDIF
+							CASE 1
+								PRINTFORML 「輝夜、そんなに私とするの嬉しいんだ？　私も嬉しいよ」
+								PRINTFORML （違うっ！　こんなこと、したくないっ！　したくないのにっっ！！）
+								IF FLAG:AUTOMODE
+									PRINTFORMDL 頬を朱に染め頷く輝夜に、妹紅は唇を押し付け腰を動かし始めた
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMDW 頬を朱に染め頷く輝夜に、妹紅は唇を押し付け腰を動かし始めた
+								ENDIF
+						ENDSELECT
+					ELSEIF NO:(ARG:2) == 26
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「慧音、一緒に気持ち良くなろ？　ほら擦ってあげる」
+								IF FLAG:AUTOMODE
+									PRINTFORML （ゴメン慧音ゴメン慧音ゴメン慧音……）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （ゴメン慧音ゴメン慧音ゴメン慧音……）
+								ENDIF
+							CASE 1
+								PRINTFORML 「慧音のおまんここすれるの気持ちいい。慧音も気持ちいいよね」
+								IF FLAG:AUTOMODE
+									PRINTFORML （いやだいやだいやだっ！　こんな慧音を傷つけるようなことなんていやなのにっ！！）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （いやだいやだいやだっ！　こんな慧音を傷つけるようなことなんていやなのにっ！！）
+								ENDIF
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ふふ、%ARGS:1%、気持ちいい？」
+								IF FLAG:AUTOMODE
+									PRINTFORML （っ！　なんでこんなっ！）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （っ！　なんでこんなっ！）
+								ENDIF
+							CASE 1
+								PRINTFORML 「%ARGS:1%は可愛くて気持ちいいよ」
+								IF FLAG:AUTOMODE
+									PRINTFORML （違うっ！　そんなこと言いたくないっ！！）
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW （違うっ！　そんなこと言いたくないっ！！）
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ENDIF
+			ENDIF
+		;着替える
+		CASE 74
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;催眠逃げる
+		CASE 75
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;安眠
+		CASE 76
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;踏む
+		CASE 80
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;ビンタ
+		CASE 81
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;折る
+		CASE 82
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;キス
+		CASE 83
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;手淫
+		CASE 84
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;フェラ
+		CASE 85
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;パイズリ
+		CASE 86
+			IF FLAG:526 == 1
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSEIF FLAG:526 == 2
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ELSE
+				IF GETBIT (CFLAG:800,1)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSEIF GETBIT (CFLAG:800,2)
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+						CASE 1
+					ENDSELECT
+				ENDIF
+			ENDIF
+	ENDSELECT
+RETURN
+
+;戦闘時発情して味方を襲うor発情した仲間に襲われる
+;NO:(ARG:2)で対象キャラ確認可能
+@BATTLE_MIKATA_KOUDOU_RAPE_31_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;襲われる　この口上を言うキャラが捕まっている時は口上なしで解除
+		CASE 95
+			SELECTCASE ARG:3
+				;自力脱出
+				CASE 1
+				;襲っている奴が拘束・丸呑み・戦意喪失・発情したことによる解除
+				CASE 2
+
+				;襲われる
+				CASEELSE
+				
+			ENDSELECT
+		;襲う
+		CASE 96
+			SELECTCASE ARG:3
+				;ふたなり襲撃開始
+				CASE 3
+
+				;レズ襲撃開始
+				CASE 2
+
+				;なんか継続系ってぜんぜん出ないんだよな……
+				;襲撃継続（ふたなり）
+				CASE 1
+
+				;襲撃継続
+				CASEELSE
+
+			ENDSELECT
+
+	ENDSELECT
+
+RETURN

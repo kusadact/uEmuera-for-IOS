@@ -1,0 +1,363 @@
+﻿;固定イベント
+;RETURN	0:失敗した　1:成功した　2:以後のイベントスキップ
+@CHECK_FIXED_EVENT_162
+#DIM LCOUNT
+;LOCAL
+;0	LOOP
+;1	目標値
+;2	達成値
+;3	戻り値
+;4	被害者あり
+;5	TEMP
+;6	TEMP
+;7	TEMP
+
+LOCAL:3 = 0
+
+;目標値（イベント難易度）決定
+LOCAL:1 = 0
+
+
+;達成値決定
+CALL GET_SEARCH_RATE
+LOCAL:2 = RESULT
+
+
+IF LOCAL:2 >= LOCAL:1
+	PRINTFORML 在迷宮内探索的%CALLNAME:1%%TACHI()%面前、出現了一位神婆
+IF FLAG:AUTOMODE
+    PRINTFORML 「嚯、沒想到会在這種地方看到其他人、真是稀罕」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「嚯、沒想到会在這種地方看到其他人、真是稀罕」
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 「相逢就是緣。要讓老太婆為你占卜一下麼？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「相逢就是緣。要讓老太婆為你占卜一下麼？」
+ENDIF
+
+	PRINTFORML 　
+	PRINTFORML 要占卜麼？
+	PRINTFORML 　
+	$INPUT_LOOP_OBABA
+	PRINTL [0] 是
+	PRINTL [1] 否
+	
+	IF FLAG:AUTOMODE
+		TINPUT FLAG:AUTOMODE * 1000 , 1, 0, ""
+	ELSE
+		INPUT
+	ENDIF
+	
+	IF RESULT == 0
+		PRINTFORML 「算卦有時候準。有時候不准。即使出現了不好的結果、也不要太過在意」
+IF FLAG:AUTOMODE
+    PRINTFORML 説完後神婆從懷中取出了水晶球、念念有詞…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  説完後神婆從懷中取出了水晶球、念念有詞…
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 　
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML …
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  …
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML ……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ……
+ENDIF
+
+		LOCAL:7 = RAND:6
+		
+		IF LOCAL:7 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「『今日不宜外出、在家裡度過吧』」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「『今日不宜外出、在家裡度過吧』」
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 倒是想从这里出去……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  倒是想从这里出去……
+ENDIF
+
+		
+		ELSEIF LOCAL:7 == 1
+IF FLAG:AUTOMODE
+    PRINTFORML 「『相遇的機会！　或許会見到完美的男友！？』。太好了」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「『相遇的機会！　或許会見到完美的男友！？』。太好了」
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 為什麼呢。只有討厭的預感…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  為什麼呢。只有討厭的預感…
+ENDIF
+
+			
+		ELSEIF LOCAL:7 == 2
+IF FLAG:AUTOMODE
+    PRINTFORML 「『以角為目標』……是在什麼地方有鬼存在麼？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「『以角為目標』……是在什麼地方有鬼存在麼？」
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML …………“角”？
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  …………“角”？
+ENDIF
+
+			
+		ELSEIF LOCAL:7 == 3
+IF FLAG:AUTOMODE
+    PRINTFORML 「『明日有雨』。能振奮心情、気力也不容易減少。説不定很適合約会」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「『明日有雨』。能振奮心情、気力也不容易減少。説不定很適合約会」
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 那是其他的異文
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  那是其他的異文
+ENDIF
+
+			
+		ELSEIF LOCAL:7 == 4
+IF FLAG:AUTOMODE
+    PRINTFORML 「…………」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「…………」
+ENDIF
+
+			PRINTFORML 「………………呼」
+IF FLAG:AUTOMODE
+    PRINTFORML 神婆好像睡着了
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  神婆好像睡着了
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML …………白白浪費時間
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  …………白白浪費時間
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 把冒出鼻涕泡的神婆丟在原地、%CALLNAME:1%%TACHI()%重新開始了探索
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  把冒出鼻涕泡的神婆丟在原地、%CALLNAME:1%%TACHI()%重新開始了探索
+ENDIF
+
+			
+		ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「『2秒後、你等会被丟入触手之海』、出現了非常具体的結果」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「『2秒後、你等会被丟入触手之海』、出現了非常具体的結果」
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 「…………哎、2秒！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「…………哎、2秒！？」
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 神婆驚叫的同時、突然地面開了個洞！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  神婆驚叫的同時、突然地面開了個洞！
+ENDIF
+
+			PRINTFORML 　
+			LOCAL:4 = 0
+			IF 50 > RAND:(100 + ABL:1:5 * 50)
+				CALL ADD_ABL_EXP(5, 1, 1000 + RAND:(ABL:1:5 * 500 + 1))
+				CALL PRINT_MESSAGE(1, 200, 138, CALLNAME:1, "", 1)
+				LOCAL:5 = 5 + RAND:4 + RAND:4
+				FOR LOCAL:0, 0, LOCAL:5
+					LOCAL:6 = RAND:4
+					IF LOCAL:6 == 3
+						CALL LOST_VIRGIN(1, 1, 4)
+					ENDIF
+					CALL EXTASY(1, LOCAL:6, RAND:50, 150)
+				NEXT
+				;妊娠はしない
+					LOCAL:4 = 1
+				WAIT
+			ELSE
+				CALL ADD_ABL_EXP(5, 1, 500 + RAND:(ABL:1:5 * 200 + 1))
+				CALL PRINT_MESSAGE(1, 200, 138, CALLNAME:1, "", 2)
+			ENDIF
+			IF FLAG:10
+				IF 50 > RAND:(100 + ABL:(FLAG:10):5 * 50)
+					CALL ADD_ABL_EXP(5, FLAG:10, 1000 + RAND:(ABL:(FLAG:10):5 * 500 + 1))
+					CALL PRINT_MESSAGE(FLAG:10, 200, 138, CALLNAME:1, "", 1)
+					LOCAL:5 = 5 + RAND:4 + RAND:4
+					FOR LOCAL:0, 0, LOCAL:5
+						LOCAL:6 = RAND:4
+						IF LOCAL:6 == 3
+							CALL LOST_VIRGIN(FLAG:10, 1, 4)
+						ENDIF
+						CALL EXTASY(FLAG:10, LOCAL:6, RAND:50, 150)
+					NEXT
+					LOCAL:4 = 1
+					WAIT
+				ELSE
+					CALL ADD_ABL_EXP(5, FLAG:10, 500 + RAND:(ABL:(FLAG:10):5 * 200 + 1))
+					CALL PRINT_MESSAGE(FLAG:10, 200, 138, CALLNAME:1, "", 2)
+				ENDIF
+			ENDIF
+			IF FLAG:11
+				IF 50 > RAND:(100 + ABL:(FLAG:11):5 * 50)
+					CALL ADD_ABL_EXP(5, FLAG:11, 1000 + RAND:(ABL:(FLAG:11):5 * 500 + 1))
+					CALL PRINT_MESSAGE(FLAG:11, 200, 138, CALLNAME:1, "", 1)
+					LOCAL:5 = 5 + RAND:4 + RAND:4
+					FOR LOCAL:0, 0, LOCAL:5
+						LOCAL:6 = RAND:4
+						IF LOCAL:6 == 3
+							CALL LOST_VIRGIN(FLAG:11, 1, 4)
+						ENDIF
+						CALL EXTASY(FLAG:11, LOCAL:6, RAND:50, 150)
+					NEXT
+					LOCAL:4 = 1
+					WAIT
+				ELSE
+					CALL ADD_ABL_EXP(5, FLAG:11, 500 + RAND:(ABL:(FLAG:10):5 * 200 + 1))
+					CALL PRINT_MESSAGE(FLAG:11, 200, 138, CALLNAME:1, "", 2)
+				ENDIF
+			ENDIF
+			
+			IF LOCAL:4
+				PRINTFORML 神婆掉進了落穴之中、在裡面等着的触手蜂擁而至！
+				
+				FOR LCOUNT,0, (RAND:5 + 5)
+					LOCAL:12 = 30 + (RAND:30 * 20) + RAND:30
+					PRINTFORM 神婆高潮了！ (MP 
+					SETCOLOR 0x70FF70
+					PRINTFORM -{LOCAL:12}
+					RESETCOLOR
+					PRINTFORML )
+				NEXT
+				
+				PRINTFORML 　
+IF FLAG:AUTOMODE
+    PRINTFORML 雖然被触手的体液把弄湿了全身、但%CALLNAME:1%%TACHI()%還是從落穴中爬了出去…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW 雖然被触手的体液把弄湿了全身、但%CALLNAME:1%%TACHI()%還是從落穴中爬了出去…
+ENDIF
+
+				PRINTFORML 　
+				PRINTFORML 雖然被触手的体液把弄湿了全身、但神婆還是從落穴中爬了出去…
+IF FLAG:AUTOMODE
+    PRINTFORML 「唉、真是倒了大霉」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「唉、真是倒了大霉」
+ENDIF
+
+			ELSE
+				PRINTFORML 
+				PRINTFORML 能看見落穴内有無数的触手…
+IF FLAG:AUTOMODE
+    PRINTFORML 幸運的回避了這個危機的%CALLNAME:1%%TACHI()%、急忙的離開了那裡…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  幸運的回避了這個危機的%CALLNAME:1%%TACHI()%、急忙的離開了那裡…
+ENDIF
+
+				PRINTFORML 　
+IF FLAG:AUTOMODE
+    PRINTFORML 幸運的回避了這個危機的神婆、急忙的離開了那裡…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  幸運的回避了這個危機的神婆、急忙的離開了那裡…
+ENDIF
+
+				PRINTFORML 「哎呀哎呀、真是太危険了…」
+			ENDIF
+			
+			WAIT
+			
+		ENDIF
+			IF LOCAL:7 != 4
+				PRINTFORML 「那麼、我也該離開了。保重」
+IF FLAG:AUTOMODE
+    PRINTFORML 這麼説完、神婆直接走了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  這麼説完、神婆直接走了…
+ENDIF
+
+			ENDIF
+			
+	ELSEIF RESULT == 1
+		IF FLAG:AUTOMODE
+			PRINTFORML 「嘛、不想聽的話那也沒辦法」
+			PRINTFORML 這麼説完、神婆直接走了…
+		    TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML  「嘛、我也不会勉强你的」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW   「嘛、我也不会勉强你的」
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 這麼説完、神婆直接走了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  這麼説完、神婆直接走了…
+ENDIF
+
+		ENDIF
+
+	
+	ELSE
+		GOTO INPUT_LOOP_OBABA
+		
+	ENDIF
+	
+	;別の場所に再配置
+	FLAG:162 = RAND:30 + 1
+	LOCAL:3 = 1
+ELSE
+	;見つからなかった場合（通常は何もしない）
+ENDIF
+
+RETURN LOCAL:3
+

@@ -1,0 +1,3582 @@
+﻿;キャラ番号15_リリーホワイト口上
+;
+;
+;口上基礎知識					
+;　口上を書く時は基本的に ARG:0 と ARG:1 の中に「シチュエーション」が入っているので、					
+;　それに応じて分岐を行い、適切なメッセージを表示する……というのが基本方針になります					
+;　					
+;　なお、TARGET に口上を表示するキャラが指定された状態になっているので、					
+;　自分の名前や自分のCFLAGを見たい時などは CALLNAME:TARGET とか CFLAG:1 とかで参照できます					
+;					
+					
+					
+
+;口上選択時のタイトル
+@KOJO_TITLE_15_0
+RESULTS = 東方触手宮v1.05.2用 リリーホワイト口上ver0.20
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_15_0
+PRINTFORML -----------------------------------------------------------------------------------------------------
+PRINTFORML 
+PRINTFORML かいたひと：無銘
+PRINTFORML （口上サンプルの上海と半霊、阿求口上に加え各種分岐はサニーミルク口上と屠自古口上を参考にしています
+PRINTFORML 　と言うより必要な構文をコピペしてエラーが出たらその都度書き直してるのが実情です、すみません）
+PRINTFORML 
+PRINTFORML ・天然系ヒロイン→負けちゃったよ……
+PRINTFORML 
+PRINTFORML ・内容の半分は春で出来ています。残りの半分は……　ネタです。
+PRINTFORML 
+PRINTFORML ・一部を除いて口上に「」がついていませんが、仕様です。
+PRINTFORML 
+PRINTFORML ・もし不審な挙動やエラーが発生した場合など、各自で構文を最適化してください。
+PRINTFORML 
+PRINTFORML ・ライセンスなどの詳細はりーどみーを読むこと。いいね？
+PRINTFORML 
+PRINTFORML -----------------------------------------------------------------------------------------------------
+
+
+;デフォルトの文字色を返す関数					
+;これが無い場合、デフォルトはシステムカラー（白文字）になります					
+@KOJO_DEFAULT_COLOR_15_0
+
+;文字色：レグホーン
+;髪の毛の色＋全体的にパステル系のイメージ？　春らしさ重視
+RETURN RGBCOLOR(255, 233, 169)
+
+;ロールバックするかも					
+;RETURN RGBCOLOR(255, 160, 255) 			
+					
+;10進数で書きたい場合は上、16進数で書きたい場合は下のような表現を使えばOKです					
+;RETURN RGBCOLOR(255, 233, 169)		
+;RETURN 0xffe9a9					
+					
+					
+					
+;口上本体					
+@KOJO_15_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)					
+					
+;デフォルトの地の文を表示するコマンドです					
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)					
+					
+;そのキャラの口上の文字色を反映します					
+SETCOLOR CFLAG:700					
+					
+					
+					
+;↓↓↓　　ここから口上のメイン処理　　↓↓↓					
+					
+;ARG:0 や ARG:1 の内容で分岐をかけます					
+;それぞれの値の意味は「資料とか\PRINT_MESSAGE(口上)フラグ一覧.txt」を参照してください					
+
+;睡眠時分岐
+IF CFLAG:25 && CFLAG:29 != 1
+SELECTCASE ARG:0
+
+	CASE 12 TO 13				
+		;通常・衣服攻撃（まとめて処理）
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML …春を伝えたかっただけなのに……
+			CASE 1
+				PRINTFORML …チルノちゃん、それは痛いー……
+			CASEELSE
+				PRINTFORML ……すぅすぅ……。
+		ENDSELECT
+
+	CASE 14
+		;性攻撃
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML ……ひゃあん……
+			CASE 1
+				PRINTFORML …んんんーっ…すぅ……。
+			CASEELSE
+				PRINTFORML ん……くすぐったいー……。
+		ENDSELECT
+
+	CASE 15
+		;拘束攻撃
+		;ARG:1にコマンドID　ARG:2に丸呑みフラグ
+		IF ARG:2 != 0
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML …柔らかくてあったかい…春……？
+				CASE 1
+					PRINTFORML ……春はまだ？…二度寝する……zzz
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML ？…ぎゅうぅ…すーすー……
+				CASE 1
+					PRINTFORML ……からだうごかない…もう少し…寝る……。
+			ENDSELECT
+		ENDIF
+	CASE 16
+		;寄生攻撃
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML ……おなか…あついぃ……。
+			CASE 1
+				PRINTFORML …そこは…だめですよ…んんっ……
+		ENDSELECT
+
+	CASE 33
+		;喪失
+			PRINTFORML 「うぅ…これも…夢……」
+
+	CASE 120
+		;絶頂の瞬間
+		;ARG:1に部位　ARG:2にMPダメージ
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML …んん――っ！？ぁぁ…みひゃぁぁっ……！？
+			CASE 1
+				PRINTFORML んうっ！？…ふ…ぅみゅうぅぅぅ――――っ……
+			CASE 2
+				PRINTFORML …ぁっあっ…ぁあん…　ぁ…んぅあぁぁ――――っ……！！
+		ENDSELECT
+
+	CASE 136
+		;処女喪失　（ARG:1は喪失原因　0：敵の攻撃　1：自慰　2：出産）　
+		;ARG:2にMP減少量　ARG:3が1の場合、喪失の直前　2の場合、喪失を防いだ
+		IF ARG:1 == 0		
+		;『ARG:3が1』の場合は「処女を喪失しそうなとき」		
+			;V防御などで処女喪失を防げる場合も表示されるけどここでは無視		
+			;本当に喪失するかどうかチェックしたい場合は…後で説明するのぜ！		
+			;とにかく『ARG:3が0』の場合が「実際の処女喪失」
+			IF CFLAG:29 || TFLAG:16 == 2
+				IF ARG:3 == 1
+					PRINTFORML ……うぅぅん……ぁっ……。
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 糸の切れた人形のように動かないリリーホワイトの躰を嬲り尽くそうと絡み付いた触手は彼女の両脚を開かせ、
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 糸の切れた人形のように動かないリリーホワイトの躰を嬲り尽くそうと絡み付いた触手は彼女の両脚を開かせ、
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL その奥で固く閉じたつぼみへとその先端を伸ばしていく……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW その奥で固く閉じたつぼみへとその先端を伸ばしていく……
+					ENDIF
+				ELSEIF ARG:3 == 0
+					PRINTFORML ……うぅぅぅ…ゃっ……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 触手が幼い秘裂を抉じ開け、蠢く先端が何者も受け容れた事のないその奥へ入り込んでいく度に、
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 触手が幼い秘裂を抉じ開け、蠢く先端が何者も受け容れた事のないその奥へ入り込んでいく度に、
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 暗く淀んだ表情の口許から微かに苦悶の喘ぎ声が漏れる……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 暗く淀んだ表情の口許から微かに苦悶の喘ぎ声が漏れる……
+					ENDIF
+					PRINTFORML ……うっ…ぁっ…　…いゃぁぁぁ……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 狭い膣内を掻き分け胎内深く潜り込んでいく触手が彼女のココロとカラダに純潔を奪われる感覚を刻み込んでいく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 狭い膣内を掻き分け胎内深く潜り込んでいく触手が彼女のココロとカラダに純潔を奪われる感覚を刻み込んでいく
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトの眼が一瞬開いたように見えたが、穢された己の肢体とそれに絡み付く触手が視界に入った瞬間
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトの眼が一瞬開いたように見えたが、穢された己の肢体とそれに絡み付く触手が視界に入った瞬間
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 彼女の意識は再び絶望の淵へと沈んでいった……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 彼女の意識は再び絶望の淵へと沈んでいった……
+					ENDIF
+					PRINTFORML 「……これも…夢…だよね……」
+				ENDIF
+			ELSEIF CFLAG:28
+				IF ARG:3 == 1
+					PRINTFORML 「zzz……だめぇっ…あぁ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは自らの純潔に迫る危機に気付いていない……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは自らの純潔に迫る危機に気付いていない……
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 彼女の顔はほんのりと赤く染まり幼いつぼみからは愛蜜を滴らせている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 彼女の顔はほんのりと赤く染まり幼いつぼみからは愛蜜を滴らせている……
+					ENDIF
+;				ELSEIF ARG:3 == 2
+					;『ARG:3が2』の場合は「処女喪失を防げた時」だけど……寝てたら無理！
+					;
+				ELSEIF ARG:3 == 0
+					PRINTFORML ……んぅぅ？…ひゃあぁあああっ……！！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 幼いつぼみは愛蜜をたたえた花弁を開き、蠢く触手を抵抗なく受け容れていく……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 幼いつぼみは愛蜜をたたえた花弁を開き、蠢く触手を抵抗なく受け容れていく……
+					ENDIF
+					PRINTFORML …あぁぁっ…！　…あたまとろけちゃうよぉぉ…ぁぁぁ……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 苦痛よりも快楽がはるかに勝るのか、膣内を凌辱される度に純潔の証が混じった蜜を溢れさせる
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 苦痛よりも快楽がはるかに勝るのか、膣内を凌辱される度に純潔の証が混じった蜜を溢れさせる
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 膣内から触手が引き抜かれた頃には、リリーホワイトはとろりとした表情に濁った笑みを浮かべ、
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 膣内から触手が引き抜かれた頃には、リリーホワイトはとろりとした表情に濁った笑みを浮かべ、
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 触手と粘液にまみれたまま甘いまどろみへと沈んでいった……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 触手と粘液にまみれたまま甘いまどろみへと沈んでいった……
+					ENDIF
+					PRINTFORML 「……気持ちいい…おやすみ……」
+				ENDIF
+			ELSE
+				IF ARG:3 == 1
+					PRINTFORML 「zzz……そこはだめぇ…んぅ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは自らの純潔に迫る危機に気付いていない……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは自らの純潔に迫る危機に気付いていない……
+					ENDIF
+;				ELSEIF ARG:3 == 2
+					;『ARG:3が2』の場合は「処女喪失を防げた時」だけど……寝てたら無理！
+					;
+				ELSEIF ARG:3 == 0
+					PRINTFORML ……いたい……　…や…やめてぇぇぇ……。
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 幼い秘裂を触手に貫かれ、何者も受け容れた事のないその奥を凌辱される恐怖と苦痛に顔が歪んでゆく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 幼い秘裂を触手に貫かれ、何者も受け容れた事のないその奥を凌辱される恐怖と苦痛に顔が歪んでゆく
+					ENDIF
+					PRINTFORML ……きゃあぁぁ…うぅぅぅ……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 膣内から引き抜かれた触手の粘液には純潔を奪われた事を意味する鮮血が混じっていた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 膣内から引き抜かれた触手の粘液には純潔を奪われた事を意味する鮮血が混じっていた
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトの眼が一瞬開いたように見えたが、穢された己の肢体とそれに絡み付く触手が視界に入った瞬間
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトの眼が一瞬開いたように見えたが、穢された己の肢体とそれに絡み付く触手が視界に入った瞬間
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 彼女の意識は再び絶望の淵へと沈んでいった……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 彼女の意識は再び絶望の淵へと沈んでいった……
+					ENDIF
+					PRINTFORML 「……これは…夢…です……」
+				ENDIF
+			ENDIF
+;		ELSEIF ARG:1 == 1
+				;死に分岐だよなこれ
+				;PRINTFORML 
+				;PRINTFORMDW 
+;			ENDIF
+		ELSEIF ARG:1 == 2
+			IF CFLAG:29 || TFLAG:16 == 2
+				PRINTFORML ……ひいぃぃ！！　……うぅぅっ…ああああぁぁぁぁぁぁ……！！
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 産道を押し広げる自らの子供に処女膜を破られるという理不尽な痛みに、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 産道を押し広げる自らの子供に処女膜を破られるという理不尽な痛みに、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトは淀んだ瞳に涙を滲ませ声にならない叫びを上げている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトは淀んだ瞳に涙を滲ませ声にならない叫びを上げている……
+				ENDIF
+			ELSEIF CFLAG:28
+				PRINTFORML 「……はぁはぁ…痛くしないでよぅぅ…　…んはぁっ！…ああああぁぁぁぁぁぁ！！」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 処女膜を破られる苦痛よりも胎内を子供に刺激される快楽がはるかに勝るのか、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 処女膜を破られる苦痛よりも胎内を子供に刺激される快楽がはるかに勝るのか、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトは歓喜とも嬌声とも似た叫びを上げている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトは歓喜とも嬌声とも似た叫びを上げている……
+				ENDIF
+			ELSE
+				PRINTFORML 「ひぎいぃぃっ！！　いたいいたいいたい！！　ああああぁぁぁぁぁぁっ！！！！」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 産道を押し広げる自らの子供に処女膜を破られるという理不尽な痛みに、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 産道を押し広げる自らの子供に処女膜を破られるという理不尽な痛みに、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトは歯を食いしばり苦痛の叫びを上げている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトは歯を食いしばり苦痛の叫びを上げている……
+				ENDIF
+				PRINTFORML 「……こんなの絶対おかしいよ……」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 己の身に起きたあまりに異様な出来事にリリーホワイトの瞳がみるみるうちに濁っていく……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 己の身に起きたあまりに異様な出来事にリリーホワイトの瞳がみるみるうちに濁っていく……
+				ENDIF
+			ENDIF
+		ENDIF
+
+ENDSELECT
+;ここまで寝言
+ELSE
+;ここから通常
+SELECTCASE ARG:0
+	CASE 1
+		;味方の攻撃（発動時）
+		;ARG:1にコマンドID
+		SELECTCASE ARG:1
+			; *----汎用----*
+			CASE 1
+				;防御
+				PRINTFORML あぶないです……
+			CASE 2
+				;アイテム使用
+				PRINTFORML これを使って……
+			CASE 3
+				;前に出る
+				IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+				;PTにリリーブラックが居る
+					PRINTFORML ブラック、わたしが行くよっ！
+				ELSE
+					PRINTFORML 春ですよーっ！
+				ENDIF
+			CASE 4
+				;後退
+				IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+				;PTにリリーブラックが居る
+					PRINTFORML ブラック、やっぱり無理っ……！
+				ELSE
+					PRINTFORML やっぱり離れなきゃ……！
+				ENDIF
+			CASE 5
+				;逃走　成功したら55
+				PRINTFORML ここは逃げるですよー！
+
+			; *----弾幕----*
+			CASE 10
+				;弱弾幕
+			IF BASE:TP <= 30
+					PRINTFORML 「逃げちゃだめ逃げちゃだめ逃げちゃだめ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは逃げ腰になりながらも狙い澄ました弾幕を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは逃げ腰になりながらも狙い澄ました弾幕を放った！
+					ENDIF
+			ELSE
+			SELECTCASE RAND:2		
+				CASE 0	
+					PRINTFORML はーるーでーすーよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは狙いを澄まして弾幕を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは狙いを澄まして弾幕を放った！
+					ENDIF
+				CASE 1	
+					PRINTFORML くらうですー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは狙いを澄まして弾幕を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは狙いを澄まして弾幕を放った！
+					ENDIF
+				ENDSELECT
+			ENDIF
+
+			CASE 11
+				;中弾幕
+			IF BASE:TP <= 30
+					PRINTFORML 「逃げちゃだめ逃げちゃだめ逃げちゃだめ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは逃げ腰になりながらも勢いある弾幕を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは逃げ腰になりながらも勢いある弾幕を放った！
+					ENDIF
+			ELSE
+			SELECTCASE RAND:2		
+				CASE 0	
+					PRINTFORML はーるーでーすーよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは勢いよく弾幕を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは勢いよく弾幕を放った！
+					ENDIF
+				CASE 1	
+					PRINTFORML くらうですー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは勢いよく弾幕を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは勢いよく弾幕を放った！
+					ENDIF
+				ENDSELECT
+			ENDIF
+
+			CASE 12
+				;強弾幕
+			IF TFLAG:55 == 9
+				;霊撃の場合
+					PRINTFORML 「春風よっ！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に向かって輝かしい弾幕を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に向かって輝かしい弾幕を放った！
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 眩い輝きに敵が一瞬ひるむ！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 眩い輝きに敵が一瞬ひるむ！
+					ENDIF
+			ELSEIF BASE:TP <= 30
+					PRINTFORML 「逃げちゃだめ逃げちゃだめ逃げちゃだめ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは逃げ腰になりながらも敵に渾身の弾幕を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは逃げ腰になりながらも敵に渾身の弾幕を放った！
+					ENDIF
+			ELSE
+			SELECTCASE RAND:2		
+				CASE 0	
+					PRINTFORML はーるーでーすーよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に向かって渾身の弾幕を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に向かって渾身の弾幕を放った！
+					ENDIF
+				CASE 1	
+					PRINTFORML くらうですー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に向かって渾身の弾幕を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に向かって渾身の弾幕を放った！
+					ENDIF
+				ENDSELECT
+			ENDIF
+
+			CASE 13
+				;溜め撃ち
+				;溜め動作
+			IF CFLAG:31 == 2
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「ブラック、あれを使うですよー！！」
+					PRINTFORML 「――春よ…遠き春よ――」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは春度をチャージしている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは春度をチャージしている！
+					ENDIF
+				ELSE
+					PRINTFORML ――春よ…遠き春よ…　瞼閉じれば…――
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは春度をチャージしている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは春度をチャージしている！
+					ENDIF
+				ENDIF
+			ELSE
+				;発射！			
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「リリースプリングウィンド・ホワイトー！！！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトはチャージした春度を解き放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトはチャージした春度を解き放った！
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 解き放たれた春が光の渦となり敵を浄化してゆく！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 解き放たれた春が光の渦となり敵を浄化してゆく！
+					ENDIF
+				ELSE
+					PRINTFORML リリーホワイト、春風の到来っ！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトはチャージした春度を解き放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトはチャージした春度を解き放った！
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 解き放たれた春が光の渦となり敵を浄化してゆく！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 解き放たれた春が光の渦となり敵を浄化してゆく！
+					ENDIF
+				ENDIF
+			ENDIF
+
+			CASE 14
+				;ばら撒き弾
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「ブラック、ふたりで撃ちまくりますよー！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に向かって大量の花吹雪をばら撒いた！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に向かって大量の花吹雪をばら撒いた！
+					ENDIF
+				ELSE		
+					PRINTFORML リリーホワイト、弾幕開花宣言っ！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に向かって大量の花吹雪をばら撒いた！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に向かって大量の花吹雪をばら撒いた！
+					ENDIF
+				ENDIF 
+
+			CASE 15
+				;貫通弾
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「ブラック、力を合わせるですよー！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは辺り一面に無数の光の矢を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは辺り一面に無数の光の矢を放った！
+					ENDIF
+				ELSE		
+					PRINTFORML リリーホワイト、春告精の光っ！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは辺り一面に無数の光の矢を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは辺り一面に無数の光の矢を放った！
+					ENDIF
+				ENDIF
+				ENDSELECT
+
+		SELECTCASE ARG:1
+			; *---消耗武器---*
+			CASE 20
+				;弱攻撃
+			IF BASE:TP <= 30
+					PRINTFORML 「逃げちゃだめ逃げちゃだめ逃げちゃだめ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは逃げ腰になりながらも狙い澄まして武器を撃った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは逃げ腰になりながらも狙い澄まして武器を撃った！
+					ENDIF
+			ELSE
+			SELECTCASE RAND:2		
+				CASE 0	
+					PRINTFORML はーるーでーすーよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは狙いを澄まして武器を撃った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは狙いを澄まして武器を撃った！
+					ENDIF
+				CASE 1	
+					PRINTFORML くらうですー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは狙いを澄まして武器を撃った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは狙いを澄まして武器を撃った！
+					ENDIF
+				ENDSELECT
+			ENDIF
+
+			CASE 21
+				;中攻撃
+			IF BASE:TP <= 30
+					PRINTFORML 「逃げちゃだめ逃げちゃだめ逃げちゃだめ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは逃げ腰になりながらも勢いよく武器を撃った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは逃げ腰になりながらも勢いよく武器を撃った！
+					ENDIF
+			ELSE
+			SELECTCASE RAND:2		
+				CASE 0	
+					PRINTFORML はーるーでーすーよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは勢いよく武器を撃った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは勢いよく武器を撃った！
+					ENDIF
+				CASE 1	
+					PRINTFORML くらうですー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは勢いよく武器を撃った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは勢いよく武器を撃った！
+					ENDIF
+				ENDSELECT
+			ENDIF
+
+			CASE 22
+				;強攻撃
+			IF BASE:TP <= 30
+					PRINTFORML 「逃げちゃだめ逃げちゃだめ逃げちゃだめ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは逃げ腰になりながらも力の限り武器を撃ちこんだ！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは逃げ腰になりながらも力の限り武器を撃ちこんだ！
+					ENDIF
+			ELSE
+			SELECTCASE RAND:2		
+				CASE 0	
+					PRINTFORML はーるーでーすーよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に最大火力で武器を撃ちこんだ！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に最大火力で武器を撃ちこんだ！
+					ENDIF
+				CASE 1	
+					PRINTFORML くらうですー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に最大火力で武器を撃ちこんだ！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に最大火力で武器を撃ちこんだ！
+					ENDIF
+				ENDSELECT
+			ENDIF
+
+			CASE 23
+				;節約攻撃
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「ブラック、あの戦法で行くよー！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは牽制程度に武器を撃っている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは牽制程度に武器を撃っている！
+					ENDIF
+				ELSE		
+					PRINTFORML 春も弾幕もあげないですよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは牽制程度に武器を撃っている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは牽制程度に武器を撃っている！
+					ENDIF
+				ENDIF
+
+			CASE 24
+				;みだれ撃ち
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「ブラック、ばしばし行くよー！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは手にした武器をあたり構わず撃っている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは手にした武器をあたり構わず撃っている！
+					ENDIF
+				ELSE		
+					PRINTFORML 春！はる！はる――！！！！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは手にした武器をあたり構わず撃っている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは手にした武器をあたり構わず撃っている！
+					ENDIF
+				ENDIF
+
+			CASE 25
+				;一点集中
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「ブラック、集中砲火でいくよー！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に狙いを定め手にした武器を連射した！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に狙いを定め手にした武器を連射した！
+					ENDIF
+				ELSE		
+					PRINTFORML だだだだだー！！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に狙いを定め手にした武器を連射した！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に狙いを定め手にした武器を連射した！
+					ENDIF
+				ENDIF
+		ENDSELECT
+		SELECTCASE ARG:1
+			; *--非消耗武器--*
+			CASE 30
+				;弱攻撃
+			IF BASE:TP <= 30
+					PRINTFORML 「逃げちゃだめ逃げちゃだめ逃げちゃだめ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは逃げ腰になりながらも正確に狙って武器を振った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは逃げ腰になりながらも正確に狙って武器を振った！
+					ENDIF
+			ELSE
+			SELECTCASE RAND:2		
+				CASE 0	
+					PRINTFORML はーるーでーすーよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵を正確に狙って武器を振った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵を正確に狙って武器を振った！
+					ENDIF
+				CASE 1	
+					PRINTFORML くらうですー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵を正確に狙って武器を振った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵を正確に狙って武器を振った！
+					ENDIF
+			ENDSELECT
+			ENDIF
+
+			CASE 31
+				;中攻撃
+			IF BASE:TP <= 30
+					PRINTFORML 「逃げちゃだめ逃げちゃだめ逃げちゃだめ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは逃げ腰になりながらも勢いよく武器を振った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは逃げ腰になりながらも勢いよく武器を振った！
+					ENDIF
+			ELSE
+			SELECTCASE RAND:2		
+				CASE 0	
+					PRINTFORML はーるーでーすーよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に勢いよく武器を振った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に勢いよく武器を振った！
+					ENDIF
+				CASE 1	
+					PRINTFORML くらうですー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵に勢いよく武器を振った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵に勢いよく武器を振った！
+					ENDIF
+			ENDSELECT
+			ENDIF
+
+			CASE 32
+				;強攻撃
+			IF BASE:TP <= 30
+					PRINTFORML 「逃げちゃだめ逃げちゃだめ逃げちゃだめ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは逃げ腰になりながらも武器を大きく振り上げ、一撃を放つ！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは逃げ腰になりながらも武器を大きく振り上げ、一撃を放つ！
+					ENDIF
+			ELSE
+			SELECTCASE RAND:2		
+				CASE 0	
+					PRINTFORML はーるーでーすーよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは武器を大きく振り上げ、敵に叩きつけた！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは武器を大きく振り上げ、敵に叩きつけた！
+					ENDIF
+				CASE 1	
+					PRINTFORML くらうですー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは武器を大きく振り上げ、敵に叩きつけた！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは武器を大きく振り上げ、敵に叩きつけた！
+					ENDIF
+			ENDSELECT
+			ENDIF
+
+			CASE 33
+				;下段狙い
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「ブラック、わたしが足止めするよ！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは構えた武器を振り回し、敵の足元を一撃した！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは構えた武器を振り回し、敵の足元を一撃した！
+					ENDIF
+				ELSE		
+					PRINTFORML 足元がお留守ですよー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは構えた武器を振り回し、敵の足元を一撃した！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは構えた武器を振り回し、敵の足元を一撃した！
+					ENDIF
+				ENDIF
+
+			CASE 34
+				;急所狙い
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「ブラック、敵の急所をねらうよー！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは構えた武器もろとも突撃し、敵の中心を一撃した！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは構えた武器もろとも突撃し、敵の中心を一撃した！
+					ENDIF
+				ELSE		
+					PRINTFORML それえぇぇーっ！！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは構えた武器もろとも突撃し、敵の中心を一撃した！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは構えた武器もろとも突撃し、敵の中心を一撃した！
+					ENDIF
+				ENDIF
+
+			CASE 50
+			;A防御
+				PRINTFORML お尻はいやですーっ…
+			CASE 51
+			;B防御
+				PRINTFORML 触らないでくださいぃ…
+			CASE 52
+			;C防御
+				PRINTFORML 恥ずかしいですよぉ…
+			CASE 53
+			;V防御
+				IF TALENT:0
+					PRINTFORML 初めては渡しませんっ…！
+				ELSE
+					PRINTFORML な、中はやめてえぇっ…！
+				ENDIF
+
+		CASE 42
+			;拘束からの離脱
+			;ARG:2が丸呑みフラグ、ARG:4に誰に捕まっているか（CFLAG を直接見れば十分…）
+			;ARG:3が　0→実行時　1→絶頂で失敗　2→脱出成功　3→拘束レベル低下　4→脱出失敗
+			IF ARG:2 == 1 || TFLAG:55 == 10
+			;丸呑み
+			;全身系と下半身系で分けるべきか…
+			IF ARG:3 == 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……はううぅぅーっ……。
+						PRINTFORML だから食べても美味しくないですよー……！！
+					CASE 1
+						PRINTFORML ぃやぁぁー！食べられて一回休みなんてやですーっ！！
+				ENDSELECT
+			ELSEIF ARG:3 == 1
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML んあぁー！　…ふぁ、あっ…ぁああぁぁ……！！
+					CASE 1
+						PRINTFORML ……ぁぁ…んあぁ…あついよおぉ……
+						PRINTFORML やぁ…とろ…け…るうぅぅぅ……。
+				ENDSELECT
+			ELSEIF ARG:3 == 2
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 食べても美味しくないって言ったですよー……。
+					CASE 1
+						PRINTFORML ……わたしはお菓子じゃないですっ。
+				ENDSELECT
+			ELSEIF ARG:3 == 3
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……出られる…もうちょっとで……
+					CASE 1
+						PRINTFORML ……もうすこしで…外にっ……
+				ENDSELECT
+			ELSEIF ARG:3 == 4
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……ぁあっ…また…閉じちゃったよぉ……。
+						PRINTFORML もうちょっとで…出られたのに……
+					CASE 1
+						PRINTFORML ……いやぁ、あっ…ぁあぁぁ……
+						PRINTFORML また…食べられ…るうぅぅぅっ……！！
+				ENDSELECT
+				ENDIF
+			ELSE
+			;その他の拘束
+			IF ARG:3 == 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……んあぁぁーっ…は…放してよおおっ！！
+					CASE 1
+						PRINTFORML ……それだけは……
+						PRINTFORML だめえぇぇ――――っ！！！！
+				ENDSELECT
+			ELSEIF ARG:3 == 1
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……だ、めぇぇっ……
+						PRINTFORML ちから、はいら…ない…よおぉぉ……。
+					CASE 1
+						PRINTFORML ひやあぁぁぁっ！？
+						PRINTFORML も、もう…おねがいぃ、はなして…えぇ……。
+				ENDSELECT
+			ELSEIF ARG:3 == 2
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……やっと…放してくれた……。
+					CASE 1
+						PRINTFORML ……動けないのはやーですよっ……！！
+				ENDSELECT
+			ELSEIF ARG:3 == 3
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……もうちょっと…もうちょっとで……
+					CASE 1
+						PRINTFORML ……今なら…いけるっ……
+				ENDSELECT
+			ELSEIF ARG:3 == 4
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……離れ…ないぃぃ……
+						PRINTFORML もうちょっと…もうちょっとだったのにっ……。
+					CASE 1
+						PRINTFORML ……放してぇっ…もう…乱暴しないでよぅ……。
+						PRINTFORML ……おね…がい…っ……
+				ENDSELECT
+				ENDIF
+			ENDIF
+
+			CASE 43
+				;力溜め
+				;実行時はARG:2が 0、絶頂で失敗するとその後ARG:2が 1 の口上が表示されます
+				IF ARG:2 == 0
+					PRINTFORML まだまだ…戦えるよっ……
+				ELSEIF ARG:2 == 1
+					PRINTFORML やっ…ふぁあああっ……
+				ENDIF
+
+			CASE 44
+				;諦める
+				;既に諦めているかのチェックはTFLAG:16で。TFLAG:16 == 2に諦めたフラグ
+				;これを書いておかないと諦め直後の口上が毎ターン呼ばれる事になるのぜ
+				IF TFLAG:16 == 2
+				SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML （……きもちいい…　…もう…動けないよぅ……）
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは肢体を投げ出し凌辱に身を任せている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは肢体を投げ出し凌辱に身を任せている……
+					ENDIF
+				CASE 1
+					PRINTFORML ……ぅうん…　…ひあぁっ……！！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは全身を触手に愛撫され甘い喘ぎ声をあげている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは全身を触手に愛撫され甘い喘ぎ声をあげている……
+					ENDIF
+				CASE 2
+					PRINTFORML （……うぅぅ……。）
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 全身を拘束されたリリーホワイトは動けないまま犯され続けている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 全身を拘束されたリリーホワイトは動けないまま犯され続けている……
+					ENDIF
+				ENDSELECT
+				ELSE
+				;こっちが諦め直後の口上
+				IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML ……黒百合ちゃんごめん…もう…だめ……
+				ELSE
+					PRINTFORML ……だめ…もう動けない……
+					PRINTFORML ……もうっ…好きにしていいよおぉぉ……。
+				ENDIF
+			ENDIF
+
+			CASE 45
+				;動けない
+				PRINTFORML 「……きゃあ…っ！！……」
+		ENDSELECT
+
+	CASE 21
+	;攻撃をかわされた
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML あれれっ……！？
+			CASE 1
+				PRINTFORML 避けられたぁ……。
+		ENDSELECT
+	CASE 22
+	;敵の通常攻撃を避けた
+		PRINTFORML 当たりませんよー！
+	CASE 23
+	;敵の衣服攻撃を避けた　ARG:2に部位
+		IF CFLAG:28 && BASE:CP == 0 
+			PRINTFORML あっ、今の避けなきゃよかったぁ……
+		ELSEIF BASE:CP == 0 
+			PRINTFORML どこ触る気ですかー！？
+		ELSE
+			PRINTFORML 当たりませんよー！
+		ENDIF
+	CASE 24
+	;敵の性攻撃を避けた　ARG:2に部位
+		IF CFLAG:28
+			PRINTFORML あっ、今の避けなきゃよかったぁ……
+		ELSE
+			PRINTFORML どこ触る気ですかー！？
+		ENDIF
+	CASE 25
+	;敵の拘束攻撃を避けた
+		IF CFLAG:28
+			PRINTFORML 捕まったら気持ちいいことしてくれるですかね……
+		ELSE
+			PRINTFORML 捕まらないですよーっ！！
+		ENDIF
+	CASE 26
+	;敵の寄生攻撃を避けた（通常は起こらない）
+		PRINTFORML ……中はだめですうぅっ！！
+	CASE 27
+	;敵の特殊攻撃を避けた
+		PRINTFORML 当たりませんよー！
+
+	CASE 46
+		;裸で時間経過
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML あぁっ、どうしようぉ……
+				PRINTFORML これじゃ見られちゃいますぅ……。
+			CASE 1
+				PRINTFORML やだっ、恥ずかしいよぉ……
+				PRINTFORML 見ないで、こっち見ないでよおっ―――！
+		ENDSELECT
+	CASE 47
+		;重度汚染で時間経過
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML ……んぁぁ…ゃぁ…ふぁあぁぁ……
+			CASE 1
+				PRINTFORML ……ぁあぁ…ぃやっ…んあぁぁっ……
+		ENDSELECT
+
+		CASE 50
+			;カウンター待機動作
+			;部位防御とのバッティングを避けるため、必ずここに記述すること
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「……少し…頭冷やしてよ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは眼光鋭く身構えている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは眼光鋭く身構えている！
+					ENDIF
+				ELSE		
+					PRINTFORML ……もう堪忍袋の緒が切れましたー！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは眼光鋭く身構えている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは眼光鋭く身構えている！
+					ENDIF
+				ENDIF
+		CASE 51
+			;カウンター発動！
+		IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+					PRINTFORML 「――全力全開ですよぉぉぉ！！！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵の隙を突き、全力の一撃を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵の隙を突き、全力の一撃を放った！
+					ENDIF
+				ELSE		
+					PRINTFORML ――くらえ、この愛っ！！！！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは敵の隙を突き、全力の一撃を放った！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは敵の隙を突き、全力の一撃を放った！
+					ENDIF
+				ENDIF
+
+	CASE 54
+		;戦闘開始時 
+		;ARG:1にイベントID（ARG:1が　0：通常戦闘　1～：ボスなどの特殊戦闘 詳細はTBD）
+		IF ARG:1 == 0
+		;注意！喪失中は静かにしましょう
+		IF CFLAG:29
+		;
+		;不意打ち受けて悠長に名乗りを上げてる余裕は無いです
+		ELSEIF TFLAG:14 == 2 
+			PRINTFORML きゃぁ、敵！
+		ELSEIF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+			;PTにリリーブラックが居る
+			PRINTFORML 「春風の使者、リリーホワイト！！」
+		ELSE
+			PRINTFORML 春がきましたよー！
+		ENDIF
+		;クイーンとの決戦用
+		;目覚めた心万能説
+		ELSEIF ARG:1 == 1
+		;喪失中は静かに
+		IF CFLAG:29
+		;
+		ELSE
+			PRINTFORML 「わたしの願いは、全ての触手を消し去ること！！」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――目覚めた心は走り出した未来を描くため…――
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――目覚めた心は走り出した未来を描くため…――
+			ENDIF
+		ENDIF
+		;ガーディアンとの決戦用
+		;ボス戦では不意打ち分岐をかけない方向で
+		ELSEIF ARG:1 == 2
+		;喪失中は静かに
+		IF CFLAG:29
+		;
+		ELSE
+			PRINTFORML 「……全力全開！いくよっ！！」
+		ENDIF
+		ENDIF
+	CASE 55				
+		;敵から逃げた
+		;注意！喪失中および図書館内は静かにしましょう
+		IF CFLAG:29
+		;
+		ELSEIF CFLAG:28	
+		PRINTFORML なんとか…大丈夫っ……。
+		ELSE
+		PRINTFORML 逃げましたよー
+		ENDIF
+	CASE 61
+		;敵初遭遇時
+		IF CFLAG:29
+		;
+		ELSE			
+			SELECTCASE ARG:1
+				CASE 1
+				;クイーン初遭遇時
+					PRINTFORML 「何かあるの…奇跡はないかもしれないけど、それと同じものが」
+					PRINTFORML 「……じゃなきゃ、誰も生きてなんていけないもの……！！」
+				CASE 3
+				;ガーディアン初遭遇時
+					PRINTFORML 「……絶対、だいじょうぶ……」
+					PRINTFORML 「…わたしなら…絶対、だいじょうぶだから！！」
+				CASE 4
+				;バイオプラント初遭遇時
+					PRINTFORML 「……こんなことって……」
+				CASE 18
+				;ドッペルゲンガー初遭遇時
+					;
+				CASE 19
+				;娘初遭遇時
+					PRINTFORML 「……まさか……！？」
+				CASEELSE
+					PRINTFORML ……一体、何物なの……！？
+			ENDSELECT
+		ENDIF
+	CASE 62				
+		;仲間を見捨てた
+		;ARG:2に見捨てたキャラ１　ARG:3に見捨てたキャラ２
+		IF ARG:2 == 56 || ARG:3 == 56
+			;リリーブラックを見捨てた
+			PRINTFORML 「絶対…絶対戻ってくるから……！！」
+		ELSE
+			PRINTFORML ……わたしじゃ…助けられない……。
+		ENDIF
+	CASE 63				
+		;仲間に見捨てられた
+		;ARG:2に見捨てられたキャラ１　ARG:3に見捨てられたキャラ２
+		IF ARG:2 == 56 || ARG:3 == 56
+			;リリーブラックに見捨てられた
+			PRINTFORML 「信じてる…すぐ助けに来るって……」
+		ELSE
+			PRINTFORML ……やっぱり…足手まといなの……！？
+		ENDIF
+	CASE 57				
+		;敵に勝った
+		;注意！喪失中および図書館内は静かにしましょう
+		IF CFLAG:29
+		;
+		ELSEIF CFLAG:28	
+		PRINTFORML わたし…勝ったのっ……？
+		ELSE
+		PRINTFORML 大勝利ーっ！！
+		ENDIF
+
+		;自慰関連はまとめて全部ここに持ってくるぜ
+			CASE 48
+				;ターン終了時自慰
+				PRINTFORML …だめぇ…戦わなきゃあぁ…でも……
+				SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML はるっ、はあっ、はるですよおぉ…
+					PRINTFORML 春が、来ちゃうよう……！
+				CASE 1
+					PRINTFORML 身体がっ、熱いぃ…！
+					PRINTFORML 手が、勝手に、動いちゃう……！
+				CASE 2
+					PRINTFORML あ、いやっ、見られてるのにぃ…
+					PRINTFORML 見ないで、見ないでよお、んっ―――！
+				CASE 3
+					PRINTFORML だめぇ、がまんっ…できないよおぉぉ…
+				ENDSELECT
+			CASE 117
+				;睡眠時自慰
+				PRINTFORML 体が熱くて眠れないよ…
+				PRINTFORML …もう…がまん、できないよぉぉっ……！
+			CASE 118
+				;自慰
+				SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML はるっ、はあっ、はるですよおぉ…
+					PRINTFORML 春が、来ちゃうよう……！
+				CASE 1
+					PRINTFORML 身体がっ、熱いぃ…！
+					PRINTFORML 手が、勝手に、動いちゃう……！
+				CASE 2
+					PRINTFORML あ、いやっ、見られてるのにぃ…
+					PRINTFORML 見ないで、見ないでよお、んっ―――！
+				CASE 3
+					PRINTFORML だめぇ、がまんっ…できないよおぉぉ…
+				ENDSELECT
+			CASE 119
+				;自慰で絶頂失敗
+				PRINTFORML …はあっ…あぁぁんっ…
+				PRINTFORML ……まだぁ…からだが…あついのぉぉ……。
+
+	CASE 12				
+		;敵の通常攻撃(HP攻撃)が当たった
+		;ARG:2がHPダメージ量
+		IF CFLAG:29 || TFLAG:16 == 2
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML ……いた…ぁっ……
+				CASE 1
+					PRINTFORML ……ぅうっ……
+			ENDSELECT
+		ELSEIF BASE:TARGET:0 <= ARG:2 || ARG:2 >= 1500 
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML いったぁぁーぃ……。
+				CASE 1
+					PRINTFORML んぎゅぅ……！！
+			ENDSELECT
+		ELSEIF CFLAG:28
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 痛いのはやですー……。
+				CASE 1
+					PRINTFORML もっと優しくしてよぅ……。
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML きゃっ！
+				CASE 1
+					PRINTFORML いたいですー
+			ENDSELECT
+		ENDIF		
+	CASE 13				
+		;敵の衣服攻撃(CP攻撃)が当たった
+		;リリーホワイトは黒下着が正義だとか
+		;個人的にははいてないつけてないも良し
+		IF CFLAG:29 && BASE:CP == 0 || TFLAG:16 == 2 && BASE:CP == 0 
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML ……んあ…ぁっ……
+				CASE 1
+					PRINTFORML ……ぅうっ……
+			ENDSELECT
+		ELSEIF CFLAG:29 || TFLAG:16 == 2 
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML ……ぁ…いや……
+				CASE 1
+					PRINTFORML ……やめ…て……
+			ENDSELECT
+		ELSEIF BASE:CP == 0 
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML きゃっ！
+				CASE 1
+					PRINTFORML もうやめてぇ……
+			ENDSELECT
+		ELSEIF CFLAG:28
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 脱がされちゃう……。
+				CASE 1
+					PRINTFORML ひゃあ…んっ……。
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 服やぶれちゃうー！
+				CASE 1
+					PRINTFORML やめてよぉ……
+			ENDSELECT
+		ENDIF
+	CASE 35
+		;CPが減少した
+		;ARG:1に破れ強度（ARG:1が　0：全裸になった　1：半裸になった　2：破れ始めた）
+		IF CFLAG:29 || TFLAG:16 == 2 
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML ……ぁ…いや……
+				CASE 1
+					PRINTFORML ……やめ…て……
+			ENDSELECT
+		ELSEIF CFLAG:28
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML あぁっ……！！
+				CASE 1
+					PRINTFORML わたしの服……
+			ENDSELECT
+		ELSEIF ARG:1 == 0 
+				PRINTFORML …いやぁっ…！　恥ずかしいですよおぉっ……。
+		ELSEIF ARG:1 == 1 
+				PRINTFORML …この服気に入ってたのにー……！！
+		ELSEIF ARG:1 == 2 
+				PRINTFORML きゃぁ…服に穴がっ……！？
+		ENDIF
+	CASE 14				
+		;敵の性攻撃(EP攻撃)が当たった			
+		;性攻撃などの場合、ARG:2に属性（0＝A攻撃　1＝B攻撃　2＝C攻撃　3＝V攻撃　5＝肌攻撃　9＝M攻撃）が入っています
+		;ARG:3がEPダメージ量
+		IF CFLAG:29 || TFLAG:16 == 2
+			IF ARG:2 == 0			
+				;A攻撃された		
+				PRINTFORML ……やぁぁぁ…こわれ…ちゃうよぉ…　うぅっ……
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトの弱々しい拒絶の声とは裏腹に彼女のアヌスは異形の触手を抵抗なく飲み込んでいった……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトの弱々しい拒絶の声とは裏腹に彼女のアヌスは異形の触手を抵抗なく飲み込んでいった……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ずぶずぶと体内奥深くへと入り込み腸壁を蹂躙する感触に、彼女の虚ろな瞳に涙が浮かんでいる……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ずぶずぶと体内奥深くへと入り込み腸壁を蹂躙する感触に、彼女の虚ろな瞳に涙が浮かんでいる……
+				ENDIF
+			ENDIF
+			IF ARG:2 == 1			
+				;B攻撃された
+				PRINTFORML ……いや…ぁん！？　…んっ…ぁぁ…ぁあっ……
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 粘液にまみれた触手がぐったりとしたリリーホワイトの双丘に絡みつき桜色の先端を弄ぶ
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 粘液にまみれた触手がぐったりとしたリリーホワイトの双丘に絡みつき桜色の先端を弄ぶ
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そのたびに彼女は身震いと共に悲鳴とも嬌声ともつかない喘ぎ声を漏らしている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そのたびに彼女は身震いと共に悲鳴とも嬌声ともつかない喘ぎ声を漏らしている……
+				ENDIF
+			ENDIF	
+			IF ARG:2 == 2			
+				;C攻撃された
+				PRINTFORML ……そこは…ぁっ！？　…ぁんっ…！　はぁ…ぁあっ……
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトの秘所を掻き分けクリトリスに絡みついてくるぬるりとした感触に、彼女の虚ろな表情が引きつっている
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトの秘所を掻き分けクリトリスに絡みついてくるぬるりとした感触に、彼女の虚ろな表情が引きつっている
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 少女の最も敏感な部分を吸い上げられる恥辱と快楽に思わず身体が反応し、何度も喘ぎ声を漏らしてしまう……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 少女の最も敏感な部分を吸い上げられる恥辱と快楽に思わず身体が反応し、何度も喘ぎ声を漏らしてしまう……
+				ENDIF
+			ENDIF		
+			IF ARG:2 == 3			
+				;V攻撃された		
+				PRINTFORML ……やめて…はいって…こないでぇ…　…いやっ…ぁっ……
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 触手は抵抗する気力のないリリーホワイトの秘裂を押し拡げ膣肉を掻き分けながら奥まで沈み込んでいった……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 触手は抵抗する気力のないリリーホワイトの秘裂を押し拡げ膣肉を掻き分けながら奥まで沈み込んでいった……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 彼女の中で激しくうねる触手が肉襞と擦れる感触が、彼女のココロとカラダに犯される感覚を刻み込んでいく……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 彼女の中で激しくうねる触手が肉襞と擦れる感触が、彼女のココロとカラダに犯される感覚を刻み込んでいく……
+				ENDIF
+			ENDIF
+		ELSEIF CFLAG:28
+			IF ARG:2 == 0			
+				;A攻撃された		
+				PRINTFORML …んんっ…おしりのなかきもちいいよおぉぉぉ……。
+				PRINTFORML もっとぉ…もっとはいってきてえぇっ……！！
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトの懇願するような嬌声と共に彼女のアヌスは異形の触手を抵抗なく飲み込んでいった……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトの懇願するような嬌声と共に彼女のアヌスは異形の触手を抵抗なく飲み込んでいった……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL ずぶずぶと体内奥深くへと入り込み腸壁を蹂躙する感触に、彼女のココロが徐々に蕩けていく……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW ずぶずぶと体内奥深くへと入り込み腸壁を蹂躙する感触に、彼女のココロが徐々に蕩けていく……
+				ENDIF
+			ENDIF
+			IF ARG:2 == 1			
+				;B攻撃された
+				PRINTFORML …そこぉ、そこじんじんするのおぉぉぉっ……！！
+				PRINTFORML さきっぽもっとっ…もっといじってえぇぇ…んあぁぁっ……！！
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 粘液にまみれた触手が紅潮したリリーホワイトの双丘に絡みつき桜色の先端を弄ぶ
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 粘液にまみれた触手が紅潮したリリーホワイトの双丘に絡みつき桜色の先端を弄ぶ
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL そのたびに彼女は悲鳴とも嬌声ともつかない喘ぎ声を漏らし胸を突き出しながら更なる責めを求める……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW そのたびに彼女は悲鳴とも嬌声ともつかない喘ぎ声を漏らし胸を突き出しながら更なる責めを求める……
+				ENDIF
+			ENDIF	
+			IF ARG:2 == 2			
+				;C攻撃された
+				PRINTFORML ……ぁっ…そこぉ…はずかしいのにぃ…あつくなっちゃうぅぅ……。
+				PRINTFORML きっ…きもちよくてえぇっ、おまたがびちゃびちゃしてるよおぉぉ！！
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトの秘所を掻き分けクリトリスに絡みついてくるぬるりとした感触に、彼女の紅潮した顔が蕩けていく
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトの秘所を掻き分けクリトリスに絡みついてくるぬるりとした感触に、彼女の紅潮した顔が蕩けていく
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 少女の最も敏感な部分を吸い上げられる快楽を自ら抵抗なく受け入れ、何度も嬌声と蜜を漏らしてしまう……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 少女の最も敏感な部分を吸い上げられる快楽を自ら抵抗なく受け入れ、何度も嬌声と蜜を漏らしてしまう……
+				ENDIF
+			ENDIF		
+			IF ARG:2 == 3			
+				;V攻撃された		
+				PRINTFORML …ひゃぁあっ！…おくまでぇ、おくまではいってくるうぅぅ！！
+				PRINTFORML ぁぁっ…あつくなってるっ、なかきゅんきゅんしてるよぉぉぉ――！！
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 触手はリリーホワイトの濡れそぼった秘裂を押し拡げ膣肉を掻き分け奥まで沈み込み、彼女もそれを受け入れる……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 触手はリリーホワイトの濡れそぼった秘裂を押し拡げ膣肉を掻き分け奥まで沈み込み、彼女もそれを受け入れる……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 彼女の中で激しくうねる触手を熱い蜜壺が飲み込んでいき、彼女は犯されることすらも自然と快感に変えていく……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 彼女の中で激しくうねる触手を熱い蜜壺が飲み込んでいき、彼女は犯されることすらも自然と快感に変えていく……
+				ENDIF
+			ENDIF
+		ELSEIF BASE:TARGET:2 <= ARG:3 || ARG:3 >= 6000 
+			IF ARG:2 == 0			
+				;A攻撃された		
+				PRINTFORML …ふわぁっ…んあぁぁぁぁぁっ――――！？
+				PRINTFORML ゃあぁぁ…お尻でぇ、お尻のなかでえぇぇ……。
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 
+				ENDIF
+			ENDIF
+			IF ARG:2 == 1			
+				;B攻撃された
+				PRINTFORML ……ゃふぁ…んうっ……！？
+				PRINTFORML ……胸が…なんか…すごいのおぉぉっ……！！
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 
+				ENDIF
+			ENDIF	
+			IF ARG:2 == 2			
+				;C攻撃された
+				PRINTFORML ぁあっ…そこは…そこはぁっ……
+				PRINTFORML 恥ずかしいとこなのに…この感じいぃぃ……！！
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 
+				ENDIF
+			ENDIF		
+			IF ARG:2 == 3			
+				;V攻撃された		
+				PRINTFORML ……はあぁぁぁ…ぅうぅぅんっ……。
+				PRINTFORML なかで…動いてるうぅ…なにこの気分っ……！？
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 
+				ENDIF
+			ENDIF
+		ELSE
+			IF ARG:2 == 0			
+				;A攻撃された
+				SELECTCASE RAND:2
+					CASE 0		
+						PRINTFORML お、お尻なんて入らないよぉぉっ！？
+						PRINTFORML 無理、こわれちゃうぅっ…嫌あぁぁぁ……。
+					CASE 1		
+						PRINTFORML お尻の穴がぁあ…なんか広がってるよおぉ……。
+						PRINTFORML ……ひゃあぁ…中まではいってくるぅぅ……！？
+				ENDSELECT
+			ENDIF
+			IF ARG:2 == 1			
+				;B攻撃された
+				SELECTCASE RAND:2
+					CASE 0		
+						PRINTFORML ……やだっ…胸が…ゃふあぁぁぁっ！？
+						PRINTFORML ゃ…そこ弱いのぉっ！　んあっぁっぁぁぁ……。
+					CASE 1		
+						PRINTFORML は、離れてよぉ…ぁあっ…揉まないでぇっ……！！
+						PRINTFORML ……ふあっ…ぁ…ぁぁ…ぁあぁぁぁっ……！？
+				ENDSELECT
+			ENDIF	
+			IF ARG:2 == 2			
+				;C攻撃された
+				SELECTCASE RAND:2
+					CASE 0		
+						PRINTFORML そ、そんなとこ…恥ずかしいですよぉ……！！
+						PRINTFORML ……やだ…ぁぁ…ぁあっ、ひゃあぁぁぁん！？
+					CASE 1		
+						PRINTFORML ……あ、ぁうぅっ…ひえぇぇぇっ……！？
+						PRINTFORML や…やめてよぉ…や…ゃあぁぁぁっ……。
+				ENDSELECT
+			ENDIF		
+			IF ARG:2 == 3			
+				;V攻撃された		
+				SELECTCASE RAND:2
+					CASE 0		
+						PRINTFORML えっ？……きゃあぁぁ――っ！？
+						PRINTFORML やだっ…はいってくる…動いてるよおぉぉ……。
+					CASE 1		
+						PRINTFORML だめっ、入ってこないでよぉ……
+						PRINTFORML きゃあっ！　…あっ…なかまで…ううっ……。
+				ENDSELECT
+			ENDIF
+		ENDIF
+
+	;拘束関連まとめとくぜ
+	;拘束脱出は攻撃行動のすぐ下に書かないとバグの元
+	CASE 15
+		;敵の拘束攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に丸呑みフラグ
+		IF CFLAG:29 || TFLAG:16 == 2
+			IF ARG:2 != 0
+				PRINTFORML ……ぁっ…わたし…食べられて…　…ぃゃ…ぁ……。
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 抵抗する気力のないリリーホワイトは一瞬のうちに咥えこまれ、体内に引きずり込まれていく……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 抵抗する気力のないリリーホワイトは一瞬のうちに咥えこまれ、体内に引きずり込まれていく……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 力を失った彼女の半身が見る見るうちに粘液にまみれた肉壁の奥に沈んでいき、彼女は餌としての運命を辿るのみだ……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 力を失った彼女の半身が見る見るうちに粘液にまみれた肉壁の奥に沈んでいき、彼女は餌としての運命を辿るのみだ……
+				ENDIF
+			ELSE
+				PRINTFORML ……やだっ…だめ…ぇっ…　は…はな…し…て……
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 触手は抵抗する気力のないリリーホワイトの躰を味わうように全身に絡み付き始めた……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 触手は抵抗する気力のないリリーホワイトの躰を味わうように全身に絡み付き始めた……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 激しくうねる触手が顔を、胸を、太腿を這う感触が、彼女の心に凌辱の絶望を刷り込んでいく……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 激しくうねる触手が顔を、胸を、太腿を這う感触が、彼女の心に凌辱の絶望を刷り込んでいく……
+				ENDIF
+			ENDIF
+		ELSEIF CFLAG:35
+			IF ARG:2 != 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……ひゃあぁ！　…そんなに舐めないでよぉぉ……
+						PRINTFORML ……ふあっ…あぁ…ぁぁっ…熱いぃ……。
+					CASE 1
+						PRINTFORML ……ひゃあぁ！　…そんなに舐めないでよぉぉ……
+						PRINTFORML ……ふあっ…あぁ…ぁぁっ…熱いぃ……。
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……んあぁっ…巻き付いてくる…敏感なとこにぃ……
+						PRINTFORML ……あっあぁぁっ…羽は…弱いの…おぉぉ……！！
+					CASE 1
+						PRINTFORML ……んあぁっ…巻き付いてくる…敏感なとこにぃ……
+						PRINTFORML ……あっあぁぁっ…羽は…弱いの…おぉぉ……！！
+				ENDSELECT
+			ENDIF
+		ELSEIF CFLAG:28
+			IF ARG:2 != 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……ああっ…食べられちゃうよぉ……
+						PRINTFORML わたしって…そんなに美味しいの……？
+					CASE 1
+						PRINTFORML ……口の中で…いっぱい舐められてる……
+						PRINTFORML ……んあぁ…あっ…暖かいですぅ……。
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ふあぁん…抜けないとっ…でもこの感触っ……。
+						PRINTFORML いっぱい…ぁ…撫でられてる…んうぅぅぅ……
+					CASE 1
+						PRINTFORML ……足とか胸に…絡み付いてるぅ…んんっ……
+						PRINTFORML ひゃあっ…羽にも…ぁっ…いい……
+				ENDSELECT
+			ENDIF
+		ELSE
+			IF ARG:2 != 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML きゃあぁっ…え、何っ…？
+						PRINTFORML ……わたし…食べられちゃうの……！？
+					CASE 1
+						PRINTFORML ぅうっ…や、やめてよぉ……。
+						PRINTFORML 食べても美味しくないですよー……。
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML いやぁっ…！？　やだっ、放してよお……！！
+						PRINTFORML ……うぅ…動けないぃ……。
+					CASE 1
+						PRINTFORML ……いやっ…ぬるぬるで気持ち悪いよぉ……。
+						PRINTFORML ……ぁっ…やめて…見えちゃうよおっ……。
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 52
+		;拘束レベルアップ
+		;ARG:1に拘束レベル　ARG:2に丸呑みフラグ
+		IF CFLAG:29 || TFLAG:16 == 2
+			IF ARG:2 != 0
+				PRINTFORML ……ぅぅっ…わたし…どうなっ…　…ぃゃ…ぁああ……
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 無抵抗のリリーホワイトは全身を呑み込まれ、蠢く肉壁のさらに奥深くへと沈んでいく……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 無抵抗のリリーホワイトは全身を呑み込まれ、蠢く肉壁のさらに奥深くへと沈んでいく……
+				ENDIF
+			ELSE
+				PRINTFORML ……ゃっ…だ…め…ぇっ…　は…はな…し…てっ……
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 全身に絡み付く触手が無抵抗のリリーホワイトの躰を嬲り尽くそうとさらに数を増す……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 全身に絡み付く触手が無抵抗のリリーホワイトの躰を嬲り尽くそうとさらに数を増す……
+				ENDIF
+			ENDIF
+		ELSEIF CFLAG:35
+			IF ARG:2 != 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……はぅぅ…どうなっちゃうのぉ…ぉぉっ……
+						PRINTFORML ……ぅあっ…熱いよぉ…ぁっ…ぁぁぁ……。
+					CASE 1
+						PRINTFORML ……はぅぅ…どうなっちゃうのぉ…ぉぉっ……
+						PRINTFORML ……ぅあっ…熱いよぉ…ぁっ…ぁぁぁ……。
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……ふあぁぁっ…離して…よおぉぉぉっ……
+						PRINTFORML ……あぁっ…ぁぁぁ…そこは…弱いのぉぉ……！！
+					CASE 1
+						PRINTFORML ……ふあぁぁっ…離して…よおぉぉぉっ……
+						PRINTFORML ……あぁっ…ぁぁぁ…そこは…弱いのぉぉ……！！
+				ENDSELECT
+			ENDIF
+		ELSEIF CFLAG:28
+			IF ARG:2 != 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……どうしよう…食べられちゃったぁぁ……
+						PRINTFORML ……でも…なんか暖かくて…春みたい……？
+					CASE 1
+						PRINTFORML ……お腹の中…柔らかくて暖かいですぅ……
+						PRINTFORML 抜け出さなきゃっ…でも…気持ちよくなっちゃう……。
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……んんっ…ぬるぬるして…なんか不思議な気分……。
+						PRINTFORML ……全身…ぎゅうってされて…ふあぁぁっ……
+					CASE 1
+						PRINTFORML ……んううぅぅぅ…だめえぇっ…ぁあぁぁ……
+						PRINTFORML 身体中…舐められてるみたいぃ…気持ちいいょぉぉ……
+				ENDSELECT
+			ENDIF
+		ELSE
+			IF ARG:2 != 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……やだぁああっ……！！
+						PRINTFORML 食べられちゃう…助けてえぇぇっ……。
+					CASE 1
+						PRINTFORML こんな気持ち悪いのに食べられるのはいやーっ！！
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ぬるぬるうねうね嫌ぁ……
+						PRINTFORML ……お願い、もう放してくださいー……。
+					CASE 1
+						PRINTFORML ……ううう…春を伝えに行けない……
+						PRINTFORML ……手が届かない…春が……。
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 53
+		;拘束レベルMAX継続　ARG:2に丸呑みフラグ
+		IF CFLAG:29 || TFLAG:16 == 2
+			IF ARG:2 != 0
+				PRINTFORML ……ここから…だしてぇ…　…暗いよ…狭いよ…熱い…よ…ぉぉっ……
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 完全に呑み込まれたリリーホワイトは蠢く肉壁に人形のように弄ばれ、熱い粘液にココロとカラダを蕩かされている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 完全に呑み込まれたリリーホワイトは蠢く肉壁に人形のように弄ばれ、熱い粘液にココロとカラダを蕩かされている……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 動けない彼女の肢体が肉壁に揉まれ粘液に浸かるたびに飴玉のようにそこから力が溶け出していく……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 動けない彼女の肢体が肉壁に揉まれ粘液に浸かるたびに飴玉のようにそこから力が溶け出していく……
+				ENDIF
+			ELSE
+				PRINTFORML ……もう…やめてよぉっ…　…はなして…はな…し…て…よぉぉ……
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 動けなくなったリリーホワイトの躰を貪るように触手は体液をまき散らし、肢体を這い回り、弄んでいる……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 動けなくなったリリーホワイトの躰を貪るように触手は体液をまき散らし、肢体を這い回り、弄んでいる……
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 幾つもの触手が口を、胸を、羽を、そして肛門や秘裂を犯すたびに彼女の心が壊されていく……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 幾つもの触手が口を、胸を、羽を、そして肛門や秘裂を犯すたびに彼女の心が壊されていく……
+				ENDIF
+			ENDIF
+		ELSEIF CFLAG:35
+			IF ARG:2 != 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML んあぁっ…とけちゃう…とけちゃうよおぉっ……！！
+						PRINTFORML ……熱いぃぃ…ぁぁ…ふぁあっ…んぅぅっ……。
+					CASE 1
+						PRINTFORML んあぁっ…とけちゃう…とけちゃうよおぉっ……！！
+						PRINTFORML ……熱いぃぃ…ぁぁ…ふぁあっ…んぅぅっ……。
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……やだっ…こんなに…もうやめてよおぉぉ……
+						PRINTFORML ……んぁっ…ぁあぁっ…また…きちゃうぅぅっ……！！
+					CASE 1
+						PRINTFORML ……やだっ…こんなに…もうやめてよおぉぉ……
+						PRINTFORML ……んぁっ…ぁあぁっ…また…きちゃうぅぅっ……！！
+				ENDSELECT
+			ENDIF
+		ELSEIF CFLAG:28
+			IF ARG:2 != 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……体が熱くてっ…とろけてくみたいぃぃ……
+						PRINTFORML ……もう…抜け出す…なんてぇっ…んあぁぁ……。
+					CASE 1
+						PRINTFORML ……わたしは食べられて…お腹の中でっ……
+						PRINTFORML でも…すごくぅぅっ…気持ちが…あったかいよぉぉ……。
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……んあっ…動けない…逃げられないよ……。
+						PRINTFORML でもっ…何されるのか…ちょっと楽しみですうぅぅ……
+					CASE 1
+						PRINTFORML ……こうやってぇ…絡まってれば…きっと……
+						PRINTFORML 気持ちいいこと…してくれる…ぁあっ…そこぉぉっ……
+				ENDSELECT
+			ENDIF
+		ELSE
+			IF ARG:2 != 0
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……いやぁぁ…狭くて動けないぃ……。
+						PRINTFORML 食べられて一回休みなんて…嫌ですよぅ……。
+					CASE 1
+						PRINTFORML 狭くてぬるぬるで気持ち悪いです……
+						PRINTFORML ……もう出してくださいよう…ぅぅっ……。
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML ……からだが…動かないぃ……。
+						PRINTFORML …わたし…　…これからどうなっちゃうのぉ……
+					CASE 1
+						PRINTFORML ……おねがい…もう…離して……。
+						PRINTFORML はなして…だめ…そこは…そこはやめてえぇぇ……！！
+				ENDSELECT
+			ENDIF
+		ENDIF
+
+	CASE 16
+		;敵の寄生攻撃（命中）
+		;ARG:1にコマンドID　ARG:2に妊娠フラグ　ARG:3にMPダメージ
+		IF CFLAG:29 || TFLAG:16 == 2
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML ……ぁぁ…おなかに…はいってくる…　…ぃやあぁぁっ……
+				CASE 1
+					PRINTFORML ……な…なかはいやぁ…！　…だめ…えっ…あぁぁ……
+			ENDSELECT
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に大量の白濁液を注ぎ込んでゆく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に大量の白濁液を注ぎ込んでゆく
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL おぞましい魔物の子種が子宮を満たしていく感覚に、彼女の淀んだ瞳からとめどなく涙が零れる……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW おぞましい魔物の子種が子宮を満たしていく感覚に、彼女の淀んだ瞳からとめどなく涙が零れる……
+					ENDIF
+		ELSEIF CFLAG:28
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML ……んんっ…出ちゃいますかぁ？
+					PRINTFORML あったかいのぉ、わたしの中にいっぱい出してくださいぃぃっ……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に大量の白濁液を注ぎ込んでゆく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に大量の白濁液を注ぎ込んでゆく
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL おぞましい魔物の子種が子宮を満たしているというのに、彼女の瞳からは希望にも似た何かが見て取れる……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW おぞましい魔物の子種が子宮を満たしているというのに、彼女の瞳からは希望にも似た何かが見て取れる……
+					ENDIF
+				CASE 1
+					PRINTFORML ……あぁっ、ぃいのぉぉ……。
+					PRINTFORML ぅふ、いいですよぉ…？　触手さんの赤ちゃんっ…産んであげても……。
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に大量の白濁液を注ぎ込んでゆく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に大量の白濁液を注ぎ込んでゆく
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL おぞましい魔物の子種が子宮を満たしているというのに、彼女の瞳からは希望にも似た何かが見て取れる……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW おぞましい魔物の子種が子宮を満たしているというのに、彼女の瞳からは希望にも似た何かが見て取れる……
+					ENDIF
+			ENDSELECT
+				SIF CFLAG:29
+					PRINTFORML ……また…会えるかな……
+		ELSEIF BASE:TARGET:1 <= ARG:3 || ARG:3 >= 500 
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML ……もう…もうやめてえぇぇ……
+					PRINTFORML ……こんなに出されたらぁっ…赤ちゃんできちゃうよぉ……。
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に溢れるほどの白濁液を注ぎ込んでゆく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に溢れるほどの白濁液を注ぎ込んでゆく
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL おぞましい魔物の子種が子宮を満たしていく感覚に、彼女の淀んだ瞳からとめどなく涙が零れる……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW おぞましい魔物の子種が子宮を満たしていく感覚に、彼女の淀んだ瞳からとめどなく涙が零れる……
+					ENDIF
+				CASE 1
+					PRINTFORML ……いやあぁぁ…ぁぁっ……
+					PRINTFORML ……いっぱい溢れてる…こんなに、奥までたくさん……！？
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に溢れるほどの白濁液を注ぎ込んでゆく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に溢れるほどの白濁液を注ぎ込んでゆく
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL おぞましい魔物の子種が子宮を満たしていく感覚に、彼女の淀んだ瞳からとめどなく涙が零れる……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW おぞましい魔物の子種が子宮を満たしていく感覚に、彼女の淀んだ瞳からとめどなく涙が零れる……
+					ENDIF
+			ENDSELECT
+				SIF CFLAG:29
+					PRINTFORML ……わたし…もう…だめ……
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 中で動いてて…こわれちゃうよ……き、きゃぁぁ！？
+					PRINTFORML なかが、なんか熱いのっ、はいってくる…いやあああぁ……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に大量の白濁液を注ぎ込んでゆく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に大量の白濁液を注ぎ込んでゆく
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL おぞましい魔物の子種が子宮を満たしていく感覚に、彼女の瞳からとめどなく涙が零れる……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW おぞましい魔物の子種が子宮を満たしていく感覚に、彼女の瞳からとめどなく涙が零れる……
+					ENDIF
+
+				CASE 1
+					PRINTFORML 何、なにするの…もう抜いてよぉ……！！
+					PRINTFORML ……やだ、お腹に…なかになにかいれられて――！？
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に大量の白濁液を注ぎ込んでゆく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトの奥深くまで挿入された触手が突如激しく脈動すると、彼女の胎内に大量の白濁液を注ぎ込んでゆく
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL おぞましい魔物の子種が子宮を満たしていく感覚に、彼女の瞳からとめどなく涙が零れる……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW おぞましい魔物の子種が子宮を満たしていく感覚に、彼女の瞳からとめどなく涙が零れる……
+					ENDIF
+
+			ENDSELECT
+				SIF CFLAG:29
+					PRINTFORML ……わたし…もう…だめ……
+		ENDIF
+
+	CASE 33				
+		;MPが0（戦意喪失）になった
+		PRINTFORML 
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 身も心も犯し尽されたリリーホワイトの瞳は、彼女の心の中を映したように真っ黒に濁っていた。そして――
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 身も心も犯し尽されたリリーホワイトの瞳は、彼女の心の中を映したように真っ黒に濁っていた。そして――
+		ENDIF
+		PRINTFORML ……もう…むり……。
+		IF FLAG:AUTOMODE
+			PRINTFORMDL ――ついに、最後の一筋の光が消えた……。
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW ――ついに、最後の一筋の光が消えた……。
+		ENDIF
+		PRINTFORML 
+
+	;絶頂関連まとめとくぜ
+	CASE 34
+		;EPが0になった
+		;ARG:1に絶頂部位　ARG:2で細かい状況を分岐させる予定　※絶頂の瞬間とはまた別 絶頂メッセージは120
+		;ARG:1に属性（0＝A攻撃　1＝B攻撃　2＝C攻撃　3＝V攻撃）が入っています
+		IF CFLAG:29 || TFLAG:16 == 2 
+			IF ARG:1 == 0
+				;A
+				PRINTFORML ……うぅ…　もう…やめてぇ……
+			ENDIF
+			IF ARG:1 == 1
+				;B
+				PRINTFORML ……うぅ…　もう…やめてぇ……
+			ENDIF
+			IF ARG:1 == 2
+				;C
+				PRINTFORML ……うぅ…　もう…やめてぇ……
+			ENDIF
+			IF ARG:1 == 3
+				;V
+				PRINTFORML ……うぅ…　もう…やめてぇ……
+			ENDIF
+		ELSEIF CFLAG:35 
+			IF ARG:1 == 0
+				;A
+				PRINTFORML ……あ…ぁっ…　またっ…またはいってっ…きちゃうぅぅ……
+			ENDIF
+			IF ARG:1 == 1
+				;B
+				PRINTFORML ……あ…ぁっ…　またっ…またすごいのっ…きちゃうぅぅ……
+			ENDIF
+			IF ARG:1 == 2
+				;C
+				PRINTFORML ……あ…ぁっ…　またっ…またすごいのっ…きちゃうぅぅ……
+			ENDIF
+			IF ARG:1 == 3
+				;V
+				PRINTFORML ……あ…ぁっ…　またっ…またはいってっ…きちゃうぅぅ……
+			ENDIF
+		ELSEIF CFLAG:28 
+			IF ARG:1 == 0
+				;A
+				PRINTFORML ……んんっ…　おしりきもちいぃっ…がまんできないようぅ……
+			ENDIF
+			IF ARG:1 == 1
+				;B
+				PRINTFORML ……あ…はぁ…　胸がじんじんしてぇ…もう…あぁぁぁ……
+			ENDIF
+			IF ARG:1 == 2
+				;C
+				PRINTFORML ……ううぅ…　あそこが熱いよぅっ…もう…げんかいぃぃ……
+			ENDIF
+			IF ARG:1 == 3
+				;V
+				PRINTFORML ……あ…んっ…　なかくちゅくちゅしたらぁ…わたしいぃ…もぉ……
+			ENDIF
+		ELSE
+			IF ARG:1 == 0
+				;A
+				PRINTFORML ……んんっ…　おしりきもちいぃっ…がまんできないようぅ……
+			ENDIF
+			IF ARG:1 == 1
+				;B
+				PRINTFORML ……あ…はぁ…　胸がじんじんしてぇ…もう…あぁぁぁ……
+			ENDIF
+			IF ARG:1 == 2
+				;C
+				PRINTFORML ……ううぅ…　あそこが熱いよぅっ…もう…げんかいぃぃ……
+			ENDIF
+			IF ARG:1 == 3
+				;V
+				PRINTFORML ……あ…んっ…　なかくちゅくちゅしたらぁ…わたしいぃ…もぉ……
+			ENDIF
+		ENDIF
+	CASE 120
+		;絶頂の瞬間
+		;ARG:1に部位　ARG:2にMPダメージ
+		IF CFLAG:35
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML んぁああ！！　…ぁあぁっ…あっ、あっあああぁぁぁっ！！！！
+			CASE 1
+				PRINTFORML ぁっ…ぁあっ…ゃあっ、あっあっあっあああぁぁ――！！！！
+			CASE 2
+				PRINTFORML んあぁぁ…ゃあぁあああぁぁっ……！！
+			CASE 3
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトはあまりの快楽に言葉を失いながら身を跳ねさせている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトはあまりの快楽に言葉を失いながら身を跳ねさせている……
+				ENDIF
+		ENDSELECT
+		ELSEIF CFLAG:28
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML ぁあっ…はあぁっ……
+				PRINTFORML ん―――！！　あぁ――――――――っ！！！！
+			CASE 1
+				PRINTFORML ぁひゃっ！？
+				PRINTFORML あっ…ぁぁ…んみゃあぁぁ――――！！？？
+			CASE 2
+				PRINTFORML ゃふあぁっ！？
+				PRINTFORML ……ん…ぁぁっ――――z＿＿＿＿＿＿＿＿！！！！
+			CASE 3
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトはあまりの快楽に言葉を失いながら身を跳ねさせている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトはあまりの快楽に言葉を失いながら身を跳ねさせている……
+				ENDIF
+		ENDSELECT
+		ELSE
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML ぁあっ…はあぁっ……
+				PRINTFORML ん―――！！　あぁ――――――――っ！！！！
+			CASE 1
+				PRINTFORML ぁひゃっ！？
+				PRINTFORML あっ…ぁぁ…んみゃあぁぁ――――！！？？
+			CASE 2
+				PRINTFORML ゃふあぁっ！？
+				PRINTFORML ……ん…ぁぁっ――――z＿＿＿＿＿＿＿＿！！！！
+			CASE 3
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトはあまりの快楽に言葉を失いながら身を跳ねさせている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトはあまりの快楽に言葉を失いながら身を跳ねさせている……
+				ENDIF
+		ENDSELECT
+		ENDIF
+	CASE 122
+		;戦意喪失中に絶頂
+		PRINTFORML ……ぁぁ…ぁあっ……
+		IF FLAG:AUTOMODE
+			PRINTFORMDL リリーホワイトはあまりの快楽に言葉を失いながら身を跳ねさせている……
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW リリーホワイトはあまりの快楽に言葉を失いながら身を跳ねさせている……
+		ENDIF
+
+	CASE 101				
+		;迷宮内で誰かに会った			
+		IF NO:(ARG:1) == 56			
+			;リリーブラックに会った		
+			PRINTFORML 「黒百合ちゃん！」	
+		ELSEIF NO:(ARG:1) == 5			
+			;チルノに会った		
+			PRINTFORML 「チルノちゃん！」	
+		ELSEIF NO:(ARG:1) == 12			
+			;レティに会った		
+			PRINTFORML 「……あのー、一時休戦でいいですねー……？」	
+		ELSEIF NO:(ARG:1) == 34			
+			;幽香に会った		
+			PRINTFORML 「幽香さんも閉じ込められたんですか……！？」	
+		ELSEIF NO:(ARG:1) == 1			
+			;霊夢に会った		
+			PRINTFORML 「……やっぱり異変、なんですか？」	
+		ELSEIF NO:(ARG:1) == 2			
+			;魔理沙に会った		
+			PRINTFORML 「……やっぱり異変、なんですか？」	
+		ELSEIF NO:(ARG:1) == 9			
+			;咲夜に会った		
+			PRINTFORML 「……よく会う気がしますけど、まさかこんな場所で……」
+		ELSEIF NO:(ARG:1) == 14			
+			;アリスに会った		
+			PRINTFORML 「アリスさんがいると心強いですー」		
+		ELSEIF NO:(ARG:1) == 19			
+			;妖夢に会った		
+			PRINTFORML 「妖夢さんも春を探して……？　違ったですかー」
+		ELSEIF NO:(ARG:1) == 20			
+			;幽々子に会った		
+			PRINTFORML 「……幽々子さん…なんでここに……？」	
+		ELSE			
+			;その他		
+			PRINTFORML 「春ですよー」	
+		ENDIF						
+	CASE 109				
+		;PTに加入した			
+		PRINTFORML 春ですよー
+	CASE 141
+		;遭遇時逆襲：襲い掛かられた
+		;ARG:1に遭遇キャラ　ARG:2が1なら実はドッペル
+		IF ARG:2 == 1 && NO:(ARG:1) == 15
+			PRINTFORML ――あなたは……
+			PRINTFORML ……『鏡』ですね！！
+		ELSEIF ARG:2 == 1 && NO:(ARG:1) == 56
+			PRINTFORML ――違う
+			PRINTFORML 黒百合ちゃんはこんなことしない！！
+		ELSEIF ARG:2 == 1
+			PRINTFORML ――違う
+			PRINTFORML あなたは誰なの……！？
+		ELSE
+			PRINTFORML 何するですかー！！
+		ENDIF
+	CASE 142
+		;遭遇時逆襲：襲い掛かった
+		;ARG:2が1なら実はドッペル
+		;※主人公ではなく、襲った側のキャラの口上
+		IF ARG:2 == 1
+			PRINTFORML あなたの全部を春色に染めてあげますよ……
+		ELSE
+			PRINTFORML 春をもらいに来ましたよー！！
+		ENDIF
+
+	CASE 125
+		;寄生が進行
+		IF CFLAG:29
+			IF ARG:1 == 8
+				PRINTFORML ……なか…に…なにかいる……
+			ELSEIF ARG:1 == 4
+				PRINTFORML ……なかで…うごいて…うぅっ……
+			ELSEIF ARG:1 == 1
+				PRINTFORML ……うぅ…なかから…でてくるよぉ……
+			ENDIF
+		ELSEIF CFLAG:28
+			IF ARG:1 == 8
+				PRINTFORML ……わたしの中に…何かいるの……？
+			ELSEIF ARG:1 == 4
+				PRINTFORML ……わたしのおなかで…大きくなってるぅ……
+			ELSEIF ARG:1 == 1
+				PRINTFORML ……ふぁ…中からもうすぐ…でてくるぅっ……
+			ENDIF
+		ELSE
+			IF ARG:1 == 8
+				PRINTFORML ……これってもしかして…そんな……！？
+			ELSEIF ARG:1 == 4
+				PRINTFORML ……おなかの中で…何か動いてる……！？
+			ELSEIF ARG:1 == 1
+				PRINTFORML ……なにか…何かが中から…もうすぐ……
+			ENDIF
+		ENDIF
+	CASE 126		
+		;妊娠が進行
+		IF CFLAG:29
+			IF ARG:1 == 11
+				PRINTFORML ……ぅ……。
+			ELSEIF ARG:1 == 8
+				;セーフ
+				IF CFLAG:36 == 1
+					PRINTFORML …………。
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+				ELSE
+					PRINTFORML ……なか…に…なにかいる……
+				ENDIF
+			ELSEIF ARG:1 == 5
+				PRINTFORML ……やだぁ…こんなのってえぇぇ……
+			ELSEIF ARG:1 == 3
+				PRINTFORML ……なかで…うごいて…うぅっ……
+			ELSEIF ARG:1 == 1
+				PRINTFORML ……ぁうぅぅぅっ…もう…うまれるのぉ……
+			ENDIF
+		ELSEIF CFLAG:28
+			IF ARG:1 == 11
+				PRINTFORML ……どうも最近調子が出ないですよー。
+			ELSEIF ARG:1 == 8
+				;セーフ
+				IF CFLAG:36 == 1
+					PRINTFORML わたしの勘違いだったみたいですー
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+				ELSE
+					PRINTFORML ……わたしの中に…何かいるの……？
+				ENDIF
+			ELSEIF ARG:1 == 5
+				PRINTFORML ……生きてる…わたしの中で……
+			ELSEIF ARG:1 == 3
+				PRINTFORML ……こんなに…おっきく育ってるぅ……
+			ELSEIF ARG:1 == 1
+				PRINTFORML ……もうすぐ…産まれそう……
+				PRINTFORML ……やっと…会えるんですねぇっ……。
+			ENDIF
+		ELSE
+			IF ARG:1 == 11
+				PRINTFORML ……どうも最近調子が出ないですよー。
+			ELSEIF ARG:1 == 8
+				;セーフ
+				IF CFLAG:36 == 1
+					PRINTFORML わたしの勘違いだったみたいですー
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+				ELSE
+					PRINTFORML ……これってもしかして…そんな……！？
+				ENDIF
+			ELSEIF ARG:1 == 5
+				PRINTFORML ……あの触手の…？　なんで…こんなの……
+			ELSEIF ARG:1 == 3
+				PRINTFORML ……いや…わたしのお腹…こんなに大きく……
+			ELSEIF ARG:1 == 1
+				PRINTFORML ……いたいいたいっ！！
+				PRINTFORML ……そんな…もうすぐ…産まれるの……！？
+			ENDIF
+		ENDIF
+	CASE 127
+		;寄生出産
+		;（ARG:1が　0：最初　1：産まれた　2：吸われた）ARG:2に子供の種類
+		IF CFLAG:29
+			IF ARG:1 == 0
+				PRINTFORML 「……なかで…うごいてっ…でてくるぅっ……」
+			ELSEIF ARG:1 == 1
+				PRINTFORML 「……いや…　…なかから…こんなのぉっ……」
+			ELSEIF ARG:1 == 2
+				PRINTFORML 「……うっ…やめて…　すわないでぇ……」
+			ENDIF
+		ELSEIF CFLAG:28
+			IF ARG:1 == 0
+				PRINTFORML 「……中で動いて…外に出てくるぅ…早くでてきてぇっ……」
+			ELSEIF ARG:1 == 1
+				PRINTFORML 「……こんなにおっきい…　…わたしの中から…んぁっ……」
+			ELSEIF ARG:1 == 2
+				PRINTFORML 「……わたしの…胸…　吸ってくれてる……」
+			ENDIF
+		ELSE
+			IF ARG:1 == 0
+				PRINTFORML 「……なかで…中で動いてるのぅ…外にでてくるよぉぉ……」
+			ELSEIF ARG:1 == 1
+				PRINTFORML 「……こんな化け物が…　…わたしの中から…うぅっ……」
+			ELSEIF ARG:1 == 2
+				PRINTFORML 「……うぅ…いやっ…　こんなのってないよ……」
+			ENDIF
+		ENDIF
+	CASE 129
+		;妊娠出産
+		;（ARG:1が　0：最初　1：産まれた　2：吸われた）ARG:2に子供の種類
+		;娘の場合…のはずだが、なぜか逆転してる？
+		IF ARG:2 == 19
+			IF CFLAG:29
+				IF ARG:1 == 0
+					PRINTFORML 「……いたいいぃ…おなか…こわれちゃうぅっ……」
+				ELSEIF ARG:1 == 1
+					PRINTFORML 「……いや…　…なかから…こんなのぉっ……」
+				ELSEIF ARG:1 == 2
+					PRINTFORML 「……うっ…やめて…　すわないでぇ……」
+				ENDIF
+			ELSEIF CFLAG:28
+				IF ARG:1 == 0
+					PRINTFORML 「……おねがい…痛くしないで…早くでてきてぇっ……」
+				ELSEIF ARG:1 == 1
+					PRINTFORML 「……こんなにおっきい…　…わたしの中から…んぁっ……」
+				ELSEIF ARG:1 == 2
+					PRINTFORML 「……わたしの…胸…　吸ってくれてるぅ……」
+				ENDIF
+			ELSE
+				IF ARG:1 == 0
+					PRINTFORML 「いたいいたいいたい！！　お腹やぶれちゃううぅぅぅ――っ！！！！」
+				ELSEIF ARG:1 == 1
+					PRINTFORML 「……こんな化け物が…　…わたしの中から…うぅっ……」
+				ELSEIF ARG:1 == 2
+					PRINTFORML 「……うぅ…いやっ…　こんなのってないよ……」
+				ENDIF
+			ENDIF
+		;それ以外…と思っていたが、こっちが娘
+		ELSE
+			IF CFLAG:29
+				IF ARG:1 == 0
+					PRINTFORML 「……いたいいぃ…おなか…こわれちゃうぅっ……」
+				ELSEIF ARG:1 == 1
+					PRINTFORML 「……わたしの…こども…なの……？」
+				ELSEIF ARG:1 == 2
+					PRINTFORML 「……わたしの…おっぱい…のんでる……」
+				ENDIF
+			ELSEIF CFLAG:28
+				IF ARG:1 == 0
+					PRINTFORML 「……おねがい…痛くしないで…早くでてきてぇっ……」
+				ELSEIF ARG:1 == 1
+					PRINTFORML 「……わたし…そっくり…　…かわいいっ……」
+				ELSEIF ARG:1 == 2
+					PRINTFORML 「……わたし…　お母さんに…なっちゃった……」
+					PRINTFORML 「――あっ…どこいくのっ……」
+				ENDIF
+			ELSE
+				IF ARG:1 == 0
+					PRINTFORML 「いたいいたいいたい！！　お腹やぶれちゃううぅぅぅ――っ！！！！」
+				ELSEIF ARG:1 == 1
+					PRINTFORML 「……わ…わたしの…　…こども……！？」
+				ELSEIF ARG:1 == 2
+					PRINTFORML 「……わたしの…　おっぱい…吸ってる……」
+					PRINTFORML 「――あっ…きもちいい……」
+				ENDIF
+			ENDIF
+		ENDIF
+
+	CASE 130
+		;部屋の浄化実行
+		;喪失中は（ｒｙ
+		IF CFLAG:29
+		;
+		ELSE
+			PRINTFORML ――清らかなる風よ、春告精リリーホワイトの名の下にこの地の穢れを…
+			PRINTFORML 払い清めよ！！！！
+		ENDIF
+	CASE 132
+		;部屋を移動（突撃）
+		IF TARGET == 1
+			;リリーホワイトが主人公の時だけメッセージを表示
+			PRINTFORML 春ですよーっ！！
+		ENDIF
+	CASE 133
+		;部屋を移動（慎重）
+		IF TARGET == 1
+			;リリーホワイトが主人公の時だけメッセージを表示
+			PRINTFORML 春がきましたよ…。
+		ENDIF
+	CASE 134
+		;部屋を移動（待ち伏せ）
+		IF TARGET == 1
+			;リリーホワイトが主人公の時だけメッセージを表示
+			PRINTFORML 春なのです…
+		ENDIF
+	CASE 135
+		;部屋を移動（探索）
+		IF TARGET == 1
+			;リリーホワイトが主人公の時だけメッセージを表示
+			PRINTFORML 春はどこですか…？
+		ENDIF			
+
+	CASE 136
+		;処女喪失　（ARG:1は喪失原因　0：敵の攻撃　1：自慰　2：出産）　
+		;ARG:2にMP減少量　ARG:3が1の場合、喪失の直前　2の場合、喪失を防いだ
+		IF ARG:1 == 0
+		;『ARG:3が1』の場合は「処女を喪失しそうなとき」
+			;V防御などで処女喪失を防げる場合も表示されるぜ
+			;本当に喪失するかどうかチェックしたい場合は、上級編でやっているように LOST_VIRGIN_CHECK を使うけどARG:3で分岐かけた方が簡単	
+			;とにかく、『ARG:3が0』の場合が本当の処女喪失時なので注意だぜ！
+			IF CFLAG:29 || TFLAG:16 == 2
+				IF ARG:3 == 1
+					PRINTFORML ……ぃ……ゃぁっ……。
+					IF FLAG:AUTOMODE
+						PRINTFORMDL もはや抵抗する気力の無いリリーホワイトの躰を嬲り尽くそうと絡み付いた触手は無理矢理彼女の両脚を開かせ、
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW もはや抵抗する気力の無いリリーホワイトの躰を嬲り尽くそうと絡み付いた触手は無理矢理彼女の両脚を開かせ、
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL その奥で固く閉じたつぼみへとその先端を伸ばしていく……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW その奥で固く閉じたつぼみへとその先端を伸ばしていく……
+					ENDIF
+				ELSEIF ARG:3 == 0
+					PRINTFORML ……うぅぅぅ…ぁっ……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 触手が幼い秘裂を抉じ開け、蠢く先端が何者も受け容れた事のないその奥へ入り込んでいく度に、
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 触手が幼い秘裂を抉じ開け、蠢く先端が何者も受け容れた事のないその奥へ入り込んでいく度に、
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 暗く淀んだ表情の口許から微かに苦悶の喘ぎ声が漏れる……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 暗く淀んだ表情の口許から微かに苦悶の喘ぎ声が漏れる……
+					ENDIF
+					PRINTFORML ……うっ…ぁっ…　…いゃぁぁぁ……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 狭い膣内を掻き分け胎内深く潜り込んでいく触手が彼女のココロとカラダに純潔を奪われる感覚を刻み込んでいく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 狭い膣内を掻き分け胎内深く潜り込んでいく触手が彼女のココロとカラダに純潔を奪われる感覚を刻み込んでいく
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 凌辱が終わった後も、彼女は秘所から鮮血混じりの粘液を垂らしながら黒く濁った瞳で虚空を見つめていた……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 凌辱が終わった後も、彼女は秘所から鮮血混じりの粘液を垂らしながら黒く濁った瞳で虚空を見つめていた……
+					ENDIF
+					PRINTFORML ……こんな…のって…ないよ……。
+				ENDIF
+			ELSEIF CFLAG:28
+				IF ARG:3 == 1
+					PRINTFORML …だめ…だよぉ……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 拒絶の言葉とは裏腹にリリーホワイトの顔はほんのりと赤く染まり幼いつぼみからは愛蜜を滴らせている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 拒絶の言葉とは裏腹にリリーホワイトの顔はほんのりと赤く染まり幼いつぼみからは愛蜜を滴らせている……
+					ENDIF
+				ELSEIF ARG:3 == 2
+					PRINTFORML …もう…終わり……？
+				ELSEIF ARG:3 == 0
+					PRINTFORML ……んっ…ひゃあぁあああっ……！！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 幼いつぼみは愛蜜をたたえた花弁を開き、蠢く触手を抵抗なく受け容れていく……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 幼いつぼみは愛蜜をたたえた花弁を開き、蠢く触手を抵抗なく受け容れていく……
+					ENDIF
+					PRINTFORML …あぁぁぁ…！　…あたまとろけちゃうよぉぉ……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 苦痛よりも快楽がはるかに勝るのか、膣内を凌辱される度に純潔の証が混じった蜜を溢れさせる
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 苦痛よりも快楽がはるかに勝るのか、膣内を凌辱される度に純潔の証が混じった蜜を溢れさせる
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 膣内から触手が引き抜かれた頃には、リリーホワイトはとろりとした表情に濁った笑みを浮かべていた……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 膣内から触手が引き抜かれた頃には、リリーホワイトはとろりとした表情に濁った笑みを浮かべていた……
+					ENDIF
+				ENDIF
+			ELSE
+				IF ARG:3 == 1
+					PRINTFORML …や…あぁ……。
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは青ざめた顔で秘所に入り込もうとする触手を振り払おうとしている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは青ざめた顔で秘所に入り込もうとする触手を振り払おうとしている！
+					ENDIF
+				ELSEIF ARG:3 == 2
+					PRINTFORML …やらせませーんっ！！
+				ELSEIF ARG:3 == 0
+					PRINTFORML ……うぅぅぅっ……！！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 幼い秘裂を触手に貫かれ、何者も受け容れた事のないその奥を凌辱される恐怖と苦痛に顔が歪んでゆく
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 幼い秘裂を触手に貫かれ、何者も受け容れた事のないその奥を凌辱される恐怖と苦痛に顔が歪んでゆく
+					ENDIF
+					PRINTFORML ……散っちゃった…わたしの…初めて……。
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 膣内から引き抜かれた触手の粘液には純潔を奪われた事を意味する鮮血が混じっていた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 膣内から引き抜かれた触手の粘液には純潔を奪われた事を意味する鮮血が混じっていた
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL それを直視してしまったリリーホワイトの瞳が絶望に濁っていく……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW それを直視してしまったリリーホワイトの瞳が絶望に濁っていく……
+					ENDIF
+				ENDIF
+				SIF CFLAG:29
+					PRINTFORML ……こんな…のって…ないよ……。
+			ENDIF
+		ELSEIF ARG:1 == 1
+			IF CFLAG:28
+				IF ARG:3 == 1
+					PRINTFORML 「……春来るぅぅ…がまんできないぃ…　いれちゃうのぉぉっ……」
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORMDL ﾌﾞﾁ
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW ﾌﾞﾁ
+					ENDIF
+					PRINTFORML 「あぁぁぁ、……わたしぃ…こわれちゃううぅぅぅ……」
+					PRINTFORML 「……でもぉ……くちゅくちゅしたらぁ…きもちいいからぁ、いいかなぁぁっ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは濁った笑みを浮かべ、流れる一筋の血も気にかけず己を慰めている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは濁った笑みを浮かべ、流れる一筋の血も気にかけず己を慰めている……
+					ENDIF
+				ENDIF
+			ELSE
+				IF ARG:3 == 1
+					PRINTFORML 「ここ気持ちいい…わたし…いれちゃうよぉ……」
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORMDL ﾌﾞﾁ
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW ﾌﾞﾁ
+					ENDIF
+					PRINTFORML 「んあぁぁ…痛っ、……やっちゃった……」
+					PRINTFORML 「……でも……　きもちいいから、いいかな……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは顔を紅潮させ、流れる一筋の血も気にかけず己を慰めている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは顔を紅潮させ、流れる一筋の血も気にかけず己を慰めている……
+					ENDIF
+				ENDIF
+			ENDIF
+		ELSEIF ARG:1 == 2
+			IF CFLAG:29 || TFLAG:16 == 2
+				PRINTFORML ……ひいぃぃ！！　……うぅぅっ…ああああぁぁぁぁぁぁ……！！
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 産道を押し広げる自らの子供に処女膜を破られるという理不尽な痛みに、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 産道を押し広げる自らの子供に処女膜を破られるという理不尽な痛みに、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトは淀んだ瞳に涙を滲ませ声にならない叫びを上げている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトは淀んだ瞳に涙を滲ませ声にならない叫びを上げている……
+				ENDIF
+			ELSEIF CFLAG:28
+				PRINTFORML 「……はぁはぁ…痛くしないでよぅぅ…　…んはぁっ！…ああああぁぁぁぁぁぁ！！」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 処女膜を破られる苦痛よりも胎内を子供に刺激される快楽がはるかに勝るのか、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 処女膜を破られる苦痛よりも胎内を子供に刺激される快楽がはるかに勝るのか、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトは歓喜とも嬌声とも似た叫びを上げている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトは歓喜とも嬌声とも似た叫びを上げている……
+				ENDIF
+			ELSE
+				PRINTFORML 「ひぎいぃぃっ！！　いたいいたいいたい！！　ああああぁぁぁぁぁぁっ！！！！」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 産道を押し広げる自らの子供に処女膜を破られるという理不尽な痛みに、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 産道を押し広げる自らの子供に処女膜を破られるという理不尽な痛みに、
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL リリーホワイトは歯を食いしばり苦痛の叫びを上げている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW リリーホワイトは歯を食いしばり苦痛の叫びを上げている……
+				ENDIF
+				PRINTFORML 「……こんなの絶対おかしいよ……」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 己の身に起きたあまりに異様な出来事にリリーホワイトの瞳がみるみるうちに濁っていく……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 己の身に起きたあまりに異様な出来事にリリーホワイトの瞳がみるみるうちに濁っていく……
+				ENDIF
+			SIF CFLAG:29
+				PRINTFORML ……こんな…のって…ないよ……。
+			ENDIF
+		ENDIF
+
+	CASE 114
+		;睡眠開始（ARG:1が　0：見張り無し　1：PTで見張り　2：ARG:2のキャラが見張り）ARG:2に見張りNPC
+		;重度汚染の場合、表示せずに115へ
+		IF FLAG:(50+FLAG:5) == 100
+		;
+		ELSEIF BASE:CP == 0 
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML ……おやすみなさいですー。
+			CASE 1
+				PRINTFORML ……もっと寝心地いいとこないかな……
+		ENDSELECT
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 白い素肌を晒して眠りにつくリリーホワイトの無防備な裸身はどこか煽情的に見える……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 白い素肌を晒して眠りにつくリリーホワイトの無防備な裸身はどこか煽情的に見える……
+			ENDIF
+		ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML ……おやすみなさいですー。
+			CASE 1
+				PRINTFORML ……もっと寝心地いいとこないかな……
+		ENDSELECT
+		ENDIF
+	CASE 115
+		;重度汚染部屋で睡眠開始
+		IF BASE:CP == 0 && CFLAG:28
+			PRINTFORML これっ…なんか気持ちいいですよぉ……
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 白い素肌を床一面の触手に埋め眠りにつくリリーホワイトの無防備な裸身はどこか背徳的に見える……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 白い素肌を床一面の触手に埋め眠りにつくリリーホワイトの無防備な裸身はどこか背徳的に見える……
+			ENDIF
+		ELSEIF BASE:CP == 0
+			PRINTFORML ……こんなとこで寝られませんよー……。
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 白い素肌を床一面の触手に埋め眠りにつくリリーホワイトの無防備な裸身はどこか背徳的に見える……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 白い素肌を床一面の触手に埋め眠りにつくリリーホワイトの無防備な裸身はどこか背徳的に見える……
+			ENDIF
+		ELSEIF CFLAG:28
+			PRINTFORML これっ…なんか気持ちいいですよぉ……
+		ELSE
+			PRINTFORML ……こんなとこで寝られませんよー……。
+		ENDIF
+	CASE 116
+		;重度汚染部屋で睡眠
+		IF BASE:CP == 0 
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML ……んんっ…んぁ…ぁふうぅぅ……
+			CASE 1
+				PRINTFORML ……はぁ…はあぁ…んうぅぅっ……
+		ENDSELECT
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 部屋中の触手が無防備な裸身を晒すリリーホワイトの素肌を押し包む……。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 部屋中の触手が無防備な裸身を晒すリリーホワイトの素肌を押し包む……。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 首筋から背中、羽、足裏から太腿…そして双丘へ、秘所へと蠢きながら這い登っていき、眠っている彼女の躰を弄ぶ
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 首筋から背中、羽、足裏から太腿…そして双丘へ、秘所へと蠢きながら這い登っていき、眠っている彼女の躰を弄ぶ
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 全身の性感帯を愛撫され続ける彼女の寝息に、次第に喘ぎ声が混じっていく……。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 全身の性感帯を愛撫され続ける彼女の寝息に、次第に喘ぎ声が混じっていく……。
+			ENDIF
+		ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML ……んんっ…んぁ…ぁふうぅぅ……
+			CASE 1
+				PRINTFORML ……はぁ…はあぁ…んうぅぅっ……
+		ENDSELECT
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 部屋中の触手が無防備な寝姿を晒すリリーホワイトの手足を這い登り衣服の隙間に入り込む……。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 部屋中の触手が無防備な寝姿を晒すリリーホワイトの手足を這い登り衣服の隙間に入り込む……。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 首筋から背中、羽、足裏から太腿…そして下着の中…双丘へ秘所へと潜り込み、眠っている彼女の躰を弄ぶ
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 首筋から背中、羽、足裏から太腿…そして下着の中…双丘へ秘所へと潜り込み、眠っている彼女の躰を弄ぶ
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 全身の性感帯を愛撫され続ける彼女の寝息に、次第に喘ぎ声が混じっていく……。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 全身の性感帯を愛撫され続ける彼女の寝息に、次第に喘ぎ声が混じっていく……。
+			ENDIF
+		ENDIF
+	CASE 149				
+		;入浴			
+		;だから喪失中は（ｒｙ
+		IF CFLAG:29
+		;
+		ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML ……気持ちいいですー。
+			CASE 1
+				PRINTFORML ……はにゃーん……
+		ENDSELECT
+		ENDIF
+
+	CASE 150
+		;捕食開始
+		;捕食関係はARG:1に敵の種類、ARG:2に丸呑みフラグ
+		PRINTFORML ……もう、動けない……
+		PRINTFORML ……力が…吸われてく……
+	CASE 151
+		;捕食されている
+		IF ARG:2 != 0
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML ……溶けてってる…おなかの中で……
+				CASE 1
+					PRINTFORML ……ちからが…吸われてく……
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML ……こころ…溶けてくみたい……
+				CASE 1
+					PRINTFORML ……ちからが…抜けていってる……
+			ENDSELECT
+		ENDIF
+	CASE 152				
+		;捕食されきった
+		IF ARG:2 != 0
+			PRINTFORML ……こころも…からだも…溶けてってる……
+			PRINTFORML ……わたしが…無くなってくみたい……
+			PRINTFORML ……まるで……
+			PRINTFORML ……気持ちいいっていう……
+			PRINTFORML ……感じそのものになってく……
+			PRINTFORML ……ほんとうの春って…ここにあったんだ……
+		ELSE
+			PRINTFORML ……こころにも…からだにも…いっぱい入れられて……
+			PRINTFORML ……わたしが…無くなってくみたい……
+			PRINTFORML ……ちがう……
+			PRINTFORML ……別のものに…ずっと気持ちよくなれるなにか……
+			PRINTFORML ……そのためにここに来た……
+			PRINTFORML ……ほんとうの春って…ここにあったんだ……
+		ENDIF
+	CASE 156
+		;敵ランクアップ
+		;ARG:1に敵の種類
+		PRINTFORML 「力を吸収して…より強くなったっていうの……！？」
+	CASE 154
+		;一回休み
+		PRINTFORML ……頭が…　…まっしろ…に……
+		PRINTFORML …一回休み…　…ですねー……。
+	CASE 157
+		;ゲームオーバー
+		;ARG:1に敵の種類
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 
+		ENDIF
+		PRINTFORML 「春は……　死にますか……？」
+		IF FLAG:AUTOMODE
+			PRINTFORMDL 
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMDW 
+		ENDIF
+	CASE 158
+		;復活！
+		SELECTCASE ARG:1
+			;助けてもらった
+			CASE 0
+				PRINTFORML 「……ありがとう……！！」
+			;捨てられた
+			CASE 1
+				PRINTFORML ……わたし、助かったんだ……。
+		ENDSELECT
+	CASE 160
+		;MAP表示時（日常？のつぶやきなどにどうぞ）
+		IF CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「………………」
+				CASE 1
+					PRINTFORML 「…ぁ…ぅっ……」
+				CASEELSE 
+					PRINTFORML 「…ぁっ…ぃぃ……」
+			ENDSELECT
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは黒く濁った瞳で宙を見つめている
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは黒く濁った瞳で宙を見つめている
+					ENDIF
+		ELSEIF CFLAG:28
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「あぁっ…はるですよぅぅ……」
+				CASE 1
+					PRINTFORML 「お花畑お花畑お花畑……」
+				CASEELSE 
+					PRINTFORML 「…気持ち良くしてくれる触手さんは…？」
+			ENDSELECT
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは顔を紅潮させどこか緩んだ表情だ
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは顔を紅潮させどこか緩んだ表情だ
+					ENDIF
+		ELSEIF MAXBASE:MP/4 >= BASE:MP
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML ちょっとピンチです……
+				CASE 1
+					PRINTFORML ……だ、だいじょうぶ。
+				CASEELSE 
+					PRINTFORML ……もうやだよぉ……。
+			ENDSELECT
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトの瞳に濁りが見える、精神的に余裕がないようだ
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトの瞳に濁りが見える、精神的に余裕がないようだ
+					ENDIF
+		ELSE
+			SELECTCASE RAND:255
+			;もっとましな分岐方法が絶対ある
+				CASE 0
+				IF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56
+					PRINTFORML 「白百合の花言葉は『純潔』『無垢』なんですよー」
+					SETCOLOR 0xb33e5c
+					PRINTFORML 「……この状況から最も遠い言葉ね……」
+					RESETCOLOR 
+				ELSE
+					PRINTFORML 「黒百合ちゃんだいじょうぶかな……」
+				ENDIF
+				CASE 1 TO 50
+					PRINTFORML 春風が恋しいです……
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは春を振りまいている
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは春を振りまいている
+					ENDIF
+				CASE 51 TO 100
+					PRINTFORML 絶対、だいじょうぶだから！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは春を振りまいている
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは春を振りまいている
+					ENDIF
+				CASE 101 TO 150
+					PRINTFORML 黒百合ちゃん……！
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは春を振りまいている
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは春を振りまいている
+					ENDIF
+				CASE 151 TO 200
+					PRINTFORML うーん、どこもじめじめしてますねー
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは春を振りまいている
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは春を振りまいている
+					ENDIF
+				CASEELSE 
+					PRINTFORML 春ですよー
+					IF FLAG:AUTOMODE
+						PRINTFORMDL リリーホワイトは春を振りまいている
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW リリーホワイトは春を振りまいている
+					ENDIF
+			ENDSELECT
+		ENDIF
+	
+	CASE 166
+		;遭遇時会話：喪失キャラを浄化した
+		PRINTFORML 「……幻想少女に力を…春を……！！」
+	CASE 167
+		;遭遇時会話：喪失中に浄化してもらった
+		PRINTFORML ……力が…あふれてくる……。
+	
+	;CASE 159
+		;オープニング（各種設定が終わって、MAPが表示される直前に全キャラに対して実行　口上独自の設定などにどうぞ）
+
+	CASE 203
+		;任意のオープニング
+		;春が来ない香霖堂とか我ながら古すぎるぜ
+			PRINTFORMDL リリーホワイト口上オープニングを見ますか？
+			PRINTFORMDL [0] 全部見る
+			PRINTFORMDL [1] あらすじだけ見る
+			PRINTFORMDL [2] 見ない
+			$INPUT_LOOP_OP15_0
+			INPUT
+			IF RESULT == 0
+			;リセットカラーしないとドローラインの色ががが
+			PRINTFORML 
+			RESETCOLOR 
+			DRAWLINE 
+			SETCOLOR CFLAG:700 
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――20XX年、春。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――20XX年、春。
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 「今年もこれで春を伝える仕事はおしまいですよー」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL リリーホワイトの春告精としての活動も終わりにさしかかっていた……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW リリーホワイトの春告精としての活動も終わりにさしかかっていた……
+			ENDIF
+			SETCOLOR 0xb33e5c
+			PRINTFORML 「ちょっと待ちなさい」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……筈だった。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……筈だった。
+			ENDIF
+			PRINTFORML 「香霖堂にまだ春が来ていないけど」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL やはり春告精のリリーブラック。ホワイトとは二人で一人、一人で二人という関係である。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW やはり春告精のリリーブラック。ホワイトとは二人で一人、一人で二人という関係である。
+			ENDIF
+			SETCOLOR CFLAG:700 
+			PRINTFORML 「それじゃさっそく、香霖堂へ行って春伝えてくるですよー！！」
+			SETCOLOR 0xb33e5c
+			PRINTFORML 「私を置いていくのはやめなさいーっ！！」
+			RESETCOLOR 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――香霖堂――
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――香霖堂――
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			SETCOLOR CFLAG:700  
+			PRINTFORML 「春ですよー……あれ？」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 香霖堂周辺には雪が深く降り積もり、未だ春の気配は全く無い。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 香霖堂周辺には雪が深く降り積もり、未だ春の気配は全く無い。
+			ENDIF
+			PRINTFORML 「こういうのってあれじゃないんですか？『異変』です！」
+			SETCOLOR 0xb33e5c
+			PRINTFORML 「でももし異変だとしたら、巫女だの魔法使いだのがとっくに動き出してる筈よね……」
+			SETCOLOR CFLAG:700  
+			PRINTFORML 「でもこの店を中心に春が消えてる感じ……」
+			RESETCOLOR 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL その時、店の中から一人の男性が姿を現した。香霖堂の店主、森近霖之助である。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW その時、店の中から一人の男性が姿を現した。香霖堂の店主、森近霖之助である。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 「君たちは確か…春の妖精だね、用事は何かな？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 「君たちは確か…春の妖精だね、用事は何かな？」
+			ENDIF
+			SETCOLOR CFLAG:700  
+			PRINTFORML 「春を伝えに来ましたー」
+			SETCOLOR 0xb33e5c
+			PRINTFORML 「何か変わったことは起こりませんでしたか？」
+			RESETCOLOR 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 「そう言えば屋根裏に住み着いてる本読み妖怪を最近見ないね」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 「そう言えば屋根裏に住み着いてる本読み妖怪を最近見ないね」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 「書庫から勝手に持ち出した本を返して貰いた……あれ？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 「書庫から勝手に持ち出した本を返して貰いた……あれ？」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 既に二人の姿は霖之助の視界から消えていた……。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 既に二人の姿は霖之助の視界から消えていた……。
+			ENDIF
+			PRINTFORML 
+			SETCOLOR CFLAG:700 
+			PRINTFORML 「屋根裏に手がかりがあるかも知れませんよ！」
+			SETCOLOR 0xb33e5c
+			PRINTFORML 「仕方ないわねぇ…消えた本読み妖怪の話も気になるし……」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL リリーホワイトが香霖堂の屋根裏に上がり、それに続くリリーブラック。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW リリーホワイトが香霖堂の屋根裏に上がり、それに続くリリーブラック。
+			ENDIF
+			SETCOLOR CFLAG:700 
+			PRINTFORML 「間違いないよ、この奥に春が消えていってる」
+			SETCOLOR 0xb33e5c
+			PRINTFORML 「……私も感じる、この奥には確実に何かあるわ」
+			RESETCOLOR 
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――この時二人は、この先に何が待っているか知る由も無かった――
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――この時二人は、この先に何が待っているか知る由も無かった――
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			RESETCOLOR 
+			DRAWLINE 
+			PRINTFORML 
+		ELSEIF RESULT == 1
+		;唐突に始まる「これまでのあらすじ」
+			PRINTFORML 
+			RESETCOLOR 
+			DRAWLINE 
+			SETCOLOR CFLAG:700  
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 「これまでのあらすじ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 「これまでのあらすじ」
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 春告精リリーホワイトは古道具屋、香霖堂付近で春が消失する異変を察知。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 春告精リリーホワイトは古道具屋、香霖堂付近で春が消失する異変を察知。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL その元凶が屋根裏にあると踏み調査を開始したが……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW その元凶が屋根裏にあると踏み調査を開始したが……
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ナムサン！得体の知れぬ触手蠢く奇怪なラビリンスめいた洞窟に迷い込んでしまう。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ナムサン！得体の知れぬ触手蠢く奇怪なラビリンスめいた洞窟に迷い込んでしまう。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 脱出路を断たれ、バディたるリリーブラックとも分断されてしまったのだ。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 脱出路を断たれ、バディたるリリーブラックとも分断されてしまったのだ。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 退路無き以上、このケオスの中で脱出法を探さねばならぬ。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 退路無き以上、このケオスの中で脱出法を探さねばならぬ。
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――慈悲無き春に、彼女は何を見るのか――
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――慈悲無き春に、彼女は何を見るのか――
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 守るべきもののため、走れ！リリーホワイト！走れ！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 守るべきもののため、走れ！リリーホワイト！走れ！
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 「ゼロ・トレラント・スプリング」
+			PRINTFORML 
+			RESETCOLOR 
+			DRAWLINE 
+			PRINTFORML 
+		ELSEIF RESULT == 2
+		;
+		ELSE
+		GOTO INPUT_LOOP_OP15_0
+		ENDIF
+
+	;CASE 204
+		;エンディング（仲間を囮にして脱出）
+	CASE 206
+		;エンディング（ガーディアン撃破）
+		IF CFLAG:29
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 少女たちの激しい弾幕が、確実にガーディアンの邪悪な力を削っている！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 少女たちの激しい弾幕が、確実にガーディアンの邪悪な力を削っている！
+			ENDIF
+			PRINTFORML 
+			PRINTFORML ――聞こえる…みんなの声が……。
+			PRINTFORML ――よかった…支えてくれてるみんなは、いつだってそばに……！！
+			PRINTFORML 
+			PRINTFORML ……だから、まだ頑張れるっ…戦えるっ……！！
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――リリーホワイトの瞳に光が戻った！――
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――リリーホワイトの瞳に光が戻った！――
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 「この…一発でっ…！！」
+			PRINTFORML 
+			PRINTFORML 
+		ELSEIF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+		;白黒揃えばこうもなるぜ
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 少女たちの激しい弾幕が、確実にガーディアンの邪悪な力を削っている！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 少女たちの激しい弾幕が、確実にガーディアンの邪悪な力を削っている！
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 「行くよっ、ブラック！！」
+			SETCOLOR 0xb33e5c
+			PRINTFORML 「分かったわ、ホワイト！！」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 二人は力を合わせ、その身に宿された全ての春度を力に変える……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 二人は力を合わせ、その身に宿された全ての春度を力に変える……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ガーディアンは残る力を悪しき視線に変え反撃するが、二人を包む眩い光に阻まれた！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ガーディアンは残る力を悪しき視線に変え反撃するが、二人を包む眩い光に阻まれた！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			SETCOLOR CFLAG:700
+			PRINTFORML 「リリースプリングウィンド・ホワイトっ！」
+			SETCOLOR 0xb33e5c
+			PRINTFORML 「リリースプリングウィンド・ブラックっ！」
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――二人の渾身の弾幕が一つに重なり、輝く光の渦となって全てを浄化する！――
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――二人の渾身の弾幕が一つに重なり、輝く光の渦となって全てを浄化する！――
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			SETCOLOR CFLAG:700
+			PRINTFORML 「これで決めるよっ！！」
+			PRINTFORML 
+			PRINTFORML 
+			SETCOLOR 0xe6afcf
+			PRINTFORML 「「リリースプリングウィンド・マーブル……マックスうぅぅっ！！！！」」
+			PRINTFORML 
+			PRINTFORML 
+			RESETCOLOR 
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 少女たちの激しい弾幕が、確実にガーディアンの邪悪な力を削っている！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 少女たちの激しい弾幕が、確実にガーディアンの邪悪な力を削っている！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ガーディアンは残る力を邪視に集め、最後の反撃を試みる……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ガーディアンは残る力を邪視に集め、最後の反撃を試みる……
+			ENDIF
+			PRINTFORML 
+			PRINTFORML （……この一撃で決める……！）
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL リリーホワイトの手許に大量の春度が集まってゆく……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW リリーホワイトの手許に大量の春度が集まってゆく……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 気合一閃、前に突き出した手先から渾身の砲撃が放たれガーディアンの眼を撃ち貫く！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 気合一閃、前に突き出した手先から渾身の砲撃が放たれガーディアンの眼を撃ち貫く！
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 「リリーホワイト・ブレイカーっ！！！！」
+			PRINTFORML 
+			PRINTFORML 
+		ENDIF
+	;CASE 208
+		;エンディング（転移門で脱出）
+	CASE 210
+		;エンディング（クイーン撃破）
+		IF CFLAG:29
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 少女たちの激しい弾幕が、確実に迷宮の主の邪悪な力を削っている！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 少女たちの激しい弾幕が、確実に迷宮の主の邪悪な力を削っている！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL （…貴様ら…よくも……！！）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW （…貴様ら…よくも……！！）
+			ENDIF
+			PRINTFORML 
+			PRINTFORML ――聞こえる…みんなの声が……。
+			PRINTFORML ――よかった…支えてくれてるみんなは、いつだってそばに……！！
+			PRINTFORML 
+			PRINTFORML ……だから、まだ頑張れるっ…戦えるっ……！！
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――リリーホワイトの瞳に光が戻った！――
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――リリーホワイトの瞳に光が戻った！――
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL （――まだ戦える…だと……！？）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW （――まだ戦える…だと……！？）
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL （――心は確かに折り砕いた筈……！！）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW （――心は確かに折り砕いた筈……！！）
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL （今お前が纏うその力は一体何だ！！！！）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW （今お前が纏うその力は一体何だ！！！！）
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 「は、　る、　で、　す、　よ　お　おぉぉぉ！！！！」
+			PRINTFORML 
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――Listen to my song…――
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――Listen to my song…――
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+		ELSEIF NO:1 == 56 || NO:(FLAG:10) == 56 || NO:(FLAG:11) == 56 || NO:(FLAG:15) == 56 || NO:(FLAG:16) == 56
+		;白黒揃えばこうもなるぜ
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 少女たちの激しい弾幕が、確実に迷宮の主の邪悪な力を削っている！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 少女たちの激しい弾幕が、確実に迷宮の主の邪悪な力を削っている！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL （…貴様ら…よくも……！！）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW （…貴様ら…よくも……！！）
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 「行くよっ、ブラック！！」
+			SETCOLOR 0xb33e5c
+			PRINTFORML 「分かったわ、ホワイト！！」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 二人は力を合わせ、その身に宿された全ての春度を力に変える……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 二人は力を合わせ、その身に宿された全ての春度を力に変える……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 迷宮の主は残る全ての触手を伸ばし反撃するが、全て二人を包む清浄な風に阻まれた！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 迷宮の主は残る全ての触手を伸ばし反撃するが、全て二人を包む清浄な風に阻まれた！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			SETCOLOR CFLAG:700
+			PRINTFORML 「リリースプリングウィンド・ホワイトっ！」
+			SETCOLOR 0xb33e5c
+			PRINTFORML 「リリースプリングウィンド・ブラックっ！」
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ――二人の渾身の弾幕が一つに重なり、輝く光の渦となって全てを浄化する！――
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ――二人の渾身の弾幕が一つに重なり、輝く光の渦となって全てを浄化する！――
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL （……何故…何故だぁぁぁっ……！！！！）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW （……何故…何故だぁぁぁっ……！！！！）
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			SETCOLOR 0xe6afcf
+			PRINTFORML 「「リリースプリングウィンド・マーブル……マックスうぅぅっ！！！！」」
+			PRINTFORML 
+			PRINTFORML 
+			RESETCOLOR 
+		ELSE
+		;頭冷やそうか
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 少女たちの激しい弾幕が、確実に迷宮の主の邪悪な力を削っている！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 少女たちの激しい弾幕が、確実に迷宮の主の邪悪な力を削っている！
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL （…貴様ら…よくも……！！）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW （…貴様ら…よくも……！！）
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL リリーホワイトは高く舞い上がると、迷宮の主に呼びかける
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW リリーホワイトは高く舞い上がると、迷宮の主に呼びかける
+			ENDIF
+			PRINTFORML 「春を奪ったのは、あなただったんですね……！！」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 彼女の小柄な体とは裏腹に、その声には聞く者を威圧するような気迫が漂う。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 彼女の小柄な体とは裏腹に、その声には聞く者を威圧するような気迫が漂う。
+			ENDIF
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL （……それが如何したと？）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW （……それが如何したと？）
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 満身創痍になりながらも迷宮の主はなお余裕に満ち溢れているように見える。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 満身創痍になりながらも迷宮の主はなお余裕に満ち溢れているように見える。
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL しかしそれが春告精の激情に最後の火をつけた……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW しかしそれが春告精の激情に最後の火をつけた……
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 「春が来て、夏が来て、秋になって、やがては冬になる……
+			PRINTFORML ……それでも冬はいつか終わって、また春が来るんです……！！」
+			PRINTFORML 
+			PRINTFORML 「ねぇ、春返そうよ……」
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL リリーホワイトは全身の春度を眼前の一点に凝縮し、
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW リリーホワイトは全身の春度を眼前の一点に凝縮し、
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 目視でも分かるほど強力な魔力へと変換して渾身の砲撃を放つ！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 目視でも分かるほど強力な魔力へと変換して渾身の砲撃を放つ！
+			ENDIF
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 「リリーホワイト・ブレイカーっ！！！！」
+			PRINTFORML 
+			PRINTFORML 
+		ENDIF
+	;CASE 212
+		;エンディング（クイーンソロ撃破）
+		;戦闘素質15でどうしろと
+
+
+
+	CASEELSE				
+		;特に処理しない口上は全部ここに飛んできます			
+		;ここでは別に何もしなくてもOKです			
+ENDSELECT					
+ENDIF					
+
+;↑↑↑　　ここまで口上のメイン処理　　↑↑↑					
+					
+					
+					
+;表示が終わったら文字の色をリセットしておきましょう					
+RESETCOLOR					
+					
+;自分で口上を書いた場合は RETURN 1 になります　　基本的にこのままにしておいてください					
+RETURN 1					

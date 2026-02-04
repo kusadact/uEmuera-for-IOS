@@ -1,0 +1,47 @@
+﻿;固定イベント
+;RETURN	0:失敗した　1:成功した　2:以後のイベントスキップ
+@CHECK_FIXED_EVENT_207
+;LOCAL
+;0	LOOP
+;1	目標値
+;2	達成値
+;3	戻り値
+
+LOCAL:3 = 0
+
+;目標値（イベント難易度）決定
+LOCAL:1 = 0
+
+
+;達成値決定
+CALL GET_SEARCH_RATE
+LOCAL:2 = RESULT
+
+
+IF LOCAL:2 >= LOCAL:1
+	CALL ADD_ABL_EXP_PT(0, 500)
+	
+	IF FLAG:AUTOMODE
+		PRINTFORML %CALLNAME:1%%TACHI()%発現了一本破破爛爛的書！
+		PRINTFORML 打開想看看裡面的内容、但是書内一片空白、内容直接進入了腦中
+		PRINTFORML 這本書似乎是進入幻想鄉後所説的「統一言語」的辞書…
+		PRINTFORML 考慮到或許什麼時候会用上的%CALLNAME:1%%TACHI()%、就這樣決定拿走這本書
+		TWAIT FLAG:AUTOMODE * 500, 0
+	ELSE
+		PRINTFORMW %CALLNAME:1%%TACHI()%発現了一本破破爛爛的書！
+		PRINTFORMW 打開想看看裡面的内容、但是書内一片空白、内容直接進入了腦中
+		PRINTFORMW 這本書似乎是進入幻想鄉後所説的「統一言語」的辞書…
+		PRINTFORMW 考慮到或許什麼時候会用上的%CALLNAME:1%%TACHI()%、就這樣決定拿走這本書
+	ENDIF
+	CALL PRINT_MESSAGE(1, 200, 207, CALLNAME:1, "", 0)
+	CALL PRINT_MESSAGE(FLAG:10, 200, 207, CALLNAME:1, "", 0)
+	CALL PRINT_MESSAGE(FLAG:11, 200, 207, CALLNAME:1, "", 0)
+	
+	FLAG:207 = 0
+	LOCAL:3 = 1
+ELSE
+	;見つからなかった場合（通常は何もしない）
+ENDIF
+
+RETURN LOCAL:3
+

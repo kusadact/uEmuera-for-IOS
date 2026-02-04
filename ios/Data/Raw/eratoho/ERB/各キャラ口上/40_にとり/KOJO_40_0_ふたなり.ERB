@@ -1,0 +1,3859 @@
+﻿;にとりのふたなり口上（外付け）です。
+;この口上は「触手宮テンプレートうどんげ口上版」に内蔵されているものを改変して製作しました。
+;※本来のテンプレートでは「YYのキャラ～」の部分はSELECTCASEで指定していますが、この口上ではIF構文に書き直しております。
+
+@FUTANARI_NITORI_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+SELECTCASE ARG:0
+	;射精　CFLAG:805 == 3で自慰の判別可能　ARG:1はHP減少量
+	CASE 451
+		;発情中
+		IF CFLAG:28
+			;初射精
+			IF EXP:12 == 0
+				PRINTFORML 「あひっ❤ひいぃいぃ～～！！❤❤」
+				IF FLAG:AUTOMODE
+					PRINTFORML （これが…『しゃせい』っ…❤）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （これが…『しゃせい』っ…❤）
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL にとりは未知の感覚に身体を震わせている！
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW にとりは未知の感覚に身体を震わせている！
+				ENDIF
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「来るっ❤ちんぽ汁来るぅ❤…んおおぉおおぉっ❤❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「来るっ❤ちんぽ汁来るぅ❤…んおおぉおおぉっ❤❤」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「せーえき、出るっ❤あぁああぁああぁ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「せーえき、出るっ❤あぁああぁああぁ❤」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		;射精中毒２以上
+		ELSEIF ABL:12 > 1
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「うぅっ、ダメなのにぃ…ひうぅううぅっ❤」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL にとりは射精の虜になりかけている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW にとりは射精の虜になりかけている…
+					ENDIF
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんなの、耐えきれないぃ…あぁっ、んあぁああぁああぁあ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんなの、耐えきれないぃ…あぁっ、んあぁああぁああぁあ❤」
+					ENDIF
+			ENDSELECT
+		ELSE
+			;初射精
+			IF EXP:12 == 0
+				PRINTFORML 「な、なんか来てるぅ…んううぅうっ！！❤」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL にとりは未知の快感に耐え切れず絶頂した！
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW にとりは未知の快感に耐え切れず絶頂した！
+				ENDIF
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「出ちゃう…出ちゃうよぉ…ひぃああぁ～～っ！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「出ちゃう…出ちゃうよぉ…ひぃああぁ～～っ！！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「くぅ、ああ…ダメぇえぇえぇえ～…！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「くぅ、ああ…ダメぇえぇえぇえ～…！」
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+
+		;HP0にいかない時はここで自慰フラグ洗浄、6/10版はここに欠陥があった
+		SIF (BASE:HP <= 0 || BASE:HP > ARG:1) && CFLAG:805 == 3
+			CFLAG:805 = 0
+
+	;ふたなり終了
+	CASE 452
+		;発情中
+		IF CFLAG:28
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ～あ、萎えて取れちゃった…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ～あ、萎えて取れちゃった…」
+			ENDIF
+		;射精中毒２以上
+		ELSEIF ABL:12 > 1
+			PRINTFORML 「アア、しぼんだ………」
+			IF FLAG:AUTOMODE
+				PRINTFORML （…って私、なんで残念がってるんだろ…）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW （…って私、なんで残念がってるんだろ…）
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ふぅ…取れたみたいね…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ふぅ…取れたみたいね…」
+			ENDIF
+		ENDIF
+	;ふたなり時、戦闘中に発情　発情確率は射精中毒×５％
+	CASE 453
+		;射精中毒２以上
+		IF ABL:12 > 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 「はぁっ❤またおちんぽビキビキ疼いて来たぁ❤」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「はぁっ❤またおちんぽビキビキ疼いて来たぁ❤」
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ぐ…急に、勃起が酷くっ…熱いぃ…っ❤」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ぐ…急に、勃起が酷くっ…熱いぃ…っ❤」
+			ENDIF
+		ENDIF
+	;ふたなり永久化　必ず射精中毒３
+	CASE 454
+		IF FLAG:AUTOMODE
+			PRINTFORML 「あ、あれ？まさか、取れなくなっちゃった！？」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「あ、あれ？まさか、取れなくなっちゃった！？」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML 「…ま、まぁ取れなくなったのは仕方ないよね、うん…」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 「…ま、まぁ取れなくなったのは仕方ないよね、うん…」
+		ENDIF
+		IF FLAG:AUTOMODE
+			PRINTFORML （そう、仕方ないのよコレは。…べ、別にそんな、嬉しがってなんか…❤）
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW （そう、仕方ないのよコレは。…べ、別にそんな、嬉しがってなんか…❤）
+		ENDIF
+	;性欲発散（まず自分が最初に襲った）
+	;※ARG:3が対象のキャラ　各CASEの意味は魔理沙の部分に記載
+	CASE 455
+		;魔理沙を抱く
+		IF NO:(ARG:3) == 2 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				;※0は喪失　1は拘束具装着時　2は眠り状態（睡眠時ではない）
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「魔理沙ぁ…私、もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「魔理沙ぁ…私、もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「アァ…やっぱり魔理沙のおまんこ最ッ高❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「アァ…やっぱり魔理沙のおまんこ最ッ高❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「膣内（なか）でたっくさんビュービューしてあげるからね❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「膣内（なか）でたっくさんビュービューしてあげるからね❤❤」
+					ENDIF
+				;胸を使う
+				;※5は喪失　6は拘束具装着時　9は眠り状態（睡眠時ではない・巨乳含む）
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…魔理沙のおっぱい❤柔らかくて美味しそう～❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…魔理沙のおっぱい❤柔らかくて美味しそう～❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おっぱい、フニフニ❤嫉妬しちゃうなぁ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おっぱい、フニフニ❤嫉妬しちゃうなぁ…❤」
+					ENDIF
+				;巨乳を使う
+				;※7は喪失　8は無理矢理
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…魔理沙のおっぱい❤おっきくて美味しそう～❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…魔理沙のおっぱい❤おっきくて美味しそう～❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「んはぁ❤やっぱり、やらかい…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「んはぁ❤やっぱり、やらかい…❤」
+					ENDIF
+				;尻を使う
+				;※10は喪失　11は拘束具装着時　12は眠り状態（睡眠時ではない）
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「魔理沙のお尻…プリッとしてて可愛い…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「魔理沙のお尻…プリッとしてて可愛い…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふふっ❤おちんちん当てるとヒクヒクしてる❤か～わいい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふふっ❤おちんちん当てるとヒクヒクしてる❤か～わいい❤」
+					ENDIF
+				;口を使う
+				;※15は喪失　16は無理矢理　17は眠り状態（睡眠時ではない）
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、あ～んして魔理沙？私のおちんぽ汁味わって欲しいの❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、あ～んして魔理沙？私のおちんぽ汁味わって欲しいの❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｼﾞｭﾌﾟﾝ、ｼﾞｭﾎﾟﾝ❤）「あは❤魔理沙のお口あったかくて好き❤もちろん魔理沙も好きよ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｼﾞｭﾌﾟﾝ、ｼﾞｭﾎﾟﾝ❤）「あは❤魔理沙のお口あったかくて好き❤もちろん魔理沙も好きよ❤」
+					ENDIF
+			ENDSELECT
+		;雛を抱く
+		ELSEIF NO:(ARG:3) == 39 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛ぁ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛ぁ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「すごい…雛のおまんこキュウキュウ締め付けてくるぅ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「すごい…雛のおまんこキュウキュウ締め付けてくるぅ…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんなにしてくれるなら、頑張って気持ちよくさせなきゃね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんなにしてくれるなら、頑張って気持ちよくさせなきゃね❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うふふ…雛のおっぱい❤頂きま～す❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うふふ…雛のおっぱい❤頂きま～す❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おちんぽで乳首弄っちゃお❤えいえいっ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おちんぽで乳首弄っちゃお❤えいえいっ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （はぁぁ…乳首コキ楽しい…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （はぁぁ…乳首コキ楽しい…❤）
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛のおっぱい、たっぷり味わっちゃお❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛のおっぱい、たっぷり味わっちゃお❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「あはは❤おちんぽ沈んじゃった❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「あはは❤おちんぽ沈んじゃった❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛のお尻…引き締まってて美味しそう❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛のお尻…引き締まってて美味しそう❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾇﾌﾟｩ❤）「んっ❤お尻の穴も締まってて心地良いわ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾇﾌﾟｩ❤）「んっ❤お尻の穴も締まってて心地良いわ❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、あ～んして雛？私のおちんぽ汁味わって欲しいの❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、あ～んして雛？私のおちんぽ汁味わって欲しいの❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （雛のお口、小っちゃくて可愛い…❤もっと奥まで入れちゃおう❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （雛のお口、小っちゃくて可愛い…❤もっと奥まで入れちゃおう❤）
+					ENDIF
+			ENDSELECT
+		;にとりの娘を抱く
+		ELSEIF NO:(ARG:3) == 40 && CFLAG:(ARG:3):104 == 1
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ごめんね…お母さん我慢できない❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ごめんね…お母さん我慢できない❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ひぁあ！なにこれぇ❤キツキツロリまんこしゅごい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ひぁあ！なにこれぇ❤キツキツロリまんこしゅごい❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「娘のおっぱい頂いちゃお❤親の特権よね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「娘のおっぱい頂いちゃお❤親の特権よね❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んふ❤きめ細やかでスベスベ❤子供っていいわ～❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んふ❤きめ細やかでスベスベ❤子供っていいわ～❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…あんた、娘の癖に生意気なくらい巨乳ね…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…あんた、娘の癖に生意気なくらい巨乳ね…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「悔しいからたっぷり使わせてもらうわ❤」（ﾆｭﾌﾟｩ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「悔しいからたっぷり使わせてもらうわ❤」（ﾆｭﾌﾟｩ❤）
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML （娘のお尻…小っちゃくて可愛いわ～❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （娘のお尻…小っちゃくて可愛いわ～❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「でも私の娘なんだから、柔なだけのお尻じゃ困るわ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「でも私の娘なんだから、柔なだけのお尻じゃ困るわ…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「大丈夫よ、お母さんがしっかり鍛えてあげるからね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「大丈夫よ、お母さんがしっかり鍛えてあげるからね❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、あ～んして？ママのおちんぽミルク味わって欲しいの❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、あ～んして？ママのおちんぽミルク味わって欲しいの❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｼﾞｭﾌﾟｯｼﾞｭﾌﾟﾌﾟｩ❤）「すごい吸い付きっ❤　うぅっ、もう出そうっ…！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｼﾞｭﾌﾟｯｼﾞｭﾌﾟﾌﾟｩ❤）「すごい吸い付きっ❤　うぅっ、もう出そうっ…！！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んはあっ！❤」（ﾋﾞｭﾙﾙｩ❤）「……はい、ゴックンしていいよ❤よく出来ました❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んはあっ！❤」（ﾋﾞｭﾙﾙｩ❤）「……はい、ゴックンしていいよ❤よく出来ました❤」
+					ENDIF
+			ENDSELECT
+		;椛を抱く
+		ELSEIF NO:(ARG:3) == 41 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「椛ぃ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「椛ぃ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んふぅ❤椛のおまんこ獣くさぁい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んふぅ❤椛のおまんこ獣くさぁい❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「でもこの匂い…堪らないわぁ…❤ずっと嗅いでたい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「でもこの匂い…堪らないわぁ…❤ずっと嗅いでたい❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…椛のおっぱい❤頂きま～す❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…椛のおっぱい❤頂きま～す❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あは❤くっさいちんぽ擦り付けて椛にマーキングしちゃお❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あは❤くっさいちんぽ擦り付けて椛にマーキングしちゃお❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…椛のおっぱい、モッチモチ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…椛のおっぱい、モッチモチ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「あはぁ…気持ち良い～❤　私このままダメにされちゃいそう❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「あはぁ…気持ち良い～❤　私このままダメにされちゃいそう❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「椛のお尻…引き締まってて美味しそう❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「椛のお尻…引き締まってて美味しそう❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾂﾌﾟｩ❤…ﾅﾃﾞｽﾘｽﾘ）「はぁ～❤挿入れ心地も撫で心地も最高ぉ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾂﾌﾟｩ❤…ﾅﾃﾞｽﾘｽﾘ）「はぁ～❤挿入れ心地も撫で心地も最高ぉ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ついでに尻尾も…モッフモフモフー❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ついでに尻尾も…モッフモフモフー❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、あ～んして椛？私のおちんぽ汁味わって欲しいの❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、あ～んして椛？私のおちんぽ汁味わって欲しいの❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「椛の為に作ったせーえき、全部吸ってくれると嬉しいなぁ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「椛の為に作ったせーえき、全部吸ってくれると嬉しいなぁ❤」
+					ENDIF
+			ENDSELECT
+		;ヤマメを抱く
+		ELSEIF NO:(ARG:3) == 78 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「土蜘蛛ぉ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「土蜘蛛ぉ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁっ…あっ…！良いおまんこ持ってるじゃないの土蜘蛛ぉ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁっ…あっ…！良いおまんこ持ってるじゃないの土蜘蛛ぉ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「悔しいけど完敗よ……あぁっイクぅ❤蜘蛛まんこにイかされちゃううぅ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「悔しいけど完敗よ……あぁっイクぅ❤蜘蛛まんこにイかされちゃううぅ❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「土蜘蛛のおっぱい…どんなもんかなぁ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「土蜘蛛のおっぱい…どんなもんかなぁ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うふぅ、んっ❤なかなか…侮れないわね…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うふぅ、んっ❤なかなか…侮れないわね…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「このまま蜘蛛っぱいを河童のザーメン塗れにしてやるぅ…❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「このまま蜘蛛っぱいを河童のザーメン塗れにしてやるぅ…❤❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「土蜘蛛のおっぱい…おっきい…ムカつくぅ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「土蜘蛛のおっぱい…おっきい…ムカつくぅ…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｽﾞﾆｭﾌﾟｩｯ❤）「悔しいからおっぱいレイプしちゃうからね！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｽﾞﾆｭﾌﾟｩｯ❤）「悔しいからおっぱいレイプしちゃうからね！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「どうだ！このっ❤河童チンポで滅茶苦茶に弄繰り回してやるっ❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「どうだ！このっ❤河童チンポで滅茶苦茶に弄繰り回してやるっ❤❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「土蜘蛛のお尻…試させてもらうわ…！❤」（ﾇﾌﾟｩ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「土蜘蛛のお尻…試させてもらうわ…！❤」（ﾇﾌﾟｩ…❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おほぉ❤ネットリ絡みつくぅ❤…こんなに凄いなんてぇ…！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おほぉ❤ネットリ絡みつくぅ❤…こんなに凄いなんてぇ…！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「合格よ！尻子玉抜く代わりに、ケツ穴に中出ししてあげる❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「合格よ！尻子玉抜く代わりに、ケツ穴に中出ししてあげる❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、あ～んしなさい、土蜘蛛？私のおちんぽ汁味わって欲しいの❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、あ～んしなさい、土蜘蛛？私のおちんぽ汁味わって欲しいの❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んくぅ❤そんなに吸い付かなくてもちゃんと出してやるわよぉ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んくぅ❤そんなに吸い付かなくてもちゃんと出してやるわよぉ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾋﾞｭﾙｩ❤）「んっ！…ふぅう～。…また飲みたくなったら、奢ってあげてもいいわよ？❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾋﾞｭﾙｩ❤）「んっ！…ふぅう～。…また飲みたくなったら、奢ってあげてもいいわよ？❤」
+					ENDIF
+			ENDSELECT
+		;勇儀を抱く
+		ELSEIF NO:(ARG:3) == 80 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「鬼様ぁ…私もう…我慢できないですっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「鬼様ぁ…私もう…我慢できないですっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んくぅう❤…膣内、とっても暖かぁい…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んくぅう❤…膣内、とっても暖かぁい…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （こんな心地良いなら、後で折檻されてもいい…っ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （こんな心地良いなら、後で折檻されてもいい…っ❤）
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…鬼さんのおっぱい❤頂きま～す❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…鬼さんのおっぱい❤頂きま～す❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （あら、筋肉質かと思ったけど…意外と柔らか～い❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （あら、筋肉質かと思ったけど…意外と柔らか～い❤）
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…鬼さんのおっぱい…でっかくて、羨ましいなぁ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…鬼さんのおっぱい…でっかくて、羨ましいなぁ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「ンっ、すごい弾力❤さすが鬼の身体ですね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「ンっ、すごい弾力❤さすが鬼の身体ですね❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「鬼さんのお尻…引き締まっててカッコいい…！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「鬼さんのお尻…引き締まっててカッコいい…！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾅﾃﾞﾅﾃﾞ）「うん、見立て通り、とっても上質なお・し・り❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾅﾃﾞﾅﾃﾞ）「うん、見立て通り、とっても上質なお・し・り❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「では、挿入れさせてもらいます❤…んうっ！❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「では、挿入れさせてもらいます❤…んうっ！❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「さ、あ～んしてください、鬼さん。私のおちんぽ汁味わって欲しいんです❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「さ、あ～んしてください、鬼さん。私のおちんぽ汁味わって欲しいんです❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「酒臭い口を河童臭～くしてあげますね❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「酒臭い口を河童臭～くしてあげますね❤❤」
+					ENDIF
+			ENDSELECT
+		;その他の人たち（「にとり本人の娘」以外の娘も含む）
+		ELSE
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ゴメン、私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ゴメン、私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うあっはぁっ！❤セックス気持ち良いっ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うあっはぁっ！❤セックス気持ち良いっ…❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あなたのおっぱい…使わせて…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あなたのおっぱい…使わせて…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｸﾆｭｸﾆｭ❤）「んふぅう❤良い乳してるわね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｸﾆｭｸﾆｭ❤）「んふぅう❤良い乳してるわね❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんな大きいおっぱい、使わないと勿体ないよね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんな大きいおっぱい、使わないと勿体ないよね❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あっあっ❤圧力がすごいぃ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あっあっ❤圧力がすごいぃ❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「お尻なら、いいよね？挿入れちゃうよ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「お尻なら、いいよね？挿入れちゃうよ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「う、くっ❤…ちゃんとアナルに入ったみたいね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「う、くっ❤…ちゃんとアナルに入ったみたいね❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （こんな良いケツ穴してるのに尻子玉抜けないなんて…残念❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （こんな良いケツ穴してるのに尻子玉抜けないなんて…残念❤）
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、お口開けて？河童ザーメンたっぷりあげるから❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、お口開けて？河童ザーメンたっぷりあげるから❤」
+					ENDIF
+			ENDSELECT
+		ENDIF
+		
+		
+	;性欲発散（他の人を見て襲いかかった）
+	CASE 456
+		;※以下の二つはふたなり設定が「主人公のみ」で発生。相手は主人公固定。
+		;口でお掃除してあげる
+		IF ARG:1 == 30
+			;魔理沙をお掃除
+			IF NO == 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「も～、魔理沙ったら、こんなに汚しちゃって…❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「も～、魔理沙ったら、こんなに汚しちゃって…❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「…はい、おちんぽ綺麗になったよ❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「…はい、おちんぽ綺麗になったよ❤」
+				ENDIF
+			;雛をお掃除
+			ELSEIF NO == 39
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あらら雛、おちんちんが汚れてる❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あらら雛、おちんちんが汚れてる❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「…んぷぅ…終わったよ❤また汚れたらシてあげるからね❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「…んぷぅ…終わったよ❤また汚れたらシてあげるからね❤」
+				ENDIF
+			;椛をお掃除
+			ELSEIF NO == 41
+				IF FLAG:AUTOMODE
+					PRINTFORML 「椛、ちんぽ周りが凄いことになってるよ❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「椛、ちんぽ周りが凄いことになってるよ❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「…ほら、掃除しておいたからね❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「…ほら、掃除しておいたからね❤」
+				ENDIF
+			;ヤマメをお掃除
+			ELSEIF NO == 78
+				IF FLAG:AUTOMODE
+					PRINTFORML 「まったく、土蜘蛛はちんぽの使い方もわからないのかねぇ…❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「まったく、土蜘蛛はちんぽの使い方もわからないのかねぇ…❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「…んぷぅ…次はもっと綺麗に使いなさいよ❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「…んぷぅ…次はもっと綺麗に使いなさいよ❤」
+				ENDIF
+			;勇儀をお掃除
+			ELSEIF NO == 80
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あらあら鬼さん、おちんぽが汚れてますよ❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あらあら鬼さん、おちんぽが汚れてますよ❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「ふぅ…またお掃除させていただきますね❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「ふぅ…またお掃除させていただきますね❤」
+				ENDIF
+			;他の人をお掃除
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あ～あ～、こんなに汚しちゃって…❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あ～あ～、こんなに汚しちゃって…❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「…ほら、綺麗になった❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （ﾊﾑ…ﾁｭ❤…ﾍﾟﾛﾍﾟﾛ…❤）「…ほら、綺麗になった❤」
+				ENDIF
+			ENDIF
+		;冷たい目線
+		ELSEIF ARG:1 == 31
+			;魔理沙にドン引き
+			IF NO == 2
+				IF FLAG:AUTOMODE
+					PRINTFORML （魔理沙、こんな事するんだ…ちょっと引いちゃうわー…）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （魔理沙、こんな事するんだ…ちょっと引いちゃうわー…）
+				ENDIF
+			;雛にドン引き
+			ELSEIF NO == 39
+				IF FLAG:AUTOMODE
+					PRINTFORML （…雛のこういう一面は見たくなかったな…）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （…雛のこういう一面は見たくなかったな…）
+				ENDIF
+			;椛にドン引き
+			ELSEIF NO == 41
+				IF FLAG:AUTOMODE
+					PRINTFORML （椛…ついに野生に戻っちゃったかな…）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （椛…ついに野生に戻っちゃったかな…）
+				ENDIF
+			;ヤマメにドン引き
+			ELSEIF NO == 78
+				IF FLAG:AUTOMODE
+					PRINTFORML （……………………無いわー………）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （……………………無いわー………）
+				ENDIF
+			;勇儀にドン引き
+			ELSEIF NO == 80
+				IF FLAG:AUTOMODE
+					PRINTFORML （粗忽ね…こういうのが鬼達の良くないところよね～…）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （粗忽ね…こういうのが鬼達の良くないところよね～…）
+				ENDIF
+			;他の人にドン引き
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML （うわぁ、人がしてるトコ思いっきし見ちゃった…）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （うわぁ、人がしてるトコ思いっきし見ちゃった…）
+				ENDIF
+			ENDIF
+		;※ARG:3が対象のキャラ
+		;魔理沙を抱く
+		ELSEIF NO:(ARG:3) == 2 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				;※0は喪失　1は拘束具装着時　2は眠り状態（睡眠時ではない）
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あ～一人だけズルイ！私も魔理沙としたい！」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あ～一人だけズルイ！私も魔理沙としたい！」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私の方が、魔理沙を気持ちよくさせてあげられるんだからね…！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私の方が、魔理沙を気持ちよくさせてあげられるんだからね…！」
+					ENDIF
+				;胸を使う
+				;※5は喪失　6は拘束具装着時　9は眠り状態（睡眠時ではない・巨乳含む）
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私も！私も魔理沙とおっぱいしたい！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私も！私も魔理沙とおっぱいしたい！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「どう、魔理沙？私のおちんぽも気持ちいいでしょ？❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「どう、魔理沙？私のおちんぽも気持ちいいでしょ？❤」
+					ENDIF
+				;巨乳を使う
+				;※7は喪失　8は無理矢理
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私も！私も魔理沙とおっぱいしたい！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私も！私も魔理沙とおっぱいしたい！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「ふぁあ❤すっごい柔らかい…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「ふぁあ❤すっごい柔らかい…❤」
+					ENDIF
+				;尻を使う
+				;※10は喪失　11は拘束具装着時　12は眠り状態（睡眠時ではない）
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「抜け駆けは許さないわよ…私もする！❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「抜け駆けは許さないわよ…私もする！❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾇﾌﾟｩ❤）「おほぅっ❤流石魔理沙…まだまだイケそうね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾇﾌﾟｩ❤）「おほぅっ❤流石魔理沙…まだまだイケそうね❤」
+					ENDIF
+				;口を使う
+				;※15は喪失　16は無理矢理　17は眠り状態（睡眠時ではない）
+				CASE 15, 16
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私も魔理沙におちんぽあげたい～！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私も魔理沙におちんぽあげたい～！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｼﾞｭﾌﾟﾝ、ｼﾞｭﾎﾟﾝ❤）「どお？美味しい？私は気持ちいいわ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｼﾞｭﾌﾟﾝ、ｼﾞｭﾎﾟﾝ❤）「どお？美味しい？私は気持ちいいわ❤」
+					ENDIF
+			ENDSELECT
+		;雛を抱く
+		ELSEIF NO:(ARG:3) == 39 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「二人だけでするなんてズルイ～！私も雛としたい！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「二人だけでするなんてズルイ～！私も雛としたい！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「どう、雛？私も気持ち良くさせてあげるからね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「どう、雛？私も気持ち良くさせてあげるからね❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛、悪いんだけど…私もおっぱいしたい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛、悪いんだけど…私もおっぱいしたい❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あぁやっぱり、すっごく柔い…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あぁやっぱり、すっごく柔い…❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛、悪いんだけど…私もおっぱいしたい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛、悪いんだけど…私もおっぱいしたい❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「こんなおっぱいして、あんなの見せられたら滾るに決まってるでしょ…っ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「こんなおっぱいして、あんなの見せられたら滾るに決まってるでしょ…っ❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛ぁ❤私も我慢できなぁい…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛ぁ❤私も我慢できなぁい…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾇﾌﾟｩ❤）「良い❤良いわ❤雛アナルすっごく良い❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾇﾌﾟｩ❤）「良い❤良いわ❤雛アナルすっごく良い❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛…私のも気持ち良くしてぇ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛…私のも気持ち良くしてぇ…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…❤雛が私のをしゃぶってるなんて、シアワセ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…❤雛が私のをしゃぶってるなんて、シアワセ❤」
+					ENDIF
+			ENDSELECT
+		;にとりの娘を抱く
+		ELSEIF NO:(ARG:3) == 40 && CFLAG:(ARG:3):104 == 1
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「えーと、その…　見てたら私もしたくなったの。だからもうちょっとだけ頑張って❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「えーと、その…　見てたら私もしたくなったの。だからもうちょっとだけ頑張って❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「気持ちよくできたらあとでゴホウビあげるから、ね❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「気持ちよくできたらあとでゴホウビあげるから、ね❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ひあぁあ❤一回した後なのに、キツキツって締め付けてくるよぉ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ひあぁあ❤一回した後なのに、キツキツって締め付けてくるよぉ❤）
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私も娘のおっぱい堪能したい！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私も娘のおっぱい堪能したい！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「実の娘だもんね、魅力的に見えるのも仕方ないよね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「実の娘だもんね、魅力的に見えるのも仕方ないよね❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私も娘のおっぱい堪能したい！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私も娘のおっぱい堪能したい！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「こんなだらしないおっぱいに育てた覚えはないわよ…お仕置きしなきゃね！❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「こんなだらしないおっぱいに育てた覚えはないわよ…お仕置きしなきゃね！❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「実の親を差し置いてするなんて酷い…私もしたいのに！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「実の親を差し置いてするなんて酷い…私もしたいのに！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「大丈夫よ❤お母さんはお尻の扱い慣れてるから❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「大丈夫よ❤お母さんはお尻の扱い慣れてるから❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16
+					IF FLAG:AUTOMODE
+						PRINTFORML 「さぁ、次はお母さんのちんぽミルクをあげるわ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「さぁ、次はお母さんのちんぽミルクをあげるわ…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （私のおちんぽを小っちゃな口が咥えて…いけない事なのに、たぎって来ちゃう…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （私のおちんぽを小っちゃな口が咥えて…いけない事なのに、たぎって来ちゃう…❤）
+					ENDIF
+			ENDSELECT
+		;椛を抱く
+		ELSEIF NO:(ARG:3) == 41 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「一人だけなんてズルイ…私も椛とおまんこしたい❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「一人だけなんてズルイ…私も椛とおまんこしたい❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁあ…気持ち良い❤イッパツした後とは思えないわ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁあ…気持ち良い❤イッパツした後とは思えないわ❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「椛のおっぱい…私も使いたい…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「椛のおっぱい…私も使いたい…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああっ、良い❤気持ちいいよぉ椛…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああっ、良い❤気持ちいいよぉ椛…❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「椛のおっぱい…私も使いたい…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「椛のおっぱい…私も使いたい…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「こんなに出されちゃって…私も乳内射精して良いよね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「こんなに出されちゃって…私も乳内射精して良いよね❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私もお尻使っても…いいよね、椛❤」（ﾇﾌﾟｩ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私もお尻使っても…いいよね、椛❤」（ﾇﾌﾟｩ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （椛のケツ穴、暖かくて気持ちいいよぉ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （椛のケツ穴、暖かくて気持ちいいよぉ❤）
+					ENDIF
+				;口を使う
+				CASE 15, 16
+					IF FLAG:AUTOMODE
+						PRINTFORML 「次は私のを頼むわ、椛…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「次は私のを頼むわ、椛…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁぁ…椛のお口、暖かい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁぁ…椛のお口、暖かい❤」
+					ENDIF
+			ENDSELECT
+		;ヤマメを抱く
+		ELSEIF NO:(ARG:3) == 78 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「終わった？…じゃあ次は私の番ね…❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「終わった？…じゃあ次は私の番ね…❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｽﾞﾌﾟｯ❤ｽﾞﾌﾟﾌﾟ❤）「土蜘蛛にっ❤休ませる時間なんかっ❤あげないんだからね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｽﾞﾌﾟｯ❤ｽﾞﾌﾟﾌﾟ❤）「土蜘蛛にっ❤休ませる時間なんかっ❤あげないんだからね❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「せっかくだし、私もおっぱい使おっと❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「せっかくだし、私もおっぱい使おっと❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…まさか一人だけで終わると思ってたの？土蜘蛛は考えが甘いわね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…まさか一人だけで終わると思ってたの？土蜘蛛は考えが甘いわね❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「せっかくだし、私もおっぱい使おっと❤」（ﾆｭﾌﾟｩ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「せっかくだし、私もおっぱい使おっと❤」（ﾆｭﾌﾟｩ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんなデカパイ揺らしてたら、皆に使われるに決まってるでしょ❤おバカさんね～❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんなデカパイ揺らしてたら、皆に使われるに決まってるでしょ❤おバカさんね～❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら❤一人分でへばってないでシャキッとして！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら❤一人分でへばってないでシャキッとして！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「途中でやる気無くしたら、そのまま尻子玉ブチ抜いちゃうからね❤」（ﾇﾌﾟｩ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「途中でやる気無くしたら、そのまま尻子玉ブチ抜いちゃうからね❤」（ﾇﾌﾟｩ❤）
+					ENDIF
+				;口を使う
+				CASE 15, 16
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はい、次はこっちよ❤ちゃんと吸ってね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はい、次はこっちよ❤ちゃんと吸ってね❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んんっ❤頑張るじゃない土蜘蛛…それならタップリ、サービスしてあげるわ！❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んんっ❤頑張るじゃない土蜘蛛…それならタップリ、サービスしてあげるわ！❤」
+					ENDIF
+			ENDSELECT
+		;勇儀を抱く
+		ELSEIF NO:(ARG:3) == 80 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「わたしもぉ❤私も鬼さんとエッチしたい！」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「わたしもぉ❤私も鬼さんとエッチしたい！」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾊﾟﾝｯﾊﾟﾝｯ❤）「流石鬼さんです❤一回二回じゃへばりませんね～❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾊﾟﾝｯﾊﾟﾝｯ❤）「流石鬼さんです❤一回二回じゃへばりませんね～❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あの…私も、おっぱい使いたい…です❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あの…私も、おっぱい使いたい…です❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （筋肉質だけど…それがいいのよ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （筋肉質だけど…それがいいのよ❤）
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あの…私も、おっぱい使いたい…です❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あの…私も、おっぱい使いたい…です❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「ふゎ❤乳圧ひゅごいいぃ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「ふゎ❤乳圧ひゅごいいぃ❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「鬼さん、私もお尻使って…いいですよね？❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「鬼さん、私もお尻使って…いいですよね？❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾇﾌﾟｩ❤）「くぅっ…キュッと締まってて、いいお尻❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾇﾌﾟｩ❤）「くぅっ…キュッと締まってて、いいお尻❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16
+					IF FLAG:AUTOMODE
+						PRINTFORML 「鬼さん？私のも…味わってくれますか？❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「鬼さん？私のも…味わってくれますか？❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふぁ…あっ❤…こんなに吸い付いてくれるなんて…嬉しいです❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふぁ…あっ❤…こんなに吸い付いてくれるなんて…嬉しいです❤」
+					ENDIF
+			ENDSELECT
+		;その他の人たち（「にとり本人の娘」以外の娘も含む）（簡易コメントで済まぬ…）
+		ELSE
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私もちょっと、我慢できそうにないわ…ごめんね❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私もちょっと、我慢できそうにないわ…ごめんね❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「じゃあ、私もおっぱい使わせてもらおうかな…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「じゃあ、私もおっぱい使わせてもらおうかな…❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「じゃあ、私もおっぱい使わせてもらおうかな…❤」（ﾇﾌﾟｩ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「じゃあ、私もおっぱい使わせてもらおうかな…❤」（ﾇﾌﾟｩ❤）
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「河童の前でアナルレイプするなんて……私もやる❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「河童の前でアナルレイプするなんて……私もやる❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「安心して❤仲間の尻子玉抜くなんて事しないから❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「安心して❤仲間の尻子玉抜くなんて事しないから❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16
+					IF FLAG:AUTOMODE
+						PRINTFORML 「次は私のを…お願いね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「次は私のを…お願いね❤」
+					ENDIF
+			ENDSELECT
+		ENDIF
+		
+	;性欲発散（相手が催眠状態）
+	;※現時点では普通に襲うのと同じ文
+	CASE 457
+		;魔理沙を抱く
+		IF NO:(ARG:3) == 2 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				;※0は喪失　1は拘束具装着時　2は眠り状態（睡眠時ではない）
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「魔理沙ぁ…私、もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「魔理沙ぁ…私、もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「アァ…やっぱり魔理沙のおまんこ最ッ高❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「アァ…やっぱり魔理沙のおまんこ最ッ高❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「膣内（なか）でたっくさんビュービューしてあげるからね❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「膣内（なか）でたっくさんビュービューしてあげるからね❤❤」
+					ENDIF
+				;胸を使う
+				;※5は喪失　6は拘束具装着時　9は眠り状態（睡眠時ではない・巨乳含む）
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…魔理沙のおっぱい❤柔らかくて美味しそう～❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…魔理沙のおっぱい❤柔らかくて美味しそう～❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おっぱい、フニフニ❤嫉妬しちゃうなぁ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おっぱい、フニフニ❤嫉妬しちゃうなぁ…❤」
+					ENDIF
+				;巨乳を使う
+				;※7は喪失　8は無理矢理
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…魔理沙のおっぱい❤おっきくて美味しそう～❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…魔理沙のおっぱい❤おっきくて美味しそう～❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「んはぁ❤やっぱり、やらかい…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「んはぁ❤やっぱり、やらかい…❤」
+					ENDIF
+				;尻を使う
+				;※10は喪失　11は拘束具装着時　12は眠り状態（睡眠時ではない）
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「魔理沙のお尻…プリッとしてて可愛い…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「魔理沙のお尻…プリッとしてて可愛い…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふふっ❤おちんちん当てるとヒクヒクしてる❤か～わいい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふふっ❤おちんちん当てるとヒクヒクしてる❤か～わいい❤」
+					ENDIF
+				;口を使う
+				;※15は喪失　16は無理矢理　17は眠り状態（睡眠時ではない）
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、あ～んして魔理沙？私のおちんぽ汁味わって欲しいの❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、あ～んして魔理沙？私のおちんぽ汁味わって欲しいの❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｼﾞｭﾌﾟﾝ、ｼﾞｭﾎﾟﾝ❤）「あは❤魔理沙のお口あったかくて好き❤もちろん魔理沙も好きよ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｼﾞｭﾌﾟﾝ、ｼﾞｭﾎﾟﾝ❤）「あは❤魔理沙のお口あったかくて好き❤もちろん魔理沙も好きよ❤」
+					ENDIF
+			ENDSELECT
+		;雛を抱く
+		ELSEIF NO:(ARG:3) == 39 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛ぁ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛ぁ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「すごい…雛のおまんこキュウキュウ締め付けてくるぅ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「すごい…雛のおまんこキュウキュウ締め付けてくるぅ…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんなにしてくれるなら、頑張って気持ちよくさせなきゃね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんなにしてくれるなら、頑張って気持ちよくさせなきゃね❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うふふ…雛のおっぱい❤頂きま～す❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うふふ…雛のおっぱい❤頂きま～す❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おちんぽで乳首弄っちゃお❤えいえいっ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おちんぽで乳首弄っちゃお❤えいえいっ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （はぁぁ…乳首コキ楽しい…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （はぁぁ…乳首コキ楽しい…❤）
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛のおっぱい、たっぷり味わっちゃお❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛のおっぱい、たっぷり味わっちゃお❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「あはは❤おちんぽ沈んじゃった❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「あはは❤おちんぽ沈んじゃった❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛のお尻…引き締まってて美味しそう❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛のお尻…引き締まってて美味しそう❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾇﾌﾟｩ❤）「んっ❤お尻の穴も締まってて心地良いわ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾇﾌﾟｩ❤）「んっ❤お尻の穴も締まってて心地良いわ❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、あ～んして雛？私のおちんぽ汁味わって欲しいの❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、あ～んして雛？私のおちんぽ汁味わって欲しいの❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （雛のお口、小っちゃくて可愛い…❤もっと奥まで入れちゃおう❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （雛のお口、小っちゃくて可愛い…❤もっと奥まで入れちゃおう❤）
+					ENDIF
+			ENDSELECT
+		;にとりの娘を抱く
+		ELSEIF NO:(ARG:3) == 40 && CFLAG:(ARG:3):104 == 1
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ごめんね…お母さん我慢できない❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ごめんね…お母さん我慢できない❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ひぁあ！なにこれぇ❤ピッタリ吸い付いて…ロリまんこしゅごい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ひぁあ！なにこれぇ❤ピッタリ吸い付いて…ロリまんこしゅごい❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「娘のおっぱい頂いちゃお❤親の特権よね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「娘のおっぱい頂いちゃお❤親の特権よね❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んふ❤きめ細やかでスベスベ❤子供っていいわ～❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んふ❤きめ細やかでスベスベ❤子供っていいわ～❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…あんた、娘の癖に生意気なくらい巨乳ね…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…あんた、娘の癖に生意気なくらい巨乳ね…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ）「悔しいからたっぷり使わせてもらうわ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ）「悔しいからたっぷり使わせてもらうわ❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML （娘のお尻…小っちゃくて可愛いわ～❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （娘のお尻…小っちゃくて可愛いわ～❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「でも私の娘なんだから、柔なだけのお尻じゃ困るわ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「でも私の娘なんだから、柔なだけのお尻じゃ困るわ…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「大丈夫よ、お母さんがしっかり鍛えてあげるからね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「大丈夫よ、お母さんがしっかり鍛えてあげるからね❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、あ～んして？ママのおちんぽミルク味わって欲しいの❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、あ～んして？ママのおちんぽミルク味わって欲しいの❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｼﾞｭﾌﾟｯｼﾞｭﾌﾟﾌﾟｩ❤）「すごい吸い付きっ❤　うぅっ、もう出そうっ…！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｼﾞｭﾌﾟｯｼﾞｭﾌﾟﾌﾟｩ❤）「すごい吸い付きっ❤　うぅっ、もう出そうっ…！！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んはあっ！❤」（ﾋﾞｭﾙﾙｩ❤）「……はい、ゴックンしていいよ❤よく出来ました❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んはあっ！❤」（ﾋﾞｭﾙﾙｩ❤）「……はい、ゴックンしていいよ❤よく出来ました❤」
+					ENDIF
+			ENDSELECT
+		;椛を抱く
+		ELSEIF NO:(ARG:3) == 41 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「椛ぃ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「椛ぃ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んふぅ❤椛のおまんこ獣くさぁい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んふぅ❤椛のおまんこ獣くさぁい❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「でもこの匂い…堪らないわぁ…❤ずっと嗅いでたい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「でもこの匂い…堪らないわぁ…❤ずっと嗅いでたい❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…椛のおっぱい❤頂きま～す❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…椛のおっぱい❤頂きま～す❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あは❤くっさいちんぽ擦り付けて椛にマーキングしちゃお❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あは❤くっさいちんぽ擦り付けて椛にマーキングしちゃお❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…椛のおっぱい、モッチモチ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…椛のおっぱい、モッチモチ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「あはぁ…気持ち良い～❤　私このままダメにされちゃいそう❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「あはぁ…気持ち良い～❤　私このままダメにされちゃいそう❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「椛のお尻…引き締まってて美味しそう❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「椛のお尻…引き締まってて美味しそう❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾂﾌﾟｩ❤…ﾅﾃﾞｽﾘｽﾘ）「はぁ～❤挿入れ心地も撫で心地も最高ぉ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾂﾌﾟｩ❤…ﾅﾃﾞｽﾘｽﾘ）「はぁ～❤挿入れ心地も撫で心地も最高ぉ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ついでに尻尾も…モッフモフ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ついでに尻尾も…モッフモフ❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、あ～んして椛？私のおちんぽ汁味わって欲しいの❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、あ～んして椛？私のおちんぽ汁味わって欲しいの❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「椛の為に作ったせーえき、全部吸ってくれると嬉しいなぁ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「椛の為に作ったせーえき、全部吸ってくれると嬉しいなぁ❤」
+					ENDIF
+			ENDSELECT
+		;ヤマメを抱く
+		ELSEIF NO:(ARG:3) == 78 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「土蜘蛛ぉ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「土蜘蛛ぉ…私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁっ…あっ…！良いおまんこ持ってるじゃないの土蜘蛛ぉ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁっ…あっ…！良いおまんこ持ってるじゃないの土蜘蛛ぉ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「悔しいけど完敗よ……あぁっイクぅ❤蜘蛛まんこにイかされちゃううぅ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「悔しいけど完敗よ……あぁっイクぅ❤蜘蛛まんこにイかされちゃううぅ❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「土蜘蛛のおっぱい…どんなもんかなぁ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「土蜘蛛のおっぱい…どんなもんかなぁ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うふぅ、んっ❤なかなか…侮れないわね…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うふぅ、んっ❤なかなか…侮れないわね…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「このまま蜘蛛っぱいを河童のザーメン塗れにしてやるぅ…❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「このまま蜘蛛っぱいを河童のザーメン塗れにしてやるぅ…❤❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「土蜘蛛のおっぱい…おっきい…ムカつくぅ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「土蜘蛛のおっぱい…おっきい…ムカつくぅ…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｽﾞﾆｭﾌﾟｩｯ❤）「悔しいからおっぱいレイプしちゃうからね！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｽﾞﾆｭﾌﾟｩｯ❤）「悔しいからおっぱいレイプしちゃうからね！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「どうだ！このっ❤河童チンポで滅茶苦茶に弄繰り回してやるっ❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「どうだ！このっ❤河童チンポで滅茶苦茶に弄繰り回してやるっ❤❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「土蜘蛛のお尻…試させてもらうわ…！❤」（ﾇﾌﾟｩ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「土蜘蛛のお尻…試させてもらうわ…！❤」（ﾇﾌﾟｩ…❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おほぉ❤ネットリ絡みつくぅ❤…こんなに凄いなんてぇ…！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おほぉ❤ネットリ絡みつくぅ❤…こんなに凄いなんてぇ…！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「合格よ！尻子玉抜く代わりに、ケツ穴に中出ししてあげる❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「合格よ！尻子玉抜く代わりに、ケツ穴に中出ししてあげる❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、あ～んしなさい、土蜘蛛？私のおちんぽ汁味わって欲しいの❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、あ～んしなさい、土蜘蛛？私のおちんぽ汁味わって欲しいの❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んくぅ❤そんなに吸い付かなくてもちゃんと出してやるわよぉ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んくぅ❤そんなに吸い付かなくてもちゃんと出してやるわよぉ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾋﾞｭﾙｩ❤）「んっ！…ふぅう～。…また飲みたくなったら、奢ってあげてもいいわよ？❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾋﾞｭﾙｩ❤）「んっ！…ふぅう～。…また飲みたくなったら、奢ってあげてもいいわよ？❤」
+					ENDIF
+			ENDSELECT
+		;勇儀を抱く
+		ELSEIF NO:(ARG:3) == 80 && CFLAG:(ARG:3):104 == 0
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「鬼様ぁ…私もう…我慢できないですっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「鬼様ぁ…私もう…我慢できないですっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んくぅう❤…膣内、とっても暖かぁい…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んくぅう❤…膣内、とっても暖かぁい…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （こんな心地良いなら、後で折檻されてもいい…っ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （こんな心地良いなら、後で折檻されてもいい…っ❤）
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…鬼さんのおっぱい❤頂きま～す❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…鬼さんのおっぱい❤頂きま～す❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （あら、筋肉質かと思ったけど…意外と柔らか～い❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （あら、筋肉質かと思ったけど…意外と柔らか～い❤）
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ…鬼さんのおっぱい…でっかくて、羨ましいなぁ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ…鬼さんのおっぱい…でっかくて、羨ましいなぁ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾆｭﾌﾟｩ❤）「ンっ、すごい弾力❤さすが鬼の身体ですね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾆｭﾌﾟｩ❤）「ンっ、すごい弾力❤さすが鬼の身体ですね❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「鬼さんのお尻…引き締まっててカッコいい…！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「鬼さんのお尻…引き締まっててカッコいい…！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾅﾃﾞﾅﾃﾞ）「うん、見立て通り、とっても上質なお・し・り❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾅﾃﾞﾅﾃﾞ）「うん、見立て通り、とっても上質なお・し・り❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「では、挿入れさせてもらいます❤…んうっ！❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「では、挿入れさせてもらいます❤…んうっ！❤」
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「さ、あ～んしてください、鬼さん。私のおちんぽ汁味わって欲しいんです❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「さ、あ～んしてください、鬼さん。私のおちんぽ汁味わって欲しいんです❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「酒臭い口を河童臭～くしてあげますね❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「酒臭い口を河童臭～くしてあげますね❤❤」
+					ENDIF
+			ENDSELECT
+		;その他の人たち（「にとり本人の娘」以外の娘も含む）
+		ELSE
+			SELECTCASE ARG:1
+				;膣を使う
+				CASE 0, 1, 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ゴメン、私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ゴメン、私もう…我慢できないっ！❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うあっはぁっ！❤セックス気持ち良いっ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うあっはぁっ！❤セックス気持ち良いっ…❤」
+					ENDIF
+				;胸を使う
+				CASE 5, 6, 9
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あなたのおっぱい…使わせて…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あなたのおっぱい…使わせて…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｸﾆｭｸﾆｭ❤）「んふぅう❤良い乳してるわね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｸﾆｭｸﾆｭ❤）「んふぅう❤良い乳してるわね❤」
+					ENDIF
+				;巨乳を使う
+				CASE 7, 8
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんな大きいおっぱい、使わないと勿体ないよね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんな大きいおっぱい、使わないと勿体ないよね❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あっあっ❤圧力がすごいぃ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あっあっ❤圧力がすごいぃ❤」
+					ENDIF
+				;尻を使う
+				CASE 10, 11, 12
+					IF FLAG:AUTOMODE
+						PRINTFORML 「お尻なら、いいよね？挿入れちゃうよ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「お尻なら、いいよね？挿入れちゃうよ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「う、くっ❤…ちゃんとアナルに入ったみたいね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「う、くっ❤…ちゃんとアナルに入ったみたいね❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （こんな良いケツ穴してるのに尻子玉抜けないなんて…残念❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （こんな良いケツ穴してるのに尻子玉抜けないなんて…残念❤）
+					ENDIF
+				;口を使う
+				CASE 15, 16, 17
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、お口開けて？河童ザーメンたっぷりあげるから❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、お口開けて？河童ザーメンたっぷりあげるから❤」
+					ENDIF
+			ENDSELECT
+		ENDIF
+
+	;性欲発散される（全員からされ終わった時に一言だけ）
+	;※元の口上と変え、誰に襲われたかは問わず状況別という形にした。
+	CASE 458
+		;このキャラが主人公＝性欲発散しているのは仲間（このIF構文は省略しないように）
+		IF TARGET == 1
+			;睡眠時（睡眠休息も含む）
+			IF CFLAG:25 || FLAG:8 != 0
+				SELECTCASE ARG:1
+					;膣を使われる
+					CASE 0
+						PRINTFORML 「んくぅ❤……ん～❤……」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 悩まし気に腰をくねらせているが起きる気配はない…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 悩まし気に腰をくねらせているが起きる気配はない…
+						ENDIF
+					;胸を使われる
+					CASE 1
+						PRINTFORML 「…んぅ…ぐぅ～…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 寝辛そうにしているが全く起きない…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 寝辛そうにしているが全く起きない…
+						ENDIF
+					;尻を使われる
+					CASE 2
+						PRINTFORML 「…っう、んふっ❤…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 尻を穿られ官能的な声を漏らしているが、起きる様子はない…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 尻を穿られ官能的な声を漏らしているが、起きる様子はない…
+						ENDIF
+					;口を使われる
+					CASE 3
+						PRINTFORML 「…ぐぷ…ぶぶ…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 異物を口に挿入されてもなぜか眠ったままのようだ…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 異物を口に挿入されてもなぜか眠ったままのようだ…
+						ENDIF
+					;手を使われる
+					CASE 4
+						PRINTFORML 「すぅ…くぅ…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL しこたま精液を浴びせられたが、にとりは眠ったままだ…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW しこたま精液を浴びせられたが、にとりは眠ったままだ…
+						ENDIF
+				ENDSELECT
+			;発情時または喪失時または催眠（感情操作モード）時
+			ELSEIF CFLAG:28 || CFLAG:29 || CFLAG:43 && FLAG:526 == 1
+				SELECTCASE ARG:1
+					;膣を使われる
+						CASE 0
+						PRINTFORML 「ひぅっ…ん…❤」（ﾋﾞｸﾋﾞｸｯ❤）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは幸せそうな顔で小さく痙攣している…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは幸せそうな顔で小さく痙攣している…
+						ENDIF
+					;胸を使われる
+					CASE 1
+						PRINTFORML （あは…❤　ベトベトぉ…❤）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは白く染まった胸を見て悦に浸っている
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは白く染まった胸を見て悦に浸っている
+						ENDIF
+					;尻を使われる
+					CASE 2
+						PRINTFORML 「ん……お…ほぉ…っ…❤」（ﾋｸﾋｸｯ❤）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは腑抜けた顔で菊門をひくつかせている
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは腑抜けた顔で菊門をひくつかせている
+						ENDIF
+					;口を使われる
+					CASE 3
+						PRINTFORML （……んふ、濃厚……❤）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは舌の上で精液を転がしている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは舌の上で精液を転がしている…
+						ENDIF
+					;手を使われる
+					CASE 4
+						PRINTFORML （ﾆﾁｬﾆﾁｬ…）「うふふ❤…沢山出したね…❤」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは掌の中の精液を弄んでいる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは掌の中の精液を弄んでいる…
+						ENDIF
+				ENDSELECT
+			;催眠（認識操作）時
+			ELSEIF CFLAG:43 && FLAG:526 == 2
+				SELECTCASE ARG:1
+					;膣を使われる
+					CASE 0
+						PRINTFORML （……？？？）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは犯された事を認識できていないようだ
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは犯された事を認識できていないようだ
+						ENDIF
+					;胸を使われる
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「？？……機械油が飛んだのかな？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「？？……機械油が飛んだのかな？」
+						ENDIF
+					;尻を使われる
+					CASE 2
+						PRINTFORML 「お尻、温かい…？？」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりはうつろな目でいぶかしんでいる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりはうつろな目でいぶかしんでいる…
+						ENDIF
+					;口を使われる
+					CASE 3
+						IF FLAG:AUTOMODE
+							PRINTFORML （なんだろ…口の中が生臭い…）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （なんだろ…口の中が生臭い…）
+						ENDIF
+					;手を使われる
+					CASE 4
+						IF FLAG:AUTOMODE
+							PRINTFORML 「？？……オイル漏れかな」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「？？……オイル漏れかな」
+						ENDIF
+				ENDSELECT
+			;それ以外（拘束具状態・催眠（肉体操作）時も含む）
+			ELSE
+				SELECTCASE ARG:1
+					;膣を使われる
+					CASE 0
+						PRINTFORML 「うぅ…ひ、酷い…こんなことって…グスッ…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは同じ境遇の仲間から凌辱されショックを受けている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは同じ境遇の仲間から凌辱されショックを受けている…
+						ENDIF
+					;胸を使われる
+					CASE 1
+						PRINTFORML 「ひぐっ、ぐすん……おっぱい滅茶苦茶されたぁ…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは同じ境遇の仲間からの仕打ちに涙目になっている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは同じ境遇の仲間からの仕打ちに涙目になっている…
+						ENDIF
+					;尻を使われる
+					CASE 2
+						PRINTFORML 「ひぃいぃ…尻子玉抜かれる…！腑抜けにされるぅ…！！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは同じ境遇の仲間からアナルレイプされ恐怖している…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは同じ境遇の仲間からアナルレイプされ恐怖している…
+						ENDIF
+					;口を使われる
+					CASE 3
+						PRINTFORML 「ぐ…うぇっ…ぷ……」（こんな惨めな思いするなんて…）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは同じ境遇の仲間からのイラマチオで心が張り裂けそうになっている
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは同じ境遇の仲間からのイラマチオで心が張り裂けそうになっている
+						ENDIF
+					;手を使われる
+					CASE 4
+						PRINTFORML （レイプされるよりマシとはいえ…酷い仕打ちよ…）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは同じ境遇の仲間を怯えた目で見ている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは同じ境遇の仲間を怯えた目で見ている…
+						ENDIF
+				ENDSELECT
+			ENDIF
+		;このキャラが主人公ではない＝性欲発散しているのは主人公（とその仲間）
+		;※条件の関係上分けているだけらしいので上と同じ内容。
+		ELSE
+			;睡眠時（睡眠休息も含む）
+			IF CFLAG:25 || FLAG:8 != 0
+				SELECTCASE ARG:1
+					;膣を使われる
+					CASE 0
+						PRINTFORML 「くぅ……ん❤……」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 悩まし気に腰をくねらせているが起きる気配はない…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 悩まし気に腰をくねらせているが起きる気配はない…
+						ENDIF
+					;胸を使われる
+					CASE 1
+						PRINTFORML 「…んぅ…ぐぅ～…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 寝辛そうにしているが全く起きない…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 寝辛そうにしているが全く起きない…
+						ENDIF
+					;尻を使われる
+					CASE 2
+						PRINTFORML 「…っう、んふっ❤…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 尻を穿られ官能的な声を漏らしているが、起きる様子はない…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 尻を穿られ官能的な声を漏らしているが、起きる様子はない…
+						ENDIF
+					;口を使われる
+					CASE 3
+						PRINTFORML 「…ぐぷ…ぶぶ…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 異物を口に挿入されてもなぜか眠ったままのようだ…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 異物を口に挿入されてもなぜか眠ったままのようだ…
+						ENDIF
+					;手を使われる
+					CASE 4
+						PRINTFORML 「すぅ…すぅ…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL しこたま精液を浴びせられたが、にとりは眠ったままだ…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW しこたま精液を浴びせられたが、にとりは眠ったままだ…
+						ENDIF
+				ENDSELECT
+			;発情時または喪失時または催眠（感情操作モード）時
+			ELSEIF CFLAG:28 || CFLAG:29 || CFLAG:43 && FLAG:526 == 1
+				SELECTCASE ARG:1
+					;膣を使われる
+					CASE 0
+						PRINTFORML 「ひぅっ…んひぃっ…❤」（ﾋﾞｸﾋﾞｸｯ❤）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは幸せそうな顔で小さく痙攣している…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは幸せそうな顔で小さく痙攣している…
+						ENDIF
+					;胸を使われる
+					CASE 1
+						PRINTFORML （あは…❤　ベトベトぉ…❤）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは白く染まった胸を見て悦に浸っている
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは白く染まった胸を見て悦に浸っている
+						ENDIF
+					;尻を使われる
+					CASE 2
+						PRINTFORML 「ん……お…ほぉ…っ…❤」（ﾋｸﾋｸｯ❤）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは腑抜けた顔で菊門をひくつかせている
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは腑抜けた顔で菊門をひくつかせている
+						ENDIF
+					;口を使われる
+					CASE 3
+						PRINTFORML （ん～……濃厚……❤）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは舌の上で精液を転がしている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは舌の上で精液を転がしている…
+						ENDIF
+					;手を使われる
+					CASE 4
+						PRINTFORML （ﾆﾁｬﾆﾁｬ…）「うふふ❤…沢山出したね…❤」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは掌の中の精液を弄んでいる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは掌の中の精液を弄んでいる…
+						ENDIF
+				ENDSELECT
+			;催眠（認識操作）時
+			ELSEIF CFLAG:43 && FLAG:526 == 2
+				SELECTCASE ARG:1
+					;膣を使われる
+					CASE 0
+						PRINTFORML （……？？？）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは犯された事を認識できていないようだ
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは犯された事を認識できていないようだ
+						ENDIF
+					;胸を使われる
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「？？……機械油が飛んだのかな？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「？？……機械油が飛んだのかな？」
+						ENDIF
+					;尻を使われる
+					CASE 2
+						PRINTFORML 「お尻、温かい…？？」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりはうつろな目でいぶかしんでいる…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりはうつろな目でいぶかしんでいる…
+						ENDIF
+					;口を使われる
+					CASE 3
+						IF FLAG:AUTOMODE
+							PRINTFORML （なんだろ…口の中が生臭い…）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （なんだろ…口の中が生臭い…）
+						ENDIF
+					;手を使われる
+					CASE 4
+						IF FLAG:AUTOMODE
+							PRINTFORML 「？？……オイル漏れかな」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「？？……オイル漏れかな」
+						ENDIF
+				ENDSELECT
+			;それ以外（拘束具状態・催眠（肉体操作）時も含む）
+			ELSE
+				SELECTCASE ARG:1
+					;膣を使われる
+					CASE 0
+						PRINTFORML 「うぅ…ひ、酷い…こんなことって…グスッ…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは同じ境遇の仲間から凌辱されショックを受けている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは同じ境遇の仲間から凌辱されショックを受けている…
+						ENDIF
+					;胸を使われる
+					CASE 1
+						PRINTFORML 「ひぐっ、ぐすん……おっぱい滅茶苦茶されたぁ…」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは同じ境遇の仲間からの仕打ちに涙目になっている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは同じ境遇の仲間からの仕打ちに涙目になっている…
+						ENDIF
+					;尻を使われる
+					CASE 2
+						PRINTFORML 「ひぃいぃ…尻子玉抜かれる…！腑抜けにされるぅ…！！」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは同じ境遇の仲間からアナルレイプされ恐怖している…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは同じ境遇の仲間からアナルレイプされ恐怖している…
+						ENDIF
+					;口を使われる
+					CASE 3
+						PRINTFORML 「ぐ…うぇっ…ぷ……」（こんな惨めな思いするなんて…）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは同じ境遇の仲間からのイラマチオで心が張り裂けそうになっている
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは同じ境遇の仲間からのイラマチオで心が張り裂けそうになっている
+						ENDIF
+					;手を使われる
+					CASE 4
+						PRINTFORML （レイプされるよりマシとはいえ…酷い仕打ちよ…）
+						IF FLAG:AUTOMODE
+							PRINTFORMDL にとりは同じ境遇の仲間を冷たい目で見ている…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW にとりは同じ境遇の仲間を冷たい目で見ている…
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+	;ふたなり治療される（する側は主人公固定）（たぶん合意）
+	;（娘は主人公になり得ないので割愛）
+	;※口上の順番はされる側⇒する側らしい
+	CASE 459
+		;魔理沙にされる
+		IF NO == 2
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いいの、魔理沙？…じゃあ、挿れるよ…❤」（ｽﾞﾌﾟｯ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いいの、魔理沙？…じゃあ、挿れるよ…❤」（ｽﾞﾌﾟｯ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｼﾞｭﾌﾟ､ｽﾞｯﾌﾟｩ❤）「あぁっ、良い❤気持ちいいよ魔理沙…まりさぁ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｼﾞｭﾌﾟ､ｽﾞｯﾌﾟｩ❤）「あぁっ、良い❤気持ちいいよ魔理沙…まりさぁ…❤」
+					ENDIF
+				;胸で
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「じゃあ、その…使うよ…？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「じゃあ、その…使うよ…？」
+					ENDIF
+					;（相手が貧乳系素質で分岐）
+					IF TALENT:(NO):107 || TALENT:(NO):109
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あぁ…魔理沙の、つやつや肌…気持ちいいよ…❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あぁ…魔理沙の、つやつや肌…気持ちいいよ…❤」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ああっ…❤もっと挟んで…強くっ…❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ああっ…❤もっと挟んで…強くっ…❤」
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML （魔理沙のお尻…優しく扱わないと…！）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （魔理沙のお尻…優しく扱わないと…！）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾇﾌﾟ、ﾇｯﾌﾟ❤）「…どう、平気？痛くない？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾇﾌﾟ、ﾇｯﾌﾟ❤）「…どう、平気？痛くない？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL にとりは魔理沙を気遣いゆっくり腰を動かしている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW にとりは魔理沙を気遣いゆっくり腰を動かしている…
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML （魔理沙が口を開けて待ってる姿…そそっちゃう…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （魔理沙が口を開けて待ってる姿…そそっちゃう…❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ、はぁ…❤　い、いくよ、魔理沙…！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ、はぁ…❤　い、いくよ、魔理沙…！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL にとりはゆっくりと魔理沙の口内に挿入した…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW にとりはゆっくりと魔理沙の口内に挿入した…
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （うぁ…❤おちんぽ舌で転がされて…痺れるぅ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （うぁ…❤おちんぽ舌で転がされて…痺れるぅ…❤）
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ん…はっ…❤くうぅ…気持ち良すぎるぅ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ん…はっ…❤くうぅ…気持ち良すぎるぅ…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （魔理沙の手コキテク…凄いいっ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （魔理沙の手コキテク…凄いいっ…❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （耐えられないいぃ…❤でもこの気持ち良さ、もっと味わいたいよぉ❤❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （耐えられないいぃ…❤でもこの気持ち良さ、もっと味わいたいよぉ❤❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL にとりは恍惚とした顔をしている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW にとりは恍惚とした顔をしている…
+					ENDIF
+				;体位69
+;				CASE 5
+;					PRINTFORMW 
+			ENDSELECT
+		;雛にされる
+		ELSEIF NO == 39
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛、挿れるよ……くぅっ❤」（ﾂﾌﾟｩ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛、挿れるよ……くぅっ❤」（ﾂﾌﾟｩ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （はぅう…❤おちんぽ蕩けちゃいそう…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （はぅう…❤おちんぽ蕩けちゃいそう…❤）
+					ENDIF
+				;胸で
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あの、その…優しくしてね？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あの、その…優しくしてね？」
+					ENDIF
+					;（相手が貧乳系素質で分岐）
+					IF TALENT:(NO):107 || TALENT:(NO):109
+						IF FLAG:AUTOMODE
+							PRINTFORML 「んっ…はあ…❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「んっ…はあ…❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （ちっちゃなおっぱい擦り付けてる雛…可愛い…❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （ちっちゃなおっぱい擦り付けてる雛…可愛い…❤）
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あっ…はっ…良いよ、雛ぁ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あっ…はっ…良いよ、雛ぁ❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （雛のパイズリ姿、エロいし可愛いし…最高かも…❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （雛のパイズリ姿、エロいし可愛いし…最高かも…❤）
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…いくよ、雛…痛かったら言ってね…？」（ﾇﾌﾟｯ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…いくよ、雛…痛かったら言ってね…？」（ﾇﾌﾟｯ❤）
+					ENDIF
+					PRINTFORML 「あっ、あっ…くぅ、はっ…❤」
+					IF FLAG:AUTOMODE
+						PRINTFORML （あぁ…私今、雛のちっちゃなお尻犯してるんだ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （あぁ…私今、雛のちっちゃなお尻犯してるんだ…❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL にとりは背徳感により身を震わせている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW にとりは背徳感により身を震わせている…
+					ENDIF
+					
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あっあ……おっ…いく、いくぅ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あっあ……おっ…いく、いくぅ…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （雛の舌が絡みついて…もう出ちゃいそううぅ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （雛の舌が絡みついて…もう出ちゃいそううぅ…❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （い、いやっ勿体ない…もっとされたい…耐えなきゃ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （い、いやっ勿体ない…もっとされたい…耐えなきゃ…❤）
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「良い、良いよぉ❤　そこ、ナデナデされるの好きなのぉ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「良い、良いよぉ❤　そこ、ナデナデされるの好きなのぉ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL （雛のおちんぽよしよし、癖になるぅ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW （雛のおちんぽよしよし、癖になるぅ…❤）
+					ENDIF
+			ENDSELECT
+		;椛にされる
+		ELSEIF NO == 41 
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「準備、良い？…じゃあ…いただきます❤」（ｼﾞｭﾌﾟｩ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「準備、良い？…じゃあ…いただきます❤」（ｼﾞｭﾌﾟｩ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あぁ、あ❤　椛…大好きぃ❤」（ﾊﾟﾝ❤ﾊﾟﾝ❤ﾓﾌ❤ﾓﾌ❤ﾊﾟﾝ❤ﾓﾌ❤ﾊﾟﾝ❤ﾊﾟﾝ❤ﾓﾌ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あぁ、あ❤　椛…大好きぃ❤」（ﾊﾟﾝ❤ﾊﾟﾝ❤ﾓﾌ❤ﾓﾌ❤ﾊﾟﾝ❤ﾓﾌ❤ﾊﾟﾝ❤ﾊﾟﾝ❤ﾓﾌ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （尻尾モフりながらのセックス…最高ぉ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （尻尾モフりながらのセックス…最高ぉ❤）
+					ENDIF
+				;胸で
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「じゃあ椛のおっぱい、使わせてもらうね…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「じゃあ椛のおっぱい、使わせてもらうね…❤」
+					ENDIF
+					;（相手が貧乳系素質で分岐）
+					IF TALENT:(NO):107 || TALENT:(NO):109
+						IF FLAG:AUTOMODE
+							PRINTFORML 「椛のお胸、たっぷり射精してヌルヌルにしてあげる❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「椛のお胸、たっぷり射精してヌルヌルにしてあげる❤」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「んっふ❤ふわぁ❤……あ❤、ひぃ～❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「んっふ❤ふわぁ❤……あ❤、ひぃ～❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （おちんぽぉ❤椛のおっぱいでモミモミされてるぅ❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （おちんぽぉ❤椛のおっぱいでモミモミされてるぅ❤）
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うん❤椛は鍛えてるから、お尻も締まりがいいね❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うん❤椛は鍛えてるから、お尻も締まりがいいね❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｻﾜｻﾜ❤）「あっ❤あっ❤尻尾が気持ち良い所にぃ…イクぅううぅ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｻﾜｻﾜ❤）「あっ❤あっ❤尻尾が気持ち良い所にぃ…イクぅううぅ❤」
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「椛ったら、涎まで垂らしちゃって…❤ちょっとだけ待って❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「椛ったら、涎まで垂らしちゃって…❤ちょっとだけ待って❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……はい、どーぞ❤おあずけは無し❤よ～く味わってね？❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……はい、どーぞ❤おあずけは無し❤よ～く味わってね？❤」
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うふぅ…❤椛、おちんぽの扱い上手ぅ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うふぅ…❤椛、おちんぽの扱い上手ぅ❤」
+					ENDIF
+					;にとりに玉あり素質で追加セリフ
+					IF TALENT:180
+						IF FLAG:AUTOMODE
+							PRINTFORML （玉にもじゃれ付くなんて…椛の変態ぃ…❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （玉にもじゃれ付くなんて…椛の変態ぃ…❤）
+						ENDIF
+					ENDIF
+			ENDSELECT
+		;ヤマメにされる
+		ELSEIF NO == 78
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｽﾞﾌﾟｯ❤）「うっ！？ネットリお膣がっ…くううっ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｽﾞﾌﾟｯ❤）「うっ！？ネットリお膣がっ…くううっ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （うきゅうぅ…い、意地でも先にイクものかぁっ…！❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （うきゅうぅ…い、意地でも先にイクものかぁっ…！❤）
+					ENDIF
+				;胸で
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「じゃあおっぱいでお願いするわ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「じゃあおっぱいでお願いするわ…」
+					ENDIF
+					;（相手が貧乳系素質で分岐）
+					IF TALENT:(NO):107 || TALENT:(NO):109
+						IF FLAG:AUTOMODE
+							PRINTFORML 「んっ❤そ、そんなゴシゴシされたら…あひいぅ❤❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「んっ❤そ、そんなゴシゴシされたら…あひいぅ❤❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （ひ、ひんにゅーのくせにぃ❤…こんなに気持ちいいの反則ぅ❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （ひ、ひんにゅーのくせにぃ❤…こんなに気持ちいいの反則ぅ❤）
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「そ、もっと擦り合わせるようにして…❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「そ、もっと擦り合わせるようにして…❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「次は上下に……あぁ…いいわ、土蜘蛛ぉ…❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「次は上下に……あぁ…いいわ、土蜘蛛ぉ…❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「このまま乳内射精（なかだし）するから…しっかり受け止めて❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「このまま乳内射精（なかだし）するから…しっかり受け止めて❤」
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「この機に乗じて尻子玉を抜くなんて騙し打ちはしない。それだけ言っとくからね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「この機に乗じて尻子玉を抜くなんて騙し打ちはしない。それだけ言っとくからね」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「じゃあ、挿入れるわね…！」（ﾇﾌﾟﾘ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「じゃあ、挿入れるわね…！」（ﾇﾌﾟﾘ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾇﾌﾟ､ﾇﾎﾟｯ❤）「くっ、中々良いケツ穴してるっ……あぁんっ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾇﾌﾟ､ﾇﾎﾟｯ❤）「くっ、中々良いケツ穴してるっ……あぁんっ❤」
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…毒とか大丈夫なのぉ…？　なら良いけど…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…毒とか大丈夫なのぉ…？　なら良いけど…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「じゃ、口開けて…よいしょ、ひ❤あひぅ❤あっああぁ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「じゃ、口開けて…よいしょ、ひ❤あひぅ❤あっああぁ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （早速おちんちんしゃぶり付くなんてぇ❤どんだけ欲しがりなのよぉ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （早速おちんちんしゃぶり付くなんてぇ❤どんだけ欲しがりなのよぉ❤）
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…私のおちんちん、大事に扱ってよね…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…私のおちんちん、大事に扱ってよね…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うっ…あうんっ❤　そう、優しくしごいて…ふあぁぅ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うっ…あうんっ❤　そう、優しくしごいて…ふあぁぅ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （い、イかされるっ…土蜘蛛の手コキで瞬殺射精しちゃううぅ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （い、イかされるっ…土蜘蛛の手コキで瞬殺射精しちゃううぅ❤）
+					ENDIF
+			ENDSELECT
+		;勇儀にされる
+		ELSEIF NO == 80 
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「じゃあ、その…挿入れますよ…」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「じゃあ、その…挿入れますよ…」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾊﾟﾝｯﾊﾟﾝｯ❤）「うっ❤あっ❤気持ちいいです鬼さぁん…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾊﾟﾝｯﾊﾟﾝｯ❤）「うっ❤あっ❤気持ちいいです鬼さぁん…❤」
+					ENDIF
+				;胸で
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「それでは…おっぱい頂きます…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「それでは…おっぱい頂きます…❤」
+					ENDIF
+					;（相手が貧乳系素質で分岐）
+					IF TALENT:(NO):107 || TALENT:(NO):109
+						IF FLAG:AUTOMODE
+							PRINTFORML （ｺﾞｼｯｺﾞｼｨｯ❤）「ん❤…はあぁ…❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （ｺﾞｼｯｺﾞｼｨｯ❤）「ん❤…はあぁ…❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （おっぱいというか胸筋だけど…これはこれで好きかも❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （おっぱいというか胸筋だけど…これはこれで好きかも❤）
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あんっ❤乳圧がっ…くぅううっ～❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あんっ❤乳圧がっ…くぅううっ～❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「え？…はい、ハリがあって素敵ですぅ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「え？…はい、ハリがあって素敵ですぅ❤」
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「天地神妙に誓って、尻子玉は抜きません！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「天地神妙に誓って、尻子玉は抜きません！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「では改めて、いきます…！えいっ❤」（ﾇﾌﾟｩ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「では改めて、いきます…！えいっ❤」（ﾇﾌﾟｩ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ぐぅっ…ケツ穴が引き締まっていく…抜くどころか搾り取られるううぅ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ぐぅっ…ケツ穴が引き締まっていく…抜くどころか搾り取られるううぅ❤）
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いいんですか…？　では遠慮なくいきますよ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いいんですか…？　では遠慮なくいきますよ…❤」
+					ENDIF
+					PRINTFORMD （ｼｬﾌﾟｯﾁｭｳｳｩ❤）PRINTFORMW「ひやあぁあぁ！❤いきなりそんなに吸ったら…おほおおぉ！！」
+					IF FLAG:AUTOMODE
+						PRINTFORML （壊れりゅう❤ちんぽの中身全部吸われてぶっ壊れちんぽになりゅのほおぉお❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （壊れりゅう❤ちんぽの中身全部吸われてぶっ壊れちんぽになりゅのほおぉお❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL どうやら勇儀は力の加減を間違えたようだ…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW どうやら勇儀は力の加減を間違えたようだ…
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「や、優しく扱ってくださいよ？！繊細なんですからぁ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「や、優しく扱ってくださいよ？！繊細なんですからぁ…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ひ！ひぃ…？あっ❤おっ❤何これぇ、すっごく心地いひぃ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ひ！ひぃ…？あっ❤おっ❤何これぇ、すっごく心地いひぃ…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （意外にやさしい…それに暖かい…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （意外にやさしい…それに暖かい…❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （あぁ…鬼さんのあったか手コキ、虜になっちゃうかもぉ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （あぁ…鬼さんのあったか手コキ、虜になっちゃうかもぉ❤）
+					ENDIF
+			ENDSELECT
+		;その他の人たち
+		ELSE
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「じゃあ、挿入れるよ…んっ❤」（ｽﾞﾌﾟﾝ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「じゃあ、挿入れるよ…んっ❤」（ｽﾞﾌﾟﾝ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｼﾞｭﾌﾟﾌﾟ、ｽﾞｯﾌﾟｩ❤）「ふっ…あっ❤…気持ち良いよぉ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｼﾞｭﾌﾟﾌﾟ、ｽﾞｯﾌﾟｩ❤）「ふっ…あっ❤…気持ち良いよぉ❤」
+					ENDIF
+				;胸で
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「よ、よろしくお願いね…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「よ、よろしくお願いね…」
+					ENDIF
+					;（相手が貧乳系素質で分岐）
+					IF TALENT:(NO):107 || TALENT:(NO):109
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ふ…ぁ❤…んんぅ❤…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ふ…ぁ❤…んんぅ❤…」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （ぺたんこ胸でコシコシ擦られて…良いよぉ❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （ぺたんこ胸でコシコシ擦られて…良いよぉ❤）
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML （ﾆｭﾌﾟﾆｭﾌﾟ❤）「はっ…❤…う…あんっ❤…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （ﾆｭﾌﾟﾆｭﾌﾟ❤）「はっ…❤…う…あんっ❤…」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （お乳でクニュクニュされて…気持ち良い～…❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （お乳でクニュクニュされて…気持ち良い～…❤）
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「大丈夫、ちゃんと優しくするから安心して…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「大丈夫、ちゃんと優しくするから安心して…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｸﾌﾟｩ❤）「んっ❤、そっちは平気？　それじゃ動くからね…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｸﾌﾟｩ❤）「んっ❤、そっちは平気？　それじゃ動くからね…❤」
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…はい、こっちは準備良いよ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…はい、こっちは準備良いよ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｼﾞｭﾌﾟ❤）「ひぅっ❤もっと、奥まで…あぁっ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｼﾞｭﾌﾟ❤）「ひぅっ❤もっと、奥まで…あぁっ❤」
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んっ❤…はぁ❤……くっぅ…❤…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んっ❤…はぁ❤……くっぅ…❤…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL にとりは%ARGS:0%が手を動かすたび快楽に震えている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW にとりは%ARGS:0%が手を動かすたび快楽に震えている…
+					ENDIF
+			ENDSELECT
+		ENDIF
+	;ふたなりで触手モンスターをおしおきする
+	CASE 460
+		SELECTCASE ARG:1
+			;放置（お説教タイム）
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「もう！そもそもあんたたちのせいで…（ｸﾞﾁｸﾞﾁｸﾄﾞｸﾄﾞ…）」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「もう！そもそもあんたたちのせいで…（ｸﾞﾁｸﾞﾁｸﾄﾞｸﾄﾞ…）」
+				ENDIF
+			;逃がさない
+			CASE -1
+				IF FLAG:AUTOMODE
+					PRINTFORML （うぅっ…❤　ダメだ、急に疼いて…ッく❤…耐えられなさそう❤）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （うぅっ…❤　ダメだ、急に疼いて…ッく❤…耐えられなさそう❤）
+				ENDIF
+			;膣を使う
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ほら、もっと腰振って❤あんたたちが今まで私にしてきたことでしょ～❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ほら、もっと腰振って❤あんたたちが今まで私にしてきたことでしょ～❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「嫌と言うほど中出ししてあげるから、覚悟しなさい❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「嫌と言うほど中出ししてあげるから、覚悟しなさい❤」
+				ENDIF
+			;胸を使う
+			CASE 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「コラ！逃げるな！ちゃんとおっぱいで挟みなさい❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「コラ！逃げるな！ちゃんとおっぱいで挟みなさい❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML （ｸﾞﾆｯｸﾞﾆｯ❤）「んん～ふわふわで柔らかい❤おちんぽ溶けちゃいそう❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （ｸﾞﾆｯｸﾞﾆｯ❤）「んん～ふわふわで柔らかい❤おちんぽ溶けちゃいそう❤」
+				ENDIF
+			;尻を使う
+			CASE 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ほら、お尻出して？…たっくさんヌポヌポして、河童の秘儀で尻子玉抜いてあ・げ・る❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ほら、お尻出して？…たっくさんヌポヌポして、河童の秘儀で尻子玉抜いてあ・げ・る❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「心配しないで？痛くしないし、もし腑抜けになっても飼ってあげるから❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「心配しないで？痛くしないし、もし腑抜けになっても飼ってあげるから❤」
+				ENDIF
+			;口を使う
+			CASE 4
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ゆっくり裏を舐めて…次は先っぽ…そう、上手上手❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ゆっくり裏を舐めて…次は先っぽ…そう、上手上手❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あぁ…心地良い…❤　このまま出すから、全部飲んでね❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あぁ…心地良い…❤　このまま出すから、全部飲んでね❤」
+				ENDIF
+			;触手を使う
+			CASE 5
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あんたには、立派な触手が付いてるじゃない…きっちりご奉仕してもらうよ❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あんたには、立派な触手が付いてるじゃない…きっちりご奉仕してもらうよ❤」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ…❤ゆっくり味わえると思うと、病みつきになっちゃいそう❤」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ…❤ゆっくり味わえると思うと、病みつきになっちゃいそう❤」
+				ENDIF
+		ENDSELECT
+	;ふたなり治療する（にとりが主人公の場合のみ）
+	;※ARG:2が対象のキャラ
+	;※口上の順番はされる側⇒する側らしい
+	CASE 461
+		;魔理沙を治療
+		IF NO:(ARG:2) == 2 && CFLAG:(ARG:2):104 == 0
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああっ❤魔理沙ぁ❤だいしゅきぃ❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああっ❤魔理沙ぁ❤だいしゅきぃ❤❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「もっとぉ！もっと奥まで来てぇ❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「もっとぉ！もっと奥まで来てぇ❤❤」
+					ENDIF
+				;胸で
+				CASE 1
+					;（自分が貧乳系素質で分岐）
+					IF TALENT:107 || TALENT:109
+						IF FLAG:AUTOMODE
+							PRINTFORML 「どお、魔理沙❤スベスベお胸気持ち良い？❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「どお、魔理沙❤スベスベお胸気持ち良い？❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ふふっ❤顔見ればわかるわよ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ふふっ❤顔見ればわかるわよ❤」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML （ﾆｭﾌﾟﾆｭﾌﾟ❤）「んしょ、んしょ❤ん～？もう出ちゃいそうかな？❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （ﾆｭﾌﾟﾆｭﾌﾟ❤）「んしょ、んしょ❤ん～？もう出ちゃいそうかな？❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「我慢しないで❤顔にぶっかけてもいいよ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「我慢しないで❤顔にぶっかけてもいいよ❤」
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おっ❤おっ❤んおっ❤…コレっ❤すっごひぃ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おっ❤おっ❤んおっ❤…コレっ❤すっごひぃ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「魔理沙っ河童よりもケツ穴の扱い上手ぅ❤腑抜けちゃうぅうぅ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「魔理沙っ河童よりもケツ穴の扱い上手ぅ❤腑抜けちゃうぅうぅ❤」
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んっんっ❤…んぶぅ❤」（ﾁｭｯﾌﾟ❤ｼｬﾌﾟｩ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んっんっ❤…んぶぅ❤」（ﾁｭｯﾌﾟ❤ｼｬﾌﾟｩ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （魔理沙のおちんぽっ❤魔理沙のおちんぽぉ❤❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （魔理沙のおちんぽっ❤魔理沙のおちんぽぉ❤❤）
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふふ、ここ弱いんだ❤…それそれっ❤」（ｼｺｼｺｸﾁｭｸﾁｭ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふふ、ここ弱いんだ❤…それそれっ❤」（ｼｺｼｺｸﾁｭｸﾁｭ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （えへぇ❤魔理沙のおちんぽも、おまんこも…どっちも好きぃ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （えへぇ❤魔理沙のおちんぽも、おまんこも…どっちも好きぃ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL にとりはどさくさに紛れて魔理沙の陰唇も触っている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW にとりはどさくさに紛れて魔理沙の陰唇も触っている…
+					ENDIF
+			ENDSELECT
+		;雛を治療
+		ELSEIF NO:(ARG:2) == 39 && CFLAG:(ARG:2):104 == 0
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んっ❤私は大丈夫だから、もっと動いていいよ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んっ❤私は大丈夫だから、もっと動いていいよ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （雛の優しいセックス…大好き❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （雛の優しいセックス…大好き❤）
+					ENDIF
+				;胸で
+				CASE 1
+					;（自分が貧乳系素質で分岐）
+					IF TALENT:107 || TALENT:109
+						IF FLAG:AUTOMODE
+							PRINTFORML 「あんまりおっぱい無いから物足りないよね…ゴメンね？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「あんまりおっぱい無いから物足りないよね…ゴメンね？」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「それでも、頑張って気持ち良くさせてあげるからね❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「それでも、頑張って気持ち良くさせてあげるからね❤」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「根元から先っぽまで丹念に…よいしょ❤よいしょ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「根元から先っぽまで丹念に…よいしょ❤よいしょ❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「雛の為に心を込めて…よいしょ❤よいしょ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「雛の為に心を込めて…よいしょ❤よいしょ❤」
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「良いよぉ❤雛になら腑抜けにされても許しちゃうぅ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「良いよぉ❤雛になら腑抜けにされても許しちゃうぅ❤」
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML （チュ❤…ペロペロ…チュプゥ❤……レロォ～❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （チュ❤…ペロペロ…チュプゥ❤……レロォ～❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふぉうふぃあ？ふぃもひひー？（どう雛？気持ちいい？）」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふぉうふぃあ？ふぃもひひー？（どう雛？気持ちいい？）」
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｼｭｯｼｭｯ❤）「おちんぽピクピクしてるよ、ひ～な❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｼｭｯｼｭｯ❤）「おちんぽピクピクしてるよ、ひ～な❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「雛のちんぽだったら、いつだって喜んでシコシコしてあげる…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「雛のちんぽだったら、いつだって喜んでシコシコしてあげる…❤」
+					ENDIF
+			ENDSELECT
+		;にとりの娘を治療
+		ELSEIF NO:(ARG:2) == 40 && CFLAG:(ARG:2):104 == 1
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おっおぉ❤そ、そこはらめ…ひああぁんっ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おっおぉ❤そ、そこはらめ…ひああぁんっ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （くひいぃ❤やっぱりこの子上手すぎるよぉ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （くひいぃ❤やっぱりこの子上手すぎるよぉ❤）
+					ENDIF
+				;胸で
+				CASE 1
+					;（自分が貧乳系素質で分岐）
+					IF TALENT:107 || TALENT:109
+						IF FLAG:AUTOMODE
+							PRINTFORML 「やっ…❤ち、乳首をちんぽで弄るなんて…きうぅ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「やっ…❤ち、乳首をちんぽで弄るなんて…きうぅ❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （んっ❤この子、的確に気持ち良いところをっ❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （んっ❤この子、的確に気持ち良いところをっ❤）
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ほ～ら、おっぱいぱーい❤」（ﾌﾆﾌﾆ❤ﾆｭﾌﾟﾌﾟ❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ほ～ら、おっぱいぱーい❤」（ﾌﾆﾌﾆ❤ﾆｭﾌﾟﾌﾟ❤）
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （ふふ❤まだまだ子供ね❤おっぱい好きすぎ❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （ふふ❤まだまだ子供ね❤おっぱい好きすぎ❤）
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おひぃいぃい！❤んひゅうぅ！❤おっほぉっ！❤んお˝おぉおぉ！❤❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おひぃいぃい！❤んひゅうぅ！❤おっほぉっ！❤んお˝おぉおぉ！❤❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （油断してたぁ❤私の子だもんね❤とーぜんっ❤河童の技術っ❤持ってるよねぇ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （油断してたぁ❤私の子だもんね❤とーぜんっ❤河童の技術っ❤持ってるよねぇ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （おお˝おぉお˝❤とんぢゃう❤私っ❤娘にイかされてっ❤ケツ穴性奴隷にされちゃうぅ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （おお˝おぉお˝❤とんぢゃう❤私っ❤娘にイかされてっ❤ケツ穴性奴隷にされちゃうぅ❤）
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ムゴゴ❤…んっ、んっ❤」（ｼﾞｭﾙﾙﾙ❤ｺｸｺｸ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ムゴゴ❤…んっ、んっ❤」（ｼﾞｭﾙﾙﾙ❤ｺｸｺｸ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （おっぱいあげたの私だもん❤娘のおちんぽミルク飲んでもいいよね❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （おっぱいあげたの私だもん❤娘のおちんぽミルク飲んでもいいよね❤）
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほら、おちんちん良い子良い子しようね～❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほら、おちんちん良い子良い子しようね～❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL にとりは娘の頭と陰茎をそれぞれ撫でている…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW にとりは娘の頭と陰茎をそれぞれ撫でている…
+					ENDIF
+			ENDSELECT
+		;椛をを治療
+		ELSEIF NO:(ARG:2) == 41 && CFLAG:(ARG:2):104 == 0
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あっ❤はっ❤激しいっ❤激しいよぉっ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あっ❤はっ❤激しいっ❤激しいよぉっ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ちょ、ちょっと待って…あああぁ❤深い深いいぃぃ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ちょ、ちょっと待って…あああぁ❤深い深いいぃぃ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （はへぇ…❤　椛ったら、野生的ぃ❤❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （はへぇ…❤　椛ったら、野生的ぃ❤❤）
+					ENDIF
+				;胸で
+				CASE 1
+					;（自分が貧乳系素質で分岐）
+					IF TALENT:107 || TALENT:109
+						IF FLAG:AUTOMODE
+							PRINTFORML 「そ、そんなに擦ったら…ああっ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「そ、そんなに擦ったら…ああっ❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「落ち着いて…逃げたりしないからぁ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「落ち着いて…逃げたりしないからぁ❤」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「暴れないようにしっかり挟んで…❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「暴れないようにしっかり挟んで…❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ふあぁ❤獣汁ビュービュー来たぁ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ふあぁ❤獣汁ビュービュー来たぁ❤」
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「そ、そこはっ❤あっひいいぃ❤」（ﾇﾎﾟﾇﾎﾟｫ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「そ、そこはっ❤あっひいいぃ❤」（ﾇﾎﾟﾇﾎﾟｫ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （こんな技術持ってるなんて、天狗にしておくには惜しいわ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （こんな技術持ってるなんて、天狗にしておくには惜しいわ…❤）
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ペロリ❤…んっ❤…はむぅ❤…」（ｼｬﾌﾟﾌﾟｯ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ペロリ❤…んっ❤…はむぅ❤…」（ｼｬﾌﾟﾌﾟｯ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （この獣臭さ…❤病みつき…❤止められなくなったら責任とってもらお…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （この獣臭さ…❤病みつき…❤止められなくなったら責任とってもらお…❤）
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「椛はいい子だから、沢山してあげようね～❤」（ﾅﾃﾞﾅﾃﾞ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「椛はいい子だから、沢山してあげようね～❤」（ﾅﾃﾞﾅﾃﾞ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （素直なちんぽ…❤か～わいい❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （素直なちんぽ…❤か～わいい❤）
+					ENDIF
+			ENDSELECT
+		;ヤマメを治療
+		ELSEIF NO:(ARG:2) == 78 && CFLAG:(ARG:2):104 == 0
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「くっ❤…中々…はぅ❤…やるわね…あんっ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「くっ❤…中々…はぅ❤…やるわね…あんっ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （このままじゃ❤負けちゃうぅ❤土蜘蛛ちんぽに屈しちゃうぅう❤❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （このままじゃ❤負けちゃうぅ❤土蜘蛛ちんぽに屈しちゃうぅう❤❤）
+					ENDIF
+				;胸で
+				CASE 1
+					;（自分が貧乳系素質で分岐）
+					IF TALENT:107 || TALENT:109
+						IF FLAG:AUTOMODE
+							PRINTFORML （ﾆｭﾙﾆｭﾙ❤）「何よぉ…物足りなそうにしないでよ…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （ﾆｭﾙﾆｭﾙ❤）「何よぉ…物足りなそうにしないでよ…」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （とはいえちょっとは気持ちよさげね～…❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （とはいえちょっとは気持ちよさげね～…❤）
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ほ～ら❤さっさと諦めて、無様にビュクビュクして精液噴水になりなさい❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ほ～ら❤さっさと諦めて、無様にビュクビュクして精液噴水になりなさい❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （勝てそうっ❤だけど…早くしないと私も達しちゃうぅ❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （勝てそうっ❤だけど…早くしないと私も達しちゃうぅ❤）
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「どうっ土蜘蛛❤尻子玉なんてそうそう簡単に抜けないでしょ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「どうっ土蜘蛛❤尻子玉なんてそうそう簡単に抜けないでしょ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （くうぅ～❤土蜘蛛のくせにっ❤的確に良いとこ突いてくるぅ❤❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （くうぅ～❤土蜘蛛のくせにっ❤的確に良いとこ突いてくるぅ❤❤）
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ぐむむ❤んむぅ❤」（ｽﾞｯﾁｭｽﾞﾁｭ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ぐむむ❤んむぅ❤」（ｽﾞｯﾁｭｽﾞﾁｭ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （土蜘蛛ったら、早く出しなさいよ…どれだけ待たせるの～…///）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （土蜘蛛ったら、早く出しなさいよ…どれだけ待たせるの～…///）
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「土蜘蛛、ここが特別弱いんでしょ❤知ってるんだからね～❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「土蜘蛛、ここが特別弱いんでしょ❤知ってるんだからね～❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ほ～れ❤コスコスコス…ふふっ❤早くイっちゃいなさい❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ほ～れ❤コスコスコス…ふふっ❤早くイっちゃいなさい❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ヤバい…❤　ちょ～っとだけ土蜘蛛が可愛く見えてきたわ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ヤバい…❤　ちょ～っとだけ土蜘蛛が可愛く見えてきたわ…❤）
+					ENDIF
+			ENDSELECT
+		;勇儀を治療
+		ELSEIF NO:(ARG:2) == 80 && CFLAG:(ARG:2):104 == 0
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おっおお˝っ❤も、もっと優しく…おひゅいいぃ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おっおお˝っ❤も、もっと優しく…おひゅいいぃ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （よ、容赦無い…❤こんなのすぐ陥落しちゃう❤❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （よ、容赦無い…❤こんなのすぐ陥落しちゃう❤❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （が、我慢よぉ❤機嫌損ねたら、鬼専用の中出しお便所にされちゃうよぅ❤❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （が、我慢よぉ❤機嫌損ねたら、鬼専用の中出しお便所にされちゃうよぅ❤❤）
+					ENDIF
+				;胸で
+				CASE 1
+					;（自分が貧乳系素質で分岐）
+					IF TALENT:107 || TALENT:109
+						IF FLAG:AUTOMODE
+							PRINTFORML 「んっ❤はぁ❤…はい、気持ちいいですよぉ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「んっ❤はぁ❤…はい、気持ちいいですよぉ❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （物足りないかと思ったけど、そんなことなさそうね❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （物足りないかと思ったけど、そんなことなさそうね❤）
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「んしょ❤よいしょ❤っと…おっぱいご奉仕どうですかぁ？❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「んしょ❤よいしょ❤っと…おっぱいご奉仕どうですかぁ？❤」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （まあ、聞かなくても分かるわ…❤気持ちよさそうね❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （まあ、聞かなくても分かるわ…❤気持ちよさそうね❤）
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おっひぅ❤んへ❤…うっあぁっ❤はぁっ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おっひぅ❤んへ❤…うっあぁっ❤はぁっ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （こっちが奉仕してるはずなのにぃ❤あっさりケツ穴メロメロにされちゃったぁ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （こっちが奉仕してるはずなのにぃ❤あっさりケツ穴メロメロにされちゃったぁ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （逞しいよぉ❤こんな尻コキ続けてたらお尻がゆるゆるになっちゃうぅ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （逞しいよぉ❤こんな尻コキ続けてたらお尻がゆるゆるになっちゃうぅ❤）
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「レロ❤…グプグプ❤…んーっ❤…」（ﾁﾞｭﾌﾟ…ﾁﾞｭﾌﾟ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「レロ❤…グプグプ❤…んーっ❤…」（ﾁﾞｭﾌﾟ…ﾁﾞｭﾌﾟ…❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （中々吸い出せない…さすが鬼ね…！）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （中々吸い出せない…さすが鬼ね…！）
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾅﾃﾞﾅﾃﾞ…）「え、ちょっと優しすぎますか？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾅﾃﾞﾅﾃﾞ…）「え、ちょっと優しすぎますか？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ｼｺｼｺｼｺ…❤）「これくらいですかね？…わかりましたぁ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ｼｺｼｺｼｺ…❤）「これくらいですかね？…わかりましたぁ❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （ん～、力加減難しいなぁ…）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ん～、力加減難しいなぁ…）
+					ENDIF
+			ENDSELECT
+		;その他の人たちを治療（「にとり本人の娘」以外の娘も含む）
+		ELSE
+			SELECTCASE ARG:1
+				;膣で
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「そうその感じ❤…あっああっ❤そこ気持ちいいっ❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「そうその感じ❤…あっああっ❤そこ気持ちいいっ❤」
+					ENDIF
+				;胸で
+				CASE 1
+					;（自分が貧乳系素質で分岐）
+					IF TALENT:107 || TALENT:109
+						IF FLAG:AUTOMODE
+							PRINTFORML （ｽﾘｽﾘ…❤）「ふぅ❤…んぅ❤…ぅあん❤…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （ｽﾘｽﾘ…❤）「ふぅ❤…んぅ❤…ぅあん❤…」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML （あんまりないから不安だったけど、大丈夫そう…❤）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （あんまりないから不安だったけど、大丈夫そう…❤）
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML （ｸﾆｸﾆ❤…ｺｼｺｼ❤…）「イきそうならいつでもイって大丈夫だよ❤」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW （ｸﾆｸﾆ❤…ｺｼｺｼ❤…）「イきそうならいつでもイって大丈夫だよ❤」
+						ENDIF
+					ENDIF
+				;尻で
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML （ﾂﾌﾟｩ…ﾇﾎﾟｫ…❤）「…っふ…くあぁ…❤」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （ﾂﾌﾟｩ…ﾇﾎﾟｫ…❤）「…っふ…くあぁ…❤」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （入れられる側はあんまり慣れないなぁ…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （入れられる側はあんまり慣れないなぁ…❤）
+					ENDIF
+				;口で
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んぷ❤、んぐうぅ❤」（ｼﾞｭﾎﾟﾎﾟﾎﾟ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んぷ❤、んぐうぅ❤」（ｼﾞｭﾎﾟﾎﾟﾎﾟ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML （さすがに、キュウリ替わりにはならないな～…❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （さすがに、キュウリ替わりにはならないな～…❤）
+					ENDIF
+				;手で
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORML 「先端が好きかな～❤それとも根本かな～❤」（ｼｭｯｼｭ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「先端が好きかな～❤それとも根本かな～❤」（ｼｭｯｼｭ❤）
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「裏筋も優しく…ね❤」（ﾂｩｰｯ❤）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「裏筋も優しく…ね❤」（ﾂｩｰｯ❤）
+					ENDIF
+			ENDSELECT
+		ENDIF
+	;出会ったときに治療
+;	CASE 465
+	
+	
+	
+	ENDSELECT
+	
+RETURN

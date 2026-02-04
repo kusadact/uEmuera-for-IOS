@@ -1,0 +1,533 @@
+﻿;通常攻撃命中時の描写
+@SYSTEM_MESSAGE_12(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;敵のコマンドごとに命中時の描写したり
+
+SELECTCASE ARG:1
+	CASE 0
+		PRINTFORMW  (SYSTEM_MESSAGE_12)指令ID不正确 ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+
+	CASE 100
+		;何もなし
+	CASE 101
+		PRINTFORML 每次被刺入身体的触手注入什么东西、%ARGS:0%的意识便开始朦胧起来…
+	CASE 102
+		PRINTFORML 被它沐浴的%ARGS:0%的身体、就如同染上了严重的疟疾般颤抖着、呼吸也粗重起来…
+	CASE 103
+		PRINTFORML 尖锐的疼痛不断地袭击着%ARGS:0%，痛苦的声音在房间里回荡……
+	CASE 106
+		IF BASE:3 <= 0
+			PRINTFORML 不仅是直击的疼痛，还有痒、疼痛、灼伤……粘液毒带来的各种各样的作用折磨着%ARGS:0%…
+		ELSE
+			PRINTFORML 没能躲过沾着粘液的触手、%ARGS:0%的衣服被撕碎了！
+		ENDIF
+	CASE 107
+		;連続メッセージになるのでとりあえずスキップ
+	CASE 108
+		IF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML 不仅是直击的疼痛，还有痒、疼痛、灼伤……粘液毒带来的各种各样的作用折磨着%ARGS:0%…
+		ELSE
+			PRINTFORML 没能躲过沾着粘液的触手、%ARGS:0%的衣服被撕碎了！
+		ENDIF
+	CASE 109
+		IF (CFLAG:10 || CFLAG:20) && CFLAG:21 == 0
+			PRINTFORML 被紧紧地勒住脖子，无法呼吸的%ARGS:0%脸红地呻吟着……
+		ELSE
+			PRINTFORML 触手在无法回避的%ARGS:0%的柔软肌肤上不断地刻下红色的伤痕！
+		ENDIF
+	CASE 110
+		IF (CFLAG:10 || CFLAG:20) && CFLAG:21 == 0
+			PRINTFORML 被紧紧地勒住脖子，无法呼吸的%ARGS:0%脸色涨红呻吟着……
+		ELSE
+			PRINTFORML 身体被从死角不断袭来的触手击打、%ARGS:0%露出了痛苦的声音…
+		ENDIF
+	CASE 111
+		IF CFLAG:20 && CFLAG:21 == 0
+			PRINTFORML 被束缚而动弹不得的%ARGS:0%的身体上、惨不忍睹的伤痕不断增加…
+		ELSEIF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML 激烈的疼痛袭来，沉闷的叫声在房间里回响！
+		ELSE
+			PRINTFORML %ARGS:0%的衣服的一部分飞散开来、肌肤一点点的暴露出来！
+		ENDIF
+	CASE 113
+		IF CFLAG:20 && CFLAG:21 == 0
+			PRINTFORML 被束缚而动弹不得的%ARGS:0%的身体上、惨不忍睹的伤痕不断增加…
+		ELSEIF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML 激烈的疼痛袭来，沉闷的叫声在房间里回响！
+		ELSE
+			PRINTFORML %ARGS:0%的衣服的一部分飞散开来、肌肤一点点的暴露出来！
+		ENDIF
+	CASE 114
+		;連続メッセージになるのでとりあえずスキップ
+	CASE 115
+		IF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML %ARGS:0%的腹部被直击、收到了很大的冲击、剧烈的咳嗽起来…
+		ELSE
+			PRINTFORML %ARGS:0%完全没反应过来就受到了直击、衣服的一部分也被咬掉了！
+		ENDIF
+	CASE 116
+		IF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML %ARGS:0%的腹部被直击、因收到了过强的冲击而倒下了…
+		ELSE
+			PRINTFORML %ARGS:0%完全没反应过来就受到了直击、衣服的一部分也被咬掉了！
+		ENDIF
+	CASE 117
+		IF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML %ARGS:0%被吹飞后摔落在地板上、因全身传来的疼痛而皱起了眉头…
+		ELSE
+			PRINTFORML %ARGS:0%没能避开而被直击、衣服的一部分也被咬掉了！
+		ENDIF
+	CASE 118
+		IF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML %ARGS:0%被狠狠地摔在墙上、因全身传来的疼痛而皱起了眉头…
+		ELSE
+			PRINTFORML %ARGS:0%没能避开而被直击、衣服的一部分也被咬掉了！
+		ENDIF
+	CASE 119
+		IF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML 其中一只缠住%ARGS:0%、以惊人的怪力把她举起、重重的砸在地面上！
+		ELSE
+			PRINTFORML 吸盘吸到衣服上，离开的同时把衣服的一部分也带走了！
+		ENDIF
+	CASE 120
+		IF BASE:3 <= 0
+			PRINTFORML 被吸取力量的%ARGS:0%、不时会发出甜美的声音…
+		ELSE
+			PRINTFORML %ARGS:0%全身被勒紧、体力被一点点吸取着！
+		ENDIF
+	CASE 121
+		IF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML 其中一只缠住%ARGS:0%、以惊人的怪力把她举起、重重的砸在地面上！
+		ELSE
+			PRINTFORML 吸盘吸到衣服上，离开的同时把衣服的一部分也带走了！！
+		ENDIF
+	CASE 122
+		IF BASE:3 <= 0
+			PRINTFORML 被吸取力量的%ARGS:0%、不时会发出甜美的声音…
+		ELSE
+			PRINTFORML  %ARGS:0%全身被勒紧、体力被一点点吸取着！
+		ENDIF
+	CASE 123
+		IF BASE:3 <= 0
+			PRINTFORML %ARGS:0%面色发青冒着冷汗。　那体液好像是毒液…
+		ELSE
+			PRINTFORML 被体液打中的衣服开始融化、%ARGS:0%的衣服渐渐被弄得满是窟窿…
+		ENDIF
+	CASE 124
+		PRINTFORML %ARGS:0被出其不意地吹飞了很远！
+	CASE 125
+		IF BASE:3 <= 0
+			PRINTFORML %ARGS:0%面色发青冒着冷汗。　那体液好像是毒液…
+			PRINTFORML 被体液打中的衣服开始融化、%ARGS:0%的衣服渐渐被弄得满是窟窿…
+		ENDIF
+	CASE 126
+		IF FLAG:507 == 0
+			IF BASE:3 <= 0
+				PRINTFORML 缠绕在%ARGS:0%裸露肌肤上的触手，夺走了%ARGS:0%的体力…
+			ELSE
+				PRINTFORML 被%ARGS:1%紧抱着的%ARGS:0%，不断地被吸取力量……
+			ENDIF
+		ELSE
+				PRINTFORML 不顾发出悲痛的悲鸣的%ARGS:0%，那个触手继续从%ARGS:0%体内吸取着血液…
+		ENDIF
+	CASE 127
+		IF BASE:3 <= 0
+			PRINTFORML %ARGS:1%的身体硬度增加了，%ARGS:0%被大风吹跑了！
+		ELSE
+			PRINTFORML 结成一束袭来的触手、接二连三的割开了%ARGS:0%的身体…
+		ENDIF
+	CASE 128
+		;個別描画スキップ
+	CASE 129
+		IF BASE:3 <= 0
+			PRINTFORML %ARGS:1%的身体硬度增加了，%ARGS:0%被大风吹跑了！
+		ELSE
+			PRINTFORML 结成一束袭来的触手、接二连三的割开了%ARGS:0%的身体…
+		ENDIF
+	CASE 130
+		;個別描画スキップ
+	CASE 131
+		IF CFLAG:20 && CFLAG:21 == 0
+			PRINTFORML 眼看着肌肤被染红，那难以忍受的疼痛让%ARGS:0%的眼角浮现出泪水…
+		ELSEIF BASE:3 <= 0
+			PRINTFORML 皮肤直接被鞭打的%ARGS:0%，因为那样的痛苦发出了悲鸣!
+		ELSE
+			PRINTFORML 鞭子发出尖利的破空声，撕裂了%ARGS:0%的衣服的一部分!
+		ENDIF
+	CASE 132
+		;個別描画スキップ
+	CASE 133
+		IF CFLAG:20 && CFLAG:21 == 0
+			PRINTFORML 眼看着肌肤被染红，那难以忍受的疼痛让%ARGS:0%的眼角浮现出泪水…
+		ELSEIF BASE:3 <= 0
+			PRINTFORML 皮肤直接被鞭打的%ARGS:0%，因为那样的痛苦发出了悲鸣!
+		ELSE
+			PRINTFORML 鞭子发出尖利的破空声，撕裂了%ARGS:0%的衣服的一部分!
+		ENDIF
+	CASE 134
+		;個別描画スキップ
+	CASE 135
+		;個別描画スキップ
+	CASE 136
+		;個別描画スキップ
+	CASE 137
+		IF FLAG:507 >= 1
+			PRINTFORML 一边呜呜响着一边逼近的鞭子，在%ARGS:0%的身体上接二连三地留下令人心痛的伤口…
+		ENDIF
+	CASE 138
+		IF FLAG:507 >= 1
+			PRINTFORML 被远远超过人类的怪力束缚住身体，房间里回荡着悲鸣…
+		ENDIF
+	CASE 139
+		IF FLAG:507 >= 1
+			PRINTFORML 一边呜呜响着一边逼近的鞭子，在%ARGS:0%的身体上接二连三地留下令人心痛的伤口…
+		ENDIF
+	CASE 140
+		IF FLAG:507 >= 1
+			PRINTFORML 咬着的无数花朵从身体各处啜饮%ARGS:0%的血液！
+		ELSE
+			PRINTFORML 从被%ARGS:1%的爬山虎触碰的地方开始、%ARGS:0%的力量渐渐消失…
+		ENDIF
+	CASE 141
+		IF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML %ARGS:0%的身体被砍裂，因无法忍受的疼痛而蹲了下来…
+		ELSE
+			PRINTFORML %ARGS:0%没有完全反应就受到了直击，衣服和身体都被斩裂了！
+		ENDIF
+	CASE 142
+
+		IF FLAG:507 >= 1
+
+			IF BASE:3 <= 0
+				PRINTFORML 被渗入羽毛的鲜血融化了伤口，由于过度的疼痛，%ARGS:0%甚至无法发出悲鸣……
+			ELSE
+				PRINTFORML 衣服和身体都被沾染在羽毛上的粘液和鲜血溶解、%ARGS:0%发出了凄惨的悲鸣…
+			ENDIF
+		ELSE
+				PRINTFORML 为了不被羽毛挠痒痒而拼命的%ARGS:0%，激烈地消耗了体力……
+
+		ENDIF
+	CASE 143
+		IF FLAG:507 >= 1
+			PRINTFORML 受到精液炮弹直接攻击的%ARGS:0%瞬间被砸在墙上、又掉在地板上…
+		ELSE
+			PRINTFORML 直接击中%ARGS:0%的蛋瞬间粉碎，和液体一起滴落在地板上……
+		ENDIF
+
+	CASE 144
+		IF FLAG:507 >= 1
+			PRINTFORML 受到巨大触手鞭子的直击的%ARGS:0%瞬间被砸在墙上、又掉在地板上…
+		ELSE
+			PRINTFORML 直接击中%ARGS:0%的巨大鞭子的一部分被弹飞、激烈的敲打着周围的墙壁…
+		ENDIF
+	CASE 145
+		IF FLAG:507 > 0
+			PRINTFORML 被拉着双臂无法抵抗的%ARGS:0%的脚间发出咯吱咯吱的刺耳声音……
+		ELSE
+			PRINTFORML 无法应对剧烈摇晃的%ARGS:0%被夺走了全身的力量……
+		ENDIF
+	CASE 146
+		PRINTFORML 首の動きだけで吹き飛ばされた%ARGS:0%は着地に失敗して数回回転した…
+		
+	CASE 147
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML 被尾巴抓住了的%ARGS:0%被慢慢举起，又被数次拍在地板上！
+			CASE 1
+				PRINTFORML 尾巴数次在跌倒的%ARGS:0%的背上抽打着！
+			CASE 2
+				PRINTFORML 缠绕在%ARGS:0%脖子上的尾巴，慢慢地加强收紧的力量……
+			CASE 3
+				PRINTFORML 尾巴数次在跌倒的%ARGS:0%的腹部抽打着！
+		ENDSELECT
+	CASE 148
+		IF BASE:3 > 0
+			PRINTFORML 每当触手碰到衣服时，伴随着刺耳的声音，布料就会嘎吱嘎吱地受损…
+		ELSE
+			PRINTFORML 没能躲开的%ARGS:0%的身体轻易便被吹跑了！
+		ENDIF
+	CASE 149
+		IF RAND:3 == 0
+			PRINTFORML 没能躲开触手、%ARGS:0%被打到的地方变红了…
+		ELSE
+			PRINTFORML 没能躲开的%ARGS:0%的身体轻易便被吹跑了！
+		ENDIF
+	CASE 150
+		IF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML 突然处于动弹不得的状态%ARGS:0%被冲撞到后被吹飞了…
+		ELSE
+			PRINTFORML 对意料之外的速度%ARGS:0%毫无防备的直接受到了攻击，就这样被吹飞了…
+		ENDIF
+	CASE 151
+		IF BASE:3 <= 0
+			PRINTFORML 砸下的每一条尾巴、都收割着处于疲劳状态的%ARGS:0%的意识……
+		ELSE
+			PRINTFORML 砸下的每一条尾巴、都收割着%ARGS:0%的意识……
+		ENDIF
+	CASE 152
+		PRINTFORML %ARGS:1%的酸液炸弹精准命中、%ARGS:0%直接瘫倒在地…
+	CASE 153
+		PRINTFORML 看到如此肮脏的情景，%ARGS:0%在精神上受到了很大的损害……
+	CASE 154
+		IF BASE:0 <= 0 || BASE:3 <= 0
+			PRINTFORML 处于无法正常行动状态的%ARGS:0%和%ARGS:1%发生了碰撞……
+		ELSE
+			PRINTFORML 和%ARGS:1%撞到的%ARGS:0%说了声对不起、低下了头…
+		ENDIF
+	CASE 155
+		PRINTFORML 对%ARGS:1%来说是打算攻击的吧，当然对%ARGS:0%完全不起作用…
+	CASE 156
+		PRINTFORML %ARGS:1%突然出现在%ARGS:0%的脚下！
+	CASE 157
+		PRINTFORML %ARGS:0%没能躲过攻击、跪了下来………
+	CASE 162
+		PRINTFORML %ARGS:0%被摧毁了！
+	CASE 167
+		PRINTFORML %ARGS:0%被子弹命中！
+	CASE 168
+		PRINTFORML 没能躲开%ARGS:1%的身体冲撞的%ARGS:0%被高高的打飞了!
+	CASE 169
+		PRINTFORML %ARGS:1%的触手打在%ARGS:0%的屁股上！
+	CASE 170, 172
+		IF CFLAG:20
+			PRINTFORML %ARGS:1%のアームが身動きできない%ARGS:0%の腹を容赦なく殴りつけた！
+		ELSE
+			PRINTFORML %ARGS:1%のアームが%ARGS:0%を殴り飛ばした！
+		ENDIF
+	CASE 171
+		;多段のため一応カット
+	CASE 180
+		IF CFLAG:201 == 0
+			PRINTFORML 触手将从埘的间隙伸出的%ARGS:0%的双臂弯曲成不存在的角度、令人心痛的悲鸣和粉碎的声音同时回响着!
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%的双臂被破坏，攻击力下降了！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  %ARGS:0%的双臂被破坏，攻击力下降了！
+			ENDIF
+
+		ELSEIF CFLAG:201 == 1
+			PRINTFORML %ARGS:0%左右的脚被扭向了不存在的方向，终于超过了极限的她的股关节，发出了悲鸣和粉碎声!
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%的股关节被破坏、速度下降了！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  %ARGS:0%的股关节被破坏、速度下降了！
+			ENDIF
+
+		ELSEIF CFLAG:201 == 2
+			PRINTFORML 从触手埘中露出脸%ARGS:0%的表情痛苦扭曲，从嘴里发出吐血和沉闷的惨叫，还有肋骨破碎的声音!
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%折断的肋骨开始折磨内脏！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  %ARGS:0%折断的肋骨开始折磨内脏！
+			ENDIF
+
+		ELSEIF CFLAG:201 == 3
+			PRINTFORML 从不断收缩的触手埘中，响起%ARGS:0%的凄惨悲鸣和骨头破碎的声音!
+			IF FLAG:AUTOMODE
+				PRINTFORML %ARGS:0%被痛打的无计可施！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  %ARGS:0%被痛打的无计可施！
+			ENDIF
+
+		ENDIF
+	CASE 181
+		IF BASE:3 > MAXBASE:3 / 4
+			PRINTFORML 触手前端发光的锐利钩爪玩弄着%ARGS:0%的身体、鲜红的污渍在衣服上蔓延开来!
+		ELSEIF BASE:3 <= MAXBASE:3 / 4 && BASE:3 != 0
+			PRINTFORML 触手前端闪闪发光的锐利钩爪、一根根地嵌入从破掉的衣服缝隙中露出的%ARGS:0%的肌肤、鲜血淋漓!
+		ELSE
+			PRINTFORML 触手尖端发光的锐利钩爪，在失去了保护身体的%ARGS:0%的身体上刻下了裂伤!
+		ENDIF
+	CASE 182
+		IF BASE:1 < MAXBASE:1 / 4 && RAND:2
+			PRINTFORML %ARGS:0%的生命力被吸收、思维渐渐融化、却感到很舒服……
+		ELSEIF CFLAG:43 == 0
+			PRINTFORML 从%ARGS:0%的身体内吸收生命力……
+		ELSEIF FLAG:526 == 0
+			PRINTFORML %ARGS:0%无法抵抗、被吸收了生命力……
+		ELSEIF FLAG:526 == 1
+			PRINTFORML %ARGS:0%因为被%ARGS:1%吸取养分而感到安心……
+		ELSEIF FLAG:526 == 2
+			PRINTFORML %ARGS:0%为了让%ARGS:1%更容易吸收营养而一动不动！
+		ENDIF
+	CASE 183
+		IF CFLAG:29 == 1 || CFLAG:20 != 0
+			PRINTFORML 身体无法动弹的%ARGS:0%被庞大的精液喷射的浊流吞噬、因强烈的冲击和渗透到大脑深处的精臭无法呼吸！
+		ELSE
+			PRINTFORML 回避失败的%ARGS:0%被强力的精液喷射吞噬、在猛烈的冲击和呛人的恶臭下呻吟着！
+		ENDIF
+	CASE 184
+		IF BASE:3 <= 0
+			PRINTFORML %ARGS:1%向%ARGS:0%的股間打了过来！
+		ELSE
+			PRINTFORML %ARGS:1%从衣服上对%ARGS:0%造成了伤害!
+		ENDIF
+	CASE 185
+		IF FLAG:507 && RAND:2
+			PRINTFORML %ARGS:1%以%ARGS:0%的脸为中心打过去!
+		ELSEIF FLAG:507
+			PRINTFORML %ARGS:1%对%ARGS:0%的腹部施加了沉重的一击
+		ENDIF
+	CASE 186
+		PRINTFORML %ARGS:1%的触手命中了%ARGS:0%!
+	CASE 187
+		PRINTFORML %ARGS:1%用獠牙刺向%ARGS:0%的脖子、开始吸血了!
+	CASE 188
+		IF FLAG:507
+			PRINTFORML %ARGS:1%把触手伸进了%ARGS:0%的肚子里!
+		ELSE
+			PRINTFORML %ARGS:1%用触手刺伤了%ARGS:0% !
+		ENDIF
+	CASE 189
+		IF FLAG:507
+			PRINTFORML %ARGS:1%切开了%ARGS:0%的肚子！
+		ELSE
+			PRINTFORML %ARGS:0%的白皙肌肤上出现了伤痕……
+		ENDIF
+	CASE 190
+		IF FLAG:507
+			PRINTFORML %ARGS:1%把触手伸进了%ARGS:0%的伤口、开始痛了!
+		ENDIF
+	CASE 191
+		IF FLAG:507
+			PRINTFORML %ARGS:1%毫不留情地在%ARGS:0%的肚子上开了一个洞!
+		ENDIF
+	
+	CASE 974
+		IF BASE:3 <= 0
+			PRINTFORML %ARGS:1%开始舔舐和折磨乳头、使其沾满粘液、然后开始施加电流！
+		ELSE
+			PRINTFORML %ARGS:1%一边舔一边用衣服折磨乳头，并用粘液覆盖乳头后、开始施加电流！
+		ENDIF
+		
+	CASE 975
+		IF BASE:3 <= 0
+			IF GET_PENIS(TARGET) & 4
+				PRINTFORML %ARGS:1%对覆盖满粘液的阴茎施加电流、直到勃起！
+			ELSEIF GET_PENIS(TARGET)
+				PRINTFORML %ARGS:1%对覆盖满粘液的模拟阴茎施加电流、直到勃起！
+			ELSE
+				PRINTFORML %ARGS:1%对覆盖满粘液的阴蒂施加电流、直到勃起！
+			ENDIF
+		ELSE
+			IF GET_PENIS(TARGET) & 4
+				PRINTFORML %ARGS:1%は服の上からペニスを勃起するまで粘液まみれにすると電流を流し始めた！
+			ELSEIF GET_PENIS(TARGET)
+				PRINTFORML %ARGS:1%は服の上から擬似陰茎を勃起するまで粘液まみれにすると電流を流し始めた！
+			ELSE
+				PRINTFORML %ARGS:1%は服の上からクリトリスを勃起するまで粘液まみれにすると電流を流し始めた！
+			ENDIF
+		ENDIF
+	CASE 976
+		PRINTFORML %ARGS:1%的触手没有瞄准，挥向了%ARGS:0%的胸口！
+
+	CASE 999
+		PRINTFORML %ARGS:1%把触手插进喉咙、开始侵犯！
+	
+	
+	CASE 1052
+		IF FLAG:507 <= 1
+			PRINTFORML %ARGS:0%随着被灌入毒液而失去了力量……
+		ELSE
+			PRINTFORML %ARGS:0%的身体开始融化……
+			PRINTFORML 绝望的抵抗并不能阻止%ARGS:1%的消化……
+		ENDIF
+	CASE 1053
+		IF FLAG:507 <= 1
+			PRINTFORML %ARGS:0%在痛苦中挣扎……
+		ELSE
+			PRINTFORML %ARGS:1%咬出了%ARGS:0%又细又脆的部分……
+			PRINTFORML %ARGS:0%虽然痛苦挣扎，但出血和肌肉穿孔的疼痛却无法止住……
+		ENDIF
+	CASE 1054
+		IF FLAG:507 <= 1
+			PRINTFORML %ARGS:0%被触手碰了碰额头、皱起了眉头……
+		ELSE
+			PRINTFORML %ARGS:0%的眼睛被触手直接命中……
+		ENDIF
+	CASE 1055
+		IF FLAG:507 <= 1
+			PRINTFORML %ARGS:0%被触手打到脸上……
+		ELSE
+			PRINTFORML %ARGS:1%开始用尖尖的触手刺进%ARGS:0%的眼球……
+			PRINTFORML 即使%ARGS:0%拼命抵抗、视野也被染上了红色……
+		ENDIF
+	CASE 1056
+		IF FLAG:507 <= 1
+			PRINTFORML %ARGS:0%被粘液溅到了眼睛里……
+		ELSE
+			PRINTFORML %ARGS:0%的脸开始融化了……
+			PRINTFORML %ARGS:0%的眼角掠过了灼烧般的疼痛……
+		ENDIF
+	
+	CASE 1867
+		PRINTFORML 仿佛要烧毁%ARGS:0%的蒸汽袭来！
+
+	CASE 1877
+		PRINTFORML 眼看着肌肤被染红、那难以忍受的疼痛让%ARGS:0%的眼角浮现出泪水……
+
+	CASE 2100
+		PRINTFORML 吸入了瘴气%ARGS:0%，呼吸开始紊乱……
+	CASE 2101
+		IF RAND:2 == 0
+			PRINTFORML %ARGS:0%的脚被触手勒上……
+		ELSE
+			PRINTFORML 脚被触手缠上、%ARGS:0%被拖倒在地……
+		ENDIF
+	CASE 2102
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML %ARGS:1%跪在四肢被捆绑无法动弹的%ARGS:0%的腹部上…！
+			CASE 1
+				PRINTFORML %ARGS:1%强迫%ARGS:0%站起来、殴打她的腹部…!
+			CASE 2
+				PRINTFORML %ARGS:1%逐渐掌握了被吊起的%ARGS:0%的腹部…!
+			CASE 3
+				PRINTFORML %ARGS:1%的脚趾钻进了动弹不得的%ARGS:0%的腹部..！
+			CASEELSE
+
+		ENDSELECT
+	CASE 2103
+		PRINTFORML %ARGS:0%的脖子上缠绕着触手、开始挤压并收紧了……
+	CASE 2104
+		IF RAND:2 == 0
+			PRINTFORML %ARGS:0%没能躲开、被压扁了！
+		ELSE
+			PRINTFORML 没来得及躲避，强烈的冲击向%ARGS:0%袭来!
+		ENDIF
+
+	CASE 2105
+		IF BASE:0 <= 0
+			PRINTFORML %ARGS:1%轻轻踩着受到攻击后蹲在地上的%ARGS:0%的脑袋、
+			PRINTFORML 并渐渐加大力度……
+		ELSE
+			PRINTFORML 受到攻击，瘫倒在地%ARGS:0%的头部、
+			PRINTFORML 被%ARGS:1%慢慢踩着……
+		ENDIF
+	CASE 2114
+		PRINTFORML 虽然%ARGS:0%避开了逼近的触手、但触手的影子开始勒紧了%ARGS:0%!
+
+	CASE 2115
+		PRINTFORML %ARGS:1%把手掌放在%ARGS:0%的腹部、停顿了一下……
+		PRINTFORML 
+		PRINTFORML 下一个瞬间、强烈的弹幕射向了%ARGS:0%的腹部!
+
+	CASE 2116
+		PRINTFORML 剃刀每次掠过，%ARGS:0%的衣服就会被一片接一片地剥掉……
+
+	CASE 2117
+		PRINTFORML 缠在%ARGS:0%手脚和脖子上的头发、勒得越来越紧……
+	CASE 2120
+		PRINTFORML 附着在%ARGS:0%身上的%ARGS:1%急速吸走了灵力……
+	CASE 2121
+		PRINTFORML 缠在%ARGS:0%上半身上的%ARGS:1%类的越来越紧了……
+
+	CASEELSE
+		;何もなし
+ENDSELECT
+
+

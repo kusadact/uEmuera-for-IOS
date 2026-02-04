@@ -1,0 +1,29 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 200 ランダムイベント発生 - 152 C寄生淫蟲イベント
+; ------------------------------------------------------------------------------
+
+; □ 1 ふたなり化
+@KOJO_27_0_SYSTEM_MESSAGE_200_152_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL KOJO_27_0_SYSTEM_MESSAGE_CHINKO_EQUIP(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN 1
+
+
+; □ 2 既にふたなり
+@KOJO_27_0_SYSTEM_MESSAGE_200_152_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ああッ♥　凄いぃぃッ♥♥　おちんちんっ、ムリヤリ勃起させられてぇ……ッ♥♥」\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ひあっ！？　ああぁぁぁぁぁっッッ♥♥」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「やめ……っ……！　吸うなぁっ！　離れろぉぉ……っ！！」\n"
+	ENDSELECT
+	
+RETURN 1
+
+
+; □ 3 回避
+@KOJO_27_0_SYSTEM_MESSAGE_200_152_3(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN 0

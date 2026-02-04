@@ -1,0 +1,458 @@
+﻿
+;=================================================
+;おもらしするかどうかのチェック
+;=================================================
+@CHECK_OMORASHI(ARG:0,ARG:1,ARG:2)
+;ARG:0 対象キャラID
+;ARG:1 MP減少倍率
+;ARG:2 シチュエーション　1:部屋睡眠　2:絶頂
+#DIM WET
+#DIM SLEEP_FLAG
+
+	IF FLAG:522 == 2
+		BASE:(ARG:0):NP = 0
+		RETURN -1
+	ENDIF
+
+	WET = 0
+	SLEEP_FLAG = 0
+
+	;現在のNPとおもらし癖の有無で漏れやすさが変わる
+	WET = BASE:(ARG:0):NP
+	IF TALENT:(ARG:0):57
+		WET = WET * 120 / 100
+	ENDIF
+
+	IF ARG:2 == 1
+		SLEEP_FLAG = 1
+	ENDIF
+	IF FLAG:8 && TFLAG:13 == 0
+		SLEEP_FLAG = 1
+	ENDIF
+	IF CFLAG:(ARG:0):25 > 0
+		SLEEP_FLAG = 1
+	ENDIF
+
+	SELECTCASE ARG:2
+		;絶頂＞睡眠＞他の順で我慢の下限が減る
+		CASE 1
+			IF WET <= 50
+				;何もしない（漏らさない）
+			ELSEIF WET <= 80
+				IF RAND:100 <= WET / 2
+					CALL OMORASHI(ARG:0, ARG:1, SLEEP_FLAG, 1, 0)
+				ELSE
+				ENDIF
+			ELSEIF WET <= 90
+				IF RAND:100 <= WET * 2 / 3
+					CALL OMORASHI(ARG:0, ARG:1, SLEEP_FLAG, 1, 0)
+				ELSE
+				ENDIF
+			ELSE
+				IF RAND:100 <= WET
+					CALL OMORASHI(ARG:0, ARG:1, SLEEP_FLAG, 1, 0)
+				ELSE
+					;何もしない（漏らさない）
+				ENDIF
+			ENDIF
+		CASE 2
+			IF WET <= 30
+				;何もしない（漏らさない）
+			ELSEIF WET <= 80
+				IF RAND:100 <= WET / 2
+					CALL OMORASHI(ARG:0, ARG:1, SLEEP_FLAG, 0, 1)
+				ELSE
+				ENDIF
+			ELSEIF WET <= 90
+				IF RAND:100 <= WET * 2 / 3
+					CALL OMORASHI(ARG:0, ARG:1, SLEEP_FLAG, 0, 1)
+				ELSE
+				ENDIF
+			ELSE
+				IF RAND:100 <= WET
+					CALL OMORASHI(ARG:0, ARG:1, SLEEP_FLAG, 0, 1)
+				ELSE
+					;何もしない（漏らさない）
+				ENDIF
+			ENDIF
+		CASEELSE
+			IF WET <= 60
+				;何もしない（漏らさない）
+			ELSEIF WET <= 80
+				IF RAND:100 <= WET / 2
+					CALL OMORASHI(ARG:0, ARG:1, SLEEP_FLAG, 0, 0)
+				ELSE
+				ENDIF
+			ELSEIF WET <= 90
+				IF RAND:100 <= WET * 2 / 3
+					CALL OMORASHI(ARG:0, ARG:1, SLEEP_FLAG, 0, 0)
+				ELSE
+				ENDIF
+			ELSE
+				IF RAND:100 <= WET
+					CALL OMORASHI(ARG:0, ARG:1, SLEEP_FLAG, 0, 0)
+				ELSE
+					;何もしない（漏らさない）
+				ENDIF
+			ENDIF
+	ENDSELECT
+
+
+;=================================================
+;おもらし
+;RESULT　なし
+;=================================================
+@OMORASHI(キャラID, MP減少倍率 = 100, 睡眠フラグ=0, 部屋睡眠フラグ=0, 絶頂フラグ=0)
+#DIM キャラID
+#DIM 睡眠フラグ
+#DIM 部屋睡眠フラグ
+#DIM 絶頂フラグ
+#DIM UNKフラグ
+#DIM BP率
+#DIMS 夢の種類
+#DIM MP減少倍率
+
+;-MEMO-
+
+	UNKフラグ = 0
+	IF UNK_おもらしチェック(キャラID, LOCALS) == 1
+		UNKフラグ = 1
+		BP率 = CFLAG:(キャラID):49 * 100 / 5
+	ENDIF
+
+	SIF FLAG:522 == 2
+		RETURN -1
+
+	IF FLAG:20 != 0
+		CALL SET_はいてない(キャラID)
+		CALL CHANGE_TP(キャラID, 21)
+		BASE:(キャラID):NP = 0
+		EXP:(キャラID):失禁経験 += 1
+		CALL CHECK_GET_OMORASHI(キャラID)
+		RETURN
+	ENDIF
+
+
+	IF 絶頂フラグ
+	
+		PRINTFORM 從因高潮而顫抖的%CALLNAME:(キャラID)%的
+		
+		;着衣がないorはいてない
+		IF BASE:(キャラID):CP <= 0 || CFLAG:(キャラID):44 == 1
+			PRINT 陰唇、
+			IF BASE:(キャラID):6 <= 50
+				PRINT 溢出了娟娟細尿
+			ELSEIF BASE:(キャラID):6 <= 70
+				PRINT 流出的尿液形成了拋物線
+			ELSE
+				PRINT 噴出了大量尿液
+			ENDIF
+			IF FLAG:522 == 1
+				PRINT …
+			ELSE
+				PRINT 満溢着愛液…
+			ENDIF
+			IF UNKフラグ
+				PRINTL
+				PRINT 而且、從菊穴、
+				IF BP率 <= 50
+					PRINT 一点点挤出了汚物
+				ELSEIF BP率 <= 70
+					PRINT 拉出的汚物形成了抛物线
+				ELSE
+					PRINT 喷出了大量汚物
+				ENDIF
+				PRINT …
+			ENDIF
+		ELSE
+			PRINT 穿着的衣服
+			IF BASE:(キャラID):6 <= 50
+				PRINT 慢慢地
+			ELSEIF BASE:(キャラID):6 <= 70
+			ELSE
+				PRINT 急劇地
+			ENDIF
+			PRINT 出現了黒色的汚漬…
+			IF UNKフラグ
+				WAIT
+				PRINT 湿潤的屁股、発出了令人作嘔的声音
+				IF BP率 <= 50
+					PRINT 慢慢地
+				ELSEIF BP率 <= 70
+				ELSE
+					PRINT 迅速
+				ENDIF
+				PRINTL 沾上了汚物的顔色、而且越変越深了…
+				IF BP率 > 80
+					WAIT
+					PRINT 從内衣中溢出的汚物掉落在脚下、
+				ENDIF
+				PRINTL 四周開始瀰漫着独特的臭味…
+			ENDIF
+		ENDIF
+		WAIT
+	
+	
+		IF 睡眠フラグ
+			CALL SET_はいてない(キャラID)
+			;触手服時and拘束時は脱げない
+			IF RESULT == 1 && CFLAG:(キャラID):40 == 0 && CFLAG:(キャラID):20 == 0
+				PRINTFORM %CALLNAME:(キャラID)%
+				IF CFLAG:(キャラID):501 == 6 || CFLAG:(キャラID):501 == 8
+					PRINT 無意識的撕掉了因為被浸湿而感覚不舒服的部分衣物…
+				ELSE
+					PRINT 無法忍受継續穿着内衣無意識的脱掉并丢開了…
+				ENDIF
+			ENDIF
+			WAIT
+		ELSE
+			IF FLAG:522 == 1
+				PRINTFORM %CALLNAME:(キャラID)%因為失禁而流出了屈辱的眼泪
+			ELSE
+				PRINTFORM %CALLNAME:(キャラID)%詛咒着自己満溢着愛液的体質
+			ENDIF
+			CALL SET_はいてない(キャラID)
+			;触手服時and拘束時は脱げない
+			IF RESULT == 1 && CFLAG:(キャラID):40 == 0 && CFLAG:(キャラID):20 == 0
+				PRINTL 、
+				IF CFLAG:(キャラID):501 == 6 || CFLAG:(キャラID):501 == 8
+					PRINT 同時有些懊悩的把被淋湿的部分撕掉了…
+				ELSE
+					PRINT 同時脱掉了完全湿透的無法再接着穿下去的内衣…
+				ENDIF
+			ELSE
+				PRINT …
+			ENDIF
+			WAIT
+		ENDIF
+		
+		;処理整理中の為一時無効化
+		;CALL PRINT_MESSAGE(キャラID, 506, 5, CALLNAME:1, CALLNAME:(キャラID))
+	
+	;寝てたらおねしょ。
+	ELSEIF 睡眠フラグ
+	
+		IF RAND:10 >= 8
+			夢の種類 = 悪夢
+		ELSE
+			夢の種類 = 普通
+		ENDIF
+		
+		;おもらし少女は触手の夢を見るか？
+		IF 夢の種類 == "悪夢"
+			PRINTFORM 睡着的%CALLNAME:(キャラID)%開始呼吸加快身体不停顫抖。
+			PRINTFORMW 好像在夢裡面被触手侵犯着…
+			PRINTFORMW 迎来高潮的%CALLNAME:(キャラID)%的身体跳動之後向後舒展、
+			
+		ELSEIF 夢の種類 == "普通"
+			PRINTFORM 睡着的%CALLNAME:(キャラID)%好像身体正在顫抖、
+			
+		ENDIF
+		
+		
+		;着衣がないorはいてない
+		IF BASE:(キャラID):CP <= 0 || CFLAG:(キャラID):44 == 1
+			IF BASE:(キャラID):6 <= 50
+				PRINT 溢出了娟娟細尿
+			ELSEIF BASE:(キャラID):6 <= 70
+				PRINT 流出的尿液形成了拋物線
+			ELSE
+				PRINT 噴出了大量尿液
+			ENDIF
+			IF FLAG:522 == 1
+				PRINT …
+			ELSE
+				PRINT 満溢着愛液…
+			ENDIF
+			IF UNKフラグ
+				WAIT
+				PRINT 而且、從菊穴、
+				IF BP率 <= 50
+					PRINT 慢慢地
+				ELSE
+					PRINT 猛烈地
+				ENDIF
+				PRINT 溢出了汚物…
+			ENDIF
+		ELSE
+			IF BASE:(キャラID):6 <= 50
+				PRINT 慢慢地
+			ELSEIF BASE:(キャラID):6 <= 70
+			ELSE
+				PRINT 急劇地
+			ENDIF
+			PRINT 在衣服上拡散開来…
+			IF UNKフラグ
+				WAIT
+				PRINTL 已経完全湿潤的屁股、這次響起了潮湿的破裂声
+				PRINT 屁股的部分
+				IF BP率 <= 50
+					PRINT 慢慢地
+				ELSEIF BP率 <= 70
+				ELSE
+					PRINT 一口気
+				ENDIF
+				PRINT 変成了汚物的顔色、越発膨脹了…
+			ENDIF
+		ENDIF
+		WAIT
+		
+		
+		IF 夢の種類 == "悪夢"
+			PRINTFORML 
+			PRINTFORML 睜開眼睛、察覚到自己慘状的%CALLNAME:(キャラID)%露出了悔恨的表情
+			
+		ELSEIF 夢の種類 == "普通"
+			PRINTFORMW %CALLNAME:(キャラID)%的表情因安心感舒緩了下去…
+			IF FLAG:522 == 1
+				PRINTFORMW 好像在夢裡面找到了廁所。
+			ELSE
+			
+			ENDIF
+			PRINTFORML 
+			PRINTFORM 睜開眼睛、察覚到自己慘状的%CALLNAME:(キャラID)%
+			IF FLAG:522 == 1
+				PRINTFORM 因為睡前沒有好好上廁所而後悔
+			ELSE
+			
+			ENDIF
+			PRINTL
+		ENDIF
+		
+		
+		CALL SET_はいてない(キャラID)
+		;触手服時and拘束時は脱げない
+		IF RESULT == 1 && CFLAG:(キャラID):40 == 0 && CFLAG:(キャラID):20 == 0
+			IF CFLAG:(キャラID):501 == 6 || CFLAG:(キャラID):501 == 8
+				PRINT 同時有些懊悩的把被淋湿的部分撕掉了…
+			ELSE
+				PRINT 把已経無法使用的内衣脱下扔掉了…
+			ENDIF
+		ELSE
+			PRINT 做着善後処理…
+		ENDIF
+		WAIT
+		
+		;処理整理中の為一時無効化
+		;CALL PRINT_MESSAGE(キャラID, 506, 1, CALLNAME:1, CALLNAME:(キャラID))
+			
+
+			
+	ELSE
+			
+		;着衣がないorはいてない
+		IF BASE:(キャラID):CP <= 0 || CFLAG:(キャラID):44 == 1
+			PRINTFORM 從%CALLNAME:(キャラID)%的陰唇、
+			IF BASE:(キャラID):6 <= 50
+				PRINT 溢出了娟娟細尿
+			ELSEIF BASE:(キャラID):6 <= 70
+				PRINT 流出的尿液形成了拋物線
+			ELSE
+				PRINT 噴出了大量尿液
+			ENDIF
+			IF FLAG:522 == 1
+				PRINT …
+			ELSE
+				PRINT 満溢着愛液…
+			ENDIF
+		ELSE
+			PRINTFORM %CALLNAME:(キャラID)%穿着的衣服
+			IF BASE:(キャラID):6 <= 50
+				PRINT 慢慢地
+			ELSEIF BASE:(キャラID):6 <= 70
+			ELSE
+				PRINT 急劇地
+			ENDIF
+			PRINT 出現了黒色的汚漬…
+		ENDIF
+		WAIT
+	
+		CALL SET_はいてない(キャラID)
+		;触手服時and拘束時は脱げない
+		IF RESULT == 1 && CFLAG:(キャラID):40 == 0 && CFLAG:(キャラID):20 == 0
+			PRINTFORM %CALLNAME:(キャラID)%は
+			IF CFLAG:(キャラID):501 == 6 || CFLAG:(キャラID):501 == 8
+				PRINT 同時有些懊悩的把被淋湿的部分撕掉了…
+			ELSE
+				PRINT 把已経無法使用的内衣脱下扔掉了…
+			ENDIF
+		ENDIF
+		WAIT
+		
+		
+		;処理整理中の為一時無効化
+		;CALL PRINT_MESSAGE(キャラID, 506, 5, CALLNAME:1, CALLNAME:(キャラID))
+			
+			
+	ENDIF
+	
+	;---共通処理---
+	CALL CHANGE_TP(キャラID, 21)
+
+	LOCAL:0 = BASE:(キャラID):NP
+	BASE:(キャラID):NP = 0
+	EXP:(キャラID):失禁経験 += 1
+
+	
+	
+	;放尿ダメねじ込み
+	IF LOCAL:0 >= 10 && ABL:(キャラID):8 >= 2 && EXP:(キャラID):失禁経験 >= 15
+		SIF TALENT:(キャラID):漏尿癖
+			LOCAL:0 = LOCAL:0 * 3 / 2
+
+		TFLAG:63 = 2
+		LOCAL:5 = CALC_SENSITIVITY((キャラID), TFLAG:63, LOCAL:0 / 3)
+		IF LOCAL:0 > 80
+			PRINT 猛地噴出的
+		ELSEIF LOCAL:0 >= 60
+			PRINT 一股接一股溢出的
+		ELSE
+			PRINT 一点点漏出的
+		ENDIF
+		IF FLAG:522 == 1
+			PRINT 尿液
+		ELSE
+			PRINT 愛液
+		ENDIF
+		PRINTFORML 、給予了変的敏感的%CALLNAME:(キャラID)%快感！
+		CALL DAMAGE_COMMON(キャラID, 2, LOCAL:5 * (TALENT:(キャラID):103 + 2) * (TALENT:(キャラID):77 + 1), MP減少倍率)
+		BASE:(キャラID):NP = 0
+	ENDIF
+	
+	;漏尿癖
+	CALL CHECK_GET_OMORASHI(キャラID)
+
+	IF UNKフラグ
+		CALL CHANGE_TP(キャラID, 21)
+		
+		CFLAG:(キャラID):49 = 0
+		EXP:(キャラID):失禁経験 += 1
+	ENDIF
+
+;=================================================
+;お漏らし癖の取得チェック
+;=================================================
+@CHECK_GET_OMORASHI(ARG:0)
+;すでに持ってるならスルー
+
+	SIF FLAG:522 == 2
+		RETURN -1
+
+	SIF TALENT:(ARG:0):57
+		RETURN -1
+
+	LOCAL:1 = EXP:(ARG:0):21
+	LOCAL:1 -= 1
+	IF LOCAL:1 > RAND:20
+		IF FLAG:522 == 0
+				PRINTFORMW %CALLNAME:(ARG:0)%的愛液変得止不住了！
+		ELSE
+				PRINTFORMW %CALLNAME:(ARG:0)%変得有了漏尿的毛病！
+		ENDIF
+		TALENT:(ARG:0):57 = 1
+		RETURN 1
+	ENDIF
+
+RETURN -1
+
+

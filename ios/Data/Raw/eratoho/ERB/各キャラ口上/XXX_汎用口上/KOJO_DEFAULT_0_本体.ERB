@@ -1,0 +1,4039 @@
+﻿
+; ==========================================================
+;  東方触手宮 汎用口上
+;
+;        このファイル关于♥などの記号をそのまま表示出来るよう
+;        UTF-8 + BOMで記述されています
+;        ファイル保存の際关于ご注意ください
+; ==========================================================
+
+; ////////////////////////////
+; ■ お願い
+;	・触手宮の性格关于15種*5分岐の全75パターンと膨大です、一人で書き上げるの关于実質不可能です
+;	  たった一言の口上追加でもそれ关于大きな助けになります
+;
+;	・プログラムが解らない、口上を書きたいけれどソースコード关于見たくない等の場合
+;	  性格、所持素質、状態異常、ステータスなどの簡単な状況と、その場合の口上を書いたテキストを
+;	  アップローダーに上げるだけで、このゲームが好きな誰かが組み込んでくれるでしょう
+
+; ////////////////////////////
+; ■ 技術的なこと
+;	  改行やシステム文字色での描画方法・仕様・コーディング規約关于"KOJO_DEFAULT.ERB"
+;	  汎用口上を使った口上の書き方关于"汎用口上の使い方.txt"を参照してください
+
+; ////////////////////////////
+; ■ 参考資料
+;	・定義済キャラクター 性格一覧
+;	----------------------------------------------------------------------------------------------------
+;	01:おせっかい     | 夢月 パルスィ 一輪 わかさぎ姫 咲夜 リリーブラック 八橋 八雲紫
+;	02:おてんば       | ぬえ 影狼 チルノ フランドール 萃香 サニーミルク 幻月 ヤマメ お燐
+;	03:がんこもの     | 慧音 半霊 映姫 妖夢 椛 依姫 華扇 純狐
+;	04:がんばりや     | 橙 穣子 里香 アリス メディスン 上海人形 蓬莱人形 小傘 針妙丸 こころ 空 響子 清蘭
+;	05:きれもの       | パチュリー 八雲藍 永琳 魅魔 雷鼓 夢子 夢美 サグメ
+;	06:くろうにん     | ルナサ 鈴仙 明羅 レイセン エリー 紅美鈴 衣玖 ちゆり 朱鷺子 ドレミー
+;	07:しあわせもの   | てゐ 神綺 芳香 布都 メルラン 早苗 クラウンピース
+;	08:セクシーギャル | 小悪魔 ヘカーティア
+;	09:ぬけめがない   | リリカ ミスティア スターサファイア 諏訪子 青娥 小鈴 マイ ナズーリン 文
+;	10:ねっけつかん   | リグル サラ ユキ 魔理沙 妹紅 神奈子 勇儀 屠自古 星
+;	11:のんきもの     | ルーミア 小町 小兎姫 キスメ 霊夢 幽々子 ルイズ エレン 豊姫 マミゾウ 鈴瑚
+;	12:ひっこみじあん | 大妖精 にとり 静葉 阿求 ルナチャイルド 关于たて
+;	13:やさしいひと   | リリーホワイト 雛 弁々 さとり 神子 白蓮
+;	14:わがまま的       | 輝夜 ちびアリス 天子 正邪 レミリア 幽香 霊夢様 菫子
+;	00:ふつう的         | レティ オレンジ メリー 蓮子 こいし くるみ ひまわり妖精 ムラサ 理香子 カナ 赤蛮奇
+;	----------------------------------------------------------------------------------------------------
+
+
+
+;以下関数关于別ファイルに分離 → KOJO_DEFAULT_関数.ERB
+;睡眠用
+;@COMMON_KOJO_DEFAULT_SLEEP_TEST(ARG:0)
+
+;喪失用
+;@COMMON_KOJO_DEFAULT_RYONA_TEST(ARG:0)
+
+;絶頂中の攻撃系
+;@COMMON_KOJO_DEFAULT_NOW_H_AT_TEST(ARG:0)
+
+
+
+
+; ////////////////////////////
+; ■ 口上
+
+
+;以下頭に◆の付いた部分关于目次検索用なので消したり書き換えたりしないでねん
+
+
+
+
+;以下別フォルダにに分離 → KOJO_DEFAULT_1_味方攻撃発動時
+;@KOJO_DEFAULT_1_味方攻撃発動時
+
+;以下別ファイルに分離 → それぞれ同名の.ERB
+;@KOJO_DEFAULT_12_敵通常攻撃命中時
+;@KOJO_DEFAULT_13_敵衣服攻撃命中時
+;@KOJO_DEFAULT_14_敵性攻撃命中時
+;@KOJO_DEFAULT_15_敵拘束攻撃命中時
+;@KOJO_DEFAULT_16_敵寄生攻撃命中時
+;@KOJO_DEFAULT_17_敵特殊攻撃命中時
+;@KOJO_DEFAULT_18_敵口責め攻撃命中時
+;@KOJO_DEFAULT_21_味方攻撃(回避された)
+;@KOJO_DEFAULT_22~27敵攻撃(回避した)
+
+
+
+; ////////////////////////////
+; / ARG:0   31    ◆敵を撃破
+; / ARG:1         敵ID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_31(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「总算打倒了」"
+	CALL ADD_RAND_MESSAGE, @"「总之，向前迈出了一步」"
+
+	CALL ADD_RAND_MESSAGE, @"「……停止动了」"
+	CALL ADD_RAND_MESSAGE, @"「……有点收获？」"
+	CALL ADD_RAND_MESSAGE, @"「这样稍微……」"
+
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「一只一只确保击倒」"
+		CALL ADD_RAND_MESSAGE, @"「有点麻烦啊」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「呼……还在吗？」"
+
+	CASE 性格_セクシーギャル
+
+		CALL ADD_RAND_MESSAGE, @"「触手名折れ了呢。真是软弱」"
+		CALL ADD_RAND_MESSAGE, @"「命运的离别」"
+		CALL ADD_RAND_MESSAGE, @"「突然的告别」"
+		CALL ADD_RAND_MESSAGE, @"「再见」"
+		CALL ADD_RAND_MESSAGE, @"「再见！……吧」"
+		CALL ADD_RAND_MESSAGE, @"「美好地分别吧。为了彼此的未来」"
+		CALL ADD_RAND_MESSAGE, @"「很遗憾，看来是分别了呢」"
+		CALL ADD_RAND_MESSAGE, @"「不再站起来了吗？那就太好了」"
+		CALL ADD_RAND_MESSAGE, @"「呵呵呵。好像有点颤抖呢」"
+		CALL ADD_RAND_MESSAGE, @"「果然先倒下了吗」"
+		CALL ADD_RAND_MESSAGE, @"「感觉很好」"
+		CALL ADD_RAND_MESSAGE, @"「辛苦了」"
+		CALL ADD_RAND_MESSAGE, @"「一起走的约定怎么样了？」"
+
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「嘛，就这样吧」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「那么，下一个？」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「不、不会再动了吧……？」"
+	CASE 性格_やさしいひと
+		CALL ADD_RAND_MESSAGE, @"「对不起，我们也是拼命的」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「完全没有手感的对手」"
+		CALL ADD_RAND_MESSAGE, @"「不过就这种程度的对手」"
+	ENDSELECT
+	
+	; MP残量3/4以上なら追加口上
+	IF BASE:MP >= (MAXBASE:MP * 3 / 4)
+		CALL ADD_RAND_MESSAGE, @"「轻松呢」"
+		CALL ADD_RAND_MESSAGE, @"「没什么了不起的」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「嘿嘿～♪　弱弱的♪」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「对于这种程度的对手，用力量碾压也轻松呢」"
+		CASE 性格_くろうにん
+			CALL ADD_RAND_MESSAGE, @"「对于这种程度的对手，我很轻松」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0   32    ◆HPが0になった
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_32(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(2)
+
+	RETURN 1
+ENDIF
+
+
+
+	CALL ADD_RAND_MESSAGE, @"（糟糕，身体动不了了……！）"
+	CALL ADD_RAND_MESSAGE, @"「唔唔，力量用不出来……」"
+	CALL ADD_RAND_MESSAGE, @"「已……到极限了……」"
+
+	CALL ADD_RAND_MESSAGE, @"「呼，疲劳……」"
+	CALL ADD_RAND_MESSAGE, @"「疲劳感袭向脚部……」"
+	CALL ADD_RAND_MESSAGE, @"「被消耗成这样……」"
+	CALL ADD_RAND_MESSAGE, @"「呜呜，这样下去……」"
+	CALL ADD_RAND_MESSAGE, @"「必须找个地方休息一下……」"
+	CALL ADD_RAND_MESSAGE, @"「状况不妙……」"
+	CALL ADD_RAND_MESSAGE, @"「情况越来越糟……」"
+	CALL ADD_RAND_MESSAGE, @"「只能靠意志力硬撑下去了！」"
+	CALL ADD_RAND_MESSAGE, @"「不好，视线模糊了……」"
+	CALL ADD_RAND_MESSAGE, @"「这可是相当严峻的……」"
+	CALL ADD_RAND_MESSAGE, @"「这个……不会立刻恢复的……」"
+	CALL ADD_RAND_MESSAGE, @"「黄灯亮起了……」"
+
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（啊……嗯……？站不稳了……）"
+	ENDSELECT
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0   33    ◆MPが0になった
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_33(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+	CALL ADD_RAND_MESSAGE, @"「意……识……已经……」"
+	CALL ADD_RAND_MESSAGE, @"「我的身体……被弄脏了……」"
+	CALL ADD_RAND_MESSAGE, @"「这样……强行……」"
+
+
+;あきらめにくい性格关于次でリターン
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+
+			CASE 性格_おせっかい
+				CALL ADD_RAND_MESSAGE, @"「不要了……无法忍受……」"
+				CALL ADD_RAND_MESSAGE, @"「抵抗是……毫无意义的……」"
+				CALL ADD_RAND_MESSAGE, @"「这种事情……我无法承受……」"
+
+			CASE 性格_おてんば
+				CALL ADD_RAND_MESSAGE, @"「绝对无法胜利……」"
+				CALL ADD_RAND_MESSAGE, @"「输了……我输了……」"
+
+				CALL ADD_RAND_MESSAGE, @"「到底是怎么了……身体……在颤抖……」"
+
+				CALL ADD_RAND_MESSAGE, @"「已经没有可以做的事情了……」"
+				RETURN 1
+
+			CASE 性格_がんこもの
+				CALL ADD_RAND_MESSAGE, @"「女人……到底……是什么……我在想……」"
+				CALL ADD_RAND_MESSAGE, @"「没有逃跑的地方……」"
+
+			CASE 性格_がんばりや
+				CALL ADD_RAND_MESSAGE, @"「原始的……　欲望……」"
+				CALL ADD_RAND_MESSAGE, @"「还能……　继续……　不行……　啊……」"
+				CALL ADD_RAND_MESSAGE, @"「命运……　如此……　想要承认……」"
+
+				CALL ADD_RAND_MESSAGE, @"「心灵的铠甲……　被脱下……」"
+				CALL ADD_RAND_MESSAGE, @"「连心灵……　都不屈服……　但是……」"
+				RETURN 1
+
+			CASE 性格_きれもの
+
+				CALL ADD_RAND_MESSAGE, @"「无论……　打倒……　还是被征服……」"
+				CALL ADD_RAND_MESSAGE, @"「女人……到底……是什么……我在想……」"
+				CALL ADD_RAND_MESSAGE, @"「没有逃跑的地方……」"
+				CALL ADD_RAND_MESSAGE, @"「抵抗是……毫无意义的……」"
+				CALL ADD_RAND_MESSAGE, @"「这种事情……我无法承受……」"
+
+			CASE 性格_ぬけめがない
+
+				CALL ADD_RAND_MESSAGE, @"「无论……　打倒……　还是被征服……」"
+				CALL ADD_RAND_MESSAGE, @"「女人……到底……是什么……我在想……」"
+				CALL ADD_RAND_MESSAGE, @"「没有逃跑的地方……」"
+				CALL ADD_RAND_MESSAGE, @"「抵抗是……毫无意义的……」"
+				CALL ADD_RAND_MESSAGE, @"「这种事情……我无法承受……」"
+
+			CASE 性格_ねっけつかん
+				CALL ADD_RAND_MESSAGE, @"「原始的……　欲望……」"
+				CALL ADD_RAND_MESSAGE, @"「还能……　继续……　不行……　啊……」"
+				CALL ADD_RAND_MESSAGE, @"「命运……　如此……　想要承认……」"
+
+				CALL ADD_RAND_MESSAGE, @"「心灵的铠甲……　被脱下……」"
+				CALL ADD_RAND_MESSAGE, @"「连心灵……　都不屈服……　但是……」"
+				RETURN 1
+
+			CASE 性格_わがまま
+
+				CALL ADD_RAND_MESSAGE, @"「不要了……无法忍受……」"
+				CALL ADD_RAND_MESSAGE, @"「抵抗是……毫无意义的……」"
+				CALL ADD_RAND_MESSAGE, @"「这种事情……我无法承受……」"
+		ENDSELECT
+
+;以下、あきらめ系
+
+
+	CALL ADD_RAND_MESSAGE, @"「啊……啊……　不行了……」"
+	CALL ADD_RAND_MESSAGE, @"「不、不行了……　不能再……」"
+
+	CALL ADD_RAND_MESSAGE, @"「停下……　请原谅……」"
+	CALL ADD_RAND_MESSAGE, @"「如果……　继续下去……　我……　已经……」"
+	CALL ADD_RAND_MESSAGE, @"「请停下……　拜托了……」"
+
+	CALL ADD_RAND_MESSAGE, @"「我……　到此为止……」"
+
+	CALL ADD_RAND_MESSAGE, @"「我知道了……　我会放弃的……　所以，请……」"
+
+	CALL ADD_RAND_MESSAGE, @"「没办法……　已经……」"
+	CALL ADD_RAND_MESSAGE, @"「这样……　该怎么办……」"
+
+
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0   35    ◆CPが減少した
+; / ARG:1    0    破れ強度 0:全裸になった 1:半裸になった 2:破れ始めた
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_35_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+	CALL ADD_RAND_MESSAGE, @"「呀……别看啦！」"
+	CALL ADD_RAND_MESSAGE, @"（竟然在这种地方被脱光了……！）"
+		
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"（终于被脱光了……）"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   35    ◆CPが減少した
+; / ARG:1    1    破れ強度 0:全裸になった 1:半裸になった 2:破れ始めた
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_35_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(0)
+
+	CALL ADD_RAND_MESSAGE, @"「别……别看……」"
+
+	RETURN 1
+ENDIF
+
+
+
+
+
+
+	CALL ADD_RAND_MESSAGE, @"「必须想办法藏起来……」"
+	CALL ADD_RAND_MESSAGE, @"「只要注意角度就看不见了吧……？」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   35    ◆CPが減少した
+; / ARG:1    2    破れ強度 0:全裸になった 1:半裸になった 2:破れ始めた
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_35_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(0)
+
+	CALL ADD_RAND_MESSAGE, @"「别……别看……」"
+
+	RETURN 1
+ENDIF
+
+
+
+	
+	CALL ADD_RAND_MESSAGE, @"「呀……呀，衣服！？」"
+	CALL ADD_RAND_MESSAGE, @"「这种事也可以！？」"
+RETURN 1
+
+
+
+; ////////////////////////////
+; / ARG:0   42    ◆敵からの解放
+; / ARG:1       
+; / ARG:2        1:    2:味方の攻撃　　　3:霊撃　4:自力
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_42_X_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(2)
+
+
+	RETURN 1
+ENDIF
+
+
+
+
+
+
+; ////////////////////////////
+; / ARG:0   42    ◆敵からの解放
+; / ARG:1       
+; / ARG:2        1:    2:味方の攻撃　　　3:霊撃　4:自力
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_42_X_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL ADD_RAND_MESSAGE, @"「呜……呜……」"
+
+	RETURN 1
+ENDIF
+
+
+	
+	CALL ADD_RAND_MESSAGE, @"「哈……哈……　谢、谢谢……」"
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ふつう
+		CALL ADD_RAND_MESSAGE, @"「哈……哈……　谢、谢谢你」"
+	CASE 性格_おせっかい
+		CALL ADD_RAND_MESSAGE, @"「哈……哈……　好，开始反击吧」"
+		CALL ADD_RAND_MESSAGE, @"「哈……哈……　你真敢做啊」"
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「好像出来了！」"
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「哈……哈……　感谢你」"
+	CASE 性格_がんばりや
+		CALL ADD_RAND_MESSAGE, @"「呼……呼……现在轮到我了！」"
+		CALL ADD_RAND_MESSAGE, @"「哈……哈……　好，开始反击吧」"
+		CALL ADD_RAND_MESSAGE, @"「哈……哈……　你真敢做啊」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「呼……呼……下次要更小心……」"
+		CALL ADD_RAND_MESSAGE, @"「如果那样下去就危险了……」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「谢、谢谢……」"
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「那么，接下来该怎么办呢」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「哎呀呀，已经结束了吗」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「呼……呼……下次要更小心……」"
+		CALL ADD_RAND_MESSAGE, @"「如果那样下去就危险了……」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「呼……呼……我会立刻消灭你的！」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「呼……呼……啊，真是麻烦啊……」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「谢、谢谢……」"
+		CALL ADD_RAND_MESSAGE, @"「要、要是再被抓住怎么办……」"
+	CASE 性格_やさしいひと
+		CALL ADD_RAND_MESSAGE, @"「谢、谢谢……」"
+		CALL ADD_RAND_MESSAGE, @"「要、要是再被抓住怎么办……」"
+
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「哈……哈……　好，开始反击吧」"
+		CALL ADD_RAND_MESSAGE, @"「哈……哈……　你真敢做啊」"
+	ENDSELECT
+
+RETURN 1
+
+
+
+
+
+; ////////////////////////////
+; / ARG:0   43    ◆目覚め
+; / ARG:1       
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_43(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL ADD_RAND_MESSAGE, @"「呜……呜……」"
+
+	RETURN 1
+ENDIF
+
+;睡眠、眼ざめのループ用に言って確率で無口
+IF RAND:3 > 0
+
+	RETURN 0
+ENDIF
+
+
+
+
+	CALL ADD_RAND_MESSAGE, @"「我、我要睡觉了……」"
+	CALL ADD_RAND_MESSAGE, @"「咦，我刚才……」"
+	CALL ADD_RAND_MESSAGE, @"「什、什么时候……」"
+	CALL ADD_RAND_MESSAGE, @"「那、那个……」"
+	CALL ADD_RAND_MESSAGE, @"「哈！？现在是怎么回事……」"
+	CALL ADD_RAND_MESSAGE, @"「醒过来真是太好了……」"
+	CALL ADD_RAND_MESSAGE, @"「总算是醒过来了……」"
+
+	CALL ADD_RAND_MESSAGE, @"「我、我到底在干什么……」"
+
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ふつう
+	CASE 性格_おせっかい
+		CALL ADD_RAND_MESSAGE, @"「虽然醒了，但心情沉重啊」"
+		CALL ADD_RAND_MESSAGE, @"「咕，这个时候……」"
+		CALL ADD_RAND_MESSAGE, @"「请保持安静」"
+		CALL ADD_RAND_MESSAGE, @"「这么随心所欲……」"
+		CALL ADD_RAND_MESSAGE, @"「无法安静地睡觉呢」"
+
+		CALL ADD_RAND_MESSAGE, @"「哎呀，还在呢。我还以为你已经走了……对了」"
+		CALL ADD_RAND_MESSAGE, @"「哈哈，原来是这样啊」"
+	CASE 性格_おてんば
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「这么随心所欲……」"
+		CALL ADD_RAND_MESSAGE, @"「咕，这个时候……」"
+
+		CALL ADD_RAND_MESSAGE, @"「差点陷入对方的节奏……」"
+	CASE 性格_がんばりや
+
+		CALL ADD_RAND_MESSAGE, @"「咕，这个时候……」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「虽然醒了，但心情沉重啊」"
+		CALL ADD_RAND_MESSAGE, @"「咕，这个时候……」"
+		CALL ADD_RAND_MESSAGE, @"「这次虽然醒了，但是麻烦的情况啊」"
+
+		CALL ADD_RAND_MESSAGE, @"「差点陷入对方的节奏呢……」"
+		CALL ADD_RAND_MESSAGE, @"「这么卑鄙的情况……」"
+		CALL ADD_RAND_MESSAGE, @"「这么卑劣的情况……」"
+		CALL ADD_RAND_MESSAGE, @"「这么卑劣的情况……」"
+		CALL ADD_RAND_MESSAGE, @"「卑鄙的情况下……」"
+
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「噩梦的延续……」"
+
+	CASE 性格_しあわせもの
+	CASE 性格_セクシーギャル
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「虽然醒了，但心情沉重啊」"
+		CALL ADD_RAND_MESSAGE, @"「咕，这个时候……」"
+		CALL ADD_RAND_MESSAGE, @"「这次虽然醒了，但是麻烦的情况啊」"
+
+		CALL ADD_RAND_MESSAGE, @"「差点陷入对方的节奏呢……」"
+		CALL ADD_RAND_MESSAGE, @"「这么卑鄙的情况……」"
+		CALL ADD_RAND_MESSAGE, @"「这么卑劣的情况……」"
+		CALL ADD_RAND_MESSAGE, @"「这么卑劣的情况……」"
+		CALL ADD_RAND_MESSAGE, @"「卑鄙的情况下……」"
+	CASE 性格_ねっけつかん
+
+		CALL ADD_RAND_MESSAGE, @"「咕，这个时候……」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「虽然醒了，但心情沉重啊」"
+		CALL ADD_RAND_MESSAGE, @"「早上好。但是，我已经看腻了」"
+
+		CALL ADD_RAND_MESSAGE, @"「哎呀，还在呢。我还以为你已经走了……对了」"
+		CALL ADD_RAND_MESSAGE, @"「无法安静地睡觉呢」"
+	CASE 性格_ひっこみじあん
+
+		CALL ADD_RAND_MESSAGE, @"「……哈雷！？」"
+		CALL ADD_RAND_MESSAGE, @"「……呼啊！？」"
+		CALL ADD_RAND_MESSAGE, @"「……呜哇！？」"
+		CALL ADD_RAND_MESSAGE, @"「……呼呦！？」"
+	CASE 性格_やさしいひと
+
+		CALL ADD_RAND_MESSAGE, @"「……哈雷！？」"
+		CALL ADD_RAND_MESSAGE, @"「……呼啊！？」"
+		CALL ADD_RAND_MESSAGE, @"「……呜哇！？」"
+		CALL ADD_RAND_MESSAGE, @"「……呼呦！？」"
+
+	CASE 性格_わがまま
+
+		CALL ADD_RAND_MESSAGE, @"「无法安静地睡觉呢」"
+		CALL ADD_RAND_MESSAGE, @"「这么随心所欲……」"
+
+		CALL ADD_RAND_MESSAGE, @"「咕，这个时候……」"
+		CALL ADD_RAND_MESSAGE, @"「虽然醒了，但心情沉重啊」"
+		CALL ADD_RAND_MESSAGE, @"「早上好。但是，我已经看腻了」"
+	ENDSELECT
+
+RETURN 1
+
+
+
+
+
+
+
+; ////////////////////////////
+; / ARG:0   46    ◆ターン経過　衣服ぼろぼろ
+; / ARG:1       （ARG:1が　0：恥薄い　1：通常　2：恥じらい）　
+; / ARG:2にMPダメージ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_46(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+
+;喪失、睡眠　　→無口
+IF CFLAG:29 > 0 || CFLAG:25 > 0
+
+	RETURN 0
+ENDIF
+
+;発情
+IF CFLAG:28 > 0 && RAND:5 == 0
+
+	CALL ADD_RAND_MESSAGE, @"「觉得被看到了，感觉有点奇怪……」"
+	CALL ADD_RAND_MESSAGE, @"「啊，风啊……」"
+	CALL ADD_RAND_MESSAGE, @"「被看到了，被看到了……」"
+
+	CALL ADD_RAND_MESSAGE, @"「不、不要看胸部……」"
+	CALL ADD_RAND_MESSAGE, @"（现在，被看到那个地方的话……）"
+
+	RETURN 1
+
+ELSEIF CFLAG:28 > 0
+
+	RETURN 0
+
+ENDIF
+
+;　実質的に毎ターンでるので、飽きやすい。低確率でしか喋らないように。通常、衣服、性、拘束、寄生　５分の１～８分の１程度？
+IF RAND:6 > 0
+
+	RETURN 0
+ENDIF
+
+
+
+
+	CALL ADD_RAND_MESSAGE, @"「快点结束吧……」"
+	CALL ADD_RAND_MESSAGE, @"「嗯，风……」"
+	CALL ADD_RAND_MESSAGE, @"「不习惯这样的打扮……」"
+
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ふつう
+	CASE 性格_おせっかい
+
+
+		CALL ADD_RAND_MESSAGE, @"「这样的侮辱……」"
+		CALL ADD_RAND_MESSAGE, @"「成为众矢之的……」"
+		CALL ADD_RAND_MESSAGE, @"「无法完全隐藏……」"
+		CALL ADD_RAND_MESSAGE, @"「永远这样的打扮……」"
+		CALL ADD_RAND_MESSAGE, @"「至少不是在众人面前，还算好」"
+
+
+		CALL ADD_RAND_MESSAGE, @"「不能展示弱点……」"
+		CALL ADD_RAND_MESSAGE, @"「好好收费的」"
+
+	CASE 性格_おてんば
+	CASE 性格_がんこもの
+
+		CALL ADD_RAND_MESSAGE, @"「从哪里都感受到不正当的目光……」"
+		CALL ADD_RAND_MESSAGE, @"「这样的侮辱……」"
+		CALL ADD_RAND_MESSAGE, @"「成为众矢之的……」"
+		CALL ADD_RAND_MESSAGE, @"「无法完全隐藏……」"
+		CALL ADD_RAND_MESSAGE, @"「永远这样的打扮……」"
+		CALL ADD_RAND_MESSAGE, @"「至少不是在众人面前，还算好」"
+
+		CALL ADD_RAND_MESSAGE, @"「不能展示弱点……」"
+
+	CASE 性格_がんばりや
+
+		CALL ADD_RAND_MESSAGE, @"「这样的侮辱……」"
+		CALL ADD_RAND_MESSAGE, @"「成为众矢之的……」"
+		CALL ADD_RAND_MESSAGE, @"「无法完全隐藏……」"
+		CALL ADD_RAND_MESSAGE, @"「永远这样的打扮……」"
+		CALL ADD_RAND_MESSAGE, @"「至少不是在众人面前，还算好」"
+
+		CALL ADD_RAND_MESSAGE, @"「不能展示弱点……」"
+
+	CASE 性格_きれもの
+
+		CALL ADD_RAND_MESSAGE, @"「在这里着急，可能正中对方下怀」"
+		CALL ADD_RAND_MESSAGE, @"「……不慎的举动只会让对方欲火焚身」"
+		CALL ADD_RAND_MESSAGE, @"「……心情不好」"
+		CALL ADD_RAND_MESSAGE, @"「虽然不能太在意」"
+
+		CALL ADD_RAND_MESSAGE, @"「不能展示弱点……」"
+
+	CASE 性格_くろうにん
+
+		CALL ADD_RAND_MESSAGE, @"「请、请不要看！」"
+		CALL ADD_RAND_MESSAGE, @"「好、害羞……」"
+		CALL ADD_RAND_MESSAGE, @"「感受到了从某处的目光……」"
+	CASE 性格_しあわせもの
+
+		CALL ADD_RAND_MESSAGE, @"「如果把它当成泳装的话……不，不行」"
+		CALL ADD_RAND_MESSAGE, @"「这样穿好看吗……」"
+	CASE 性格_セクシーギャル
+
+		CALL ADD_RAND_MESSAGE, @"「这样穿好看吗……」"
+	CASE 性格_ぬけめがない
+
+
+		CALL ADD_RAND_MESSAGE, @"「在这里着急，可能正中对方下怀」"
+		CALL ADD_RAND_MESSAGE, @"「……不慎的举动只会让对方欲火焚身」"
+		CALL ADD_RAND_MESSAGE, @"「……心情不好」"
+		CALL ADD_RAND_MESSAGE, @"「虽然不能太在意」"
+
+		CALL ADD_RAND_MESSAGE, @"「感受到了从某处的目光……」"
+
+		CALL ADD_RAND_MESSAGE, @"「不能展示弱点……」"
+
+	CASE 性格_ねっけつかん
+
+		CALL ADD_RAND_MESSAGE, @"「这样的侮辱……」"
+	CASE 性格_のんきもの
+
+		CALL ADD_RAND_MESSAGE, @"「如果把它当成泳装的话……不，不行」"
+		CALL ADD_RAND_MESSAGE, @"「这样穿好看吗……」"
+	CASE 性格_ひっこみじあん
+
+		CALL ADD_RAND_MESSAGE, @"「请、请不要看！」"
+		CALL ADD_RAND_MESSAGE, @"「好、害羞……」"
+	CASE 性格_やさしいひと
+
+		CALL ADD_RAND_MESSAGE, @"「请、请不要看！」"
+		CALL ADD_RAND_MESSAGE, @"「好、害羞……」"
+
+
+	CASE 性格_わがまま
+
+		CALL ADD_RAND_MESSAGE, @"「这样的侮辱……」"
+		CALL ADD_RAND_MESSAGE, @"「成为众矢之的……」"
+		CALL ADD_RAND_MESSAGE, @"「无法完全隐藏……」"
+		CALL ADD_RAND_MESSAGE, @"「永远这样的打扮……」"
+		CALL ADD_RAND_MESSAGE, @"「至少不是在众人面前，还算好」"
+		CALL ADD_RAND_MESSAGE, @"「不能展示弱点……」"
+
+	ENDSELECT
+
+RETURN 1
+
+
+
+; ////////////////////////////
+; / ARG:0   47    ◆重度汚染部屋で時間経過
+; / ARG:1         部位
+; / ARG:2         EPダメージ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_47(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+;絶頂時
+IF CFLAG:35 > 0
+
+	CALL COMMON_KOJO_DEFAULT_NOW_H_AT_TEST(2)
+
+	CALL ADD_RAND_MESSAGE, @"「关于，离开一下……」"
+
+	RETURN 1
+
+ENDIF
+
+
+	CALL ADD_RAND_MESSAGE, @"「关于，离开吧！」"
+	CALL ADD_RAND_MESSAGE, @"「真是……这是什么地方啊……」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「真是个糟糕的地方」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「咕……等会儿我会一起烧掉的！」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   48    ◆ターン終了時自慰発生
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_48(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+
+
+
+	; 自慰中毒LVで分岐
+	SELECTCASE ABL:10
+	; 自慰中毒LV0
+	CASE 0
+		CALL ADD_RAND_MESSAGE, @"（只是一点点……只是稍微舒服一下……）"
+		CALL ADD_RAND_MESSAGE, @"「现在不是做这种事的时候……」"
+		CALL ADD_RAND_MESSAGE, @"「呜……不要自慰……但也不能就这样……」"
+
+	
+	; 自慰中毒LV1
+	CASE 1
+		CALL ADD_RAND_MESSAGE, @"「分心得厉害……所以……只能稍微……」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊……啊……身体的疼痛变得更严重了……啊……」"
+		CALL ADD_RAND_MESSAGE, @"「嗯……♥ 只是一点点……应该没关系吧……？」"
+		CALL ADD_RAND_MESSAGE, @"（一次射……♥）"
+
+		
+	; 自慰中毒LV2
+	CASE 2
+		CALL ADD_RAND_MESSAGE, @"「不行……♥ 手停不下来了……♥」"
+		CALL ADD_RAND_MESSAGE, @"「身体发热了……♥ 热热的……♥」"
+		CALL ADD_RAND_MESSAGE, @"（只有一次……只有一次……只有一次……♥）"
+		
+
+	; 自慰中毒LV3
+	CASE 3
+		CALL ADD_RAND_MESSAGE, @"「不行了，忍不住了♥ 自慰……呜♥」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊……♥ 一旦开始自慰，就什么都想不了了……♥」"
+		CALL ADD_RAND_MESSAGE, @"（只有一次♥ 只有一次……不够吧，找个地方躲起来做一个小时吧♥♥）"
+		CALL ADD_RAND_MESSAGE, @"（嗯♥ 啊♥……嗯……？ 什么时候自慰的呢……？ 哎算了♥♥♥）"
+		
+	ENDSELECT
+	
+	; 催眠中
+	IF CFLAG:43
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			CALL ADD_RAND_MESSAGE, @"「手自己动起来了……难、难道……」"
+			CALL ADD_RAND_MESSAGE, @"「什、什么！？ 手自己动起来了！？」"
+		; 発情・感情操作系
+		CASE 1
+			CALL ADD_RAND_MESSAGE, @"（明明被看到了……但无法抑制……）"
+			CALL ADD_RAND_MESSAGE, @"「不行了……忍不住了……」"
+		; 無意識・認識操作系
+		CASE 2
+			CALL ADD_RAND_MESSAGE, @"（身体发热……得冷静一下……）"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+
+
+
+
+; ////////////////////////////
+; / ARG:0   51    ◆カウンターダメージ発生時　りばーすで关于瀕死時の必殺技
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_51(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+
+	CALL ADD_RAND_MESSAGE, @"「虽然很危险！」"
+	CALL ADD_RAND_MESSAGE, @"「只剩下这个手了！」"
+
+	CALL ADD_RAND_MESSAGE, @"「咕，以为逼到绝境了吗！？……但是！」"
+	CALL ADD_RAND_MESSAGE, @"「别、别小看我！」"
+
+	CALL ADD_RAND_MESSAGE, @"「你、你在做什么！」"
+	CALL ADD_RAND_MESSAGE, @"「还、还没结束呢！」"
+	CALL ADD_RAND_MESSAGE, @"「可惜了！」"
+	CALL ADD_RAND_MESSAGE, @"「这、这么简单！」"
+	CALL ADD_RAND_MESSAGE, @"「美丽的花朵也有刺哦！」"
+
+	CALL ADD_RAND_MESSAGE, @"「别得意啦！」"
+	CALL ADD_RAND_MESSAGE, @"「你做得很好！」"
+	CALL ADD_RAND_MESSAGE, @"「别再执着了！」"
+
+	CALL ADD_RAND_MESSAGE, @"「甜蜜的东西！」"
+	CALL ADD_RAND_MESSAGE, @"「不、不要轻易触碰！」"
+	CALL ADD_RAND_MESSAGE, @"「就、就让你尝尝这个！」"
+	CALL ADD_RAND_MESSAGE, @"「不、不会让你得逞的！」"
+
+	CALL ADD_RAND_MESSAGE, @"「不、不要靠近！」"
+
+
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0   54    ◆戦闘開始時
+; / ARG:1         0:通常戦闘 1:クイーン戦 2:ガーディアン戦
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_54(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+IF CFLAG:29 > 0 || CFLAG:25 > 0
+
+;●喪失、睡眠
+
+	RETURN 0
+ENDIF
+
+
+	CALL ADD_RAND_MESSAGE, @"「要怎么战斗呢」"
+	CALL ADD_RAND_MESSAGE, @"「要怎么应对……」"
+	CALL ADD_RAND_MESSAGE, @"「被发现了！？」"
+	CALL ADD_RAND_MESSAGE, @"「竟然在这种地方！？」"
+	CALL ADD_RAND_MESSAGE, @"「真是的……」"
+	CALL ADD_RAND_MESSAGE, @"「不随便对待的话……」"
+	CALL ADD_RAND_MESSAGE, @"「为什么会有这么多失踪的孩子呢……」"
+	CALL ADD_RAND_MESSAGE, @"「无论在哪里都会出现……」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ふつう
+		CALL ADD_RAND_MESSAGE, @"「敌人……对吧，这家伙……」"
+
+		CALL ADD_RAND_MESSAGE, @"「现在要冷静处理……」"
+	CASE 性格_おせっかい
+		CALL ADD_RAND_MESSAGE, @"「开始打扫吧」"
+		CALL ADD_RAND_MESSAGE, @"「欢迎光临。那么，回去的路在那边。」"
+		CALL ADD_RAND_MESSAGE, @"「特地来见我吗？辛苦了」"
+
+		CALL ADD_RAND_MESSAGE, @"「记住女人的生存方式……」"
+
+		CALL ADD_RAND_MESSAGE, @"「迎接我？不用那么在意啦」"
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「有什么东西出现了」"
+		CALL ADD_RAND_MESSAGE, @"「哦，气氛热闹起来了」"
+		CALL ADD_RAND_MESSAGE, @"「我来了！」"
+		CALL ADD_RAND_MESSAGE, @"「啊，有什么东西！」"
+		CALL ADD_RAND_MESSAGE, @"「反正都一起上吧！」"
+
+		CALL ADD_RAND_MESSAGE, @"「我会做的！即使失去了力量！」"
+
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「真是的，从哪冒出来的」"
+		CALL ADD_RAND_MESSAGE, @"「没办法了」"
+		CALL ADD_RAND_MESSAGE, @"「月有云，花有风……如果妨碍的话！」"
+
+		CALL ADD_RAND_MESSAGE, @"「记住女人的生存方式……」"
+	CASE 性格_がんばりや
+		CALL ADD_RAND_MESSAGE, @"「我来了！」"
+		CALL ADD_RAND_MESSAGE, @"「不会轻易被打倒的！」"
+		CALL ADD_RAND_MESSAGE, @"「别以为会这么顺利！」"
+
+		CALL ADD_RAND_MESSAGE, @"「记住女人的生存方式……」"
+
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「尽量避免麻烦事……」"
+		CALL ADD_RAND_MESSAGE, @"「希望能轻松解决」"
+		CALL ADD_RAND_MESSAGE, @"（那么……这家伙的弱点是……）"
+		CALL ADD_RAND_MESSAGE, @"「在被包围之前得动手……」"
+		CALL ADD_RAND_MESSAGE, @"「月有云，花有风……」"
+
+		CALL ADD_RAND_MESSAGE, @"「战争总是突然的……」"
+		CALL ADD_RAND_MESSAGE, @"「就算背过身去，只会被追得更紧」"
+
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「不战斗的话……」"
+		CALL ADD_RAND_MESSAGE, @"「真是麻烦……」"
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「那么，该怎么办呢」"
+		CALL ADD_RAND_MESSAGE, @"「对女人来说这样的对待真是够了」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「鬼先生在这里……开玩笑的♪」"
+		CALL ADD_RAND_MESSAGE, @"「好吧，一起玩吧♪」"
+		CALL ADD_RAND_MESSAGE, @"「看来是有人指名了♪」"
+		CALL ADD_RAND_MESSAGE, @"「趁着我的魅力吸引住他们，希望有人能到达最深处」"
+
+
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"（为了尽可能有利地战斗……）"
+		CALL ADD_RAND_MESSAGE, @"「不想进行无谓的战斗呢」"
+		CALL ADD_RAND_MESSAGE, @"「在被包围之前得动手……」"
+
+		CALL ADD_RAND_MESSAGE, @"「就算背过身去，只会被追得更紧」"
+		CALL ADD_RAND_MESSAGE, @"「没办法了」"
+
+		CALL ADD_RAND_MESSAGE, @"「战争总是突然的……」"
+
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「我会立刻消灭你！」"
+
+		CALL ADD_RAND_MESSAGE, @"「即使失去了多少灵力！」"
+		CALL ADD_RAND_MESSAGE, @"「记住女人的生存方式……」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「真麻烦……要不要逃走呢……」"
+		CALL ADD_RAND_MESSAGE, @"「啊，真麻烦啊……」"
+		CALL ADD_RAND_MESSAGE, @"「我就知道会这样」"
+		CALL ADD_RAND_MESSAGE, @"「特地来见我吗？辛苦了」"
+		CALL ADD_RAND_MESSAGE, @"「不想一直在这种地方生活啊」"
+		CALL ADD_RAND_MESSAGE, @"「迎接我？不用那么在意啦」"
+		CALL ADD_RAND_MESSAGE, @"「对女人来说这样的对待真是够了」"
+
+		CALL ADD_RAND_MESSAGE, @"「敌人可不会等待啊」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（要、要战斗吗……）"
+		CALL ADD_RAND_MESSAGE, @"「敌、敌人！？怎么办！？」"
+
+		CALL ADD_RAND_MESSAGE, @"「不要低头，要朝前看……我来了！」"
+		CALL ADD_RAND_MESSAGE, @"「呜、呜。是、是战斗吗！？」"
+	CASE 性格_やさしいひと
+		CALL ADD_RAND_MESSAGE, @"「虽然不想战斗……」"
+
+		CALL ADD_RAND_MESSAGE, @"「呜、呜。是、是战斗吗！？」"
+		CALL ADD_RAND_MESSAGE, @"「现在要冷静处理……」"
+
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「快点解决吧」"
+		CALL ADD_RAND_MESSAGE, @"「那么，怎么样才能被击败呢？」"
+		CALL ADD_RAND_MESSAGE, @"「来吧，从哪里都可以」"
+
+
+		CALL ADD_RAND_MESSAGE, @"「记住女人的生存方式……」"
+
+	ENDSELECT
+	
+	; 残HP 追加口上
+	SELECTCASE BASE:HP
+	; 25%以下
+	CASE IS <= (MAXBASE:HP / 100) * 25
+		CALL ADD_RAND_MESSAGE, @"（糟糕，这种状态下无法好好战斗）"
+		CALL ADD_RAND_MESSAGE, @"「现在打起来不好……吧」"
+	; 50%以下
+	CASE IS <= (MAXBASE:HP / 100) * 50
+		CALL ADD_RAND_MESSAGE, @"「虽然现在想稍微休息一下」"
+		CALL ADD_RAND_MESSAGE, @"「情况并不容易」"
+	; 75%以下
+	CASE IS <= (MAXBASE:HP / 100) * 75
+		CALL ADD_RAND_MESSAGE, @"「有点累，但没办法」"
+		CALL ADD_RAND_MESSAGE, @"「这种程度……总算是应付了！」"
+	; 100%以下
+	CASE IS <= MAXBASE:HP
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   54    ◆戦闘開始時
+; / ARG:1    1    0:通常戦闘 1:クイーン戦 2:ガーディアン戦
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_54_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; important属性付与
+	; クイーン戦で关于汎用口上を利用せず、専用口上のみ
+	CALL SET_IMPORTANT_FLAG
+	
+	CALL ADD_RAND_MESSAGE, @"（要避免被敌人的强大吞噬……）"
+	CALL ADD_RAND_MESSAGE, @"「紧张起来了……」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   54    ◆戦闘開始時
+; / ARG:1    2    0:通常戦闘 1:クイーン戦 2:ガーディアン戦
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_54_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; クイーン戦口上で代用
+	CALL KOJO_DEFAULT_54_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+; ////////////////////////////
+; / ARG:0   55    ◆戦闘からふつうに逃げた
+; / ARG:1         0:通常戦闘 1:クイーン戦 2:ガーディアン戦
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_55(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;喪失時
+IF CFLAG:29 > 0
+	RETURN 0
+ENDIF
+
+
+
+	CALL ADD_RAND_MESSAGE, @"「总算甩掉了吧」"
+
+	CALL ADD_RAND_MESSAGE, @"「看来成功逃脱了」"
+	CALL ADD_RAND_MESSAGE, @"「虽然没想到总能逃脱……」"
+	CALL ADD_RAND_MESSAGE, @"「这次好像成功逃脱了」"
+	CALL ADD_RAND_MESSAGE, @"「这次算是脱险了」"
+
+	CALL ADD_RAND_MESSAGE, @"「呼。总算是平安无事……」"
+	CALL ADD_RAND_MESSAGE, @"「哈啊……哈啊……呼～」"
+	CALL ADD_RAND_MESSAGE, @"「哈啊……哈啊……顺利吗？」"
+	CALL ADD_RAND_MESSAGE, @"「哈啊……哈啊……总算甩掉了」"
+	CALL ADD_RAND_MESSAGE, @"「哈啊……哈啊……没什么余裕啊」"
+
+	CALL ADD_RAND_MESSAGE, @"「呼……呼……现在的位置是……」"
+
+	CALL ADD_RAND_MESSAGE, @"「看起来没事了呢」"
+	CALL ADD_RAND_MESSAGE, @"「得快点解决根本问题」"
+	CALL ADD_RAND_MESSAGE, @"「要准备下一步了」"
+
+	CALL ADD_RAND_MESSAGE, @"「虽然真想解决掉，但现在的状态……」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おせっかい
+		CALL ADD_RAND_MESSAGE, @"「现在只能防守，但总有一天……」"
+
+	CASE 性格_おてんば
+
+		CALL ADD_RAND_MESSAGE, @"「这次撤退～！」"
+
+	CASE 性格_がんばりや
+		CALL ADD_RAND_MESSAGE, @"「现在只能防守，但总有一天……」"
+
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「重新调整姿势才行，持久战不利」"
+		CALL ADD_RAND_MESSAGE, @"「为了安全起见，还是要更加隐蔽行动」"
+		CALL ADD_RAND_MESSAGE, @"「哪怕只有一丝可能性，现在也只能这样了……」"
+		CALL ADD_RAND_MESSAGE, @"「一开始像处女一样，后来像兔子一样……开什么玩笑」"
+
+		CALL ADD_RAND_MESSAGE, @"「呼……呼……不能让对方看穿我的底牌」"
+
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「为什么不追过来呢？」"
+		CALL ADD_RAND_MESSAGE, @"（拜托不要追过来啊……）"
+		CALL ADD_RAND_MESSAGE, @"「希望他们能放弃追击……」"
+		CALL ADD_RAND_MESSAGE, @"「但是，这样下去，总有一天……」"
+		CALL ADD_RAND_MESSAGE, @"「为了安全起见，还是要更加隐蔽行动」"
+		CALL ADD_RAND_MESSAGE, @"「拜托，请别找到我……」"
+	CASE 性格_しあわせもの
+
+		CALL ADD_RAND_MESSAGE, @"「这次撤退～！」"
+
+		CALL ADD_RAND_MESSAGE, @"「希望他们能放弃追击……」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「不追过来，真是缺乏毅力啊」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「好，不追过来了」"
+		CALL ADD_RAND_MESSAGE, @"「感觉不到追过来的迹象」"
+		CALL ADD_RAND_MESSAGE, @"「为了安全起见，还是要更加隐蔽行动」"
+		CALL ADD_RAND_MESSAGE, @"「哪怕只有一丝可能性，现在也只能这样了……」"
+		CALL ADD_RAND_MESSAGE, @"「一开始像处女一样，后来像兔子一样……开什么玩笑」"
+
+		CALL ADD_RAND_MESSAGE, @"「呼……呼……不能让对方看穿我的底牌」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「下次再见」"
+		CALL ADD_RAND_MESSAGE, @"「希望他们能放弃追击……」"
+		CALL ADD_RAND_MESSAGE, @"「呼……呼……真是顽固的家伙们」"
+		CALL ADD_RAND_MESSAGE, @"「呼……呼……逃跑也不容易啊」"
+	CASE 性格_やさしいひと
+		CALL ADD_RAND_MESSAGE, @"「成功避免了无谓的战斗」"
+		CALL ADD_RAND_MESSAGE, @"「希望他们能放弃追击……」"
+		CALL ADD_RAND_MESSAGE, @"「拜托，请别找到我……」"
+		CALL ADD_RAND_MESSAGE, @"「呼，呼……有点喘不过气了……」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「希望他们能放弃追击……」"
+		CALL ADD_RAND_MESSAGE, @"「但是，这样下去，总有一天……」"
+
+		CALL ADD_RAND_MESSAGE, @"「拜托，请别找到我……」"
+		CALL ADD_RAND_MESSAGE, @"「呼，呼……有点喘不过气了……」"
+
+
+	ENDSELECT
+	
+	; 逃走成功率25%以下なら追加口上
+	IF GET_ESCAPE_RATE(TARGET) <= 25
+		CALL ADD_RAND_MESSAGE, @"「没想到能逃脱……」"
+		CALL ADD_RAND_MESSAGE, @"「逃脱得还不错吧……？」"
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「千钧一发，再慢一点的话会怎样呢」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「在那种情况下能逃脱……」"
+		ENDSELECT
+	ENDIF
+	
+	; MP残25%以下なら追加口上
+	IF BASE:MP <= (MAXBASE:MP / 4)
+		CALL ADD_RAND_MESSAGE, @"「真是危险的地方……」"
+		CALL ADD_RAND_MESSAGE, @"「呼……呼……呼……刚才真是危险啊……」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「总之要赶紧休息一下身体……」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「我、我还以为完蛋了……」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   56    ◆戦闘で敗北
+; / ARG:1         0:通常戦闘 1:クイーン戦 2:ガーディアン戦
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_56(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「在这种地方……倒下，可不行……」"
+	CALL ADD_RAND_MESSAGE, @"（嗯……？力气……不进去了……）"
+
+	CALL ADD_RAND_MESSAGE, @"「我、我还……没……」"
+	CALL ADD_RAND_MESSAGE, @"「要回去……一定……」"
+	CALL ADD_RAND_MESSAGE, @"「总有一天……一定……」"
+	CALL ADD_RAND_MESSAGE, @"「轮到我了……只是……这样吗……」"
+	CALL ADD_RAND_MESSAGE, @"「不够……好像……」"
+	CALL ADD_RAND_MESSAGE, @"「要多做……我的份……」"
+	CALL ADD_RAND_MESSAGE, @"「大家……对不起……」"
+	CALL ADD_RAND_MESSAGE, @"「这种事情……」"
+	CALL ADD_RAND_MESSAGE, @"「到了这个地步……吗……」"
+	CALL ADD_RAND_MESSAGE, @"「今天……太早天黑了……吧……」"
+	CALL ADD_RAND_MESSAGE, @"「做了个坏梦……看到了……」"
+
+	CALL ADD_RAND_MESSAGE, @"「啊……之后是……」"
+	CALL ADD_RAND_MESSAGE, @"「被生出来……真是……」"
+	CALL ADD_RAND_MESSAGE, @"「被生出来的话……会给大家……添麻烦的……」"
+
+	CALL ADD_RAND_MESSAGE, @"「意识……变得……遥远……」"
+	CALL ADD_RAND_MESSAGE, @"「不知怎么的……有点累了……」"
+	CALL ADD_RAND_MESSAGE, @"「感觉……消失了……」"
+	CALL ADD_RAND_MESSAGE, @"「不想去想……之后的……」"
+	CALL ADD_RAND_MESSAGE, @"「在这种地方……真是……」"
+	CALL ADD_RAND_MESSAGE, @"「或许……稍微……有点用处吧……」"
+	CALL ADD_RAND_MESSAGE, @"「纯白……地……」"
+	CALL ADD_RAND_MESSAGE, @"「心……好痛……」"
+	CALL ADD_RAND_MESSAGE, @"「会被毁掉……我的……」"
+
+	CALL ADD_RAND_MESSAGE, @"「不知怎么的……好冷……」"
+
+	CALL ADD_RAND_MESSAGE, @"「至少……最后……」"
+	CALL ADD_RAND_MESSAGE, @"「这……这样……」"
+	CALL ADD_RAND_MESSAGE, @"「凉爽的风……如果能乘上这个……就好了……」"
+	CALL ADD_RAND_MESSAGE, @"「等一下……等一下……」"
+	CALL ADD_RAND_MESSAGE, @"「呜……连逃跑都……」"
+	CALL ADD_RAND_MESSAGE, @"「这些家伙……最后……看不到……真可惜……」"
+	CALL ADD_RAND_MESSAGE, @"「笨蛋，踩到了吗……」"
+	CALL ADD_RAND_MESSAGE, @"「被侵犯……被侵犯了……」"
+	CALL ADD_RAND_MESSAGE, @"「不行……好像不行呢……」"
+	CALL ADD_RAND_MESSAGE, @"「为什么……会是这样……」"
+
+	CALL ADD_RAND_MESSAGE, @"「繁殖……还是当作饵料……」"
+	CALL ADD_RAND_MESSAGE, @"「再一次……在那片天空下……」"
+	CALL ADD_RAND_MESSAGE, @"「外面……下雨了吗……」"
+	CALL ADD_RAND_MESSAGE, @"「不在这里的某个地方……再一次……」"
+
+	CALL ADD_RAND_MESSAGE, @"「……嗯咕！？嗯！嗯！……咕……啊」"
+
+	CALL ADD_RAND_MESSAGE, @"「再多一点……时间……如果能缓慢一些的话……」"
+	CALL ADD_RAND_MESSAGE, @"「再多一点……时间……如果能给予一些やさしいひと话……」"
+
+	CALL ADD_RAND_MESSAGE, @"「那一天……想回去……」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「这是哪里……新闻……在哪里……」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「有人……救救我……」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   57    ◆戦闘で勝利
+; / ARG:1         0:通常戦闘 1:クイーン戦 2:ガーディアン戦
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_57(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 喪失中(PTが敵を倒す以外にも、敵の自滅があり得るので注意)
+	IF CFLAG:29
+		CALL ADD_RAND_MESSAGE, @"「救、救了我……？」"
+		CALL ADD_RAND_MESSAGE, @"「嗯，结束了吗……？」"
+
+
+	; 睡眠中(睡眠中に戦闘が終わるって事关于多分PTがいるか敵の自滅)
+	ELSEIF CFLAG:25
+		CALL ADD_RAND_MESSAGE, @"「啊，那个？发生了什么……？」"
+		CALL ADD_RAND_MESSAGE, @"「嗯嗯……嗯嗯……？那个……不是梦吧」"
+
+	; 通常時
+	ELSE
+		CALL ADD_RAND_MESSAGE, @"「呼，总算解决了」"
+		CALL ADD_RAND_MESSAGE, @"「这样就全部结束了……希望是这样的」"
+		CALL ADD_RAND_MESSAGE, @"「暂时可以喘口气了吧？」"
+
+
+		CALL ADD_RAND_MESSAGE, @"「不能太悠闲了呢」"
+		CALL ADD_RAND_MESSAGE, @"「这要持续到什么时候呢……」"
+		CALL ADD_RAND_MESSAGE, @"「真是让人厌烦啊……」"
+
+		CALL ADD_RAND_MESSAGE, @"「总算，解决了……」"
+		CALL ADD_RAND_MESSAGE, @"「虽然赢了……」"
+		CALL ADD_RAND_MESSAGE, @"「能赢的对手真好……」"
+
+		CALL ADD_RAND_MESSAGE, @"「这次总算……」"
+		CALL ADD_RAND_MESSAGE, @"「就这样吧……」"
+
+		CALL ADD_RAND_MESSAGE, @"「应该高兴才对吧。比起变得越来越暗，还是这样好」"
+
+		CALL ADD_RAND_MESSAGE, @"「继续这样下去……」"
+
+		CALL ADD_RAND_MESSAGE, @"「总算安心了……」"
+		CALL ADD_RAND_MESSAGE, @"「安静下来了吧……」"
+		CALL ADD_RAND_MESSAGE, @"「不会这么轻易就被打败……」"
+
+		CALL ADD_RAND_MESSAGE, @"「赢了，真好」"
+
+		CALL ADD_RAND_MESSAGE, @"「疲劳越来越积累……」"
+		CALL ADD_RAND_MESSAGE, @"「还有希望的……」"
+
+		CALL ADD_RAND_MESSAGE, @"「下次去水源处净化……」"
+
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おせっかい
+
+			CALL ADD_RAND_MESSAGE, @"「让我们庆祝吧。因为不知道下次能赢多久」"
+			CALL ADD_RAND_MESSAGE, @"「在这种地方不能输」"
+			CALL ADD_RAND_MESSAGE, @"「要战斗多久才能离开这里呢」"
+			CALL ADD_RAND_MESSAGE, @"「准备下一步吧……」"
+			CALL ADD_RAND_MESSAGE, @"「确认伤势和消耗度……」"
+
+			CALL ADD_RAND_MESSAGE, @"「记录趋势和对策……」"
+
+			CALL ADD_RAND_MESSAGE, @"「虽然赢了，但不要急躁」"
+		CASE 性格_おてんば
+
+			CALL ADD_RAND_MESSAGE, @"「好想呼吸外面的空气啊……」"
+
+		CASE 性格_がんこもの
+
+			CALL ADD_RAND_MESSAGE, @"「让我们庆祝吧。因为不知道下次能赢多久」"
+			CALL ADD_RAND_MESSAGE, @"「在这种地方不能输」"
+			CALL ADD_RAND_MESSAGE, @"「要战斗多久才能离开这里呢」"
+			CALL ADD_RAND_MESSAGE, @"「准备下一步吧……」"
+			CALL ADD_RAND_MESSAGE, @"「确认伤势和消耗度……」"
+
+			CALL ADD_RAND_MESSAGE, @"「记录趋势和对策……」"
+			CALL ADD_RAND_MESSAGE, @"「不知道前方还有什么在等着我们……」"
+		CASE 性格_がんばりや
+
+			CALL ADD_RAND_MESSAGE, @"「在这种地方不能输」"
+			CALL ADD_RAND_MESSAGE, @"「要战斗多久才能离开这里呢」"
+			CALL ADD_RAND_MESSAGE, @"「准备下一步吧……」"
+			CALL ADD_RAND_MESSAGE, @"「确认伤势和消耗度……」"
+			CALL ADD_RAND_MESSAGE, @"「记录趋势和对策……」"
+			CALL ADD_RAND_MESSAGE, @"「梦想不是用来做梦的，而是要实现的」"
+			CALL ADD_RAND_MESSAGE, @"「泥土中也有美丽绽放的花朵。是的，无论什么情况……」"
+
+
+		CASE 性格_きれもの
+
+			CALL ADD_RAND_MESSAGE, @"「让我们庆祝吧。因为不知道下次能赢多久」"
+			CALL ADD_RAND_MESSAGE, @"「在这种地方不能输」"
+			CALL ADD_RAND_MESSAGE, @"「要战斗多久才能离开这里呢」"
+			CALL ADD_RAND_MESSAGE, @"「这种东西一个接一个地出现，真是没完没了」"
+			CALL ADD_RAND_MESSAGE, @"「经验越多越好，但是这种经验真是不想再多经历了……」"
+			CALL ADD_RAND_MESSAGE, @"「准备下一步吧……」"
+			CALL ADD_RAND_MESSAGE, @"「确认伤势和消耗度……」"
+
+			CALL ADD_RAND_MESSAGE, @"「记录趋势和对策……」"
+
+			CALL ADD_RAND_MESSAGE, @"「虽然赢了，但不要急躁」"
+		CASE 性格_くろうにん
+
+			CALL ADD_RAND_MESSAGE, @"「要战斗多久才能离开这里？」"
+			CALL ADD_RAND_MESSAGE, @"「确认伤势和消耗度……」"
+			CALL ADD_RAND_MESSAGE, @"「一点一点，一步一步……」"
+
+			CALL ADD_RAND_MESSAGE, @"「不会动起来吧……从远处再来一击吧」"
+
+			CALL ADD_RAND_MESSAGE, @"「记录趋势和对策……」"
+
+			CALL ADD_RAND_MESSAGE, @"「没关系。还没事的……」"
+
+			CALL ADD_RAND_MESSAGE, @"「因为不了解对方才会害怕。所以，就算一点一点地记住……」"
+			CALL ADD_RAND_MESSAGE, @"「不知道前方还有什么在等着我们……」"
+
+
+		CASE 性格_しあわせもの
+
+			CALL ADD_RAND_MESSAGE, @"「让我们庆祝吧。因为不知道下次能赢多久」"
+			CALL ADD_RAND_MESSAGE, @"「好想呼吸外面的空气啊……」"
+
+			CALL ADD_RAND_MESSAGE, @"「梦想不是用来做梦的，而是要实现的」"
+		CASE 性格_セクシーギャル
+
+			CALL ADD_RAND_MESSAGE, @"「也要适应这种分别呢」"
+			CALL ADD_RAND_MESSAGE, @"「哎呀哎呀，真可惜啊」"
+			CALL ADD_RAND_MESSAGE, @"「那些让女人哭泣的家伙都是渣男。是吧？」"
+
+			CALL ADD_RAND_MESSAGE, @"「只靠强行是无法击倒我的哦？」"
+			CALL ADD_RAND_MESSAGE, @"「果然，那种轻易靠近的家伙是不行的呢」"
+
+			CALL ADD_RAND_MESSAGE, @"「再见，刚才的我。请多关照，以后的我」"
+
+		CASE 性格_ぬけめがない
+
+			CALL ADD_RAND_MESSAGE, @"「让我们庆祝吧。因为不知道下次能赢多久」"
+			CALL ADD_RAND_MESSAGE, @"「在这种地方不能输」"
+			CALL ADD_RAND_MESSAGE, @"「要战斗多久才能离开这里呢」"
+			CALL ADD_RAND_MESSAGE, @"「嘛，就这样吧」"
+			CALL ADD_RAND_MESSAGE, @"「准备下一步吧……」"
+			CALL ADD_RAND_MESSAGE, @"「确认伤势和消耗度……」"
+			CALL ADD_RAND_MESSAGE, @"「一点一点，一步一步……」"
+
+			CALL ADD_RAND_MESSAGE, @"「记录趋势和对策……」"
+
+			CALL ADD_RAND_MESSAGE, @"「虽然赢了，但不要急躁」"
+		CASE 性格_ねっけつかん
+
+			CALL ADD_RAND_MESSAGE, @"「在这种地方不能输」"
+
+			CALL ADD_RAND_MESSAGE, @"「梦想不是用来做梦的，而是要实现的」"
+
+		CASE 性格_のんきもの
+			CALL ADD_RAND_MESSAGE, @"「经验越多越好，但是这种经验真是不想再多经历了……」"
+			CALL ADD_RAND_MESSAGE, @"「好想呼吸外面的空气啊……」"
+			CALL ADD_RAND_MESSAGE, @"「不知道前方还有什么在等着我们……」"
+
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「一件一件地确实完成。除此之外，别无选择对吧」"
+			CALL ADD_RAND_MESSAGE, @"「因为不了解对方才会害怕。所以，就算一点一点地记住……」"
+			CALL ADD_RAND_MESSAGE, @"「慢慢地变好了呢。毕竟，知识是无法被夺走的」"
+			CALL ADD_RAND_MESSAGE, @"「就算是我，也有一天……」"
+			CALL ADD_RAND_MESSAGE, @"「确认伤势和消耗度……」"
+			CALL ADD_RAND_MESSAGE, @"「一点一点，一步一步……」"
+			CALL ADD_RAND_MESSAGE, @"「这是鼓起勇气的结果呢……」"
+			CALL ADD_RAND_MESSAGE, @"「没关系。还没事的……」"
+		CASE 性格_やさしいひと
+
+			CALL ADD_RAND_MESSAGE, @"「一件一件地确实完成。除此之外，别无选择对吧」"
+			CALL ADD_RAND_MESSAGE, @"「因为不了解对方才会害怕。所以，就算一点一点地记住……」"
+			CALL ADD_RAND_MESSAGE, @"「慢慢地变好了呢。毕竟，知识是无法被夺走的」"
+			CALL ADD_RAND_MESSAGE, @"「没关系。还没事的……」"
+			CALL ADD_RAND_MESSAGE, @"「确认伤势和消耗度……」"
+			CALL ADD_RAND_MESSAGE, @"「一点一点，一步一步……」"
+		CASE 性格_わがまま
+
+			CALL ADD_RAND_MESSAGE, @"「这只是开始而已」"
+			CALL ADD_RAND_MESSAGE, @"「要战斗多久才能离开这里呢」"
+			CALL ADD_RAND_MESSAGE, @"「在这种地方不能输」"
+			CALL ADD_RAND_MESSAGE, @"「哎呀哎呀，真可惜啊」"
+			CALL ADD_RAND_MESSAGE, @"「怎么样？变成了美丽的风景了吧？」"
+
+		ENDSELECT
+		
+		; MP残3/4以上なら追加口上
+		IF BASE:MP >= (MAXBASE:MP * 3 / 4)
+			SELECTCASE CFLAG:100
+			CASE 性格_きれもの
+				CALL ADD_RAND_MESSAGE, @"「如果只有这种对手的话，就太轻松了」"
+			CASE 性格_ぬけめがない
+				CALL ADD_RAND_MESSAGE, @"「下一个对手也能这么轻松就好了」"
+			ENDSELECT
+		ENDIF
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   60    ◆先制攻撃・不意打ち発生
+; / ARG:2    2    敵の不意打ち
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_60_X_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「糟了！？」"
+	CALL ADD_RAND_MESSAGE, @"「你在说谎吧！？」"
+	CALL ADD_RAND_MESSAGE, @"「开、开玩笑吧……！」"
+
+	CALL ADD_RAND_MESSAGE, @"「好快！？」"
+	CALL ADD_RAND_MESSAGE, @"「突然！？」"
+	CALL ADD_RAND_MESSAGE, @"「连死角也！？」"
+	CALL ADD_RAND_MESSAGE, @"「什、什么！？」"
+	CALL ADD_RAND_MESSAGE, @"「这种事也会发生！？」"
+	CALL ADD_RAND_MESSAGE, @"「这、这样！？」"
+
+	CALL ADD_RAND_MESSAGE, @"「这、这样的话！？」"
+	CALL ADD_RAND_MESSAGE, @"「是对我设下的陷阱！？」"
+
+	CALL ADD_RAND_MESSAGE, @"「啊，脚下！？」"
+
+	CALL ADD_RAND_MESSAGE, @"「那个距离！？」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ふつう
+		CALL ADD_RAND_MESSAGE, @"「嗯、嗯首先」"
+	CASE 性格_おてんば
+	 	CALL ADD_RAND_MESSAGE, @"「咕咕」"
+	 	CALL ADD_RAND_MESSAGE, @"「那个！？」"
+	 	CALL ADD_RAND_MESSAGE, @"「诶诶！？」"
+	CASE 性格_がんこもの
+	 	CALL ADD_RAND_MESSAGE, @"「如果你要来就正面堂堂地来吧，真是的」"
+	CASE 性格_がんばりや
+		CALL ADD_RAND_MESSAGE, @"「快点整顿队形！」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「糟糕的发展啊……」"
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「怎么办，我困扰了啊」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「等、等一下」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「竟然让先制攻击了！？」"
+		CALL ADD_RAND_MESSAGE, @"「看起来还能动一点呢」"
+		CALL ADD_RAND_MESSAGE, @"「咕！？这家伙！」"
+		CALL ADD_RAND_MESSAGE, @"「呵呵！很强大！」"
+
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「不可能！？」"
+
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「不、不要……脚都软了……」"
+		CALL ADD_RAND_MESSAGE, @"「什、什么时候的！？」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「没办法了，先让步吧」"
+
+		CALL ADD_RAND_MESSAGE, @"「这、这家伙！？」"
+
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   61    ◆ARG:1の種族と初遭遇
+; / ARG:1         敵種族ID
+; / ARG:2         母親キャラのID(誰かの娘でない場合关于0)
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_61(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+	
+	CALL ADD_RAND_MESSAGE, @"「总是出现些奇怪的东西」"
+	CALL ADD_RAND_MESSAGE, @"「从没见过的家伙呢……」"
+	CALL ADD_RAND_MESSAGE, @"「那、那家伙是什么……」"
+	
+	; 敵データを参照して呼び出す汎用口上
+	TRYCCALLFORM SET_ENEMY_DATA_{ARG:1}(FLAG:1)
+		
+		; 触手種別 女性系
+		IF DA:(FLAG:1):85 & 1
+			CALL ADD_RAND_MESSAGE, @"「虽然没觉得是个正常的女人」"
+			CALL ADD_RAND_MESSAGE, @"「竟然还有这种东西……？」"
+			
+			; 性格別 追加口上
+			SELECTCASE CFLAG:100
+			CASE 性格_おてんば
+				CALL ADD_RAND_MESSAGE, @"「明明是个女人！？」"
+				CALL ADD_RAND_MESSAGE, @"「怎么可能有这种东西！」"
+			CASE 性格_がんこもの
+				CALL ADD_RAND_MESSAGE, @"「伪装成女性形态，真是狡猾啊」"
+			CASE 性格_がんばりや
+				CALL ADD_RAND_MESSAGE, @"「糟了，这也是敌人！？」"
+			CASE 性格_きれもの
+				CALL ADD_RAND_MESSAGE, @"「虽然没觉得是个正常的生物，居然是人形」"
+			CASE 性格_くろうにん
+				CALL ADD_RAND_MESSAGE, @"「人形的，而且还像女孩子一样的很难攻击啊……」"
+			CASE 性格_しあわせもの
+				CALL ADD_RAND_MESSAGE, @"「这里还有像女孩子一样的敌人，可能有点难对付呢」"
+			CASE 性格_セクシーギャル
+				CALL ADD_RAND_MESSAGE, @"「用女性的形象诱惑猎物？真是厉害呢♪」"
+			CASE 性格_やさしいひと
+				CALL ADD_RAND_MESSAGE, @"「有人类的样子，有点难攻击呢……」"
+			CASE 性格_ひっこみじあん
+				CALL ADD_RAND_MESSAGE, @"「诶诶！？不、不是人类！？」"
+			CASE 性格_わがまま
+				CALL ADD_RAND_MESSAGE, @"「无论是什么样子的敌人，我都不会手下留情！」"
+			ENDSELECT
+		ENDIF
+		
+		; 触手種別 植物系
+		IF DA:(FLAG:1):85 & 2
+			CALL ADD_RAND_MESSAGE, @"「是某种食虫植物吗」"
+			CALL ADD_RAND_MESSAGE, @"「靠近的话会从头上……那种家伙……？」"
+		ENDIF
+		
+		; 触手種別 動物系
+		IF DA:(FLAG:1):85 & 4
+			CALL ADD_RAND_MESSAGE, @"「一露背就感觉会被咬一口……」"
+			CALL ADD_RAND_MESSAGE, @"「在外面好像见过的家伙，但是……会长出什么东西来啊……」"
+		ENDIF
+		
+		; 触手種別 丸呑系
+		IF DA:(FLAG:1):85 & 8
+			CALL ADD_RAND_MESSAGE, @"「被抓住的话好危险呢……」"
+			CALL ADD_RAND_MESSAGE, @"（感觉很有那种感觉……绝对不想被抓住的类型呢……）"
+		ENDIF
+		
+		; 触手種別 海産系
+		IF DA:(FLAG:1):85 & 16
+		ENDIF
+		
+		; 触手種別 触手系
+		IF DA:(FLAG:1):85 & 32
+		CALL ADD_RAND_MESSAGE, @"「呜哇……好像在蠕动……」"
+		CALL ADD_RAND_MESSAGE, @"「好、好恶心……！」"
+		ENDIF
+		
+		; 触手種別 スライム系
+		IF DA:(FLAG:1):85 & 64
+		CALL ADD_RAND_MESSAGE, @"「说不定只要溶解掉衣服之类的……就没完没了了呢……」"
+		CALL ADD_RAND_MESSAGE, @"「上面，这个还活着……」"
+		ENDIF
+		
+		; 触手種別 男性系
+		IF DA:(FLAG:1):85 & 128
+			CALL ADD_RAND_MESSAGE, @"（那家伙，给人一种不好的感觉――）"
+			CALL ADD_RAND_MESSAGE, @"「虽然没期待到会有正常的生物……」"
+		ENDIF
+		
+		; 触手種別 罠系
+		IF DA:(FLAG:1):85 & 256
+			CALL ADD_RAND_MESSAGE, @"「奇怪形状的生物呢」"
+		ENDIF
+		
+		; 触手種別 機械系
+		IF DA:(FLAG:1):85 & 512
+			CALL ADD_RAND_MESSAGE, @"「虽然看不出是什么生物」"
+			CALL ADD_RAND_MESSAGE, @"「明显是机械……的感觉」"
+		ENDIF
+	CATCH
+	ENDCATCH
+	
+	; 処理が終わったら後始末
+	FOR LCOUNT, 0, VARSIZE("DA", 1)
+		DA:(FLAG:1):LCOUNT = 0
+	NEXT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   61    ◆ARG:1の種族と初遭遇
+; / ARG:1    1    敵種族ID 1:クイーン
+; / ARG:2         母親キャラのID(誰かの娘でない場合关于0)
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_61_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; important属性付与
+	; 初遭遇口上关于一度しか表示されない為専用口上
+	CALL SET_IMPORTANT_FLAG
+	
+	CALL ADD_RAND_MESSAGE, @"「看起来，这家伙是元凶！」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「最终BOSS登场咯？」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「让我从这里出去！」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「快点打倒它，从这里出去！」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「只要……打倒它……」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   61    ◆ARG:1の種族と初遭遇
+; / ARG:1   41    敵種族ID 41:サキュバス
+; / ARG:2         母親キャラのID(誰かの娘でない場合关于0)
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_61_41(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; important属性付与
+	; 初遭遇口上关于一度しか表示されない為専用口上
+	CALL SET_IMPORTANT_FLAG
+	
+	CALL ADD_RAND_MESSAGE, @"「不是……人类！！」"
+	CALL ADD_RAND_MESSAGE, @"「看不到……有关盟友的身影呢……」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   61    ◆ARG:1の種族と初遭遇
+; / ARG:1   52    敵種族ID 52:ハウンド
+; / ARG:2         母親キャラのID(誰かの娘でない場合关于0)
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_61_52(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; important属性付与
+	; 初遭遇口上关于一度しか表示されない為専用口上
+	CALL SET_IMPORTANT_FLAG
+	
+	CALL ADD_RAND_MESSAGE, @"「被这样的表情包围，好可怕」"
+	CALL ADD_RAND_MESSAGE, @"「是野狗在这种地方吗，不可能吧」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「只是狗崽子程度，没什么了不起的！」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「野狗和有点野狗气息的流浪触手，哪个更危险呢」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「汪汪风格来攻击，还真有些奇特的触手呢」"
+	ENDSELECT
+RETURN 1
+
+
+
+
+
+
+
+
+; ////////////////////////////
+; / ARG:0   62    ◆仲間を見捨てた
+; / ARG:1         0:通常戦闘 1:クイーン戦 2:ガーディアン戦
+; / ARG:2         見捨てたキャラ1のID
+; / ARG:3         見捨てたキャラ2のID
+; / ARG:4         0:PT残留 1:PT離脱
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_62(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;●喪失
+IF CFLAG:29 > 0
+
+	RETURN 0
+ENDIF
+
+
+		CALL ADD_RAND_MESSAGE, @"「……不管怎样，必须想办法」"
+		CALL ADD_RAND_MESSAGE, @"「……这次就原谅你了」"
+		CALL ADD_RAND_MESSAGE, @"「……对不起！」"
+		CALL ADD_RAND_MESSAGE, @"「……需要更多伙伴，更多武器」"
+		CALL ADD_RAND_MESSAGE, @"「……没能帮上忙」"
+		CALL ADD_RAND_MESSAGE, @"「……心好痛啊」"
+		CALL ADD_RAND_MESSAGE, @"「……感觉好深刻」"
+		CALL ADD_RAND_MESSAGE, @"「……不能就这样放任不管」"
+
+
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おせっかい
+
+			CALL ADD_RAND_MESSAGE, @"「就算被怨恨也没办法……」"
+			CALL ADD_RAND_MESSAGE, @"「我一定会来救你的……」"
+			CALL ADD_RAND_MESSAGE, @"「没想到会变成这样……」"
+			CALL ADD_RAND_MESSAGE, @"「接下来的时间，一秒都不能浪费……」"
+
+			CALL ADD_RAND_MESSAGE, @"「……太没用了」"
+			CALL ADD_RAND_MESSAGE, @"「……就这样结束不了」"
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「……对不起」"
+			CALL ADD_RAND_MESSAGE, @"「……就这样结束不了啊」"
+			CALL ADD_RAND_MESSAGE, @"「这个迷宫，太麻烦了……」"
+			CALL ADD_RAND_MESSAGE, @"「为自己的不足感到羞愧……」"
+			CALL ADD_RAND_MESSAGE, @"「……太没用了」"
+		CASE 性格_がんばりや
+
+			CALL ADD_RAND_MESSAGE, @"「……心中沉重的负担。必须要好好扛起来」"
+			CALL ADD_RAND_MESSAGE, @"「……就这样结束不了啊」"
+			CALL ADD_RAND_MESSAGE, @"「就算被怨恨也没办法……」"
+			CALL ADD_RAND_MESSAGE, @"「接下来的时间，一秒都不能浪费……」"
+			CALL ADD_RAND_MESSAGE, @"「如果我有更多力量的话……」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「必须避免全灭……」"
+			CALL ADD_RAND_MESSAGE, @"「没想到会变成这样……」"
+
+			CALL ADD_RAND_MESSAGE, @"「……太没用了」"
+		CASE 性格_くろうにん
+
+			CALL ADD_RAND_MESSAGE, @"「就算被怨恨也没办法……」"
+			CALL ADD_RAND_MESSAGE, @"「我一定会来救你的……」"
+			CALL ADD_RAND_MESSAGE, @"「没想到会变成这样……」"
+
+		CASE 性格_しあわせもの
+			CALL ADD_RAND_MESSAGE, @"「一定会有人来救我们的！」"
+			CALL ADD_RAND_MESSAGE, @"「……可能会有些沮丧」"
+			CALL ADD_RAND_MESSAGE, @"「必须为她加油……」"
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"「……虽然很想替她承担」"
+
+		CASE 性格_ぬけめがない
+			CALL ADD_RAND_MESSAGE, @"「必须避免全灭……」"
+			CALL ADD_RAND_MESSAGE, @"「……可能会有些沮丧」"
+			CALL ADD_RAND_MESSAGE, @"「……现在不是沮丧的时候」"
+
+		CASE 性格_ねっけつかん
+
+			CALL ADD_RAND_MESSAGE, @"「这个迷宫，太麻烦了……」"
+			CALL ADD_RAND_MESSAGE, @"「被恨也没办法啊……」"
+			CALL ADD_RAND_MESSAGE, @"「……对不起」"
+			CALL ADD_RAND_MESSAGE, @"「没想到会变成这样……」"
+			CALL ADD_RAND_MESSAGE, @"「接下来的时间，一秒都不能浪费……」"
+			CALL ADD_RAND_MESSAGE, @"「……就这样结束不了」"
+
+			CALL ADD_RAND_MESSAGE, @"「……太没用了」"
+		CASE 性格_のんきもの
+			CALL ADD_RAND_MESSAGE, @"「……明天可能轮到我了」"
+			CALL ADD_RAND_MESSAGE, @"「一定会有人来救我们的！」"
+			CALL ADD_RAND_MESSAGE, @"「必须为她加油……」"
+
+			CALL ADD_RAND_MESSAGE, @"「……可能会有些沮丧」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「……现在不是发抖的时候吧」"
+			CALL ADD_RAND_MESSAGE, @"「对不起，对不起，对不起……」"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「……现在不是发抖的时候吧」"
+			CALL ADD_RAND_MESSAGE, @"「如果我有更多力量的话……」"
+			CALL ADD_RAND_MESSAGE, @"「对不起，对不起，对不起……」"
+		CASE 性格_わがまま
+			CALL ADD_RAND_MESSAGE, @"「……虽然不好意思。但现在只能这样了」"
+			CALL ADD_RAND_MESSAGE, @"「没想到会变成这样……」"
+			CALL ADD_RAND_MESSAGE, @"「本不该是这样的……」"
+			CALL ADD_RAND_MESSAGE, @"「……就这样结束不了」"
+
+		ENDSELECT
+RETURN 1
+
+
+
+; ////////////////////////////
+; / ARG:0   63    ◆仲間に見捨てられて逃げられた
+; / ARG:1         0:通常戦闘 1:クイーン戦 2:ガーディアン戦
+; / ARG:2         逃げたキャラ1のID
+; / ARG:3         逃げたキャラ2のID(0なら逃げたキャラ关于一人だけ)
+; / ARG:4         0:PT残留 1:PT離脱
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_63(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 諦めたor喪失で反応変化
+	IF TFLAG:16 == 2 || CFLAG:29
+		CALL ADD_RAND_MESSAGE, @"「救救我……有人……」"
+		CALL ADD_RAND_MESSAGE, @"「别在意……请平安无事……」"
+		CALL ADD_RAND_MESSAGE, @"「别在意……没办法……」"
+		CALL ADD_RAND_MESSAGE, @"「因为相信你……所以……马上……」"
+		CALL ADD_RAND_MESSAGE, @"「比全灭……要好……」"
+		CALL ADD_RAND_MESSAGE, @"「有点……寂寞呢……呢……」"
+		CALL ADD_RAND_MESSAGE, @"「以后……变成笑话……也好……」"
+		CALL ADD_RAND_MESSAGE, @"「至少……应该成为诱饵……」"
+		CALL ADD_RAND_MESSAGE, @"「那个……眼泪……吗……」"
+		CALL ADD_RAND_MESSAGE, @"「不说再见……」"
+		CALL ADD_RAND_MESSAGE, @"「不能一起走……对不起……」"
+		CALL ADD_RAND_MESSAGE, @"「无法支撑……对不起……」"
+		CALL ADD_RAND_MESSAGE, @"「我们……不会输……的……」"
+
+		CALL ADD_RAND_MESSAGE, @"「这份任务……我无法交给别人……」"
+		CALL ADD_RAND_MESSAGE, @"「现在就……快点……」"
+		CALL ADD_RAND_MESSAGE, @"「约定……替我……」"
+		CALL ADD_RAND_MESSAGE, @"「被惩罚……只有我一个人……足够了……」"
+		CALL ADD_RAND_MESSAGE, @"「找到比我更好的人……」"
+
+
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+			CASE 性格_おせっかい
+
+			CASE 性格_おてんば
+
+				CALL ADD_RAND_MESSAGE, @"「别……别离开，别走……」"
+				CALL ADD_RAND_MESSAGE, @"「等、等一下！我还在这里！」"
+
+			CASE 性格_がんこもの
+
+			CASE 性格_がんばりや
+
+			CASE 性格_きれもの
+
+			CASE 性格_くろうにん
+
+				CALL ADD_RAND_MESSAGE, @"「别……别离开，别走……」"
+				CALL ADD_RAND_MESSAGE, @"「等、等一下！我还在这里！」"
+
+			CASE 性格_しあわせもの
+
+				CALL ADD_RAND_MESSAGE, @"「别……别离开，别走……」"
+				CALL ADD_RAND_MESSAGE, @"「等、等一下！我还在这里！」"
+			CASE 性格_セクシーギャル
+			CASE 性格_ぬけめがない
+
+			CASE 性格_ねっけつかん
+			CASE 性格_のんきもの
+			CASE 性格_ひっこみじあん
+
+				CALL ADD_RAND_MESSAGE, @"「别……别离开，别走……」"
+				CALL ADD_RAND_MESSAGE, @"「等、等一下！我还在这里！」"
+
+			CASE 性格_やさしいひと
+
+			CASE 性格_わがまま
+
+				CALL ADD_RAND_MESSAGE, @"「别……别离开，别走……」"
+				CALL ADD_RAND_MESSAGE, @"「等、等一下！我还在这里！」"
+
+		ENDSELECT
+
+
+
+
+	; 通常
+	ELSE
+		CALL ADD_RAND_MESSAGE, @"「等、等一下啊！？」"
+		CALL ADD_RAND_MESSAGE, @"「不、不会吧！？」"
+
+		CALL ADD_RAND_MESSAGE, @"「诶！？放开，放开啊！这个！……啊啊」"
+		CALL ADD_RAND_MESSAGE, @"“嘿，放开我！……我可不打算放过你！”"
+		CALL ADD_RAND_MESSAGE, @"“……期待着我给你道歉的美味茶点吧。”"
+		CALL ADD_RAND_MESSAGE, @"“……别白费力气了。”"
+		CALL ADD_RAND_MESSAGE, @"“……不要勉强过来帮我。太危险了。”"
+
+		CALL ADD_RAND_MESSAGE, @"“难、难道……不行！放开我，放开我！”"
+		CALL ADD_RAND_MESSAGE, @"“……没有办法对付了呢。”"
+
+
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おせっかい
+			CALL ADD_RAND_MESSAGE, @"“别看这边！快逃！”"
+			CALL ADD_RAND_MESSAGE, @"“别管我，快逃！我一定会追上你！”"
+			CALL ADD_RAND_MESSAGE, @"“……女人就像港口。只要等待就好了。”"
+			CALL ADD_RAND_MESSAGE, @"“……如果我也逃走的话，那家伙就自由了。那样的话！”"
+
+		CASE 性格_がんばりや
+
+			CALL ADD_RAND_MESSAGE, @"“别管我，快逃！我一定会追上你！”"
+			CALL ADD_RAND_MESSAGE, @"“……如果我也逃走的话，那家伙就自由了。那样的话！”"
+
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"“我是不会逃跑的！”"
+			CALL ADD_RAND_MESSAGE, @"“别管我，快逃！我一定会追上你的！”"
+			CALL ADD_RAND_MESSAGE, @"“……如果我也逃走的话，那家伙就自由了。那样的话！”"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"（为了更容易逃跑一点……）"
+			CALL ADD_RAND_MESSAGE, @"（没有正确答案……）"
+			CALL ADD_RAND_MESSAGE, @"“……没有理由就抛弃伙伴逃跑的孩子是不存在的。……等着瞧吧。”"
+			CALL ADD_RAND_MESSAGE, @"“……如果我也逃走的话，那家伙就自由了。那样的话！”"
+
+		CASE 性格_しあわせもの
+			CALL ADD_RAND_MESSAGE, @"“肯定会有人来救我们的……”"
+			CALL ADD_RAND_MESSAGE, @"“……女人就像港口。只要等待就好了。”"
+
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"“哎呀哎呀，那就让我们享受一下吧。”"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"“我没事！你先走！”"
+			CALL ADD_RAND_MESSAGE, @"“别管我，快逃！我一定会追上你的！”"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"（求求你……救救我……）"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"（没办法……只能这样了……）"
+		
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+;以下他のキャラと出会った時のやり取り关于分離 → KOJO_DEFAULT_101~108_137~141_163~165_他キャラ遭遇時やり取り.ERB
+;@KOJO_DEFAULT_101_迷宮内で他のキャラと出会った
+;@KOJO_DEFAULT_102_遭遇時会話:別れた
+;@KOJO_DEFAULT_103_遭遇時会話:雑談
+;@KOJO_DEFAULT_104_遭遇時会話:情報交換
+;@KOJO_DEFAULT_105_アイテム強請り成功
+;@KOJO_DEFAULT_106_アイテム強請り失敗
+;@KOJO_DEFAULT_107_遭遇時会話:勧誘成功
+;@KOJO_DEFAULT_108_遭遇時会話:勧誘失敗
+
+;@KOJO_DEFAULT_137~141_163~165も同タイミング口上だったので分離してあります
+
+
+;↓これどのタイミングだろう、一時共闘の後かな、↑に入れるか迷った
+; ////////////////////////////
+; / ARG:0  109    ◆PTに加わった
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_109(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"“一起离开这里吧。”"
+	CALL ADD_RAND_MESSAGE, @"“嗯，拜托了。”"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"“有我在，1+1就能变成100！十倍！十倍！”"
+	CASE 性格_ふつう
+		CALL ADD_RAND_MESSAGE, @"“一起努力逃出去吧。”"
+		CALL ADD_RAND_MESSAGE, @"“好吧，我来帮你。”"
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"“好吧，我们一起努力逃出去吧。”"
+		CALL ADD_RAND_MESSAGE, @"“唉，没办法。”"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"“算了吧，我一个人也很辛苦。”"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"“啊，我会努力不成为累赘的。”"
+	CASE 性格_やさしいひと
+		CALL ADD_RAND_MESSAGE, @"「虽然很辛苦，但我们要加油」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「看来需要我的力量，我知道了」"
+		CALL ADD_RAND_MESSAGE, @"「没办法，我来帮忙吧」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  110    ◆PTから離脱
+; / ARG:1         対象キャラのID
+; / ARG:2    1    0:確認 1:別れた
+; / ARGS:0        対象キャラの名前
+@KOJO_DEFAULT_110_X_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 離脱キャラと关于別に主人公側口上も同関数が呼び出される
+	; 主人公側口上
+	IF TARGET == 1
+		CALL ADD_RAND_MESSAGE, @"「要小心哦，%CALLNAME:(ARG:1)%我觉得如果是那样的话应该没问题，但是」"
+		CALL ADD_RAND_MESSAGE, @"「是吗，再见了」"
+		
+	; 離脱側口上
+	ELSE
+		CALL ADD_RAND_MESSAGE, @"「暂时告别吧，那么下次再见」"
+		CALL ADD_RAND_MESSAGE, @"「祝我们双方好运」"
+	ENDIF
+RETURN 1
+
+
+;以下、探索でアイテムを見つけた分離 → KOJO_DEFAULT_113_探索でアイテムを見つけた.ERB
+;@KOJO_DEFAULT_113
+
+
+; ////////////////////////////
+; / ARG:0  114    ◆睡眠開始
+; / ARG:1         0:見張り無し, 1:PTで見張り, 2:NPCが見張り
+; / ARG:2         見張っているNPCのID(0なら見張りなし)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_114(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「趁还能休息就好好休息吧」"
+	CALL ADD_RAND_MESSAGE, @"「呼，终于能休息了」"
+
+
+	CALL ADD_RAND_MESSAGE, @"「这里风景很好。在这里，可以好好休息」"
+	CALL ADD_RAND_MESSAGE, @"「有个可以藏身的地方。在这里，可以好好休息」"
+	CALL ADD_RAND_MESSAGE, @"「万一有什么情况发生，可以通过这条路线。嗯，在这里可以好好休息」"
+
+	CALL ADD_RAND_MESSAGE, @"「在这里，如果有什么靠近的话应该会有声音。可以好好休息呢」"
+	CALL ADD_RAND_MESSAGE, @"「这里有大量优质的草药。在这里，可以好好休息」"
+	CALL ADD_RAND_MESSAGE, @"「根据前进的方向和风向来考虑。嗯，在这里可以好好休息」"
+	CALL ADD_RAND_MESSAGE, @"「至少要恢复体力才行」"
+	CALL ADD_RAND_MESSAGE, @"「附近有水源，作为休息的地方还不错」"
+
+	CALL ADD_RAND_MESSAGE, @"「好像有人休息过的痕迹。……要利用一下吗」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おせっかい
+		CALL ADD_RAND_MESSAGE, @"「先把周围清理干净再睡吧」"
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「晚安！Zzz……」"
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「还能睡觉的话，还算好一点吧」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「虽然睡觉的地方不好……」"
+		CALL ADD_RAND_MESSAGE, @"「不仅是身体，头脑也要休息一下」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「竟然会在这种地方睡觉……」"
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「这地面有点软，很舒服」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「像平时一样全裸睡觉会不会太刺激了……」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「能休息真是好事」"
+		CALL ADD_RAND_MESSAGE, @"「有休息的时候就赶紧休息」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「能睡觉的话就先忽略地方的不好……」"
+		CALL ADD_RAND_MESSAGE, @"「那么，休息一下吧」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「现在的事情，从醒来后再考虑吧」"
+		CALL ADD_RAND_MESSAGE, @"「现在的事情，从睡醒后再考虑吧」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「希望在睡觉时不会被袭击……」"
+		CALL ADD_RAND_MESSAGE, @"「希望……全都是梦就好了……」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「关于睡觉……有适合的环境，虽然说出来也没用」"
+		CALL ADD_RAND_MESSAGE, @"「想要在舒服的被子里睡觉」"
+	ENDSELECT
+	
+	; 眠気による追加口上
+	SELECTCASE FLAG:7
+	CASE IS < 3
+		CALL ADD_RAND_MESSAGE, @"「虽然不是很困，但还是想恢复一点体力」"
+	CASE IS < 7
+		CALL ADD_RAND_MESSAGE, @"「要保持头脑清醒，万一有危险的时候」"
+	CASE IS < 11
+		CALL ADD_RAND_MESSAGE, @"「终于可以睡觉了……」"
+		CALL ADD_RAND_MESSAGE, @"「呼啊……啊呼……困……」"
+	CASE IS < 15
+		CALL ADD_RAND_MESSAGE, @"「宁愿被袭击也想多睡一会儿……」"
+		CALL ADD_RAND_MESSAGE, @"「不行了……困……Zzz……」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  114    ◆睡眠開始
+; / ARG:1    0    0:見張り無し, 1:PTで見張り, 2:NPCが見張り
+; / ARG:2         見張っているNPCのID(0なら見張りなし)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_114_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「希望这样的睡眠可以恢复疲劳」"
+	CALL ADD_RAND_MESSAGE, @"「即使在睡觉时也要保持警惕……」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  114    ◆睡眠開始
+; / ARG:1    1    0:見張り無し, 1:PTで見張り, 2:NPCが見張り
+; / ARG:2         見張っているNPCのID(0なら見張りなし)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_114_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「轮流守夜休息吧」"
+	CALL ADD_RAND_MESSAGE, @"「能安心地睡觉真好啊……」"
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"（让其他人多休息一会儿吧……）"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「那我先去睡觉了」"
+	ENDSELECT
+
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  114    ◆睡眠開始
+; / ARG:1    2    0:見張り無し, 1:PTで見張り, 2:NPCが見張り
+; / ARG:2         見張っているNPCのID(0なら見張りなし)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_114_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「拜托你一会儿」"
+	CALL ADD_RAND_MESSAGE, @"「不好意思，拜托了」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  118    ◆自慰メッセージ
+; / ARG:1         部位
+; / ARG:2         0:道具なし 1:道具あり
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_118(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+
+
+
+
+
+	; 催眠中
+	IF CFLAG:43
+		SELECTCASE CFLAG:43
+		; 催眠強度1
+		CASE 1
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				CALL ADD_RAND_MESSAGE, @"「呀……！　啊啊啊！　那里不行！　那里不行啊！」"
+				
+			; 発情・感情操作系
+			CASE 1
+				CALL ADD_RAND_MESSAGE, @"「想要……感觉舒服的东西……」"
+				
+			; 無意識・認識操作系
+			CASE 2
+				CALL ADD_RAND_MESSAGE, @"（被看到了？只是在自慰而已吧？）"
+				CALL ADD_RAND_MESSAGE, @"（得想办法解决身体的燥热感）"
+			ENDSELECT
+
+		; 催眠強度2
+		CASE 2
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				CALL ADD_RAND_MESSAGE, @"「呀……！　啊啊啊！　停下！　停下啊！」"
+				
+			; 発情・感情操作系
+			CASE 1
+				CALL ADD_RAND_MESSAGE, @"「呜♥　嗯嗯♥　啊啊……♥　希望……嗯♥」"
+				CALL ADD_RAND_MESSAGE, @"「希望……嗯♥　肚子里……咕咕地翻腾着♥」"
+				
+			; 無意識・認識操作系
+			CASE 2
+				CALL ADD_RAND_MESSAGE, @"「看着我自慰，这么有趣吗？」"
+			ENDSELECT
+			
+		; 催眠強度最大、又关于レッサーヒュプノの減衰あり催眠
+		CASEELSE
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				CALL ADD_RAND_MESSAGE, @"「呜啊啊啊啊♥　停下！　停下自慰啊啊啊♥♥」"
+				
+			; 発情・感情操作系
+			CASE 1
+				CALL ADD_RAND_MESSAGE, @"「被看着……嗯♥　自己做的话会很兴奋♥」"
+				
+			; 無意識・認識操作系
+			CASE 2
+				CALL ADD_RAND_MESSAGE, @"「快点等我一下，我马上就要来了」"
+			ENDSELECT
+		ENDSELECT
+		
+		RETURN 1
+	ENDIF
+	
+	; 自慰中毒LVで分岐
+	SELECTCASE ABL:10
+	; LV0
+	CASE 0
+		; 発情していない
+		IF !CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"「这种事情……不是现在的时候……」"
+			CALL ADD_RAND_MESSAGE, @"「不行，明明不行……」"
+		; 発情中
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「这种疼痛……得平息下来……」"
+			CALL ADD_RAND_MESSAGE, @"「因为……要解决这种性欲……」"
+		ENDIF
+
+	; LV1
+	CASE 1
+		; 発情していない
+		IF !CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"「嗯……啊……♥ 关于……嗯……」"
+			CALL ADD_RAND_MESSAGE, @"「呼啊……嗯……♥ 啊……♥」"
+			CALL ADD_RAND_MESSAGE, @"「关于啊……关于啊……嗯啊……啊♥」"
+		; 発情中
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「关于啊……♥ 关于啊……♥ 嗯嗯……嗯啊啊……♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 啊♥ 呼……嗯啊♥」"
+			CALL ADD_RAND_MESSAGE, @"（这种时候……♥ 自慰的话……不行……了……♥♥）"
+		ENDIF
+		
+	; LV2
+	CASE 2
+		; 発情していない
+		IF !CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"「呜啊……♥ 身体，好热……♥」"
+			CALL ADD_RAND_MESSAGE, @"「不行啊……♥ 手停不下来……♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 已经停不下来了♥ 我喜欢自慰♥」"
+			CALL ADD_RAND_MESSAGE, @"「只是一点点♥ 只是一点点而已……♥」"
+			CALL ADD_RAND_MESSAGE, @"「只要一次……一次就好了……♥ 好♥」"
+		; 発情中
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"（这种时候……♥ 自慰的话……不行……了……♥♥）"
+			CALL ADD_RAND_MESSAGE, @"（关于啊♥ 感觉好舒服……♥ 我喜欢自慰♥）"
+			CALL ADD_RAND_MESSAGE, @"「嗯啊……♥ 不行……♥ 好舒服……一直……♥♥」"
+			CALL ADD_RAND_MESSAGE, @"（好、好厉害♥ 这是什么♥ 比平时♥ 要更♥ 更加♥）"
+		ENDIF
+		
+	; LV3以上
+	CASEELSE
+		; 発情していない
+		IF !CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"「只是一点点♥ 只是一点点而已……♥」"
+			CALL ADD_RAND_MESSAGE, @"「关于啊♥ 我喜欢自慰♥♥ 喜欢♥♥ 喜欢♥♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊啊……♥ 好舒服……♥ 嗯……♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「一次够了吗……♥♥ 啊♥♥ 好了……不够的话也没关系♥♥♥」"
+		; 発情中
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"（喜欢自慰♥ 喜欢自慰♥ 自慰最棒了♥）"
+			CALL ADD_RAND_MESSAGE, @"（喜欢自慰♥ 喜欢自慰♥ 自慰最高了♥♥）"
+			CALL ADD_RAND_MESSAGE, @"「啊♥啊♥嗯啊♥♥ 嗯嘻♥ 关于啊♥ 关于啊♥ 啊啊啊♥♥」"
+			CALL ADD_RAND_MESSAGE, @"（关于状态♥♥ 关于状态♥♥ 开始了♥♥ 停不下来♥♥ 这样♥♥ 一直这样♥♥）"
+			CALL ADD_RAND_MESSAGE, @"（关于状态自慰♥♥ 真棒♥♥ 一起♥♥ 一直♥♥ 这样自慰♥♥ 自慰♥♥♥♥啊♥♥啊啊啊♥♥♥♥♥）"
+		ENDIF
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  119    ◆自慰で絶頂失敗
+; / ARG:1         部位
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_119(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+
+
+
+
+
+	; 自慰中毒LVで分岐
+	SELECTCASE ABL:10
+	; LV0
+	CASE 0
+		CALL ADD_RAND_MESSAGE, @"「不行了……这种事情要停下来……」"
+		CALL ADD_RAND_MESSAGE, @"（关于啊……）"
+		
+	; LV1
+	CASE 1
+		CALL ADD_RAND_MESSAGE, @"「呜呜……」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊……没能……」"
+		CALL ADD_RAND_MESSAGE, @"「为什么不能……」"
+		
+	; LV2
+	CASE 2
+		CALL ADD_RAND_MESSAGE, @"「明明很舒服为什么不能……？」"
+		CALL ADD_RAND_MESSAGE, @"「明明很舒服♥ 为什么♥ 为什么不能……♥」"
+		CALL ADD_RAND_MESSAGE, @"（来……♥ 啊，那个……？）"
+		
+	; LV3以上
+	CASEELSE
+		CALL ADD_RAND_MESSAGE, @"（想要……♥ 想要……♥）"
+		CALL ADD_RAND_MESSAGE, @"（为什么啊♥ 让我……♥ 让我啊♥）"
+		CALL ADD_RAND_MESSAGE, @"（不能…… 不能♥♥ 为什么♥♥ 为什么不能啊♥♥）"
+	ENDSELECT
+	
+	
+RETURN 1
+
+
+;以下絶頂時口上关于分離 → KOJO_DEFAULT_120_絶頂.ERB
+;@KOJO_DEFAULT_120
+
+
+; ////////////////////////////
+; / ARG:0  121    ◆発情がおさまった
+; / ARG:1         部位
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_121(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+;●喪失中
+IF CFLAG:29 > 0
+
+	CALL ADD_RAND_MESSAGE, @"「关于啊……♥♥ 关于啊……♥ 关于啊……」"
+	CALL ADD_RAND_MESSAGE, @"「啊……♥♥ 啊……♥ 啊……」"
+	CALL ADD_RAND_MESSAGE, @"「啊……♥♥ 啊……♥ 啊……」"
+	CALL ADD_RAND_MESSAGE, @"「嘿……♥♥ 嘿……♥ 嘘……」"
+	CALL ADD_RAND_MESSAGE, @"「呼啊……♥♥ 呼啊……♥ 啊……」"
+
+
+	RETURN 1
+
+ENDIF
+
+
+
+	; 完全に発情がおさまった
+	IF CFLAG:28 == 0
+		IF ABL:6 + ABL:7 + ABL:8 + ABL:9 + ABL:15 >= 10
+			CALL ADD_RAND_MESSAGE, @"\d发情虽然已经平息，但身体仍然疼痛……\d\n「是发情了还是没有发情……感觉没太大区别……♥♥」"
+		ELSEIF ABL:6 + ABL:7 + ABL:8 + ABL:9 + ABL:15 >= 5
+			CALL ADD_RAND_MESSAGE, @"\d发情虽然已经平息，但身体仍然无法恢复……\d\n「虽然稍微好一点了……但身体已经变成这样了……♥」"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「呼，终于平静下来了……」"
+			CALL ADD_RAND_MESSAGE, @"（呜～……好害羞……）"
+		ENDIF
+		
+	; 少し発情がおさまった(まだ発情中)
+	ELSE
+		IF ABL:6 + ABL:7 + ABL:8 + ABL:9 + ABL:15 >= 10
+			CALL ADD_RAND_MESSAGE, @"「关于啊……♥♥ 关于啊……♥♥ 关于啊……♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「完全……♥ 不够……♥♥」"
+		ELSEIF ABL:6 + ABL:7 + ABL:8 + ABL:9 + ABL:15 >= 5
+			CALL ADD_RAND_MESSAGE, @"「不够……♥」"
+			CALL ADD_RAND_MESSAGE, @"「身体的疼痛……还没有平息……♥」"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「不行……还想要……」"
+			CALL ADD_RAND_MESSAGE, @"「稍微，平静下来了……」"
+			CALL ADD_RAND_MESSAGE, @"「稍微，平静下来了……但是……关于啊♥」"
+			CALL ADD_RAND_MESSAGE, @"（不、不够啊……）"
+		ENDIF
+	ENDIF
+RETURN 1
+
+
+
+
+
+
+
+; ////////////////////////////
+; / ARG:0  123    ◆母乳を吸われる
+; / ARG:1    
+; / ARG:2         回復量
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_123(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+
+	; B感覚LVで分岐
+	SELECTCASE ABL:7
+	; LV0
+	CASE 0
+		CALL ADD_RAND_MESSAGE, @"「不可能……！？　奶水！？为什么！？」"
+	
+	; LV1
+	CASE 1
+		CALL ADD_RAND_MESSAGE, @"「不要啊啊啊！　不要吸啊啊啊啊！」"
+		CALL ADD_RAND_MESSAGE, @"「停下啊啊！　不要吸啊啊啊啊！」"
+		CALL ADD_RAND_MESSAGE, @"「等等啊啊！　不要吸啊啊啊啊！」"
+		CALL ADD_RAND_MESSAGE, @"「不、现在、吸胸部是不行的！」"
+		CALL ADD_RAND_MESSAGE, @"「不可以这样！放过我！」"
+
+
+	; LV2
+	CASE 2
+			CALL ADD_RAND_MESSAGE, @"「又……♥ 被吸奶了……啊……♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 不要♥ 喝那么多♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 被吸奶了♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 别♥ 吸奶♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「嗯♥ 胸部♥ 变得♥ 热♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「谎言♥ 爸爸♥ 我的♥ 胸部♥ 被吸了♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「必须♥ 忍住♥ 胸部♥♥ 不可以♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「不♥ 不会输♥ 胸部♥♥ 不可以♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「等♥ 等一下♥ 胸部♥♥ 不可以♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「不♥ 不要♥ 吸了♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「哇♥ 我的♥ 胸部♥ 被吸了♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「这么♥ 这么用力♥♥ 吸的话♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「接下来♥ 接下来♥ 要吸什么♥♥ 啊♥ 胸部♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「为什么♥ 胸部♥♥ 为什么♥♥ 啊♥ 变得这样♥♥」"
+
+	; LV3以上
+	CASEELSE
+			CALL ADD_RAND_MESSAGE, @"「咿♥ 奶♥ 奶奶♥ 这么被吸♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 不要♥ 喝那么多♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 啊♥ 被吸了♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 啊♥ 别吸♥♥ 别吸啊♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 啊♥ 那里，别吸♥♥ 离开啊♥♥」"
+
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 被吸奶了♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 胸部♥♥ 不可以♥♥ 不可以啊♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 胸部♥♥ 这样的话♥♥ 我受不了♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 别♥ 吸奶♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「嗯♥ 胸部♥♥ 不可以♥♥ 融化了♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「嗯♥ 胸部♥ 变得♥ 热♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「谎言♥ 爸爸♥ 我的♥ 胸部♥ 被吸了♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「必须♥ 忍住♥ 胸部♥♥ 不可以♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「不♥ 不会输♥ 胸部♥♥ 不可以♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「等♥ 等一下♥ 胸部♥♥ 不可以♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「不♥ 不要♥ 吸了♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「嗯♥ 不行♥ 被吸了♥♥ 变成这样♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 别♥ 别再吸胸部♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 别♥ 别再吸胸部♥♥ 啊♥ 变成这样♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「喔♥ 你怎么♥ 吸胸部♥♥ 这样，啊♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「哇♥ 我的♥ 胸部♥ 被吸了♥♥」"
+
+			CALL ADD_RAND_MESSAGE, @"「那么♥ 那么♥ 这么用力♥♥ 吸的话，胸部会坏掉♥♥ 胸部会被毁掉♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「嗯♥ 胸部♥♥ 不可以♥♥ 不要碰♥♥ 啊♥♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「这么♥ 这么用力♥♥ 吸的话♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「接下来♥ 接下来♥ 要吸什么♥♥ 啊♥ 胸部♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「为什么♥ 胸部♥♥ 为什么♥♥ 啊♥ 变得这样♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「为什么♥ 胸部♥♥ 为什么♥♥ 这么用力♥♥ 啊♥♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「为什么♥ 胸部♥♥ 瞄准♥♥ 啊♥♥♥」"
+
+
+	ENDSELECT
+RETURN 1
+
+
+
+;////////////////////////////
+; / ARG:0  125    ◆寄生進行
+; / ARG:1         進行度合い
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_125(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;\n（改行）しとかないと次のログ次第で流れてっちゃう
+
+
+
+;●バリアント分岐　出産用
+IF FLAG:600 == 1
+
+	LOCAL:0 = 0
+
+	IF ABL:11 > 2 && CFLAG:29
+		LOCAL:0 = 3
+	ENDIF
+
+ELSE
+
+	LOCAL:0 = ABL:11
+
+ENDIF
+
+
+;喪失中　＋　症状が低い
+IF CFLAG:29 > 0 && ARG:1 >= 8
+
+	RETURN 0
+
+ENDIF
+
+
+	IF ARG:1 >= 12
+		;寄生した幼体が育つに关于まだ時間がかかるようだ…
+		;自覚症状のない時期
+		CALL ADD_RAND_MESSAGE, @"「～♪」\n"
+	ELSEIF ARG:1 >= 8
+	;少し体に違和感を覚えた。寄生した幼体が徐々に育ち始めたようだ
+		CALL ADD_RAND_MESSAGE, @"「……？　是我的错觉吗」\n"
+		CALL ADD_RAND_MESSAGE, @"「……感觉怪怪的」\n"
+		
+		
+	ELSEIF ARG:1 >= 4
+	;時折息を荒げている。寄生した幼体がかなり育ってきたようだ…
+		;触手中毒LV2以上
+		IF LOCAL:0 >= 2
+			CALL ADD_RAND_MESSAGE, @"「难道……♥」\n"
+			CALL ADD_RAND_MESSAGE, @"「啊……♥　……这种感觉……♥」\n"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「不、不可能……不会吧……这种事……！」\n"
+			CALL ADD_RAND_MESSAGE, @"「这种……怎、怎么办才好……！」\n"
+		ENDIF
+		
+		
+	ELSEIF ARG:1 >= 2
+	;辛そうな表情を見せている。寄生した幼体がもうすぐ産まれそうだ…
+		;触手中毒LV2以上
+		IF LOCAL:0 >= 2
+			CALL ADD_RAND_MESSAGE, @"「动了起来……♥　好好……♥」\n"
+			CALL ADD_RAND_MESSAGE, @"「长大了快点让妈妈听到你有力的声音……♥」\n"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「不要……不要……有没有办法……！？」\n"
+			CALL ADD_RAND_MESSAGE, @"「呜……咕……呜，动了……？」"
+		ENDIF
+		
+		
+	ELSEIF ARG:1 >= 1
+	;様子がおかしい。も关于や一刻の猶予も無いようだ…
+		;触手中毒LV2以上
+		IF LOCAL:0 >= 2
+			CALL ADD_RAND_MESSAGE, @"「呜……♥　快了……♥　快了……♥」\n"
+			CALL ADD_RAND_MESSAGE, @"「会是什么样的孩子呢……♥」\n"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"（不想生……不想生……讨厌……不要……！！）\n"
+			CALL ADD_RAND_MESSAGE, @"「快、快了……这样……？　该怎么办……！！」\n"
+		ENDIF
+	ENDIF
+	
+RETURN 1
+; ////////////////////////////
+; / ARG:0  126    ◆妊娠進行
+; / ARG:1         進行度合い
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_126(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;\n（改行）しとかないと次のログ次第で流れてっちゃう
+
+
+;●バリアント分岐　出産用
+IF FLAG:600 == 1
+
+	LOCAL:0 = 0
+
+	IF ABL:11 > 2 && CFLAG:29
+		LOCAL:0 = 3
+	ENDIF
+
+ELSE
+
+	LOCAL:0 = ABL:11
+
+ENDIF
+
+
+
+;喪失中　＋　症状が低い
+IF CFLAG:29 > 0 && ARG:1 >= 9
+
+	RETURN 0
+
+ENDIF
+
+
+
+	IF ARG:1 >= 11
+	;少し体の調子が悪いようだ…
+		CALL ADD_RAND_MESSAGE, @"「……？　是我的错觉吗」\n"
+		CALL ADD_RAND_MESSAGE, @"「……感觉怪怪的」\n"
+		CALL ADD_RAND_MESSAGE, @"「……感觉不舒服……早孕反应……？　不会吧……？」\n"
+	ELSEIF ARG:1 >= 9
+	;顔色が悪い…体調がよくないのだろうか
+		;触手中毒LV2以上
+		IF LOCAL:0 >= 2
+			CALL ADD_RAND_MESSAGE, @"「难道……怀孕了……♥」\n"
+			CALL ADD_RAND_MESSAGE, @"「啊……♥　……这种感觉……♥」\n"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「不、不可能……怀孕了……？」\n"
+			CALL ADD_RAND_MESSAGE, @"「这种……怎、怎么办才好……！」\n"
+		ENDIF
+	ELSEIF ARG:1 >= 8
+		IF CFLAG:36 == 1
+			;体調が元に戻ったようだ
+			;触手中毒LV2以上
+			IF LOCAL:0 >= 2
+				CALL ADD_RAND_MESSAGE, @"「啊……弄错了……」\n"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「太好了……误会了……太好了……」\n"
+			ENDIF
+		ELSE
+		;お腹が膨らみ始めている　どうやら以前射精された際に妊娠してしまったようだ…
+		;触手中毒LV2以上
+			IF LOCAL:0 >= 2
+				CALL ADD_RAND_MESSAGE, @"「果然是怀孕了……♥」\n"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「不要……不要……有没有办法……！？」\n"
+				CALL ADD_RAND_MESSAGE, @"「这样……那时候的受精卵……？」\n"
+			ENDIF
+		ENDIF
+		
+	ELSEIF ARG:1 >= 5
+	;お腹が大きくなってきた…
+		;触手中毒LV2以上
+		IF LOCAL:0 >= 2
+			CALL ADD_RAND_MESSAGE, @"「顺利地成长着……♥」\n"
+			CALL ADD_RAND_MESSAGE, @"「是不是该考虑起名字了呢……♥」\n"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「肚子……变大了……」\n"
+			CALL ADD_RAND_MESSAGE, @"「宝宝……有没有……堕胎的方法之类的……」\n"
+		ENDIF
+		
+	ELSEIF ARG:1 >= 3
+	;お腹关于、も关于や关于っきり分かるほどに大きくなっている
+		;触手中毒LV2以上
+		IF LOCAL:0 >= 2
+			CALL ADD_RAND_MESSAGE, @"「动了起来……♥　好好……♥」\n"
+			CALL ADD_RAND_MESSAGE, @"「长大了快点让妈妈听到你有力的声音……♥」\n"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"（不想生……不想生……讨厌……不要……！！）\n"
+			CALL ADD_RAND_MESSAGE, @"「这么大了……！　快了……！？」\n"
+		ENDIF
+		
+	ELSEIF ARG:1 >= 1
+		;母乳体質
+		;母乳が出ないとき母乳が出るようになった、のための分岐っぽいので、特別母乳に言及する必要关于なさげ
+		IF TALENT:130
+		;陣痛に苦しんでいる…
+			;触手中毒LV2以上
+			IF LOCAL:0 >= 2
+				CALL ADD_RAND_MESSAGE, @"「关于啊……呜……　快了……♥」\n"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「呜……宫缩……不……不要……」\n"
+				CALL ADD_RAND_MESSAGE, @"「什么时候……咕……呜……」\n"
+				CALL ADD_RAND_MESSAGE, @"（要生了……要生了……）\n"
+			ENDIF
+		ELSE
+		;陣痛に苦しむ+胸から、母乳が滲み始めている…
+			;触手中毒LV2以上
+			IF LOCAL:0 >= 2
+				CALL ADD_RAND_MESSAGE, @"「关于啊……呜……　快了……♥」\n"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"（为什么……会有奶水……？我可没有准备养孩子……）\n"
+				CALL ADD_RAND_MESSAGE, @"「谎言……胸涨得……讨厌……讨厌啦……」\n"
+			ENDIF
+		ENDIF
+	ENDIF
+	
+RETURN 1
+; ////////////////////////////
+; / ARG:0  127    ◆寄生出産
+; / ARG:1         進行度合い
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_127(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+;●バリアント分岐　出産用
+IF FLAG:600 == 1
+
+	LOCAL:0 = 0
+
+	IF ABL:11 > 2 && CFLAG:29
+		LOCAL:0 = 3
+	ENDIF
+
+ELSE
+
+	LOCAL:0 = ABL:11
+
+ENDIF
+
+
+	IF ARG:1 == 0
+	;突然%ARGS:0%が倒れたかと思うと、凄まじい悲鳴を上げ始めた
+	;見ると、%ARGS:0%に寄生していた幼体が%ARGS:0%のナカから少しずつ這い出ようとしている…
+		;触手中毒LV2以上
+		IF LOCAL:0 >= 2
+			CALL ADD_RAND_MESSAGE, @"「要生了……♥ 要生了呜呜呜呜呜……♥」\n"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「不……不要啊啞啞啞啞啞！！！」"
+		ENDIF
+	ELSEIF ARG:1 == 1
+	;PRINTFORMW %ARGS:0%から産まれた幼体关于%ARGS:0%の胸へと吸いついた
+	;生命力ごと吸い尽くすかのように、幼体关于乳首を吸い上げている
+		;母乳体質あり
+		IF TALENT:130
+			;触手中毒LV2以上
+			IF LOCAL:0 >= 2
+				CALL ADD_RAND_MESSAGE, @"「啊……♥ 正在吸奶……♥」\n"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「在喝奶……」"
+				CALL ADD_RAND_MESSAGE, @"「我……被怪物的孩子吸奶了……」"
+			ENDIF
+		ELSE
+
+			IF CFLAG:29 < 1
+
+				CALL ADD_RAND_MESSAGE, @"「…………什么都没有出来……」"
+
+				CALL ADD_RAND_MESSAGE, @"「……很遗憾，没有出来」"
+				CALL ADD_RAND_MESSAGE, @"「做无意义的事情……」"
+				CALL ADD_RAND_MESSAGE, @"「没用的，放弃吧……」"
+				CALL ADD_RAND_MESSAGE, @"「……这就是本能吗？」"
+				CALL ADD_RAND_MESSAGE, @"「……快点离开」"
+				CALL ADD_RAND_MESSAGE, @"「……未来让人担忧」"
+				CALL ADD_RAND_MESSAGE, @"「我的胸部……」"
+				CALL ADD_RAND_MESSAGE, @"「……现在，剥离可能很危险」"
+				CALL ADD_RAND_MESSAGE, @"「……什么都没有出来。看来，我的胸部没有异常」"
+
+				; 性格別 追加口上
+				SELECTCASE CFLAG:100
+				CASE 性格_しあわせもの
+					CALL ADD_RAND_MESSAGE, @"「……照顾也不会成为伙伴」"
+				ENDSELECT
+
+
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「别、别……什么都……出不来啦……」"
+			ENDIF
+
+		ENDIF
+		
+		;以下条件で母乳体質追加なのでそれよう口上
+		IF TALENT:130 == 0 && ABL:7 > 2
+		;どうやら疑似出産を経て、母乳が出るようになったようだ
+			CALL ADD_RAND_MESSAGE, @"「就算这样……也会有奶水出来……」"
+		ENDIF
+		
+	ELSEIF ARG:1 == 2
+		;PRINTFORMW ……やがて満足したのか、幼体关于白濁液に塗れた%ARGS:0%を残し、迷宮の奥へと消えて行った…
+		;虚ろな目をしたまま全身をビクビクとふるわせた、ともある
+		CALL ADD_RAND_MESSAGE, @"「………………」"
+	ENDIF
+RETURN 1
+
+;////////////////////////////
+; / ARG:0  129    ◆妊娠出産
+; / ARG:1         進行度合い
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_129(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●バリアント分岐　出産用
+IF FLAG:600 == 1
+
+	LOCAL:0 = 0
+
+	IF ABL:11 > 2 && CFLAG:29
+		LOCAL:0 = 3
+	ENDIF
+
+ELSE
+
+	LOCAL:0 = ABL:11
+
+ENDIF
+
+	
+	IF ARG:1 == 0
+		;突然うめき声と共に屈み込むと、その足元に羊水が溢れ始めた…
+					;触手中毒LV2以上
+					IF LOCAL:0 >= 2
+						CALL ADD_RAND_MESSAGE, @"「啊……♥ 来了……♥」"
+					ELSE
+						CALL ADD_RAND_MESSAGE, @"「谎言……要生了……？」"
+						CALL ADD_RAND_MESSAGE, @"「已、已经……到极限了！」"
+					ENDIF
+		;以下条件で母乳体質追加なのでそれよう口上
+		IF TALENT:130 == 0 && ABL:7 > 2
+			;陣痛に苦しむ～の胸から、母乳が滲み始めている…
+			;触手中毒LV2以上
+			IF LOCAL:0 >= 2
+				CALL ADD_RAND_MESSAGE, @"「奶水……要出来了♥ 是啊……宝宝要喝的……♥」"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「为什么……要养大它……？」"
+			ENDIF
+		ENDIF
+			;PRINTFORMW 息を荒くする%ARGS:0%のナカから、孕んでいた子供が少しずつ這い出ようとしている…
+			;触手中毒LV2以上
+			IF LOCAL:0 >= 2
+				CALL ADD_RAND_MESSAGE, @"「加油♥ 再……再坚持一下♥」"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「啊………呜、生………」"
+			ENDIF
+			
+		ELSEIF ARG:1 == 1
+			;触手の子供だったとき
+			IF ARG:2 == 0
+				;PRINTFORMW %ARGS:0%关于%ENEMY_NAME(CFLAG:22)%の幼体を産み落とした
+				;触手中毒LV2以上
+				IF LOCAL:0 >= 2
+					CALL ADD_RAND_MESSAGE, @"「生……出来了……♥」"
+				ELSE
+					CALL ADD_RAND_MESSAGE, @"「这个……是我生的……？」"
+				ENDIF
+			;娘だったとき
+			ELSE
+				;PRINTFORMW %ARGS:0%关于半妖の女の子を産み落とした
+				;触手中毒LV2以上
+				IF LOCAL:0 >= 2
+					CALL ADD_RAND_MESSAGE, @"「我的……可爱的宝宝……♥」"
+				ELSE
+					CALL ADD_RAND_MESSAGE, @"「宝贝……是我的吗？」"
+				ENDIF
+			ENDIF
+			
+			;PRINTFORMW 産み落とされた子供关于精根尽きた%ARGS:0%の胸に張り付き、臍の緒もそのままに母乳を吸い上げている…
+				;触手中毒LV2以上
+				IF LOCAL:0 >= 2
+					CALL ADD_RAND_MESSAGE, @"「乖乖……♥　　乖乖……♥」"
+				ELSE
+					CALL ADD_RAND_MESSAGE, @"「宝贝……在喝奶奶的奶吗？」"
+				ENDIF
+			
+		ELSEIF ARG:1 == 2
+			;スライムとかの足关于気にして关于いけないそうだ、約束だぞ
+			;PRINTFORMW ……しばらくして%ARGS:0%から離れた子供关于、早くも自らの足で立ち上がり、迷宮の奥へと消えて行った…
+			;触手中毒LV2以上
+				IF LOCAL:0 >= 2
+					CALL ADD_RAND_MESSAGE, @"「已经会走了……♥　啊……要走了吗……？」"
+				ELSE
+					CALL ADD_RAND_MESSAGE, @"「已经会走了……？　走掉了……」"
+				ENDIF
+		ENDIF
+	
+	
+	
+	
+RETURN 1
+; ////////////////////////////
+; / ARG:0  130    ◆部屋の浄化実行
+; / ARG:1    0    通常の浄化
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_130_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「稍微保持清洁哦」"
+	CALL ADD_RAND_MESSAGE, @"「顺便撒点盐吧」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「好，完成了！」"
+		CALL ADD_RAND_MESSAGE, @"「打扫完毕♪」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「这样保持干净，可能会对某人有帮助」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「呼，就这样吧」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「呼，变得漂亮了……」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「嘛，就这样吧」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  130    ◆部屋の浄化実行
+; / ARG:1    1    浄化力最大
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_130_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 通常の浄化口上を流用する
+	CALL KOJO_DEFAULT_130_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「我会认真地把你消灭掉的！」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「有这么多力量，最后的抵抗也无法做到了」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「用过剩的力量把你吹飞！」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  131    ◆眠気が進行
+; / ARG:1    3    眠気
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_131_3(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中
+	SIF CFLAG:29
+		RETURN 0
+		
+	CALL ADD_RAND_MESSAGE, @"「随时准备睡觉是个好主意」"
+	CALL ADD_RAND_MESSAGE, @"（有点困了……）"
+	CALL ADD_RAND_MESSAGE, @"「呼啊……啊呼……」"
+	
+	; 主人公なら追加口上
+	IF TARGET == 1
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「呼啊……　有没有好的睡觉地方呢」"
+		ENDSELECT
+		
+	; 主人公以外なら追加口上
+	ELSEIF TARGET != 1
+		CALL ADD_RAND_MESSAGE, @"（是不是该提议休息一下？）"
+		CALL ADD_RAND_MESSAGE, @"「稍微休息一下？」"
+	
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おせっかい
+			CALL ADD_RAND_MESSAGE, @"「或许应该找个地方休息一下」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「找到好地方后稍微休息一下吧」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  131    ◆眠気が進行
+; / ARG:1    7    眠気
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_131_7(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中
+	SIF CFLAG:29
+		RETURN 0
+		
+	CALL ADD_RAND_MESSAGE, @"「这个稍微休息一下……」"
+	CALL ADD_RAND_MESSAGE, @"「嗯～……困、困了……」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「唔唔……、好困……」"
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「这种程度……　还能继续，还能继续……」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「长时间不休息真的很辛苦」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「果然还是想稍微睡一下吧」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「眼睛湿湿的……」"
+	ENDSELECT
+	
+	; 主人公以外なら追加口上
+	IF TARGET != 1
+		CALL ADD_RAND_MESSAGE, @"「如果能稍微休息一下就好了……」"
+		CALL ADD_RAND_MESSAGE, @"「嘿，差不多该休息了吧？」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「稍微休息一下就好了……」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「稍微休息一下，对身体有好处哦」"
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"「熬夜可是美容的大敌哦」"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「差不多该休息一下了，不然会对身体有影响的哦」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  131    ◆眠気が進行
+; / ARG:1   11    眠気
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_131_11(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中
+	SIF CFLAG:29
+		RETURN 0
+		
+	CALL ADD_RAND_MESSAGE, @"「稍微休息一下吧……」"
+	CALL ADD_RAND_MESSAGE, @"「……！！还没睡！还没睡呢！」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"（一松懈就会睡着了……）"
+		CALL ADD_RAND_MESSAGE, @"「嗯，还能坚持……」"
+	CASE 性格_がんばりや
+		CALL ADD_RAND_MESSAGE, @"「嗯，还能坚持……」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（在不好的地方睡觉的话……大概会被袭击……）"
+	ENDSELECT
+	
+	; 主人公以外なら追加口上
+	IF TARGET != 1
+		CALL ADD_RAND_MESSAGE, @"「我觉得还是休息一下比较好……」"
+		CALL ADD_RAND_MESSAGE, @"「勉强只会增加危险……」"
+		
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「赶紧睡觉吧，再不睡也没好处了」"
+		CASE 性格_がんばりや
+			CALL ADD_RAND_MESSAGE, @"「嗯，还能坚持……」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「先睡一觉再继续，绝对更有效率……」"
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"「要是眼袋消不掉怎么办呢……」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"（虽然困，但如果还要继续的话，一起……）"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「不要勉强自己。休息一下吧……」"
+		CASE 性格_わがまま
+			CALL ADD_RAND_MESSAGE, @"「赶紧找个能睡觉的地方……！」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  131    ◆眠気が進行
+; / ARG:1   15    眠気
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_131_15(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中
+	SIF CFLAG:29
+		RETURN 0
+		
+	CALL ADD_RAND_MESSAGE, @"「已、已经到极限了……」"
+	CALL ADD_RAND_MESSAGE, @"（意识……）"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「没睡……没……睡……了…………」"
+	CASE 性格_がんばりや
+		CALL ADD_RAND_MESSAGE, @"「已经……坚持不住了……」"
+	ENDSELECT
+	
+	; 主人公以外なら追加口上
+	IF TARGET != 1
+		CALL ADD_RAND_MESSAGE, @"「我说过要休息的……」"
+		CALL ADD_RAND_MESSAGE, @"「对不起……已经……到极限了……」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「已经不行了，晚安……」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「为什么会变成这样……」"
+		CASE 性格_のんきもの
+			CALL ADD_RAND_MESSAGE, @"「醒来后都是梦……要是真的就好了……」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  132    ◆部屋を移動：突撃
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_132(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中
+	SIF CFLAG:29
+		RETURN 0
+
+;いくつかの性格と、この行動の相性关于悪い。無理やりなにかしゃべらせる方向で。
+
+	CALL ADD_RAND_MESSAGE, @"「好，让我们冲劲十足地出发吧！」"
+	CALL ADD_RAND_MESSAGE, @"「把陷阱一起踩扁！」"
+	CALL ADD_RAND_MESSAGE, @"「冲啊！」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+
+	CASE 性格_おせっかい
+
+		CALL ADD_RAND_MESSAGE, @"「把可疑的东西全部摧毁吧」"
+		CALL ADD_RAND_MESSAGE, @"「要不要走这边的路？」"
+		CALL ADD_RAND_MESSAGE, @"「那边远处看到的是什么呢……？」"
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「出发吧！」"
+		CALL ADD_RAND_MESSAGE, @"「来吧！」"
+
+		CALL ADD_RAND_MESSAGE, @"「刚刚踩到了什么！」"
+		CALL ADD_RAND_MESSAGE, @"「嘿嘿～♪小小的一点点」"
+		CALL ADD_RAND_MESSAGE, @"「碍事的东西，全部破坏！」"
+		CALL ADD_RAND_MESSAGE, @"「啊！那是什么呢？」"
+		CALL ADD_RAND_MESSAGE, @"「那边的路怎么样？」"
+	CASE 性格_がんこもの
+
+		CALL ADD_RAND_MESSAGE, @"「从未见过的世界呢……在坏的意义上。」"
+		CALL ADD_RAND_MESSAGE, @"「那边远处看到的是什么呢……？」"
+	CASE 性格_がんばりや
+
+		CALL ADD_RAND_MESSAGE, @"「要不要走这边的路？」"
+		CALL ADD_RAND_MESSAGE, @"「那边远处看到的是什么呢……？」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「冲劲十足，同时保持冷静」"
+		CALL ADD_RAND_MESSAGE, @"「战术要迅速！走在前面！」"
+		CALL ADD_RAND_MESSAGE, @"「就算这样，时间也不会停止……」"
+	CASE 性格_くろうにん
+
+		CALL ADD_RAND_MESSAGE, @"「没踩到，没踩到，我什么都没踩到……」"
+		CALL ADD_RAND_MESSAGE, @"「有很多看起来随时会动的植物。还是赶快吧」"
+		CALL ADD_RAND_MESSAGE, @"「远处有什么东西……」"
+	CASE 性格_しあわせもの
+
+		CALL ADD_RAND_MESSAGE, @"「嘿嘿～♪小小的一点点」"
+		CALL ADD_RAND_MESSAGE, @"「感觉看到了什么」"
+		CALL ADD_RAND_MESSAGE, @"「感觉听到了什么声音」"
+		CALL ADD_RAND_MESSAGE, @"「啊！那是什么呢？」"
+		CALL ADD_RAND_MESSAGE, @"「那边的路看起来不错」"
+
+	CASE 性格_セクシーギャル
+
+		CALL ADD_RAND_MESSAGE, @"「听到了什么声音呢」"
+		CALL ADD_RAND_MESSAGE, @"「有些形状很淫荡的植物！」"
+	CASE 性格_ぬけめがない
+
+		CALL ADD_RAND_MESSAGE, @"「听到了什么声音呢」"
+		CALL ADD_RAND_MESSAGE, @"「看到了什么呢」"
+		CALL ADD_RAND_MESSAGE, @"「有很多陌生形状的植物呢」"
+
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「如果有什么东西就立刻解决掉！」"
+		CALL ADD_RAND_MESSAGE, @"「突击！粉碎！胜利！」"
+
+		CALL ADD_RAND_MESSAGE, @"「啊！那是什么呢？」"
+		CALL ADD_RAND_MESSAGE, @"「道路是自己开拓出来的」"
+
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「决定了！下一个目的地是那边！」"
+		CALL ADD_RAND_MESSAGE, @"「好了，发起攻击！」"
+
+		CALL ADD_RAND_MESSAGE, @"「哎呀！吓我一跳啊」"
+		CALL ADD_RAND_MESSAGE, @"「要走哪条路呢？」"
+		CALL ADD_RAND_MESSAGE, @"「那边远处看到的是什么呢……？」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（如果有什么东西就直接冲过去……）"
+		CALL ADD_RAND_MESSAGE, @"「远处有什么东西」"
+		CALL ADD_RAND_MESSAGE, @"「这附近有奇怪的植物，最好快点走」"
+	CASE 性格_やさしいひと
+
+		CALL ADD_RAND_MESSAGE, @"「换个心情继续前进吧」"
+		CALL ADD_RAND_MESSAGE, @"「远处有什么东西」"
+	CASE 性格_わがまま
+
+		CALL ADD_RAND_MESSAGE, @"「把可疑的东西全部摧毁吧」"
+		CALL ADD_RAND_MESSAGE, @"「这里的奇怪植物好多啊……」"
+		CALL ADD_RAND_MESSAGE, @"「路什么的不用理会，不用理会。如果有人在路边埋伏就糟糕了」"
+		CALL ADD_RAND_MESSAGE, @"「那边远处看到的是什么呢……？」"
+	CASEELSE
+
+		CALL ADD_RAND_MESSAGE, @"「奇怪的植物很多。换个地方吧」"
+		CALL ADD_RAND_MESSAGE, @"「没时间悠闲下来」"
+		CALL ADD_RAND_MESSAGE, @"「看到什么了呢。去看看」"
+
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  133    ◆部屋を移動：慎重
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_133(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中
+	SIF CFLAG:29
+		RETURN 0
+		
+	CALL ADD_RAND_MESSAGE, @"「要小心不发出声音……」"
+	CALL ADD_RAND_MESSAGE, @"「要小心前进」"
+	CALL ADD_RAND_MESSAGE, @"「悄悄地……」"
+
+
+	CALL ADD_RAND_MESSAGE, @"「要小心不要受伤……」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おせっかい
+
+		CALL ADD_RAND_MESSAGE, @"「这附近有点干燥。要注意喉咙……」"
+		CALL ADD_RAND_MESSAGE, @"「呀！？吓我一跳……」"
+		CALL ADD_RAND_MESSAGE, @"「要警惕不放松哦」"
+		CALL ADD_RAND_MESSAGE, @"「集中注意力继续前进吧」"
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「悄悄地、小心地……」"
+		CALL ADD_RAND_MESSAGE, @"「悄悄地、小心地、怎么来着……？」"
+		CALL ADD_RAND_MESSAGE, @"「悄悄地走，说不定能顺利解决？」"
+
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「集中注意力继续前进吧」"
+		CALL ADD_RAND_MESSAGE, @"「要警惕不放松哦」"
+
+		CALL ADD_RAND_MESSAGE, @"「呀！？吓我一跳……」"
+	CASE 性格_がんばりや
+
+		CALL ADD_RAND_MESSAGE, @"「呀！？吓我一跳……」"
+		CALL ADD_RAND_MESSAGE, @"「要警惕不放松哦」"
+
+
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「不知道周围有什么，尽量不要刺激，小心行动」"
+		CALL ADD_RAND_MESSAGE, @"「尽量感受敌人的气息，小心行动」"
+		CALL ADD_RAND_MESSAGE, @"「集中注意力继续前进吧」"
+		CALL ADD_RAND_MESSAGE, @"「要警惕不放松哦」"
+
+		CALL ADD_RAND_MESSAGE, @"「悄悄地屏住呼吸，集中精神……」"
+		CALL ADD_RAND_MESSAGE, @"「呀！？吓我一跳……」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「不管往哪边走都感觉不好……」"
+
+		CALL ADD_RAND_MESSAGE, @"「呀，泥巴……」"
+	CASE 性格_しあわせもの
+
+
+	CASE 性格_セクシーギャル
+
+
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「总之要小心移动，不知道会发生什么」"
+		CALL ADD_RAND_MESSAGE, @"「那么，尽量走安全的方向吧」"
+		CALL ADD_RAND_MESSAGE, @"「突然从地面冒出什么东西的话可不好啊……」"
+		CALL ADD_RAND_MESSAGE, @"「集中注意力继续前进吧」"
+		CALL ADD_RAND_MESSAGE, @"「要警惕不放松哦」"
+
+		CALL ADD_RAND_MESSAGE, @"「悄悄地屏住呼吸，集中精神……」"
+
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「冷静地行动很重要，但不太适合我」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「随便走走看能不能找到出口」"
+		CALL ADD_RAND_MESSAGE, @"「这边感觉比较安全」"
+		CALL ADD_RAND_MESSAGE, @"「下一步要走哪边呢」"
+		CALL ADD_RAND_MESSAGE, @"「现在没必要着急。一步一步稳妥地走」"
+
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（慢慢走的话就会看到不想看到的东西……）"
+		CALL ADD_RAND_MESSAGE, @"「要走到什么地方才能出去呢……」"
+
+		CALL ADD_RAND_MESSAGE, @"「呀，泥巴……」"
+	CASE 性格_やさしいひと
+
+		CALL ADD_RAND_MESSAGE, @"「这附近有点干燥。要注意喉咙……」"
+		CALL ADD_RAND_MESSAGE, @"「呀，泥巴……」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「呀！？……真是的。嘘，嘘！」"
+
+	CASEELSE
+
+		CALL ADD_RAND_MESSAGE, @"「放松警惕是不行的呢」"
+
+
+
+	ENDSELECT
+	
+	; 現MPが最大MPの1/4以下なら追加口上
+	IF BASE:1 <= (MAXBASE:1 / 4)
+		CALL ADD_RAND_MESSAGE, @"「如果现在被敌人发现的话……」"
+		CALL ADD_RAND_MESSAGE, @"「必须找个地方休息一下……」"
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  134    ◆部屋を移動：待ち伏せ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_134(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中
+	SIF CFLAG:29
+		RETURN 0
+		
+	CALL ADD_RAND_MESSAGE, @"（躲在物影中，不被发现……）"
+	CALL ADD_RAND_MESSAGE, @"（偏偏在这种时候会打喷嚏什么的……）"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「关于……关于……关于呜呜呜呜……赛夫！」"
+		CALL ADD_RAND_MESSAGE, @"（如果敌人来了，就跳出去，咕啊啊啊啊！！嗯！）"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"（敌人来了是先发制人，还是……）"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"（从敌人来的方向悄悄溜走也是个办法）"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「伏击兼休息，还是休息兼伏击呢？」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  135    ◆探索開始
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_135(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中
+	SIF CFLAG:29
+		RETURN 0
+		
+	CALL ADD_RAND_MESSAGE, @"「如果有逃脱的线索就好了」"
+	CALL ADD_RAND_MESSAGE, @"「那么，从哪里开始着手呢」"
+	CALL ADD_RAND_MESSAGE, @"「这个房间里有什么吗」"
+	CALL ADD_RAND_MESSAGE, @"「有没有什么可以用的东西掉下来」"
+
+
+	CALL ADD_RAND_MESSAGE, @"「有个干净的水源就好了」"
+	CALL ADD_RAND_MESSAGE, @"「脚下、墙壁、天花板……太多要注意的了」"
+	CALL ADD_RAND_MESSAGE, @"希望能遇到能交流的人"
+	CALL ADD_RAND_MESSAGE, @"陷阱虽然可怕，但静静地待着也没办法……"
+	CALL ADD_RAND_MESSAGE, @"希望能找到一个可以休息的地方"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"哦，可疑的墙壁……咔嚓！！……好疼……"
+		CALL ADD_RAND_MESSAGE, @"是这边！不，是那边！"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"要好好确认这是什么地方"
+		CALL ADD_RAND_MESSAGE, @"要稍微调查一下吗"
+		CALL ADD_RAND_MESSAGE, @"要记住一些标记"
+
+		CALL ADD_RAND_MESSAGE, @"要尽量熟练地使用捡到的东西……"
+
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"那么，稍微找一下东西吧"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"希望能找到一个开着的出口"
+		CALL ADD_RAND_MESSAGE, @"肚子饿了呢，不知道有没有东西掉下来"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"希望在找东西的时候不会被袭击"
+		CALL ADD_RAND_MESSAGE, @"出口之类的……肯定没有吧……"
+		CALL ADD_RAND_MESSAGE, @"希望能捡到一些能用来出去的物品……"
+	ENDSELECT
+	
+	; 部屋の汚染度別 追加口上
+	SELECTCASE BATTLE_POLUTION()
+	CASE 0, 1
+		; 現状低汚染度の部屋关于対応口上無し
+	CASE 2
+		CALL ADD_RAND_MESSAGE, @"如果这里再干净一点，找家的事情就会变得容易了"
+	CASE 3
+		CALL ADD_RAND_MESSAGE, @"啊，真脏啊，呜……踩到什么东西了……"
+	CASE 4
+		CALL ADD_RAND_MESSAGE, @"虽然说要找能用的东西，但在这么脏的房间里……？"
+	CASE 5
+		CALL ADD_RAND_MESSAGE, @"在这么脏的地方捡到的东西，感觉不能好好使用呢"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"呜呜……要在这里找东西吗……"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"在找东西之前最好先打扫一下"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"呜……好脏啊……"
+		ENDSELECT
+	ENDSELECT
+	
+	; 緑茶・玉露共に所持数0なら追加口上
+	IF ITEM:50 == 0 && ITEM:51 == 0
+		CALL ADD_RAND_MESSAGE, @"想要喝点东西，不是酒的小休息用的"
+		CALL ADD_RAND_MESSAGE, @"啊啊……口渴了……"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"喂～茶！　不可能有吧……"
+		ENDSELECT
+	ENDIF
+	
+	; 着替えセット所持数0なら追加口上
+	IF ITEM:54 == 0
+		CALL ADD_RAND_MESSAGE, @"希望能捡到衣服之类的东西"
+		CALL ADD_RAND_MESSAGE, @"希望能碰巧有备用的衣服之类的……"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"很快就会弄脏，想要换衣服呢～"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"希望有备用的衣服"
+		CASE 性格_わがまま
+			CALL ADD_RAND_MESSAGE, @"换衣服有点不放心，不知道有没有掉下来"
+		ENDSELECT
+		
+		; 着替えセットが無い上全裸
+		IF BASE:CP == 0
+			CALL ADD_RAND_MESSAGE, @"「有什么能穿的东西吗……就算是塑料袋也行……」"
+			; 性格別 追加口上
+			SELECTCASE CFLAG:100
+			CASE 性格_おてんば
+				CALL ADD_RAND_MESSAGE, @"「这样穿会感冒的，想要衣服啊」"
+			ENDSELECT
+		ENDIF
+		
+		; 触装中
+		IF CFLAG:40
+			CALL ADD_RAND_MESSAGE, @"「ふつう的衣服掉了吗……」"
+			
+			; 性格別 追加口上
+			SELECTCASE CFLAG:100
+			CASE 性格_おてんば
+				CALL ADD_RAND_MESSAGE, @"「不能一直穿这样的衣服啊……」"
+			CASE 性格_きれもの
+				CALL ADD_RAND_MESSAGE, @"「得赶快找到能代替触手服的东西……！」"
+			CASE 性格_ひっこみじあん
+				CALL ADD_RAND_MESSAGE, @"「找到正常的衣服，想早点脱掉这个……」"
+			CASE 性格_わがまま
+				CALL ADD_RAND_MESSAGE, @"「找到正常的衣服，想早点脱掉这个！！」"
+			ENDSELECT
+		ENDIF
+	ENDIF
+	
+	; 気付け薬所持数0 & PTの誰かが喪失状態なら追加口上
+	IF ITEM:58 == 0 && (CFLAG:1:29 || (FLAG:10 && CFLAG:(FLAG:10):29) || (FLAG:11 && CFLAG:(FLAG:11):29))
+		CALL ADD_RAND_MESSAGE, @"「有没有发现药啊，就在需要的时候没有药可用」"
+		CALL ADD_RAND_MESSAGE, @"「有没有发现药啊」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「就算没有发现药，也可以用物理的方式来提醒……开个玩笑！」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  136    ◆処女喪失
+; / ARG:1    0    喪失原因 0:敵の攻撃 1:自慰 2:出産
+; / ARG:2         MPダメージ
+; / ARG:3    0    0:喪失 1:喪失の直前 2:喪失を防いだ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_136_0_X_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「不……这是假的……」"
+	CALL ADD_RAND_MESSAGE, @"「啊啊……啊……不要……不要啊……」"
+	CALL ADD_RAND_MESSAGE, @"「明明是第一次……却是这样……」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「呜啊啊……不要……果然不要这样……」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  136    ◆処女喪失
+; / ARG:1    0    喪失原因 0:敵の攻撃 1:自慰 2:出産
+; / ARG:2         MPダメージ
+; / ARG:3    1    0:喪失 1:喪失の直前 2:喪失を防いだ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_136_0_X_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「不、不会吧！？这样的话，第一次就是这样了！？」"
+	CALL ADD_RAND_MESSAGE, @"「讨厌啊啊！！说了不要，说了不要来了！！」"
+	CALL ADD_RAND_MESSAGE, @"「不要……停下！！　停下啊！！！」"
+		
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（在这样的地方……保护第一次果然是不可能的……）"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  136    ◆処女喪失
+; / ARG:1    0    喪失原因 0:敵の攻撃 1:自慰 2:出産
+; / ARG:2         MPダメージ
+; / ARG:3    2    0:喪失 1:喪失の直前 2:喪失を防いだ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_136_0_X_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「这么容易就被夺走，我可不答应！」"
+	CALL ADD_RAND_MESSAGE, @"「啊，好危险……」"
+	CALL ADD_RAND_MESSAGE, @"「呼，真是紧张啊……」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「这么容易就被夺走，我才不答应！」"
+		CALL ADD_RAND_MESSAGE, @"「你以为人的第一次是什么，真是的！」"
+		CALL ADD_RAND_MESSAGE, @"「真是的，一点儿疏忽都没有」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「太好了……还好……」"
+		CALL ADD_RAND_MESSAGE, @"（这次总算是解决了，如果下次再发生同样的事情……）"
+	ENDSELECT
+	
+	; 素質[淫壺]所持時 追加口上
+	IF TALENT:78
+		CALL ADD_RAND_MESSAGE, @"（呜呜……！那里，自己疼痛起来……！？）"
+		CALL ADD_RAND_MESSAGE, @"（不、不要……！？我居然在考虑着没有被夺走处女的遗憾……！？）"
+			
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"（为什么……！？那里，刺痛起来……！？）"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+;
+;以下分離 → KOJO_DEFAULT_101~108_137~141_163~165_他キャラ遭遇時やり取り.ERB
+;@KOJO_DEFAULT_137_X_X_1_遭遇時会話:固定イベント情報取得 提供側口上
+;@KOJO_DEFAULT_138_X_0_アイテム強請り開始
+;@KOJO_DEFAULT_139_遭遇時会話:アイテムを強請られた
+;@KOJO_DEFAULT_140_PTに勧誘された
+;@KOJO_DEFAULT_141_遭遇時逆襲：襲い掛かられた
+
+
+
+
+
+
+
+
+
+; ////////////////////////////
+; / ARG:0  149    ◆部屋に結界を張った+入浴
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_149(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「呼，稍微喘口气了」"
+	CALL ADD_RAND_MESSAGE, @"「没有泡澡的话，就感觉不像是休息了呢」"
+	CALL ADD_RAND_MESSAGE, @"「啊～泡澡果然很棒呢～」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  150    ◆捕食開始
+; / ARG:1　
+; / ARG:2 丸呑みフラグ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_150(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(1)
+
+
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  158    ◆主人公　瀕死からの復活
+; / ARG:1　主人公復活　（ARG:1が　0：助けてもらって復活　1：打ち捨てられて復活）
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_158(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+IF ARG:1 == 1
+
+	CALL ADD_RAND_MESSAGE, @"「……谢……谢谢你？」"
+	CALL ADD_RAND_MESSAGE, @"「……这……这是谁的声音」"
+	CALL ADD_RAND_MESSAGE, @"「……这……这个声音是」"
+	CALL ADD_RAND_MESSAGE, @"「……我……我也」"
+	CALL ADD_RAND_MESSAGE, @"「……在这里……不做的话……」"
+	CALL ADD_RAND_MESSAGE, @"「……嗯噶……好像很舒服的样子……」"
+	CALL ADD_RAND_MESSAGE, @"「……发……发生了什么？」"
+	CALL ADD_RAND_MESSAGE, @"「……是梦……还是幻觉？」"
+	CALL ADD_RAND_MESSAGE, @"「……有点……打扰到你了吗」"
+	CALL ADD_RAND_MESSAGE, @"「……一个人……不行吗」"
+	CALL ADD_RAND_MESSAGE, @"「……别人的……温暖」"
+
+	CALL ADD_RAND_MESSAGE, @"「……我并不是一个人」"
+
+	CALL ADD_RAND_MESSAGE, @"「……嗯……好香的味道」"
+
+
+ELSE
+
+	CALL ADD_RAND_MESSAGE, @"「……还……还没……」"
+	CALL ADD_RAND_MESSAGE, @"「……还……还没保护好」"
+	CALL ADD_RAND_MESSAGE, @"「……我还有……可以做的事情」"
+	CALL ADD_RAND_MESSAGE, @"「……必须向前……才行」"
+	CALL ADD_RAND_MESSAGE, @"「呜……动起来……我的……身体」"
+
+	CALL ADD_RAND_MESSAGE, @"「……我要回去……」"
+	CALL ADD_RAND_MESSAGE, @"「……就算是受伤……也要继续前进」"
+	CALL ADD_RAND_MESSAGE, @"「……放弃……是不好的」"
+
+	CALL ADD_RAND_MESSAGE, @"「……不能……放弃」"
+	CALL ADD_RAND_MESSAGE, @"「……因为有约定」"
+	CALL ADD_RAND_MESSAGE, @"「……这样的……痛苦」"
+	CALL ADD_RAND_MESSAGE, @"「……比起今天……更期待明天」"
+	CALL ADD_RAND_MESSAGE, @"「……明天还会……到来」"
+
+	CALL ADD_RAND_MESSAGE, @"「……指甲……好甜呢」"
+	CALL ADD_RAND_MESSAGE, @"「……护身符……多亏了」"
+	CALL ADD_RAND_MESSAGE, @"「……被夺走的东西……必须……取回来」"
+	CALL ADD_RAND_MESSAGE, @"「……虽然现在无法胜利」"
+	CALL ADD_RAND_MESSAGE, @"「……我的心……我的心」"
+	CALL ADD_RAND_MESSAGE, @"「……直到最后……一定要好好」"
+
+
+	CALL ADD_RAND_MESSAGE, @"「……………嗯」"
+	CALL ADD_RAND_MESSAGE, @"「……啊……啊」"
+	CALL ADD_RAND_MESSAGE, @"「……………咳咳」"
+	CALL ADD_RAND_MESSAGE, @"「……………咳咳」"
+
+	CALL ADD_RAND_MESSAGE, @"「……………嗯」"
+
+
+
+ENDIF
+
+RETURN 1
+; ////////////////////////////
+; / ARG:0  160    ◆MAP表示時
+@KOJO_DEFAULT_160(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; MAP表示時の口上关于非常に多く呼び出されます
+	; PT全員が汎用口上表示だった場合、全員が同じ事を喋り続ける危険性があります
+	; 相当数の口上パターンがないのであれば、ここに关于何も記述しない方がいいでしょう
+	; 今のところ关于RETURN 0のみを行っておきます
+RETURN 0
+
+
+;以下口上分離 → KOJO_DEFAULT_101~108_137~141_163~165_他キャラ遭遇時やり取り.ERB
+;@KOJO_DEFAULT_163_X_X_0_遭遇時会話:アイテムをあげた
+;@KOJO_DEFAULT_164_X_X_0_遭遇時会話:アイテムを貰った
+;@KOJO_DEFAULT_165_遭遇時会話:固定イベント情報取得 取得側口上
+
+
+
+;以下口上分離 → KOJO_DEFAULT_200_固定イベント(ランダムイベント).ERB
+;@KOJO_DEFAULT_200_ランダムイベント発生
+
+
+; ////////////////////////////
+; / ARG:0  201    ◆PT分断テレポート
+; / ARG:1    0    0:飛ばされる前
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_201_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「什么！？ 这是什么光！？」"
+	CALL ADD_RAND_MESSAGE, @"「哇！？ 太、太刺眼了……！？」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  201    ◆PT分断テレポート
+; / ARG:1    1    0:飛ばされた後
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_201_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「中了奇怪的陷阱呢……」"
+	CALL ADD_RAND_MESSAGE, @"「嗯？ 这里是哪里？」"
+
+
+
+	CALL ADD_RAND_MESSAGE, @"「至少不是墙壁或者生物里面，还算好」"
+	CALL ADD_RAND_MESSAGE, @"「像是单行道」"
+	CALL ADD_RAND_MESSAGE, @"「敌人不只是触手而已……」"
+	CALL ADD_RAND_MESSAGE, @"「真是个麻烦的陷阱」"
+
+
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0  229    ◆結婚報告
+@KOJO_DEFAULT_229(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「我们结婚了！」"
+	CALL ADD_RAND_MESSAGE, @"「永远在一起！」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「这家伙非要……」"
+		CALL ADD_RAND_MESSAGE, @"「不允许出轨」"
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「现在非常幸福」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「一定要让我幸福！」"
+	ENDSELECT
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0  443    ◆スライムスーツ装着時
+; / ARG:1         0:スライムイベントによる発生 1:スライム系の敵を倒した
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_443(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「什、什么！？」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「呀、呀呀！ 好恶心！」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「咕……离开我！」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  444    ◆スライムスーツ常駐時
+; / ARG:1    7    7:精力増強開始
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_444_7(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「呀、呀呀……！ 你想做什么……！？」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  444    ◆スライムスーツ常駐時
+; / ARG:1    8    8:精力増強中
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_444_8(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「呜啊啊…… 你在塞什么进来……！？」"
+	CALL ADD_RAND_MESSAGE, @"「咕……肚子里面，好热……」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  444    ◆スライムスーツ常駐時
+; / ARG:1   10    10:尿道責め(尿意増加)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_444_10(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「别乱进奇怪的地方……！」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  444    ◆スライムスーツ常駐時
+; / ARG:1   11    11:服侵食(汚れ増加)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_444_11(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「哎呀……好脏……」"
+
+	; CPが1以上 何かしら服を着ているなら追加口上
+	IF BASE:3
+		CALL ADD_RAND_MESSAGE, @"「唔呃……衣服透明了……」"
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  460    ◆ふたなりでおしおき
+; / ARG:1         -1:寄生触手におしおきを強制された 0:おしおきしなかった
+;                  1:V 2:B 3:A 4:M 5:触手
+; / ARGS:0        敵の名前
+; / ARGS:1        自分の名前
+@KOJO_DEFAULT_460(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「这都是你们的错，让我稍微用一下」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  461    ◆ふたなり治療(治療する側)
+; / ARG:1    3    3:口
+; / ARGS:0        治療される側の名前
+; / ARGS:1        自分の名前
+@KOJO_DEFAULT_461_3(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「快点拿出来吧，嘴巴都累了」"
+	CALL ADD_RAND_MESSAGE, @"（用嘴巴做会不会很舒服呢？）"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  461    ◆ふたなり治療(治療する側)
+; / ARG:1    4    4:手淫
+; / ARGS:0        治療される側の名前
+; / ARGS:1        自分の名前
+@KOJO_DEFAULT_461_4(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"（抖动着……越来越大……）"
+	CALL ADD_RAND_MESSAGE, @"「这个……用手处理就可以了吗？」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「发出这么没品的声音……稍微注意一下吧」"
+		CALL ADD_RAND_MESSAGE, @"「这么扭动腰部，还发出那么可怜的声音」"
+	CASE 性格_やさしいひと
+		CALL ADD_RAND_MESSAGE, @"「这样会不会舒服一点？」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  465    ◆出会い頭治療
+; / ARG:1    0    0:足(治療される側)
+; / ARGS:0        自分の名前
+; / ARGS:1        治療される側の名前
+@KOJO_DEFAULT_465_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「阿，阿弟弟……用脚，给我舒服一下……」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  465    ◆出会い頭治療
+; / ARG:1    1    1:足(治療する側)
+; / ARG:2         治療されるキャラのID
+; / ARGS:0        治療される側の名前
+; / ARGS:1        自分の名前
+@KOJO_DEFAULT_465_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「这样真的很舒服吗？」"
+	CALL ADD_RAND_MESSAGE, @"「只需要踩上去就可以了吗？」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「没、没办法呢……只是这一次哦……」"
+		CALL ADD_RAND_MESSAGE, @"「想要用脚给我做……你在想什么啊……」"
+		CALL ADD_RAND_MESSAGE, @"「真的这样就可以吗？看起来好辛苦的样子……」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「被踩着感觉很舒服，真是个变态呢，还是因为在这个地方待太久了吗？」"
+		CALL ADD_RAND_MESSAGE, @"「刚见面就要我踩你，真是难以置信」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「路过的女性突然要求脚交……你没有自尊吗？」"
+		CALL ADD_RAND_MESSAGE, @"「被脚交感到舒服，这种癖好最好还是藏起来」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「不要露出那么伤心的表情，我会好好踩你的」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「被踩到真的很舒服吗？」"
+		CALL ADD_RAND_MESSAGE, @"「哎呀……好像在抖动……」"
+		CALL ADD_RAND_MESSAGE, @"「真、真的可以踩吗？」"
+	CASE 性格_やさしいひと
+		CALL ADD_RAND_MESSAGE, @"「嗯，用脚做的话……」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「嗯……原来这样很舒服吗？」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  465    ◆出会い頭治療
+; / ARG:1    5    1:手(治療する側)
+; / ARG:2         治療されるキャラのID
+; / ARGS:0        治療される側の名前
+; / ARGS:1        自分の名前
+@KOJO_DEFAULT_465_5(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「来吧，我会好好处理，快点拿出来……」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「哎呀……在抖动……」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  466    ◆勃起
+; / ARG:1    2    2：C勃起100％（ペニスあり）
+; / ARG:2         敵に攻撃されている場合そのID、0だと発情
+; / ARG:3         勃起度上昇量
+; / ARGS:0        勃起したキャラ
+; / ARGS:1        勃起させたキャラ
+@KOJO_DEFAULT_466_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「要、要出来了……让我出来……」"
+	CALL ADD_RAND_MESSAGE, @"「想要碰触……！想要碰触……！想要碰触……！」"
+	CALL ADD_RAND_MESSAGE, @"「好痛苦……！我想要射精啊啊啊……！」"
+	
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  502    ◆偽酒
+; / ARG:1    0    偽酒飲み開始
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_502_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	CALL ADD_RAND_MESSAGE, @"「讨厌的事情最好喝酒忘记」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  551    ◆近くの部屋から悲鳴
+; / ARG:1    0    捕まっているNPCの悲鳴
+; / ARG:2         悲鳴の聞こえた部屋
+; / ARGS:0        捕まっているNPCの名前
+@KOJO_DEFAULT_551_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 触手中毒LVで分岐
+	SELECTCASE ABL:11
+	CASE 0 TO 1
+		CALL ADD_RAND_MESSAGE, @"「那、那种地方也……！？讨厌啊啊啊啊！！」"
+		CALL ADD_RAND_MESSAGE, @"「已经讨厌了……已经讨厌了」"
+		CALL ADD_RAND_MESSAGE, @"「有人……有人来救救我……」"
+		CALL ADD_RAND_MESSAGE, @"「对不起，我不会再反抗了，请原谅」"
+		CALL ADD_RAND_MESSAGE, @"「嗯、嗯嗯嗯」"
+		CALL ADD_RAND_MESSAGE, @"\d从听到的声音中，能感受到无法逃脱的绝望……\d"
+		CALL ADD_RAND_MESSAGE, @"「啊啊、啊啊啊啊、这个、这个！」"
+	CASEELSE
+		CALL ADD_RAND_MESSAGE, @"「～～～！　＃＃＃＃♪　～～～～♪♪♪」"
+		CALL ADD_RAND_MESSAGE, @"「呀、啊啊、啊啊啊啊啊啊」"
+		CALL ADD_RAND_MESSAGE, @"\d最初听起来像是悲痛的声音，很快变成了甜蜜的声音……\d"
+		CALL ADD_RAND_MESSAGE, @"\d听到了向『某人』卖弄媚态、奉献的声音……\d"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  551    ◆近くの部屋から悲鳴
+; / ARG:1    1    悲鳴を聞いた主人公の反応
+; / ARG:2         悲鳴の聞こえた部屋
+; / ARG:3         悲鳴をあげたNPCのID
+; / ARGS:0        捕まっているNPCの名前
+@KOJO_DEFAULT_551_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「惨叫！？」"
+	CALL ADD_RAND_MESSAGE, @"「现在……从哪里传来的……」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_ふつう
+		CALL ADD_RAND_MESSAGE, @"「哇哇哇……该怎么办……？」"
+	CASE 性格_おせっかい
+		CALL ADD_RAND_MESSAGE, @"「真是的！为什么会被抓住！」"
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「…我可不会变成那种人！」"
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「好脏。我无法理解」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「听到惨叫，说明既有盟友又有敌人……」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「…啊。该怎么办呢。虽然觉得不能放任不管…」"
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「那边在做什么有趣的事情？」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「留在这里，继续听那些色情的惨叫也不错呢」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「从声音判断，现在旁边有敌人……」"
+		CALL ADD_RAND_MESSAGE, @"「好，暂时应该不会过来了吧？」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「还是去帮忙比较好」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「看起来很幸福呢。那么，怎么办？去？逃跑？」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「不、不逃的话，下次就会遭遇那种事情了……」"
+	CASE 性格_やさしいひと
+		CALL ADD_RAND_MESSAGE, @"「必须要帮助……」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊…果然不能放任不管啊」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「那种……羞耻的声音……」\n\d虽然这么说，%CALLNAME:TARGET%的脸颊却染红了\d"
+	ENDSELECT
+	
+	; 友好度が高いキャラなら追加口上
+	IF CFLAG:(ARG:3):5 >= 400
+		CALL ADD_RAND_MESSAGE, @"「这个声音，难道……！？」"
+		CALL ADD_RAND_MESSAGE, @"「刚才的声音，%ARGS:0%！？」"
+	ENDIF
+RETURN 1
+

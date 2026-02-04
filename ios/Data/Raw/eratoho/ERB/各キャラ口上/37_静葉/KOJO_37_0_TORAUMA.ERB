@@ -1,0 +1,138 @@
+﻿;トラウマの数字をあれこれする関数
+@KOJO_37_0_TORAUMA(ARG:0, ARG:1, ARG:2, ARG:3, ARG:4)
+
+SELECTCASE ARG:0
+	;トラウマ値+1
+	;拘束攻撃命中、寄生、喪失、出産(一回の出産で3度呼び出されるので実質＋３)
+	CASE 15, 33, 40, 127, 129
+	CFLAG:801 += 1
+
+	;トラウマ値+2
+	;寄生攻撃命中、遺品発見
+	CASE 16, 202
+	CFLAG:801 += 2
+	
+	;トラウマ値+3
+	;仲間に見捨てられる
+	CASE 63
+	CFLAG:801 += 3
+
+	;トラウマ値+10
+	;一回休み
+	CASE 154
+	CFLAG:801 += 10
+	
+	;トラウマ値-1
+	;雑談
+	CASE 103
+	CFLAG:801 -= 1
+	
+	;トラウマ値-2
+	;入浴
+	CASE 149
+	CFLAG:801 -= 2
+
+	;絶頂時+1
+	CASE 14
+	SIF BASE:EP < ARG:3
+	CFLAG:801 += 1
+	
+	;全裸時+1
+	CASE 35
+	SIF ARG:1 == 0
+	CFLAG:801 += 1
+	
+	;アイテム使用時
+	CASE 36
+		SELECTCASE ARG:1
+			;緑茶	トラウマ回復
+			CASE 50
+				CFLAG:801 -= 1
+			;玉露	トラウマ回復
+			CASE 51
+				CFLAG:801 -= 2
+			;日本酒	トラウマ回復
+			CASE 52
+				CFLAG:801 -= 2
+			;神酒	トラウマ大回復
+			CASE 53
+				CFLAG:801 -= 5
+		ENDSELECT
+	
+	;目が覚めたら拘束中+1
+	CASE 41
+	SIF CFLAG:20 || CFLAG:21
+	CFLAG:801 += 1
+
+	;拘束レベルMAXになった瞬間だけ増やせればよかったのだけど…
+	;とりあえずはこんな頭悪い方法で20%で+1
+	CASE 53
+	SIF RAND:5 == 0
+	CFLAG:801 += 1
+	
+	;お酒発見-1
+	CASE 113
+	SIF ARG:1 == 52 || ARG:1 == 53
+	CFLAG:801 -= 1
+	
+	;寄生、妊娠が進行
+	CASE 125, 126
+		SELECTCASE ARG:1
+			CASE 1, 4
+			CFLAG:801 += 1
+		ENDSELECT
+	
+	;処女喪失
+	CASE 136
+	;敵の攻撃で喪失寸前+1
+	IF ARG:1 == 0 && ARG:3 == 2
+		CFLAG:801 += 1
+	;敵の攻撃で処女喪失+5
+	ELSEIF ARG:1 == 0 && ARG:3 == 0
+		CFLAG:801 += 5
+	ENDIF
+	
+	;戦闘勝利で20%で-1
+	CASE 57
+	SIF RAND:5 == 0
+		CFLAG:801 -= 1
+	
+	;固定イベントあれこれ
+	CASE 200
+		SELECTCASE ARG:1
+			;プラス効果の湧き水で-1
+			CASE 130, 132
+				SIF ARG:2 == 0
+				CFLAG:801 -= 1
+				
+			;澄んだ泉で-1
+			CASE 133
+				SIF ARG:2 == 0 || ARG:2 == 1
+				CFLAG:801 -= 1
+				
+			;すごいぞ不思議な泉！-3
+			CASE 135
+				SIF ARG:2 == 0 || ARG:2 == 1
+				CFLAG:801 -= 3
+			
+			;スライム、壁触手、落とし穴、桃色吐息、むし、落石+1
+			CASE 136, 137, 138, 139, 135, 146, 147, 148, 149, 150
+				SIF ARG:2 == 1
+				CFLAG:801 += 1
+
+		ENDSELECT
+	
+	
+	
+ENDSELECT
+
+	
+	
+	
+;トラウマが0以下になったら0に
+SIF CFLAG:801 < 0
+	CFLAG:801 = 0
+
+RETURN 0
+
+

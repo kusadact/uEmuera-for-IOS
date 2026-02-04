@@ -1,0 +1,66 @@
+﻿@SYSTEM_MESSAGE_402(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	;調教開始
+	IF ARG:1 == 0
+		PRINTFORML 
+IF FLAG:AUTOMODE
+    PRINTFORML %PETNAME%作为主人开始调教着变成【仆人】的%ARGS:0%！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %PETNAME%作为主人开始调教着变成【仆人】的%ARGS:0%！
+ENDIF
+
+	;女性系　ふたなりONで男の娘だと尻狙いかしゃぶらされる
+	ELSEIF ARG:1 == 1
+		PRINTFORML %PETNAME%把胯下的东西贴在了%ARGS:0%的屁股上。
+		;B感覚か尻穴狂いで分岐
+		IF ABL:6 > 1 || TALENT:75
+			PRINTFORML 面对%ARGS:0%的被充分开发的尻穴、
+			PRINTFORML %PETNAME%像是在慰劳一样、缓缓往身体里注入了快感……
+		ELSE
+			PRINTFORML %ARGS:0%的未开发的尻穴被%PETNAME%粗暴地侵犯着……
+		ENDIF
+	ELSEIF ARG:1 == 2
+		PRINTFORML %ARGS:0%紧紧含住了作为主人的%PETNAME%的胯下的东西……
+		;M感覚か舌使いで分岐
+		IF ABL:15 > 1 || TALENT:52
+			PRINTFORML 对于%ARGS:0%主动要求奉仕的请求、
+			PRINTFORML %PETNAME%抚摸着她的脑袋……
+		ELSE
+			PRINTFORML %ARGS:0%的喉咙被%PETNAME%粗暴地侵犯着……
+		ENDIF
+	;ふたなりONで生えていると兜合わせ
+	ELSEIF ARG:1 == 3
+		PRINTFORML %PETNAME%和%ARGS:0%互相摩擦着胯下的肉竿！
+	;しもべが生えていると騎乗位
+	ELSEIF ARG:1 == 4
+		PRINTFORML %PETNAME%跨坐在%ARGS:0%胯下的肉棒上、缓缓坐了下去……
+	;植物やローパーだと発情
+	ELSEIF ARG:1 == 5
+		PRINTFORML %PETNAME%在%ARGS:0%的身体上仔细地抹上了媚药！
+	;動物か海産だと性攻撃と妊娠付与
+	;本来妊娠は同族しかしないはずだけど身体が作り変えられて、という方向
+	ELSEIF ARG:1 == 6
+		PRINTFORML %ARGS:0%被%PETNAME%作为雌性索求着身体、要超越种族的差距来孕育出新的肉体……
+		PRINTFORML %ARGS:0%被迫四肢着地、被粗暴地侵犯着……
+	;スライムは発情と最大EPダウンからランダム
+	ELSEIF ARG:1 == 7
+		PRINTFORML %PETNAME%包裹住%ARGS:0%、慢慢侵蚀着她的全身……
+	ELSEIF ARG:1 == 8
+		PRINTFORML 沉浸在主人的体液中、
+		PRINTFORML %ARGS:0%被迫忍受着难以忍受的发情……
+	ELSEIF ARG:1 == 9
+		PRINTFORML %ARGS:0%的身体被改造成了马上就能高潮的样子！
+		PRINTFORML 最大EP减少了！
+	;好みの部位を犯す
+	ELSEIF ARG:1 == 10
+		PRINTFORML %ARGS:0%被%PETNAME%逼到高潮、被灌输了上下级关系……
+	;共通で侵食
+	ELSEIF ARG:1 == 11
+		PRINTFORML 调教结束后、看来%ARGS:0%已经被%PETNAME%侵蚀、已适应这个迷宫……
+	;催眠洗脳による屈服度上昇
+	ELSEIF ARG:1 == 12
+		PRINTFORML %PETNAME%在%ARGS:0%耳边低语着……
+		PRINTFORML 声音渗入大脑、软绵绵地落了下去……落了下去……
+		PRINTFORML 意识被%PETNAME%改写了……好舒服……好舒服……
+	ENDIF

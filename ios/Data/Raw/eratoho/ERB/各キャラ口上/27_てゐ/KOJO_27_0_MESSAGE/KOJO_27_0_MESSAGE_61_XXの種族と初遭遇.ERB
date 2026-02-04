@@ -1,0 +1,722 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 61 XXの種族と初遭遇
+; ------------------------------------------------------------------------------
+
+; □ 汎用口上
+@KOJO_27_0_SYSTEM_MESSAGE_61(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+#DIM ENEMY_ID
+
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ろくでもない生き物ばっか出てくる……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「まーた変なのが出てきた……」\n"
+	ENDSELECT
+	
+	; 触手種別による汎用口上
+	; 呼び出された敵情報を確定するため敵IDを取得
+	; りばーすではDAの敵情報が足りないので未適用
+	IF !KOJO_27_0_IS_REVERSE()
+		FOR LCOUNT, 1, VARSIZE("DA", 1)
+			IF ARG:1 == DA:LCOUNT:0
+				ENEMY_ID = LCOUNT
+				BREAK
+			ENDIF
+		NEXT
+		
+		; 女性系
+		IF GETBIT(DA:ENEMY_ID:85, 0)
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「この場所に取り込まれたか、元々ああいう生き物か\n　どっちにしろろくな相手じゃないのは確かね」\n"
+			ENDSELECT
+		ENDIF
+		
+		; 植物系
+		IF GETBIT(DA:ENEMY_ID:85, 1)
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「よく動く植物だこと……」\n"
+			ENDSELECT
+		ENDIF
+		
+		; 動物系
+		IF GETBIT(DA:ENEMY_ID:85, 2)
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「絶対こんな場所で生きてる動物に、まともなのは居ないし」\n"
+			ENDSELECT
+		ENDIF
+		
+		; 丸呑系
+		IF GETBIT(DA:ENEMY_ID:85, 3)
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「うげぇ……　絶対アレ相手を溶かして食べちゃうタイプの奴だ……」\n"
+			ENDSELECT
+		ENDIF
+		
+		; 海産系
+		IF GETBIT(DA:ENEMY_ID:85, 4)
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「なんでこんな場所に海の生き物がいるのよ～」\n"
+			ENDSELECT
+		ENDIF
+		
+		; ローパー系
+		IF GETBIT(DA:ENEMY_ID:85, 5)
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「うねうねしてて近付きたくないなあ」\n"
+			ENDSELECT
+		ENDIF
+		
+		; スライム系
+		IF GETBIT(DA:ENEMY_ID:85, 6)
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「スライム系って何やってくるか判んないから怖いのよー」\n"
+			ENDSELECT
+		ENDIF
+		
+		; 男性系
+		IF GETBIT(DA:ENEMY_ID:85, 7)
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「メスと見れば見境なしって感じね……」\n"
+			ENDSELECT
+		ENDIF
+		
+		; 罠系
+		IF GETBIT(DA:ENEMY_ID:85, 8)
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「あたしは罠に掛けるのが好きなの、掛かるのは嫌いよ！」\n"
+			ENDSELECT
+		ENDIF
+		
+		; 機械系
+		IF GETBIT(DA:ENEMY_ID:85, 9)
+			SELECTCASE KOJO_MODE
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「はあぁ!?　何でこんなのが動いてるワケ!?」\n"
+			ENDSELECT
+		ENDIF
+	ENDIF
+RETURN 1
+
+
+; □ 敵種族別
+; ◆ 001 クイーン
+@KOJO_27_0_SYSTEM_MESSAGE_61_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「す、凄い♥　コレに負けたらあたし、どうなっちゃうんだろ♥」\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（こ、こんな奴相手にしなきゃならないの……？）\n"
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「いかにも、な敵だわ　悪趣味」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「見るからにボスって感じ、なんとかなるかしら」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 003 ガーディアン
+@KOJO_27_0_SYSTEM_MESSAGE_61_3(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（軽く睨まれただけでこんなに……♥　捕まったら多分スゴい事されちゃう……♥）\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（あの目で見られると、頭の中ジンジンするだけじゃなくて……　お腹の疼きも大きく……）\n"
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「さっさと退いてもらうわ！　あんたを倒せば外に出られるみたいだし！」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「出口に強いのを配置しておくのってセオリーよねえ、どうしよ……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ちょ、ちょっと強そうじゃないの……」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 004 バイオプラント
+@KOJO_27_0_SYSTEM_MESSAGE_61_4(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（ちょっと、気持ちよさそうかも……）\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ひどい……　あれじゃ産む機械だわ……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「やだ……　早くここから出ないと、あたしも……」\n"
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「どんどん敵が出てくる原因はこいつみたいね！」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「うげ……　ここで倒れるとあーなるワケね……」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 007 ワーム
+@KOJO_27_0_SYSTEM_MESSAGE_61_7(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「流石にあんな太いのは入らないわねぇ♥」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「うーわ、でっかいミミズ　さぞ栄養が豊富な場所で育ったんでしょうね」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 011 イソツビ
+@KOJO_27_0_SYSTEM_MESSAGE_61_11(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「何よその動き！？　動けなさそうな見てくれの癖に！？」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 013 スライム
+@KOJO_27_0_SYSTEM_MESSAGE_61_13(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あらあら、場所によくお似合いな敵だこと」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「こういう奴って、見た目に反してヤバかったりするんじゃ……」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 015 アルラウネ
+@KOJO_27_0_SYSTEM_MESSAGE_61_15(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「へぇ……オスメス見境なしなんてイイ趣味してるじゃない♥」\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（あ、危なっ！？　人間じゃなかった……！？）\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あたしを騙そうなんて数万年早いわ！」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 018 ドッペルゲンガー
+@KOJO_27_0_SYSTEM_MESSAGE_61_18(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「これって、知った顔の相手にえっちな事されちゃうって事かな♥」\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「こんな敵が居るなんて聞いてないよぉ……」\n"
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「騙し討ちをするなら相手がもっと油断した所を狙うのね！」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「こうやって狩りをする奴も居るのね　ヤな場所だわ」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ウソっ！？　偽物なの！？」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あたしが騙されるなんて！？」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 019 ○○の娘
+@KOJO_27_0_SYSTEM_MESSAGE_61_19(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	; 自分の娘
+	IF ARG:2 == TARGET
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「あなた、あたしが産んだ子でしょ？　ほらほら～、ママですよ～♥」\n"
+		CASE "強気"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「何よ、母親に手を出そうっての？　良い度胸じゃない……」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こいつ、あたしが産んだヤツよね……　可愛げがあるし……」\n"
+		ENDSELECT
+		
+	; 誰が産んだかは知らない
+	ELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「苗床にされると、こういうのを産むハメになるわけだ……」\n"
+	ENDIF
+RETURN 1
+
+
+; 敵種族別
+; ◆ 027 ゲルスライム
+@KOJO_27_0_SYSTEM_MESSAGE_61_27(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「気持ちよくしてくれる生き物なのはいいけど、もうちょっと清潔感のある奴がいいなあ」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「溶けきってない寒天……　いや、作るの失敗した羊羹みたいな奴ね」\n"
+	ENDSELECT
+	
+RETURN 1
+
+
+; 敵種族別
+; ◆ 037 ワイヤーゴースト
+@KOJO_27_0_SYSTEM_MESSAGE_61_37(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「自分でシてるのに、実はヤられてるのって新感覚かも♥」\n"
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「うぇ……　勝手に身体動くのって気持ち悪いわ……」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「何よ今の……　もしかしてコイツが原因？」\n"
+	ENDSELECT
+	
+RETURN 1
+
+; 敵種族別
+; ◆ 044 レッサーヒュプノ
+@KOJO_27_0_SYSTEM_MESSAGE_61_44(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「なるほど、睨まれると好き勝手されちゃうって訳ね♥」\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あの目……　なんか変な力持ってるみたい……」\n"
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「でっかい目玉ね！　火でもあれば炙ってやるのに！」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ああいう奴は鏡でもあれば楽に倒せる、ってのがセオリーなんだけどねえ」\n"
+	ENDSELECT
+	
+RETURN 1
+
+; 敵種族別
+; ◆ 045 コウノトリ
+@KOJO_27_0_SYSTEM_MESSAGE_61_45(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「うげ……　何よこの鳥……」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 047 ユニコーン
+@KOJO_27_0_SYSTEM_MESSAGE_61_47(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「どっかで聞いたことがあるわ、馬っぽいろくでなしな生き物が居るって……\n　弱点はたしか角の上にとまる鳥……だったっけ？」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 052 ハウンド
+@KOJO_27_0_SYSTEM_MESSAGE_61_52(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「こいつヤダ～！　なんか本能的にダメな感じ～！」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 053 男傀儡
+@KOJO_27_0_SYSTEM_MESSAGE_61_53(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（あんなので犯されたら、あたし壊れちゃう♥）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（なにあのチンポっ♥　ヤバっ……♥　目がはなせない……♥♥）\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あ、あたしも……　ここで倒れたらあんな風に……」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ふ、普通の人に出会えたと思ったのに」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 056 フレッシュゴーレム
+@KOJO_27_0_SYSTEM_MESSAGE_61_56(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「えーと……　でかすぎ……」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 057 アグー
+@KOJO_27_0_SYSTEM_MESSAGE_61_57(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「うっげぇ……　酷いニオイだとは思ったけど、こんなのがいるのね……」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 061 ホフゴブリン
+@KOJO_27_0_SYSTEM_MESSAGE_61_61(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「やだ、ちょっと大きくしすぎじゃない♥」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（あんなおっきいの、はいるかなあ……♥）\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（に、逃げないと犯される……っ！？）\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"（こ、こいつ……　あたし%TACHI()%を犯す事しか考えてない！？）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「なんて目で見るのよ……　シッシッ、どっか行きなさい」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 062 タンブルバイン
+@KOJO_27_0_SYSTEM_MESSAGE_61_62(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「植物なら植物らしく、そこらへんに埋まってなさいよ」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 078 タングルフット
+@KOJO_27_0_SYSTEM_MESSAGE_61_78(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「床に擬態とか……っ！？　踏みつぶすわよ！」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「うげ、何コレ！？　床に擬態してたの！？」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 080 YMあなた
+@KOJO_27_0_SYSTEM_MESSAGE_61_80(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「に、人間からただならぬ気配を感じるんですけど……！？」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 081 オオガエル
+@KOJO_27_0_SYSTEM_MESSAGE_61_81(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「んげ！　どんだけでっかいカエルよ、忍者の使う大蝦蟇じゃあるまいし！」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 082 クロヤマガエル
+@KOJO_27_0_SYSTEM_MESSAGE_61_82(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「う……嘘でしょ……！？　このでっかいヌメヌメがカエルとか……！？」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 086 クリスタルエレメント
+@KOJO_27_0_SYSTEM_MESSAGE_61_86(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「どうやら人じゃないみたいね……」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 089 ヴォジャノーイ
+@KOJO_27_0_SYSTEM_MESSAGE_61_89(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	CALL KOJO_27_0_ADD_MESSAGE, @"「まったく！　口から何てもん生やしてんのよ、このエロ蛙！」\n"
+RETURN 1
+
+
+; 敵種族別
+; ◆ 93 セイレーン
+@KOJO_27_0_SYSTEM_MESSAGE_61_93(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「もう隠す気もないってわけね、いいわ相手してあげる♥」\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「うう……　耳を塞いでもまだ聞こえる……」\n"
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ああもう五月蠅い！　頭に響くからその歌やめて！」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「耳が良いってこういう時損ねえ」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 94 人食い箱
+@KOJO_27_0_SYSTEM_MESSAGE_61_94(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「見れば判るわ、捕まったら箱の中でぐっちょぐっちょにされちゃうタイプね♥」\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「やだ……　中にいっぱい、入ってる……」\n"
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「箱に隠れてるなら、もっと引きつけてから襲いなさいよ\n　そんな騙し方は二流よ！二流！」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「箱モンスターって言ったらギザギザのキバがセオリーでしょ、何みっしり詰まってんの」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 101 悪堕ちキャラ
+@KOJO_27_0_SYSTEM_MESSAGE_61_101(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 状態異常で喋れない場合は何もしないで帰る
+	SIF CFLAG:25 || CFLAG:29
+		RETURN 0
+		
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ふぅん……　気持ちいいのに負けちゃったんだぁ？」\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「そ、そんな……　嘘でしょ……」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「別人だと思いたいわね……」\n"
+	ENDSELECT
+RETURN 1
+
+
+; 敵種族別
+; ◆ 102 触手姫
+@KOJO_27_0_SYSTEM_MESSAGE_61_102(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 悪堕ちキャラ口上におまかせ
+	CALL KOJO_27_0_SYSTEM_MESSAGE_61_101(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+
+; 敵種族別
+; ◆ 103 アルラウネ化
+@KOJO_27_0_SYSTEM_MESSAGE_61_103(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 悪堕ちキャラ口上におまかせ
+	CALL KOJO_27_0_SYSTEM_MESSAGE_61_101(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+
+; 敵種族別
+; ◆ 104 スライム化
+@KOJO_27_0_SYSTEM_MESSAGE_61_104(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 悪堕ちキャラ口上におまかせ
+	CALL KOJO_27_0_SYSTEM_MESSAGE_61_101(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+
+; 敵種族別
+; ◆ 105 ラミア化キャラ
+@KOJO_27_0_SYSTEM_MESSAGE_61_105(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 悪堕ちキャラ口上におまかせ
+	CALL KOJO_27_0_SYSTEM_MESSAGE_61_101(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT

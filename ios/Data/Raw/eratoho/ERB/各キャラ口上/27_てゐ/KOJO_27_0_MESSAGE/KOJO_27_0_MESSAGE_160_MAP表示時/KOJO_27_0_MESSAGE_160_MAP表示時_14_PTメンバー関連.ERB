@@ -1,0 +1,54 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 14 PTメンバー関連
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_14(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; キャラクター対応 追加口上
+	FOR LCOUNT, 1, CHARANUM
+		; 自分と娘は除外
+		IF !(NO:LCOUNT == NO:(TARGET) || CFLAG:LCOUNT:104 != 0)
+			
+			; PTに居る
+			IF IN_PT(NO:LCOUNT)
+			
+				SELECTCASE NO:LCOUNT
+				; 鈴仙
+				CASE 28
+					; 喪失中
+					IF CFLAG:(GET_ID_FROM_NO(NO:LCOUNT)):29
+					; 通常
+					ELSE
+						CALL KOJO_27_0_ADD_MESSAGE, @"「しばらくは安全そうだから%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(NO:LCOUNT))%が先頭ね」\n"
+					ENDIF
+				ENDSELECT
+				
+			; PTに居ない
+			ELSE
+				SELECTCASE NO:LCOUNT
+				; 鈴仙
+				CASE 28
+					CALL KOJO_27_0_ADD_MESSAGE, @"（もしここに%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(NO:LCOUNT))%が居たら、すごい派手に穴に落ちたりするんだろうな……）\n"
+				ENDSELECT
+			ENDIF
+		ENDIF
+	NEXT
+RETURN 1

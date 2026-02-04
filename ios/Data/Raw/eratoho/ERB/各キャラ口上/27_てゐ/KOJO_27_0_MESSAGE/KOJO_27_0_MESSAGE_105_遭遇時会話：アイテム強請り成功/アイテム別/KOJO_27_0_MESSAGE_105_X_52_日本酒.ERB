@@ -1,0 +1,45 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 105 遭遇時会話：アイテム強請り成功 - アイテム別 52 日本酒
+; ------------------------------------------------------------------------------
+
+; □ 0 通常交渉
+@KOJO_27_0_SYSTEM_MESSAGE_105_X_52_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	SELECTCASE KOJO_MODE
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（現実逃避で飲まないように気をつけよう……）\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「お酒かぁ、嫌な事忘れる為の飲み方はしたくないわね　勿体ないし」\n"
+	ENDSELECT
+	
+	; キャラクター対応 追加口上
+	SELECTCASE NO:(ARG:1)
+	; 萃香, 勇儀
+	CASE 23, 80
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ま、まさか鬼がお酒をくれるなんて！？」\n"
+	ENDSELECT
+RETURN 1
+
+
+; □ 1 喪失キャラから強奪
+@KOJO_27_0_SYSTEM_MESSAGE_105_X_52_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	SELECTCASE KOJO_MODE
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「力尽きるまで頑張る位なら、飲んじゃえばいいのに」\n"
+	ENDSELECT
+	
+	; キャラクター対応 追加口上
+	SELECTCASE NO:(ARG:1)
+	; 萃香, 勇儀
+	CASE 23, 80
+		CALL KOJO_27_0_ADD_MESSAGE, @"「鬼が酒飲まずに倒れてるとか、何かの冗談？」\n"
+	ENDSELECT
+RETURN 1

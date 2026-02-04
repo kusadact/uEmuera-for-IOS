@@ -1,0 +1,131 @@
+﻿;--------------------------------------------------
+;■　東方触手宮_口上分岐セット
+;　　つくった人　やむっ
+;
+;CFLAG:803　出産回数（正確には初回だけ発覚時にも+1される）
+;CFLAG:850　淫魔化許可
+;CFLAG:901　直前に食らった攻撃番号
+;CFLAG:902　直前に食らった敵の名前番号
+
+
+
+;--------------------------------------------------
+;口上選択時のタイトル
+@KOJO_TITLE_7_0
+RESULTS = 東方触手宮　小悪魔口上（2015/05/26）
+
+;--------------------------------------------------
+;口上選択時の詳細説明
+@KOJO_DETAIL_7_0
+PRINTFORML 長髪で大人しいサキュバスな小悪魔さんです
+PRINTFORML しかし覚醒すると…
+PRINTFORML （覚醒していると悪堕ちが早まるので覚悟の上で）
+
+;--------------------------------------------------
+;文字色　少し紫がかった赤
+@KOJO_DEFAULT_COLOR_7_0
+	;娘
+	IF CFLAG:104
+		RETURN RGBCOLOR(240, 80, 160)
+	;オリジナル
+	ELSE
+		RETURN RGBCOLOR(200, 10, 80)
+	ENDIF
+
+;--------------------------------------------------
+;呼び方
+;ARG:0 対象キャラ番号
+;ARG:1 0:通常、1:甘えモード
+@CALLNAME_7_0(ARG:0, ARG:1)
+#FUNCTIONS
+	;例外を除いてとりあえず常にオリジナル扱いで呼ぶ。
+	;○○の娘って呼びかける時はこの関数を使わない
+	;通常
+	IF ARG:1 == 0
+		SELECTCASE NO:(ARG:0)
+		;小悪魔
+		CASE 7
+			;オリジナル
+			IF CFLAG:(ARG:0):104 == 0
+				RETURNF "お母様"
+			;娘
+			ELSE
+				RETURNF "貴女"
+			ENDIF
+		;パチュリー・レミリア
+		CASE 8,10,11
+			RETURNF CALLNAME:(GET_ID_FROM_NO(NO:(ARG:0)))+"様"
+		;フラン
+		CASE 11
+			RETURNF "フラン様"
+		;汎用
+		CASE 0
+			RETURNF "貴方さま"
+		;通常
+		CASEELSE
+			RETURNF CALLNAME:(GET_ID_FROM_NO(NO:(ARG:0)))+"さん"
+		ENDSELECT
+	;甘えモード
+	ELSE
+		SELECTCASE NO:(ARG:0)
+		;小悪魔
+		CASE 7
+			;オリジナル
+			IF CFLAG:(ARG:0):104 == 0
+				RETURNF "お母様ぁ"
+			;娘
+			ELSE
+				RETURNF "貴女ぁ"
+			ENDIF
+		;パチュリー
+		CASE 8
+			RETURNF CALLNAME:(GET_ID_FROM_NO(NO:(ARG:0)))+"さまぁ"
+		;レミリア
+		CASE 10
+			RETURNF "お嬢さまぁ"
+		;フラン
+		CASE 11
+			RETURNF "フランさまぁ"
+		;汎用
+		CASE 0
+			RETURNF "あなたさまぁ"
+		;通常
+		CASEELSE
+			RETURNF CALLNAME:(GET_ID_FROM_NO(NO:(ARG:0))) + "さぁん"
+		ENDSELECT
+	ENDIF
+
+
+;--------------------------------------------------
+;口上本体
+@KOJO_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;地の文はデフォルトのものを使用する場合こっちに；をつける
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;地の文も作る場合こっち
+;CALL KOJO_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;文字色設定
+IF CFLAG:104
+	CALL KOJO_DEFAULT_COLOR_7_0
+	SETCOLOR RESULT
+ELSE
+	SETCOLOR CFLAG:700
+ENDIF
+
+;本体
+
+RESULT = 0
+
+CALL INM_KOJO_ROOT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+IF RESULT == 0
+	CALL KOJO_ROOT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+ENDIF
+
+
+RESETCOLOR
+;口上記入済み
+RETURN 1
+

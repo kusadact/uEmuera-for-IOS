@@ -1,0 +1,1579 @@
+﻿;着せ替え導入型　輝夜口上
+;SBの輝夜口上と同じ方向性
+
+
+;使用CFLAG
+;800	連続絶頂識別用
+;801	連続絶頂識別用その２
+;802	連続自慰識別用
+;803	意思力
+
+;口上選択時のタイトル
+@KOJO_TITLE_30_1
+RESULTS = 着せ替え込輝夜口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_30_1
+PRINTFORML 輝夜口上(エロ輝夜口上とは別の人です)
+PRINTFORML 着せ替えに特化……はできればやります
+PRINTFORML 触手宮はやられるのがメインコンセプトと聞きました
+PRINTFORML 
+PRINTFORML ・一部の服は固有の台詞を用意してあります(メイド服は特に多い)
+
+
+;文字色設定
+;他のキャラの口上と被るとよくないので、先人の輝夜口上より引用
+;以下一行。元口上でのコメント
+;＞ただのピンクじゃなくて、石竹色
+@KOJO_DEFAULT_COLOR_30_1
+RETURN RGBCOLOR(229,152,197)
+
+;口上本体
+@KOJO_30_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;連続自慰識別用処理
+;都合上フラグの解除は先頭で
+CALL GET_EQUIP_BONUS(TARGET, 39)
+IF (RESULT == 1 || CFLAG:28 == 0) && ARG:0 == 118
+	;媚薬装備か、発情していない状態で自慰口上呼び出しが来たらフラグを下げる
+	;手動で連続自慰した場合があるので、このチェックは口上の先頭に無いと正しく動かない
+	CFLAG:802 = 0
+ELSEIF  ARG:0 != 33 && ARG:0 != 118 && ARG:0 != 119 && ARG:0 != 120 && ARG:0 != 121 && ARG:0 != 122 && ARG:0 != 136
+	;関係ない口上が来てもフラグを下げる
+	;このチェックは別に最後の方でやっても構わないけど、↑と一緒にここでやっておく
+	CFLAG:802 = 0
+ENDIF
+
+
+;口上側で地の文の制御もするつもりなら、地の文制御と口上本体は分けた方が無難です
+CALL KOJO_30_1_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;そのキャラの口上の文字色を反映します
+SETCOLOR CFLAG:700
+
+;淫乱の場合、意思力が無条件で0に(MPが0の時も)
+;にょろーんでの意思力処理が死に処理になるが気にしない
+IF TALENT:淫乱
+	CFLAG:803 = 0
+ENDIF
+
+
+;↓↓↓　　ここから口上のメイン処理　　↓↓↓
+
+;ARG:0 や ARG:1 の内容で分岐をかけます
+;それぞれの値の意味は「資料とか\PRINT_MESSAGE(口上)フラグ一覧.txt」を参照してください
+SELECTCASE ARG:0
+	CASE 1
+		;味方の攻撃（発動時）
+		;ARG:1にコマンドID
+		SELECTCASE ARG:1
+			; *----弾幕----*
+			CASE 10, 11, 12
+				IF !RAND:2
+					PRINTFORML 「弾には当たってほしいものだけど……」
+					PRINTFORML 「偶々当たるだけなのは、そんなに好きじゃないわ……」
+				ELSE
+					PRINTFORML 「わぁ、綺麗な花火……」
+;					PRINTFORML 「……って、自分の弾幕に酔いしれてどうするのよ」
+				ENDIF
+			;おねだり
+			;動作は確認してません
+			
+			;Aおねだり
+			CASE 54
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「んん……ぁひ……」
+						PRINTFORML 「お、おしりが……うずいてっ……おねがいっ……」
+					CASE 1
+						PRINTFORML 「はぁっ……んん……ぁはぁっ……」
+						PRINTFORML 「おしりがっ……かゆくってぇっ……はやくっ……しずめてぇっ……」
+					CASE 2
+						PRINTFORML 「くひゃんん……おねがぁいっ……おしりのあな……いじってぇ……」
+						PRINTFORML 「あんんっ……もぅ……がまんできないのぉ……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「あふぅ……おしりがっ、かゆぃっ……」
+				ENDSELECT
+			;Bおねだり
+			CASE 55
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「はぁっ……っくぅっ……」
+						PRINTFORML 「むねっ……ううっ……でも……っ……」
+					CASE 1
+						PRINTFORML 「ねぇっ……っはぁ……むね……いじってよ……」
+						PRINTFORML 「はぁっ……はっ……うずいってしまってぇっ……おちつかないのっ……」
+					CASE 2
+						PRINTFORML 「ぁふ……っんん……きゃはぁっ……%UNICODE(0x2661)%」
+						PRINTFORML 「むねっ……いじってくだひゃいっ……%UNICODE(0x2661)%」
+						PRINTFORML 「うずうずしてっ……しかたがないのぉ……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「んんぅっ……むねがぁ……かゆいのぉっ……」
+				ENDSELECT
+			;Cおねだり
+			CASE 56
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「ぁふっ……っん……」
+						PRINTFORML 「だめっ……またが……うずくのっ……」
+					CASE 1
+						PRINTFORML 「ううっ……くつじょくてきだけど……でも……」
+						PRINTFORML 「うずきすぎて……なにもかんがえられなく……っ」
+					CASE 2
+						PRINTFORML 「むねぇ……いじってくだひゃぃっ……」
+						PRINTFORML 「くひゃんっ……じぶんでいじってもっ……まんぞくできないんですぅ……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「んぁ……うぅんっ……ここが……かゆくってぇっ……」
+				ENDSELECT
+			;Vおねだり
+			CASE 57
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「はぁっ……はぁ……っんん……」
+						PRINTFORML 「ねえ……いちど……ナカまで、……っん……いれてみてよ……」
+					CASE 1
+						PRINTFORML 「っんん……っはぁ……ん……」
+						PRINTFORML 「きゃふ……めがぼやけて……ぅんん……」
+						PRINTFORML 「はぁっ……はぁ……それ、いちどナカにいれてぇっ……」
+					CASE 2
+						PRINTFORML 「ぁんん……ぁふぅっ……はぁぁ……」
+						PRINTFORML 「おねがぁい……わたしのあそこっ……おかしてぇっ……」
+						PRINTFORML 「ぁふぅ……からだがっ……あかちゃんを……ほしがってるのぉ……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「んん……ぁふ……いれてぇっ……」
+				ENDSELECT
+			;力抜いておねだり
+			CASE 58
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「っはぁ……ん……」
+						PRINTFORML 「もぅ……ていこう……できない……」
+					CASE 1
+						PRINTFORML 「っん……くはぁ……」
+						PRINTFORML 「ていこう、するっ、ほうほうが……っあ……かんがえられ……」
+					CASE 2
+						PRINTFORML 「ぇ……へへ……ぇ%UNICODE(0x2661)%」
+						PRINTFORML 「わらし……いま……むりょくなのぉ……%UNICODE(0x2661)%」
+						PRINTFORML 「すきに……おかしてぇっ……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「はぁっ……はぁっ……っん……」
+				ENDSELECT
+		ENDSELECT
+	;敵の通常攻撃（命中）
+	;ARG:1にコマンドID　ARG:2にHPダメージ　ARG:3にCPダメージ
+	CASE 12
+		SELECTCASE K30_WILL()
+			CASE 0
+				PRINTFORML 「くっ……私に恨みでもあるの？」
+				PRINTFORML 「こんな場所じゃなければ料理して食べてあげたんだけど……」
+			CASE 1
+				PRINTFORML 「くぅ……んん……」
+				PRINTFORML 「やめて……あまり攻撃受けたくないの……」
+			CASE 2
+				PRINTFORML 「きゃぁ……ぁふ……%UNICODE(0x2661)%」
+				PRINTFORML 「えへへ……せっかくなら、もっと気持ちいい攻撃がいいですぅ……%UNICODE(0x2661)%」
+			CASE 3
+				PRINTFORML 「あ……ぅ……」
+		ENDSELECT
+	;敵の衣服攻撃
+	CASE 13
+		SELECTCASE K30_WILL()
+			CASE 0
+				PRINTFORML 「ん……？　服を狙ってくるなんて……どこかに風呂でもあるのかしら？」
+			CASE 1
+				PRINTFORML 「やっぱり、この迷宮は獣しかいない……」
+			CASE 2
+				PRINTFORML 「はぁっ……また素肌が露出しちゃうのぉっ……」
+			CASE 3
+				PRINTFORML 「うぅっ……っぁ……」
+		ENDSELECT
+	;敵の性攻撃
+	;コウノトリの需要が非常に高いと聞いたので、コウノトリだけ独自口上を実装
+	CASE 14
+		SELECTCASE ARG:1
+			;コウノトリ　全体Ｖ
+			;一物を見せられて子宮が刺激を受ける攻撃
+			CASE 387
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「ああっ……ん……く……」
+						PRINTFORML 「なかが……じんじんしてっ……くぅっ……」
+					CASE 1
+						PRINTFORML 「はぁっ……はぁ……あかちゃんかぁ……」
+						PRINTFORML 「……はっ、私は一体何を……！」
+					CASE 2
+						PRINTFORML 「あっ……ん……」
+						PRINTFORML 「えへへ……あかちゃん、うみたいよぉ……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「きゃふ……っくぅ……」
+				ENDSELECT
+			;それ以外
+			;攻撃の種類によって区分があるので、それに対応させる
+			CASEELSE
+				;600～799　性攻撃(強)
+				IF INRANGE(ARG:1, 600, 799)
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「くぁ……ぁくぅっ……や、やめてぇっ……」
+							PRINTFORML 「これ以上は……はぁっ……またいしきがぁ……」
+						CASE 1
+							PRINTFORML 「ひゃぁんっ……んんっ……ぁっ……」
+							PRINTFORML 「あっ……あっ……あっ……」
+						CASE 2
+							PRINTFORML 「くひゃぁ……んん……！　き、もちいぃですぅ……%UNICODE(0x2661)%」
+							PRINTFORML 「そこぉ……もっとぉ……あっ、あっ、んぁぁぁっ……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「きゃは……ぁんんっ……」
+					ENDSELECT
+				;性攻撃
+				ELSE
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「んんっ……く……！　な、何をしてるのっ……」
+						CASE 1
+							PRINTFORML 「あっ、はぁっ……っん……！　だめ、これ以上しないでっ……」
+						CASE 2
+							PRINTFORML 「ひゃぁ……んん……%UNICODE(0x2661)%　おねがぁいっ……もっと、きもちよくしてぇ……」
+						CASE 3
+							PRINTFORML 「ひゃぁ……っんん……」
+					ENDSELECT
+				ENDIF
+		ENDSELECT
+	;敵の拘束攻撃
+	;コウノトリの需要が非常に高いと聞いたので、コウノトリだけ独自口上を実装
+	CASE 15
+		SELECTCASE ARG:1
+			;コウノトリ　拘束
+			;掴んで自身の羽で巣を作って性交の準備をする
+			CASE 546
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「きゃあっ！　ちょっと、離してっ！」
+						PRINTFORML 「っくうっ……って、この姿勢じゃ、まるで私、これから……」
+					CASE 1
+						PRINTFORML 「きゃあっ！　やめてっ！」
+						PRINTFORML 「あぅんっ……私を仰向けに落として、どうするつもりなの……」
+					CASE 2
+						PRINTFORML 「うぅっ……っく……」
+						PRINTFORML 「んん……これから、赤ちゃん作るの……？」
+					CASE 3
+						PRINTFORML 「うぅ……っはぁっ……」
+				ENDSELECT
+			CASEELSE
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「えっ……ちょっと……離してよっ……」
+					CASE 1
+						PRINTFORML 「くっ……ん……また……やられてしまうの……？」
+					CASE 2
+						PRINTFORML 「んん……っあ……%UNICODE(0x2661)%　これから、おかされちゃうのぉっ……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「はぁっ……いやぁ……」
+				ENDSELECT
+		ENDSELECT
+	;敵の寄生攻撃
+	CASE 16
+		SELECTCASE ARG:1
+			;コウノトリ　全体Ｖ寄生
+			;精液の霧を放つ
+			CASE 842
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「な……何をしてるの……」
+						PRINTFORML 「予行練習なのかしら……って、臭いっ！」
+						PRINTFORML 「ナカまで変な感触がして……いやぁ……」
+					CASE 1
+						PRINTFORML 「変な行動ね……はぁ……被害が無いなら別にいいけど……」
+						PRINTFORML 「……って……っえ？　精液の匂いが濃すぎっ……」
+						PRINTFORML 「んん……まるで、身体中にぶっかけられた気分……」
+					CASE 2
+						PRINTFORML 「んん……っく……はぁぁんっ……」
+						PRINTFORML 「ぁはぁ……てきと、かんせつてきなまじわり、してるのぉ……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「ううっ……せーえきが……なかにぃっ……」
+				ENDSELECT
+			;コウノトリ
+			;処女：膣口に管を宛がって射精　非処女：挿入して射精
+			;精液が漏れ出る
+			CASE 843
+				;処女
+				IF TALENT:0 && !LOST_VIRGIN_CHECK(TARGET)
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「あっ……いやっ……ださないでっ……」
+							PRINTFORML 「いやぁ……間接的に出されてるのっ……ああっ……」
+							PRINTFORML 「も、もぅ入らないからぁ……止めてよぉっ……」
+						CASE 1
+							PRINTFORML 「あついっ……やめて、そんなのあてがわないでっ……」
+							PRINTFORML 「ああっ……っく……ぁはああああっ……」
+							PRINTFORML 「こ、これ以上入らないからぁ……んんぅっ……」
+						CASE 2
+							PRINTFORML 「あ……はぁんっ……いれられてないのに、とても……はぁっ……あついのぉっ……」
+							PRINTFORML 「はぁっ……はぁ……ぁはぁ……たくさんそそがれてるぅっ……」
+							PRINTFORML 「もぅ……はいらない……んん……%UNICODE(0x2661)%　たくさん、たれてくるのぉっっ……」
+						CASE 3
+							PRINTFORML 「あっ……んん……もぅ……はいらないからぁ……」
+					ENDSELECT
+				ELSE
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「きゃぁっ……っん……くぁぁっ……んん……！」
+							PRINTFORML 「も……はいらない……からぁ……ぁはあああっ……」
+							PRINTFORML 「……んぁ、また、だされてぇ……っん……！」
+						CASE 1
+							PRINTFORML 「あふ……っく……やぁめっ……あぁんっ……」
+							PRINTFORML 「んっ……ぁ……もぅ、ださないでぇっ……んっああああっ……」
+							PRINTFORML 「なか、あふれて……るのにぃっ……ひゃああああっ……」
+						CASE 2
+							PRINTFORML 「あっ……ん……はぁぁ……んん……%UNICODE(0x2661)%」
+							PRINTFORML 「はぁっ……はぁっ……ひゃんんっ……とっても、きもちいいですぅっ……%UNICODE(0x2661)%」
+							PRINTFORML 「んん……%UNICODE(0x2661)%　わらしのなかからぁ……せいえきがたれてくるのぉっ……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「あっ……あん……あぁんっ……」
+					ENDSELECT
+				ENDIF
+			;精液が数センチ程部屋に溜まる
+			CASE 844
+				;処女
+				IF TALENT:0 && !LOST_VIRGIN_CHECK(TARGET)
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「ふっ……く……な、なんとかなったわ……」
+							PRINTFORML 「って、離れてるのに熱く……！？」
+							PRINTFORML 「ううっ……ナカがあつくって……溢れてるっ……」
+						CASE 1
+							PRINTFORML 「はぁっ……はぁ……何とか避けた……」
+							PRINTFORML 「……えっ、こ、こいつ……何をしてるの……！？」
+							PRINTFORML 「はぁっ……はぁっ……っく……ナカがあふれてっ……流れ落ちてるぅっ……」
+						CASE 2
+							PRINTFORML 「はぁっ……っん……%UNICODE(0x2661)%」
+							PRINTFORML 「ぁふ……かんせつてきにせいえきそそがれてぇっ……%UNICODE(0x2661)%」
+							PRINTFORML 「あんんっ……せいえきがながれおちてますぅっ……%UNICODE(0x2661)%　んん……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「あっ……あん……んぁぁ……」
+					ENDSELECT
+				ELSE
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「きゃぁ……ん……んぁ……くぅ……ん……」
+							PRINTFORML 「やめ……ん……！　これいじょう、わたしをこわさな……んぁぁっ……」
+							PRINTFORML 「ぁはぁ……ナカがあつくって……とろとろしたのが、ながれおちるのっ……」
+						CASE 1
+							PRINTFORML 「ぁっ……ん……はぁぁっ……んん……！」
+							PRINTFORML 「はぁっ……もぅ……もたないからぁ……ださないでっ……ひゃああっ……」
+							PRINTFORML 「んん……っく……いくらでも……あふれてきちゃうっ……」
+						CASE 2
+							PRINTFORML 「きゃふ……っん……あぁぁっ……ん……%UNICODE(0x2661)%」
+							PRINTFORML 「もっとぉ……くひゃんっ……ついてぇ……ナカにだしてほしいのぉ……」
+							PRINTFORML 「……ぁ%UNICODE(0x2661)%　きてるっ、ナカにたくさんだされてるぅっ……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「んっ……ん……んっぁ……」
+					ENDSELECT
+				ENDIF
+			;大量射精して子宮が精液で満たされる
+			CASE 845, 846
+				;処女
+				IF TALENT:0 && !LOST_VIRGIN_CHECK(TARGET)
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「うっ……穢らわしいモノが膨れてるぅっ……」」
+							PRINTFORML 「やめてっ……出さないでぇっ……」
+							PRINTFORML 「こんなに出されたら、ナカまで満たされちゃうのっ……」
+						CASE 1
+							PRINTFORML 「はぁっ……っんく……ん……」
+							PRINTFORML 「い、いれられてないのに……ナカが熱いっ……」
+							PRINTFORML 「どういう事なのっ……っぁ……はぁっ……」
+						CASE 2
+							PRINTFORML 「あっ……ふ……くぅぅん……%UNICODE(0x2661)%」
+							PRINTFORML 「わたしの、ナカぁ……あかちゃんのもとでいっぱいなのぉ……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「あふ……っく……ぅんっ……」
+					ENDSELECT
+				ELSE
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「あっ……ん……！　くぁ……あぁんっ……」
+							PRINTFORML 「きゃふ……！　くっぁ……あそこが、あつくなって……だめ……！　ださないでっ……」
+							PRINTFORML 「んぅああああっ……はぁっ……はぁっ……ナカが……いっぱいになって……」
+						CASE 1
+							PRINTFORML 「あっ……く……っあふぅっ……」
+							PRINTFORML 「だめぇ……もぅ、つかないでぇ……ひゃっ、あああああっ……」
+							PRINTFORML 「ぁはぁっ……わらしのナカっ、あつくなってるぅ……」
+						CASE 2
+							PRINTFORML 「ひゃんっ……っく……あっ……んん……%UNICODE(0x2661)%」
+							PRINTFORML 「ぁふ……きもちいいですぅ……%UNICODE(0x2661)%　いーっぱい、ナカに出してくださぁぃ……%UNICODE(0x2661)%」
+							PRINTFORML 「ひゃあああん……ナカにたくさんだされてるのぉっ……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「あふ……っくぅんっ……あぁんっ……」
+					ENDSELECT
+				ENDIF
+			;溺れそうになる　非処女：何度も出される
+			CASE 847
+				;処女
+				IF TALENT:0 && !LOST_VIRGIN_CHECK(TARGET)
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「ふっ……く……な、なんとかなったわ……」
+							PRINTFORML 「って、離れてるのに熱く……！？」
+							PRINTFORML 「ううっ……げほげほっ……直接出されたわけじゃないのに……息が苦しく……」
+						CASE 1
+							PRINTFORML 「っく……はあっ……いれられなかったけど……あついっ……！」
+							PRINTFORML 「ふぁ……っげほっ……げほ……な、なにこ……んん……！」
+							PRINTFORML 「げほげほっ……いきができないなんて……げほっ……」
+						CASE 2
+							PRINTFORML 「ふぁぁっ……あのばけものに……そそがれるのぉっ……%UNICODE(0x2661)%」
+							PRINTFORML 「えへへ……あっ、おおきいのがあつくぅっ……ふぁあああああんっ……」
+							PRINTFORML 「こほ……いきが……できな……ぜんしんに……ぶっかけられた……みたい……ですぅ……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「あ……っはぁっ……めぇっ……」
+					ENDSELECT
+				ELSE
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「ふぁ……ん……っんん……！」
+							PRINTFORML 「はぁっ……はぁ……ナカがあつくって……ひゃぁんっ……また、出すのっ……」
+							PRINTFORML 「あっ……ん……はぁぁっ……んん……もぅ、やめてぇっ……」
+						CASE 1
+							PRINTFORML 「ひゃぁっ……ん……あふ……はぁっ……んん……！」
+							PRINTFORML 「くひゃんっ……ん……もう、ださないでぇっ……」
+							PRINTFORML 「ひゃあああっ……また、だされてるぅっ……あつすぎるのぉっ……」
+						CASE 2
+							PRINTFORML 「くひゃんっ……あっ……んん……」
+							PRINTFORML 「ぁふ……もっとぉ……そそいでくだひゃぃっ……あああっ……%UNICODE(0x2661)%」
+							PRINTFORML 「わたひのなかぁ……せいえきでいっぱいなのぉ……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「はぁっ……はぁっ……はぁ……んん……！」
+					ENDSELECT
+				ENDIF
+			CASEELSE
+				;処女
+				IF TALENT:0 && !LOST_VIRGIN_CHECK(TARGET)
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「ふうっ……何とか避けたわ……」
+							PRINTFORML 「ええっ……こいつ、間接的に出す気なの……！？」
+						CASE 1
+							PRINTFORML 「ううっ……ひぃっ……」
+							PRINTFORML 「そんなっ……どうしてこいつらは、子供を残そうと……！？」
+						CASE 2
+							PRINTFORML 「ひゃぁぁっ……かんせつてきにだされてるぅっ……%UNICODE(0x2661)%」
+							PRINTFORML 「あふ……あかちゃん、はらむのぉ……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「んん……っはぁ……っん……」
+					ENDSELECT
+				ELSE
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「くひゃ……んんっ……やめっ……こども、はらんじゃうからぁっ……」
+							PRINTFORML 「ああ……っん……はぁぁっ……ほんとうにっ……やめてよぉっ……」
+						CASE 1
+							PRINTFORML 「はぁっ……はぁっ……んん……！」
+							PRINTFORML 「ぁっ……はぁっ……おねがぃっ、ださないでっ……」
+							PRINTFORML 「はぁぁぁぁっ……いやっ、また、こだね、はいっちゃううぅっ……」
+						CASE 2
+							PRINTFORML 「あふぅ……っん……%UNICODE(0x2661)%」
+							PRINTFORML 「くひゃんっ……こども、つくるのぉ……？」
+							PRINTFORML 「んん……%UNICODE(0x2661)%　たくさん、そそいでくだひゃいっ……っああ%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「あっ……あぁっ……ぁ……ん……」
+					ENDSELECT
+				ENDIF
+		ENDSELECT
+	CASE 33
+		;MPが0（戦意喪失）になった
+		SELECTCASE K30_WILL()
+			CASE 0
+				PRINTFORML 「うぅ……もう……だめぇ……」
+			CASE 1
+				PRINTFORML 「あっ……ぅ……」
+				PRINTFORML 「はぁ……んん……もぅだめなのっっ……」
+			CASE 2,3
+				PRINTFORML 「ぁ……はぁ……んん……%UNICODE(0x2661)%」
+				PRINTFORML 「わらしぃ……しょくしゅにおかされるのぉ……%UNICODE(0x2661)%」
+		ENDSELECT
+	CASE 35
+		;CPが減少した
+		;ARG:1に破れ強度　（ARG:1が　0：全裸になった　1：半裸になった　2：破れ始めた）
+		SELECTCASE ARG:1
+			CASE 0
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「くっ……ぁ……は、恥ずかしい……」
+					CASE 1
+						PRINTFORML 「あっ……私の服が……」
+						PRINTFORML 「こんな恰好じゃ、また襲われて……うう……」
+					CASE 2
+						PRINTFORML 「え……へへ……%UNICODE(0x2661)%」
+						PRINTFORML 「わらしぃ……はだかになっちゃったの……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「あっ……ふくがぁっ……」
+				ENDSELECT
+			CASE 1
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「きゃあっ！　胸や太腿が……ううっ……」
+					CASE 1
+						PRINTFORML 「くっ……私の服が少なく……」
+						PRINTFORML 「このままじゃ、いずれは全裸に……うう……」
+					CASE 2
+						PRINTFORML 「ぁはぁ……んん……%UNICODE(0x2661)%」
+						PRINTFORML 「こんなに破けちゃったぁ……ねぇ……もっと破いてよ……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「あふぅ……むねがぁ……」
+				ENDSELECT
+			CASE 2
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「くっ……私の服を破いてくるなんて……」
+					CASE 1
+						PRINTFORML 「服を破いてくるなんて、なんて奴らなの……」
+						PRINTFORML 「どうしよう、早く、何とかしないと……」
+					CASE 2
+						PRINTFORML 「きゃふぅ……私の素肌が……%UNICODE(0x2661)%」
+						PRINTFORML 「ふふ……こんな場所で、淫らな姿になれるなんて……%UNICODE(0x2661)%」
+					CASE 3
+						PRINTFORML 「はぁっ……っん……はだかにっ……」
+				ENDSELECT
+		ENDSELECT
+	;アイテムを使用
+	CASE 36
+		;使ったアイテムによって分岐
+		SELECTCASE ARG:1
+			;着替えセット
+			CASE 54
+				;CFLAG:501に着用している衣服の種類が入っている(ようだ)
+				SELECTCASE CFLAG:501
+					;いつもの服
+					CASE 0
+						PRINTFORML 「ふぅ……気味が悪いけど、服着ない訳にはいかないしね……」
+						PRINTFORML 「この服はやっぱり可愛い上に落ち着くし、このまま眠……」
+						PRINTFORML 「……いけない、危うく肉塊に埋もれる所だったわ」
+					;普通の服
+					CASE 1
+						PRINTFORML 「へー、里の娘が着ているのを見るわね」
+						PRINTFORML 「でもこれ……太腿が丸見えじゃない……」
+					;体操着
+					CASE 2
+						PRINTFORML 「うーん……見た事無い衣装ね……」
+						PRINTFORML 「裾小さすぎだし生地が薄すぎるし、何を狙ってるのよ……」
+					;メイド服
+					CASE 3
+						SELECTCASE K30_WILL()
+							CASE 0
+								PRINTFORML 「わぁ……すごく可愛らしい……」
+								PRINTFORML 「でも被虐的な感じもするのよね……他に服が無いなら仕方ないけど」
+							CASE 1
+								PRINTFORML 「こ、これは……フリルが付いて可愛いけど……」
+								PRINTFORML 「なぜか、襲ってほしいと言ってるような印象を受けるのよね……」
+							CASE 2
+								PRINTFORML 「っはぁ……っん……」
+								PRINTFORML 「わたしぃ……この化け物達の……慰み者になるのぉ……%UNICODE(0x2661)%」
+						ENDSELECT
+					;パジャマ
+					CASE 4
+						PRINTFORML 「ん……？　寝間着って、いつもの服か和服じゃダメなの……？」
+						PRINTFORML 「それはそうと、この服動きづらいわね……」
+					;巫女服
+					CASE 5
+						PRINTFORML 「あの押しかけ巫女が着ている服ね。よかった、脇は空いてないんだ」
+						PRINTFORML 「……胸元がすーすーするんだけど」
+					;スクール水着
+					CASE 6
+						PRINTFORML 「……？　ねえ、これ……服……なの？」
+						PRINTFORML 「うーん……月の都にあったような、なかったような……」
+					;マイクロビキニ
+					CASE 7
+						PRINTFORML 「これって紐じゃない……胸や尻がほぼ丸見え……ん……用途が分かったわ」
+						PRINTFORML 「隣の国にけしかけて、国王をたぶらかす為の衣服ね！」
+					;ボディスーツ
+					CASE 8
+						PRINTFORML 「うう……私の身体って……」
+						PRINTFORML 「こんなに、華奢なの……？」
+					;セーラー服
+					CASE 9
+						PRINTFORML 「これ……確か学生服だったっけ……？」
+						PRINTFORML 「いや、私が居た頃の月の都はもっと着物に近かったんだけど……イナバが……うーん……」
+					;半ズボン
+					CASE 10
+						PRINTFORML 「えーと……太腿見えすぎなんだけど」
+						PRINTFORML 「妹紅の方が合うんじゃない？」
+					;妊婦服
+					CASE 11
+						PRINTFORML 「永琳曰く"知らない事もある方がいい"らしいけど」
+						PRINTFORML 「……これは、その類の服のようね。それにしても、捲れると胸が丸見えなんじゃ……」
+					;ランジェリードレス
+					CASE 12
+						PRINTFORML 「えーと……襦袢にフリルがついて薄くなったワンピース……かな」
+						PRINTFORML 「これが和洋折衷ってやつかなあ……でも、こんな場所で着たくないわね」
+					;セーター
+					CASE 13
+						PRINTFORML 「ほくほくして、あったか～い」
+						PRINTFORML 「……でも、生地が柔らかすぎるようね。胸……」
+					;チャイナドレス
+					CASE 14
+						PRINTFORML 「永琳が読ませてくれた本で見たことがあるわ」
+						PRINTFORML 「……太腿出すぎなんだけど、それに胸元が空きすぎ……」
+					;貞操帯
+					CASE 15
+						PRINTFORML 「武器や防具は、装備しないと、効果が無いぞ！」
+						PRINTFORML 「……何言ってるのかしら私。それにしても、これは心強いわね」
+					;ポイントアーマー
+					CASE 16
+						PRINTFORML 「よっちゃんにこれ身に着けないのか聞いたら要らないと言われたんだよね」
+						PRINTFORML 「神を呼び出しづらくなるのが理由らしいけど……」
+						PRINTFORML 「それはそうとして、少し屈みづらくなったわね」
+					;園児服
+					CASE 17
+						PRINTFORML 「……？　園児？　小さい子も寺小屋に通うんじゃないの？」
+						PRINTFORML 「それと、いくらなんでもこれが合うのは、小さいイナバまでだと思う……」
+					;エプロン
+					CASE 18
+						PRINTFORML 「えーと……割烹着を可愛くした物……かな……」
+						PRINTFORML 「私の服まで付いてるなんて、とてもありがたいわ」
+					;ローブ
+					CASE 19
+						PRINTFORML 「私がいつも着ている服と少し意匠が似ているわね」
+						PRINTFORML 「ん……？　少し力が湧いてきたような……」
+					;ウェディングドレス
+					CASE 20
+						PRINTFORML 「わぁ……フリルがたくさん付いてる……」
+						PRINTFORML 「それにこの生地、肌触りがとてもきめ細かねえ……」
+					;ふんどし
+					CASE 21
+						PRINTFORML 「ふんどしは見た事あるけど、これは男性向けよね……？」
+						PRINTFORML 「まあ、服の下だしいいかな」
+					;触手服
+					CASE 22
+						PRINTFORML 「私の服だ。……もう、ここにある事には突っ込まないんだけど、やけに厚手ね……」
+						PRINTFORML 「まあ、もしかしたら冬服でも吸い込まれたのかも知れないし……着てみましょう……ひゃんっ……」
+						PRINTFORML 「やだっ、服の中、んん……きもちわるいっ……ぁっ……」
+					;スリングショット
+					CASE 23
+						PRINTFORML 「なに、このＹ字の布……投擲武器に使うの？」
+						PRINTFORML 「え……まさか下着代わりに……！？」
+					;包帯のみ
+					CASE 100
+						PRINTFORML 「包帯じゃないの……ま、まあ他に無いのなら巻くしかないか……」
+						PRINTFORML 「うーん……ほとんど全裸と変わりないじゃない……」
+					;靴下のみ
+					CASE 101
+						PRINTFORML 「靴下だけじゃない……服じゃないよね？」
+					;魔法少女の服
+					CASE 102
+						PRINTFORML 「あら、可愛らしい」
+						PRINTFORML 「これで私も魔法が使えるようになるのね……え、元から魔法使えるようなものだって？」
+				ENDSELECT
+		ENDSELECT
+	CASE 55
+		;敵から逃げた
+		;v0.05.3から種類を分けました
+		SELECTCASE K30_WILL()
+			CASE 0
+				PRINTFORML 「ふぅ……危うく死ぬ所だったわ」
+			CASE 1
+				PRINTFORML 「うぅ……何とか逃げ出せたけど……」
+			CASE 2
+				PRINTFORML 「はぁっ……はぁっ……んんっ……%UNICODE(0x2661)%」
+				PRINTFORML 「つ……ついにげてしまったけど、からだが……うずくのっ……%UNICODE(0x2661)%」
+		ENDSELECT
+	;戦闘敗北時
+	CASE 56
+		SELECTCASE K30_WILL()
+			CASE 0
+				PRINTFORML 「ぁ……ぅ……」
+				PRINTFORML (このまま、迷宮の一部になるのかも……)
+			CASE 1
+				PRINTFORML 「うぅ……っん……」
+				PRINTFORML (敵に襲われて……また痴態を曝す事になるの……)
+			CASE 2
+				SELECTCASE CFLAG:501
+					;メイド服
+					CASE 3
+						PRINTFORML 「はぁっ……はぁっ……っん……」
+						PRINTFORML 「ごしゅじんさまぁ……わたしの……からだ……もてあそんでぇ……%UNICODE(0x2661)%」
+					;巫女服
+					CASE 6
+						PRINTFORML 「っは……ああっ……」
+						PRINTFORML 「こんなせいそうをきて、まけるなんて……わたし……わたしぃ……%UNICODE(0x2661)%」
+					;ドレス
+					CASE 20
+						PRINTFORML 「あはぁ……んんぅっ……」
+						PRINTFORML 「わたしぃ……ばけものと……けっこんするのぉ……%UNICODE(0x2661)%」
+					CASEELSE
+						PRINTFORML 「えへへ……わたしのからだで、たのしんでくさひゃぃ……%UNICODE(0x2661)%」
+						PRINTFORML 「もっと、きもちよくなりたいのぉ……%UNICODE(0x2661)%」
+				ENDSELECT
+		ENDSELECT
+	;戦闘に勝利
+	CASE 57
+		SELECTCASE K30_WILL()
+			CASE 2,3
+				
+			CASEELSE
+				PRINTFORML 「ふふ……せめて俳句の一つぐらい読めるようになってから来なさいな」
+		ENDSELECT
+	CASE 62
+		SELECTCASE K30_WILL()
+			CASE 2,3
+				
+			CASEELSE
+				;仲間を見捨てて逃げた
+				IF NO:(ARG:2) == 31 || NO:(ARG:3) == 31
+					;妹紅を見捨てた場合
+					PRINTFORML （……も、妹紅ならあんな奴ぐらい蹴散らせるでしょ）
+					PRINTFORML （……ね、そうよね……？）
+				ELSE
+					PRINTFORML （いくら不死身でもトラウマに残る事だけは……！）
+				ENDIF
+		ENDSELECT
+	CASE 63
+		;仲間に見捨てられた
+		IF NO:(ARG:2) == 31 || NO:(ARG:3) == 31
+			;妹紅に見捨てられた場合
+			SELECTCASE K30_WILL()
+				CASE 3
+					PRINTFORML 「はぁっ……っ……」
+				CASEELSE
+					PRINTFORML 「私を置いていかないでよ……妹紅……」
+					PRINTFORML 「聞いてる……？　私が居なかったらあなたなんか既に朽ち果ててるのよ……？」
+			ENDSELECT
+		ELSE
+			SELECTCASE K30_WILL()
+				CASE 0
+					PRINTFORML 「え……嘘でしょう……？」
+					PRINTFORML 「どうして、私を置いて……」
+					PRINTFORML 「やめてよ……私、まだ死にたくない……」
+				CASE 1
+					PRINTFORML 「うぅっ……もう、わたし……だめなの……」
+				CASE 2
+					SELECTCASE CFLAG:501
+						;メイド服
+						CASE 3
+							PRINTFORML 「ごしゅじんさまぁ……わらしぃ……ひとりになっちゃったぁ……%UNICODE(0x2661)%」
+							PRINTFORML 「これからは、ぞんぶんにぃ……からだぁ……いじってぇ……%UNICODE(0x2661)%」
+						CASEELSE
+							PRINTFORML 「えぇへ……わらし……えっちすぎて……もぅだめなのぉ……%UNICODE(0x2661)%」
+							PRINTFORML 「だからぁ……みんなに……みすてられちゃったぁ……んんっ……ぁはぁっ……%UNICODE(0x2661)%」
+					ENDSELECT
+				CASE 3
+					PRINTFORML 「ぁはぁっ……そんなぁ……」
+			ENDSELECT
+		ENDIF
+	CASE 59
+		;戦闘中に敵に捕食されている
+		IF NO:1 == 31 || NO:(FLAG:10) == 31 || NO:(FLAG:11) == 31
+			;PTに妹紅が居る
+			SELECTCASE K30_WILL()
+				CASE 0
+					PRINTFORML 「く……あなたなんかに、助けてもらわ、なくても……！」
+				CASE 1
+					PRINTFORML 「ふふ……何とか……ぬけだしてみせるから……」
+					PRINTFORML 「あなたは……そこで……みててっ……」
+				CASE 2
+					PRINTFORML 「もこぉ……わらし……だめになりそぉ……%UNICODE(0x2661)%」
+					PRINTFORML 「もぉ……ここからぁ……ぬけだせないのぉ……%UNICODE(0x2661)%」
+				CASE 3
+					PRINTFORML 「んん……っ……」
+			ENDSELECT
+		ELSE
+			SELECTCASE K30_WILL()
+				CASE 0
+					PRINTFORML 「く……私を食べるなんて……っくんっ……いい度胸じゃないの……」
+					PRINTFORML 「解放されたら蹴散らしてあげるわ……」
+				CASE 1
+					PRINTFORML 「うう……っく……はやく、ここから抜けないと……」
+					PRINTFORML 「ばけものに、なにもかも溶かされてしまう……」
+				CASE 2
+					PRINTFORML 「ぇへへ……ばけものに……たべられちゃったのぉっ……%UNICODE(0x2661)%」
+					PRINTFORML 「はぁっ……はぁっ……わらしのすべてをぉ……あじわってぇ……%UNICODE(0x2661)%」
+				CASE 3
+					PRINTFORML 「んん……っ……」
+			ENDSELECT
+		ENDIF
+	CASE 61
+			SELECTCASE K30_WILL()
+				CASE 2,3
+					PRINTFORML 「はぁっ……っ……」
+				CASEELSE
+					;敵と初遭遇
+					IF ARG:1 == 1
+						PRINTFORML 「お……恐ろしい……」
+						PRINTFORML 「永琳に読んでもらった本ですら、こんな化け物見た事がないわ……」
+					ELSEIF ARG:1 == 18 && SAVESTR:(TFLAG:1) == CALLNAME:(GET_ID_FROM_NO(31))
+						;初遭遇ドッペルゲンガーが妹紅に化けていた
+						PRINTFORML 「あ、妹紅！　あなたもこの迷宮に迷い込んだの？」
+						PRINTFORML 「どこを見てもうねうねした壁だらけで、どこを頼ればいいのか分からなかったの」
+						PRINTFORML 「……ところで、その手、まるで触手みたいだけど、どこで手に入れたの？」
+					ELSE
+						PRINTFORML 「こんな化け物と遭遇するの、お伽噺の中だけでいいのだけど……」
+					ENDIF
+			ENDSELECT
+	CASE 110
+		;PTメンバーと別れる
+		IF TARGET == 1
+			SELECTCASE K30_WILL()
+				CASE 2,3
+					
+				CASEELSE
+					;主人公として表示する場合、ARG:1のキャラを見送る
+					;騙して別れてます
+					PRINTFORML 「……少しお話しがあるんだけど、よろしいかしら？」
+					PRINTFORML 「あちらの方を見てきたんだけど、不可思議な箱を見かけたのよ」
+					PRINTFORML 「それは化け物が寄ってこない効果があるらしくてね。一度は見る価値があると思うわ」
+					PRINTFORML 「私たちは既に堪能したから、一人で楽しんできてね」
+			ENDSELECT
+		ELSE
+			;それ以外の場合、自分が抜ける
+			SELECTCASE K30_WILL()
+				CASE 0
+					PRINTFORML 「私に抜けてほしいって？」
+					PRINTFORML 「うーん……それは残念ねえ……そうだ」
+					PRINTFORML 「もしイナバを見つけたら私にちょうだいね」
+				CASE 1
+					PRINTFORML 「えっ……ここで、別れるですって……」
+					PRINTFORML 「……ねえ、ここから出たら、筍あげるから、もう少しだけ居させて……」
+					PRINTFORML 「い、イナバも抱かせてあげるからっ……おねがいっ……」
+				CASE 2
+					SELECTCASE CFLAG:501
+						;メイド服
+						CASE 3
+							PRINTFORML 「そぅ……？　それなら……わらしっ、ごしゅじんさまにからだささげてくるのぉっ……」
+							PRINTFORML 「えへへ……あたまのなか、おかしくなりそぉ……%UNICODE(0x2661)%」
+						CASEELSE
+							PRINTFORML 「はぁい……わらしぃ……ばけものとあそんでおくのぉ……」
+							PRINTFORML 「それじゃぁ、またねぇ……%UNICODE(0x2661)%」
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	;探索でアイテム入手
+	CASE 113
+			SELECTCASE K30_WILL()
+				CASE 2,3
+					
+				CASEELSE
+					SELECTCASE ARG:1
+						;使い魔
+						CASE 22
+							PRINTFORML 「わわっ、こんな所でこれを見つけるなんて……」
+							PRINTFORML 「……雪玉？　違うわ、これはイナバなのよ。ほら」
+						;着替えセット
+						CASE 54
+							PRINTFORML 「どうしてこんな所に服が……」
+							PRINTFORML 「まあ、どんな理由にしても有難い事に変わりはないわね……」
+					ENDSELECT
+			ENDSELECT
+	CASE 118
+		;自慰開始
+		IF CFLAG:802
+			SELECTCASE K30_WILL()
+				CASE 3
+					PRINTFORML 「あふ……っん……ぅんっ……んん……！」
+				CASEELSE
+					PRINTFORML 「ん……はぁ……だめぇ……」
+					PRINTFORML 「てがとまらなくて……くひゃんっ……からだがたかぶるのぉっ……」
+			ENDSELECT
+		ELSE
+			SELECTCASE K30_WILL()
+				CASE 0
+					PRINTFORML 「はぁっ……はぁ……ん……」
+					PRINTFORML 「うぅ……股が滲んで……っん……」
+				CASE 1
+					PRINTFORML 「はぁっ……んん……！」
+					PRINTFORML 「だめなのにっ、っん……！　からだがかってにぃ……
+				CASE 2
+					PRINTFORML 「ぁあんっ……ぁっ……あんんっ……%UNICODE(0x2661)%」
+					PRINTFORML 「おなにー……さいこうなのぉ……わらしぃ……えっちになるぅ……%UNICODE(0x2661)%」
+				CASE 3
+					PRINTFORML 「あふ……っん……ぅんっ……」
+			ENDSELECT
+		ENDIF
+	CASE 120
+		;絶頂
+		IF TFLAG:13
+			;戦闘中の場合
+			IF CFLAG:35
+				;既に絶頂中＝連続絶頂
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「ぅぁ……だめ……ぇ……」
+						PRINTFORML 「また……イっちゃうのぉ……っ……！」
+					CASE 1
+						PRINTFORML 「ぁ……ん……はぁ……んんぅっ……」
+						PRINTFORML 「らめ……あたまのなかぁ、まっしろになるぅ……」
+					CASE 2
+						SELECTCASE CFLAG:501
+							;メイド服
+							CASE 3
+								PRINTFORML 「ひっ……っん……っはぁっ……%UNICODE(0x2661)%」
+								PRINTFORML 「ごしゅじんさまぁ……っまた……っいくのぉっ……っんん……ぁはあああああっ……%UNICODE(0x2661)%」
+							CASEELSE
+								PRINTFORML 「……ぁ……ひ……んはぁっ……%UNICODE(0x2661)%」
+								PRINTFORML 「も……もっとぉ……わらしを……こわしてぇ……%UNICODE(0x2661)%」
+						ENDSELECT
+					CASE 3
+						PRINTFORML 「っぁ……はぁっ……っんん……！」
+				ENDSELECT
+			ELSEIF FLAG:97
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「んっ……は……はぁっ……」
+						PRINTFORML 「わらしぃ……てきのまえで……じいしひゃってぇ……いくぅ……んっぁああああっ……」
+					CASE 1
+						PRINTFORML 「んんっ……ぁ……らめぇ……」
+						PRINTFORML 「おそわれるだけ、なのにぃ……てが……とまらなくってぇ……」
+					CASE 2
+						SELECTCASE CFLAG:501
+							;メイド服
+							CASE 3
+								PRINTFORML 「くひゃぁ……っんん……%UNICODE(0x2661)%　はぁっ……はぁ……んん……%UNICODE(0x2661)%」
+								PRINTFORML 「ごしゅじんさまぁ……わらしぃ……おなにーしてぇ……いきますぅ……ひゃああああんんんっ……%UNICODE(0x2661)%」
+							CASEELSE
+								PRINTFORML 「あん……んっ……はぁっ……%UNICODE(0x2661)%」
+								PRINTFORML 「あふ……ん……わたしがイくところ……みてほしいのぉっ……%UNICODE(0x2661)%」
+						ENDSELECT
+					CASE 3
+						PRINTFORML 「っぁ……はぁっ……っんん……！」
+				ENDSELECT
+			ELSE
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「ぁ……はぁ……んん……%UNICODE(0x2661)%」
+						PRINTFORML 「らめ……てきのすがたが……かすれてぇ……%UNICODE(0x2661)%」
+					CASE 1
+						PRINTFORML 「んっ……はぁ………あぁ……ひ……」
+						PRINTFORML 「んん……っぁ……いくぅ……てきがまえにいるってのにぃ……%UNICODE(0x2661)%」
+					CASE 2
+						SELECTCASE CFLAG:501
+							;メイド服
+							CASE 3
+								PRINTFORML 「はぁっ……はぁっ……はぁ……っんん……！」
+								PRINTFORML 「ごしゅじんさまぁ……わらしぃ、いきますぅ……ひゃああああんっ……%UNICODE(0x2661)%」
+							CASEELSE
+								PRINTFORML 「きゃふ……っく……っはぁ……%UNICODE(0x2661)%」
+								PRINTFORML 「もぅ……いっちゃいますぅ……%UNICODE(0x2661)%　ふぁああああっ……%UNICODE(0x2661)%」
+						ENDSELECT
+					CASE 3
+						PRINTFORML 「っぁ……はぁっ……っんん……！　……っはぁぁ……」
+				ENDSELECT
+			ENDIF
+		ELSE
+			;非戦闘中の場合
+			IF CFLAG:800
+				;フラグが立った状態で発生した＝連続絶頂
+				;CFLAG:801のように毎回+1するような形にすれば何回目の連続絶頂か？なども見れます
+				;メモ　連続絶頂の最後だけ変更するのは不可(ソース元　口上テンプレート作者)
+				
+				;8回以上
+				IF CFLAG:801 >= 8
+					PRINTFORML 「あっ……は……」
+					PRINTFORML 「も……だめ……いきが……ぁ……くぁああああっ……」
+				ELSE
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「ふひゃ……ぁあんっ……」
+							PRINTFORML 「また……イくのっ……ふぁああああぁんっ……」
+						CASE 1
+							PRINTFORML 「ああっ……だめ……めのまえが……また……しろくぅ……」
+							PRINTFORML 「ああ……っん……ひゃああああっ……%UNICODE(0x2661)%」
+						CASE 2
+							PRINTFORML 「わらしぃ……また……えっちになるのぉ……%UNICODE(0x2661)%」
+							PRINTFORML 「あぁ……っん……ひゃっ、っく、はぁああああん……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「っぁ……はぁっ……っんん……！　……っはぁぁ……」
+					ENDSELECT
+				ENDIF
+			;自慰
+			ELSEIF FLAG:97
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「んん……ぁ……ぁあ……っひ……」
+						PRINTFORML 「てがとまらなくってぇっ……いくぅっっ……んぁああああああっ……」
+					CASE 1
+						PRINTFORML 「ひゃぁ……っん……ぁぁ……」
+						PRINTFORML 「じぶんのてで……いくのぉ……くひゃあああああんっ……%UNICODE(0x2661)%」
+					CASE 2
+						SELECTCASE CFLAG:501
+							;メイド服
+							CASE 3
+								PRINTFORML 「ぁはぁ……っん……ぁっ……あぁんっ……%UNICODE(0x2661)%」
+								PRINTFORML 「ごしゅじんさまに……かくれてっ……じいしてるのぉっ……んぅああああっ……%UNICODE(0x2661)%」
+							;巫女服
+							CASE 6
+								PRINTFORML 「んんっ……っあ……っはあっ……%UNICODE(0x2661)%」
+								PRINTFORML 「ばけもの、たおさなきゃならないのにぃ……てがっ……かってにぃ……%UNICODE(0x2661)%」
+							;ドレス
+							CASE 20
+								PRINTFORML 「あぁんっ……はぁぁっ……っぅんんっ……%UNICODE(0x2661)%」
+								PRINTFORML 「ぇへへっ……けっこん……してるのにぃっ……じいしちゃってるのぉっ……%UNICODE(0x2661)%」
+							CASEELSE
+								PRINTFORML 「ぁはぁ……わらしの、からだ……とってもびんかんなのぉ……%UNICODE(0x2661)%」
+								PRINTFORML 「あっ……っん……いっちゃいますぅ……ひゃああああああんっ……%UNICODE(0x2661)%」
+						ENDSELECT
+					CASE 3
+						PRINTFORML 「っぁ……はぁっ……っんん……！　……っはぁぁ……」
+				ENDSELECT
+			ELSE
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「はぁっ……はぁっ……ん……！」
+						PRINTFORML 「もぅだめ……わらしぃ……んっあああああっ……」
+					CASE 1
+						PRINTFORML 「あ……っふぅ……くぅ……んんぅっ……」
+						PRINTFORML 「もぅ……いきますぅっ……ひゃあああんっ……%UNICODE(0x2661)%」
+					CASE 2
+						PRINTFORML 「えへへ……めのまえが……しろくなってきたのぉ……%UNICODE(0x2661)%」
+						PRINTFORML 「わらしぃ……もぅ……たえられなぃ……%UNICODE(0x2661)%　ひゃああああんっ……」
+					CASE 3
+						PRINTFORML 「っぁ……はぁっ……っんん……！　……っはぁぁ……」
+				ENDSELECT
+			ENDIF
+		ENDIF
+	CASE 132
+		;部屋を移動（突撃）
+		IF TARGET == 1
+			SELECTCASE K30_WILL()
+				CASE 0
+					PRINTFORML 「敵が居たらその時よね」
+				CASE 1
+					PRINTFORML 「ん……敵が居たら、どうしようかな……」
+				CASE 2
+					PRINTFORML 「はぁ……はぁっ……」
+					PRINTFORML 「次は、どんな敵に犯されるのかな、私……%UNICODE(0x2661)%」
+			ENDSELECT
+		ENDIF
+	CASE 133
+		;部屋を移動（慎重）
+		IF TARGET == 1
+			SELECTCASE K30_WILL()
+				CASE 0
+					PRINTFORML 「慎重に行ってみましょう。……壁から肉塊を千切って投げればいいのかしら？」
+				CASE 1
+					PRINTFORML 「こ、これ以上は、襲われたくないから……」
+				CASE 2
+					PRINTFORML 「どんな敵が居るのか、こっそりと……」
+					PRINTFORML 「っん……んんぅ……%UNICODE(0x2661)%　想像するだけで、目がうるんで……」
+			ENDSELECT
+		ENDIF
+	CASE 134
+		;部屋を移動（待ち伏せ）
+		IF TARGET == 1
+			SELECTCASE K30_WILL()
+				CASE 2,3
+					
+				CASEELSE
+					PRINTFORML 「私は攻めるより、待つ派だから……」
+			ENDSELECT
+		ENDIF
+	CASE 135
+		;部屋を移動（探索）
+		IF TARGET == 1
+			SELECTCASE K30_WILL()
+				CASE 2,3
+					
+				CASEELSE
+					PRINTFORML 「何か使えそうな物はないかな……」
+			ENDSELECT
+		ENDIF
+	CASE 136
+		;処女喪失
+		IF ARG:3 == 0
+			SELECTCASE K30_WILL()
+				CASE 3
+					PRINTFORML 「ううっ……っん……くぅっ……」
+				CASEELSE
+					PRINTFORML 「え……そんな……えっ……？」
+					PRINTFORML 「やだぁ……私の楽しみの一つが……！」
+			ENDSELECT
+		ENDIF
+	CASE 159
+		;ゲーム開始時
+		;他のバリアントで言う処女モードの設定など、お好きにどうぞ
+		
+		;初期意志力を設定
+		CFLAG:803 = 100
+		
+		PRINTFORML 輝夜の初期服をメイド服にしますか？
+		PRINTFORML (輝夜の服装以外にも、コンフィグ設定も変更します)
+		PRINTFORML (具体的には、メイド服が出現するように変更します)
+		CALL ASK_YN
+		
+		IF RESULT == 0
+			IF FLAG:AUTOMODE
+				PRINTFORML 目を覚ましたらメイド服を着させられていました
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 目を覚ましたらメイド服を着させられていました
+			ENDIF
+			CFLAG:501 = 3
+			SETBIT FLAG:523, 12
+		ENDIF
+	;各種イベント
+	CASE 200
+		SELECTCASE ARG:1
+			;にょろーん
+			CASE 142
+				;身体を奉げた場合
+				IF ARG:2 == 2
+					SELECTCASE K30_WILL()
+						CASE 2
+							PRINTFORML 「ぁっ、っふぅぅっ……しょくしゅにからめとられるのぉっ……%UNICODE(0x2661)%」
+							PRINTFORML 「ひゃっ……はぁんっ……あぁっ、っくぅんっ……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「あっ、くっ、んぅっ……」
+							PRINTFORML 「あっ、あっ、あっ、あっ……」
+						CASEELSE
+							PRINTFORML 「えぇっ……！？　いきなり……！？」
+							PRINTFORML 「ちょっと……そんなこと、聞いてな……あっ、はぁんっ……んぁぁぁっ……！」
+							PRINTFORML 「はぁっ……はぁっ……あぁんんっ……！」
+					ENDSELECT
+				;襲われた後
+				ELSEIF ARG:2 == 3
+					SELECTCASE K30_WILL()
+						CASE 2
+							PRINTFORML 「はぁっ……はぁっ……っんぁ……%UNICODE(0x2661)%」
+							PRINTFORML 「きもち……よかったですぅっ……%UNICODE(0x2661)%　っんはぁっ……また、おってよぉっ……%UNICODE(0x2661)%」
+						CASE 3
+							PRINTFORML 「はぁっ……はぁっ……」
+						CASEELSE
+							PRINTFORML 「んっ……っはぁっ……っんんっ……」
+							PRINTFORML 「もう、おそわれたくないっ……いやっ、ほんとうにっ……」
+					ENDSELECT
+				ENDIF
+		ENDSELECT
+	;触手服
+	CASE 441
+		SELECTCASE ARG:1
+			;睡眠中責め立て時
+			;喪失中は代わりに10が呼び出される
+			CASE 0
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「んんぅっ……っく……」
+					CASE 1
+						PRINTFORML 「あっ……っん……はぁっ……はぁっ……っんん……！」
+					CASE 2
+						PRINTFORML 「きゃは……ぁくぅんっ……んんっ……%UNICODE(0x2661)%」
+				ENDSELECT
+			;通常責め
+			CASE 1
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「んんっ……っぁ……！　ふ、服の中が騒めいてっ……！」
+						PRINTFORML 「あっ、ふ、くぅんっ……や、やめてっ……まだ、しずみたくないのっ……」
+					CASE 1
+						PRINTFORML 「きゃっ、っぁ……！　やめっ、んんっ……」
+						PRINTFORML 「こんなことされるとっ、しかいが、うるんでっ……」
+					CASE 2
+						PRINTFORML 「はぁっ……はぁっ……ぁふぅぅっ……%UNICODE(0x2661)%」
+						PRINTFORML 「ふくのなか、そわそわっとしてぇ……きもち、んん……%UNICODE(0x2661)%　いいのぉ……%UNICODE(0x2661)%」
+				ENDSELECT
+			;胸責め
+			CASE 3
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「くふぅ……はぁぁっ……ぁあんっ……！」
+						PRINTFORML 「いやっ、むねしぼられるのはいやぁ……んんん……！」
+					CASE 1
+						PRINTFORML 「はぁっ……はぁぁっ……んぁ……！」
+						PRINTFORML 「ぁふ……っはぁ……やめてよっ……むね、いじめないでぇっ……！」
+					CASE 2
+						PRINTFORML 「はぁっ……んんぁ……ぁふぅ……くひゃんん……！」
+						PRINTFORML 「ぁふ、むねに、しげきがきたのぉ……ひゃんん……！」
+				ENDSELECT
+			;V寄生攻撃
+			CASE 7
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「ひゃっ……んん……！　まさか、いれようとしてるんじゃぁ……」
+						PRINTFORML 「いやっ、こんなじょうたいでっ……んんぁ……！　まじわろうとしないでっ……！」
+						PRINTFORML 「あっ、んっ……はぁっ、んんぅっ、やなのっ……んん……！」
+					CASE 1
+						PRINTFORML 「んっ……んんっ……っあ……」
+						PRINTFORML 「あふぅ……しょくしゅが、ナカにはいってっ……んぁ……！」
+						PRINTFORML 「あっ、ふっ、んんぅっ……だめっ、からだが、かってにぃ……%UNICODE(0x2661)%」
+					CASE 2
+						PRINTFORML 「あっ……はぁぁ……ぁん……%UNICODE(0x2661)%」
+						PRINTFORML 「ぇへへ……わらしぃ、いまからしょくしゅとまじわるのぉ……%UNICODE(0x2661)%」
+						PRINTFORML 「あんっ、あっ、くんっ、ひゃくんんっ……%UNICODE(0x2661)%　あっ……っふぅ……とってもきもちいよぉ……%UNICODE(0x2661)%」
+				ENDSELECT
+			;喪失時
+			CASE 10
+				PRINTFORML 「んん……っぁ……っくぅんっ……」
+			;尻穴弄り
+			CASE 13
+				SELECTCASE K30_WILL()
+					CASE 0
+						PRINTFORML 「ぁふ……っくぅんっ……おしりがっ、かゆくってぇっ……」
+					CASE 1
+						PRINTFORML 「んん……！　ぁぅ……おしりっ、いじらないでぇっ……」
+					CASE 2
+						PRINTFORML 「ぁっ、はぁぁっ……おしりのあなぁ、ぞくぞくするのぉ……%UNICODE(0x2661)%」
+				ENDSELECT
+		ENDSELECT
+	;ペットレイプ
+	CASE 514
+		SELECTCASE ARG:1
+			;唐突に襲われる
+			CASE 0
+				;屈服度によって分岐
+				
+				;屈服度30以上
+				IF CFLAG:400 >= 30
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「ぁふぅ……や、んんっ……っあふぅ……いきなり、おそわないでっ……」
+						CASE 1
+							PRINTFORML 「きゃ……んん……だ、め……っ……んっ、ぁ……ここでおそわれたらっ、わたしぃっ……」
+						CASE 2
+							PRINTFORML 「きゃんっ……わたしを、おそうのぉ……？　いいよぉ、たくさんおそってぇ……%UNICODE(0x2661)%」
+					ENDSELECT
+				ELSE
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「きゃあっ！　ちょっと！　何してるのよっ！」
+						CASE 1
+							PRINTFORML 「あっ……うっ……やめてよ……私なんか襲っても……っぅうんっ……」
+						CASE 2
+							PRINTFORML 「きゃんっ……はぁっ、くんっ……ぁくぅぅっ……わらし……いまからおそわれるのぉ……%UNICODE(0x2661)%」
+					ENDSELECT
+				ENDIF
+			;身体を奉げる
+			CASE 1
+				;屈服度によって分岐
+				
+				;屈服度30以上
+				IF CFLAG:400 >= 30
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「はぁ……んん……ペットにからだ、捧げちゃうのっ……」
+							PRINTFORML 「ぇへへ……お腹いっぱいになって……かつやくしてぇっ……」
+						CASE 1
+							PRINTFORML 「はぁっ……はぁぁん……んん……」
+							PRINTFORML 「おそわれることをかんがえるとっ、からだがあつくっ……」
+							PRINTFORML 「わたしのからだっ……すみずみまであじわってぇっ……」
+						CASE 2
+							PRINTFORML 「ぁふ……っんっ……はぁぁんっ……」
+							PRINTFORML 「わらしぃ……いまから、ぺっとにたべられるのぉ……%UNICODE(0x2661)%」
+							PRINTFORML 「きゃふ……っん……ま、まだはやいからぁ……んん……%UNICODE(0x2661)%」
+					ENDSELECT
+				ELSE
+					SELECTCASE K30_WILL()
+						CASE 0
+							PRINTFORML 「……ペットに身体捧げるなんて……自ら罠に陥れるようなものだけど……」
+							PRINTFORML 「でも、味方になってくれるなら仕方ないよね……」
+						CASE 1
+							PRINTFORML 「んっ……私の味方になってくれるのなら、お腹満たさせてあげるわ……」
+							PRINTFORML 「でも……その分働いてね……？」
+						CASE 2
+							PRINTFORML 「ぇへへ……いまからぺっとにおかされるのぉ……%UNICODE(0x2661)%」
+							PRINTFORML 「んぁ……っんっ……あぁんっ……からだが、たかぶっていくのぉっ……%UNICODE(0x2661)%」
+					ENDSELECT
+				ENDIF
+		ENDSELECT
+
+;		PRINTFORML スーパー半霊モードになりますか？（全能力が強化されます）
+;		CALL ASK_YN
+;		IF RESULT == 0
+;			FOR LOCAL:0, 0, 4
+;				MAXBASE:(LOCAL:0) *= 3
+;				BASE:(LOCAL:0) = MAXBASE:(LOCAL:0)
+;			NEXT
+;			FOR LOCAL:0, 0, 6
+;				ABL:(LOCAL:0) = 3
+;			NEXT
+;		ENDIF
+;	CASE 202
+;		;遺品（アイテム的には着替えセット）を見つけた
+;		IF NO:(ARG:1) == 31
+;			;妹紅の遺品
+;			PRINTFORML （人間部分の服が落ちてる…）
+;		ELSE
+;			PRINTFORML （誰かの服が落ちてる…　ボロボロだけど、まだ着られそうかな…）
+;		ENDIF
+	CASEELSE
+		;ここでは別に何もしなくてもOKです
+ENDSELECT
+
+;↑↑↑　　ここまで口上のメイン処理　　↑↑↑
+
+;意思力
+;触手宮の能力変化は少し大雑把な組まれ方になってるので、口上側で制御する
+;このアイデアはてゐ口上の方の堕落度を参考にさせていただきました。ありがとうございます
+
+;基本的には口上を呼び出す時に判定を行い、呼び出した口上によって上下降が決まる
+;他の関数に、いわゆる「快楽攻撃」を纏めました
+
+IF K30_KAIRAKU(ARG:0, ARG:1, ARG:2) == 2
+	CFLAG:803 = MAX(CFLAG:803-8, 0)
+ELSEIF K30_KAIRAKU(ARG:0, ARG:1, ARG:2) == 1
+	CFLAG:803 = MAX(CFLAG:803-4, 0)
+ELSE
+	;想定以上に口上を呼び出す機会が多かったのでボツに
+	;CFLAG:803 = MIN(CFLAG:803+1, 100)
+ENDIF
+
+;↓デバッグ用
+;PRINTFORML 意思力:{CFLAG:803}
+
+
+
+
+
+
+;連続絶頂識別用処理
+IF ARG:0 == 120 && TFLAG:13 == 0
+	;非戦闘中に絶頂口上が来たら、フラグを立てておく
+	CFLAG:800 = 1
+	
+	;こんな感じで毎回+1するようにしておけば、何回目かも分かります
+	CFLAG:801 += 1
+ELSEIF ARG:0 != 34 && ARG:0 != 120 && ARG:0 != 121 && ARG:0 != 122 && ARG:0 != 136
+	;連続絶頂中に関係ない口上呼び出しが来たら、フラグを下げておく
+	;口上作者追記　ARG:0 == 34の場合も除外しないと機能しない(EP0でも口上を呼び出すから)
+	CFLAG:800 = 0
+	CFLAG:801 = 0
+ENDIF
+
+;連続自慰識別用処理
+CALL GET_EQUIP_BONUS(TARGET, 39)
+IF RESULT == 0 && ARG:0 == 118 && CFLAG:28
+	;媚薬装備無しで発情中の場合、連続自慰フラグを立てておく
+	CFLAG:802 = 1
+ENDIF
+
+RESETCOLOR
+
+;今の所汎用口上の概念が無いので、RETURN 0 が必要になる事は無いと思います
+RETURN 1
+
+
+
+;地の文制御(関数の名前は適当です　他のキャラと被らなければ何でも良いでしょう)
+@KOJO_30_1_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM PERCENT, 1
+
+
+LOCAL = 0
+SELECTCASE ARG:0
+;	CASE 4
+;		;例：半霊を狙った性攻撃は全部地の文を書き換える
+;		;敵のコマンドなので一旦赤文字に
+;		SETCOLOR 0xEE1010
+;		PRINTFORML %ARGS:1%は%ARGS:0%の表面を触手で磨き始めた！
+;		RESETCOLOR
+;	CASE 6
+		;例：処女の状態で、処女を守れるような寄生攻撃を受けた場合、文章を書き換える
+;		IF TALENT:0 && LOST_VIRGIN_CHECK(TARGET) == 0
+;			;敵のコマンドなので一旦赤文字に
+;			SETCOLOR 0xEE1010
+;			PRINTFORML %ARGS:1%は%ARGS:0%に挿入し、子種を注ぎ込もうとした！
+;			RESETCOLOR
+;		ELSE
+;			CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;		ENDIF
+;	CASE 14
+		;例：半霊を狙った性攻撃（命中時）は全部地の文を書き換える
+		;性攻撃命中の場合、EPダメージで絶頂→処女喪失の可能性があるので、引数にEPダメージも渡しておく
+;		IF ARG:2 == 3 && TALENT:0 && LOST_VIRGIN_CHECK(TARGET, ARG:3)
+;			;この攻撃で処女喪失する場合
+;			PRINTFORML %ARGS:1%の触手は勢い余って%ARGS:0%のナカに入り込んでしまった！
+;		ELSE
+;			PRINTFORML %ARGS:0%は気持ち良さそうにしている！
+;		ENDIF
+	CASEELSE
+		;通常はデフォルトの地の文を表示
+		LOCAL = 1
+ENDSELECT
+
+;本来の地の文を表示する場合、服装によって文章を変える
+IF LOCAL && BASE:3 >= 1 && ARG:0 == 4
+	;百分率で計算
+	IF BASE:CP >= 1
+		PERCENT = BASE:CP * 100 / MAXBASE:CP
+		PRINTFORM %ARGS:1%は%ARGS:0%が纏っている
+		;半裸
+		IF PERCENT <= 33
+			CALLFORM CLOTH_DATA_{CFLAG:501}(12, TARGET)
+		;損耗時
+		ELSEIF PERCENT <= 66
+			CALLFORM CLOTH_DATA_{CFLAG:501}(11, TARGET)
+		;通常
+		ELSE
+			CALLFORM CLOTH_DATA_{CFLAG:501}(10, TARGET)
+		ENDIF
+		PRINTFORML %RESULTS%をねっとりと見つめ、狙いを定めて攻撃を行った！
+	ENDIF
+ENDIF
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;----------------------------------------------
+;快楽攻撃カテゴリー
+;式中関数
+;ARG　　判定するARG:0
+;ARG:1　ARG:1
+;ARG:2　ARG:2
+;----------------------------------------------
+@K30_KAIRAKU, ARG, ARG:1, ARG:2
+#FUNCTION
+
+;快楽攻撃に該当するイベントの引数である場合、1を返す
+;イベント内のARG:1が多すぎるので、該当しない物はラベルで飛ばす
+IF ARG != 200
+	GOTO JUMP_EVENT_K30
+ENDIF
+
+SELECTCASE ARG:1
+	;発情湧き水
+	CASE 131
+		;飲んだ場合のみ該当
+		IF !ARG:2
+			LOCAL = 1
+		ELSE
+			LOCAL = 0
+		ENDIF
+	;発情湧き水
+	CASE 134
+		;発情と寄生のみ該当
+		IF ARG:2 == 2 || ARG:2 == 4
+			LOCAL = 1
+		ELSE
+			LOCAL = 0
+		ENDIF
+	;スライム
+	CASE 136
+		;回避しきれなかった場合のみ該当
+		IF ARG:2 == 1
+			LOCAL = 1
+		ELSE
+			LOCAL = 0
+		ENDIF
+	;壁触手
+	CASE 137
+		;回避しきれなかった場合のみ該当
+		IF ARG:2 == 1
+			LOCAL = 1
+		ELSE
+			LOCAL = 0
+		ENDIF
+	;落とし穴
+	CASE 138
+		;回避しきれなかった場合のみ該当
+		IF ARG:2 == 1
+			LOCAL = 1
+		ELSE
+			LOCAL = 0
+		ENDIF
+	;桃色ガス
+	CASE 139
+		;回避しきれなかった場合のみ該当
+		IF ARG:2 == 1
+			LOCAL = 1
+		ELSE
+			LOCAL = 0
+		ENDIF
+	;にょろーん
+	CASE 142
+		;身体を奉げた場合のみ該当
+		IF ARG:2 == 2 || ARG:2 == 3
+			LOCAL = 2
+		ELSE
+			LOCAL = 0
+		ENDIF
+	;不思議なガス
+	CASE 143
+		;発情と自慰のみ該当
+		IF ARG:2 == 2 || ARG:2 == 3
+			LOCAL = 1
+		ELSE
+			LOCAL = 0
+		ENDIF
+	;柔らかい壁
+	CASE 144
+		;呑み込まれた場合のみ該当
+		IF ARG:2 == 2
+			LOCAL = 1
+		ELSE
+			LOCAL = 0
+		ENDIF
+	;淫蟲A
+	CASE 146
+		LOCAL = 1
+	;淫蟲B
+	CASE 147
+		LOCAL = 1
+	;淫蟲C
+	CASE 148
+		LOCAL = 1
+	;淫蟲V
+	CASE 149
+		LOCAL = 1
+	;C寄生淫蟲
+	CASE 152
+		LOCAL = 1
+	;淫蟲肌
+	CASE 153
+		LOCAL = 1
+	;淫蟲M
+	CASE 154
+		LOCAL = 1
+	;それ以外の場合、0を返す
+	CASEELSE
+		LOCAL = 0
+ENDSELECT
+
+$JUMP_EVENT_K30
+SELECTCASE ARG
+	;性攻撃
+	CASE 14
+		LOCAL = 1
+	;拘束攻撃
+	CASE 15
+		LOCAL = 1
+	;寄生攻撃
+	CASE 16
+		LOCAL = 1
+	;絶頂
+	CASE 120
+		LOCAL = 2
+	;戦意喪失中に絶頂
+	CASE 122
+		LOCAL = 2
+	;寄生
+	CASE 127
+		LOCAL = 2
+	;妊娠
+	CASE 129
+		LOCAL = 2
+	CASEELSE
+		LOCAL = 0
+ENDSELECT
+
+RETURNF LOCAL
+
+
+;----------------------------------------------
+;意志力判定
+;式中関数
+;0：　通常
+;1：　少し危ない
+;2：　諦め
+;----------------------------------------------
+@K30_WILL
+#FUNCTION
+
+;喪失状態
+IF BASE:MP <= 0 && CFLAG:803 >= 16
+	LOCAL = 3
+ELSEIF CFLAG:803 <= 15
+	LOCAL = 2
+ELSEIF CFLAG:803 <= 50
+	LOCAL = 1
+ELSE
+	LOCAL = 0
+ENDIF
+
+RETURNF LOCAL
+

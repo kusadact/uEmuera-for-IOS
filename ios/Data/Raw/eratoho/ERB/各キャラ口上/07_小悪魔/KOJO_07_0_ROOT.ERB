@@ -1,0 +1,95 @@
+﻿@KOJO_ROOT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;口上本体。ここで各カテゴリに分岐させる
+
+SELECTCASE ARG:0
+	;-------------------------------------
+	;◆バトル
+	
+	;味方の行動発動
+	CASE 1
+		CALL BTL_P_ACT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;	CASE 11
+;		CALL BTL_P_HIT<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;	CASE 21
+;		CALL BTL_P_SWAY<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;	CASE 31
+;		CALL BTL_P_DESTROY<#>(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;敵の攻撃開始
+	CASE 2 TO 7
+		CALL BTL_E_ATK_START_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	;敵の攻撃開始（悪堕ち）
+	CASE 9
+		CALL BTL_AKUOCHI_ATK_START_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;敵の攻撃が当たった
+	CASE 12 TO 17
+		CALL BTL_E_ATK_HIT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	;敵の攻撃を回避した
+	CASE 22 TO 27
+		CALL BTL_E_ATK_SWAY_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	;何かが起こった結果
+	CASE 32 TO 53
+		CALL BTL_OCCUR_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		
+	;戦闘終了
+	CASE 54 TO 57
+		CALL BTL_END_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;その他
+	CASE 58 TO 63
+		CALL BTL_ETC_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;-------------------------------------
+	;◆マップ上
+	
+	;NPC関係
+	CASE 101 TO 112
+		CALL MAP_NPC_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;マップ上での行動
+	CASE 113 TO 136
+		CALL MAP_ACT_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;NPC関係2
+	CASE 137 TO 148
+		CALL MAP_NPC2_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;その他
+	CASE 156 TO 160
+		CALL MAP_ETC_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;-------------------------------------
+	;◆イベント
+	
+	;ランダムイベント
+	CASE 200, 201
+		CALL EVENT_RANDOM_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;-------------------------------------
+	;◆各種追加パッチ
+	
+	CASE 427 TO 447
+		CALL PATCH_ETC_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;-------------------------------------
+	;◆ふたなりパッチ
+	
+	;ふたなりイベント対応
+	CASE 451 TO 465
+		CALL FUTANARI_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	;-------------------------------------
+	;◆各種追加パッチ
+	
+	CASE 500 TO 505
+		CALL PATCH_ETC_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+ENDSELECT
+
+
+RETURN
+

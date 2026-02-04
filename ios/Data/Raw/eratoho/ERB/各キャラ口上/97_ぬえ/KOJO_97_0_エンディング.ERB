@@ -1,0 +1,169 @@
+﻿;各エンディング地の文の後に呼ばれる。後日談的な感じ
+;陵辱から逃れても開発された体は戻らないっていいよね！
+@KOJO_97_ENDING
+
+PRINTFORMDW 何はともあれぬえはあの迷宮を脱出した。これまでの日常へと帰ってきたのだ
+PRINTFORMDL しかし……
+PRINTFORMDL ……………………
+PRINTFORMDW ………………………………
+
+;Aについて
+;A感覚
+SIF ABL:6 >= 3
+	PRINTFORMD 何度も肛門絶頂を仕込まれセックス用の穴になった
+SIF ABL:6 == 2
+	PRINTFORMD 肉棒をくわえ込む悦びを知ってしまった
+SIF ABL:6 == 1
+	PRINTFORMD 背徳的な疼きを覚えてしまった
+;尻穴狂い
+SIF TALENT:75
+	PRINTFORMD 、排泄ですら肛門絶頂を覚えるアクメ狂いの縦に割れた
+SIF ABL:6 >= 0
+	PRINTFORMDW 尻穴、
+
+;Bについて
+;超乳以上は母乳分泌前提
+;B感覚
+SIF ABL:7 >= 3
+	PRINTFORMD 乳頭は常に勃起し見る者の目に毒な
+SIF ABL:7 == 2
+	PRINTFORMD まともに服も着られないほどに敏感な
+SIF ABL:7 == 1
+	PRINTFORMD 常に火照りを覚える
+
+;超乳
+IF GET_BUST(TARGET) >= 4
+	PRINTFORMD 、甘ったるい粘つく母乳を垂れ流す異常に肥大した
+;超乳
+ELSEIF GET_BUST(TARGET) == 3
+	PRINTFORMD 、乳頭を甘い香りの液体で湿らせた頭よりも大きなサイズの
+ELSE
+	;爆乳
+	IF GET_BUST(TARGET) == 2
+		PRINTFORMD 体格とアンバランスな大きさの性的な
+	;巨乳
+	ELSEIF GET_BUST(TARGET) == 1
+		PRINTFORMD セックスアピール満点の大きめの
+		;母乳
+		SELECTCASE TALENT:130
+			;母乳体質なし
+			CASE 0
+			;母乳体質
+			CASE 1
+				PRINTFORMD 母乳が滲みだす
+			;母乳異常分泌
+			CASE 2
+				PRINTFORMD 母乳がほとばしる
+			;母乳製造装置
+			CASEELSE
+				PRINTFORMD 母乳が垂れ流しの
+		ENDSELECT
+	ENDIF
+ENDIF
+;残虐表現可
+SIF GET_BUST(TARGET) >= 3 && FLAG:507
+	PRINTFORMD 、乳腺で肉棒を受け入れることのできる淫穴と化した
+;淫乳
+SIF TALENT:76
+	PRINTFORMD 乳腺全体が性感帯と化した媚び媚びの淫肉に生まれ変わった
+SIF ABL:7 >= 0
+	PRINTFORMDW 乳房、
+
+;Cについて
+;C感覚
+SIF ABL:8 >= 3
+	PRINTFORMD いじられるとすぐに絶頂しぷっくりと膨れては輝く
+SIF ABL:8 == 2
+	PRINTFORMD 下着にこすれるだけで勃起してしまう
+SIF ABL:8 == 1
+	PRINTFORMD 性感帯に成り果てた
+
+;ペニス
+IF CFLAG:42 || TALENT:121
+	;射精中毒
+	SIF ABL:12 >= 3
+		PRINTFORMD 暇さえあれば扱いてしまう射精狂いの
+	SIF ABL:8 == 2
+		PRINTFORMD ほとばしる精液を抑えきれない
+	SIF ABL:8 == 1
+		PRINTFORMD 射精の快感を教えられてしまった
+	;淫茎
+	SIF TALENT:77
+	PRINTFORMD 軽くいじられるだけで腰が砕るほどの快感に支配される
+;クリトリス
+ELSE
+	;淫核
+	SIF TALENT:77
+		PRINTFORMD 醜く育った弱点そのものの淫猥な
+ENDIF
+SIF ABL:8 >= 0
+	PRINTFORMDW \@ CFLAG:42 || TALENT:121 ? ペニス # クリトリス \@、
+	
+;Vについて
+;V感覚
+SIF ABL:9 >= 3
+	PRINTFORMD 雄を見ればすぐに発情してよだれを垂らしはじめる
+SIF ABL:9 == 2
+	PRINTFORMD 雌の悦びを徹底的に仕込まれた
+SIF ABL:9 == 1
+	PRINTFORMD セックスの悦びを覚えてしまった
+;淫壺
+SIF TALENT:78
+	PRINTFORMD どれだけ精を注がれてもみたされない淫乱な
+SIF ABL:9 >= 0
+	PRINTFORMDW 膣穴
+
+PRINTFORMDW はもう元には戻らない……
+PRINTFORMDW 
+
+;苗床
+;バッドエンドっぽいけどこんなゲームやってる時点で……
+IF CFLAG:801
+	PRINTFORML 「こんなんじゃ満足できない！！うああっ……、オマンコの疼きがあっ%UNICODE(0x2665)%　触手チンポほしいいっ%UNICODE(0x2665)%　」
+	PRINTFORMDL ぬえの体はすっかり変わり果ててしまっていた
+	PRINTFORMDW 淫獣の苗床にされてしまった体は自分で慰めることはおろか、人間やそこらの妖怪とのまぐわい程度ではかけらも満たされない
+	PRINTFORML 「なんで子宮までチンポ挿れてくれないのっ！！射精って、こんだけで？一発でお腹膨れるくらい出してよおっ%UNICODE(0x2665)%」
+	PRINTFORMDW あの迷宮で散々改造されたぬえの淫穴を満足させられるペニスなど、ここには存在しない
+	PRINTFORMDW 精を求めて貪欲に蠢く膣内は人間ならば一突きしただけで射精してしまうほどの魔の性壺と化していた
+	PRINTFORMDW ぬえが激しく腰を振るその下では、淫魔に誘われたあわれな男が今まさに枯れ死に寸前にまで搾られていた。
+IF FLAG:AUTOMODE
+    PRINTFORML 「っはあ%UNICODE(0x2665)%　うう、どうにかしてよう……。こんなんじゃあおかしくなる……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「っはあ%UNICODE(0x2665)%　うう、どうにかしてよう……。こんなんじゃあおかしくなる……」
+ENDIF
+
+	PRINTFORMDW 目の前の男を搾りカスにした後でぬえはふらりと立ち上がった
+	PRINTFORMDW 子宮の熱は解消されず中途半端な疼きだけが高まっていく
+IF FLAG:AUTOMODE
+    PRINTFORML 「……そうか、来てくれないならこっちから……。ふふっ、私の能力を使えば……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……そうか、来てくれないならこっちから……。ふふっ、私の能力を使えば……」
+ENDIF
+
+	PRINTFORMDL 幸か不幸か彼女にはその力があった
+	PRINTFORMDW ぬえを中心に空間がぼやけ、禍々しい肉色の世界に置き換わっていく
+IF FLAG:AUTOMODE
+    PRINTFORML 「幻想郷の正体を触手の世界に固定してやる！さあ、新しい異変の始まりだよ！！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「幻想郷の正体を触手の世界に固定してやる！さあ、新しい異変の始まりだよ！！」
+ENDIF
+
+	PRINTFORML 
+	PRINTFORML 
+IF FLAG:AUTOMODE
+    PRINTFORML 
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  
+ENDIF
+
+;苗床までは行っていない
+ELSE
+	
+	
+ENDIF
+
+

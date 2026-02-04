@@ -1,0 +1,47 @@
+﻿;岡崎夢美口上オープニング
+;内容的は前と変わっていません
+;EDは触らないでおきます
+
+@KOJO_71_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SELECTCASE ARG:0
+
+	;記入済みのEDの地の文飛ばす
+	CASE 204, 206
+	;
+	
+	;OP
+	CASE 203
+		IF CHARANUM <= 2
+			PRINTFORML いつものように可能性空間移動船で魔法、魔力の研究に没頭していた岡崎夢美
+			PRINTFORML そんな彼女には最近気になっていることがある
+			PRINTFORML ちゆり伝いに聞いた話なのだが、幻想郷に異空間へと繋がる〝穴〟がつい最近発見されたという話
+			PRINTFORML 好奇心旺盛な夢美は早速その場所を里の人間や妖怪達に聞きまわった
+			IF FLAG:AUTOMODE
+				PRINTFORML ようやくその場所を特定したのだが、その〝穴〟というのは小さなものだった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW ようやくその場所を特定したのだが、その〝穴〟というのは小さなものだった
+			ENDIF
+			PRINTFORML 人一人がしゃがみこめば潜れるような広さしかなく、どう考えても船は置いていくしか無かった
+			PRINTFORML 夢美はちゆりに留守番を任せ、一人で調査することを決意
+			PRINTFORML そしてその〝穴〟に歩いて近づいたときのことである　穴からおびただしい量の触手が伸びてきたのだ！
+			PRINTFORML 夢美は危険を感じて船に戻ろうと思うも、触手に足を掴まれてしまう！
+			PRINTFORML 慌てて助手の名前を叫ぶも、あっという間に異空間へ引きずり込まれてしまうのだった…
+			PRINTFORML 
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORML 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+
+	;その他は通常の地の文
+	CASEELSE
+	CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+ENDSELECT
+
+

@@ -1,0 +1,158 @@
+﻿;スキル名を返す
+;使用者IDが引き渡された場合
+;使用者のパラメータに対応してコマンド名が変化する場合がある
+;使用者IDを省略した場合は、標準指定のコマンド名を返す
+;ARG:0 スキルNO
+;ARG:1 使用者ID
+@SKILLNAME(ARG:0, ARG:1 = -1)
+#FUNCTIONS
+#DIM SKILL_NO
+#DIM CHARA_ID
+
+SKILL_NO = ARG:0 % 100
+
+IF ARG:1 > 0 && ARG:1 < CHARANUM
+	CHARA_ID = ARG:1
+ELSE
+	CHARA_ID = -1
+ENDIF
+
+SELECTCASE SKILL_NO
+	CASE -1
+		RETURNF " "
+	CASE 0
+		RETURNF "取消"
+	CASE 1
+		RETURNF "防御"
+	CASE 2
+		RETURNF "道具"
+	CASE 3
+		RETURNF "前出"
+	CASE 4
+		RETURNF "返回原处"
+	CASE 5
+		RETURNF "逃跑"
+	CASE 8
+		RETURNF "緊急浄化"
+	CASE 10
+		RETURNF "弱弾幕"
+	CASE 11
+		RETURNF "中弾幕"
+	CASE 12
+		RETURNF "強弾幕"
+	CASE 13
+		RETURNF "蓄力攻击"
+	CASE 14
+		RETURNF "霰弹"
+	CASE 15
+		RETURNF "貫通弾"
+	CASE 19
+		RETURNF "霊撃"
+	CASE 20
+		RETURNF "弱攻撃"
+	CASE 21
+		RETURNF "中攻撃"
+	CASE 22
+		RETURNF "強攻撃"
+	CASE 23
+		RETURNF "節約攻撃"
+	CASE 24
+		RETURNF "乱舞攻击"
+	CASE 25
+		RETURNF "一点集中"
+	CASE 30
+		RETURNF "弱攻撃"
+	CASE 31
+		RETURNF "中攻撃"
+	CASE 32
+		RETURNF "強攻撃"
+	CASE 33
+		RETURNF "瞄准下身"
+	CASE 34
+		RETURNF "瞄准要害"
+	CASE 35
+		RETURNF "反击"
+	CASE 42
+		RETURNF "尝试脱出"
+	CASE 43
+		RETURNF "蓄力"
+	CASE 44
+		RETURNF "放弃"
+	CASE 45
+		RETURNF " "
+	CASE 46
+		RETURNF " "
+	CASE 47
+		RETURNF " "
+	CASE 50
+		RETURNF "保护尻"
+	CASE 51
+		RETURNF "保护胸"
+	CASE 52
+		IF GET_PENIS(CHARA_ID)
+			RETURNF "保护阴茎"
+		ELSE
+			RETURNF "保护阴蒂"
+		ENDIF
+	CASE 53
+		RETURNF "防止性交"
+	CASE 54
+		RETURNF "求饶"
+	CASE 55
+		RETURNF "求饶"
+	CASE 56
+		RETURNF "求饶"
+	CASE 57
+		RETURNF "求饶"
+	CASE 58
+		RETURNF "求饶"
+	CASE 60
+		RETURNF "使用"
+	CASE 61
+		RETURNF "使用"
+	;催眠中コマンド
+	CASE 71
+		RETURNF "平常行動"
+	CASE 72
+		RETURNF "自慰"
+	CASE 73
+		RETURNF "袭击同伴"
+	CASE 74
+		RETURNF "衣装着替"
+	CASE 75
+		RETURNF "逃跑"
+	CASE 76
+		RETURNF "安眠"
+	CASE 77
+		RETURNF "精神抵抗"
+	
+	CASE 79
+		RETURNF "催眠行動"
+	CASE 80
+		RETURNF "踩踏"
+	CASE 81
+		RETURNF "拍打"
+	CASE 82
+		RETURNF "弯折"
+	CASE 83
+		RETURNF "亲吻"
+	CASE 84
+		RETURNF "手淫"
+	CASE 85
+		RETURNF "口交"
+	CASE 86
+		RETURNF "乳交"
+	CASE 95
+		RETURNF "発情抱きつき"
+	CASE 96
+		RETURNF "発情抱きつかれ"
+	CASE 97
+		RETURNF "傀儡抱きつかれ"
+	CASE 98
+		RETURNF "傀儡抱きつき"
+
+	CASEELSE
+		RETURNF "错误行動"
+ENDSELECT
+
+

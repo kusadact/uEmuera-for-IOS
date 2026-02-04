@@ -1,0 +1,444 @@
+﻿;ARG:0 == 9の管理
+;語尾伸ばし多用して狂ってること表現しようとしたら小悪魔になりかけた
+
+;%ARGS:0%が責められる相手（味方）で%ARGS:1%が責める悪堕ちキャラの名前（敵でありこの口上を言うキャラ）
+;※注！　ここではTARGET使用禁止！（TARGET=悪堕ちキャラが味方だった時のIDなので見ても恐らく意味が無い）
+
+
+@BATTLE_AKUOCHI_KOUDOU_HATUDOU_28_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;てーorれーor娘
+IF NO:(ARG:2) == 27 || NO:(ARG:2) == 55 || CFLAG:(ARG:2):104
+	SELECTCASE ARG:1
+		;発情魔眼、疼く暗示
+		CASE 16, 384
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「これ、今の私の波長なんだよ……♪」
+					DATAFORM 「――――堕ちろ」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「これ、今の私の波長なんだよ……♪」
+					DATAFORM 「――――堕ちろ」
+				ENDDATA
+			ENDIF
+		;昏睡魔眼
+		CASE 17
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「しばらく、寝ててねぇ……」
+					DATAFORM 「――――眠れ」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「しばらく、寝ててねぇ……」
+					DATAFORM 「――――眠れ」
+				ENDDATA
+			ENDIF
+		;フラート
+		CASE 21
+IF FLAG:AUTOMODE
+    PRINTFORML 「せっかくこんな所に呼ばれたんだから、抵抗しないで楽しもうよ……？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「せっかくこんな所に呼ばれたんだから、抵抗しないで楽しもうよ……？」
+ENDIF
+
+		;通常弾幕攻撃系
+		CASE 173 TO 175
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「ふふ……」
+					DATAFORM 「こういう攻撃なら文句はないよね？」
+					DATAFORM 「ほらほら、弾幕勝負しなきゃあ」
+					DATAFORM 「早く、動かなくなってね？」
+					DATAFORM 「ばーん」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「ふふ……」
+					DATAFORM 「こういう攻撃なら文句はないよね？」
+					DATAFORM 「ほらほら、弾幕勝負しなきゃあ」
+					DATAFORM 「早く、動かなくなってね？」
+					DATAFORM 「ばーん」
+				ENDDATA
+			ENDIF
+		;物理的に脱がす
+		CASE 259
+			IF BASE:(ARG:2):3 <= 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「きれいなお肌……触ってて、きもちいい……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW  「きれいなお肌……触ってて、きもちいい……」
+				ENDIF
+
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「えいっ」
+						DATAFORM 「こんなもの、いらないの」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「えいっ」
+						DATAFORM 「こんなもの、いらないの」
+					ENDDATA
+				ENDIF
+			ENDIF
+		;脱がし弾幕
+		CASE 260
+			IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「これは避けちゃ駄目だからね……」
+						DATAFORM 「これに当たると、すてきな事になっちゃうの……♪」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「これは避けちゃ駄目だからね……」
+						DATAFORM 「これに当たると、すてきな事になっちゃうの……♪」
+					ENDDATA
+				ENDIF
+		;捕まえる
+		CASE 568
+IF FLAG:AUTOMODE
+    PRINTFORML 「さぁ……私と一緒に……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「さぁ……私と一緒に……」
+ENDIF
+
+		;C
+		CASE 675
+IF FLAG:AUTOMODE
+    PRINTFORML 「こういうのがいいんだよね？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「こういうのがいいんだよね？」
+ENDIF
+
+		;逆レ
+		CASE 731
+			IF (CFLAG:(ARG:2):42 || TALENT:(ARG:2):121) && RAND:2
+				PRINTFORM 「すてきなおちんちん……
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　下のお口で食べちゃうから
+				CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+			ELSE
+				PRINTFORM 「あは
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　%ARGS:0%ったらすっごく勃たせちゃってるぅ……
+				CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+			ENDIF
+		;キス
+		CASE 979
+			SELECTCASE RAND:2
+				CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「私のしたいこと、分かるねぇ……？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「私のしたいこと、分かるねぇ……？」
+ENDIF
+
+				CASE 1
+					PRINTFORM 「恋人になってぇ……
+					CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+			ENDSELECT
+		;胸あわせ
+		CASE 1885
+IF FLAG:AUTOMODE
+    PRINTFORML 「離れちゃ、イヤだよ……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「離れちゃ、イヤだよ……」
+ENDIF
+
+		;ＶＣＢ複合拘束　３回攻撃
+		CASE 1890
+			SELECTCASE RAND:2
+				CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML 「いっぱい、すりすりしてあげるぅ……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「いっぱい、すりすりしてあげるぅ……」
+ENDIF
+
+				CASE 1
+					PRINTFORM 「んふふ……
+					CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 　どこから責めて欲しい……？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　どこから責めて欲しい……？」
+ENDIF
+
+			ENDSELECT
+		;C
+		CASE 1892
+			PRINTFORM 「ふふっ……かわいいのが見えたぁ……
+			CALL HEARTCB(0xD02830)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+		;胸
+		CASE 1893
+IF FLAG:AUTOMODE
+    PRINTFORML 「あ……そこにシてほしいんだね……？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「あ……そこにシてほしいんだね……？」
+ENDIF
+
+
+	ENDSELECT
+ELSE
+	SELECTCASE ARG:1
+		;発情魔眼、疼く暗示
+		CASE 16, 384
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「これ、今の私の波長なんですぅ……♪」
+					DATAFORM 「――――堕ちろ」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「これ、今の私の波長なんですぅ……♪」
+					DATAFORM 「――――堕ちろ」
+				ENDDATA
+			ENDIF
+		;昏睡魔眼
+		CASE 17
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「しばらく、寝ててくださいねぇ……」
+					DATAFORM 「――――眠れ」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「しばらく、寝ててくださいねぇ……」
+					DATAFORM 「――――眠れ」
+				ENDDATA
+			ENDIF
+		;フラート
+		CASE 21
+IF FLAG:AUTOMODE
+    PRINTFORML 「せっかくこんな所に呼ばれたんですから、抵抗せず楽しみましょう……？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「せっかくこんな所に呼ばれたんですから、抵抗せず楽しみましょう……？」
+ENDIF
+
+		;通常弾幕攻撃系
+		CASE 173 TO 175
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「ふふ……」
+					DATAFORM 「こういう攻撃なら文句はありませんよね？」
+					DATAFORM 「ほらほら、弾幕勝負しなきゃあ」
+					DATAFORM 「早く、動かなくなって下さいね？」
+					DATAFORM 「ばーん」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「ふふ……」
+					DATAFORM 「こういう攻撃なら文句はありませんよね？」
+					DATAFORM 「ほらほら、弾幕勝負しなきゃあ」
+					DATAFORM 「早く、動かなくなって下さいね？」
+					DATAFORM 「ばーん」
+				ENDDATA
+			ENDIF
+		;物理的に脱がす
+		CASE 259
+			IF BASE:(ARG:2):3 <= 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「きれいなお肌……触ってて、きもちいいですぅ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW  「きれいなお肌……触ってて、きもちいいですぅ……」
+				ENDIF
+
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「えいっ」
+						DATAFORM 「こんなもの、いらないんですよ？」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「えいっ」
+						DATAFORM 「こんなもの、いらないんですよ？」
+					ENDDATA
+				ENDIF
+			ENDIF
+		;脱がし弾幕
+		CASE 260
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「これは避けちゃ駄目ですからね……」
+				DATAFORM 「これに当たると、すてきな事になるんですよぉ……？」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「これは避けちゃ駄目ですからね……」
+				DATAFORM 「これに当たると、すてきな事になるんですよぉ……？」
+				ENDDATA
+			ENDIF
+		;捕まえる
+		CASE 568
+			IF FLAG:AUTOMODE
+				PRINTFORML 「さぁ……私と一緒に……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  「さぁ……私と一緒に……」
+			ENDIF
+
+		;C
+		CASE 675
+			IF FLAG:AUTOMODE
+				PRINTFORML 「こういうのがいいんですよね？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  「こういうのがいいんですよね？」
+			ENDIF
+
+		;逆レ
+		CASE 731
+			IF (CFLAG:(ARG:2):42 || TALENT:(ARG:2):121) && RAND:2
+				PRINTFORM 「すてきなおちんちん……
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　下のお口で食べちゃいます
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW  」
+				ENDIF
+
+			ELSE
+				PRINTFORM 「あは
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　%ARGS:0%ったらすっごく勃たせちゃってますよぉ……？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW  　%ARGS:0%ったらすっごく勃たせちゃってますよぉ……？」
+				ENDIF
+
+			ENDIF
+		;キス
+		CASE 979
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私のしたいこと、分かりますよねぇ……？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW  「私のしたいこと、分かりますよねぇ……？」
+					ENDIF
+
+				CASE 1
+					PRINTFORM 「恋人になってくださぁい……
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW  」
+					ENDIF
+
+			ENDSELECT
+		;胸あわせ
+		CASE 1885
+			IF FLAG:AUTOMODE
+				PRINTFORML 「離れちゃ、イヤですよ……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  「離れちゃ、イヤですよ……」
+			ENDIF
+
+		;ＶＣＢ複合拘束　３回攻撃
+		CASE 1890
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いっぱい、すりすりしてあげますぅ……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW  「いっぱい、すりすりしてあげますぅ……」
+					ENDIF
+
+				CASE 1
+					PRINTFORM 「んふふ……
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　どこから責めて欲しいですか……？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW  　どこから責めて欲しいですか……？」
+					ENDIF
+
+			ENDSELECT
+		;C
+		CASE 1892
+			PRINTFORM 「ふふっ……かわいいのが見えましたぁ……
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  」
+			ENDIF
+
+		;胸
+		CASE 1893
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ……そこにシてほしいんですね……？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  「あ……そこにシてほしいんですね……？」
+			ENDIF
+
+
+	ENDSELECT
+
+ENDIF

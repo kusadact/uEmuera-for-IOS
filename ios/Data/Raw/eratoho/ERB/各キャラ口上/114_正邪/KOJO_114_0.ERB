@@ -1,0 +1,3307 @@
+﻿;◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+[SKIPSTART]
+鬼人正邪口上デス
+この口上はエラーや不具合、バリアントの仕様変更等のやむをえない場合に限り他者による修正・改造が可能です
+この口上をコピーしてKOJO_114_1やKOJO_114_2として別口上にして、そちらを改造するのは自由ですが
+	その場合@KOJO_114_0_SERIALと@KOJO_114_0_SEARCHKOJOの中身は決してそのまま流用しないで下さい
+	流用されるとこの口上の動作が不安定になってしまいます
+
+この正邪ちゃんは常時逆襲されそうな気がするんですがそれは…
+
+コピペ？どんな手を使っても書き上げればいいのさ
+[SKIPEND]
+;◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;口上タイトル
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_TITLE_114_0
+RESULTS = 鬼人正邪口上_ｶｯｺｶﾘ
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_DETAIL_114_0
+PRINTFORML 鬼人正邪口上です
+PRINTFORML といってもまだ台詞はほとんど無いけどね
+PRINTFORML 
+PRINTFORML 台詞に文字色を付けろ？～ヤだね！
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;文字色
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_DEFAULT_COLOR_114_0
+IF CFLAG:104
+	;娘
+	RETURN 0xC0C0C0
+ELSE
+	RETURN 0xAAAAAA
+ENDIF
+
+;RGBCOLOR(256, 256, 256)
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;連携用変数
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_114_0_LOCALFLAG(LOCALFLAG, ARG = 0)
+#DIM REF LOCALFLAG
+
+IF ARG
+	LOCAL = LOCALFLAG
+ELSE
+	LOCALFLAG = LOCAL
+ENDIF
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_114_0_SERIAL
+RETURN 2561140
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;口上本体
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_114_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM わかさぎPT
+#DIM 赤蛮奇PT
+#DIM 影狼PT
+#DIM 弁々PT
+#DIM 八橋PT
+#DIM 針妙丸PT
+#DIM 雷鼓PT
+
+
+SIF ARG == 0
+	RETURN
+
+;－－－－－
+わかさぎPT = KOJO_114_0_SEARCHNO(109)
+CALL KOJO_114_0_SEARCHKOJO(わかさぎPT)
+SIF RESULT <= 0
+	わかさぎPT = 0
+
+赤蛮奇PT = KOJO_114_0_SEARCHNO(110)
+CALL KOJO_114_0_SEARCHKOJO(赤蛮奇PT)
+SIF RESULT <= 0
+	赤蛮奇PT = 0
+
+影狼PT = KOJO_114_0_SEARCHNO(111)
+CALL KOJO_114_0_SEARCHKOJO(影狼PT)
+SIF RESULT <= 0
+	影狼PT = 0
+	
+弁々PT = KOJO_114_0_SEARCHNO(112)
+CALL KOJO_114_0_SEARCHKOJO(弁々PT)
+SIF RESULT <= 0
+	弁々PT = 0
+	
+八橋PT = KOJO_114_0_SEARCHNO(113)
+CALL KOJO_114_0_SEARCHKOJO(八橋PT)
+SIF RESULT <= 0
+	八橋PT = 0
+	
+針妙丸PT = KOJO_114_0_SEARCHNO(115)
+CALL KOJO_114_0_SEARCHKOJO(針妙丸PT)
+SIF RESULT <= 0
+	針妙丸PT = 0
+	
+雷鼓PT = KOJO_114_0_SEARCHNO(116)
+CALL KOJO_114_0_SEARCHKOJO(雷鼓PT)
+SIF RESULT <= 0
+	雷鼓PT = 0
+;－－－－－
+
+
+
+;地の文呼び出し
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;CALL KOJO_114_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+IF CFLAG:104
+	RESETCOLOR
+	RETURN 1
+ENDIF
+
+;今はメンドイから喪失・睡眠時はカット
+IF CFLAG:戦意喪失 || CFLAG:睡眠
+	RESETCOLOR
+	RETURN 1
+ENDIF
+
+
+;口上色反映
+SETCOLOR CFLAG:700
+
+;各分岐
+SELECTCASE ARG:0
+CASE 1
+	;---味方の攻撃---
+	SELECTCASE ARG:1
+	CASE 1
+		;防御
+		PRINTDATAL
+			DATAFORM 「やり過ごすか…」
+			DATAFORM 「ここは耐えるべきかな？」
+		ENDDATA
+;	CASE 2
+		;アイテム使用
+		
+		
+;	CASE 3
+		;前に出る
+		
+		
+;	CASE 4
+		;後退
+		
+		
+	CASE 5
+		;逃走
+		PRINTDATAL
+			DATAFORM 「構ってらんねーな」
+			DATAFORM 「退くかな…」
+		ENDDATA
+		
+	CASE 8
+		;緊急浄化
+		PRINTDATAL
+			DATAFORM 「外野が邪魔だな…」
+			DATAFORM 「外堀を埋めるか…」
+		ENDDATA
+		
+		
+	;---弾幕---
+	CASE 10 TO 12
+		;弱～強弾幕
+		PRINTDATAL
+			DATAFORM 「喰らいな！」
+		ENDDATA
+
+	CASE 13
+		;溜め撃ち
+		IF CFLAG:31 == 2
+			;溜め動作
+			PRINTDATAL
+				DATAFORM 「ちょいと大きいのでもくれてやるか…」
+			ENDDATA
+			
+			
+		ELSE
+			;発射！	
+			PRINTDATAL
+				DATAFORM 「喰らいな！」
+			ENDDATA
+			
+			
+		ENDIF
+
+	CASE 14
+		;ばら撒き弾
+		PRINTDATAL
+			DATAFORM 「ちょこまかすんな！」
+			DATAFORM 「これならどうだ！」
+		ENDDATA
+
+	CASE 15
+		;貫通弾
+		PRINTDATAL
+			DATAFORM 「一網打尽だ！」
+			DATAFORM 「まとめて喰らいな！」
+		ENDDATA
+
+	CASE 19
+		;霊撃
+
+	;---消耗武器---
+	CASE 20 TO 22
+		;弱～強弾幕
+		PRINTDATAL
+			DATAFORM 「喰らいな！」
+		ENDDATA
+
+
+	CASE 23
+		;節約攻撃
+		PRINTDATAL
+			DATAFORM 「お前にはこれで十分だ！」
+			DATAFORM （ここで使い切りたくはないな…）
+		ENDDATA
+
+	CASE 24
+		;みだれ撃ち
+		PRINTDATAL
+			DATAFORM 「ほれほれ避けろ避けろー！」
+			DATAFORM 「みだれ撃ちだー！」
+		ENDDATA
+
+	CASE 25
+		;一点集中
+		PRINTDATAL
+			DATAFORM 「一点集中！」
+		ENDDATA
+
+	;---非消耗武器---
+	CASE 30 TO 32
+		;弱～強弾幕
+		PRINTDATAL
+			DATAFORM 「喰らいな！」
+		ENDDATA
+
+	CASE 33
+		;下段狙い
+		PRINTDATAL
+			DATAFORM 「遅くしてやるよ！」
+			DATAFORM 「これならどうだ！」
+		ENDDATA
+
+	CASE 34
+		;急所狙い
+		PRINTDATAL
+			DATAFORM 「ひるみな！」
+			DATAFORM 「これならどうだ！」
+		ENDDATA
+
+	CASE 50
+		;カウンター待機動作
+		PRINTDATAL
+			DATAFORM 「来なよ」
+			DATAFORM 「ほらほら来いよ」
+		ENDDATA
+
+	CASE 51
+		;カウンター発動！
+		PRINTDATAL
+			DATAFORM 「スキあり！」
+			DATAFORM 「待ってました！」
+		ENDDATA
+
+
+
+	;---拘束時---
+	CASE 42
+		;脱出
+		
+		IF ARG:3 == 0
+			;開始
+			PRINTDATAL
+				DATAFORM (早く抜け出さないと…)
+				DATAFORM (こ、こうすれば…)
+				DATAFORM (こんな状況ひっくり返してやる！)
+			ENDDATA
+
+		ELSEIF ARG:3 == 1
+			;絶頂中で結果捕まったまま
+		
+		
+		ELSEIF ARG:3 == 2
+			;結果脱出成功
+			IF ARG:2 == 1
+				;丸呑み
+				PRINTDATAL
+					DATAFORM 「ふいー」
+					DATAFORM 「やっと出れたか」
+					DATAFORM 「体中がべとべとまみれだな」
+					DATAFORM 「今度はこっちの番だ」
+					DATAFORM 「さぁて逆襲の始まりだ！」
+				ENDDATA
+				
+			ELSE
+				;拘束
+				PRINTDATAL
+					DATAFORM 「ふいー」
+					DATAFORM 「動きを封じるなんて卑怯なんだよ」
+					DATAFORM 「今度はこっちの番だ」
+					DATAFORM 「さぁて逆襲の始まりだ！」
+				ENDDATA
+			ENDIF
+		
+		ELSEIF ARG:3 == 3
+			;結果拘束レベルダウン
+		
+		ELSEIF ARG:3 == 4
+			;結果脱出失敗
+			PRINTDATAL
+				DATAFORM （うぅ…）
+				DATAFORM （くっ…）
+			ENDDATA
+		ENDIF
+	CASE 43
+		;力溜め
+		IF ARG:2 == 0
+			PRINTDATAL
+				DATAFORM （あ、頭を使え、冷静に…）
+				DATAFORM （こ、好機があるはずだ…）
+				DATAFORM （今に見てろよ…）
+			ENDDATA
+		ELSE
+			;失敗
+			PRINTDATAL
+				DATAFORM （うぅ…）
+				DATAFORM （くっ…）
+			ENDDATA
+		ENDIF
+		
+	CASE 44
+		;諦める
+		IF ARG:2 == 0
+			;諦めた
+			PRINTDATAL
+				DATAFORM （もう……むり……なのかなぁ…）
+			ENDDATA
+			
+			
+		ELSE
+			;諦め状態
+			
+			
+		ENDIF
+		
+	CASE 45
+		;何もしない
+		PRINTDATAL
+			DATAFORM 「くっ…」
+		ENDDATA
+		
+		
+		
+		
+	CASE 46
+		;強制自慰
+		PRINTDATAL
+			DATAFORM （か、体がかってに…）
+			DATAFORM （わ、私…何して…）
+		ENDDATA
+		
+		
+		
+	CASE 50
+		;A防御
+		
+		
+		
+		
+	CASE 51
+		;B防御
+		
+		
+		
+	CASE 52
+		;C防御
+		
+		
+		
+	CASE 53
+		;V防御
+		
+		
+		
+		
+		
+	ENDSELECT
+	
+CASE 2 TO 7
+	;敵攻撃発動
+		
+		
+CASE 9
+	;悪堕キャラ攻撃時の追加の発言
+	
+	
+CASE 11
+	;味方の攻撃命中
+	
+	
+CASE 12
+	;敵の攻撃命中
+	IF BASE:MP > 200
+		PRINTDATAL
+			DATAFORM 「くそっ…」
+			DATAFORM 「痛い！…」
+			DATAFORM 「痛ッ！」
+			DATAFORM 「痛ッ、よくもやったな…」
+			DATAFORM 「ッ…今のは効いたぞ…」
+		ENDDATA
+	ELSE
+		;若干弱気に
+		PRINTDATAL
+			DATAFORM 「うぐッ…」
+			DATAFORM 「うぐッ、や、やめ…」
+			DATAFORM 「痛い！…や、やめろ！」
+			DATAFORM 「痛ッ！」
+			DATAFORM 「痛ッ、いいかげんにしろ！」
+		ENDDATA
+	ENDIF
+	
+	
+	
+CASE 13
+	;敵の衣服攻撃命中
+	IF BASE:MP > 200
+		PRINTDATAL
+			DATAFORM 「…やってくれたな」
+		ENDDATA
+	ELSE
+		;若干弱気に
+		PRINTDATAL
+			DATAFORM 「も、もういいだろ！」
+		ENDDATA
+	ENDIF
+	
+	
+	
+	
+CASE 14
+	;敵の性攻撃命中
+	IF RAND:10 == 0
+		IF ARG:2 == 0
+			;A攻撃
+			PRINTDATAL
+				DATAFORM 「わ！？どこ触ってんだ変態！」
+				DATAFORM 「触んな、変態！」
+				DATAFORM 「お、お尻なんか触んなよ！」
+			ENDDATA
+		ENDIF
+		IF ARG:2 == 1
+			;B攻撃
+			PRINTDATAL
+				DATAFORM 「む、胸は！…やめッ…」
+			ENDDATA
+		ENDIF
+		IF ARG:2 == 2
+			;C攻撃
+			PRINTDATAL
+				DATAFORM 「つ、摘まむな！…やめッ…」
+			ENDDATA
+		ENDIF
+		IF ARG:2 == 3
+			;V攻撃
+			PRINTDATAL
+				DATAFORM 「動くな！抜け！さっさと抜けえ！」
+				DATAFORM 「やめろ！入れるな！死ね！」
+			ENDDATA
+		ENDIF
+	ELSE
+		PRINTDATAL
+			DATAFORM 「ッッ！…後でひどいぞ…？」
+			DATAFORM 「そこッ…ダメッ…」
+			DATAFORM 「や、やめ…ひぅ！」
+			DATAFORM 「触…るな…！」
+		ENDDATA
+	ENDIF
+	
+CASE 15
+	;敵の拘束攻撃命中
+	;ARG:1にコマンドID　ARG:2に丸呑みフラグ
+	IF ARG:2
+		;丸呑み
+		PRINTDATAL
+			DATAFORM 「！？しまった！食われッ…んんッ！」
+			DATAFORM 「や！？やめろ！食うな！」
+		ENDDATA
+	ELSE
+		PRINTDATAL
+			DATAFORM 「ッが！？体が…動かない…」
+			DATAFORM 「しまっ！？…っく！動けない…」
+		ENDDATA
+	ENDIF
+	
+CASE 52
+	;拘束レベルアップ
+	;ARG:1に拘束レベル　ARG:2に丸呑みフラグ
+	IF ARG:2
+		;丸呑み
+		PRINTDATAL
+			DATAFORM （マズイ！このままじゃ呑みこまれちまう…！）
+			DATAFORM （か、体が…沈んでいく…）
+		ENDDATA
+	ELSE
+		PRINTDATAL
+			DATAFORM 「く、苦しい…」
+		ENDDATA
+	ENDIF
+	
+CASE 53
+	;拘束レベルMAX継続　ARG:2に丸呑みフラグ
+	IF ARG:2
+		;丸呑み
+		PRINTDATAL
+			DATAFORM （うぅ…動けない…）
+			DATAFORM （う、動けない…ヤダ！…ヤダ！）
+		ENDDATA
+	ELSE
+		PRINTDATAL
+			DATAFORM 「ぐッ…ッ…く、くるじい…」
+			DATAFORM 「こ、このままじゃ…コイツの好き勝手に…」
+		ENDDATA
+	ENDIF
+	
+CASE 16
+	;敵の寄生攻撃命中
+	;ARG:1にコマンドID　ARG:2に妊娠フラグ　ARG:3にMPダメージ
+	IF RAND:3 == 0
+		PRINTDATAL
+			DATAFORM （ひッ！？中で、膨らんで…あッ、嫌！…）
+			DATAFORM （入って…来てる…ヤダ！…ヤダ！）
+		ENDDATA
+	ENDIF
+CASE 17
+	;敵のその他攻撃命中
+	
+CASE 22 TO 27
+	;敵の攻撃を避けた
+	PRINTDATAL
+		DATAFORM 「あらよっと」
+		DATAFORM 「そんなことで私に反逆できるのか？」
+		DATAFORM 「体の向きを変えて…あらよっと！」
+		DATAFORM 「向きをかえてやればﾁｮﾛｲもんよ」
+	ENDDATA
+
+CASE 33				
+	;MPが0（戦意喪失）になった
+	PRINTDATAL
+		DATAFORM （ﾋッ…ｲｲｯ、ｷﾓﾁｲｲ…♪）
+		DATAFORM （頭…真ｯｼﾛ…ｷﾓﾁｲｲ♪）
+	ENDDATA
+	
+	
+CASE 34
+	;EPが0になった
+	;ARG:1に絶頂部位　ARG:2で細かい状況を分岐させる予定　※絶頂の瞬間とはまた別 絶頂メッセージは120
+	;ARG:1に属性（0＝A攻撃　1＝B攻撃　2＝C攻撃　3＝V攻撃）が入っています
+	
+	
+	
+;＝＝＝戦闘前・後＝＝＝
+CASE 54
+	;戦闘開始時
+	IF TARGET == 1
+		;主役の時だけ
+		IF ARG:1 == 0
+			;通常戦闘
+			PRINTDATAL
+				DATAFORM 「やれやれ面倒だね」
+				DATAFORM 「下克上の邪魔だ、去りな」
+				DATAFORM 「私に反逆しようって？面白いね」
+			ENDDATA
+
+
+		ELSEIF ARG:1 == 1
+			;ラスボス
+
+		ELSEIF ARG:1 == 2
+			;ガーディアン
+
+		ENDIF
+	ENDIF
+
+
+CASE 55
+	;逃走
+	IF TARGET == 1
+		;主役の時だけ
+		IF ARG:1 == 0
+			;通常戦闘
+			PRINTDATAL
+				DATAFORM 「ど、どんな手を使っても生き残ればいいのさ！」
+			ENDDATA
+
+
+		ELSEIF ARG:1 == 1
+			;ラスボス
+
+		ELSEIF ARG:1 == 2
+			;ガーディアン
+
+		ENDIF
+
+	ENDIF
+CASE 61
+	;敵初遭遇時
+	IF TARGET == 1
+		;主役の時だけ
+		SELECTCASE ARG:1
+		CASE 1
+			;クイーン
+			PRINTFORML 「こいつが、この迷宮の主ってわけか…」
+			PRINTFORML 「お前を倒して下克上だ！」
+		CASE 3
+			;ガーディアン
+			PRINTFORML 「下剋上の邪魔だよ、消えてもらおうか」
+		CASEELSE
+			PRINTDATAL
+				DATAFORM 「新手か…私に反逆すると痛い目見るぞ？」
+				DATAFORM 「どいてもらおうか」
+			ENDDATA
+		ENDSELECT
+	ENDIF
+	
+CASE 62
+	;仲間を見捨てて逃げた
+	
+CASE 63
+	;仲間に見捨てられた
+
+
+
+
+;＝＝＝味方遭遇会話＝＝＝
+CASE 103
+	;雑談ARG:1に相手ID
+	
+
+	CALL KOJO_114_0_SEARCHKOJO(ARG:1)
+	LOCAL = RESULT
+	SELECTCASE LOCAL
+	CASE 109
+		;わかさぎ姫
+		IF CFLAG:(ARG:1):104
+			;娘
+			
+		ELSEIF CFLAG:(ARG:1):999 == 0
+			;初遭遇
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ、あなたはお尋ね者の天邪鬼さん！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ、あなたはお尋ね者の天邪鬼さん！」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ん？、なんだ半漁人か…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ん？、なんだ半漁人か…」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「は、半漁人じゃありません！人魚です！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「は、半漁人じゃありません！人魚です！」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「どっちも一緒だろ？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「どっちも一緒だろ？」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「違いますよ！半漁人は上半身が魚なんですよ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「違いますよ！半漁人は上半身が魚なんですよ！」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ヘーソウナンダ、スゴイネー」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ヘーソウナンダ、スゴイネー」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「真面目に聞いて下さい！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「真面目に聞いて下さい！」
+			ENDIF
+			SETCOLOR CFLAG:700
+			
+			CFLAG:(ARG:1):999 = 1
+			
+		ELSEIF CFLAG:(ARG:1):999 == 1
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「わ、私をこんな所に連れてきたのはあなたですね！早く湖に帰して！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「わ、私をこんな所に連れてきたのはあなたですね！早く湖に帰して！」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「何を根拠にそんな事を…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「何を根拠にそんな事を…」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「えっと…それは…、あ、あなたが先の異変の黒幕だったから…きっと、これもあなたが…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「えっと…それは…、あ、あなたが先の異変の黒幕だったから…きっと、これもあなたが…」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「前科があるだけで私を疑うの？酷イワー人魚酷イワー」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「前科があるだけで私を疑うの？酷イワー人魚酷イワー」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ご、ごめんなさい…って自業自得ですよ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ご、ごめんなさい…って自業自得ですよ！」
+			ENDIF
+			SETCOLOR CFLAG:700
+			
+			CFLAG:(ARG:1):999 = 2
+			
+		ELSEIF CFLAG:(ARG:1):999 == 2 && RAND:3 == 0
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「そんなに帰りたいなら帰り道を教えてあげるよ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「そんなに帰りたいなら帰り道を教えてあげるよ」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ほ、ホントですか！？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ほ、ホントですか！？」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ほら、あの地面にある穴は外と繋がってるんだよ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ほら、あの地面にある穴は外と繋がってるんだよ」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ、ありがとうございます！私、あなたのこと誤解してました！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ、ありがとうございます！私、あなたのこと誤解してました！」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「いいのいいの、私も酷いこと言ったからおあいこだよ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「いいのいいの、私も酷いこと言ったからおあいこだよ」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「で、では失礼します！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「で、では失礼します！」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…あ、穴の中に変な虫がいっぱい居るんですけど…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…あ、穴の中に変な虫がいっぱい居るんですけど…」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あーそれな、大丈夫大丈夫、何もしてこないから」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あーそれな、大丈夫大丈夫、何もしてこないから」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…目が笑ってますよ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…目が笑ってますよ」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「チッ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「チッ…」
+			ENDIF
+			
+			CFLAG:(ARG:1):999 = 3
+			
+		ELSEIF CFLAG:(ARG:1):999 == 3 &&  RAND:3 == 0
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ほ、ホントに帰り道を知らないんですか？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ほ、ホントに帰り道を知らないんですか？」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 	しつこいなぁ、知らないよ、まぁ知ってても教えないけど」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 	しつこいなぁ、知らないよ、まぁ知ってても教えないけど」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「うぅ、そんなぁ…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「うぅ、そんなぁ…」
+			ENDIF
+			SETCOLOR CFLAG:700
+			
+		ELSE
+			SELECTCASE RAND:2
+			CASE 1
+				SETCOLOR CFLAG:700
+				PRINTFORML 「早く帰らないと、化け物の食い物にされるぞ？」
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「わ、私、食べ物じゃないですよぉ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「わ、私、食べ物じゃないですよぉ…」
+				ENDIF
+				SETCOLOR CFLAG:700
+				
+			CASE 0
+				SETCOLOR CFLAG:700
+				PRINTFORML 「人魚の肉を食べると不老不死になるらしいな…」
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「そ、そんなのただの作り話です！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「そ、そんなのただの作り話です！」
+				ENDIF
+				SETCOLOR CFLAG:700
+				
+			ENDSELECT
+		ENDIF
+		[SKIPSTART]
+		;---MEMO---
+		
+			「あの、お願いがあるのですが…」
+		「水臭いやつだな、まぁ魚だから仕方ないか」
+			「酷い！(泣)」
+		
+		
+			「魚が陸に何の用だ、水中に立ち去れい！」
+		「半漁人より酷くなってます！」
+			「魚に失礼だぞ」
+		「ご、ごめんなさい…って私は人魚です！」
+		[SKIPEND]
+		
+	CASE 111
+		;影狼
+		IF CFLAG:(ARG:1):104
+			;娘
+			IF CFLAG:(ARG:1):999 == 0
+				IF 影狼PT
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あ、ママー」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あ、ママー」
+					ENDIF
+					SETCOLOR CFLAG:(影狼PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「げっ！？アンタ、もうこんなに成長したの！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「げっ！？アンタ、もうこんなに成長したの！？」
+					ENDIF
+					IF わかさぎPT
+						SETCOLOR CFLAG:(わかさぎPT):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「わぁ♪影狼さんそっくりでかわいいです♪」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「わぁ♪影狼さんそっくりでかわいいです♪」
+						ENDIF
+					ENDIF
+					IF 針妙丸PT
+						SETCOLOR CFLAG:(針妙丸PT):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「おぉー、母親によく似てるねー」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「おぉー、母親によく似てるねー」
+						ENDIF
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「もっと成長したら色んな所が似るんだろうな」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「もっと成長したら色んな所が似るんだろうな」
+					ENDIF
+					SETCOLOR CFLAG:(影狼PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…何が言いたいのかしら？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…何が言いたいのかしら？」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「がうー？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「がうー？」
+					ENDIF
+					SETCOLOR CFLAG:700
+					
+				ELSE
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「お？あの狼女の子供か？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「お？あの狼女の子供か？」
+					ENDIF
+					IF わかさぎPT
+						SETCOLOR CFLAG:(わかさぎPT):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「わぁ♪かわいいです♪」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「わぁ♪かわいいです♪」
+						ENDIF
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んー、体毛はあいつの方が濃いかな」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んー、体毛はあいつの方が濃いかな」
+					ENDIF
+					IF 針妙丸PT
+						SETCOLOR CFLAG:(針妙丸PT):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「正邪はそういう事だけ素直に言うんだよね…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「正邪はそういう事だけ素直に言うんだよね…」
+						ENDIF
+					ENDIF
+					IF わかさぎPT
+						SETCOLOR CFLAG:(わかさぎPT):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「影狼さんが聞いたら怒りますよ…？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「影狼さんが聞いたら怒りますよ…？」
+						ENDIF
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「がうー？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「がうー？」
+					ENDIF
+					SETCOLOR CFLAG:700
+				ENDIF
+				
+				CFLAG:(ARG:1):999 = 1
+			ELSE
+				
+				
+				
+				
+			ENDIF
+			
+		;＝＝＝＝＝　オリジナル　＝＝＝＝＝
+		ELSEIF  CFLAG:(ARG:1):999 == 0
+			;初遭遇
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あ、天邪鬼！アナタこんなところに隠れてたのね！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あ、天邪鬼！アナタこんなところに隠れてたのね！」
+			ENDIF
+			IF わかさぎPT
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「って、わかさぎ姫じゃない！何でコイツと一緒にいるの！？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「って、わかさぎ姫じゃない！何でコイツと一緒にいるの！？」
+				ENDIF
+				SETCOLOR CFLAG:(わかさぎPT):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「え、えっと…成り行きで…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「え、えっと…成り行きで…」
+				ENDIF
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「なんだ狼女か、この洞窟はお前の巣なのか？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「なんだ狼女か、この洞窟はお前の巣なのか？」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「それはこっちの台詞よ！この洞窟はアナタの仕業ね！元の私を返しなさい！ｱｵｰﾝ!(襲)」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「それはこっちの台詞よ！この洞窟はアナタの仕業ね！元の私を返しなさい！ｱｵｰﾝ!(襲)」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「わわ！知らん知らん！近寄るな！獣の匂いが移るだろ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「わわ！知らん知らん！近寄るな！獣の匂いが移るだろ！」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「な！？お、乙女に向かって…酷い！酷いわー！ｱｵｰﾝ!(泣)」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「な！？お、乙女に向かって…酷い！酷いわー！ｱｵｰﾝ!(泣)」
+			ENDIF
+			IF わかさぎPT
+				SETCOLOR CFLAG:(わかさぎPT):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あわわ、影狼さん泣かないで下さぃ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あわわ、影狼さん泣かないで下さぃ…」
+				ENDIF
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「…怒ったり、泣いたり、忙しい奴だな…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「…怒ったり、泣いたり、忙しい奴だな…」
+			ENDIF
+			
+			CFLAG:(ARG:1):999 = 1
+			
+		ELSEIF CFLAG:(ARG:1):999 < 10
+			;＝＝＝＝＝　フラグIS＜10　＝＝＝＝＝
+			IF CFLAG:(ARG:1):5 >= 200
+				IF わかさぎPT
+					SETCOLOR CFLAG:(わかさぎPT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「影狼さん、い、今はここを出るために協力し合わないと！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「影狼さん、い、今はここを出るために協力し合わないと！」
+					ENDIF
+				ENDIF
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「うー…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「うー…」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「な、何だよ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「な、何だよ…」
+				ENDIF
+				
+				CFLAG:(ARG:1):999 = 10
+				CFLAG:(ARG:1):998 = 0
+			ELSEIF BASE:(ARG:1):CP == 0 && BASE:CP == 0
+				;両方裸
+				IF GETBIT(CFLAG:(ARG:1):998, 0) == 0
+					;未読0
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あ！？天邪鬼！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あ！？天邪鬼！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「狼女！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「狼女！？」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「な、何よ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「な、何よ…」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「お前は毛皮があるから裸でも平気そうだなって」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「お前は毛皮があるから裸でも平気そうだなって」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「何？体毛が欲しいの？！あげる！貰って！ｱｵｰﾝ!(熱)」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「何？体毛が欲しいの？！あげる！貰って！ｱｵｰﾝ!(熱)」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「何でそうなる！てか、どうやって渡すんだよ！待て！落ち着け！ﾊﾅｾｰ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「何でそうなる！てか、どうやって渡すんだよ！待て！落ち着け！ﾊﾅｾｰ」
+					ENDIF
+					
+					SETBIT CFLAG:(ARG:1):998, 0
+				ELSE
+					SELECTCASE RAND:2
+					CASE 1
+						SETCOLOR CFLAG:700
+						PRINTFORML 「どうだ？すべすべだぞ？羨ましかろう？」
+						SETCOLOR CFLAG:(ARG:1):700
+						PRINTFORML 「こいつ…」
+					CASE 0
+						SETCOLOR CFLAG:(ARG:1):700
+						PRINTFORML 「寒い？寒いでしょ？」
+						SETCOLOR CFLAG:700
+						PRINTFORML 「体毛ならいらんぞ？」
+					ENDSELECT
+				ENDIF
+			
+			ELSEIF BASE:(ARG:1):CP == 0
+				;相手が裸
+				IF GETBIT(CFLAG:(ARG:1):998, 1) == 0
+					;未読1
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「！？天邪鬼！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「！？天邪鬼！」
+					ENDIF
+					IF わかさぎPT
+						SETCOLOR CFLAG:(わかさぎPT):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「か、影狼さん！？どうしたんですかその格好！？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「か、影狼さん！？どうしたんですかその格好！？」
+						ENDIF
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「狼女か、露出狂だったとはたまげたなぁ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「狼女か、露出狂だったとはたまげたなぁ…」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うるさい！こっち見んな！死ね！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うるさい！こっち見んな！死ね！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おいおい、そっちが見せてるんだろ？八つ当たりは良くないぞ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おいおい、そっちが見せてるんだろ？八つ当たりは良くないぞ？」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うるさーーい！ｱｵｰﾝ!(襲)」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うるさーーい！ｱｵｰﾝ!(襲)」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「おぉ、ｺﾜｲｺﾜｲ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「おぉ、ｺﾜｲｺﾜｲ」
+					ENDIF
+					IF わかさぎPT
+						SETCOLOR CFLAG:(わかさぎPT):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「か、影狼さんの体…綺麗…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「か、影狼さんの体…綺麗…」
+						ENDIF
+					ENDIF
+					
+					SETBIT CFLAG:(ARG:1):998, 1
+				ELSE
+					SELECTCASE RAND:2
+					CASE 1
+						SETCOLOR CFLAG:700
+						PRINTFORML 「獣らしい恰好だな」
+						SETCOLOR CFLAG:(ARG:1):700
+						PRINTFORML 「ほっといてよ！」
+					CASE 0
+						SETCOLOR CFLAG:700
+						PRINTFORML 「服が無くても平気とかｳﾗﾔﾏｼｰ」
+						SETCOLOR CFLAG:(ARG:1):700
+						PRINTFORML 「いつかｺﾛｽ…」
+					ENDSELECT
+				ENDIF
+			ELSEIF BASE:CP == 0
+				;自分が裸
+				IF GETBIT(CFLAG:(ARG:1):998, 2) == 0
+					;未読2
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「また会ったわね、天邪鬼」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「また会ったわね、天邪鬼」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「げっ！？狼女！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「げっ！？狼女！」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「服を着る事にすら反逆するなんて流石は天邪鬼ね～♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「服を着る事にすら反逆するなんて流石は天邪鬼ね～♪」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふんっ、毛皮があるのに服を着てるお前の方がよっぽど天邪鬼だよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふんっ、毛皮があるのに服を着てるお前の方がよっぽど天邪鬼だよ」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「な！？言ったわね！その舌引き抜いて二度と生意気な事を言えないようにしてあげるわ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「な！？言ったわね！その舌引き抜いて二度と生意気な事を言えないようにしてあげるわ！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「そんな事する暇があるなら自分の体毛でも引き抜いたらどうだ～？少しは恥ずかしく無くなるんじゃないか？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「そんな事する暇があるなら自分の体毛でも引き抜いたらどうだ～？少しは恥ずかしく無くなるんじゃないか？」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「抜いても直ぐに生えちゃうわよ！……ハッ!」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「抜いても直ぐに生えちゃうわよ！……ハッ!」
+					ENDIF
+					IF わかさぎPT
+						SETCOLOR CFLAG:(わかさぎPT):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「え…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「え…」
+						ENDIF
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「抜いたのか…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「抜いたのか…」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ｱｵｰﾝ!(泣)」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ｱｵｰﾝ!(泣)」
+					ENDIF
+					SETCOLOR CFLAG:700
+					
+					SETBIT CFLAG:(ARG:1):998, 2
+				ELSE
+					SELECTCASE RAND:2
+					CASE 1
+						SETCOLOR CFLAG:(ARG:1):700
+						PRINTFORML 「いいザマね」
+						SETCOLOR CFLAG:700
+						PRINTFORML 「ふんっ」
+					CASE 0
+						SETCOLOR CFLAG:(ARG:1):700
+						PRINTFORML 「そんな格好だと風邪引くわよ～？」
+						SETCOLOR CFLAG:700
+						PRINTFORML 「余計なお世話だ」
+					ENDSELECT
+				ENDIF
+			ELSE
+				SELECTCASE RAND:2
+				CASE 1
+					SETCOLOR CFLAG:700
+					PRINTFORML 「後で吠え面かくなよ？ってお前はいつも吠え面だったな…」
+					SETCOLOR CFLAG:(ARG:1):700
+					PRINTFORML 「コロォォォス！！！！ｱｵｰﾝ!(怒)」
+					SETCOLOR CFLAG:700
+					PRINTFORML 「ほーら、また吠えた」
+				CASE 0
+					SETCOLOR CFLAG:(ARG:1):700
+					PRINTFORML 「いつかぎゃふんと言わせてやるわ」
+					SETCOLOR CFLAG:700
+					PRINTFORML 「ならこっちはキャウンと言わせてやるよ」
+					SETCOLOR CFLAG:(ARG:1):700
+					PRINTFORML 「前言撤回！今すぐぎゃふんと言わせてやる！」
+				ENDSELECT
+				
+				
+				;くれぐれも背中には気を付けることね
+				;何で私がアナタの仲間に…って言いたいところだけど、この状況じゃそうは言ってられないわね
+				
+				
+				
+			ENDIF
+		ELSEIF CFLAG:(ARG:1):999 < 20
+			;＝＝＝＝＝　フラグIS＜20　＝＝＝＝＝
+			IF CFLAG:(ARG:1):5 >= 400
+				
+				
+				
+				CFLAG:(ARG:1):999 = 20
+				CFLAG:(ARG:1):998 = 0
+			ELSEIF GETBIT(CFLAG:(ARG:1):998, 0) == 0
+				;未読0
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ちょっと天邪鬼！アナタのその"何でもひっくり返す能力"で私を元の姿に戻しなさいよ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ちょっと天邪鬼！アナタのその"何でもひっくり返す能力"で私を元の姿に戻しなさいよ！」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「はぁ？何で私がそんなことしなきゃならないんだ？やだね！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「はぁ？何で私がそんなことしなきゃならないんだ？やだね！」
+				ENDIF
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「な、…はは～ん、さては出来ないんでしょ？出来ないのよね？"何でも"っていうのは嘘なんでしょ？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「な、…はは～ん、さては出来ないんでしょ？出来ないのよね？"何でも"っていうのは嘘なんでしょ？」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「うっ、獣の分際で偉そうに……えい！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「うっ、獣の分際で偉そうに……えい！」
+				ENDIF
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「きゃ！…ｲﾀﾀ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「きゃ！…ｲﾀﾀ…」
+				ENDIF
+				IF わかさぎPT
+					SETCOLOR CFLAG:(わかさぎPT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「だ、大丈夫ですか！？影狼さん！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「だ、大丈夫ですか！？影狼さん！」
+					ENDIF
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「どうだ！お前をひっくり返して、元の獣らしく四つん這いに戻してやったぞ？嬉しいか？嬉しいよな？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「どうだ！お前をひっくり返して、元の獣らしく四つん這いに戻してやったぞ？嬉しいか？嬉しいよな？」
+				ENDIF
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こいつ…ゆ"る"さ"ん"！覚悟ー！ｱｵｰﾝ!(怒)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こいつ…ゆ"る"さ"ん"！覚悟ー！ｱｵｰﾝ!(怒)」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ほーら、犬さんこちらー♪」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ほーら、犬さんこちらー♪」
+				ENDIF
+				IF 針妙丸PT
+					SETCOLOR CFLAG:(針妙丸PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いやー正邪が楽しそうで何よりだよー」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いやー正邪が楽しそうで何よりだよー」
+					ENDIF
+				ENDIF
+				
+				SETBIT CFLAG:(ARG:1):998, 0
+			ELSE
+				
+				
+				
+			ENDIF
+		ELSE
+			;＝＝＝＝＝　フラグ20以上　＝＝＝＝＝
+			
+			IF CFLAG:(ARG:1):999 == 20
+				IF FLAG:AUTOMODE
+					PRINTFORML 「捕まえたわよ天邪鬼！観念なさい！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「捕まえたわよ天邪鬼！観念なさい！」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「えーい放せ放せ、犬くさいのは嫌いなんだ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「えーい放せ放せ、犬くさいのは嫌いなんだ！」
+				ENDIF
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「減らず口を……！？そういえばアナタって天邪鬼なのよね…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「減らず口を……！？そういえばアナタって天邪鬼なのよね…」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「自分でそう言ってるだろ……あ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「自分でそう言ってるだろ……あ…」
+				ENDIF
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「て、ことは本当は犬の匂いが好きなのねー♪嬉しいわー♪ｱｵｰﾝ!(喜)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「て、ことは本当は犬の匂いが好きなのねー♪嬉しいわー♪ｱｵｰﾝ!(喜)」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「違う違う！私は本当に嫌いなのであって…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「違う違う！私は本当に嫌いなのであって…」
+				ENDIF
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「も～、素直じゃないんだからー♪」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「も～、素直じゃないんだからー♪」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ﾔﾒﾛｰﾊﾅｾｰ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ﾔﾒﾛｰﾊﾅｾｰ」
+				ENDIF
+				
+				CFLAG:(ARG:1):999++
+				
+			ELSEIF CFLAG:(ARG:1):999 == 21
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「天邪鬼、アナタの名前って正邪って言うのね」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「天邪鬼、アナタの名前って正邪って言うのね」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あー？なんだ今更？それが何だよ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あー？なんだ今更？それが何だよ」
+				ENDIF
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「私がこの姿になったのは正邪のせいじゃ！なんちゃって♪」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「私がこの姿になったのは正邪のせいじゃ！なんちゃって♪」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「……」
+				ENDIF
+				SETCOLOR CFLAG:(ARG:1):700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…ワ、ワオーン！(襲)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…ワ、ワオーン！(襲)」
+				ENDIF
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「恥ずかしいなら、最初から言うなよ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「恥ずかしいなら、最初から言うなよ…」
+				ENDIF
+					
+				CFLAG:(ARG:1):999++
+				;呼び方を正邪に変更
+					
+			ELSE
+				IF CFLAG:(ARG:1):5 >= 400
+					;好感度高い
+					IF GETBIT(CFLAG:(ARG:1):998, 0) == 0
+						;未読0
+						SETCOLOR CFLAG:(ARG:1):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「ほーら、正邪の好きな獣の香りよ～♪」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「ほーら、正邪の好きな獣の香りよ～♪」
+						ENDIF
+						SETCOLOR CFLAG:700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「えーい！臭い！毛深い！抱きつくな！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「えーい！臭い！毛深い！抱きつくな！」
+						ENDIF
+						SETCOLOR CFLAG:(ARG:1):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「もー素直じゃないんだからー♪」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「もー素直じゃないんだからー♪」
+						ENDIF
+						SETCOLOR CFLAG:700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「この野獣が…ハイハイ、カゲロウスキスキー(棒)、これでどうだ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「この野獣が…ハイハイ、カゲロウスキスキー(棒)、これでどうだ！」
+						ENDIF
+						SETCOLOR CFLAG:(ARG:1):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…正邪…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…正邪…」
+						ENDIF
+						SETCOLOR CFLAG:700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「(お？やったか？)」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「(お？やったか？)」
+						ENDIF
+						SETCOLOR CFLAG:(ARG:1):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「やっと素直になったのねー♪嬉しいわー♪ｱｵｰﾝ!(喜)」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「やっと素直になったのねー♪嬉しいわー♪ｱｵｰﾝ!(喜)」
+						ENDIF
+						SETCOLOR CFLAG:700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「(アーッ！)」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「(アーッ！)」
+						ENDIF
+						
+						SETBIT CFLAG:(ARG:1):998, 0
+						
+					ELSE
+						SELECTCASE RAND:2
+						CASE 1
+							SETCOLOR CFLAG:(ARG:1):700
+							IF FLAG:AUTOMODE
+								PRINTFORML 「正邪ーすりすりー♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「正邪ーすりすりー♪」
+							ENDIF
+							SETCOLOR CFLAG:700
+							IF FLAG:AUTOMODE
+								PRINTFORML 「毛を擦りつけんな！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「毛を擦りつけんな！」
+							ENDIF
+						CASE 0
+							SETCOLOR CFLAG:(ARG:1):700
+							IF FLAG:AUTOMODE
+								PRINTFORML 「アオーン♪」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「アオーン♪」
+							ENDIF
+							SETCOLOR CFLAG:700
+							IF FLAG:AUTOMODE
+								PRINTFORML 「抱きつくな！むさ苦しい！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「抱きつくな！むさ苦しい！」
+							ENDIF
+						ENDSELECT
+					ENDIF
+				ELSE
+					;好感度低い＿ヤンデレ化？
+					SELECTCASE RAND:2
+					CASE 1
+						
+					CASE 0
+						
+					ENDSELECT
+				ENDIF
+			ENDIF
+		ENDIF
+		[SKIPSTART]
+		;---MEMO---
+		
+		IF 
+		「つーかまえたー♪」
+			「うわ！何だ！？」
+
+
+		IF 守　悪い子
+		「正邪を押し倒しちゃったわ～♪」
+			「重い身体だな、さっさとどけ！」
+		「そんな事言ってると今から私の身体で思い知らされるわよ～？」
+			「そうはいくか！逆符「天下転覆」！」
+		「キャっ！」
+			「どーだ、上下を入れ替えてやったぞ？これで思い知らせまい」
+		「…優しくしてね♪」
+			「ウガーー！」
+
+
+		IF 守　良い子
+		「正邪を押し倒しちゃったわ～♪」
+			「お、重いからさっさとどけよ…」
+		「そんな事言ってると今から私の身体で思い知らされるわよ～？」
+			「や、やめろ、顔を近づけんな！」
+		「赤くなっちゃって、カワイー♪」
+			「だ、ﾀﾞﾚｶｰ！」
+
+
+			「お前はホント毛深いなー」
+		「ちょっと、引っ張らないでよ！」
+
+			「犬の性感帯ってどこにあるんだ？」
+		「突然何よ？って私は狼よ！」
+			「どっちも大差ないだろ？この辺か…？」
+		「勝手にお腹をさすらないで！絶対教え無いんだから！」
+			「そっかー、じゃあ調べるしか無いなー」
+		「や、やめなさーーい！」
+
+			「」
+			
+			
+		[SKIPEND]
+	CASE 114
+		;正邪
+		IF CFLAG:(ARG:1):104
+			;娘
+			
+		ELSE
+			
+			
+		ENDIF
+		
+		
+		
+		
+	CASE 115
+		;針妙丸
+		IF CFLAG:(ARG:1):104
+			;娘
+			
+		ELSEIF CFLAG:(ARG:1):999 == 0
+			;初遭遇
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「おぉ！正邪、まだ生きておったか」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「おぉ！正邪、まだ生きておったか」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「姫！ってことはやっぱりこの洞窟は姫が私を捕える為に…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「姫！ってことはやっぱりこの洞窟は姫が私を捕える為に…」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「わ、私はこんなことしないよ！私はてっきりあんたがしたんだと思ってたよ？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「わ、私はこんなことしないよ！私はてっきりあんたがしたんだと思ってたよ？」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「う～ん、こんな事が出来れば簡単に支配者になれたんだがな…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「う～ん、こんな事が出来れば簡単に支配者になれたんだがな…」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「う～ん、正邪じゃないなら真犯人はだーれ？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「う～ん、正邪じゃないなら真犯人はだーれ？」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「誰でもいいさ、虐げられたらやり返す…下克上だ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「誰でもいいさ、虐げられたらやり返す…下克上だ！」
+			ENDIF
+			SETCOLOR CFLAG:(ARG:1):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あんたはブレないねー…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あんたはブレないねー…」
+			ENDIF
+			SETCOLOR CFLAG:700
+			
+			CFLAG:(ARG:1):999 = 1
+			
+		ELSE
+			;IF BASE:(ARG:1):CP == 0 && BASE:CP == 0
+				;両方裸
+				
+			IF BASE:(ARG:1):CP == 0
+				;相手が裸
+				IF GETBIT(CFLAG:(ARG:1):998, 0) == 0
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あ…正邪…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あ…正邪…」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「姫にそういう趣味があったとは意外だぞ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「姫にそういう趣味があったとは意外だぞ」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ち、違う違う！取られたの！服取られたのー！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ち、違う違う！取られたの！服取られたのー！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いいんですよ？別に隠さなくても…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いいんですよ？別に隠さなくても…」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ちがーう！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ちがーう！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					
+					SETBIT CFLAG:(ARG:1):998, 0
+					
+				ELSE
+					SELECTCASE RAND:2
+					CASE 1
+						
+					CASE 0
+						
+					ENDSELECT
+				ENDIF
+			ELSEIF BASE:CP == 0
+				;自分が裸
+				IF GETBIT(CFLAG:(ARG:1):998, 0) == 1
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「正邪！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「正邪！？」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「げ！？姫！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「げ！？姫！」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…ふ、服はどうしたのー？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…ふ、服はどうしたのー？」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あー…す、捨てた？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あー…す、捨てた？」
+					ENDIF
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「べ、別にこんな時まで嘘をつかなくても…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「べ、別にこんな時まで嘘をつかなくても…」
+					ENDIF
+					SETCOLOR CFLAG:700
+					
+					SETBIT CFLAG:(ARG:1):998, 1
+					
+				ELSE
+					SELECTCASE RAND:2
+					CASE 1
+						
+					CASE 0
+						SETCOLOR CFLAG:(ARG:1):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「正邪の肌って白くてすべすべだねー」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「正邪の肌って白くてすべすべだねー」
+						ENDIF
+						SETCOLOR CFLAG:700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「…刺すなよ？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「…刺すなよ？」
+						ENDIF
+						SETCOLOR CFLAG:(ARG:1):700
+						IF FLAG:AUTOMODE
+							PRINTFORML 「刺さないよ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「刺さないよ！」
+						ENDIF
+						SETCOLOR CFLAG:700
+						
+					ENDSELECT
+				ENDIF
+			ELSE
+				
+				SELECTCASE RAND:5
+				CASE 4
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「これ！正邪！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「これ！正邪！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ん？なんだ姫か、危うく踏み潰す所だったぞ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ん？なんだ姫か、危うく踏み潰す所だったぞ」
+					ENDIF
+					
+				CASE 3
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「正邪や」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「正邪や」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「何ですか？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「何ですか？」
+					ENDIF
+					
+				CASE 2
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「正邪、お疲れだね…私が針治療で癒してあげるよ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「正邪、お疲れだね…私が針治療で癒してあげるよ！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あー、遠慮しとくよ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あー、遠慮しとくよ…」
+					ENDIF
+					
+				CASE 1
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「嘘吐きな正邪の為に針を千本用意したよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「嘘吐きな正邪の為に針を千本用意したよ」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「どこにそんな持ってたんだ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「どこにそんな持ってたんだ…」
+					ENDIF
+					
+				CASE 0
+					SETCOLOR CFLAG:(ARG:1):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「正邪、もっと私に頼っていいんだよ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「正邪、もっと私に頼っていいんだよ？」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…色々と危ないので遠慮します」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…色々と危ないので遠慮します」
+					ENDIF
+					
+				ENDSELECT
+			ENDIF
+		
+		ENDIF
+		[SKIPSTART]
+		針妙丸
+			正邪とは腐れ縁になりそう、騙された事は別にもう気にしてなさそう、
+			小さい体に対してすごく大きい心とかそんなイメージ
+			
+			正邪は針妙丸の事は嫌いでもないし好きでもない感じ
+			嫌いじゃないから寄ってきてもあまり押し返さない
+			
+		OP
+		「ここはどこー？」
+		「…うーむ、虫籠で寝てる間に何が起きたのやら…」
+		「まさか…正邪がまた何かしでかしたの？」
+		「…うーむ、巫女も見当たらないし、とりあえず誰か探すかー」
+
+		「姫、そろそろ頭の上から降りてください…」
+			「えー」
+
+		「正邪って良い香りだねー」
+			「うーん…今の状態で言われてもなぁ…」
+			
+		[SKIPEND]
+		
+	CASEELSE
+		PRINTDATAL
+			DATAFORM 「聞きたいか？聞きたいよな？」
+			DATAFORM （コイツはどうやってからかおうかな…）
+		ENDDATA
+	ENDSELECT
+	
+;＝＝＝会話＿情報交換＝＝＝
+CASE 104
+	;情報交換
+	IF TARGET == 1
+		;メイン
+		PRINTDATAL
+			DATAFORM 「聞きたいか？聞きたいよな？」
+			DATAFORM （どんなウソを教えようかな…）
+		ENDDATA
+	ENDIF
+
+CASE 137
+	;遭遇時会話：固定イベント情報取得(NPC時)
+CASE 165
+	;遭遇時会話：固定イベント情報取得(PTM時)
+
+
+
+;＝＝＝会話＿アイテム頂戴＝＝＝
+CASE 138
+	;アイテム強請り開始
+	;ARG:1に対象ID＿主人公だけ呼ばれる
+	;ARG:2が１のときは相手が喪失か睡眠
+	
+	CALL KOJO_114_0_SEARCHKOJO(ARG:1)
+	LOCAL = RESULT
+	
+	
+	
+	IF ARG:2
+		IF CFLAG:(ARG:1):戦意喪失
+			PRINTDATAL
+				DATAFORM 「その状態じゃ道具を使えないだろう？私が代わりに使ってやるよ」
+			ENDDATA
+		ELSEIF CFLAG:(ARG:1):睡眠
+			PRINTDATAL
+				DATAFORM 「のんきに寝てると大事な物を奪われちまうぞ？」
+			ENDDATA
+		ELSE
+			PRINTDATAL
+				DATAFORM 「その状態じゃ道具を使えないだろう？私が代わりに使ってやるよ」
+			ENDDATA
+		ENDIF
+	ELSE
+	
+		IF 針妙丸PT && RAND:10 == 0
+			SETCOLOR CFLAG:700
+			PRINTFORML 「何か譲って頂ｹﾅｲﾃﾞｼｮｳｶ…」
+			SETCOLOR CFLAG:(針妙丸PT):700
+			PRINTFORML 「ほら！正邪、もっと大きな声で！」
+			
+		ELSEIF 影狼PT && RAND:10 == 0
+			SETCOLOR CFLAG:(影狼PT):700
+			PRINTFORML 「何か頂けると嬉しいのだけど…って、アナタが言いなさいよ！」
+			SETCOLOR CFLAG:700
+			PRINTFORML 「あー、私は人見知りだから」
+			
+		ELSEIF わかさぎPT && RAND:10 == 0
+			SETCOLOR CFLAG:700
+			PRINTFORML 「何かくれ！」
+			SETCOLOR CFLAG:(わかさぎPT):700
+			PRINTFORML 「す、ストレートですね…」
+			SETCOLOR CFLAG:700
+			
+		ELSEIF RAND:2 == 0
+			SETCOLOR CFLAG:700
+			PRINTFORML 「何かくれないか？」
+			
+		ELSE
+			SETCOLOR CFLAG:700
+			PRINTFORML 「秘密道具とか持ってないか？」
+			
+		ENDIF
+		
+		[SKIPSTART]
+		SELECTCASE LOCAL
+		CASE 109
+			;わかさぎ姫
+			
+		CASE 111
+			;影狼
+			SELECTCASE RAND:2
+			CASE 1
+				
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「」
+				ENDIF
+				
+				LOCAL:1 = 20
+				
+			CASE 0
+				SETCOLOR CFLAG:700
+				IF FLAG:AUTOMODE
+					PRINTFORML 「」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「」
+				ENDIF
+				
+				LOCAL:1 = 10
+				
+			ENDSELECT
+			CALL KOJO_114_0_LOCALFLAG(LOCAL:1, 1)
+			
+		CASE 115
+			;針妙丸
+			
+		CASEELSE
+		ENDSELECT
+		[SKIPEND]
+	ENDIF
+
+CASE 139
+	;アイテムを強請られた(NPC時)
+	;ARG:1にアイテムID　0で失敗となる
+	IF CFLAG:29
+		;喪失中
+		
+		
+		
+	ELSEIF ARG:1 == 0
+		;強請り失敗
+		PRINTDATAL
+			DATAFORM 「私が素直に渡すと思ってるのか？おめでたいねえ」
+			DATAFORM 「やだね！渡すもんか！」
+		ENDDATA
+	ELSE
+		;成功
+		PRINTDATAL
+			DATAFORM 「あ、こら！勝手に取んな！」
+		ENDDATA
+	ENDIF
+
+CASE 105
+	;アイテム強請り成功
+	IF TARGET == 1
+		;メイン
+		IF ARG:2 == 1
+			;対象が喪失
+			PRINTDATAL
+				DATAFORM 「こいつは貰っとくよ」
+				DATAFORM 「こいつは私に使われる方がいいのさ」
+			ENDDATA
+			
+		ELSE
+			PRINTDATAL
+				DATAFORM 「ん？お礼？言うわけないだろ」
+				DATAFORM 「お？くれるのか？」
+			ENDDATA
+		ENDIF
+	ENDIF
+	
+	
+CASE 106
+	;アイテム強請り失敗
+	IF TARGET == 1
+		;メイン
+		IF ARG:2 == 1
+			;対象が喪失
+			PRINTDATAL
+				DATAFORM 「ケッ、使えねー道具だな」
+			ENDDATA
+		ELSE
+			PRINTDATAL
+				DATAFORM 「な！？反逆か？反逆だな？！」
+			ENDDATA
+		ENDIF
+	ENDIF
+
+;＝＝＝会話＿仲間に誘う＝＝＝
+CASE 107
+	;勧誘成功
+
+	IF TARGET == 1
+		;自分がメイン
+		PRINTDATAL
+			DATAFORM 「当レジスタンスは誰でもウェルカム、仲間になるなら歓迎するよ」
+			DATAFORM 「お？仲間になってくれるのか？」
+			DATAFORM （ヤバくなったらさっさと捨てるか…）
+		ENDDATA
+		
+		
+	ENDIF
+CASE 108
+	;勧誘失敗
+
+	IF TARGET == 1
+		;自分がメイン
+		PRINTDATAL
+			DATAFORM 「ぬぅ、私は諦めんよ…」
+			DATAFORM 「反逆的だな、ますます欲しくなったよ」
+		ENDDATA
+	ENDIF
+
+
+
+CASE 140
+	;PTに勧誘された(NPC時)
+	IF ARG:1 == 1
+		;共闘
+		IF ARG:2 == 0
+			;失敗
+			PRINTDATAL
+				DATAFORM 「だが断る！」
+				DATAFORM 「そんな頼みは聞けないね！」
+			ENDDATA
+		ELSE
+			;成功
+			PRINTDATAL
+				DATAFORM 「手を出すなって？イヤだね！」
+			ENDDATA
+		ENDIF
+	ELSE
+		;本加入
+		IF ARG:2 == 0
+			;失敗
+			PRINTDATAL
+				DATAFORM 「お前の仲間になんか、なりたか無いね」
+			ENDDATA
+		ENDIF
+	ENDIF
+	
+	
+CASE 109
+	;PT本加入時（共闘以外）(NPC時)
+	IF CFLAG:29
+		
+	ELSE
+		PRINTDATAL
+			DATAFORM 「付いてくるなって？じゃあ付き纏ってやろうかな」
+		ENDDATA
+	ENDIF
+	
+	
+CASE 110
+	;離脱時
+	IF ARG:2 == 0
+		;確認時
+		IF CFLAG:29
+			;喪失
+			
+		ELSE
+			
+		ENDIF
+	;離脱した　※こっちは自分がメインの時も呼ばれる
+	ELSEIF ARG:2 == 1
+		IF CFLAG:29
+			
+		ELSE
+			IF TARGET == 1
+				;メイン
+				
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「そう、さよなら」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「そう、さよなら」
+					ENDDATA
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+
+
+;＝＝＝会話＿逆襲＝＝＝
+CASE 111
+	;逆襲：アイテム取られる
+CASE 112
+	;逆襲：攻撃される
+CASE 141
+	;逆襲：襲い掛かられた
+CASE 142
+	;逆襲：襲い掛かった
+	
+	
+;＝＝＝会話＿喪失キャラ回復＝＝＝
+CASE 166
+	;喪失キャラを浄化した
+	
+CASE 143
+	;遭遇時喪失キャラに気付け薬を使った
+	
+CASE 144
+	;喪失中に遭遇し気付け薬を使ってもらう
+		SELECTCASE ARG:1
+		CASE 0
+			;お礼を言って去る
+
+		CASE 1
+			;仲間に入りたい
+			
+		CASE 2
+			;入った
+			
+			
+		CASE 3
+			;断られた
+			
+		CASE 4
+			;お酒まで貰った
+		CASE 5
+			;でも触手酒だった
+		CASE 6
+			;乳搾り無理矢理
+		CASE 7
+			;乳搾り同意
+		CASE 8
+			;乳搾り失敗(低好感度)
+		CASE 9
+			;ふたなりちんちんぶちぃ
+		CASE 10
+			;搾精
+		CASE 11
+			;搾精終わり
+		CASE 12
+			;搾乳終わり
+		CASE 13
+			;魔法の拘束具
+		CASE 14
+			;優しくされた
+		ENDSELECT
+
+;＝＝＝会話＿アイテムを渡す＝＝＝
+CASE 163
+	;アイテムをプレゼントした
+	IF TARGET == 1
+		;自分がメイン
+		
+	ENDIF
+	
+CASE 164
+	;アイテムをプレゼントされた(NPC時)
+	IF ARG:3 == 1
+		;実はドッペル
+		
+		
+	ENDIF
+
+	
+	
+	
+	
+	
+;＝＝＝探索系＝＝＝
+CASE 135
+	;探索開始
+	IF TARGET == 1
+		;自分がメイン
+		
+	ENDIF
+
+
+CASE 113
+	;探索でアイテムを見つけた
+	IF TARGET == 1
+		;自分がメイン
+		
+	ENDIF
+
+
+CASE 202
+	;遺品イベント
+
+
+	IF TARGET == 1
+		;メイン
+		
+		SELECTCASE NO:(ARG:1)
+		CASEELSE
+		ENDSELECT
+
+	ELSE
+		
+		
+	ENDIF
+
+	
+	
+;＝＝＝就寝系＝＝＝
+CASE 114
+	;睡眠開始
+
+
+
+
+
+	IF TARGET == 1
+		;メイン
+		
+		IF 影狼PT > 0 && わかさぎPT > 0 && CFLAG:(影狼PT):999 < 20 && CFLAG:(わかさぎPT):999 < 20 && RAND:10 == 0
+			SETCOLOR CFLAG:(わかさぎPT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「影狼さんと添い寝です♪
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「影狼さんと添い寝です♪
+			ENDIF
+			SETCOLOR CFLAG:(影狼PT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ちょっとやめてよ、恥ずかしい…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ちょっとやめてよ、恥ずかしい…」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ふん、犬と魚で、臭い仲ってか？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ふん、犬と魚で、臭い仲ってか？」
+			ENDIF
+			SETCOLOR CFLAG:(影狼PT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「いい加減ｺﾛｽわよ？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「いい加減ｺﾛｽわよ？」
+			ENDIF
+			SETCOLOR CFLAG:(わかさぎPT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「わ、私は臭くないですよ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「わ、私は臭くないですよ！」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「私"は"？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「私"は"？」
+			ENDIF
+			SETCOLOR CFLAG:(わかさぎPT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「え？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「え？」
+			ENDIF
+			SETCOLOR CFLAG:(影狼PT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ｱｵｰﾝ!(泣)」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ｱｵｰﾝ!(泣)」
+			ENDIF
+			SETCOLOR CFLAG:(わかさぎPT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あわわ、影狼さんも臭く無いですよ！石鹸の良い香りですよ！」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あわわ、影狼さんも臭く無いですよ！石鹸の良い香りですよ！」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「おぉ、臭い臭い」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「おぉ、臭い臭い」
+			ENDIF
+			
+		ELSEIF 影狼PT > 0 && わかさぎPT > 0 && CFLAG:(影狼PT):5 > 500 && CFLAG:(わかさぎPT):5 > 500 && RAND:10 == 0
+			SETCOLOR CFLAG:(わかさぎPT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「正邪さん♪」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「正邪さん♪」
+			ENDIF
+			SETCOLOR CFLAG:(影狼PT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ふふ♪正邪♪」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ふふ♪正邪♪」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「あー…生臭いし、獣臭いから離れてくれないか？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「あー…生臭いし、獣臭いから離れてくれないか？」
+			ENDIF
+			SETCOLOR CFLAG:(わかさぎPT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「大丈夫ですよ♪」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「大丈夫ですよ♪」
+			ENDIF
+			SETCOLOR CFLAG:(影狼PT):700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「目覚める頃には病みつきになってるわ♪」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「目覚める頃には病みつきになってるわ♪」
+			ENDIF
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「私は目覚めないと思うぞ？」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「私は目覚めないと思うぞ？」
+			ENDIF
+			
+		ELSEIF 影狼PT > 0 && RAND:2 == 0
+			IF CFLAG:(影狼PT):999 < 20
+				;影狼フラグ0
+				SELECTCASE RAND:2
+				CASE 1
+					SETCOLOR CFLAG:(影狼PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふふふ、生意気なアナタの寝顔でも見させてもらおうかしら？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふふふ、生意気なアナタの寝顔でも見させてもらおうかしら？」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふん、お前の下品な寝顔を見るくらいなら先に寝てやるよ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふん、お前の下品な寝顔を見るくらいなら先に寝てやるよ…」
+					ENDIF
+					SETCOLOR CFLAG:(影狼PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「な！？私の寝顔のどこが下品なのよ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「な！？私の寝顔のどこが下品なのよ！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「えーい吠えるな、寝れないだろ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「えーい吠えるな、寝れないだろ！」
+					ENDIF
+					SETCOLOR CFLAG:(影狼PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「くっ、起きたら覚えてなさいよ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「くっ、起きたら覚えてなさいよ…」
+					ENDIF
+					SETCOLOR CFLAG:700
+					
+				CASE 0
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「zzz…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「zzz…」
+					ENDIF
+					SETCOLOR CFLAG:(影狼PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あら、起きてると糞生意気だけど、寝顔はかわいいのね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あら、起きてると糞生意気だけど、寝顔はかわいいのね」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「zzz…ｲﾇ…ｸｻｲ…zzz…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「zzz…ｲﾇ…ｸｻｲ…zzz…」
+					ENDIF
+					SETCOLOR CFLAG:(影狼PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「このまま永眠させようかしら？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「このまま永眠させようかしら？」
+					ENDIF
+					SETCOLOR CFLAG:700
+					
+				ENDSELECT
+					
+			ELSE
+				SELECTCASE RAND:2
+				CASE 1
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「zzz…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「zzz…」
+					ENDIF
+					SETCOLOR CFLAG:(影狼PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふふ♪かわいー寝顔♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふふ♪かわいー寝顔♪」
+					ENDIF
+					SETCOLOR CFLAG:700
+					
+				CASE 0
+					SETCOLOR CFLAG:(影狼PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ｸﾞｶﾞｰ…zzz…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ｸﾞｶﾞｰ…zzz…」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…よだれ垂れてるぞ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…よだれ垂れてるぞ…」
+					ENDIF
+					
+				ENDSELECT
+			ENDIF
+		ELSEIF わかさぎPT > 0 && RAND:2 == 0
+			IF CFLAG:(わかさぎPT):999 < 20
+				;わかさぎフラグ0
+				SELECTCASE RAND:3
+				CASE 2
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「zzz…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「zzz…」
+					ENDIF
+					SETCOLOR CFLAG:(わかさぎPT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふふっ、正邪さんは口は悪いですけど寝顔はｶﾜｲｲですね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふふっ、正邪さんは口は悪いですけど寝顔はｶﾜｲｲですね」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「zzz…ﾀﾞｲｽｷ…ﾃﾞｽ…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「zzz…ﾀﾞｲｽｷ…ﾃﾞｽ…」
+					ENDIF
+					SETCOLOR CFLAG:(わかさぎPT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「！？」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ﾃﾝﾌﾟﾗ…zzz…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ﾃﾝﾌﾟﾗ…zzz…」
+					ENDIF
+					SETCOLOR CFLAG:(わかさぎPT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…な、何の夢を見てるんでしょう…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…な、何の夢を見てるんでしょう…」
+					ENDIF
+					SETCOLOR CFLAG:700
+					
+				CASE 1
+					SETCOLOR CFLAG:(わかさぎPT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ね、寝てる間に食べようとか、考えないでくださいよ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ね、寝てる間に食べようとか、考えないでくださいよ？」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「しないよ、火を通さずに食べたら食中毒になるからな」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「しないよ、火を通さずに食べたら食中毒になるからな」
+					ENDIF
+					SETCOLOR CFLAG:(わかさぎPT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「火があっても食べないで下さい！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「火があっても食べないで下さい！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					
+				CASE 0
+					SETCOLOR CFLAG:(わかさぎPT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「う～、寝てる間に変な事しないで下さいね？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「う～、寝てる間に変な事しないで下さいね？」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「マグロに興味は無いぞ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「マグロに興味は無いぞ」
+					ENDIF
+					SETCOLOR CFLAG:(わかさぎPT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「人魚です！マグロじゃないです！ちゃんと動きますから！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「人魚です！マグロじゃないです！ちゃんと動きますから！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「へぇー、どんな風に？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「へぇー、どんな風に？」
+					ENDIF
+					SETCOLOR CFLAG:(わかさぎPT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「！…そ、それは…言えません！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「！…そ、それは…言えません！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					
+				ENDSELECT
+			ELSE
+				
+				
+				
+				
+			ENDIF
+			
+			
+		ELSEIF 針妙丸PT > 0 && RAND:2 == 0
+			IF CFLAG:(針妙丸PT):999 < 20
+				SELECTCASE RAND:3
+				CASE 2
+					SETCOLOR CFLAG:(針妙丸PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「正邪、見張りは私に任せてゆっくり休むといいよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「正邪、見張りは私に任せてゆっくり休むといいよ」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んーよろしく…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んーよろしく…」
+					ENDIF
+					SETCOLOR CFLAG:(針妙丸PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「敵が来たら、この針で起こしてあげるよ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「敵が来たら、この針で起こしてあげるよ！」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あー…普通に起こしてくれないか？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あー…普通に起こしてくれないか？」
+					ENDIF
+					
+				CASE 1
+					SETCOLOR CFLAG:(針妙丸PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私はそろそろ寝るよー…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私はそろそろ寝るよー…」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「わわ！懐に入ってくんな！押しつぶすぞ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「わわ！懐に入ってくんな！押しつぶすぞ！」
+					ENDIF
+					
+				CASE 0
+					SETCOLOR CFLAG:(針妙丸PT):700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「正邪の胸は程よい高さで枕に良いのぅ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「正邪の胸は程よい高さで枕に良いのぅ」
+					ENDIF
+					SETCOLOR CFLAG:700
+					IF FLAG:AUTOMODE
+						PRINTFORML 「…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「…」
+					ENDIF
+					
+				ENDSELECT
+					
+			ELSE
+				
+				
+				
+				
+			ENDIF
+			
+		ELSE
+			SETCOLOR CFLAG:700
+			IF FLAG:AUTOMODE
+				PRINTFORML 「ふぁ～…寝るか…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「ふぁ～…寝るか…」
+			ENDIF
+		ENDIF
+	ENDIF
+[SKIPSTART]
+
+
+[SKIPEND]
+
+CASE 115
+	;重度汚染部屋で睡眠114の後に呼ばれる
+	;@SLEEP_TENTACLE参照
+	;呼び出し条件　FLAG:(CFLAG:(ARG:0):4 + 50) >= 100
+
+
+
+CASE 116
+	;重度汚染部屋で睡眠して蟲に襲われた115の後2回呼ばれる
+	;@SLEEP_TENTACLE参照
+	;※必ず二回起きる
+	SELECTCASE ARG:1
+		CASE 0
+			;A
+		CASE 1
+			;B
+		CASE 2
+			;C
+		CASE 3
+			;V
+	ENDSELECT
+
+
+
+;＝＝＝浄化系＝＝＝
+CASE 130
+	;部屋の浄化実行
+
+
+CASE 149
+	;部屋に結界を張った＋入浴
+
+
+
+
+
+
+;＝＝＝行動＝＝＝
+CASE 131
+	;眠気が進行
+	;FLAG:7	眠気
+
+
+CASE 132
+	;部屋を移動：突撃
+
+
+CASE 133
+	;部屋を移動：慎重
+
+
+CASE 134
+	;部屋を移動：待ち伏せ
+
+
+
+;＝＝＝自慰＝＝＝
+CASE 117
+	;睡眠時自慰発生　※自慰の内容自体はCASE 118が呼ばれる
+
+
+
+
+CASE 118
+	;自慰メッセージ
+	;※戦闘中、桃色ガス等でも出る
+	;ARG:1	部位
+
+	IF ARG:2
+		;道具使用
+		
+	ELSE
+		;指
+		
+	ENDIF
+
+
+CASE 119
+	;自慰で絶頂失敗
+
+
+
+;＝＝＝よろず＝＝＝
+
+CASE 120
+	;絶頂の瞬間
+CASE 121
+	;発情がおさまった
+CASE 122
+	;戦意喪失中に絶頂
+CASE 123
+	;母乳を吸われる　※母乳体質のとき戦闘中に敵から胸でイかされてると呼ばれるEXTASY.ERB参照
+CASE 136
+	;処女喪失
+		;ARG:3が1の場合は「処女を喪失しそうなとき」
+		;V防御などで処女喪失を防げる場合も表示されます
+		;本当に喪失するかどうかチェックしたい場合は、上級編でやっているように LOST_VIRGIN_CHECK を使います		
+		;ARG:3が0の場合が本当の処女喪失時なので注意
+	IF ARG:0 == 0
+		PRINTFORML 「うぅ、痛い…」
+	ELSEIF ARG:0 == 1
+		PRINTFORML 「ひっ！やめろ！」
+	ENDIF
+	
+CASE 153
+	;リザレクション発生
+CASE 156
+	;敵ランクアップ
+CASE 158
+	;主人公復活
+	;「○○の瞳に、かすかな光が灯った」の所
+	SELECTCASE ARG:1
+		;助けてもらった
+		CASE 0
+		
+		;捨てられた
+		CASE 1
+		
+	ENDSELECT
+CASE 160
+	;MAP表示時
+	
+;＝＝＝妊娠・寄生＝＝＝
+CASE 125
+	;寄生が進行
+CASE 126
+	;妊娠が進行
+CASE 221, 225
+	;A寄生が進行(221は卵、225は幼体)
+	IF ARG:1 >= 12
+		;%ARGS:0%に寄生した幼体が育つにはまだ時間がかかるようだ…
+	ELSEIF ARG:1 >= 8
+		;%ARGS:0%は少し体に違和感を覚えた。寄生した幼体が徐々に育ち始めたようだ…
+	ELSEIF ARG:1 >= 4
+		;%ARGS:0%は時折息を荒げている。寄生した幼体がかなり育ってきたようだ…
+	ELSEIF ARG:1 >= 2
+		;%ARGS:0%は辛そうな表情を見せている。寄生した幼体がもうすぐ産まれそうだ…
+	ELSEIF ARG:1 >= 1
+		;%ARGS:0%の様子がおかしい。もはや一刻の猶予も無いようだ…
+	ENDIF
+CASE 222, 226
+	;A寄生が進行(PT側)
+	;CHECK_A_PARASITE参照
+	
+CASE 127
+	;寄生出産　※寄生出産は地の文で何が生まれたかは分からない、CFLAG:22には上位も入っている　A寄生はCASE 223で別枠
+
+	IF ARG:1 == 0
+		;開始
+		
+	ELSEIF ARG:1 == 3
+		;汚染部屋の触手が襲ってきた　※ARG:1はこっちの方が大きいが先に呼ばれる
+		
+	ELSEIF ARG:1 == 1
+		;授乳
+
+
+	ELSE
+		;立ち去った
+	ENDIF
+
+CASE 223, 227
+
+
+CASE 129
+	;妊娠出産　※無理にでも違いをつけるとしたら寄生…ある程度形に　妊娠…卵、まだ形になってない　といった感じに
+
+CASE 223, 227
+	;A寄生出産
+	
+	
+CASE 224, 228
+	;A寄生が進行(PT側)
+	
+
+
+
+CASE 145
+	;味方の寄生が進行
+CASE 146
+	;味方の妊娠が進行
+CASE 147
+	;味方が寄生出産
+CASE 148
+	;味方が妊娠出産
+	
+	
+	
+	
+	
+	
+	
+;＝＝＝捕食＝＝＝
+CASE 150
+	;捕食開始
+CASE 151
+	;捕食されている
+CASE 152
+	;捕食され尽くした
+
+
+
+
+
+
+;＝＝＝イベント＝＝＝
+CASE 200
+	;ランダムイベント
+	
+	
+	
+	
+	
+CASE 201
+	;PT分断テレポート
+
+
+
+
+;＝＝＝その他＝＝＝
+CASE 511
+	;エネミー図鑑
+	
+;＝＝＝オープニングとか＝＝＝
+CASE 159
+	;ゲーム開始時 ※OP口上的な　必ず通したい処理があるときに
+[SKIPSTART]
+	正邪ちゃんは…
+		・お尋ね者だから皆から攻められるんだよね
+		・支配者だから皆を攻めるんだよね
+	・お尋ね者
+		「い、いつか反逆してやるぞ…」
+	・支配者
+		「今まで虐げられた分をキッチリ返してやるぞ！」
+	（攻守フラグ設定）
+
+
+	正邪ちゃんってホントは…
+		・悪い子だよね
+		・良い子だよね
+	・悪い子
+		「あたりまえだろ、我が名は正邪！生まれ持ってのアマノジャクだ！」
+	・良い子
+		「はぁ？な、何言ってんだ！わ、我が名は正邪！生まれ持ってのアマノジャクだ！」
+	（高好感度時素直フラグ設定）
+[SKIPEND]
+CASE 203
+	;OP、ゲーム開始直前 ※飛ばされる可能性あり
+	
+	IF FLAG:AUTOMODE
+		PRINTFORML 「はぁ～…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「はぁ～…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「追っ手から逃げて洞窟に逃げ込んだのはよかったが」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「追っ手から逃げて洞窟に逃げ込んだのはよかったが」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「まさかこんな所に出ちまうとは…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「まさかこんな所に出ちまうとは…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「…もしかして追っ手の仕業か？これは罠なのか？」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「…もしかして追っ手の仕業か？これは罠なのか？」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「だったら…この洞窟の主に会って返り討ちしてやる！下剋上だ！」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「だったら…この洞窟の主に会って返り討ちしてやる！下剋上だ！」
+	ENDIF
+	
+	
+CASE 299
+	;EXオープニング (Extra、Phantasmのときのオープニング) ※飛ばされる可能性あり
+	
+;＝＝＝　　　＝＝＝
+CASE 204
+	;エンディング１・仲間を囮にして逃げる
+CASE 205
+	;エンディング１・仲間を囮にして逃げる(仲間時)
+CASE 206
+	;エンディング２・ガーディアン撃破
+CASE 207
+	;エンディング２・ガーディアン撃破(仲間時)
+CASE 208
+	;エンディング３・転移門発見
+CASE 209
+	;エンディング３・転移門発見(仲間時)
+CASE 210
+	;エンディング４・クイーン撃破
+CASE 211
+	;エンディング４・クイーン撃破(仲間時)
+CASE 212
+	;エンディング５・クイーンソロ撃破
+
+
+;＝＝＝　　　＝＝＝
+CASE 213
+	;転移門(光の渦)・ラスボス部屋に転送
+CASE 214
+	;転移門(光の渦)・触手の巣に転送
+CASE 157
+	;ゲームオーバー
+
+
+;＝＝＝　　　＝＝＝
+CASEELSE
+ENDSELECT
+
+RESETCOLOR
+
+;口上記入済み
+RETURN 1
+
+;=================================================
+;指定NOキャラがPTにいるかどうか(娘は無視、ｵﾘｼﾞﾅﾙを探す)
+;ARG:0	確認したいNO
+;RETURNF	0:いない　IS>0:いる
+;=================================================
+@KOJO_114_0_SEARCHNO(ARG:0)
+#FUNCTION
+
+
+SIF NO:1 == ARG && CFLAG:1:104 == 0
+	RETURNF 1
+
+SIF FLAG:10 > 0 && NO:(FLAG:10) == ARG && CFLAG:(FLAG:10):104 == 0
+	RETURNF FLAG:10
+
+SIF FLAG:11 > 0 && NO:(FLAG:11) == ARG && CFLAG:(FLAG:11):104 == 0
+	RETURNF FLAG:11
+
+RETURNF 0
+
+
+;=================================================
+;指定IDのキャラに同作者の口上が使用されているか
+;RETURN	使用されているならキャラNOを返す
+;=================================================
+@KOJO_114_0_SEARCHKOJO(ARG)
+SIF ARG <= 0
+	RETURN 0
+	
+LOCAL = 0
+RESULT = 0
+TRYCALLFORM KOJO_{NO:(ARG)}_{CFLAG:(ARG):701}_SERIAL
+LOCAL = RESULT
+SELECTCASE NO:(ARG)
+CASE 109
+	;わかさぎ姫
+	LOCAL = LOCAL == 2561090 ? 109 # 0
+CASE 110
+	;赤蛮奇
+	LOCAL = LOCAL == 2561100 ? 110 # 0
+CASE 111
+	;影狼
+	LOCAL = LOCAL == 2561110 ? 111 # 0
+CASE 112
+	;弁々
+	LOCAL = LOCAL == 2561120 ? 112 # 0
+CASE 113
+	;八橋
+	LOCAL = LOCAL == 2561130 ? 113 # 0
+CASE 114
+	;正邪
+	LOCAL = LOCAL == 2561140 ? 114 # 0
+CASE 115
+	;針妙丸
+	LOCAL = LOCAL == 2561150 ? 115 # 0
+CASE 116
+	;雷鼓
+	LOCAL = LOCAL == 2561160 ? 116 # 0
+CASEELSE
+	LOCAL = 0
+ENDSELECT
+RETURN LOCAL
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;-以下雑記-
+[SKIPSTART]
+CFLAG:999
+キャラ固有フラグ、主人公に対しての振る舞いを切り替える
+自分が主人公の時は使わない
+CFLAG:998
+未読フラグ
+
+正邪は魔理沙や紅妹みたいな口調かな？まぁその二人のイメージも人によって違うわけだが
+語尾に"ぞ"が多い？
+
+
+
+正邪は他者を人名で呼ばなさそう
+「お前」「人間」「付喪神」「ブンヤ」「巫女」「ババa…おっと！秘密道具が無ければ死んでたな…」
+
+
+	
+
+	IF GROUPMATCH()
+[SKIPEND]
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+

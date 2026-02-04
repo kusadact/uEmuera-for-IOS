@@ -1,0 +1,1945 @@
+﻿;**************************************
+;東方触手宮　アリス口上(2012/20 更新） 
+;
+;対応　v0.05.2
+;
+;
+;kinako
+;**************************************
+;口上基礎知識
+;　口上を書く時は基本的に ARG:0 と ARG:1 の中に「シチュエーション」が入っているので、
+;　それに応じて分岐を行い、適切なメッセージを表示する……というのが基本方針になります
+;　
+;　なお、TARGET に口上を表示するキャラが指定された状態になっているので、
+;　自分の名前や自分のCFLAGを見たい時などは CALLNAME:TARGET とか CFLAG:1 とかで参照できます
+;
+;口上選択時のタイトル
+@KOJO_TITLE_14_0
+RESULTS = 東方触手宮　アリス口上(2012/06/20 更新） 
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_14_0
+PRINTFORML ランダム分岐を多め　繰り返しが飽きにくいものを目指して。
+PRINTFORML 寄生＆妊娠系も搭載　こちらもそれぞれランダム分岐を用意。何回もアリスを孕ませたい紳士な方に
+PRINTFORML なるべく自然な口上　触手宮の雰囲気に合わせ、かつアリスっぽいものを想定
+
+
+;文字色　明るい水色
+@KOJO_DEFAULT_COLOR_14_0
+RETURN RGBCOLOR(200, 255, 255)
+
+
+;口上本体
+@KOJO_14_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;デフォルトの地の文を表示するコマンドです
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;そのキャラの口上の文字色を反映します
+SETCOLOR CFLAG:700
+
+
+
+;↓↓↓　　ここから口上のメイン処理　　↓↓↓
+
+;ARG:0 や ARG:1 の内容で分岐をかけます
+;それぞれの値の意味は「資料とか\PRINT_MESSAGE(口上)フラグ一覧.txt」を参照してください
+
+
+SELECTCASE ARG:0
+
+		;自分が攻撃する時
+	CASE 1
+		SELECTCASE ARG:1
+			;防御
+			CASE 1
+				;発情
+				IF CFLAG:28
+					PRINTFORML 
+					PRINTFORML 「ふわぁ……！　いやぁ……！　近寄らないで……！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 　アリスは発情しきった体を理性と同時に守ろうとしている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 　アリスは発情しきった体を理性と同時に守ろうとしている！
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORML 「ふっ…っ…　あ……うぅ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 　体からくる刺激と恐怖にアリスの精神はこれ以上耐えれそうにない！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 　体からくる刺激と恐怖にアリスの精神はこれ以上耐えれそうにない！
+					ENDIF
+				;全裸
+				ELSEIF !BASE:CP
+					PRINTFORML 「こっち、見ないでよ……！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 　顔を染めたアリスは自分の胸と大事な箇所を押さえている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 　顔を染めたアリスは自分の胸と大事な箇所を押さえている！
+					ENDIF
+				;その他
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……」
+					ENDIF
+					;捕まっていない仲間がいるか
+					IF (NO:1 != 79 && !CFLAG:1:20) || (NO:(FLAG:10) != 79 && !CFLAG:(FLAG:10):20) || (NO:(FLAG:11) != 79 && !CFLAG:(FLAG:11):20)
+						IF FLAG:AUTOMODE
+							PRINTFORML 「……こちらは防御に専念するわ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「……こちらは防御に専念するわ」
+						ENDIF
+					ENDIF
+				ENDIF
+			;アイテム
+			CASE 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「今、これを使うべきね」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「今、これを使うべきね」
+				ENDIF
+			;前進
+			CASE 3
+				PRINTFORML 「この私を盾にするなんて……」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 　アリスはため息をついて、一歩前に進み出た！
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 　アリスはため息をついて、一歩前に進み出た！
+				ENDIF
+			;後退
+			CASE 4
+				PRINTFORML 「下がらせてもらうわ」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 　アリスは魔法の糸で牽制しながら後退した！
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 　アリスは魔法の糸で牽制しながら後退した！
+				ENDIF
+				;捕まっていない仲間がいるか
+				IF (NO:1 != 79 && !CFLAG:1:20) || (NO:(FLAG:10) != 79 && !CFLAG:(FLAG:10):20) || (NO:(FLAG:11) != 79 && !CFLAG:(FLAG:11):20)
+					IF FLAG:AUTOMODE
+						PRINTFORML 「今度はあなたが前に出る？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「今度はあなたが前に出る？」
+					ENDIF
+				ENDIF
+			;逃走
+			CASE 5
+				;発情
+				IF CFLAG:28
+					PRINTFORML 「こんな……はぁ……、ぁ……っ」」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 　アリスは発情しきった体を抑えながら走りだした！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 　アリスは発情しきった体を抑えながら走りだした！
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORML 「今逃げなきゃ……やられる」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 　追い詰められたアリスは逃走を試みた！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 　追い詰められたアリスは逃走を試みた！
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 
+							ENDIF
+					ENDSELECT
+				ENDIF
+			
+			;弾幕攻撃
+			;弱弾幕
+			CASE 10
+				;発情
+				IF CFLAG:28
+					PRINTFORML 「これじゃ集中……できないわ」
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORML 「まだよ……！　今は確実に……！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 追い詰められながらも、アリスは冷静さを失わない！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 追い詰められながらも、アリスは冷静さを失わない！
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:5
+						CASE 0
+							PRINTFORML 「確実に当てていくわ」
+						CASE 1
+							PRINTFORML 「豆鉄砲をくらいなさい」
+						CASE 2
+							PRINTFORML 「とどめはこれで十分」
+						CASE 3
+							PRINTFORML アリスは魔力を節約している！
+						CASEELSE
+							PRINTFORML 「塵も積もれは……ただのゴミ」
+					ENDSELECT
+				ENDIF
+			;中弾幕
+			CASE 11
+				;発情
+				IF CFLAG:28
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ふぅ、ん　……！　い、今は戦いに集中よ！」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 　アリスは頬を染めながら、必死に歯を食いしばっている！
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 　アリスは頬を染めながら、必死に歯を食いしばっている！
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「これぐらい……なんでもないわ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「これぐらい……なんでもないわ」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 　とてつもなく敏感になった部位からアリスは意識を背けている！
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 　とてつもなく敏感になった部位からアリスは意識を背けている！
+							ENDIF
+					ENDSELECT
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「く……まだ！　まだよ！」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL アリスの目から涙が滲んでいる……
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW アリスの目から涙が滲んでいる……
+							ENDIF
+						CASE 1
+							PRINTFORML 「はぁ……はぁ……いくわよ」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 　触手に体を弄ばれながらも、アリスはまだ闘志を失っていない！
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 　触手に体を弄ばれながらも、アリスはまだ闘志を失っていない！
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「う、く……私が追い詰められるなんて……っ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「う、く……私が追い詰められるなんて……っ」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORMDL アリスの精神力はもうぎりぎりだ……
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW アリスの精神力はもうぎりぎりだ……
+							ENDIF
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:7
+						CASE 0
+							PRINTFORML アリスは次々と人形を取り出している！
+						CASE 1
+							PRINTFORML スペクトルミステリーの波動が敵に向かっていく！
+						CASE 2
+							PRINTFORML ついでにアリスは人形を投げた！
+						CASE 3
+							PRINTFORML 虹色の弾幕が辺りを染めている……
+						CASE 4
+							PRINTFORML 「これが一番確実ね」
+						CASE 5
+							PRINTFORML 「これはどうかしら」
+						CASEELSE
+							PRINTFORML 「弾幕はブレインよ！」
+					ENDSELECT
+				ENDIF
+			;強弾幕
+			CASE 12
+				;発情
+				IF CFLAG:28
+					PRINTFORML 「ふあっ……っん！　もう、怒ったわよ！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 　アリスは欲情に集中を乱され、ありったけの人形を投げつけた！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 　アリスは欲情に集中を乱され、ありったけの人形を投げつけた！
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORML 「これじゃ、まるでやぶれかぶれね……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 　ボロボロのアリスの代わりに大江戸人形が特攻した！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 　ボロボロのアリスの代わりに大江戸人形が特攻した！
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:7
+						CASE 0
+							PRINTFORML 続いて一際大きい人形が突撃した！
+						CASE 1
+							PRINTFORML アリスは次々と大玉を放っている！
+						CASE 2
+							PRINTFORML 「当たれば儲けものね」
+						CASE 3
+							PRINTFORML 「やれそう、かも」
+						CASE 4
+							PRINTFORML 「少し激しくね！」
+						CASE 5
+							PRINTFORML 「大味だったかしら？」
+						CASEELSE
+							PRINTFORML 「手が滑ったわ」
+					ENDSELECT
+				ENDIF
+			;溜め撃ち
+			CASE 13
+				;溜め
+				IF CFLAG:31 == 2
+					SELECTCASE RAND:7
+						CASE 0
+							PRINTFORML アリスは人形を設置した！
+						CASE 1
+							PRINTFORML アリスはスペルカードを掲げた！
+						CASE 2
+							PRINTFORML アリスは人形に魔力を充填している……
+						CASE 3
+							PRINTFORML 「ここに人形をおいて、ターン終了」
+						CASE 4
+							PRINTFORML 「切り札を使うわ」
+						CASE 5
+							PRINTFORML 「博打は嫌いじゃないわ。イカサマ有りなら」
+						CASEELSE
+							PRINTFORML 「……」
+					ENDSELECT
+				;発射
+				ELSE
+					SELECTCASE RAND:7
+						CASE 0
+							PRINTFORML 無数の人形達が敵に襲いかかる！
+						CASE 1
+							PRINTFORML 試験中の巨大化した人形が暴れている！
+						CASE 2
+							PRINTFORML 投げつけた人形が大爆発を起こした！
+						CASE 3
+							PRINTFORML スペルカードが発動！
+						CASE 4
+							PRINTFORML 「これでも喰らいなさい！」
+						CASE 5
+							PRINTFORML 「もったいないから当たってね！」
+						CASEELSE
+							PRINTFORML 「吹き飛びなさい！」
+					ENDSELECT
+				ENDIF
+			;ばら撒き弾
+			CASE 14
+					SELECTCASE RAND:7
+						CASE 0
+							PRINTFORML 弾幕にまぎれて魔法の糸が敵を絡めとる！
+						CASE 1
+							PRINTFORML 小さな人形が敵の注意を逸らしている！
+						CASE 2
+							PRINTFORML 拡散した弾幕が敵の動きを封じようとしている！
+						CASE 3
+							PRINTFORML 「これで当たりやすくなるかしら」
+						CASE 4
+							PRINTFORML 「きっとこれが布石になるわ」
+						CASE 5
+							PRINTFORML 「得意分野ね」
+						CASEELSE
+							PRINTFORML 
+					ENDSELECT
+			;貫通弾
+			CASE 15
+					SELECTCASE RAND:7
+						CASE 0
+							PRINTFORML 一度に展開した人形達が敵全体に向けて一斉射撃を始めた！
+						CASE 1
+							PRINTFORML 極太のレーザーが敵を貫通して薙ぎ払う！
+						CASE 2
+							PRINTFORML アリスが操る人形が敵を次々と貫いていく！
+						CASE 3
+							PRINTFORML 「いいわ。まとめて相手をしてあげる」
+						CASE 4
+							PRINTFORML 「弾幕はばらまくもの」
+						CASE 5
+							PRINTFORML 「ファンネル！」
+						CASEELSE
+							PRINTFORML 
+					ENDSELECT
+			;消耗武器
+			;弱攻撃
+			CASE 20
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「体が……　ふぁぅ！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「体が……　ふぁぅ！？」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「う……今は確実に……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「う……今は確実に……」
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML アリスは巧みに道具を使用している！
+						CASE 1
+							PRINTFORML 「当たりなさい！」
+						CASE 2
+							PRINTFORML 「残り弾数に気をつけないとね」
+						CASEELSE
+							PRINTFORML 「この際なんでも使うわ」
+					ENDSELECT
+				ENDIF
+			;中攻撃
+			CASE 21
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんな状態じゃ……思うように動けないわ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんな状態じゃ……思うように動けないわ」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……きついわね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……きついわね」
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML アリスは巧みに道具を使用している！
+						CASE 1
+							PRINTFORML 「当たりなさい！」
+						CASE 2
+							PRINTFORML 「残り弾数に気をつけないとね」
+						CASEELSE
+							PRINTFORML 「この際なんでも使うわ」
+					ENDSELECT
+				ENDIF
+			;強攻撃
+			CASE 22
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ……ふっぅ……くっ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ……ふっぅ……くっ！」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……これでいけるかしら」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……これでいけるかしら」
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML アリスは巧みに道具を使用している！
+						CASE 1
+							PRINTFORML 「当たりなさい！」
+						CASE 2
+							PRINTFORML 「残り弾数に気をつけないとね」
+						CASEELSE
+							PRINTFORML 「この際なんでも使うわ」
+					ENDSELECT
+				ENDIF
+			;節約攻撃
+			CASE 23
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んんっ……私……なにをやって」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んんっ……私……なにをやって」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「もう逃げたほうが……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「もう逃げたほうが……」
+					ENDIF
+				;その他
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ついケチってしまうわね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ついケチってしまうわね」
+					ENDIF
+				ENDIF
+			;みだれうち
+			CASE 24
+				;発情
+				IF CFLAG:28
+					PRINTFORML 「ふ……あぁああああああっ！？」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 　急に体中がうずいたアリスは武器の弾を縦横無尽にばらまいた！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 　急に体中がうずいたアリスは武器の弾を縦横無尽にばらまいた！
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「う……ここは一気に」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「う……ここは一気に」
+					ENDIF
+				;その他
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こういう贅沢もたまには悪くないわね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こういう贅沢もたまには悪くないわね」
+					ENDIF
+				ENDIF
+			;一点集中
+			CASE 25
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふぁっ！？　もう、なんなのよ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふぁっ！？　もう、なんなのよ！」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「大分……しぶといわね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「大分……しぶといわね」
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「狙い撃つわ！」
+						CASE 1
+							PRINTFORML 「ターゲットをレンジに入れてシュート！」
+						CASE 2
+							PRINTFORML 「残り弾数に気をつけないとね」
+						CASEELSE
+							PRINTFORML 「大盤振る舞いよ」
+					ENDSELECT
+				ENDIF
+			
+			;非消耗武器
+			;弱攻撃
+			CASE 30
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……あ、敵を、先にたおさなきゃ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……あ、敵を、先にたおさなきゃ」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……もう終わって」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……もう終わって」
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML アリスは人形に武器もたせて突撃させた！
+						CASE 1
+							PRINTFORML 「どうもしっくりこないわね」
+						CASE 2
+							PRINTFORML 「これでトドメ刺せるかしら？」
+						CASEELSE
+							PRINTFORML 「この際なんでも使うわ」
+					ENDSELECT
+				ENDIF
+			;中攻撃
+			CASE 31
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「やだ……体が熱い……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「やだ……体が熱い……」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……まずいわね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……まずいわね」
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:6
+						CASE 0
+							PRINTFORML アリスは人形に武器を持たせて突撃させた！
+						CASE 1
+							PRINTFORML アリスは武器に糸をつけて宙で操っている！
+						CASE 2
+							PRINTFORML ついでにアリスは藁人形に武器を叩きつけた！
+						CASE 3
+							PRINTFORML 「私が武器に頼るなんてね」
+						CASE 4
+							PRINTFORML 「やっ！」
+						CASEELSE
+							PRINTFORML 「この際なんでも使うわ」
+					ENDSELECT
+				ENDIF
+			;強攻撃
+			CASE 32
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「う、……お腹が熱い」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「う、……お腹が熱い」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……やるしかないわ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……やるしかないわ」
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML アリスは人形に武器を持たせて突撃させた！
+						CASE 2
+							PRINTFORML アリスは武器に糸をつけて敵に叩きつけた！
+						CASE 3
+							PRINTFORML 「やってみるわ」
+						CASEELSE
+							PRINTFORML 「この際なんでも使うわ」
+					ENDSELECT
+				ENDIF
+			;下段狙い
+			CASE 33
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うぅ……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うぅ……」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……少しはこれで」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……少しはこれで」
+					ENDIF
+				;その他
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「動きを鈍らせれば戦いやすくなりそうね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「動きを鈍らせれば戦いやすくなりそうね」
+					ENDIF
+				ENDIF
+			;急所狙い
+			CASE 34
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「はぁ……もう！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「はぁ……もう！」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……」
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML アリスは武器を持たせた人形を急所に投げつけた！
+						CASE 2
+							PRINTFORML 「……相手の行動より先に動ければ」
+						CASE 3
+							PRINTFORML 「そこが弱点ね！」
+						CASEELSE
+							PRINTFORML 「スタンを狙ってみるわ」
+					ENDSELECT
+				ENDIF
+			
+			;拘束離脱
+			CASE 42
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ふぁ、あ……あ……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ふぁ、あ……あ……」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「これが最後のチャンスかしら……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「これが最後のチャンスかしら……」
+					ENDIF
+				;その他
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 
+						CASE 2
+							PRINTFORML 
+						CASE 3
+							PRINTFORML 
+						CASEELSE
+							PRINTFORML 
+					ENDSELECT
+				ENDIF
+			
+			;力溜め
+			CASE 43
+				;発情
+				IF CFLAG:28
+					IF FLAG:AUTOMODE
+						PRINTFORML 「きっと、無理……ね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「きっと、無理……ね」
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……いちか……ばちか」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……いちか……ばちか」
+					ENDIF
+				;その他
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「力をためれば……抜け出せるはず」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「力をためれば……抜け出せるはず」
+					ENDIF
+				ENDIF
+			
+			;諦め
+			CASE 44
+				PRINTFORML 「これじゃもう……無理ね」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 触手の手からは逃れられないことを悟ると、アリスの手がだらりと下がった……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 触手の手からは逃れられないことを悟ると、アリスの手がだらりと下がった……
+				ENDIF
+			;Ａを守る
+			CASE 50
+				PRINTFORML 「後ろ……？　まさか！？」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 　背中から回りこむ触手の気配を感じ、アリスはお尻をふって狙いを逸らした！
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 　背中から回りこむ触手の気配を感じ、アリスはお尻をふって狙いを逸らした！
+				ENDIF
+			;Ｂを守る
+			CASE 51
+				PRINTFORML 「どこを触ってるのよ！」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 　アリスは自らの体を抱くようにして胸を守っている！
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 　アリスは自らの体を抱くようにして胸を守っている！
+				ENDIF
+			;Ｃを守る
+			CASE 52
+				PRINTFORML 「や……そこはやめなさい！」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 　敏感な部分をくすぐられたアリスは身をくねらせて、触手から離れた！、
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 　敏感な部分をくすぐられたアリスは身をくねらせて、触手から離れた！、
+				ENDIF
+			;Ｖを守る
+			CASE 53
+				SELECTCASE RAND:5
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「なにするつもり！？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「なにするつもり！？」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML アリスは足を閉じて必死に触手を押さえ込んでいる！
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW アリスは足を閉じて必死に触手を押さえ込んでいる！
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「……！　そこだけはやめて！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「……！　そこだけはやめて！」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 挿入を本能的に恐れたアリスは手で入口を覆い隠した！
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 挿入を本能的に恐れたアリスは手で入口を覆い隠した！
+						ENDIF
+					CASE 2
+						IF FLAG:AUTOMODE
+							PRINTFORML 
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 
+						ENDIF
+					CASE 3
+						IF FLAG:AUTOMODE
+							PRINTFORML 
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 
+						ENDIF
+				ENDSELECT
+		ENDSELECT
+	CASE 12
+		;敵の通常攻撃(HP攻撃)が当たった
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「いたっ！」
+			CASE 1
+				PRINTFORML 「う……」
+			CASEELSE
+				PRINTFORML 「きゃっ！」
+		ENDSELECT
+	CASE 14
+		;敵の性攻撃(EP攻撃)が当たった
+		;性攻撃などの場合、ARG:2に属性（0＝A攻撃　1＝B攻撃　2＝C攻撃　3＝V攻撃）が入っています
+		IF ARG:2 == 3
+			;V攻撃された
+			SELECTCASE RAND:7
+				CASE 0
+					PRINTFORML 「ナカ……こすらない、で…！」
+				CASE 1
+					PRINTFORML （きもち　わるい……！）
+				CASE 2
+					PRINTFORML 「……いやぁ！」
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 触手は冒涜的な儀式を経てアリスに自らの児を孕ませようとしている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 触手は冒涜的な儀式を経てアリスに自らの児を孕ませようとしている……
+					ENDIF
+				CASE 4
+					IF FLAG:AUTOMODE
+						PRINTFORMDL アリスの桃色のつぼみに触手の群れが殺到している……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW アリスの桃色のつぼみに触手の群れが殺到している……
+					ENDIF
+				CASE 5
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 触手の粘液とアリスの愛液が交じり合い
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 触手の粘液とアリスの愛液が交じり合い
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 異物の挿入に淫らな音を添えている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 異物の挿入に淫らな音を添えている……
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 膣内に侵入したおぞましい感覚にアリスは身を震わせている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 膣内に侵入したおぞましい感覚にアリスは身を震わせている……
+					ENDIF
+			ENDSELECT
+		ELSEIF ARG:2 == 0
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「そっちは……ちが……」
+				CASE 1
+					PRINTFORML 「ひぁ!!?」
+				CASE 2
+					PRINTFORML 「お尻……！？」
+				CASE 3
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 不浄の穴に触れられる感覚にアリスは戸惑いを隠せない！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 不浄の穴に触れられる感覚にアリスは戸惑いを隠せない！
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 腸内に侵入したおぞましい感覚をアリスはお尻をふって振り払おうをしている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 腸内に侵入したおぞましい感覚をアリスはお尻をふって振り払おうをしている！
+					ENDIF
+			ENDSELECT
+		ELSE
+			;それ以外
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「この、けだもの……！」
+				CASE 1
+					PRINTFORML 「そこから離れなさい……！」
+				CASE 2
+					PRINTFORML 「こんなの、気持よくなんか……！」
+				CASE 3
+					PRINTFORML 「んっ……！」
+				CASEELSE
+					PRINTFORML 「感じ……ないわ！」
+			ENDSELECT
+		ENDIF
+	CASE 22 TO 27
+		;敵の攻撃を避けた（22～27が避けた時の処理なので、全部まとめて処理）
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「当たらないわ！」
+			CASE 1
+				PRINTFORML 「計算通りね」
+			CASEELSE
+				PRINTFORML 「これ以上させないわ」
+		ENDSELECT
+	CASE 32
+		;HPが0になった
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「力が入らない……」
+			CASE 1
+				PRINTFORML 「攻撃を受けすぎたわ……」
+			CASEELSE
+				PRINTFORML アリスはもう立つこともままならないようだ……
+		ENDSELECT
+	CASE 33
+		;MPが0（戦意喪失）になった
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 人形のようにアリスは　虚ろな瞳で何かを考え込んでいる……
+			CASE 1
+				PRINTFORML （もう……何もかも無駄よ）
+			CASEELSE
+				PRINTFORML （ここから出ることは……不可能だわ）
+		ENDSELECT
+	CASE 35
+		;CPが減少した　（ARG:1が　0：全裸になった　1：半裸になった　2：破れ始めた）
+		IF ARG:1 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「よくも　私の服を……！」
+				CASE 1
+					PRINTFORML アリスはボロきれと化した服を、未練がましそうに見つめている……
+				CASEELSE
+					PRINTFORML 「許さないわ……」
+			ENDSELECT
+		ELSEIF ARG:1 == 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「まだ、直せるかしら……」
+				CASE 1
+					PRINTFORML 「隠しきれないじゃない……」
+				CASEELSE
+					PRINTFORML 「……ひどい事するわ」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「これくらいなら直せるけど……」
+				CASE 1
+					PRINTFORML 「かすっただけね」
+				CASEELSE
+					PRINTFORML 「まったく……」
+			ENDSELECT
+		ENDIF
+	CASE 40
+		;寄生された
+		;産みつけられる卵というイメージで
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「！？　うそ、今……」
+				CASE 1
+					PRINTFORML 「何を入れられたの……！？」
+				CASEELSE
+					PRINTFORML 「まさか……こいつの！？」
+			ENDSELECT
+	CASE 46
+		;羞恥フラグ
+		;全裸エロくないというと人は言いますが、羞恥あっての全裸も至高のものです。この口上はエロくないですが……
+		IF ARG:1 == 0
+			;恥薄いは何もなし
+		ELSEIF ARG:1 == 1
+			SELECTCASE RAND:10
+				CASE 0
+					PRINTFORML 「……なんて格好」
+				CASE 1
+					PRINTFORML 「何も隠せないだなんて……」
+				CASE 2
+					PRINTFORML 「……こんな辱めを」
+				CASE 3
+					PRINTFORML 「……絶対、許さないわ」
+				CASE 4
+					PRINTFORML 「無防備もいいところね……」
+				CASE 5
+					PRINTFORML ねぶるような視線を感じて思わずアリスは目を逸らした！
+				CASE 6
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 人形達が看板をもってアリスの裸を隠そうとしている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 人形達が看板をもってアリスの裸を隠そうとしている！
+					ENDIF
+				CASE 7
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 晒された素肌が微かに震えている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 晒された素肌が微かに震えている……
+					ENDIF
+				CASE 8
+					PRINTFORML 
+				CASEELSE
+					PRINTFORML 
+			ENDSELECT
+		ELSE
+			PRINTFORML
+		ENDIF
+	CASE 52
+		IF ARG:2
+			PRINTFORML 「丸呑みだなんて……！」
+			IF ARG:1 > 4
+				PRINTFORML 「これじゃ、もう……」
+			ENDIF
+		ELSE
+			PRINTFORML 「しまった！？」
+			IF ARG:1 > 4
+				PRINTFORML 「う、うごけない……！」
+			ENDIF
+		ENDIF
+		CALL MSG_WAIT(1)
+	CASE 55
+		;敵から逃げた
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「一時撤退よ！」
+				CASE 1
+					PRINTFORML 「さよなら」
+				CASEELSE
+					PRINTFORML 「相手にしてられないわ」
+			ENDSELECT
+	CASE 57
+		;敵に勝った
+			SELECTCASE RAND:7
+				CASE 0
+					PRINTFORML 「当然ね」
+				CASE 1
+					PRINTFORML 「人形と服を直さないと……」
+				CASE 2
+					PRINTFORML アリスはそっと息を吐いた……
+				CASE 3
+					PRINTFORML 「きりがないわ……」
+				CASE 4
+					PRINTFORML アリスは眉をしかめて汚れを落としている
+				CASE 5
+					PRINTFORML 「人形遣いをなめないことね」
+				CASEELSE
+					PRINTFORML 「ふふ……」
+			ENDSELECT
+	CASE 101
+		;迷宮内で誰かに会った
+		IF NO:(ARG:1) == 88
+			;上海に会った
+			PRINTFORML 「上海じゃない。　こんなところにいたのね」
+			PRINTFORML （自立制御の実験でもしてたっけ？）
+		ELSEIF NO:(ARG:1) == 89
+			;蓬莱に会った
+			PRINTFORML 「あら蓬莱。こっちにいらっしゃいな」
+			PRINTFORML （細かいことを考えたら負けな気がする……）
+		ELSEIF NO:(ARG:1) == 1
+			;霊夢に会った
+			PRINTFORML 「おめでたい巫女まで捕まっているなんて……」
+		ELSEIF NO:(ARG:1) == 2
+			;魔理沙に会った
+			PRINTFORML 「そこの白黒いのは魔理沙ね。大丈夫？」
+		ELSEIF NO:(ARG:1) == 33
+			;メディスンに会った
+			PRINTFORML 「あら可愛いお人形」
+		ELSEIF NO:(ARG:1) == 52
+			;神埼に会った
+			PRINTFORML 「え。もしかしてここって魔界なの？」
+		ELSEIF NO:(ARG:1) == 90
+			;ちびアリスに会った
+			PRINTFORML 「ドッペルゲンガーが姿を間違えたのかしら？」
+		ELSE
+			;その他
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「こんにちは」
+				CASE 1
+					PRINTFORML 「ごきげんよう」
+				CASE 2
+					PRINTFORML 「貴方も閉じ込められたのね」
+				CASE 3
+					PRINTFORML 「なにやってるの？」
+				CASEELSE
+					PRINTFORML 「……あら」
+			ENDSELECT
+		ENDIF
+	CASE 103
+			;会話
+			;主人公の場合のみ
+		IF TARGET == 1
+			IF CFLAG:1:22 && (CFLAG:1:36 == 0 || CFLAG:1:36 >= 3)
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「気分が悪そう？　平気よ……これぐらい」
+					CASE 1
+						PRINTFORML 「心配してる？　余計なお世話」
+					CASE 2
+						PRINTFORML 「ええ……そうね」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL  　時折思い出したかのように腹の奥が脈動する……
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW  　時折思い出したかのように腹の奥が脈動する……
+						ENDIF
+					CASE 3
+						PRINTFORML 「…………」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 　会話の途中でアリスは言葉を止め、お腹をさすった……
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 　会話の途中でアリスは言葉を止め、お腹をさすった……
+						ENDIF
+					CASEELSE
+						PRINTFORML 
+				ENDSELECT
+			ELSE
+			SELECTCASE RAND:17
+					CASE 0
+						PRINTFORML 「材料があれば、貴方をモデルに人形作ってあげてもいいわよ」
+					CASE 1
+						PRINTFORML 「外の世界から流れてくる人形って角張ってるのが多いわねぇ」
+					CASE 2
+						PRINTFORML 「プラモデルって知ってる？　
+						PRINTFORML   外の人間はあんな穴だらけの板で満足するのかしら」
+					CASE 3
+						PRINTFORML 「人形にも魂があるわ。
+						PRINTFORML   え？　この前歩いていたのを見たって？　そんなまさか」
+					CASE 4
+						PRINTFORML 「人形のメンテにも手間が掛かるわ。散髪とか」
+					CASE 5
+						PRINTFORML 「人形の巨大化もまだまだ問題点が多いわね……」
+					CASE 6
+						PRINTFORML 「何体まで同時に操れるかって？　さぁ……試したことないわ」
+					CASE 7
+						PRINTFORML 「人形は湿気がたまると大変。
+						PRINTFORML   天気がいい日はちゃんと干しているわ」
+					CASE 8
+						PRINTFORML 「髪をきりたいの？　じゃあ少し分けて。使うから」
+					CASE 9
+						PRINTFORML 「人形とお風呂に入りたかったから防水加工を施したのよ」
+					CASE 10
+						PRINTFORML 「ここに入ってからなんだか人形達の様子がおかしいわ。
+						PRINTFORML   まるで本当に生きている気がするのよ」
+					CASE 11
+						PRINTFORML 「子供を生める人形を試作しているのよ。
+						PRINTFORML   なんでかって？　作る手間が省けるじゃない。……いや、人形をよ」
+					CASE 12
+						PRINTFORML 「この前ドールハウスというのを見たわ。あれは職人芸ね。
+						PRINTFORML   多少小さすぎる気がするけど」
+					CASE 13
+						PRINTFORML 「どこかで落ち着いてお裁縫がしたいわね」
+					CASE 14
+						PRINTFORML 「無理は良くないわ。何事も」
+					CASE 15
+						PRINTFORML 「外の世界で私と同じ名前の魔女がいるらしいわ。会ってみたいわね」
+					CASEELSE
+						PRINTFORML 
+				ENDSELECT
+			ENDIF
+			IF ARG:2
+				PRINTFORM
+			ENDIF
+		ENDIF
+	CASE 104
+	;会話
+		;情報交換
+		SELECTCASE RAND:5
+			CASE 0
+				PRINTFORML 「敵の情報はありがたいわ」
+			CASE 1
+				PRINTFORML 「ｶｸｶｸｼｶｼﾞｶって便利な呪文よね」
+			CASE 2
+				PRINTFORML 「ここは協力しあうべきね」
+			CASE 3
+				PRINTFORML 「まだテスト中？　なにそれ」
+			CASEELSE
+				PRINTFORML 「……なんだか今は脱出できない気がするのよねぇ」
+		ENDSELECT
+	CASE 109
+		;PTに加入した
+		PRINTFORML 「よろしくね」
+	CASE 113
+		;探索でアイテムを拾った
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「あら、なにかあったわ」
+				CASE 1
+					PRINTFORML 「色々な物が落ちているわね」
+				CASE 2
+					PRINTFORML 「助かるわ」
+				CASE 3
+					PRINTFORML 「これの使い方は……」
+				CASEELSE
+					PRINTFORML 「見つけた！」
+			ENDSELECT
+	CASE 114
+		;眠り開始
+		;IF TARGET == -1を入れるか迷い中
+			IF ARG:1 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「すぅ……すぅ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「すぅ……すぅ……」
+				ENDIF
+			ELSEIF ARG:1 == 1
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「交代で休みましょう」
+					CASE 1
+						PRINTFORML 「見張りは部屋の中央でね」
+					CASE 2
+						PRINTFORML 「これなら安心ね」
+					CASE 3
+						PRINTFORML 「お疲れ様」
+					CASEELSE
+						PRINTFORML 「次は私の番？」
+				ENDSELECT
+			ELSEIF ARG:1 == 2
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「頼むわね」
+					CASE 1
+						PRINTFORML 「不躾なお願いだけど……」
+					CASE 2
+						PRINTFORML 「これなら大分休めるわ」
+					CASE 3
+						PRINTFORML 「ふぅ……」
+					CASEELSE
+						PRINTFORML 「昼も夜もよくわからないわね」
+				ENDSELECT
+			ENDIF
+	CASE 120
+		;絶頂時
+		;せっかくなので多めに　感じないわ！
+			SELECTCASE RAND:12
+				CASE 0
+					PRINTFORML 「やだ、やぁら！　はぁあああぁぁあｯ!!」
+				CASE 1
+					PRINTFORML 「んっくぅうううぅ!!」」
+				CASE 2
+					PRINTFORML 「……か、感じ、　ないわ……　！？　──ふぅうぁあああ!!」
+				CASE 3
+					PRINTFORML 「アっん…ぁん…あぁ……ぁんっ!」
+				CASE 4
+					PRINTFORML 「だめ！　らめぇ！　ふぁあああぁぁあｯん!!」
+				CASE 5
+					PRINTFORML 「あっ……イっ、ちゃ──」
+				CASE 6
+					IF FLAG:AUTOMODE
+						PRINTFORMDL アリスの体は絶頂の余韻でビクビクと痙攣し続けている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW アリスの体は絶頂の余韻でビクビクと痙攣し続けている……
+					ENDIF
+				CASE 7
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 触手に弄ばれたアリスの身体はさらなる悦楽を欲している……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 触手に弄ばれたアリスの身体はさらなる悦楽を欲している……
+					ENDIF
+				CASE 8
+					IF FLAG:AUTOMODE
+						PRINTFORMDL アリスの秘裂から断続的に愛液が吹きでている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW アリスの秘裂から断続的に愛液が吹きでている……
+					ENDIF
+				CASE 9
+					PRINTFORML 「な、なに……これ……やっ、そこっ……」
+				CASE 10
+					PRINTFORML 「私が……こんな……」
+				CASEELSE
+					PRINTFORML 「はぁ……はぁ……」
+			ENDSELECT
+	CASE 125
+		;寄生が進行
+		IF ARG:1 >= 12
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「やられたわね……」
+				CASE 1
+					PRINTFORML 「……迂闊だったわ」
+				CASEELSE
+					PRINTFORML 
+				ENDSELECT
+			CALL MSG_WAIT(1)
+		ELSEIF ARG:1 >= 8
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「変な感じ……」
+				CASE 1
+					PRINTFORML 「お腹の奥ね……」
+				CASEELSE
+					PRINTFORML 
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSEIF ARG:1 >= 4
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「うっ……はやく、なんとかしないと」
+				CASE 1
+					PRINTFORML 「糸でひっぱり出せないかしら」
+				CASEELSE
+					PRINTFORML 
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSEIF ARG:1 >= 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「熱い……！」
+				CASE 1
+					PRINTFORML 「う、ぐ……魔力を吸われてる」
+				CASEELSE
+					PRINTFORML 
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSEIF ARG:1 >= 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「も、もう……限界」
+				CASE 1
+					PRINTFORML 「……抑え切れないわ」
+				CASEELSE
+					PRINTFORML 
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ENDIF
+	CASE 126
+		;妊娠が進行
+		;正直書きすぎた
+		IF ARG:1 >= 11
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「？　どうしたのかしら……」
+				CASE 1
+					PRINTFORML 「調子が出ないわね」
+				CASEELSE
+					PRINTFORML 「ん……」
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSEIF ARG:1 >= 9
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「うっ……まさか、大丈夫よね」
+				CASE 1
+					PRINTFORML 「気のせいかしら……」
+				CASEELSE
+					PRINTFORML 「はぁ……」
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSEIF ARG:1 >= 8
+			IF CFLAG:36 == 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やっぱり気のせいだったみたい」
+					CASE 1
+						PRINTFORML 「妙にあれが早かったけど……」
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORMDL  アリスは迷宮の物陰に屈みこんだあと、息をついて出てきた……
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW  アリスは迷宮の物陰に屈みこんだあと、息をついて出てきた……
+						ENDIF
+						CALL MSG_WAIT(1)
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「うぇっ……ふぐっ……」
+						IF FLAG:AUTOMODE
+							PRINTFORMDL (嘘……、まさか、できちゃったの……？)
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW (嘘……、まさか、できちゃったの……？)
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 得体のしれない生命との行為で子を孕んだ事実に、アリスは呆然としている……
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 得体のしれない生命との行為で子を孕んだ事実に、アリスは呆然としている……
+						ENDIF
+						PRINTFORML 
+						PRINTFORML 
+						CALL MSG_WAIT(1)
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 迷宮の片隅でアリスは激しく嘔吐した…
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 迷宮の片隅でアリスは激しく嘔吐した…
+						ENDIF
+						PRINTFORML (これってやっぱり……つわり、なの……？)
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 身に覚えがあるアリスは、異形の子種で妊娠した現実に驚愕している……
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 身に覚えがあるアリスは、異形の子種で妊娠した現実に驚愕している……
+						ENDIF
+						PRINTFORML 
+						PRINTFORML 
+						CALL MSG_WAIT(1)
+				ENDSELECT
+			ENDIF
+		ELSEIF ARG:1 >= 5
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「……もう取り返しがつかないわ」
+				CASE 1
+					PRINTFORML 「化物に責任……とってくれるわけないわね」
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORMDL アリスは時々お腹を押さえて考え事をしている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW アリスは時々お腹を押さえて考え事をしている……
+					ENDIF
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSEIF ARG:1 >= 3
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もう、こんなに大きくなって……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL アリスは身重になった自分の体を見下ろしている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW アリスは身重になった自分の体を見下ろしている……
+					ENDIF
+				CASE 1
+					PRINTFORML （この迷宮では時間の流れが違うのかしら……？）
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 胎内で育つモノのことを考えないように、アリスは別のことに思考を巡らせている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 胎内で育つモノのことを考えないように、アリスは別のことに思考を巡らせている……
+					ENDIF
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 「今、中で動いたわ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 「今、中で動いたわ」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 内側から腹をける我が子の感触に、アリスはなんとも言えない気分になった……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 内側から腹をける我が子の感触に、アリスはなんとも言えない気分になった……
+					ENDIF
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSEIF ARG:1 >= 1
+			IF TALENT:130
+				PRINTFORML 「ふ……っ、いたぁっ……！」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL アリスは涙をこらえて、懸命にふくらみきった腹を押さえている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW アリスは涙をこらえて、懸命にふくらみきった腹を押さえている……
+				ENDIF
+				CALL MSG_WAIT(1)
+			ELSE
+				PRINTFORML 「おっぱい……でてるわ」
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 本人の思惑とは別に、母親となる準備を終えた乳房の先端から母乳が滴っている
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 本人の思惑とは別に、母親となる準備を終えた乳房の先端から母乳が滴っている
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…………」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…………」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL どこか遠くの出来事のように、アリスはそれを眺めていた……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW どこか遠くの出来事のように、アリスはそれを眺めていた……
+				ENDIF
+				PRINTFORML
+				CALL MSG_WAIT(1)
+			ENDIF
+		ENDIF
+	CASE 127
+		;寄生・出産イベント
+		IF ARG:1 == 0
+			;最初
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「で、でてくる……いやぁあぁぁっ!!!」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL アリスの子宮を借り宿にしていた異形はようやく外に出られた喜びに打ち震えている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW アリスの子宮を借り宿にしていた異形はようやく外に出られた喜びに打ち震えている！
+					ENDIF
+					CALL MSG_WAIT(1)
+				CASE 1
+					PRINTFORML 「あ……あ、あぁあアアァあｯ!!!」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL アリスは秘貝開帳するような体勢で這い出た幼体を出迎えた！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW アリスは秘貝開帳するような体勢で這い出た幼体を出迎えた！
+					ENDIF
+					CALL MSG_WAIT(1)
+				CASEELSE
+					PRINTFORML 「こ、こんなに……ひ、ひぅうぁぁあああｯ!!!」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 異形の出産には激しい快感が伴うのか
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 異形の出産には激しい快感が伴うのか
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL アリスのクレヴァスからは愛液が泉のごとく溢れ、くぱくぱと痙攣し続けている！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW アリスのクレヴァスからは愛液が泉のごとく溢れ、くぱくぱと痙攣し続けている！
+					ENDIF
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSEIF ARG:1 == 1
+			IF FLAG:AUTOMODE
+				PRINTFORML 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+			IF TARGET != 1
+				;仲間の時に産まれる
+				IF FLAG:11
+					PRINTFORM 
+				ELSE
+					PRINTFORM 
+				ENDIF
+			ELSEIF FLAG:10
+				;主人公から産まれる＋仲間居る
+				IF FLAG:11
+					PRINTFORM 
+				ELSE
+					PRINTFORM 
+				ENDIF
+			ELSE
+				;主人公から産まれる＋誰も居ない
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+			ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 
+				ENDIF
+			IF TALENT:130 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「う、うそ……急におっぱいが……！？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「う、うそ……急におっぱいが……！？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL アリスの乳首から吹き出した母乳が噴水のように細く弧を描いている……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW アリスの乳首から吹き出した母乳が噴水のように細く弧を描いている……
+				ENDIF
+				PRINTFORML  
+			ENDIF
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやぁ！　吸わないで！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL アリスの必死の抵抗も虚しく、激しい絶頂を迎えた直後の身体は言うことを聞かない…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW アリスの必死の抵抗も虚しく、激しい絶頂を迎えた直後の身体は言うことを聞かない…
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL そのまま触手の幼体は身をくねらせアリスの乳房に巻きつき母乳をしぼりあげる！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW そのまま触手の幼体は身をくねらせアリスの乳房に巻きつき母乳をしぼりあげる！
+					ENDIF
+					CALL MSG_WAIT(1)
+				CASE 1
+					PRINTFORML 「あ……あ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL お人形のように動けないアリスを、産まれたばかり獣が犯し続けている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW お人形のように動けないアリスを、産まれたばかり獣が犯し続けている……
+					ENDIF
+					CALL MSG_WAIT(1)
+				CASEELSE
+					PRINTFORML 「だ、めぇ……、むね、弱いのに……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 痙攣するたびに母乳が吹き出て、体を白く染めていく……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 痙攣するたびに母乳が吹き出て、体を白く染めていく……
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL どうやらアリスの肉体はこの迷宮で条理の外側から造り替えられてしまったようだ
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW どうやらアリスの肉体はこの迷宮で条理の外側から造り替えられてしまったようだ
+					ENDIF
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSEIF ARG:1 == 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「うぅ……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 敵の子を産み落としてしまったことに、アリスは歯噛みしている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 敵の子を産み落としてしまったことに、アリスは歯噛みしている……
+					ENDIF
+					CALL MSG_WAIT(1)
+				CASE 1
+					PRINTFORML 「…………」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 胎内から犯されきったアリスはしばらくそのままピクリとも動けなかった……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 胎内から犯されきったアリスはしばらくそのままピクリとも動けなかった……
+					ENDIF
+					CALL MSG_WAIT(1)
+				CASEELSE
+					PRINTFORML 「ぁ……あぅ……ん」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 寄生出産を終えてなお、火照り続ける体をアリスは自分で慰めた……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 寄生出産を終えてなお、火照り続ける体をアリスは自分で慰めた……
+					ENDIF
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ENDIF
+	CASE 129
+		;妊娠・出産イベント
+		IF ARG:1  == 0
+			;最初
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「痛みがない…！？　こんなのって……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 我が子が産道をこする度、限界まで拡張したアリスの膣洞に激しい快感が走り抜ける！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 我が子が産道をこする度、限界まで拡張したアリスの膣洞に激しい快感が走り抜ける！
+					ENDIF
+					CALL MSG_WAIT(1)
+				CASE 1
+					PRINTFORML 「ふっ……ぐぅ、う……！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL M字に開脚したアリスの股から異形との落とし子が産声をあげる！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW M字に開脚したアリスの股から異形との落とし子が産声をあげる！
+					ENDIF
+					CALL MSG_WAIT(1)
+				CASEELSE
+					PRINTFORML 「あ……うまれた」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL その瞬間、強烈な快楽の痺れにアリスの頭の中が真っ白に染まる！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW その瞬間、強烈な快楽の痺れにアリスの頭の中が真っ白に染まる！
+					ENDIF
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSEIF ARG:1  == 1
+			;産まれた
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML (これが……私の……)
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 一途に乳をもとめようとする異形に対して、アリスはなぜか抵抗をする気がおきない……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 一途に乳をもとめようとする異形に対して、アリスはなぜか抵抗をする気がおきない……
+					ENDIF
+					CALL MSG_WAIT(1)
+				CASE 1
+					PRINTFORML 「いたっ……あわてないで。　まだ、いっぱいあるから……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL アリスの子供は母親の敏感な胸をしゃぶり続けている……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW アリスの子供は母親の敏感な胸をしゃぶり続けている……
+					ENDIF
+					CALL MSG_WAIT(1)
+				CASEELSE
+					PRINTFORML 「あ…あ……おっぱい出るたび、か、感じるの……」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 望まれなかった生命は、産んでくれた母親に感謝するように全身を愛撫しつづける……
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 望まれなかった生命は、産んでくれた母親に感謝するように全身を愛撫しつづける……
+					ENDIF
+					CALL MSG_WAIT(1)
+			ENDSELECT
+		ELSE
+			PRINTFORML 
+			PRINTFORML （どこにいくのかしら……）
+			IF FLAG:AUTOMODE
+				PRINTFORMDL アリスは痛めた腹をさすりながら、それを見送った……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW アリスは痛めた腹をさすりながら、それを見送った……
+			ENDIF
+			CALL MSG_WAIT(1)
+		ENDIF
+	CASE 130
+		;浄化した
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「残しておくと厄介ね」
+				CASE 1
+					PRINTFORML 「きれいさっぱりよ」
+				CASE 2
+					PRINTFORML アリスは人形を使って部屋中の汚物を一掃させた！
+				CASE 3
+					PRINTFORML アリスは炎の弾幕で辺りを焼き尽くした！
+				CASEELSE
+					PRINTFORML 「まあまあかしら」
+			ENDSELECT
+	CASE 132
+		;部屋を移動（突撃）
+		;主人公の時だけメッセージを表示
+		IF TARGET == 1
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「ここは一気に抜けましょう」
+				CASE 1
+					PRINTFORML 「はやく移動するわ」
+				CASE 2
+					PRINTFORML 「相手が慎重に動いてれば先制がとれるわね」
+				CASE 3
+					PRINTFORML 「人形たちが落ち着かないわね……」
+				CASEELSE
+					PRINTFORML 
+			ENDSELECT
+		ENDIF
+	CASE 133
+		;部屋を移動（慎重）
+		IF TARGET == 1
+			;主人公の時だけメッセージを表示
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「ここは慎重にいきましょう」
+				CASE 1
+					PRINTFORML 「ゆっくり移動するわ」
+				CASE 2
+					PRINTFORML 「…………」
+				CASE 3
+					PRINTFORML 「人形たちに先行させましょう」
+				CASEELSE
+					PRINTFORML 「待ち伏せ程度なら気づけるはずね」
+			ENDSELECT
+		ENDIF
+	CASE 135
+		;探索開始
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「なにがあるかしら？」
+				CASE 1
+					PRINTFORML 「もっと調べないと……」
+				CASE 2
+					PRINTFORML 「なにがでてくるかしら……」
+				CASE 3
+					PRINTFORML 「探索は基本ね」
+				CASEELSE
+					PRINTFORML 
+			ENDSELECT
+	CASE 136
+		;処女喪失
+		IF ARG:3 == 1
+			;ARG:3が1の場合は「処女を喪失しそうなとき」
+			;V防御などで処女喪失を防げる場合も表示されます
+			;本当に喪失するかどうかチェックしたい場合は、上級編でやっているように LOST_VIRGIN_CHECK を使います
+			PRINTFORML 「いやっ！　お願い、いれないで……！」
+		ELSEIF ARG:3 == 0
+			PRINTFORML 「ぁ……！」
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 思わず涙を流したアリスの足の間に、破瓜の証が滴り落ちている……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 思わず涙を流したアリスの足の間に、破瓜の証が滴り落ちている……
+			ENDIF
+		ELSE
+			;ARG:3が0の場合が本当の処女喪失時なので注意
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「危なかったわ……」
+				CASE 1
+					PRINTFORML 「もうっ……！」
+				CASE 2
+					PRINTFORML 「ナマモノのくせに！」
+				CASE 3
+					PRINTFORML 「やめなさい！」
+				CASEELSE
+					PRINTFORML 「少しひやっとしたわ」
+			ENDSELECT
+		ENDIF
+	CASE 109
+		;PTに加入した
+		PRINTFORML 「たべ……られちゃう」
+	CASE 152
+		;捕食されきった（リタイア）
+		PRINTFORML 「おかあさん、私の……おにんぎょう」
+	CASEELSE
+		;特に処理しない口上は全部ここに飛んできます
+		;ここでは別に何もしなくてもOKです
+ENDSELECT
+
+;↑↑↑　　ここまで口上のメイン処理　　↑↑↑
+
+
+
+;表示が終わったら文字の色をリセットしておきましょう
+RESETCOLOR
+
+;自分で口上を書いた場合は RETURN 1 になります　　基本的にこのままにしておいてください
+RETURN 1
+

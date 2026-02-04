@@ -1,0 +1,486 @@
+﻿
+; ////////////////////////////
+; / ARG:0  120    絶頂の瞬間
+; / ARG:1         部位
+; / ARG:2         MPダメージ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_120(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+
+
+
+IF FLAG:600 == 1
+	LOCAL:0 = (ABL:6 + ABL:7 + ABL:8 + ABL:9 + ABL:15) / 4
+	LOCAL:1 = (ABL:6 + ABL:7 + ABL:8 + ABL:9 + ABL:15) / 4
+ELSE
+	LOCAL:0 = (ABL:6 + ABL:7 + ABL:8 + ABL:9 + ABL:15) / 4
+	LOCAL:1 = (ABL:6 + ABL:7 + ABL:8 + ABL:9 + ABL:15) / 3
+ENDIF
+
+	; 喪失中
+	IF CFLAG:29
+		; 汎用口上で关于性感度平均で分岐を行う
+	; ◆◆◆りばーすにM感度なくない？　+　全感度MAXって結構高い◆◆◆
+	; ◆◆◆全身性感帯みたいな口上でなく、汎用絶頂って感じで口上書いてるし緩和していいかな、と思ったので式を/ 5から/ 3に、触手宮にあわせるなら/ 4がいいかもです
+	;	SELECTCASE (ABL:6 + ABL:7 + ABL:8 + ABL:9 + ABL:15) / 4
+		SELECTCASE LOCAL:0
+		; LV0
+		CASE 0
+			;発情してたらLV+1の口上コピペ
+			IF CFLAG:28
+				CALL ADD_RAND_MESSAGE, @"啊呜……呜……　一、嗯……呜……"
+				CALL ADD_RAND_MESSAGE, @"哈呜……嗯……咕……"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"呜啊……　啊……"
+				CALL ADD_RAND_MESSAGE, @"啊呜…嗯……　"
+			ENDIF
+		; LV1
+		CASE 1
+			;発情してたらLV+1の口上コピペ
+			IF CFLAG:28
+				CALL ADD_RAND_MESSAGE, @"哈嘿……咿……♥　嘿……♥"
+				CALL ADD_RAND_MESSAGE, @"嗯♥　啊♥"	
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"啊呜……呜……　一、嗯……呜……"
+				CALL ADD_RAND_MESSAGE, @"哈呜……嗯……咕……"
+			ENDIF
+		; LV2
+		CASE 2
+			;発情してたらLV+1の口上コピペ
+			IF CFLAG:28
+				CALL ADD_RAND_MESSAGE, @"哦♥　嘿♥　嗯嘿嘿嘿♥"
+				CALL ADD_RAND_MESSAGE, @"啊♥　啊♥　啊～♥"	
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"哈嘿……咿……♥　嘿……♥"
+				CALL ADD_RAND_MESSAGE, @"嗯♥　啊♥"
+			
+			ENDIF
+		; LV3以上
+		CASEELSE
+			;発情してたら限界突破
+			IF CFLAG:28
+				CALL ADD_RAND_MESSAGE, @"啊嘿♥♥　嗯♥♥　啊♥啊♥啊♥♥♥　哦哦♥♥"
+				CALL ADD_RAND_MESSAGE, @"嗯♥　嗯嗯♥♥　哦♥　哦♥♥　嘿啊……啊♥♥"	
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"哦♥　嘿♥　嗯嘿嘿嘿♥"
+				CALL ADD_RAND_MESSAGE, @"啊♥　啊♥　啊～♥"
+			ENDIF
+
+		ENDSELECT
+
+		;●ここ
+		RETURN 1
+	ENDIF
+
+
+; ////////////////////////////
+	; 汎用口上で关于性感度平均で分岐を行う
+	; ◆◆◆りばーすにM感度なくない？　+　全感度MAXって結構高い◆◆◆
+	; ◆全身性感帯みたいな口上でなく、汎用絶頂って感じで口上書いてるし緩和していいかな、と思ったので式を/ 5から/ 3に、触手宮にあわせるなら/ 4がいいかもです
+	;SELECTCASE (ABL:6 + ABL:7 + ABL:8 + ABL:9 + ABL:15) / 3
+	SELECTCASE LOCAL:1
+	; LV0
+
+	CASE 0
+		;発情してたらLV+1の口上コピペ
+		IF CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"来……嗯……"
+			CALL ADD_RAND_MESSAGE, @"啊……嗯……"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"呜……呜……　呜呜……　别再这样了……"
+			CALL ADD_RAND_MESSAGE, @"呜……　这种感觉只会让人恶心……"
+			CALL ADD_RAND_MESSAGE, @"这种事……　怎么可能会感觉舒服……"
+		
+		; 性格別追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_ふつう
+			CALL ADD_RAND_MESSAGE, @"呜呜……这种事……"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"竟然被这种家伙引起感觉……"
+			CALL ADD_RAND_MESSAGE, @"呜……　怎么会是这样的……"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"（脑袋里一片空白……）"
+			CALL ADD_RAND_MESSAGE, @"这……这是什么……"
+		ENDSELECT
+		ENDIF
+	; LV1
+	CASE 1
+		;発情してたらLV+1の口上コピペ　といいながらちょっと改変
+		IF CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"比平时更加敏感……♥　啊……♥"
+			CALL ADD_RAND_MESSAGE, @"嗯♥　呜……♥"
+			CALL ADD_RAND_MESSAGE, @"哈♥　嗯♥　嗯……♥"
+			CALL ADD_RAND_MESSAGE, @"身体发热……♥　不、不行……要……要……♥"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"来……嗯……"
+			CALL ADD_RAND_MESSAGE, @"啊……嗯……"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"啊……咕……！　还没……！　不可能……这样就……！"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"这、这只是生理现象而已……"
+			CALL ADD_RAND_MESSAGE, @"别因为让我达到高潮就得意忘形……"
+		ENDSELECT
+		ENDIF
+	; LV2
+	CASE 2
+		;発情してたらLV+1の口上コピペ　といいながらちょっと改変
+		IF CFLAG:28
+			; 絶頂中
+			IF CFLAG:35
+				CALL ADD_RAND_MESSAGE, @"神、神奇♥　玛丽♥　达到高潮♥♥　嗯♥♥"
+				CALL ADD_RAND_MESSAGE, @"啊啊……♥　要……要高潮……高潮不停……♥♥"
+				CALL ADD_RAND_MESSAGE, @"「嗯、嗯……好棒♥♥　好舒服……♥　停不下来了♥♥　啊♥　好舒服♥♥」"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「为什么♥　这么舒服……嗯……♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「身体♥　自己动了起来♥　嗯♥♥　啊♥　啊♥　嗯嗯♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「转圈圈♥　好舒服的感觉♥♥　啊♥啊♥　嗯嗯♥♥」"
+			ENDIF
+		
+		; 絶頂中
+		ELSEIF CFLAG:35
+			CALL ADD_RAND_MESSAGE, @"「又、又要来了♥　又……嗯♥♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「刚刚才♥　刚刚才……嗯♥」"
+		
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「啊……♥　啊啊……嗯……♥」"
+			CALL ADD_RAND_MESSAGE, @"嗯♥　呜……♥"
+			CALL ADD_RAND_MESSAGE, @"哈♥　嗯♥　嗯……♥"
+			CALL ADD_RAND_MESSAGE, @"「不、不行……要……要来了♥　要来了♥」"
+		ENDIF
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「这……这只是生理现象♥　只是生理现象……♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「脑袋里麻痹……♥　要冷静……要冷静……♥♥」"
+		ENDSELECT
+		
+	; LV3以上
+	CASEELSE
+		; 発情してた限界突破
+		IF CFLAG:28
+			; 絶頂中
+			IF CFLAG:35
+				CALL ADD_RAND_MESSAGE, @"「太、太棒了♥♥　好舒服♥　诶♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「来了♥♥　一直都在♥　一直都在♥　这样♥♥　回不去了♥♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「嗯、嗯……好棒♥♥　好舒服……♥　停不下来了♥♥　啊♥　好舒服♥♥」"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「关于♥♥　关于这个♥　脑袋♥　完全不听使唤♥♥　啊♥　不行♥♥♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「太棒了♥　太棒了♥　太太太棒了♥♥　啊♥　嗯嗯♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「来了♥　来了♥　来了♥♥　啊♥啊♥啊♥　嗯嗯嗯♥♥♥」"
+			ENDIF
+		ELSE
+			; 絶頂中
+			IF CFLAG:35
+				CALL ADD_RAND_MESSAGE, @"「又♥　又要来了♥♥　又要来了♥　好舒服的感觉♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「来了♥　来了♥　停不下来♥　啊……♥　又……来了♥♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「呜啊♥　啊……♥　要来了……停不下来♥　停不下来啊……♥♥」"
+				
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「来了……♥♥　好舒服……嗯……♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「来了♥　来了♥♥　啊♥　啊♥　嗯嗯♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「转圈圈♥　好舒服的感觉♥♥　啊♥啊♥　嗯嗯♥♥」"
+			ENDIF
+		ENDIF
+	ENDSELECT
+
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  120    絶頂の瞬間
+; / ARG:1    0    部位 0:A
+; / ARG:2         MPダメージ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_120_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+
+	; A感覚LVで分岐
+	SELECTCASE ABL:6
+	; LV0
+	CASE 0
+		CALL ADD_RAND_MESSAGE, @"「不要啊！？　为什么要用屁股啊！？」"
+	
+	; LV1
+	CASE 1
+		CALL ADD_RAND_MESSAGE, @"「不行！　不想在那种地方感觉到！？　呜啊啊！？　屁股啊啊啊！？」"
+		
+	; LV2
+	CASE 2
+		CALL ADD_RAND_MESSAGE, @"「再……♥　再用屁股感觉舒服……　不要啊……」"
+		CALL ADD_RAND_MESSAGE, @"「不要了……　不要在那里让我高潮……」"
+		
+	; LV3以上
+	CASEELSE
+		CALL ADD_RAND_MESSAGE, @"「屁股要高潮了♥　屁股要高潮了……啊……♥」"
+		CALL ADD_RAND_MESSAGE, @"「呜啊……♥　屁股的洞被挖弄……啊……♥」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  120    絶頂の瞬間
+; / ARG:1    1    部位 1:B
+; / ARG:2         MPダメージ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_120_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+	; B感覚LVで分岐
+	SELECTCASE ABL:7
+	; LV0
+	CASE 0
+		CALL ADD_RAND_MESSAGE, @"「呜啊……！？　为什么胸部……！？」"
+	
+	; LV1
+	CASE 1
+		CALL ADD_RAND_MESSAGE, @"「不要啊啊啊！？　胸部！？　胸部啊啊啊啊！？」"
+		
+	; LV2
+	CASE 2
+		CALL ADD_RAND_MESSAGE, @"「又……♥　胸部被弄高潮了……啊……♥」"
+		
+	; LV3以上
+	CASEELSE
+		;母乳体質
+		IF TALENT:130
+			CALL ADD_RAND_MESSAGE, @"「呀♥　奶水♥　奶水♥　涌出来停不下来♥♥」"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「胸部高潮♥ 胸部高潮啊……♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊啊……♥ 胸部，电麻麻的……♥」"
+		ENDIF
+
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  120    絶頂の瞬間
+; / ARG:1    2    部位 2:C
+; / ARG:2         MPダメージ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_120_2(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+	; C感覚LVで分岐
+	SELECTCASE ABL:8
+	; LV0
+	CASE 0
+		;発情してたらLV+1の口上コピペ
+		IF CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"「啊 豆子……高潮了……」"
+			CALL ADD_RAND_MESSAGE, @"「高潮了……啊……阴蒂……变大了……」"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「用阴蒂……高潮了……」"
+			CALL ADD_RAND_MESSAGE, @"「阴蒂……电麻麻的……」"
+		ENDIF
+	; LV1
+	CASE 1
+		;発情してたらLV+1の口上コピペ　といいながらちょっと改変
+		IF CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 敏感度提高了……阴蒂♥ 很舒服♥」"
+			CALL ADD_RAND_MESSAGE, @"「豆子……麻了……啊♥」"
+			CALL ADD_RAND_MESSAGE, @"「阴蒂♥ 阴蒂……喜欢♥」"
+			
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「啊 豆子……高潮了……」"
+			CALL ADD_RAND_MESSAGE, @"「高潮了……啊……阴蒂……变大了……」"
+		ENDIF
+	; LV2
+	CASE 2
+		;発情してたらLV+1の口上コピペ　といいながらちょっと改変
+		IF CFLAG:28
+			; 絶頂中
+			IF CFLAG:35
+				CALL ADD_RAND_MESSAGE, @"「阴蒂♥♥ 噗噜♥ 噗噜♥ 噗噜♥ 阴蒂♥ 啊♥啊～♥♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「啊啊♥ 又高潮了呢♥♥ 阴蒂高潮♥ 停不下来呢♥♥」"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「比平时♥♥ 阴蒂♥ 很厉害♥♥ 高潮♥♥♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「那里♥ 那里♥ 很舒服♥♥ 阴蒂♥ 高潮♥♥ 去♥♥ 去♥♥」"
+			ENDIF
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 阴蒂很好♥ 很舒服♥」"
+			CALL ADD_RAND_MESSAGE, @"「豆子……麻了……啊♥」"
+			CALL ADD_RAND_MESSAGE, @"「阴蒂♥ 阴蒂……喜欢♥」"
+		ENDIF
+	; LV3以上
+	CASEELSE
+		;発情してたら限界突破
+		IF CFLAG:28
+			; 絶頂中
+			IF CFLAG:35
+				CALL ADD_RAND_MESSAGE, @"「阴蒂♥♥ 噗噜♥ 噗噜♥ 噗噜♥ 阴蒂♥ 啊♥啊～♥♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「啊嗯♥ 又高潮了呢♥♥ 阴蒂♥高潮♥ 停不下来呢♥♥」"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「喜欢♥ 那里喜欢♥♥ 淫荡的豆子♥ 嗯♥ 嗯♥ 嗯♥♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「那里♥ 那里♥ 很舒服♥♥ 阴蒂♥ 高潮♥♥ 去♥♥ 去♥♥」"
+			ENDIF
+		ELSE
+		; 連続絶頂
+			IF CFLAG:35
+				CALL ADD_RAND_MESSAGE, @"「已、已经♥ 高潮了……但是还♥♥ 阴蒂♥ 再次♥ 啊♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「啊啊♥ 又高潮了♥♥ 阴蒂高潮♥ 停不下来呢♥♥」"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「阴蒂♥ 酥酥的♥ 高潮♥高潮♥」"
+				CALL ADD_RAND_MESSAGE, @"「高潮♥ 淫荡的豆子高潮♥♥ 呜♥♥」"
+			ENDIF
+		ENDIF
+
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  120    絶頂の瞬間
+; / ARG:1   3     部位 3:V
+; / ARG:2         MPダメージ
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_120_3(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+;●バリアント分岐
+IF FLAG:600 == 1
+
+	IF ABL:11 > ABL:15
+
+		LOCAL:0 = ABL:11
+	ELSE
+
+		LOCAL:0 = ABL:15
+	ENDIF
+
+	IF ABL:9 > 2
+
+		LOCAL:0 += 1
+
+	ENDIF
+
+	IF LOCAL:0 < 1 && ABL:9 == 2
+		LOCAL:0 = 1
+	ENDIF
+
+
+ELSE
+
+	LOCAL:0 = ABL:9
+
+ENDIF
+
+
+
+
+	; V感覚LVで分岐
+	SELECTCASE LOCAL:0
+	; LV0
+	CASE 0
+		;発情してたらLV+1の口上コピペ　といいながらちょっと改変
+		IF CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"「咕……为什么……？ 肚子里面热起来了……」"
+			CALL ADD_RAND_MESSAGE, @"「为什么……会因为这种人而感到舒服……！」"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「不可能……已经高潮了吗……？」"
+			CALL ADD_RAND_MESSAGE, @"「别……别粗暴地……！」"
+		ENDIF
+		
+	; LV1
+	CASE 1
+		;発情してたらLV+1の口上コピペ　といいながらちょっと改変
+		IF CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"（啊♥ 阴道高潮了……♥）"
+			CALL ADD_RAND_MESSAGE, @"「高潮了♥ 阴道高潮了♥」"
+			CALL ADD_RAND_MESSAGE, @"（子宫♥ 下降了♥）"
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「咕……为什么……？ 肚子里面热起来了……」"
+			CALL ADD_RAND_MESSAGE, @"「为什么……会因为这种人而感到舒服……！」"
+		ENDIF
+		
+		
+	; LV2
+	CASE 2
+		;発情してたらLV+1の口上コピペ
+		IF CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"「这样♥ 这样粗暴地对待我♥ 高潮♥ 高潮♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「啊♥ 高潮♥ 子宫咚咚地跳♥♥ 高潮♥♥」"
+		
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"（啊♥ 阴道高潮了……♥）"
+			CALL ADD_RAND_MESSAGE, @"「高潮了♥ 阴道高潮了♥」"
+			CALL ADD_RAND_MESSAGE, @"（子宫♥ 下降了♥）"
+		ENDIF
+		
+	; LV3以上
+	CASEELSE
+		; 発情
+		IF CFLAG:28
+			; 絶頂中
+			IF CFLAG:35
+				CALL ADD_RAND_MESSAGE, @"「已经高潮了♥♥ 高潮了♥♥ 停♥ 停不下来♥ 嗯♥ 高♥♥♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「又♥♥　要去♥♥　心动♥♥　心动不已♥♥」"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「内♥♥　内喜欢♥　心动不已♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「啊♥　啊♥　想要♥　想要♥　关于处女蜜♥♥　为什么不给我♥♥」"
+			ENDIF
+		ELSE
+			; 絶頂中
+			IF CFLAG:35
+				CALL ADD_RAND_MESSAGE, @"「这么♥　说下去♥♥　就无法回头了♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「又要来了♥　淫乱的阴道♥♥　又要高潮了♥♥」"
+			ELSE
+				CALL ADD_RAND_MESSAGE, @"「这样♥ 这样粗暴地对待我♥ 高潮♥ 高潮♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「啊♥ 高潮♥ 子宫咚咚地跳♥♥ 高潮♥♥」"
+			ENDIF
+		ENDIF
+	ENDSELECT
+
+RETURN 1
+
+

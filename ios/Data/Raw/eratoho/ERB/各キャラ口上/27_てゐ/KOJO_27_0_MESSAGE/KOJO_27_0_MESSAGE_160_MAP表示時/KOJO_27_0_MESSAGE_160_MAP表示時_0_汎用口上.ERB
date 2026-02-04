@@ -1,0 +1,41 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 0 汎用口上
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 通常時
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（永遠亭に帰ったら、部下たちにオマンコの良さ教えなきゃ♥）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（ここから出るの勿体ないなぁ♥）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（ここから出れたとして、外の世界じゃ刺激が足りないよぉ♥）\n"
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「ホントにここ……　出られるの……？」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（かえりたい……）\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「いつになったらココから出られるのかしら」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「永遠亭に残してきたウサギたち、あたしなしで大丈夫かしらね……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「こんな異変が起きてるなら、妖精の百匹や二百匹くらい出てもいいんじゃないかな」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「こんなとこに、にんじん……なんてあるわけないか……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「こういう場所って、竹林なんか比べものにならないくらい迷うわよね」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「迷いの竹林は判りやすい目印があるからいいけど、ここは目印がすぐなくなっちゃうのよねー」\n"
+	ENDSELECT
+RETURN 1

@@ -1,0 +1,51 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 101 迷宮内で他のキャラと会った - キャラクター別 111 影狼
+; ------------------------------------------------------------------------------
+
+; □ 0 通常
+@KOJO_27_0_SYSTEM_MESSAGE_101_X_0_CHARA_111(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 遭遇キャラは拘束されている
+	IF CFLAG:(ARG:1):504
+	
+	; 催眠行動中
+	ELSEIF CFLAG:(ARG:1):43 == 1
+	
+	; 遭遇キャラと寸前まで共闘していた
+	ELSEIF ARG:1 == PARTY_NO:1 || ARG:1 == PARTY_NO:2
+		; 対象のキャラとは初遭遇
+		; 表示タイミングが一度しかない口上、優先口上として処理する
+		IF KOJO_27_0_GET_ENCOUNTER_COUNT(ARG:1) == 0
+			CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+			CALL KOJO_27_0_ADD_MESSAGE, @"「竹林でたまに見る狼ね　いつもは大人しいけど、ヤルときゃヤルじゃない」\n"
+			RETURN 1
+		ENDIF
+		
+		CALL KOJO_27_0_ADD_MESSAGE, @"「何だかんだ言っても狼って強いわよねー」\n"
+		
+	; 通常行動中
+	ELSE
+		; 対象のキャラとは初遭遇
+		; 表示タイミングが一度しかない口上、優先口上として処理する
+		IF KOJO_27_0_GET_ENCOUNTER_COUNT(ARG:1) == 0
+			CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+			CALL KOJO_27_0_ADD_MESSAGE, @"「あ、たまに見る狼……　この場所が竹林ごと取り込まれたとかだったらヤだなぁ……」\n"
+			RETURN 1
+		ENDIF
+	ENDIF
+RETURN 1
+
+
+; □ 1 喪失中
+@KOJO_27_0_SYSTEM_MESSAGE_101_X_1_CHARA_111(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 遭遇キャラは拘束されている
+	IF CFLAG:(ARG:1):504
+	
+	; 遭遇キャラと寸前まで共闘していた
+	ELSEIF ARG:1 == PARTY_NO:1 || ARG:1 == PARTY_NO:2
+	
+	; 通常行動中
+	ELSE
+
+	ENDIF
+RETURN 1

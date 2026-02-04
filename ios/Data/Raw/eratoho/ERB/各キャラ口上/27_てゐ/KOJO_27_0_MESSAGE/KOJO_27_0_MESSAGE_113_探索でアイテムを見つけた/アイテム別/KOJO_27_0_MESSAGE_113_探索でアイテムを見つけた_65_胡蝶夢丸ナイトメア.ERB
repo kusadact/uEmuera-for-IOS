@@ -1,0 +1,47 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 113 探索でアイテムを見つけた - 65 胡蝶夢丸ナイトメア
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_113_65(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+
+	; 喪失中は何もしないで帰る
+	SIF CFLAG:29
+		RETURN 0
+	
+	; 出来るだけ専用メッセージを見せたいので、優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	SELECTCASE KOJO_MODE
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「この薬多分見たことあるわ……\n　こんな悪夢みたいな場所で追加悪夢なんて考えたくもない」\n"
+	ENDSELECT
+	
+	; キャラクター対応 追加口上
+	FOR LCOUNT, 1, CHARANUM
+		; 自分と娘は除外
+		IF !(NO:LCOUNT == NO:(TARGET) || CFLAG:LCOUNT:104 != 0)
+			
+			; PTに居る
+			IF IN_PT(NO:LCOUNT)
+			
+				SELECTCASE NO:LCOUNT
+				; 永琳
+				CASE 29
+					; 喪失中
+					IF CFLAG:(GET_ID_FROM_NO(NO:LCOUNT)):29
+						CALL KOJO_27_0_ADD_MESSAGE, @"\d力尽きている%CALLNAME:(GET_ID_FROM_NO(NO:LCOUNT))%を見て、%CALLNAME:TARGET%は小さく溜息をついた……\n"
+					; 通常
+					ELSE
+						CALL KOJO_27_0_ADD_MESSAGE, @"「ええと師匠コレ……　なんでもないです……」\n"
+					ENDIF
+				ENDSELECT
+				
+			; PTに居ない
+			ELSE
+
+			ENDIF
+		ENDIF
+	NEXT
+RETURN 1

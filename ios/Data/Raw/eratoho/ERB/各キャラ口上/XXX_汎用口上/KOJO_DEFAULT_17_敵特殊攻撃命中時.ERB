@@ -1,0 +1,404 @@
+﻿
+; ////////////////////////////
+; / ARG:0   17    敵のその他攻撃(命中)
+; / ARG:1   16    コマンドID(凝視 発情+強制自慰)
+; / ARG:2         対象キャラID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_17_16(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+	
+	; important属性付与
+	; 敵のその他攻撃に汎用口上关于無いけれど、専用口上なので設定
+	CALL SET_IMPORTANT_FLAG
+	
+	; ステータス異常 発情で分岐
+	; 未発情
+	
+	IF !CFLAG:28
+		CALL ADD_RAND_MESSAGE, @"「♥♥！？　♥♥♥♥！？　这是……♥♥♥！？」"
+		CALL ADD_RAND_MESSAGE, @"「关于……♥　啊呜……呜♥♥」"
+		CALL ADD_RAND_MESSAGE, @"「呜啊啊啊♥　好热♥　好热啊啊啊♥♥」"
+		CALL ADD_RAND_MESSAGE, @"「！　突然肚子里……啊♥　关于啊♥　啊♥♥」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"「想要……♥　只要是舒服的都想要……♥♥」"
+		ENDSELECT
+		
+	; 既に発情中
+	ELSE
+		CALL ADD_RAND_MESSAGE, @"「嘿咕……咕♥♥　脑袋里都化掉了……♥♥」"
+		CALL ADD_RAND_MESSAGE, @"「嗯哦……哦♥　哦……♥♥ 嗯啊啊啊啊♥♥♥」"
+		CALL ADD_RAND_MESSAGE, @"「想要……♥　只要是舒服的……♥　什么都想要……♥♥」"
+		CALL ADD_RAND_MESSAGE, @"「关于ー♥　关于ー♥　关于ー♥　关于ー♥」"
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   17    敵のその他攻撃(命中)
+; / ARG:1   20    コマンドID(自慰誘発)
+; / ARG:2         対象キャラID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_17_20(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+	
+	; important属性付与
+	; 敵のその他攻撃に汎用口上关于無いけれど、専用口上なので設定
+	CALL SET_IMPORTANT_FLAG
+	
+	CALL ADD_RAND_MESSAGE, @"「咖……为什么突然这样……奇怪的感觉……」"
+	CALL ADD_RAND_MESSAGE, @"（为、为什么突然变成这样……）"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「舒服的……　想要……」"
+	CASE 性格_がんこもの
+		CALL ADD_RAND_MESSAGE, @"「不、不对！　这不是我的意愿……！」"
+	CASE 性格_がんばりや
+		CALL ADD_RAND_MESSAGE, @"「不、不行……　忍不住了……」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"（不行……思考停止了……）"
+		CALL ADD_RAND_MESSAGE, @"（这就是药物的效果――！）"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「这样真是太不公平了啦……」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「要我当着你的面自慰吗？」"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「咕！　你是想让我当成展览品吗！」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（如果现在自己动手的话，恐怕就停不下来了……　但是……）"
+	CASE 性格_やさしいひと
+		CALL ADD_RAND_MESSAGE, @"「做这种事情，开心吗……」"
+	CASE 性格_わがまま
+		CALL ADD_RAND_MESSAGE, @"「不、不要……！　这种、不好的事情……！」"
+	ENDSELECT
+	
+	; 自慰中毒LV3以上 or 素質[自慰しやすい] 所持自追加口上
+	IF ABL:10 >= 3 || TALENT:60
+		CALL ADD_RAND_MESSAGE, @"「被灌这种东西，当然停不下来了嘛……♥」"
+		CALL ADD_RAND_MESSAGE, @"（想要自慰♥　想要自慰♥　现在就想要自慰♥）"
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   17    敵のその他攻撃(命中)
+; / ARG:1   22    コマンドID(全体催眠)
+; / ARG:2         対象キャラID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_17_22(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(1)
+
+	RETURN 1
+ENDIF
+
+
+	
+	; important属性付与
+	; 敵のその他攻撃に汎用口上关于無いけれど、専用口上なので設定
+	CALL SET_IMPORTANT_FLAG
+	
+	; この攻撃が命中した場合、必ず催眠中となる
+	; 記述口上关于全て催眠中のものになるので注意
+	SELECTCASE CFLAG:43
+	; 催眠強度1
+	CASE 1
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			CALL ADD_RAND_MESSAGE, @"「啊……这是……？　身体……不听使唤……」"
+			CALL ADD_RAND_MESSAGE, @"「呜、动不了！？」"
+			
+		; 発情・感情操作系
+		CASE 1
+			CALL ADD_RAND_MESSAGE, @"（刚才为什么那么讨厌呢……明明只是给我带来舒服的事情……）"
+			CALL ADD_RAND_MESSAGE, @"（嗯……？　为什么肚子里……这么热……？）"
+			
+		; 無意識・認識操作系
+		CASE 2
+			CALL ADD_RAND_MESSAGE, @"「你做了什么……头晕晕的……」"
+		ENDSELECT
+
+	; 催眠強度2
+	CASE 2
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			CALL ADD_RAND_MESSAGE, @"（好了，别再这样了！）"
+			
+		; 発情・感情操作系
+		CASE 1
+			CALL ADD_RAND_MESSAGE, @"（想要做爱♥　想要在任何地方都被插入♥）"
+			CALL ADD_RAND_MESSAGE, @"（啊♥　不行♥　子宫都掉下来了♥）"
+			
+		; 無意識・認識操作系
+		CASE 2
+			CALL ADD_RAND_MESSAGE, @"（要服务……　必须要服务……）"
+		ENDSELECT
+		
+	; 催眠強度最大、又关于レッサーヒュプノの減衰あり催眠
+	CASEELSE
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			CALL ADD_RAND_MESSAGE, @"（完全被身体控制了……）"
+			CALL ADD_RAND_MESSAGE, @"（身体……该怎么办……怎么办……！）"
+			
+		; 発情・感情操作系
+		CASE 1
+			CALL ADD_RAND_MESSAGE, @"「啊啊♥　啊啊啊啊♥　给我，给我快乐♥」"
+			CALL ADD_RAND_MESSAGE, @"「嘿……♥　忍不住了……♥　强奸我吧，快点强奸我♥♥」"
+			CALL ADD_RAND_MESSAGE, @"「子宫♥　宝宝的房间一直在颤抖♥♥　停不下来的♥♥」"
+			
+		; 無意識・認識操作系
+		CASE 2
+			CALL ADD_RAND_MESSAGE, @"「想要用哪里来感受快乐吗？\n　为了让大家感到快乐，%CALLNAME:TARGET%会做任何事情」"
+			
+			; 素質[尻穴狂い]所持時 or A感度3以上 追加口上
+			IF TALENT:75 || ABL:6 >= 3
+				CALL ADD_RAND_MESSAGE, @"「想要用哪里来感受快乐吗？\n　软绵绵的屁股洞是推荐哦」"
+			ENDIF
+			
+			; 素質[淫壺]所持時 or V感度3以上 追加口上
+			IF TALENT:78 || ABL:9 >= 3
+				CALL ADD_RAND_MESSAGE, @"「想要用哪里来感受快乐吗？\n　已经改造成性交专用的滑溜溜的阴道，已经准备好了」"
+			ENDIF
+			
+			; 素質[キス魔]所持時 or M感度3以上 追加口上
+			IF TALENT:79 || ABL:15 >= 3
+				CALL ADD_RAND_MESSAGE, @"「想要用哪里来感受快乐吗？\n　变态口交已经变成了喜欢被侵犯的变态嘴巴，尽情享受吧」"
+			ENDIF
+		ENDSELECT
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   17    敵のその他攻撃(命中)
+; / ARG:1  950    コマンドID(汚染攻撃)
+; / ARG:2         対象キャラID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_17_950(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;●睡眠
+IF CFLAG:25 > 0
+
+	CALL COMMON_KOJO_DEFAULT_SLEEP_TEST(0)
+
+	RETURN 1
+ENDIF
+
+
+;喪失時
+IF CFLAG:29 > 0
+
+	CALL COMMON_KOJO_DEFAULT_RYONA_TEST(0)
+
+
+
+	RETURN 1
+ENDIF
+
+
+
+
+
+
+
+
+	
+	; important属性付与
+	; 敵のその他攻撃に汎用口上关于無いけれど、専用口上なので設定
+	CALL SET_IMPORTANT_FLAG
+	
+	; 汚染攻撃关于精液経験が上昇するので精液中毒で分岐
+	SELECTCASE ABL:14
+	; 精液中毒 LV3未満
+	CASE 0 TO 2
+		; 発情していない
+		IF !CFLAG:28
+			CALL ADD_RAND_MESSAGE, @"「什、什么啊这个！？　好脏！！」"
+			CALL ADD_RAND_MESSAGE, @"「呜呜……　黏糊糊的好脏……」"
+
+			CALL ADD_RAND_MESSAGE, @"「呜呜……　洗一下就会掉下来吧……」"
+
+
+			; 性格別 追加口上
+			SELECTCASE CFLAG:100
+			CASE 性格_きれもの
+				CALL ADD_RAND_MESSAGE, @"「虽然看起来没有毒，但很让人不舒服……」"
+				CALL ADD_RAND_MESSAGE, @"「为什么要给我这个东西……」"
+				CALL ADD_RAND_MESSAGE, @"「啊啊真是的！　好脏啊！」"
+
+			CASE 性格_しあわせもの
+				CALL ADD_RAND_MESSAGE, @"「得去哪里洗个澡才行……」"
+			CASE 性格_セクシーギャル
+				CALL ADD_RAND_MESSAGE, @"「毫不犹豫地喷在我身上吧……」"
+				CALL ADD_RAND_MESSAGE, @"「得去哪里洗个澡才行……」"
+
+			CASE 性格_ひっこみじあん
+				CALL ADD_RAND_MESSAGE, @"「黏糊糊的好恶心……」"
+				CALL ADD_RAND_MESSAGE, @"「呜呜……　黏糊糊的……」"
+			ENDSELECT
+			
+			; 服を着ているなら追加口上
+			IF BASE:CP
+				CALL ADD_RAND_MESSAGE, @"「衣服贴在皮肤上好讨厌……」"
+
+				; 性格別 追加口上
+				SELECTCASE CFLAG:100
+
+					CASE 性格_おてんば
+						CALL ADD_RAND_MESSAGE, @"「呀呀呀！　得换衣服了」"
+
+					CASE 性格_くろうにん
+						CALL ADD_RAND_MESSAGE, @"「这、这可是珍贵的衣服啊……」"
+
+					CASE 性格_しあわせもの
+						CALL ADD_RAND_MESSAGE, @"「现在要脱掉这身衣服，换上其他的了……」"
+
+					CASE 性格_セクシーギャル
+						CALL ADD_RAND_MESSAGE, @"「现在要脱掉这身衣服，换上其他的了……」"
+
+					CASE 性格_のんきもの
+						CALL ADD_RAND_MESSAGE, @"「等会要换衣服了吧」"
+						CALL ADD_RAND_MESSAGE, @"「衣服都毁了」"
+					CASE 性格_ひっこみじあん
+						CALL ADD_RAND_MESSAGE, @"「这、这可是珍贵的衣服啊……」"
+					CASE 性格_やさしいひと
+						CALL ADD_RAND_MESSAGE, @"「这、这可是珍贵的衣服啊……」"
+
+					CASE 性格_わがまま
+						CALL ADD_RAND_MESSAGE, @"「等会要换衣服了吧」"
+
+				ENDSELECT
+
+
+			ENDIF
+			
+		; 発情中
+		ELSE
+			CALL ADD_RAND_MESSAGE, @"「什、什么啊这个！　好脏啊！」"
+			CALL ADD_RAND_MESSAGE, @"「呀！　这是什么啊　（啊……但是这个味道……♥）」"
+			
+			; 性格別 追加口上
+			SELECTCASE CFLAG:100
+			CASE 性格_きれもの
+				CALL ADD_RAND_MESSAGE, @"「这是什么意思……♥」"
+				CALL ADD_RAND_MESSAGE, @"「啊啊……♥ 这么脏……♥」"
+			CASE 性格_セクシーギャル
+				CALL ADD_RAND_MESSAGE, @"「啊啊……♥ 变得黏黏糊糊了……♥」"
+			CASE 性格_ひっこみじあん
+				CALL ADD_RAND_MESSAGE, @"「黏糊糊的感觉好恶心……♥」"
+				CALL ADD_RAND_MESSAGE, @"「呜呜……♥ 黏糊糊的……♥」"
+			ENDSELECT
+			
+			; 服を着ているなら追加口上
+			IF BASE:CP
+				CALL ADD_RAND_MESSAGE, @"「不要……♥ 衣服都透明了……♥」"
+				CALL ADD_RAND_MESSAGE, @"（这样一来，就算在衣服外面也能看到乳头竖起来了♥♥）"
+			ENDIF
+		ENDIF
+	
+	; 精液中毒 LV3以上
+	CASEELSE
+		CALL ADD_RAND_MESSAGE, @"「关于啊……♥ 这么脏♥」"
+		CALL ADD_RAND_MESSAGE, @"（不行了♥ 光是这个味道就……）"
+	
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「喜欢这个味道，给我更多在口中♥」"
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「啊啊…… 闻到这个味道就会兴奋……♥」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"（堕落了呢，居然对被这种脏液喷洒感到高兴♥）"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"（啊…… 闻到这个味道就会失去力气……♥）"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"（全身都被弄得散发着淫荡的味道……♥）"
+		ENDSELECT
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0   17    敵のその他攻撃(命中)
+; / ARG:1  951    コマンドID(汚染攻撃)
+; / ARG:2         対象キャラID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_17_951(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; important属性付与
+	; 敵のその他攻撃に汎用口上关于無いけれど、専用口上なので設定
+	CALL SET_IMPORTANT_FLAG
+	
+	; ARG:0 == 17, ARG:1 == 950の汚染攻撃で処理
+	CALL KOJO_DEFAULT_17_950(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+; ////////////////////////////
+; / ARG:0   17    敵のその他攻撃(命中)
+; / ARG:1  952    コマンドID(汚染攻撃)
+; / ARG:2         対象キャラID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_17_952(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; important属性付与
+	; 敵のその他攻撃に汎用口上关于無いけれど、専用口上なので設定
+	CALL SET_IMPORTANT_FLAG
+	
+	; ARG:0 == 17, ARG:1 == 950の汚染攻撃で処理
+	CALL KOJO_DEFAULT_17_950(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+; ////////////////////////////
+; / ARG:0   17    敵のその他攻撃(命中)
+; / ARG:1  953    コマンドID(汚染攻撃)
+; / ARG:2         対象キャラID
+; / ARGS:0        自分の名前
+; / ARGS:1        敵の名前
+@KOJO_DEFAULT_17_953(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; important属性付与
+	; 敵のその他攻撃に汎用口上关于無いけれど、専用口上なので設定
+	CALL SET_IMPORTANT_FLAG
+	
+	; ARG:0 == 17, ARG:1 == 950の汚染攻撃で処理
+	CALL KOJO_DEFAULT_17_950(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+RETURN RESULT
+
+

@@ -1,0 +1,47 @@
+﻿;複乳化
+@SYSTEM_MESSAGE_535(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;素質チェック用
+IF ARG:1 == 0
+	PRINTFORML %ARGS:0%胸部附近的皮肤感觉不太舒服……
+ELSEIF ARG:1 == 1
+	PRINTFORML %ARGS:0%胸部附近的皮肤膨胀起来、出现了新的乳头……
+ELSEIF ARG:1 == 2
+	PRINTFORML %ARGS:0%胸部附近的皮肤更加膨胀起来、顶端的乳头发育了起来……
+ELSEIF ARG:1 == 3
+	PRINTFORML %ARGS:0%胸部附近的皮肤更加膨胀起来、又长出了新的乳房……　
+ELSEIF ARG:1 == 4
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%变成了【复乳】
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%变成了【复乳】
+ENDIF
+
+ELSEIF ARG:1 == 5
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%变成了【复乳 Lv2】
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%变成了【复乳 Lv2】
+ENDIF
+
+ELSEIF ARG:1 == 6
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%变成了【复乳 Lv3】
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%变成了【复乳 Lv3】
+ENDIF
+
+ELSEIF ARG:1 == 7
+;敵の複乳化攻撃による反応
+ELSEIF ARG:1 == 11
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的胸部里似乎被植入了什么东西……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的胸部里似乎被植入了什么东西……
+ENDIF
+
+ENDIF

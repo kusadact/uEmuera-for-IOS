@@ -1,0 +1,416 @@
+﻿;イベント
+
+@INM_EVENT_RANDOM_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;ランダムイベント
+
+	SELECTCASE ARG:0
+	;トラップ
+	CASE 200
+		CALL INM_EVENT_RANDOM_TRAP_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+			
+	;PT分断テレポート
+	CASE 201
+		; 通常口上表示
+		RETURN
+		
+	ENDSELECT
+
+RETURN RESULT
+
+
+;ランダムイベント
+;-----------------------------------------------------------------------------------------------------------------------------------------
+@INM_EVENT_RANDOM_TRAP_7_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;トラップイベント発生
+;ARG:1にイベントID　ARG:2で同じイベントの詳細分岐
+;●特殊イベント系
+
+	;戦意喪失
+	IF CFLAG:29
+		RETURN
+	ENDIF
+
+
+;------------------------------
+	;主人公の時しか呼ばない行動
+	IF TARGET == 1
+		SELECTCASE ARG:1
+		;誰かの荷物　荷物袋が落ちている　開けると着替えセット（54）と日本酒（52）を入手　無視した場合は残る
+		;誰かの荷物　荷物袋が落ちている　開けると中から触手　雑魚を１匹生成して、敵の先制で強制戦闘　無視した場合は残る
+		;誰かの荷物　ヒュプノ。
+		CASE 140, 141, 171
+			;開けた
+			IF ARG:2 == 0
+				;通常
+				IF ARG:1 == 140
+					PRINTFORM 「こんな場所に誰の荷物でしょう？　おや、これは…随分と際どい下着が出てきましたよ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;敵
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんな場所に誰の荷物でしょう？　中身は………えっ？敵っ！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんな場所に誰の荷物でしょう？　中身は………えっ？敵っ！？」
+					ENDIF
+				ENDIF
+			;開けない
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こんな場所に誰の荷物でしょう？　放っておくのがいいかもしれませんね。」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こんな場所に誰の荷物でしょう？　放っておくのがいいかもしれませんね。」
+				ENDIF
+			ENDIF
+			
+			RETURN 1
+			
+		;柔らかい壁　壁の無い部屋で発生したら即終了＋再配置　高難易度　体当たりすると崩れて通路追加orネチョ　ネチョか放置の場合は残る
+		CASE 144
+			SELECTCASE ARG:2
+			;あっさり崩れた
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「えーい！　…あれ？　今ので崩れたんですか？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「えーい！　…あれ？　今ので崩れたんですか？」
+				ENDIF
+			;ヤられた
+			CASE 2
+				PRINTFORM 「えーい！　え……やっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　やぁん
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　なんだかこの壁…いやらしい…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDSELECT
+			
+			RETURN 1
+			
+		ENDSELECT
+	ENDIF
+	
+
+;------------------------------
+	;常に呼ぶ行動
+	SELECTCASE ARG:1
+	;湧き水　飲むとHP・MP・EP全快　飲まなかった場合は残る
+	CASE 130
+		IF ARG:2 == 0
+			PRINTFORM 「…はぁ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　とても美味しかったです
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+		
+		RETURN 1
+		
+	;湧き水　飲むとHPが上昇
+	CASE 132
+		IF ARG:2 == 0
+			PRINTFORM 「…んぅ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　力が…漲ってきました
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ENDIF
+		
+		RETURN 1
+		
+	;澄んだ泉　飲むとMP25％回復、入るとEP50％回復　拠点にすることを想定
+	CASE 133
+		SELECTCASE ARG:2
+		;MP回復
+		;EP回復
+		CASE 0, 1
+			PRINTFORM 「…はぁぁ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 　リフレッシュできました」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 　リフレッシュできました」
+			ENDIF
+		;無視
+		CASE 2
+			;主人公
+			IF TARGET == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「こんな何が潜んでいるか判らない泉…無視するのが一番ですよね…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「こんな何が潜んでいるか判らない泉…無視するのが一番ですよね…」
+				ENDIF
+			ENDIF
+		ENDSELECT
+		
+		RETURN 1
+		
+	;白濁した泉　133とは違う場所　飲むとMP全快or発情　入ると速度+5or寄生（種類はランダム）
+	CASE 134
+		SELECTCASE ARG:2
+		;発情
+		CASE 2
+			PRINTFORM 「……あ…んんぅ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　身体が火照って…なんだかいい気分になってきましたよ…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			RETURN 1
+		
+		ENDSELECT
+		
+	;不思議なガス　危機回避判定失敗で　眠気+2/全員発情/全員強制自慰/全員TP200/全員TP0　のいずれか
+	CASE 143
+		SELECTCASE ARG:2
+		;眠気
+		CASE 1
+			CALL GET_PT_CHAR_NO_7_0(8, 1)
+			;パチュリーが居る
+			IF RESULT > 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…ぁ…パチュリーさまの…寝込みを襲う…チャンスなのに…不覚…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…ぁ…パチュリーさまの…寝込みを襲う…チャンスなのに…不覚…」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…ぁ…絶頂したわけでもないのに…意識…が…トぶ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…ぁ…絶頂したわけでもないのに…意識…が…トぶ……」
+				ENDIF
+			ENDIF
+			
+			RETURN 1
+			
+		;テンション上昇
+		CASE 4
+			PRINTFORM 「はぁぁぁぁ
+			CALL HEARTCB(0xD02830, 3)
+			PRINTFORM 　なんだか…身体が疼いてキましたよ…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			RETURN 1
+			
+		;テンション下降
+		CASE 5
+			IF FLAG:AUTOMODE
+				PRINTFORML 「……はぁ。　こういう重い気分の時は…誰でもいいからヤるしかないですね…」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「……はぁ。　こういう重い気分の時は…誰でもいいからヤるしかないですね…」
+			ENDIF
+			RETURN 1
+			
+		ENDSELECT
+	;スッキリ草　眠気を０にしてくれる薬草　効果は必ず分かってOK　使わなかった場合は残る
+	CASE 145
+		SELECTCASE ARG:2
+		;使った
+		CASE 1
+			PRINTFORM 「なんだか…目が冴えてきました…ふふ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		;放置
+		CASE 2
+			;主人公
+			IF TARGET == 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「これは確かパチュリー様が言っていた眠気覚ましの…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「これは確かパチュリー様が言っていた眠気覚ましの…」
+				ENDIF
+				PRINTFORM 「でも…こんなものを使ってたら寝込みを襲ったりできないですよね
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		ENDSELECT
+		
+		RETURN 1
+		
+	;落石　危機回避判定失敗でHPダメージ
+	CASE 150
+		CALL GET_PT_CHAR_NO_7_0(8, 1)
+		SELECTCASE ARG:2
+		;回避失敗
+		CASE 1
+			;パチュリーが居る（ランダム）
+			IF RESULT > 0
+				PRINTFORM 「ねぇ…パチュリーさまぁ…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 腰をくねらせながら近づいてくる%CALLNAME:(TARGET)%を避けるようにパチュリーが後ずさった瞬間
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 腰をくねらせながら近づいてくる%CALLNAME:(TARGET)%を避けるようにパチュリーが後ずさった瞬間
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 目の前の%CALLNAME:(TARGET)%の頭に、上から落ちてきた大きな岩が直撃した。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 目の前の%CALLNAME:(TARGET)%の頭に、上から落ちてきた大きな岩が直撃した。
+				ENDIF
+				PRINTFORM 「うぅ……パチュリー様…実は私が身を挺して庇ったんですよ？　御褒美…頂けません
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				
+				RETURN 1
+			ENDIF
+		;回避成功
+		CASE 2
+			;パーティ
+			IF FLAG:10 != 0 || FLAG:11 != 0 || FLAG:15 != 0 || FLAG:16 != 0
+				;パチュリーが居る
+				IF RESULT > 0
+					PRINTFORM 「ねぇ…パチュリーさまぁ…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 腰をくねらせながら近づいてくる%CALLNAME:(TARGET)%を避けるようにパチュリーが後ずさった瞬間
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 腰をくねらせながら近づいてくる%CALLNAME:(TARGET)%を避けるようにパチュリーが後ずさった瞬間
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 目の前の%CALLNAME:(TARGET)%との間に、上から大きな岩が落ちてきた。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 目の前の%CALLNAME:(TARGET)%との間に、上から大きな岩が落ちてきた。
+					ENDIF
+					PRINTFORM 「……ほ、ほら！　実は私がパチュリー様に当たらない様に誘導したんですよ！　御褒美…頂けません
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					RETURN 1
+				ENDIF
+			ENDIF
+		ENDSELECT
+		
+	;壁尻スライム
+	CASE 176
+		SELECTCASE ARG:2
+;		;捕らえられた
+;		CASE 0
+		CASE 1
+		;犯された
+			PRINTFORM （はあんっ
+			CALL HEARTCB(0xD02830, 3)
+			PRINTFORM 　犯されてるっ
+			CALL HEARTCB(0xD02830, 2)
+			PRINTFORM 　お願い…もっと深く…激しくぅん
+			CALL HEARTCB(0xD02830, 3)
+			IF FLAG:AUTOMODE
+				PRINTFORML ）
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW ）
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL %CALLNAME:(TARGET)%は唯一自由になる両脚を絡め、ピストン運動を促している…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW %CALLNAME:(TARGET)%は唯一自由になる両脚を絡め、ピストン運動を促している…
+			ENDIF
+			RETURN 1
+		;犯す側
+		CASE 2, 3
+			PRINTFORM 「くすくすくす…
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 　こんな無防備にお尻を突き出して…犯してくれって言ってる様なものですよね
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう呟いて%CALLNAME:(TARGET)%は、股間の剛直をあてがった…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう呟いて%CALLNAME:(TARGET)%は、股間の剛直をあてがった…
+			ENDIF
+			RETURN 1
+		ENDSELECT
+		
+		
+		
+	ENDSELECT
+
+;ここはデフォルトだと通常口上に行く
+RETURN
+
+
+
+
+
+
+

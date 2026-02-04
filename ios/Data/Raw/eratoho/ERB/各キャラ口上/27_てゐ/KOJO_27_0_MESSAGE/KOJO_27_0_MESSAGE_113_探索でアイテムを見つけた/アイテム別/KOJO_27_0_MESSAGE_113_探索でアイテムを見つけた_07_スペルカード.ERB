@@ -1,0 +1,59 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 113 探索でアイテムを見つけた - 07 スペルカード
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_113_7(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+
+	; 喪失中は何もしないで帰る
+	SIF CFLAG:29
+		RETURN 0
+	
+	; 出来るだけ専用メッセージを見せたいので、優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 初発見
+	IF KOJO_27_0_GET_ITEMGET_COUNT(ARG:1) == 0
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「スペルカードねぇ……　ここいらのヤツはルールとか守らなそうだけど……」\n"
+		ENDSELECT
+	
+	; 2つめ以降
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「またスペルカード？\n　こう何枚も落ちてるって事は、やられちゃったのが何人も居るって事よね……」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「またスペルカード？\n　こう頻繁に落ちてるって事は、弾幕勝負をする奴がここにも居るのかしら？」\n"
+		ENDSELECT
+	ENDIF
+	
+	; キャラクター対応 追加口上
+	FOR LCOUNT, 1, CHARANUM
+		; 自分と娘は除外
+		IF !(NO:LCOUNT == NO:(TARGET) || CFLAG:LCOUNT:104 != 0)
+			
+			; PTに居る
+			IF IN_PT(NO:LCOUNT)
+			
+				SELECTCASE NO:LCOUNT
+				; 霊夢
+				CASE 1
+					; 喪失中
+					IF CFLAG:(GET_ID_FROM_NO(NO:LCOUNT)):29
+						CALL KOJO_27_0_ADD_MESSAGE, @"「スペルカードルール、役にたってないわよ巫女さん……」\n"
+					; 通常
+					ELSE
+						CALL KOJO_27_0_ADD_MESSAGE, @"「ここいらのやつがルール守るとは思えないんだけど、博麗の巫女としてはどう思う？」\n"
+					ENDIF
+				ENDSELECT
+				
+			; PTに居ない
+			ELSE
+
+			ENDIF
+		ENDIF
+	NEXT
+RETURN 1

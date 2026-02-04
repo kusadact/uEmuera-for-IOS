@@ -1,0 +1,756 @@
+﻿;***********************************
+;		静葉お姉ちゃんお着替え関数
+;		CFLAG:900を利用
+;		0	通常
+;		1	小さい
+;		2	大きい
+;		3	エロ下着
+;		4	ランドセル
+;		5	メイド服
+;		6	園児服
+;		7	可愛い水着
+;		8	エロい水着
+;		9	スク水
+;		10	セーラー服
+		
+;***********************************
+
+;なかったことに！
+@KOJO_37_0_CLOTHE
+;全裸
+IF BASE:3 == 0
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「ぅぅぅ…着替えられてよかった…」
+		CASE 1
+			PRINTFORML 「ふぇえ…恥ずかしかったです…」
+		CASEELSE
+			PRINTFORML 「やっと視線を気にせず動けるわ…」
+	ENDSELECT
+;ボロでも何か布ある
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「ぼろぼろじゃない服…」
+		CASE 1
+			PRINTFORML 「まるで私の為に作られたみたいにピッタリ」
+			PRINTFORML 「もしかしてずっと前から私は目をつけられていたのかしら？」
+		CASEELSE
+			PRINTFORMDL 静葉は周囲の視線を気にしながらコソコソと着替えた
+	ENDSELECT
+ENDIF
+
+RETURN 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;戦闘中の着替えは静かに真剣に
+IF TFLAG:13
+
+;ゆっくりお着替え
+ELSE
+SELECTCASE RAND:11
+	;通常
+	CASE 0
+		PRINTFORMDL 着替えセットの中身は静葉の普段着だった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ぅぅぅ…普段着てる服でよかった…」
+					PRINTFORML (この際、どうしてそんなものがあるかは気にしないでおきましょう…)
+				CASE 1
+					PRINTFORML 「ふぇえ…恥ずかしかったです…」
+				CASEELSE
+					PRINTFORML 「やっと視線を気にせず動けるわ…」
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いつもの服…」
+					PRINTFORML (下着のサイズまで合っているなんて…少し怖いわ…)
+				CASE 1
+					PRINTFORML 「まるで私の為に作られたみたいにピッタリ」
+					PRINTFORML 「もしかしてずっと前から私は目をつけられていたのかしら？」
+				CASEELSE
+					PRINTFORMDL 静葉は周囲の視線を気にしながらコソコソと着替えた
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 0
+	;小さい
+	CASE 1
+		PRINTFORMDL 着替えセットの中身は少しサイズの小さい静葉の普段着だった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「く…うぐぐ…むりやり着ればなんとか…」
+					PRINTFORML 「ビリッといってまた裸なんてなりませんように…」
+				CASE 1
+					PRINTFORML 「ふぇぇ…裸よりはましとはいえピチピチで体のラインが…」
+				CASEELSE
+					PRINTFORML 「ふう…なんとか着れたわ…」
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もったいないけれど痛んでいる部分だけ着替えましょ」
+					PRINTFORML 「これ、小さすぎるもの」
+				CASE 1
+					PRINTFORML 「あ、あんまり見ないで…」
+					PRINTFORML 「体のラインが出ちゃって恥ずかしい…」
+				CASEELSE
+					PRINTFORMDL 静葉は周囲の視線を気にしながらコソコソと着替えた
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 1
+	;大きい
+	CASE 2
+		PRINTFORMDL 着替えセットの中身はブカブカな服と派手なブカブカな下着だった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ぅぅぅ…下着がスカスカだけど…着けないよりはマシよね」
+				CASE 1
+					PRINTFORML 「やっと服を着れたけど…スカートがストーンといきそう…」
+				CASEELSE
+					PRINTFORML (こんな派手な下着はいて動き回るなんて…)
+					PRINTFORML (ううん、背に腹は変えられないわ。我慢よ静葉…)
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「…胸の大きい方向けのセクシーな下着つきですか」
+					PRINTFORML 「……色々な意味で着たくないです」
+				CASE 1
+					PRINTFORML 「あちこちブカブカで落ち着かないわ…」
+					PRINTFORML (パンツも変えたいけど…歩いてる間にずり落ちそう…)
+				CASEELSE
+					PRINTFORMDL 静葉は自分の胸をぺたぺたと触り、セットに入っていた迫力のある下着に目をやり自嘲気味に短く笑った
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 2
+	;エロ下着
+	CASE 3
+		PRINTFORMDL 着替えセットの中身はガーターベルトやベビードールといったセクシーな下着だった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「え…下着しかないの…？そんな…」
+				CASE 1
+					PRINTFORML 「やだっ…なんだか透けてるし裸より恥ずかしい気が…」
+					PRINTFORML 「か、考えすぎよね…裸に比べればどんな格好だって…」
+				CASEELSE
+					PRINTFORMDL 静葉はしばらく下着を難しい表情で睨んでいたが覚悟を決めて着始めた
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「う、うう…今の格好の方が下手したらマシな気がする…」
+				CASE 1
+					PRINTFORML (えーと、ガーターベルトってパンツの上？下？）
+				CASEELSE
+					PRINTFORML 「サイズぴったり…着ろってことよねこれ…」
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 3
+	;ランドセル
+	CASE 4
+		PRINTFORMDL 着替えセットの中身は可愛らしいデザインの子供服一式、そしてランドセルだった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「子供っぽいデザイン…だなんてワガママ言ってられないし着ましょ」
+				CASE 1
+					PRINTFORML 「この際、服の種類には目を瞑りましょ」
+				CASEELSE
+					PRINTFORML 「はぁ…せめて下着は大人用のものがよかったわ…」
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ランドセル…やっぱり背負わないとだめよね？」
+				CASE 1
+					PRINTFORML 「たしか外の世界の子供用の鞄だったかしら？…意外と重いのね」
+				CASEELSE
+					PRINTFORML 「私…神様なのに…」
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 4
+	;メイド服
+	CASE 5
+		PRINTFORMDL 着替えセットの中身はふりふりひらひらのメイド服だった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「この状況だし仕方ないわよね、この格好も不可抗力よ、ふふっ」
+				CASE 1
+					PRINTFORML 「可愛いのに…どうせまたすぐに裸にされちゃうのでしょうね…」
+				CASEELSE
+					PRINTFORML 「変な服を着ざるを得ないよりはずっといいわね」
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「あら、かわいい服♪吸血鬼のとこの家来の制服ね」
+				CASE 1
+					PRINTFORML 「ふふふ、嫌いじゃないわ。こういう服」
+				CASEELSE
+					PRINTFORML 「ひらひらしてあまり給仕向けな服とは思えないわね」
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 5
+	;園児服
+	CASE 6
+		PRINTFORMDL 着替えセットの中身はスモッグやバッジといった幼稚園の制服だった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「またすぐに脱がされちゃいそう…」
+				CASE 1
+					PRINTFORML 「選択の余地無し…なのよね…」
+				CASEELSE
+					PRINTFORML 「やっと服を着れるのにこんなのって…」
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「…なんで名札に私の名前まで」
+				CASE 1
+					PRINTFORML 「うう…こんな格好じゃ私の神様としての威厳が…」
+				CASEELSE
+					PRINTFORML 「こんなものまで用意されてる…弄ばれている気がするわ」
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 6
+	;可愛い水着
+	CASE 7
+		PRINTFORMDL 着替えセットの中身は可愛らしいパレオつきの水着だった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「この格好で歩き回るのは裸とはまた別の恥ずかしさが…」
+				CASE 1
+					PRINTFORML 「服を着れる嬉しさがどこかにいってしまうわね…」
+				CASEELSE
+					PRINTFORML 「変な服を着ざるを得ないよりはずっといいわね」
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ちょっと子供っぽすぎないかしら…」
+				CASE 1
+					PRINTFORML 「水遊びに来たわけでもないのにこんな格好だなんて…」
+				CASEELSE
+					PRINTFORML 「ぅぅぅ…恥ずかしい…おへその辺りに心なしか視線を感じるわ…」
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 7
+	
+	;エロ水着
+	CASE 8
+		PRINTFORMDL 着替えセットの中身は隠すべき場所が隠れる程度しか布面積のないキワドイ水着だった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「裸と大してかわらないじゃない…」
+				CASE 1
+					PRINTFORML 「…着替えるのやめようかしら」
+				CASEELSE
+					PRINTFORML 「裸のほうが……うう、どっちがマシかしら…」
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「え？え？え？」
+					PRINTFORMDL 静葉は水着を手にして呆然としている
+				CASE 1
+					PRINTFORML 「今のままのほうがマシじゃないかしら…！？」
+				CASEELSE
+					PRINTFORML 「こういうのはもっと…なんていうか…体に自信がある人のほうが…」
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 8
+	;スク水
+	CASE 9
+		PRINTFORMDL 着替えセットの中身は静葉の名前の入ったスクール水着だった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「恥ずかしくないと言えば嘘になるけど…裸よりは数倍マシね」
+				CASE 1
+					PRINTFORML 「水遊びでもないのに水着を着るのは見世物みたいでちょっと抵抗が…」
+				CASEELSE
+					PRINTFORML 「うーん…これなら水着でもそこまで恥ずかしくは…」
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「珍しく質素な服…というか水着ね」
+				CASE 1
+					PRINTFORML 「どうして名前が入っているの…」
+				CASEELSE
+					PRINTFORML 「水着なのにニーソックスってどういう組み合わせなの…」
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 9
+	
+	CASE 10
+		PRINTFORMDL 着替えセットの中身はセーラー服だった
+		;全裸
+		IF BASE:3 == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ん～…ちょっとスカート丈が…なんて言ってる場合じゃないわね」
+				CASE 1
+					PRINTFORML 「ひらひらしていて可愛いわね」
+				CASEELSE
+					PRINTFORML 「下着、上着、全部揃ってる服ってとても嬉しいわ」
+			ENDSELECT
+		;ボロでも何か布ある
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「これは早苗さんが外の世界で着ていた服よね」
+				CASE 1
+					PRINTFORML 「こんな場所にいるからかしら…ちょっと布地が頼りないのが気になっちゃう」
+				CASEELSE
+					PRINTFORML 「あんまり派手に動くと見えちゃいそう…でも、派手に動かざるを得ないのよね…はぁ…」
+			ENDSELECT
+		ENDIF
+		CFLAG:900 = 10
+	ENDSELECT
+		
+		
+ENDIF
+
+
+;**********************************************************************
+
+;静葉お姉ちゃん脱ぎ脱ぎ関数
+;ARG
+;0	破れ強度　0:全裸	1:半裸	2:破れ始め
+
+@KOJO_37_0_CLOTHE_BREAK(ARG:0)
+
+SELECTCASE ARG:0
+;全裸
+CASE 0
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「いやっ！見ないでっ！」
+		CASE 1
+			PRINTFORML 「下着まで……ぐすっ…」
+		CASEELSE
+			PRINTFORML 「きゃああ！？服っ…服をっ…！」
+	ENDSELECT
+;半裸
+CASE 1
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「こんなボロボロじゃ隠せないっ…！」
+		CASE 1
+			PRINTFORML 「穴だらけに…ひどい……」
+		CASEELSE
+			PRINTFORML 「やだっ……みえちゃう……」
+	ENDSELECT
+;破れ始め
+CASE 2
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「きゃっ……大きい穴が…」
+		CASE 1
+			PRINTFORML 「早めに直さないと……」
+		CASEELSE
+			PRINTFORML 「肌が見えちゃう……！」
+	ENDSELECT
+ENDSELECT
+
+RETURN 0
+
+
+SELECTCASE CFLAG:900
+	;普通
+	CASE 0
+		SELECTCASE ARG:0
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやっ！見ないでっ！」
+				CASE 1
+					PRINTFORML 「下着まで……ぐすっ…」
+				CASEELSE
+					PRINTFORML 「きゃああ！？服っ…服をっ…！」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「こんなボロボロじゃ隠せないっ…！」
+				CASE 1
+					PRINTFORML 「私の自慢のスカートが…ひどい……」
+				CASEELSE
+					PRINTFORML 「やだっ……下着みえちゃう……」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ……大きい穴が…」
+				CASE 1
+					PRINTFORML 「早めに直さないと……」
+				CASEELSE
+					PRINTFORML 「肌が見えちゃう……！」
+			ENDSELECT
+		ENDSELECT
+	
+	;小さい
+	CASE 1
+		SELECTCASE ARG:0
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやっ！見ないでっ！」
+				CASE 1
+					PRINTFORML 「下着まで……ぐすっ…」
+				CASEELSE
+					PRINTFORML 「きゃああ！？服っ…服をっ…！」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「こんなボロボロじゃ隠せないっ…！」
+				CASE 1
+					PRINTFORML 「もうあちこちビリビリにさけちゃってるじゃない…」
+				CASEELSE
+					PRINTFORML 「やだっ……下着みえちゃう……」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ひっ……やっぱり破れちゃう…」
+				CASE 1
+					PRINTFORML 「早めに直さないと……」
+				CASEELSE
+					PRINTFORML 「肌が見えちゃう……！」
+			ENDSELECT
+		ENDSELECT
+	
+	;エロ下着
+	CASE 3
+		SELECTCASE ARG:0
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやっ！見ないでっ！」
+				CASE 1
+					PRINTFORML 「あんな下着でもあったほうが……」
+				CASEELSE
+					PRINTFORML 「裸…！？いやあぁあ！？」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もう裸とかわらないじゃないのよお…」
+				CASE 1
+					PRINTFORML 「どこをどう隠せっていうの…」
+				CASEELSE
+					PRINTFORML 「はやく着替えたい…」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もう穴が！？」
+				CASE 1
+					PRINTFORML 「ただでさえ隠れてないのに……」
+				CASEELSE
+					PRINTFORML 「うふふ…ここから一気にやぶけてしまいそうね…」
+			ENDSELECT
+		ENDSELECT
+	
+	;ランドセル
+	CASE 4
+		SELECTCASE ARG:0
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやっ！見ないでっ！」
+				CASE 1
+					PRINTFORML 「下着まで……ぐすっ…」
+				CASEELSE
+					PRINTFORML 「きゃああ！？服っ…服をっ…！」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「こんなボロボロじゃ隠せないっ…！」
+				CASE 1
+					PRINTFORML 「私の自慢のスカートが…ひどい……」
+				CASEELSE
+					PRINTFORML 「やだっ……下着みえちゃう……」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ……大きい穴が…」
+				CASE 1
+					PRINTFORML 「早めに直さないと……」
+				CASEELSE
+					PRINTFORML 「肌が見えちゃう……！」
+			ENDSELECT
+		ENDSELECT
+	
+	;メイド服
+	CASE 5
+		SELECTCASE ARG:0
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやっ！見ないでっ！」
+				CASE 1
+					PRINTFORML 「下着まで……ぐすっ…」
+				CASEELSE
+					PRINTFORML 「きゃああ！？服っ…服をっ…！」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「こんなボロボロじゃ隠せないっ…！」
+				CASE 1
+					PRINTFORML 「私の自慢のスカートが…ひどい……」
+				CASEELSE
+					PRINTFORML 「やだっ……下着みえちゃう……」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ……大きい穴が…」
+				CASE 1
+					PRINTFORML 「早めに直さないと……」
+				CASEELSE
+					PRINTFORML 「肌が見えちゃう……！」
+			ENDSELECT
+		ENDSELECT
+
+	;園児服
+	CASE 6
+		SELECTCASE ARG:0
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやっ！見ないでっ！」
+				CASE 1
+					PRINTFORML 「下着まで……ぐすっ…」
+				CASEELSE
+					PRINTFORML 「きゃああ！？服っ…服をっ…！」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「こんなボロボロじゃ隠せないっ…！」
+				CASE 1
+					PRINTFORML 「服が…ひどい……」
+				CASEELSE
+					PRINTFORML 「やだっ……下着みえちゃう……」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ……大きい穴が…」
+				CASE 1
+					PRINTFORML 「早めに直さないと……」
+				CASEELSE
+					PRINTFORML 「肌が見えちゃう……！」
+			ENDSELECT
+		ENDSELECT
+
+	;水着
+	CASE 7
+		SELECTCASE ARG:0
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやっ！見ないでっ！」
+				CASE 1
+					PRINTFORML 「やだぁ……ぐすっ…」
+				CASEELSE
+					PRINTFORML 「きゃああ！？何か隠すもの…服をっ…！」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「こんなボロボロじゃ隠せないっ…！」
+				CASE 1
+					PRINTFORML 「あああ…パレオがボロボロに……」
+				CASEELSE
+					PRINTFORML 「やだっ……穴だらけ……」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ……大きい穴が…」
+				CASE 1
+					PRINTFORML 「早めに直さないと……」
+				CASEELSE
+					PRINTFORML 「ただでさえそんなに隠せてないのに……」
+			ENDSELECT
+		ENDSELECT
+
+	;エロ水着
+	CASE 8
+		SELECTCASE ARG:0
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやっ！見ないでっ！」
+				CASE 1
+					PRINTFORML 「やだぁ……ぐすっ…」
+				CASEELSE
+					PRINTFORML 「あんな水着でもないよりはマシだったわ…くすん」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「こんなボロボロじゃ隠せないっ…！」
+				CASE 1
+					PRINTFORML 「あああ…もうどうしたら……」
+				CASEELSE
+					PRINTFORML 「やだっ……穴だらけ……」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ……紐がきれちゃいそう…」
+				CASE 1
+					PRINTFORML 「早くかわりになる服を……」
+				CASEELSE
+					PRINTFORML 「も、もうこんなにぼろぼろなの！？……」
+			ENDSELECT
+		ENDSELECT
+
+	;スク水着
+	CASE 9
+		SELECTCASE ARG:0
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやっ！見ないでっ！」
+				CASE 1
+					PRINTFORML 「やだぁ……ぐすっ…」
+				CASEELSE
+					PRINTFORML 「きゃああ！？何か隠すもの…服をっ…！」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「こんなボロボロじゃ隠せないっ…！」
+				CASE 1
+					PRINTFORML 「あああ…よりによってこんなとこに穴が……」
+				CASEELSE
+					PRINTFORML 「やだっ……穴だらけ……」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ……大きい穴が…」
+				CASE 1
+					PRINTFORML 「早めに直さないと……」
+				CASEELSE
+					PRINTFORML 「ただでさえそんなに隠せてないのに……」
+			ENDSELECT
+		ENDSELECT
+
+	;セーラー服
+	CASE 10
+		SELECTCASE ARG:0
+		;全裸
+		CASE 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「いやっ！見ないでっ！」
+				CASE 1
+					PRINTFORML 「やだぁ……ぐすっ…」
+				CASEELSE
+					PRINTFORML 「きゃああ！？何か隠すもの…服をっ…！」
+			ENDSELECT
+		;半裸
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「こんなボロボロじゃ隠せないっ…！」
+				CASE 1
+					PRINTFORML 「あああ…よりによってこんなとこに穴が……」
+				CASEELSE
+					PRINTFORML 「ふぇえ……なんだか裸よりいやらしいかんじに」
+			ENDSELECT
+		;破れ始め
+		CASE 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ……大きい穴が…」
+				CASE 1
+					PRINTFORML 「早めに直さないと……」
+				CASEELSE
+					PRINTFORML 「きゃあっ…スカートに穴が…」
+			ENDSELECT
+		ENDSELECT
+ENDSELECT
+
+
+

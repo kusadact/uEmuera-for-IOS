@@ -1,0 +1,80 @@
+﻿
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   50    コマンドID(Ａ責めを防ぐ)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_50(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"（瞄准这边的……）"
+	CALL ADD_RAND_MESSAGE, @"（不让你们随便……！）"
+	CALL ADD_RAND_MESSAGE, @"（稍微抵抗一下……）"
+	CALL ADD_RAND_MESSAGE, @"（那个动作。虽然觉得不可能……）"
+
+RETURN 1
+
+
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   51    コマンドID(Ｂ責めを防ぐ)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_51(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"（瞄准胸部的……）"
+	CALL ADD_RAND_MESSAGE, @"（不让你们随便……！）"
+	CALL ADD_RAND_MESSAGE, @"（稍微抵抗一下……）"
+	CALL ADD_RAND_MESSAGE, @"（现在，不能被玩弄胸部……）"
+
+RETURN 1
+
+
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   52    コマンドID(Ｃ責めを防ぐ)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_52(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"（瞄准这里的……）"
+	CALL ADD_RAND_MESSAGE, @"（不让你们随便……！）"
+	CALL ADD_RAND_MESSAGE, @"（稍微抵抗一下……）"
+	CALL ADD_RAND_MESSAGE, @"（只要集中注意力……）"
+
+RETURN 1
+
+
+
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   53    コマンドID(性交を防ぐ)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_53(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"（保护自己，不要被侵犯……）"
+	CALL ADD_RAND_MESSAGE, @"（一定……一定要保护住……！）"
+	
+	; [処女](初めて)所持時 追加口上
+	IF TALENT:0 == 1
+		CALL ADD_RAND_MESSAGE, @"（绝对……绝对不能让这些家伙夺走我的第一次！）"
+		CALL ADD_RAND_MESSAGE, @"（只有第一次不给他们……！）"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"（不，不好好保护的话就会被侵犯……！）"
+			CALL ADD_RAND_MESSAGE, @"（在这种地方失去处女真是讨厌啊……）"
+			CALL ADD_RAND_MESSAGE, @"「这、这里不行……」"
+		ENDSELECT
+	ENDIF
+	
+	; [処女](再生)所持時 追加口上
+	IF TALENT:0 == 2
+		CALL ADD_RAND_MESSAGE, @"「不要多次失去处女了！」"
+	ENDIF
+RETURN 1
+
+

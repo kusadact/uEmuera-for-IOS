@@ -1,0 +1,39 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 17 妊娠・月経
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_17(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; ステータス表示関数が状態確認に便利なので利用する
+	; 寄生・妊娠時は取得した文字色から進行度が得られる
+	; チェック済みなので妊娠や寄生でのバリデーション不要
+	CALL PRINT_CONDITION_4(TARGET)
+	SELECTCASE RESULTS
+	CASE "寄生"
+	
+	CASE "妊娠"
+	
+	CASE "危険日"
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「今日襲われたら赤ちゃん出来ちゃうかも♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あ……　多分今日はＨしたらヤバい日だ……）\n"
+		ENDSELECT
+		
+	CASE "排卵"
+	
+	CASE "月経"
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（女の子の日来てる♥　あたしの身体、赤ちゃん作る準備してる♥）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（だる……　時間の感覚よくわかんないけど、今がアノ日って事はわかるわ……）\n"
+		ENDSELECT
+		
+	CASEELSE
+		RETURN 0
+	ENDSELECT
+	
+RETURN 1

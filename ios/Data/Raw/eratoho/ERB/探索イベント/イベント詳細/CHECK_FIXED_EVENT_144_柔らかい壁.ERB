@@ -1,0 +1,178 @@
+﻿;固定イベント
+;RETURN	0:失敗した　1:成功した　2:以後のイベントスキップ
+@CHECK_FIXED_EVENT_144
+;LOCAL
+;0	LOOP
+;1	目標値
+;2	達成値
+;3	戻り値
+;4	道・上
+;5	道・左
+;6	道・右
+;7	道・下
+;8	開く道
+;9	TEMP
+;10	判定用1
+;11	判定用2
+;12	判定用3
+;13	判定用4
+
+VARSET LOCAL, 0, 1, 14
+
+
+
+
+;壁の無い場所で発生したら、別の場所に移る
+IF FLAG:5 < 6
+	LOCAL:4 = -1
+ELSE
+	LOCAL:4 = ((FLAG:5 - 1) / 5 - 1) * 9 + ((FLAG:5 - 1) % 5 + 4)
+	IF FLAG:(300 + LOCAL:4) == 0
+		LOCAL:9 |= 1
+	ENDIF
+ENDIF
+IF (FLAG:5 % 5) == 1
+	LOCAL:5 = -1
+ELSE
+	LOCAL:5 = ((FLAG:5 - 1) / 5 - 1) * 9 + ((FLAG:5 - 1) % 5 + 8)
+	IF FLAG:(300 + LOCAL:5) == 0
+		LOCAL:9 |= 2
+	ENDIF
+ENDIF
+IF (FLAG:5 % 5) == 0
+	LOCAL:6 = -1
+ELSE
+	LOCAL:6 = ((FLAG:5 - 1) / 5 - 1) * 9 + ((FLAG:5 - 1) % 5 + 9)
+	IF FLAG:(300 + LOCAL:6) == 0
+		LOCAL:9 |= 4
+	ENDIF
+ENDIF
+IF FLAG:5 > 25
+	LOCAL:7 = -1
+ELSE
+	LOCAL:7 = ((FLAG:5 - 1) / 5) * 9 + ((FLAG:5 - 1) % 5 + 4)
+	IF FLAG:(300 + LOCAL:7) == 0
+		LOCAL:9 |= 8
+	ENDIF
+ENDIF
+
+IF LOCAL:9 == 0
+	;周囲に崩せる壁が無いので再配置
+	FLAG:144 = RAND:30 + 1
+	RETURN 0
+ELSE
+	;崩せる壁を決定 4か所とも閉じていることは無いので、最大でも3か所な点に注意
+	IF LOCAL:9 & 1
+		LOCAL:(10 + LOCAL:14) = LOCAL:4
+		LOCAL:14 += 1
+	ENDIF
+	IF LOCAL:9 & 2
+		LOCAL:(10 + LOCAL:14) = LOCAL:5
+		LOCAL:14 += 1
+	ENDIF
+	IF LOCAL:9 & 4
+		LOCAL:(10 + LOCAL:14) = LOCAL:6
+		LOCAL:14 += 1
+	ENDIF
+	IF LOCAL:9 & 8
+		LOCAL:(10 + LOCAL:14) = LOCAL:7
+		LOCAL:14 += 1
+	ENDIF
+	LOCAL:8 = LOCAL:(RAND:(LOCAL:14) + 10)
+ENDIF
+
+;目標値（イベント難易度）決定
+LOCAL:1 = 180
+;周囲全て壁だと発見率アップ
+IF LOCAL:14 == 4
+	LOCAL:1 = 70
+ENDIF
+;達成値決定
+CALL GET_SEARCH_RATE
+LOCAL:2 = RESULT
+
+IF LOCAL:2 >= LOCAL:1
+	CALL ADD_ABL_EXP_PT(0, 2000)
+	
+	PRINTFORML 発現了和周囲的樣子有些不一樣的墻壁！　要直接撞破它麼？
+	CALL ASK_YN
+	IF RESULT == 0
+		IF RAND:2 == 0 || LOCAL:14 == 4
+			PRINTFORML %CALLNAME:1%%TACHI()%的撞撃、很簡単的就破坏了墻壁！
+			IF FLAG:AUTOMODE
+				PRINTFORML 能移動的通路増加了！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  能移動的通路増加了！
+			ENDIF
+
+			CALL PRINT_MESSAGE(1, 200, 144, CALLNAME:1, "", 1)
+			CALL PRINT_MESSAGE(FLAG:10, 200, 144, CALLNAME:1, "", 1)
+			CALL PRINT_MESSAGE(FLAG:11, 200, 144, CALLNAME:1, "", 1)
+			FLAG:(300 + LOCAL:8) = 1
+			
+			;再配置
+			FLAG:144 = RAND:30 + 1
+		ELSE
+			PRINTFORML %CALLNAME:1%%TACHI()%撞了過去、但是%CALLNAME:1%%TACHI()%被墻壁呑沒了！
+			PRINTFORML 看来那墻壁是軟体妖怪擬態而成的…
+			IF FLAG:AUTOMODE
+				PRINTFORML 被墻壁呑沒的%CALLNAME:1%%TACHI()%的全身都在被激烈的愛撫着！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW  被墻壁呑沒的%CALLNAME:1%%TACHI()%的全身都在被激烈的愛撫着！
+			ENDIF
+
+			CALL PRINT_MESSAGE(1, 200, 144, CALLNAME:1, "", 2)
+			LOCAL:9 = 5 + RAND:6
+			FOR LOCAL:0, 0, LOCAL:9
+				CALL EXTASY(1, RAND:4, RAND:50, 200)
+			NEXT
+			
+				IF FLAG:AUTOMODE
+					TWAIT FLAG:AUTOMODE * 500, 0
+				ELSE
+					WAIT
+				ENDIF
+			IF FLAG:10
+				LOCAL:9 = 5 + RAND:6
+				CALL PRINT_MESSAGE(FLAG:10, 200, 144, CALLNAME:1, "", 2)
+				FOR LOCAL:0, 0, LOCAL:9
+					CALL EXTASY(FLAG:10, RAND:4, RAND:50, 200)
+				NEXT
+				
+				IF FLAG:AUTOMODE
+					TWAIT FLAG:AUTOMODE * 500, 0
+				ELSE
+					WAIT
+				ENDIF
+			ENDIF
+			IF FLAG:11
+				LOCAL:9 = 5 + RAND:6
+				CALL PRINT_MESSAGE(FLAG:11, 200, 144, CALLNAME:1, "", 2)
+				FOR LOCAL:0, 0, LOCAL:9
+					CALL EXTASY(FLAG:11, RAND:4, RAND:50, 200)
+				NEXT
+				
+				IF FLAG:AUTOMODE
+					TWAIT FLAG:AUTOMODE * 500, 0
+				ELSE
+					WAIT
+				ENDIF
+			ENDIF
+			
+			;ネチョられた場合はその場に残る
+		ENDIF
+	ELSE
+		;無視した場合はその場に残る
+		CALL PRINT_MESSAGE(1, 200, 144, CALLNAME:1, "", 3)
+		CALL PRINT_MESSAGE(FLAG:10, 200, 144, CALLNAME:1, "", 3)
+		CALL PRINT_MESSAGE(FLAG:11, 200, 144, CALLNAME:1, "", 3)
+	ENDIF
+	LOCAL:3 = 1
+ELSE
+	;見つからなかった場合（通常は何もしない）
+ENDIF
+
+RETURN LOCAL:3
+

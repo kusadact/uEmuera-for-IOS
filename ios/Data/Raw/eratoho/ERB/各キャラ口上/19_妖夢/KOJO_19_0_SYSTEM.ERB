@@ -1,0 +1,65 @@
+﻿;魂魄妖夢口上オープニング
+;内容的は前と変わっていません
+;EDは触らないでおきます
+
+@KOJO_19_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SELECTCASE ARG:0
+
+	;記入済みのEDの地の文飛ばす
+	CASE 204, 206
+	;
+	
+	;OP
+	CASE 203
+		IF CHARANUM <= 2
+			PRINTFORML いつものように庭の剪定に勤しむ魂魄妖夢
+			PRINTFORML 白玉楼の端っこまで仕事を終えた妖夢は屋敷に戻ろうと思った
+			IF FLAG:AUTOMODE
+				PRINTFORML そのときである、塀の隅に見慣れぬ巨大な植物が自生していたのである
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW そのときである、塀の隅に見慣れぬ巨大な植物が自生していたのである
+			ENDIF
+			PRINTFORML その植物は幾重にも蔓が絡まったものであった
+			PRINTFORML 白玉楼の庭には似合わないし、不気味なので刈ろうとした
+			IF FLAG:AUTOMODE
+				PRINTFORML そのときである、植物の蔓が目にも留まらぬスピードで飛んできたのだ！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW そのときである、植物の蔓が目にも留まらぬスピードで飛んできたのだ！
+			ENDIF
+			PRINTFORML 妖夢の細い足を掴んだ蔓は妖夢を自身の方へどんどん引き寄せていく
+			IF FLAG:AUTOMODE
+				PRINTFORML 妖夢は助けを呼ぼうとしたが、それよりも早く植物の内側に引きずり込まれたのだった！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 妖夢は助けを呼ぼうとしたが、それよりも早く植物の内側に引きずり込まれたのだった！
+			ENDIF
+			PRINTFORML 植物の内側は空洞で地中深くまで続いており、妖夢は自由落下していく…
+			IF FLAG:AUTOMODE
+				PRINTFORML 逃げようとするのだが、不思議なことに空を飛ぶことが出来ないのだった！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 逃げようとするのだが、不思議なことに空を飛ぶことが出来ないのだった！
+			ENDIF
+			PRINTFORML 焦る妖夢　底が見えない筒の空間
+			PRINTFORML そのうち妖夢は落ちていく恐怖に絶望し、とうとう気を失ってしまった
+			PRINTFORML そして妖夢は触手の迷宮へと吸い込まれていくのであった……
+			PRINTFORML 
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORML 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+
+	;その他は通常の地の文
+	CASEELSE
+	CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+ENDSELECT
+
+

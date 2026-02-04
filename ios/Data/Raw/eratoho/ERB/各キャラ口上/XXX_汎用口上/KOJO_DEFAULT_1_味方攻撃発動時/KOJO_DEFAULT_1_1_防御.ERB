@@ -1,0 +1,72 @@
+﻿
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1    1    コマンドID(防御)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"（休息也是策略的一部分）"
+	CALL ADD_RAND_MESSAGE, @"（保护自己，等待机会）"
+		
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"（只要稍微露出破绽，我就会打爆你！）"
+		CALL ADD_RAND_MESSAGE, @"（呆呆地待着真是无聊～～～～～！）"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"（调整呼吸……保持冷静……）"
+		CALL ADD_RAND_MESSAGE, @"（后手……不要错过机会……）"
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"（有没有什么破绽……？）"
+		CALL ADD_RAND_MESSAGE, @"「弯腰缩身什么的，不适合我……」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"（趁这个机会能不能离开一下……）"
+		CALL ADD_RAND_MESSAGE, @"（啊，腿有点麻，动不了了……）"
+	ENDSELECT
+			
+	; 現MPが最大MPの1/4以下時 追加口上
+	IF BASE:1 <= (MAXBASE:1 / 4)
+		CALL ADD_RAND_MESSAGE, @"「必须专心恢复一下……」"
+		CALL ADD_RAND_MESSAGE, @"「糟糕……有点危险……」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「危机就是机会……！」"
+			CALL ADD_RAND_MESSAGE, @"（一定要打爆你……！）"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"（这种时候要保持冷静……）"
+			CALL ADD_RAND_MESSAGE, @"「生死存亡……！」"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「攻击是最好的防御……不对啊」"
+			CALL ADD_RAND_MESSAGE, @"「如果状态好的话，根本不需要防守……」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「不……别过来……」"
+			CALL ADD_RAND_MESSAGE, @"（有人……救救我……）"
+		ENDSELECT
+	ENDIF
+	; 仲間がいる時の追加口上
+	IF FLAG:10
+		CALL ADD_RAND_MESSAGE, @"「必须专心恢复一下……」"
+		CALL ADD_RAND_MESSAGE, @"「嘿，这不太妙吧……？」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「过来这边」"
+			CALL ADD_RAND_MESSAGE, @"（能看清吗？）"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「帮我解决掉……」"
+			CALL ADD_RAND_MESSAGE, @"（战斗不能全靠我……）"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+
+
+
+
+
+
+
+

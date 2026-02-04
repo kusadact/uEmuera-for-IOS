@@ -1,0 +1,4171 @@
+﻿;使う方の戦闘行動ファイルのXXをキャラのNoに置き換え、使わない戦闘行動ファイルを削除する
+;ARG:0 == 1の管理
+@BATTLE_MIKATA_KOUDOU_HATUDOU_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	IF ARG:1 < 10
+		CALL BATTLE_MIKATA_KOUDOU_SONOTA_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 16
+		CALL BATTLE_MIKATA_KOUDOU_DANMAKU_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 26
+		CALL BATTLE_MIKATA_KOUDOU_SYOUMOUBUKI_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 35
+		CALL BATTLE_MIKATA_KOUDOU_NO_SYOUMOUBUKI_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 54
+		CALL BATTLE_MIKATA_KOUDOU_KOUSOKU_NOW_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 59
+		CALL BATTLE_MIKATA_KOUDOU_ONEDARI_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 62
+		CALL BATTLE_MIKATA_KOUDOU_SOUBI_USE_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 90
+		CALL BATTLE_MIKATA_KOUDOU_SAIMIN_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 100
+		CALL BATTLE_MIKATA_KOUDOU_RAPE_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ENDIF
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_SONOTA_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+	SELECTCASE ARG:1
+		;防御
+		CASE 1
+			;身を守る
+			IF ARG:2 == 0
+				;MP1/4以下
+				IF MAXBASE:MP/4 >= BASE:MP
+					IF RAND:3 == 0
+						PRINTFORM 「哈啊
+						;TranslatedMark 「はぁ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ELSEIF RAND:2 == 0
+						PRINTFORM 「哈啊…
+						;TranslatedMark 「はぁ…
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 现在……不行……」
+							;TranslatedMark 今は……らめぇ……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 现在……不行……」
+							;TranslatedMark 今は……らめぇ……」
+						ENDIF
+						PRINTFORM …
+						CALL HEARTCB(0xD02830, 2)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ELSE
+						PRINTFORM 「啊啊啊…停下来啊啊
+						;TranslatedMark 「アァアッ…やめてぇぇ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ENDIF
+				;発情orMP1/2以下
+				ELSEIF CFLAG:28 != 0 || MAXBASE:MP/2 >= BASE:MP
+					IF RAND:2 == 0
+						PRINTFORM 「啊哈
+						;TranslatedMark 「あぁは
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　哈啊咿噫～～……拜托了忍耐一下…我的身体啊啊
+						;TranslatedMark はひぃぃ～～ッ……頼むから耐えて…わらひの体あぁ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ELSE
+						PRINTFORM 「咕…呼…
+						;TranslatedMark 「く…ふぅ…
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 现、现在……」
+							;TranslatedMark い、今は……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 现、现在……」
+							;TranslatedMark い、今は……」
+						ENDIF
+					ENDIF
+				;その他
+				ELSE
+					IF RAND:2 == 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「这防御，不是那么轻易就能被打破的呢」
+							;TranslatedMark 「この守り、そうそう崩せるものか」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「这防御，不是那么轻易就能被打破的呢」
+							;TranslatedMark 「この守り、そうそう崩せるものか」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「尽管放马过来吧」
+							;TranslatedMark 「かかってくるがいい」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「尽管放马过来吧」
+							;TranslatedMark 「かかってくるがいい」
+						ENDIF
+					ENDIF
+				ENDIF
+				;リロードフラグ洗浄
+				SIF CFLAG:805 == 5
+					CFLAG:805 = 0
+			;リロード
+			ELSEIF ARG:2 == 1
+				IF CFLAG:805 == 5
+					CFLAG:805 = 0
+				ELSE
+					;MP1/4以下か発情中か朦朧
+					IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || FLAG:7 >= 11
+						IF FLAG:AUTOMODE
+							PRINTFORML 「可恶…手指在颤抖着……！」
+							;TranslatedMark 「くそッ…指が震えて……！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「可恶…手指在颤抖着……！」
+							;TranslatedMark 「くそッ…指が震えて……！」
+						ENDIF
+					;ハイテンションモード☆
+					ELSEIF BASE:TP >= 150
+						IF FLAG:AUTOMODE
+							PRINTFORML 「我就先给你30秒（一回合）！」
+							;TranslatedMark 「30秒(1ターン)だけ待ってやる！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「我就先给你30秒（一回合）！」
+							;TranslatedMark 「30秒(1ターン)だけ待ってやる！」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「我一直都想这么说一下来着呢♪」
+							;TranslatedMark 「一度言ってみたかったんだよ♪」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「我一直都想这么说一下来着呢♪」
+							;TranslatedMark 「一度言ってみたかったんだよ♪」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「残弹管理是战场的铁则」
+							;TranslatedMark 「残弾管理は戦場の鉄則だ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「残弹管理是战场的铁则」
+							;TranslatedMark 「残弾管理は戦場の鉄則だ」
+						ENDIF
+					ENDIF
+					CFLAG:805 = 5
+				ENDIF
+			ENDIF
+		;アイテム
+		CASE 2
+			PRINTFORM 「在为时已晚之前」
+			;TranslatedMark 「手遅れになる前に」
+		;前進
+		CASE 3
+		;MP1/4以下
+		IF MAXBASE:MP/4 >= BASE:MP
+			IF RAND:2 == 0
+				PRINTFORM 「啊啊啊哈哈…
+				;TranslatedMark 「あぁあはは…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　已经、弄得一团糟了…
+				;TranslatedMark もう、めちゃくちゃにしてぇ…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ELSE
+				PRINTFORM 「放马过来吧！」
+				;TranslatedMark 「打って来い！」
+				PRINTFORM 「吾名为八坂！既不会逃跑也不会躲藏！」
+				;TranslatedMark 「我が名は八坂！逃げも隠れもせぬ！」
+			ENDIF
+		;発情orMP1/2以下
+		ELSEIF CFLAG:28 != 0 || MAXBASE:MP/2 >= BASE:MP
+			IF RAND:2 == 0
+				PRINTFORM 「……
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML ……哇啊！不对……这是策略！！」
+					;TranslatedMark ……ッは！違う…これは作戦だ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ……哇啊！不对……这是策略！！」
+					;TranslatedMark ……ッは！違う…これは作戦だ！！」
+				ENDIF
+			ELSE
+				PRINTFORM 「我会站前去承受……
+				;TranslatedMark 「前に出て私が受けよう……
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　(……这个、感觉好舒服啊)」
+					;TranslatedMark (……これ、気持ちいんだよぉ)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　(……这个、感觉好舒服啊)」
+					;TranslatedMark (……これ、気持ちいんだよぉ)」
+				ENDIF
+			ENDIF
+		ELSE
+			IF RAND:2 == 0
+				PRINTFORM 「放马过来吧！」
+				;TranslatedMark 「打って来い！」
+				PRINTFORM 「吾名为八坂！既不会逃跑也不会躲藏！」
+				;TranslatedMark 「我が名は八坂！逃げも隠れもせぬ！」
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「军神之名可不是随便自夸的」
+					;TranslatedMark 「伊達に軍神なんて名乗ってないんだよ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「军神之名可不是随便自夸的」
+					;TranslatedMark 「伊達に軍神なんて名乗ってないんだよ」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「我可不是那么容易能被打败的」
+					;TranslatedMark 「ちょっとやそっとでは壊れんぞ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「我可不是那么容易能被打败的」
+					;TranslatedMark 「ちょっとやそっとでは壊れんぞ」
+				ENDIF
+			ENDIF
+		ENDIF
+		;後退
+		CASE 4
+		;MP1/4以下
+		IF MAXBASE:MP/4 >= BASE:MP
+			IF RAND:2 == 0
+				PRINTFORM 「嗬呃呃唔唔唔咕
+				;TranslatedMark 「へえうぅぅっぐ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　已经……不行了
+				;TranslatedMark も……だめぇ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　现在必须先撤退
+				;TranslatedMark 今はっ退かないとぉ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ELSE
+				PRINTFORM 「呃噫
+				;TranslatedMark 「はひっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　呼
+				;TranslatedMark ひうっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　这、这样下去的话、要不行了…
+				;TranslatedMark こ、これいじょう、だめぇ…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+		;発情orMP1/2以下
+		ELSEIF CFLAG:28 != 0 || MAXBASE:MP/2 >= BASE:MP
+			PRINTFORM 「呼啊
+			;TranslatedMark 「ふぁ
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 哈啊
+			;TranslatedMark はぁ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			PRINTFORM 「再、再这样下去的话…
+			;TranslatedMark 「こ、これ以上されると…
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「呵呵、我在这里哦、想的话就追过来吧」
+				;TranslatedMark 「ふふ、私はこっちだぞ、追って来い」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「呵呵、我在这里哦、想的话就追过来吧」
+				;TranslatedMark 「ふふ、私はこっちだぞ、追って来い」
+			ENDIF
+		ENDIF
+		;逃走
+		CASE 5
+		;拘束or丸呑み
+		IF CFLAG:20 || CFLAG:21
+			IF RAND:2 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「唔咕……太污秽了！」
+					;TranslatedMark 「うぐぅっ……汚らわしい！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「唔咕……太污秽了！」
+					;TranslatedMark 「うぐぅっ……汚らわしい！」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「放、放手！你这混蛋！」
+					;TranslatedMark 「は、放せ！ このぉぉっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「放、放手！你这混蛋！」
+					;TranslatedMark 「は、放せ！ このぉぉっ！」
+				ENDIF
+			ENDIF
+		;MP1/4以下
+		ELSEIF MAXBASE:MP/4 >= BASE:MP
+			IF RAND:2 == 0
+				PRINTFORM 「咕……用这副身体、能逃得掉吗……」
+				;TranslatedMark 「くぅッ……この体で、逃げ切れるのか……」
+			ELSE
+				PRINTFORM 「可恶……竟然被迫背对敌人了！」
+				;TranslatedMark 「くそッ……敵に背を向けるとは！」
+			ENDIF
+		;発情orMP1/2以下
+		ELSEIF CFLAG:28 || MAXBASE:MP/2 >= BASE:MP
+			PRINTFORM 「现…现在……必须后退了吗……但是
+			;TranslatedMark 「い…今は……退かなくてはぁ……でもぉッッ
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			PRINTL
+		;通常
+		ELSE
+			PRINTFORM 「有时候撤退也是很重要的」
+			;TranslatedMark 「時には引く事も肝心だ」
+			PRINTFORM 「并不是只知道猪突的莽夫才是真正的战士」
+			;TranslatedMark 「猪武者だけが兵(ツワモノ)ではない」
+			PRINTL
+		ENDIF
+		
+		;失敗
+		IF ARG:2 == 0
+			;MP1/4以下
+			IF MAXBASE:MP/4 >= BASE:MP
+				IF RAND:2 == 0
+					PRINTFORM 「别说战斗了…连逃跑这种事都做不到吗……」
+					;TranslatedMark 「戦う事も…逃げる事もできんのか……」
+				ELSE
+					PRINTFORM 「……已经……跑不动了……」
+					;TranslatedMark 「……もう……走れない……」
+				ENDIF
+			;発情orMP1/2以下
+			ELSEIF CFLAG:28 || MAXBASE:MP/2 >= BASE:MP
+				PRINTFORM 「哈啊～…哈啊啊啊～…
+				;TranslatedMark 「はぁ～…はあぁぁ～…ッ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM （别说战斗……连逃跑也
+				;TranslatedMark （戦う事も……逃げる事も
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML ）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ）
+				ENDIF
+			;通常
+			ELSE
+				PRINTL
+				IF FLAG:AUTOMODE
+					PRINTFORML 「嘁！漏了一手！」
+					;TranslatedMark 「ちぃっ！ぬかったわ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「嘁！漏了一手！」
+					;TranslatedMark 「ちぃっ！ぬかったわ！」
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDSELECT
+RETURN
+@BATTLE_MIKATA_KOUDOU_DANMAKU_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE ARG:1
+		;弾幕攻撃
+			;弱弾幕
+			CASE 10
+				;MP1/4以下か要睡眠以上
+				IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+					IF FLAG:AUTOMODE
+						PRINTFORML 「咕……这种东西、顶多只是猫骗罢了……」
+						;TranslatedMark 「くっ……こんなものでは、猫騙しくらいにしか……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「咕……这种东西、顶多只是猫骗罢了……」
+						;TranslatedMark 「くっ……こんなものでは、猫騙しくらいにしか……」
+					ENDIF
+				;HP1/4以下or妊娠中
+				ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「啊呜唔…咕唔唔！……连我自己都觉得、真是不成样子」
+						;TranslatedMark 「あうぅぅッ…ぐうぅ！……我ながら、なんて様だ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「啊呜唔…咕唔唔！……连我自己都觉得、真是不成样子」
+						;TranslatedMark 「あうぅぅッ…ぐうぅ！……我ながら、なんて様だ」
+					ENDIF
+				;ハイテンションモード☆
+				ELSEIF BASE:TP >= 150
+					IF FLAG:AUTOMODE
+						PRINTFORML 「接下来是耳朵了（哼嗯，决定了呢）」
+						;TranslatedMark 「次は耳だ(ふっ、決まったな)」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「接下来是耳朵了（哼嗯，决定了呢）」
+						;TranslatedMark 「次は耳だ(ふっ、決まったな)」
+					ENDIF
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「无路可逃」
+								;TranslatedMark 「逃げる場所など無いぞ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「无路可逃」
+								;TranslatedMark 「逃げる場所など無いぞ」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「只是试探而已」
+								;TranslatedMark 「小手調べだ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「只是试探而已」
+								;TranslatedMark 「小手調べだ」
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「八坂之风哟！」
+								;TranslatedMark 「八坂の風よ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「八坂之风哟！」
+								;TranslatedMark 「八坂の風よ！」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			;中弾幕
+			CASE 11
+				;MP1/4以下か要睡眠以上
+				IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+					IF FLAG:AUTOMODE
+						PRINTFORML 「真的能做到…吗…？」
+						;TranslatedMark 「本当にやれるの…か…？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「真的能做到…吗…？」
+						;TranslatedMark 「本当にやれるの…か…？」
+					ENDIF
+				;HP1/4以下or妊娠中
+				ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「咕！…身体不听使唤！」
+						;TranslatedMark 「くぅ！……身体がいう事を聞かん！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「咕！…身体不听使唤！」
+						;TranslatedMark 「くぅ！……身体がいう事を聞かん！」
+					ENDIF
+				;ハイテンションモード☆
+				ELSEIF BASE:TP >= 150
+					IF FLAG:AUTOMODE
+						PRINTFORML 「跪下、祈求宽恕吧！（这样真帅呢）」
+						;TranslatedMark 「跪け、命乞いをしろ！(大佐かっこいいよねぇ)」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「跪下、祈求宽恕吧！（这样真帅呢）」
+						;TranslatedMark 「跪け、命乞いをしろ！(大佐かっこいいよねぇ)」
+					ENDIF
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「普通并不是什么坏事、但也就是没什么亮点对吧？」
+								;TranslatedMark 「普通が悪いわけじゃないケド、華がないよねぇ？」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「普通并不是什么坏事、但也就是没什么亮点对吧？」
+								;TranslatedMark 「普通が悪いわけじゃないケド、華がないよねぇ？」
+							ENDIF
+						CASE 1
+							IF FLAG:AUTOMODE
+								PRINTFORML 「妨碍信仰者就要一一排除」
+								;TranslatedMark 「信仰の妨げになるものは一つ一つ排除しなくてはなりません」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「妨碍信仰者就要一一排除」
+								;TranslatedMark 「信仰の妨げになるものは一つ一つ排除しなくてはなりません」
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「战斗中无需半点怜悯」
+								;TranslatedMark 「戦に情けは無用」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「战斗中无需半点怜悯」
+								;TranslatedMark 「戦に情けは無用」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			;強弾幕
+			CASE 12
+				;拘束状態で強弾幕。つまり、霊撃
+				IF CFLAG:10 || CFLAG:20
+					;MP1/4以下か要睡眠以上かHP1/4以下
+					IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7 || MAXBASE:HP/4 >= BASE:HP
+						IF FLAG:AUTOMODE
+							PRINTFORML 「拜托……离我远点！」
+							;TranslatedMark 「頼む……離れてくれぇ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「拜托……离我远点！」
+							;TranslatedMark 「頼む……離れてくれぇ！」
+						ENDIF
+					ELSE
+						IF RAND:3 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「别碰我！」
+								;TranslatedMark 「私に触れるな！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「别碰我！」
+								;TranslatedMark 「私に触れるな！」
+							ENDIF
+						ELSEIF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「滚开！」
+								;TranslatedMark 「離れろぉ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「滚开！」
+								;TranslatedMark 「離れろぉ！」
+							ENDIF
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「我才不会把身体交给你们这些东西！」
+								;TranslatedMark 「貴様らにくれてやる体など持たぬわ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「我才不会把身体交给你们这些东西！」
+								;TranslatedMark 「貴様らにくれてやる体など持たぬわ！」
+							ENDIF
+						ENDIF
+					ENDIF
+				ELSE
+					;MP1/4以下か要睡眠以上
+					IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+						IF FLAG:AUTOMODE
+							PRINTFORML 「这下子……能打倒吧……！」
+							;TranslatedMark 「これで……倒れてくれぇっ……！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「这下子……能打倒吧……！」
+							;TranslatedMark 「これで……倒れてくれぇっ……！」
+						ENDIF
+					;HP1/4以下or妊娠中
+					ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+						IF FLAG:AUTOMODE
+							PRINTFORML 「身体……好重啊……！」
+							;TranslatedMark 「身体が……重いッ……！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「身体……好重啊……！」
+							;TranslatedMark 「身体が……重いッ……！」
+						ENDIF
+					;ハイテンションモード☆
+					ELSEIF BASE:TP >= 150
+						IF FLAG:AUTOMODE
+							PRINTFORML 「神符『如水眼之美丽源泉』！」
+							;TranslatedMark 「神符『水眼の如き美しき源泉』！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「神符『如水眼之美丽源泉』！」
+							;TranslatedMark 「神符『水眼の如き美しき源泉』！」
+						ENDIF
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「你们这些混蛋的蠢样让我打从心底的厌恶呢（尽管我们才刚见面而已）」
+									;TranslatedMark 「貴様のアホ面には心底ウンザリさせられる(会ったばかりだけどね)」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「你们这些混蛋的蠢样让我打从心底的厌恶呢（尽管我们才刚见面而已）」
+									;TranslatedMark 「貴様のアホ面には心底ウンザリさせられる(会ったばかりだけどね)」
+								ENDIF
+							CASE 1
+								IF FLAG:AUTOMODE
+									PRINTFORML 「无论弹幕还是战斗、华丽一点不是更好嘛？」
+									;TranslatedMark 「弾幕も戦も派手な方がいいだろう？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「无论弹幕还是战斗、华丽一点不是更好嘛？」
+									;TranslatedMark 「弾幕も戦も派手な方がいいだろう？」
+								ENDIF
+							CASEELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「见识一下吧、八坂的神德」
+									;TranslatedMark 「八坂の神徳、見せてくれよう」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「见识一下吧、八坂的神德」
+									;TranslatedMark 「八坂の神徳、見せてくれよう」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				ENDIF
+			;溜め撃ち
+			CASE 13
+				;溜め
+				IF CFLAG:31 == 2
+					;MP1/4以下or妊娠中or要睡眠以上
+					IF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || FLAG:7 >= 7
+						IF RAND:2 == 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「已经……没有退路了！」
+								;TranslatedMark 「もう……後がないんだよぉ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「已经……没有退路了！」
+								;TranslatedMark 「もう……後がないんだよぉ！」
+							ENDIF
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「大国主大人…请给予我力量…父亲大人…啊…」
+								;TranslatedMark 「オオクニヌシ様…どうか御力を……父上ぇ……ッ」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「大国主大人…请给予我力量…父亲大人…啊…」
+								;TranslatedMark 「オオクニヌシ様…どうか御力を……父上ぇ……ッ」
+							ENDIF
+						ENDIF
+					ELSEIF BASE:TP >= 150
+						IF FLAG:AUTOMODE
+							PRINTFORML 「让你看看吧……八坂的神雷！」
+							;TranslatedMark 「見せてあげよう……八坂のイカズチを！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「让你看看吧……八坂的神雷！」
+							;TranslatedMark 「見せてあげよう……八坂のイカズチを！」
+						ENDIF
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「国津神的力量，可别小看了呐？」
+									;TranslatedMark 「国津神の力、甘く見るなよ？」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「国津神的力量，可别小看了呐？」
+									;TranslatedMark 「国津神の力、甘く見るなよ？」
+								ENDIF
+							CASEELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「…………」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「…………」
+								ENDIF
+								IF FLAG:AUTOMODE
+									PRINTFORML 「哈！………我正在集中注意力、没在睡觉！」
+									;TranslatedMark 「はッ！………集中してるんだ寝てないぞ！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「哈！………我正在集中注意力、没在睡觉！」
+									;TranslatedMark 「はッ！………集中してるんだ寝てないぞ！」
+								ENDIF
+						ENDSELECT
+					ENDIF
+				;発射
+				ELSE
+					IF CFLAG:31 == 2
+						;MP1/4以下or妊娠中or要睡眠以上
+						IF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || FLAG:7 >= 7
+							IF FLAG:AUTOMODE
+								PRINTFORML 「倒下吧啊啊啊！！」
+								;TranslatedMark 「倒れろぉぉぉッッ！！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「倒下吧啊啊啊！！」
+								;TranslatedMark 「倒れろぉぉぉッッ！！」
+							ENDIF
+						ELSEIF BASE:TP >= 150
+							IF RAND:2 == 0
+								IF FLAG:AUTOMODE
+									PRINTFORML 「『バルス』哦哦！！」
+									;TranslatedMark 「『バルス』ッッッ！！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「『バルス』哦哦！！」
+									;TranslatedMark 「『バルス』ッッッ！！」
+								ENDIF
+							ELSE
+								IF FLAG:AUTOMODE
+									PRINTFORML 「神符『神所踏足之御神渡』！！」
+									;TranslatedMark 「神符『神が歩かれた御神渡り』！！」
+									TWAIT FLAG:AUTOMODE * 400, 0
+								ELSE
+									PRINTFORMW 「神符『神所踏足之御神渡』！！」
+									;TranslatedMark 「神符『神が歩かれた御神渡り』！！」
+								ENDIF
+							ENDIF
+						ELSE
+							SELECTCASE RAND:2
+								CASE 0
+									IF FLAG:AUTOMODE
+										PRINTFORML 「感受荒神御灵的狂暴之力吧」
+										;TranslatedMark 「荒ぶる神の御霊を味わうといい」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「感受荒神御灵的狂暴之力吧」
+										;TranslatedMark 「荒ぶる神の御霊を味わうといい」
+									ENDIF
+								CASEELSE
+									IF FLAG:AUTOMODE
+										PRINTFORML 「吾名为八坂！作为国津神之一柱，大国主命之子！」
+										;TranslatedMark 「我が名はヤサカ！　国津神が一柱、オオクニヌシノミコトの子なり！」
+										TWAIT FLAG:AUTOMODE * 400, 0
+									ELSE
+										PRINTFORMW 「吾名为八坂！作为国津神之一柱，大国主命之子！」
+										;TranslatedMark 「我が名はヤサカ！　国津神が一柱、オオクニヌシノミコトの子なり！」
+									ENDIF
+							ENDSELECT
+						ENDIF
+					ENDIF
+				ENDIF
+			;ばら撒き弾
+			CASE 14
+				;MP1/4以下or妊娠中or要睡眠以上
+				IF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || FLAG:7 >= 7
+					IF FLAG:AUTOMODE
+						PRINTFORML 「别过来啊……别过来啊啊！」
+						;TranslatedMark 「来るなッ……来ないでよぉぉ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「别过来啊……别过来啊啊！」
+						;TranslatedMark 「来るなッ……来ないでよぉぉ！」
+					ENDIF
+				;ハイテンションモード☆
+				ELSEIF BASE:TP >= 150
+					IF FLAG:AUTOMODE
+						PRINTFORML 「『Mountain of Faith』!!」
+						;TranslatedMark 「『マウンテンオブフェイス』！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「『Mountain of Faith』!!」
+						;TranslatedMark 「『マウンテンオブフェイス』！！」
+					ENDIF
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							IF FLAG:AUTOMODE
+								PRINTFORML 「死吧！」
+								;TranslatedMark 「死ねぇぇッ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「死吧！」
+								;TranslatedMark 「死ねぇぇッ！」
+							ENDIF
+						CASEELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「哈哈哈……你刚才说要去哪儿呐」
+								;TranslatedMark 「はっはっはっ……どこへ行こうと言うのだね」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「哈哈哈……你刚才说要去哪儿呐」
+								;TranslatedMark 「はっはっはっ……どこへ行こうと言うのだね」
+							ENDIF
+					ENDSELECT
+				ENDIF
+			;貫通弾
+			CASE 15
+				;MP1/4以下or妊娠中or要睡眠以上
+				IF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || FLAG:7 >= 7
+					IF FLAG:AUTOMODE
+						PRINTFORML 「贯穿吧啊啊啊！」
+						;TranslatedMark 「貫けぇぇえぇッ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「贯穿吧啊啊啊！」
+						;TranslatedMark 「貫けぇぇえぇッ！」
+					ENDIF
+				ELSEIF BASE:TP >= 150
+					IF FLAG:AUTOMODE
+						PRINTFORML 「神祭『Expanded Onbashira』！！」
+						;TranslatedMark 「神祭『エクスパンデッド・オンバシラ』！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「神祭『Expanded Onbashira』！！」
+						;TranslatedMark 「神祭『エクスパンデッド・オンバシラ』！！」
+					ENDIF
+				ELSE
+					SELECTCASE RAND:2
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「给你开个空洞！」
+							;TranslatedMark 「風穴を開けてやる！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「给你开个空洞！」
+							;TranslatedMark 「風穴を開けてやる！」
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「我会再给你一根柱子的」
+							;TranslatedMark 「オンバシラをもう一本くれてやろう」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「我会再给你一根柱子的」
+							;TranslatedMark 「オンバシラをもう一本くれてやろう」
+						ENDIF
+					ENDSELECT
+				ENDIF
+			ENDSELECT
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_SYOUMOUBUKI_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	;消耗武器
+	SELECTCASE ARG:1
+
+		;弱攻撃
+		CASE 20
+			;MP1/4以下か要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…啊啊……手在颤抖、停不下来」
+					;TranslatedMark 「…ううっ……手の震えが、止まらんッ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…啊啊……手在颤抖、停不下来」
+					;TranslatedMark 「…ううっ……手の震えが、止まらんッ」
+				ENDIF
+			;HP1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「哈啊……哈啊……该死、击中它！」
+					;TranslatedMark 「はぁ……はぁっ……くそ、当たれ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「哈啊……哈啊……该死、击中它！」
+					;TranslatedMark 「はぁ……はぁっ……くそ、当たれ！」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「接下来到轮到耳朵了！（一直以来都想说一次呢）」
+						;TranslatedMark 「次は耳だ！(一度言ってみたかったんだよ)」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「接下来到轮到耳朵了！（一直以来都想说一次呢）」
+						;TranslatedMark 「次は耳だ！(一度言ってみたかったんだよ)」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「小小试探罢了」
+						;TranslatedMark 「小手調べといこうか」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「小小试探罢了」
+						;TranslatedMark 「小手調べといこうか」
+					ENDIF
+				ENDIF
+			ENDIF
+		;中攻撃
+		CASE 21
+			;MP1/4以下か要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「该死……准星、确定不了！」
+					;TranslatedMark 「くそ……狙いが、定まらん！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「该死……准星、确定不了！」
+					;TranslatedMark 「くそ……狙いが、定まらん！」
+				ENDIF
+			;HP1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「唔咕……别慌张、还有胜机……一定有的！」
+					;TranslatedMark 「うぅぐッ……慌てるな、まだ勝機は……有ってくれっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「唔咕……别慌张、还有胜机……一定有的！」
+					;TranslatedMark 「うぅぐッ……慌てるな、まだ勝機は……有ってくれっ！」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「在那里」
+						;TranslatedMark 「そこだ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「在那里」
+						;TranslatedMark 「そこだ」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「不要心急、慢慢来」
+						;TranslatedMark 「焦らずじっくりといこう」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「不要心急、慢慢来」
+						;TranslatedMark 「焦らずじっくりといこう」
+					ENDIF
+				ENDIF
+			ENDIF
+		;強攻撃
+		CASE 22
+			;MP1/4以下か要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「打中吧……请打中吧！！」
+					;TranslatedMark 「当たれ……当たってくれ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「打中吧……请打中吧！！」
+					;TranslatedMark 「当たれ……当たってくれ！！」
+				ENDIF
+			;HP1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「拜托……倒下吧！」
+					;TranslatedMark 「頼む……倒れてくれ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「拜托……倒下吧！」
+					;TranslatedMark 「頼む……倒れてくれ！」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「把你打成碎片！」
+						;TranslatedMark 「ばらばらにしてくれる」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「把你打成碎片！」
+						;TranslatedMark 「ばらばらにしてくれる」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「全力攻击！」
+						;TranslatedMark 「火力を叩き込む！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「全力攻击！」
+						;TranslatedMark 「火力を叩き込む！」
+					ENDIF
+				ENDIF
+			ENDIF
+		;節約攻撃
+		CASE 23
+			;MP1/4以下or妊娠中or要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「啊啊……残弹数！」
+					;TranslatedMark 「うぅッ……残弾が！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「啊啊……残弹数！」
+					;TranslatedMark 「うぅッ……残弾が！」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「毕竟在关键时刻要避免弹药不足的情况啊」
+						;TranslatedMark 「いざって時に弾切れは避けたいからねぇ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「毕竟在关键时刻要避免弹药不足的情况啊」
+						;TranslatedMark 「いざって時に弾切れは避けたいからねぇ」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「弹药保存是生存的基本原则啊」
+						;TranslatedMark 「弾薬温存は生き残りの基本だよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「弹药保存是生存的基本原则啊」
+						;TranslatedMark 「弾薬温存は生き残りの基本だよ」
+					ENDIF
+				ENDIF
+			ENDIF
+		;みだれうち
+		CASE 24
+			;MP1/4以下or妊娠中or要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「唔啊啊！打中！打中！！……请打中啊啊！」
+					;TranslatedMark 「ううぅぅッ！当たれ！当たれ！！……当たってくれぇ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「唔啊啊！打中！打中！！……请打中啊啊！」
+					;TranslatedMark 「ううぅぅッ！当たれ！当たれ！！……当たってくれぇ！」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「这种弹幕也不坏嘛？」
+						;TranslatedMark 「こういう弾幕も悪くないだろう？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「这种弹幕也不坏嘛？」
+						;TranslatedMark 「こういう弾幕も悪くないだろう？」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「头太高了、给我老老实实地蹲下去比较好哟」
+						;TranslatedMark 「頭が高い、這い蹲ってりゃいいんだよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「头太高了、给我老老实实地蹲下去比较好哟」
+						;TranslatedMark 「頭が高い、這い蹲ってりゃいいんだよ」
+					ENDIF
+				ENDIF
+			ENDIF
+		;一点集中
+		CASE 25
+			;MP1/4以下or妊娠中or要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「哈啊…哈啊！……如果这样不行的话……」
+					;TranslatedMark 「ハァッ…ハァッ！……これがダメなら……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「哈啊…哈啊！……如果这样不行的话……」
+					;TranslatedMark 「ハァッ…ハァッ！……これがダメなら……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「不能……输给那些家伙！」
+					;TranslatedMark 「嫌だ……あんな奴らにぃ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「不能……输给那些家伙！」
+					;TranslatedMark 「嫌だ……あんな奴らにぃ！」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「这种时候不能吝啬、全力以赴」
+						;TranslatedMark 「出し惜しみは無しだ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「这种时候不能吝啬、全力以赴」
+						;TranslatedMark 「出し惜しみは無しだ」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「在需要倾泻火力的时候不能犹豫、一鼓作气攻上去！」
+						;TranslatedMark 「火力を叩き込む時は躊躇わず、一気に攻めるんだよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「在需要倾泻火力的时候不能犹豫、一鼓作气攻上去！」
+						;TranslatedMark 「火力を叩き込む時は躊躇わず、一気に攻めるんだよ」
+					ENDIF
+				ENDIF
+			ENDIF
+	ENDSELECT
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_NO_SYOUMOUBUKI_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	;非消耗武器
+	SELECTCASE ARG:1
+		;弱攻撃
+		CASE 30
+			;MP1/4以下か要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「呜唔唔……（刀刃变钝了……）」
+					;TranslatedMark 「ぅううぅ……(刃こぼれが……)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「呜唔唔……（刀刃变钝了……）」
+					;TranslatedMark 「ぅううぅ……(刃こぼれが……)」
+				ENDIF
+			;HP1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「呼…呼……（已经、连握紧刀柄都……）」
+					;TranslatedMark 「フゥー…フゥー……ッ(もう、まともに柄も握れない……)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「呼…呼……（已经、连握紧刀柄都……）」
+					;TranslatedMark 「フゥー…フゥー……ッ(もう、まともに柄も握れない……)」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「已经很久没有握住刀柄了呢」
+						;TranslatedMark 「得物の柄を握るのは久しぶりだよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「已经很久没有握住刀柄了呢」
+						;TranslatedMark 「得物の柄を握るのは久しぶりだよ」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「军神之称可不是浪得虚名」
+						;TranslatedMark 「軍神の名は伊達ではないぞ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「军神之称可不是浪得虚名」
+						;TranslatedMark 「軍神の名は伊達ではないぞ」
+					ENDIF
+				ENDIF
+			ENDIF
+		;中攻撃
+		CASE 31
+			;MP1/4以下か要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「呼…呼…！……（不行、再挥出一刀前、不能倒下！）」
+					;TranslatedMark 「はぁ…はぁっ…！……(ダメだ、もう一太刀打つまで、倒れ…るな！)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「呼…呼…！……（不行、再挥出一刀前、不能倒下！）」
+					;TranslatedMark 「はぁ…はぁっ…！……(ダメだ、もう一太刀打つまで、倒れ…るな！)」
+				ENDIF
+			;HP1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「咕呼呜呜……（身体撑不住了！）」
+					;TranslatedMark 「ぐふぅう……(身体が持たん！)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「咕呼呜呜……（身体撑不住了！）」
+					;TranslatedMark 「ぐふぅう……(身体が持たん！)」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「哈！」
+						;TranslatedMark 「はっ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「哈！」
+						;TranslatedMark 「はっ！」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「斩掉你！」
+						;TranslatedMark 「刈り取ってやる」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「斩掉你！」
+						;TranslatedMark 「刈り取ってやる」
+					ENDIF
+				ENDIF
+			ENDIF
+		;強攻撃
+		CASE 32
+			;MP1/4以下か要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「倒下吧啊啊啊！！」
+					;TranslatedMark 「倒れろぉぉぉっ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「倒下吧啊啊啊！！」
+					;TranslatedMark 「倒れろぉぉぉっ！！」
+				ENDIF
+			;HP1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「父亲…请帮帮我…」
+					;TranslatedMark 「父上…お助けを…ッ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「父亲…请帮帮我…」
+					;TranslatedMark 「父上…お助けを…ッ」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「国津神之一柱……八坂神奈子！……参上！」
+						;TranslatedMark 「国津神が一柱……八坂神奈子！……参る！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「国津神之一柱……八坂神奈子！……参上！」
+						;TranslatedMark 「国津神が一柱……八坂神奈子！……参る！」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「把你打碎！」
+						;TranslatedMark 「叩き割ってやる！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「把你打碎！」
+						;TranslatedMark 「叩き割ってやる！」
+					ENDIF
+				ENDIF
+			ENDIF
+		;下段狙い
+		CASE 33
+			;MP1/4以下or妊娠中or要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「咕呃…（不要慌张…先想办法阻止对方的行动！）」
+					;TranslatedMark 「ぐぅッ…(慌てるな…なんとか動きを止めるんだ！)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「咕呃…（不要慌张…先想办法阻止对方的行动！）」
+					;TranslatedMark 「ぐぅッ…(慌てるな…なんとか動きを止めるんだ！)」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「跪下、祈求宽恕吧！（这样好酷啊）」
+						;TranslatedMark 「跪け、命乞いをしろ！(大佐カッコいいよねぇ)」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「跪下、祈求宽恕吧！（这样好酷啊）」
+						;TranslatedMark 「跪け、命乞いをしろ！(大佐カッコいいよねぇ)」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「头太高了、跪下！」
+						;TranslatedMark 「頭が高い、跪け」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「头太高了、跪下！」
+						;TranslatedMark 「頭が高い、跪け」
+					ENDIF
+				ENDIF
+			ENDIF
+		;急所狙い
+		CASE 34
+			;MP1/4以下or妊娠中or要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:36 >= 3 || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「父亲……请、给我力量！」
+					;TranslatedMark 「父上……どうか、お力を！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「父亲……请、给我力量！」
+					;TranslatedMark 「父上……どうか、お力を！」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「全力一击定下胜负！」
+						;TranslatedMark 「一太刀に全てをかける！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「全力一击定下胜负！」
+						;TranslatedMark 「一太刀に全てをかける！」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「闪！」
+						;TranslatedMark 「閃！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「闪！」
+						;TranslatedMark 「閃！」
+					ENDIF
+				ENDIF
+			ENDIF
+		;カウンター待機
+		CASE 50
+			;MP1/4以下か要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「哈…哈啊……（能看穿吗…现在的我！）」
+					;TranslatedMark 「ハッ…ハァッ……(見切れるのか…今の私にっ！)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「哈…哈啊……（能看穿吗…现在的我！）」
+					;TranslatedMark 「ハッ…ハァッ……(見切れるのか…今の私にっ！)」
+				ENDIF
+			;HP1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「咕……已经、没有退路了！」
+					;TranslatedMark 「ぐぅッ……もう、後がない！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「咕……已经、没有退路了！」
+					;TranslatedMark 「ぐぅッ……もう、後がない！」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「怎么了、放马过来啊！」
+						;TranslatedMark 「どうした、打ってこい！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「怎么了、放马过来啊！」
+						;TranslatedMark 「どうした、打ってこい！」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「邪魔外道、让我把你们打回根之国去」
+						;TranslatedMark 「化生共め、根の国へ叩き返してやる」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「邪魔外道、让我把你们打回根之国去」
+						;TranslatedMark 「化生共め、根の国へ叩き返してやる」
+					ENDIF
+				ENDIF
+			ENDIF
+		;カウンター発動
+		CASE 51
+			;MP1/4以下か要睡眠以上
+			IF MAXBASE:MP/4 >= BASE:MP || FLAG:7 >= 7
+				IF FLAG:AUTOMODE
+					PRINTFORML 「啊啊啊啊啊啊————！！！」
+					;TranslatedMark 「ううぉおおーーーッッッ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「啊啊啊啊啊啊————！！！」
+					;TranslatedMark 「ううぉおおーーーッッッ！！」
+				ENDIF
+			;HP1/4以下か妊娠中
+			ELSEIF MAXBASE:HP/4 >= BASE:HP || CFLAG:36 >= 3
+				IF FLAG:AUTOMODE
+					PRINTFORML 「快点去死吧！」
+					;TranslatedMark 「もう斃れてくれぇ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「快点去死吧！」
+					;TranslatedMark 「もう斃れてくれぇ！」
+				ENDIF
+			ELSEIF BASE:TP >= 150
+				IF FLAG:AUTOMODE
+					PRINTFORML 「吾名为八坂……回到“根之国”时可不要忘了……」
+					;TranslatedMark 「我が名は八坂……“根の国へ”戻っても忘れぬ事だ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「吾名为八坂……回到“根之国”时可不要忘了……」
+					;TranslatedMark 「我が名は八坂……“根の国へ”戻っても忘れぬ事だ……」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「太天真了」
+						;TranslatedMark 「あまいぞ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「太天真了」
+						;TranslatedMark 「あまいぞ」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「看穿了」
+						;TranslatedMark 「見切った」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「看穿了」
+						;TranslatedMark 「見切った」
+					ENDIF
+				ENDIF
+			ENDIF
+	ENDSELECT
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_KOUSOKU_NOW_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE ARG:1
+
+		;拘束離脱
+		CASE 42
+			;コマンド使用時
+			IF ARG:3 == 0
+				;MP1/4以下
+				IF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORM 「哈咿啊啊啊
+					;TranslatedMark 「ひゃぁあぁいぃっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　这、这个
+					;TranslatedMark この、このぉぉっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　不…不要啊啊啊啊啊啊
+					;TranslatedMark も…いやぁあぁぁあんんっ
+					CALL HEARTCB(0xD02830, 2)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;MP1/2以下
+				ELSEIF MAXBASE:MP/2 >= BASE:MP
+					IF RAND:2 == 0
+						PRINTFORM 「咕哈啊啊…放手啊啊
+						;TranslatedMark 「くはぁぅっ…はなしぇぇえ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ELSE
+						PRINTFORM 「噫呜唔唔唔
+						;TranslatedMark 「ひぅうぅぅっ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML ！这种！…」
+							;TranslatedMark ！　このぉっ！…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ！这种！…」
+							;TranslatedMark ！　このぉっ！…」
+						ENDIF
+					ENDIF
+				;絶頂
+				ELSEIF CFLAG:35 != 0
+					IF RAND:5 == 0
+						PRINTFORM 「这种！放sh…啊咿噫噫啊啊啊
+						;TranslatedMark 「この！はなｓ…あひぃぃッッ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　现在……不行啊啊啊啊
+						;TranslatedMark いま……らめぇぇえッ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML ！！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ！！！」
+						ENDIF
+					ELSEIF RAND:4 == 0
+						PRINTFORM 「嗯哦哦哦哦哦齁
+						;TranslatedMark 「んおぉぉぉごっ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　哦齁哦哦哦哦哦
+						;TranslatedMark おほぉぉぉぉ
+						CALL HEARTCB(0xD02830, 3)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL %CALLNAME:(TARGET)%试图挣脱束缚、但身体的动作似乎被触手察觉到了，顷刻间就被触手强行送上了高潮。
+							;TranslatedMark %CALLNAME:(TARGET)%は拘束から逃れようとしたが、その動きを察知したかの様に触手が蠢き、呆気なく絶頂させられてしまった。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW %CALLNAME:(TARGET)%试图挣脱束缚、但身体的动作似乎被触手察觉到了，顷刻间就被触手强行送上了高潮。
+							;TranslatedMark %CALLNAME:(TARGET)%は拘束から逃れようとしたが、その動きを察知したかの様に触手が蠢き、呆気なく絶頂させられてしまった。
+						ENDIF
+					ELSEIF RAND:3 == 0
+						PRINTFORM 「咿噫噫噫噫！
+						;TranslatedMark 「ひぃぃぃぃっ
+						CALL HEARTCB(0xD02830, 2)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+						PRINTFORM 「住手…住手啊啊啊啊啊
+						;TranslatedMark 「やめぇ…やめへぇぇえぇっ
+						CALL HEARTCB(0xD02830, 3)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+						PRINTFORMDL 试图摆脱触手的%CALLNAME:(TARGET)%拼命地扭动身子、但
+						;TranslatedMark 触手から逃れようと%CALLNAME:(TARGET)%は身を捩ったが
+						IF FLAG:AUTOMODE
+							PRINTFORML 触手猛烈地刺激着%CALLNAME:(TARGET)%的性感带、瞬间将她送上了强烈的高潮、仿佛在警告她不要抵抗。
+							;TranslatedMark 触手は「抵抗するな」とでも言わんばかりに%CALLNAME:(TARGET)%の性感帯を攻めたて、強烈なアクメを叩きこんだ。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 触手猛烈地刺激着%CALLNAME:(TARGET)%的性感带、瞬间将她送上了强烈的高潮、仿佛在警告她不要抵抗。
+							;TranslatedMark 触手は「抵抗するな」とでも言わんばかりに%CALLNAME:(TARGET)%の性感帯を攻めたて、強烈なアクメを叩きこんだ。
+						ENDIF
+					ELSEIF RAND:2 == 0
+						PRINTFORM 「嗬咿噫嗯嗯嗯嗯嗯
+						;TranslatedMark 「ひいいぃんんんんッ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM ！！  已经…不行了……绕了我吧
+						;TranslatedMark ！！　も…だめぇ……堪忍してぇぇ
+						CALL HEARTCB(0xD02830, 2)
+						IF FLAG:AUTOMODE
+							PRINTFORML ！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ！！」
+						ENDIF
+					ELSE
+						PRINTFORM 「啊啊啊
+						;TranslatedMark 「あ゛ぁっ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　啊啊啊啊啊啊啊啊
+						;TranslatedMark ぁあ゛あ゛あぁぁっ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ENDIF
+				;発情
+				ELSEIF CFLAG:28 != 0
+					IF RAND:2 == 0
+						PRINTFORM 「啊啊～…啊啊啊啊～～
+						;TranslatedMark 「ア゛ァ～…ア゛ァ゛ァ～～
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML (脑子里……就像融化了一样……)」
+							;TranslatedMark (頭の中が……溶けていくようだ……)」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW (脑子里……就像融化了一样……)」
+							;TranslatedMark (頭の中が……溶けていくようだ……)」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「咕嗯嗯！……这些家伙的体液、是媚药吗！」
+							;TranslatedMark 「くぅぅッ！……こいつらの体液は、媚薬か！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「咕嗯嗯！……这些家伙的体液、是媚药吗！」
+							;TranslatedMark 「くぅぅッ！……こいつらの体液は、媚薬か！」
+						ENDIF
+					ENDIF
+				;その他
+				ELSE
+					IF RAND:2 == 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「该死、放开我！…太污秽了！！」
+							;TranslatedMark 「このっ、離せっ！…汚らわしい！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「该死、放开我！…太污秽了！！」
+							;TranslatedMark 「このっ、離せっ！…汚らわしい！！」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「这样下去就麻烦了…！」
+							;TranslatedMark 「このままじゃまずい…！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「这样下去就麻烦了…！」
+							;TranslatedMark 「このままじゃまずい…！」
+						ENDIF
+					ENDIF
+				ENDIF
+			ENDIF
+		;力溜め
+		CASE 43
+			;コマンド使用時
+			IF ARG:2 == 0
+				;MP1/4以下
+				IF MAXBASE:MP/4 >= BASE:MP
+					IF RAND:2 == 0
+						PRINTFORM 「哈啊、哈啊……
+						;TranslatedMark 「ハァ、ハァ……
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　怎么…办……得逃出去……才行啊
+						;TranslatedMark なん…とか……抜けださ……ないとぉ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+						PRINTFORM （咕唔……身体开始发疼了
+						;TranslatedMark （くぅぅ……身体が疼いてしまう
+						CALL HEARTCB(0xD02830, 3)
+						IF FLAG:AUTOMODE
+							PRINTFORML ！）
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ！）
+						ENDIF
+					ELSE
+						PRINTFORM 「咿……呃咕呜唔
+						;TranslatedMark 「いっ……んっくぅぅッ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM ！ 现在、有感觉了……不行啊
+						;TranslatedMark ！　今、感じちゃ……ダメ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ！」
+						ENDIF
+					ENDIF
+				;MP1/2以下
+				ELSEIF MAXBASE:MP/2 >= BASE:MP
+					IF RAND:2 == 0
+						PRINTFORM 「必、必须要、积攒力量
+						;TranslatedMark 「ち、ちから、ためないとぉ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　这样下去的话、我…
+						;TranslatedMark このままひゃ、わたしぃ…
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ELSE
+						PRINTFORM 「精神、要集中……咿咕喔哦
+						;TranslatedMark 「気を、集中させて…ひぎゅう
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　那里不行啊啊啊
+						;TranslatedMark そこらめえぇぇ
+						CALL HEARTCB(0xD02830, 2)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ENDIF
+				;絶頂
+				ELSEIF CFLAG:35 != 0
+					IF RAND:4 == 0
+						PRINTFORM 「快停下啊啊啊
+						;TranslatedMark 「いみゃらめぇぇぇっ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　那里不行啊啊啊啊
+						;TranslatedMark しょこらめにゃのぉぉっ
+						CALL HEARTCB(0xD02830, 3)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+						PRINTFORMDL %CALLNAME:(TARGET)%正在努力地积蓄力量、但是
+						;TranslatedMark %CALLNAME:(TARGET)%は何とか力を貯めようとしているが、
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 因为高潮而止不出抽搐抖动的身躯根本做不到这种事…。
+							;TranslatedMark 絶頂に身体を無茶苦茶に跳ねさせながらでは出来る訳も無かった…。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 因为高潮而止不出抽搐抖动的身躯根本做不到这种事…。
+							;TranslatedMark 絶頂に身体を無茶苦茶に跳ねさせながらでは出来る訳も無かった…。
+						ENDIF
+					ELSEIF RAND:3 == 0
+						PRINTFORM 「咿噫呼
+						;TranslatedMark 「っひっ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　啊～～～～
+						;TranslatedMark あ゛～～～～
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　啊～～～～
+						;TranslatedMark あ゛～～～～
+						CALL HEARTCB(0xD02830, 3)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL %CALLNAME:(TARGET)%每一次积蓄力量的尝试都被强烈的快感所瓦解，她露出淫乱的阿黑颜不停地高潮着…。
+							;TranslatedMark 力を貯めようと試みる度に激しい快楽に襲われ、%CALLNAME:(TARGET)%は蕩けた表情でイき狂っている…。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW %CALLNAME:(TARGET)%每一次积蓄力量的尝试都被强烈的快感所瓦解，她露出淫乱的阿黑颜不停地高潮着…。
+							;TranslatedMark 力を貯めようと試みる度に激しい快楽に襲われ、%CALLNAME:(TARGET)%は蕩けた表情でイき狂っている…。
+						ENDIF
+					ELSEIF RAND:2 == 0
+						PRINTFORM 「哦齁哦哦哦哦哦
+						;TranslatedMark 「おごおぉぉぅうぅ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　嗯哦哦哦哦啊啊
+						;TranslatedMark んおぉぉあぁ
+						CALL HEARTCB(0xD02830, 2)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 淫靡的表情浮现在了脸上、%CALLNAME:(TARGET)%无力地颤抖在高潮的快乐当中…。
+							;TranslatedMark どろどろに蕩けた表情を浮かべ、%CALLNAME:(TARGET)%はぐったりと快楽に震えている…。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 淫靡的表情浮现在了脸上、%CALLNAME:(TARGET)%无力地颤抖在高潮的快乐当中…。
+							;TranslatedMark どろどろに蕩けた表情を浮かべ、%CALLNAME:(TARGET)%はぐったりと快楽に震えている…。
+						ENDIF
+					ELSE
+						PRINTFORM 「这样子…不可能啊
+						;TranslatedMark 「こんにゃのぉ…無理ぃぃい
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　根本没办法集中力量啊啊
+						;TranslatedMark 集中にゃんて出来にゃいよぉぉ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ENDIF
+				;発情
+				ELSEIF CFLAG:28 != 0
+					IF RAND:2 == 0
+						PRINTFORM 「力
+						;TranslatedMark 「ちっ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　力量
+						;TranslatedMark ちからっ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　积攒起来
+						;TranslatedMark ためてぇっ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「逃跑的机会、一定会有的…」
+							;TranslatedMark 「逃げる隙は、あるはずだ…」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「逃跑的机会、一定会有的…」
+							;TranslatedMark 「逃げる隙は、あるはずだ…」
+						ENDIF
+					ENDIF
+				;その他
+				ELSE
+					PRINTFORM 「嗯嗯
+					;TranslatedMark 「んんっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　必、必须要想办法集中力量才行…咿噫
+					;TranslatedMark な、なんとか力を集中しないと…ひぃぃ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			ENDIF
+		;諦め
+		CASE 44
+			;コマンド入力直後
+			IF ARG:2 == 0
+				;ドッペルゲンガー（化けたキャラ番号って取って来れない？）
+				IF (ARG:3 == 18)
+					;物まねしてる元のキャラIDを調べる。面倒だし保存しておこう
+					IF ARGS:1 == "早苗"
+						CFLAG:900 = 42
+					ELSEIF ARGS:1 == "諏訪子"
+						CFLAG:900 = 44
+					;特定のキャラ以外
+					ELSE
+						CFLAG:900 = 0
+					ENDIF
+					;IDに変換
+					IF CFLAG:900
+						CFLAG:900 = GET_ID_FROM_NO(CFLAG:900)
+						IF FLAG:AUTOMODE
+							PRINTFORML 「咕唔……已经、站不起来了……」
+							;TranslatedMark 「うぐっ……もう、立てない……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「咕唔……已经、站不起来了……」
+							;TranslatedMark 「うぐっ……もう、立てない……」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 『……』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 『……』
+						ENDIF
+						PRINTFORMDL %CALLNAME_43_0(CFLAG:900, 1, ARGS:1)%的分身确认了%CALLNAME:(TARGET)%已经跪下后、抓住她的前发往上一拉，让她抬起了头。
+						;TranslatedMark %CALLNAME_43_0(CFLAG:900, 1, ARGS:1)%のドッペルゲンガーは%CALLNAME:(TARGET)%が跪いたのを確認すると、前髪を鷲掴みにして顔をあげさせ
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 露出了一抹虐待狂的微笑、舔了舔嘴唇、然后强行将舌头塞进了%CALLNAME:(TARGET)%的嘴里
+							;TranslatedMark 嗜虐的な笑みを浮かべて舌なめずりし、その舌を無理矢理唇に押し込んだ。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 露出了一抹虐待狂的微笑、舔了舔嘴唇、然后强行将舌头塞进了%CALLNAME:(TARGET)%的嘴里
+							;TranslatedMark 嗜虐的な笑みを浮かべて舌なめずりし、その舌を無理矢理唇に押し込んだ。
+						ENDIF
+						PRINTFORM 「嗯嗯嗯呜
+						;TranslatedMark 「んんぅうっ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL %CALLNAME:(TARGET)%放弃了对心爱的%CALLNAME_43_0(CFLAG:900, 1, ARGS:1)%幻影的抵抗，选择了屈从的道路。
+							;TranslatedMark %CALLNAME:(TARGET)%は愛しい%CALLNAME_43_0(CFLAG:900, 1, ARGS:1)%の幻影に抵抗する事を諦め、屈従の道を選んだ。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW %CALLNAME:(TARGET)%放弃了对心爱的%CALLNAME_43_0(CFLAG:900, 1, ARGS:1)%幻影的抵抗，选择了屈从的道路。
+							;TranslatedMark %CALLNAME:(TARGET)%は愛しい%CALLNAME_43_0(CFLAG:900, 1, ARGS:1)%の幻影に抵抗する事を諦め、屈従の道を選んだ。
+						ENDIF
+					ENDIF
+					;超レアケースだけど自分（完全ぼっちプレイだと起こる）
+					IF NO:(CFLAG:900) == 43
+						IF FLAG:AUTOMODE
+							PRINTFORML 「呜、呃……居然会被自己的假冒者给羞辱……真是失策」
+							;TranslatedMark 「うぅ、ぐ…まさか自分のニセモノに辱められるとは……不覚ッ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「呜、呃……居然会被自己的假冒者给羞辱……真是失策」
+							;TranslatedMark 「うぅ、ぐ…まさか自分のニセモノに辱められるとは……不覚ッ」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 模仿%CALLNAME:(TARGET)%的某物『……』
+							;TranslatedMark %CALLNAME:(TARGET)%を模した何か『……』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 模仿%CALLNAME:(TARGET)%的某物『……』
+							;TranslatedMark %CALLNAME:(TARGET)%を模した何か『……』
+						ENDIF
+						PRINTFORMDL 当%CALLNAME:(TARGET)%的分身让她的原型跪下后，她抓住%CALLNAME:(TARGET)%的前发并强迫对方抬起了头
+						;TranslatedMark %CALLNAME:(TARGET)%のドッペルゲンガーは自らの原型となった本人を跪かせると、前髪を鷲掴みにして顔を上げさせ
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 面带虐待狂的微笑、反复左右拍打其脸颊。
+							;TranslatedMark 嗜虐的な笑みを浮かべたまま、その頬を繰り返し左右に張った。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 面带虐待狂的微笑、反复左右拍打其脸颊。
+							;TranslatedMark 嗜虐的な笑みを浮かべたまま、その頬を繰り返し左右に張った。
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 啪  啪  干燥的声音在黑暗中回响……
+							;TranslatedMark パンッ　パンッ　と、乾いた音が暗闇に木霊する……
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 啪  啪  干燥的声音在黑暗中回响……
+							;TranslatedMark パンッ　パンッ　と、乾いた音が暗闇に木霊する……
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 被自己的幻影不断折磨着的%CALLNAME:(TARGET)%恍惚中觉得、那个本应无声的影子似乎在悄悄地低语着什么。
+							;TranslatedMark 自分の幻影にいたぶられる%CALLNAME:(TARGET)%は、無言のはずのドッぺルゲンガーが、何かを囁いたような気がした。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 被自己的幻影不断折磨着的%CALLNAME:(TARGET)%恍惚中觉得、那个本应无声的影子似乎在悄悄地低语着什么。
+							;TranslatedMark 自分の幻影にいたぶられる%CALLNAME:(TARGET)%は、無言のはずのドッぺルゲンガーが、何かを囁いたような気がした。
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 『――其实――你一直都期望着――变成这样――不是吗――……』
+							;TranslatedMark 『――本当ハ――コウナル事ヲ――望ンデイタ――クセニ――……』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 『――其实――你一直都期望着――变成这样――不是吗――……』
+							;TranslatedMark 『――本当ハ――コウナル事ヲ――望ンデイタ――クセニ――……』
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORML 「――呜唔……唔呃……」
+							;TranslatedMark 「――うっ……うぅぅっ……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「――呜唔……唔呃……」
+							;TranslatedMark 「――うっ……うぅぅっ……」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 泪水静静地、浸湿了%CALLNAME:(TARGET)%的脸颊。
+							;TranslatedMark 涙が一筋、%CALLNAME:(TARGET)%の頬を静かに濡らした。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 泪水静静地、浸湿了%CALLNAME:(TARGET)%的脸颊。
+							;TranslatedMark 涙が一筋、%CALLNAME:(TARGET)%の頬を静かに濡らした。
+						ENDIF
+						PRINTL
+					ENDIF
+				;悪堕ちキャラ
+				ELSEIF (ARG:3 == 101) || (ARG:3 == 102) || (ARG:3 == 103) || (ARG:3 == 104)
+					;元のキャラIDを調べる。
+					;悪堕ち早苗さんの下克上
+					IF NO:(ARG:0) == 42
+						IF FLAG:AUTOMODE
+							PRINTFORML 「唔呜咕、早苗……为什么……」
+							;TranslatedMark 「ううぅぐ、早苗……どうして……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「唔呜咕、早苗……为什么……」
+							;TranslatedMark 「ううぅぐ、早苗……どうして……」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 『为什么？……你不明白吗、神奈子大人？』
+							;TranslatedMark 『どうして？……わからないんですか、神奈子さま？』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 『为什么？……你不明白吗、神奈子大人？』
+							;TranslatedMark 『どうして？……わからないんですか、神奈子さま？』
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 『我一直以来、都渴望着神奈子大人的身体呢……可是居然都没有被您注意到……』
+							;TranslatedMark 『私はずっと、神奈子さまの体が欲しかったのに……気付いてくださらなかったなんて……』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 『我一直以来、都渴望着神奈子大人的身体呢……可是居然都没有被您注意到……』
+							;TranslatedMark 『私はずっと、神奈子さまの体が欲しかったのに……気付いてくださらなかったなんて……』
+						ENDIF
+						PRINTFORMDL 淫魔化的风祝、竟然让曾经的主柱%CALLNAME:(TARGET)%在她前面屈服了、
+						;TranslatedMark 淫魔と化した風祝は、かつての主柱である%CALLNAME:(TARGET)%を屈服させると
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 她伸出触手缠绕住那个丰满又性感的身体、带着嗜虐的笑容舔了舔嘴唇。
+							;TranslatedMark そのグラマラスな肉体を触手で絡めとり、嗜虐的な笑みを浮かべて舌なめずりした。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 她伸出触手缠绕住那个丰满又性感的身体、带着嗜虐的笑容舔了舔嘴唇。
+							;TranslatedMark そのグラマラスな肉体を触手で絡めとり、嗜虐的な笑みを浮かべて舌なめずりした。
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 『早苗非～常喜欢神奈子大人哟♪喜欢到希望能够侵犯您、玷污您、折磨您、让您的脸上彻底被淫欲的痛苦与快乐给覆盖的程度呢☆』
+							;TranslatedMark 『早苗は神奈子様の事が大好きですよ♪犯して、穢して、痛めつけたいくらいに☆』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 『早苗非～常喜欢神奈子大人哟♪喜欢到希望能够侵犯您、玷污您、折磨您、让您的脸上彻底被淫欲的痛苦与快乐给覆盖的程度呢☆』
+							;TranslatedMark 『早苗は神奈子様の事が大好きですよ♪犯して、穢して、痛めつけたいくらいに☆』
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 『请堕落吧……神 柰 子 大 人 ☆』
+							;TranslatedMark 『堕ちてください……　か　な　こ　さ　ま　☆』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 『请堕落吧……神 柰 子 大 人 ☆』
+							;TranslatedMark 『堕ちてください……　か　な　こ　さ　ま　☆』
+						ENDIF
+						PRINTFORM 「不要……嗯嗯呜唔唔
+						;TranslatedMark 「あっやめ……んんぅうっ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ！」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL %CALLNAME:(TARGET)%任由自己的巫女侵犯与蹂躏、逐渐堕入了彻底屈服于快乐与欲望的道路。
+							;TranslatedMark %CALLNAME:(TARGET)%は自分の巫女に嬲り犯されるまま、屈従の道へ堕ちていった。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW %CALLNAME:(TARGET)%任由自己的巫女侵犯与蹂躏、逐渐堕入了彻底屈服于快乐与欲望的道路。
+							;TranslatedMark %CALLNAME:(TARGET)%は自分の巫女に嬲り犯されるまま、屈従の道へ堕ちていった。
+						ENDIF
+					;悪堕ち諏訪子ちゃんの報復侵略
+					ELSEIF NO:(ARG:0) == 44
+						IF FLAG:AUTOMODE
+							PRINTFORML 「咿啊啊！……诹访子……住手……」
+							;TranslatedMark 「ひぃぅぐっ！……諏訪子……やめて……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「咿啊啊！……诹访子……住手……」
+							;TranslatedMark 「ひぃぅぐっ！……諏訪子……やめて……」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 『住手？……真是自以为是啊国津神、明明最先动手的是你吧……』
+							;TranslatedMark 『やめて？……調子いいわね国津神、最初に手出したのはアンタのくせに……』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 『住手？……真是自以为是啊国津神、明明最先动手的是你吧……』
+							;TranslatedMark 『やめて？……調子いいわね国津神、最初に手出したのはアンタのくせに……』
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 『你以为我是喜欢才会听你号令的？……梦话还是在梦里说吧』
+							;TranslatedMark 『私が好きでアンタに従っていたと思う？……寝言は寝て言いなさい』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 『你以为我是喜欢才会听你号令的？……梦话还是在梦里说吧』
+							;TranslatedMark 『私が好きでアンタに従っていたと思う？……寝言は寝て言いなさい』
+						ENDIF
+						PRINTFORMDL 展现了作为祟神本性的诹访子，使曾经的搭档%CALLNAME:(TARGET)%屈服后
+						;TranslatedMark 祟り神としての本性を現した諏訪子は、かつての相方である%CALLNAME:(TARGET)%を屈服させると
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 她伸出触手缠绕住那个丰满又性感的身体、带着嗜虐的笑容舔了舔嘴唇。
+							;TranslatedMark そのグラマラスな肉体を触手で絡めとり、嗜虐的な笑みを浮かべて舌なめずりした。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 她伸出触手缠绕住那个丰满又性感的身体、带着嗜虐的笑容舔了舔嘴唇。
+							;TranslatedMark そのグラマラスな肉体を触手で絡めとり、嗜虐的な笑みを浮かべて舌なめずりした。
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 『虽然可以把逃到诹访的你、和天津神一起驱逐出去……』
+							;TranslatedMark 『諏訪に落ち延びたアンタを、天津神共に突き出す事だって出来たけど……』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 『虽然可以把逃到诹访的你、和天津神一起驱逐出去……』
+							;TranslatedMark 『諏訪に落ち延びたアンタを、天津神共に突き出す事だって出来たけど……』
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL 『不过现在可以随心所欲地玩弄这幅狼狈不堪模样的你，这样感觉似乎也不赖呢☆』
+							;TranslatedMark 『今の無様なアンタを好きにできるから、これはこれでいい感じよね☆』
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW 『不过现在可以随心所欲地玩弄这幅狼狈不堪模样的你，这样感觉似乎也不赖呢☆』
+							;TranslatedMark 『今の無様なアンタを好きにできるから、これはこれでいい感じよね☆』
+						ENDIF
+						PRINTFORM 「不要……嗯嗯呜唔唔
+						;TranslatedMark 「あっやめ……んんぅうっ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ！」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL %CALLNAME:(TARGET)%被显露出本性的祟神侵犯玩弄着、堕入了向快乐与欲望屈服的道路。
+							;TranslatedMark %CALLNAME:(TARGET)%は本性を現した祟り神に弄り犯されるまま、屈従の道へ堕ちていった。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW %CALLNAME:(TARGET)%被显露出本性的祟神侵犯玩弄着、堕入了向快乐与欲望屈服的道路。
+							;TranslatedMark %CALLNAME:(TARGET)%は本性を現した祟り神に弄り犯されるまま、屈従の道へ堕ちていった。
+						ENDIF
+					;現状不可能だが悪堕ち分身神奈子さまも作っとく
+					ELSEIF NO:(ARG:0) == 43
+						;予定
+					;特定のキャラ以外
+					ELSE
+					ENDIF
+				;MP1/4以下
+				ELSEIF MAXBASE:MP/4 >= BASE:MP
+					PRINTFORM 「更
+					;TranslatedMark 「もっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　不行了哦哦
+					;TranslatedMark むりぃっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「这样下去已经没法战斗了啊啊
+					;TranslatedMark 「これ以上っ戦えにゃいのぉぉ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　认输了、认输了啊啊啊
+					;TranslatedMark 降伏っしましゅからぁ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　请让我彻底的舒服起来吧啊啊
+					;TranslatedMark いっぱい気持ちよくしてクりゃしゃいィィ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTL
+				;発情orMP1/2以下
+				ELSEIF CFLAG:28 != 0 || MAXBASE:MP/2 >= BASE:MP
+					PRINTFORM 「啊啊啊嗬啊啊…
+					;TranslatedMark 「ああぁへぇぇ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　神奈子已经不行啦啊啊啊啊
+					;TranslatedMark かにゃこもうらめぇえぇっ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTL
+				;その他
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「已经、不会再抵抗了……」
+						;TranslatedMark 「もう、抵抗しないから……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「已经、不会再抵抗了……」
+						;TranslatedMark 「もう、抵抗しないから……」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「所以……请饶我一命吧」
+						;TranslatedMark 「だから……命だけはッ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「所以……请饶我一命吧」
+						;TranslatedMark 「だから……命だけはッ」
+					ENDIF
+					PRINTL
+				ENDIF
+			ENDIF
+		;何もしない
+		CASE 45
+		;強制自慰
+		CASE 46
+			;MP1/4以下
+			IF MAXBASE:MP/4 >= BASE:MP
+				PRINTFORM 「呼咿噫
+				;TranslatedMark 「ふぃぃいっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　咿齁哦呃哦哦哦
+				;TranslatedMark いひぃぃいぃっ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「身体
+				;TranslatedMark 「からだぁっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　好热啊
+				;TranslatedMark あついのぉっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　太过分了
+				;TranslatedMark 切な過ぎて
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　不要…不要啊啊啊～～～～
+				;TranslatedMark もうっ…らめえぇぇ～～っ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;発情orMP1/2以下
+			ELSEIF CFLAG:28 != 0 || MAXBASE:MP/2 >= BASE:MP
+				PRINTFORM 「咿噫噫～～
+				;TranslatedMark 「ひぃい～～
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　嗬呃哦哦～～
+				;TranslatedMark ひっふぅ～～
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「已经、不行了……
+				;TranslatedMark 「もう、だめ……
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　好想要…忍耐不了啊啊啊啊
+				;TranslatedMark 疼いて…我慢できにゃいぃぃ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;その他
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「呜唔、啊啊！…明明、就在敌人的眼皮底下！」
+					;TranslatedMark 「うぅ、ああっ！…敵の、目のまえなのにぃ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「呜唔、啊啊！…明明、就在敌人的眼皮底下！」
+					;TranslatedMark 「うぅ、ああっ！…敵の、目のまえなのにぃ！」
+				ENDIF
+			ENDIF
+		;お尻ガード
+		CASE 50
+			;MP1/4以下
+			IF MAXBASE:MP/4 >= BASE:MP
+				PRINTFORM 「呼呀啊啊啊屁股啊啊
+				;TranslatedMark 「ふひゃぁいぃいおひりっ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「现在、不要再打屁股了啊啊啊
+				;TranslatedMark 「いま、おひりりゃめえなのぉぉ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　到此为止就好了、住手啊啊啊啊啊
+				;TranslatedMark しょこだけは、やめてぇぇえっ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;発情&MP1/2以下
+			ELSEIF CFLAG:28 != 0 && MAXBASE:MP/2 >= BASE:MP
+				PRINTFORM 「唔啊啊
+				;TranslatedMark 「うぅあっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「现在、后穴不可以啊！」
+					;TranslatedMark 「今、アナルはダメだっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「现在、后穴不可以啊！」
+					;TranslatedMark 「今、アナルはダメだっ！」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「咕啊！…强行塞进肛门、忍耐不了啊啊！」
+					;TranslatedMark 「ぐっ！…肛門にねじ込まれては、たまらん！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「咕啊！…强行塞进肛门、忍耐不了啊啊！」
+					;TranslatedMark 「ぐっ！…肛門にねじ込まれては、たまらん！」
+				ENDIF
+			ENDIF
+		;胸ガード
+		CASE 51
+			;MP1/4以下
+			IF MAXBASE:MP/4 >= BASE:MP
+				PRINTFORM 「不要啊啊啊
+				;TranslatedMark 「やらぁああ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　神奈子的胸部、不可以啊啊啊
+				;TranslatedMark かにゃこおっぱい、らめえなのぉぉっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「所以求求你、放过胸部吧啊啊啊啊啊
+				;TranslatedMark 「おにぇがいだからぁ、おっぱいは許ひてくりゃしゃいいぃ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;発情&MP1/2以下
+			ELSEIF CFLAG:28 != 0 && MAXBASE:MP/2 >= BASE:MP
+				PRINTFORM 「呜唔唔
+				;TranslatedMark 「うぅぅっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　胸部、很敏感的所以……不要啊
+				;TranslatedMark 胸は、敏感だから……だめぇっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;その他
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「我这丰满的胸部可不是为了取悦你这种东西而生的！」
+					;TranslatedMark 「貴様らを喜ばせるために膨れたわけではないっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「我这丰满的胸部可不是为了取悦你这种东西而生的！」
+					;TranslatedMark 「貴様らを喜ばせるために膨れたわけではないっ！」
+				ENDIF
+			ENDIF
+		;Cガード
+		CASE 52
+			;MP1/4以下
+			IF MAXBASE:MP/4 >= BASE:MP
+			;☆ふ☆た☆な☆り☆
+				IF CFLAG:42 || TALENT:121
+					PRINTFORM 「雌御柱、现在不行啊啊…
+					;TranslatedMark 「おんばひりゃ、いまりゃめえぇ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　现在这下去的话、精液会全部射出来、我会高潮到死掉的啊
+					;TranslatedMark いましゃれたらぁ、精しじぇんぶりぇて死んじゃうのぉぉ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「哦哦哦哦小豆豆、小豆豆现在不行啊啊啊…
+					;TranslatedMark 「おおぉお豆、いまりゃめえぇ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　这样下去的话、我会高潮到死掉的啊啊啊
+					;TranslatedMark いましゃれたらぁ、イキ死んじゃうのぉぉ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;発情&MP1/2以下
+			ELSEIF CFLAG:28 != 0 && MAXBASE:MP/2 >= BASE:MP
+			;☆ふ☆た☆な☆り☆
+				IF CFLAG:42 || TALENT:121
+					IF FLAG:AUTOMODE
+						PRINTFORML 「可、可恶！…不要碰那个地方啊！」
+						;TranslatedMark 「くっ、くそぉ！…そこは触るなぁ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「可、可恶！…不要碰那个地方啊！」
+						;TranslatedMark 「くっ、くそぉ！…そこは触るなぁ！」
+					ENDIF
+					PRINTFORM (如果现在再被玩弄这个部位的啊…真的、会疯掉的
+					;TranslatedMark (今オンバシラを嬲られたら…本当に、狂ってしまうッ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML )
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW )
+					ENDIF
+				ELSE
+					PRINTFORM 「不行！……不要碰阴蒂啊啊啊
+					;TranslatedMark 「だめっ！……女核は触らないでぇっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;その他
+			ELSE
+			;☆ふ☆た☆な☆り☆
+				IF CFLAG:42 || TALENT:121
+					IF FLAG:AUTOMODE
+						PRINTFORML 「糟糕！居然意外暴露了多余的弱点！」
+						;TranslatedMark 「まずいっ！余計な弱点を作ってしまったか！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「糟糕！居然意外暴露了多余的弱点！」
+						;TranslatedMark 「まずいっ！余計な弱点を作ってしまったか！」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「呃啊！不要碰那个地方！」
+						;TranslatedMark 「くっ！そんな所に触るな！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「呃啊！不要碰那个地方！」
+						;TranslatedMark 「くっ！そんな所に触るな！」
+					ENDIF
+				ENDIF
+			ENDIF
+		;挿入ガード
+		CASE 53
+			;危険日又は苗床卵巣
+			IF CFLAG:159 >= 1 || TALENT:137 >= 3
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「哇啊啊不要啊！！现在不可以内射啊啊！！」
+						;TranslatedMark 「うわぁあアッッダメぇ！！いま中出しダメぇええ！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「哇啊啊不要啊！！现在不可以内射啊啊！！」
+						;TranslatedMark 「うわぁあアッッダメぇ！！いま中出しダメぇええ！！」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「住手、住手啊啊啊！！」
+						;TranslatedMark 「よせ、よせぇええッッ！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「住手、住手啊啊啊！！」
+						;TranslatedMark 「よせ、よせぇええッッ！！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「里面、不要插到子宫里面啊啊啊啊啊！！」
+						;TranslatedMark 「中は、子宮には挿れるなぁアアァッッ！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「里面、不要插到子宫里面啊啊啊啊啊！！」
+						;TranslatedMark 「中は、子宮には挿れるなぁアアァッッ！！」
+					ENDIF
+				ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 神奈子颤抖着拼命的试图加紧双腿、想要死守已经做好交配准备的子宫。
+						;TranslatedMark 神奈子は、すっかり交配準備完了の子宮だけは死守すべく、両脚を固く閉じて震えている。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 神奈子颤抖着拼命的试图加紧双腿、想要死守已经做好交配准备的子宫。
+						;TranslatedMark 神奈子は、すっかり交配準備完了の子宮だけは死守すべく、両脚を固く閉じて震えている。
+					ENDIF
+			;MP1/4以下
+			ELSEIF MAXBASE:MP/4 >= BASE:MP
+				PRINTFORM 「哈啊啊咿噫
+				;TranslatedMark 「ひゃぁあぃいぃ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「不要进来啊啊啊
+				;TranslatedMark 「おみゃんしにゃいでぇっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;発情orMP1/2以下
+			ELSEIF CFLAG:28 != 0 || MAXBASE:MP/2 >= BASE:MP
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「小、小穴不行……」
+						;TranslatedMark 「お、オマンコはやめて……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「小、小穴不行……」
+						;TranslatedMark 「お、オマンコはやめて……」
+					ENDIF
+					PRINTFORM 「如果现在那里被玩弄的话……我会疯掉的
+					;TranslatedMark 「今そこイかされたら……くるっちゃうからぁ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「不想要这样啊
+					;TranslatedMark 「ズコバコらめぇえ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「请让小穴也休息一下吧
+					;TranslatedMark 「今はおまんこ休ませてぇ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;その他
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「这可不是给你们这种混蛋准备的穴！」
+					;TranslatedMark 「貴様らにくれてやるための穴ではない！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「这可不是给你们这种混蛋准备的穴！」
+					;TranslatedMark 「貴様らにくれてやるための穴ではない！」
+				ENDIF
+			ENDIF
+	ENDSELECT
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_ONEDARI_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;Aおねだり
+		CASE 54
+			;危険日又は苗床卵巣
+			IF (CFLAG:150 >= 11 && CFLAG:150 <= 17) || TALENT:137 >= 3
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「唔呃啊！……这边、用这边的洞吧！！」
+						;TranslatedMark 「っっ！……こっちだ、こっちの穴にしろぉっ！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「唔呃啊！……这边、用这边的洞吧！！」
+						;TranslatedMark 「っっ！……こっちだ、こっちの穴にしろぉっ！！」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「那边不行啦！！」
+						;TranslatedMark 「そっちはダメだっ！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「那边不行啦！！」
+						;TranslatedMark 「そっちはダメだっ！！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「屁、屁股……屁股的小穴、随便你喜欢……行了吧！」
+						;TranslatedMark 「け、けつなら……尻の穴なら、好きにして…イイからっ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「屁、屁股……屁股的小穴、随便你喜欢……行了吧！」
+						;TranslatedMark 「け、けつなら……尻の穴なら、好きにして…イイからっ！」
+					ENDIF
+				ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 神奈子为了死守自己已经做好交配准备的子宫、带着强烈的羞耻主动献出了肛门。
+						;TranslatedMark 神奈子は、すっかり交配準備完了の子宮だけは死守すべく、顔を真っ赤にしながら肛門を差し出した。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 神奈子为了死守自己已经做好交配准备的子宫、带着强烈的羞耻主动献出了肛门。
+						;TranslatedMark 神奈子は、すっかり交配準備完了の子宮だけは死守すべく、顔を真っ赤にしながら肛門を差し出した。
+					ENDIF
+			;MP1/4以下
+			ELSEIF MAXBASE:MP/4 >= BASE:MP
+				PRINTFORM 「神奈子的屁穴…
+				;TranslatedMark 「かにゃこのウンチあな…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　最喜欢H的事情了啦…
+				;TranslatedMark えっちなこと大好きなのぉ…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;発情orMP1/2以下
+			ELSEIF CFLAG:28 != 0 || MAXBASE:MP/2 >= BASE:MP
+				PRINTFORM 「哦哦哦哦屁股……屁股的穴、好有感觉
+				;TranslatedMark 「おっぉぉおひり……疼いてるのぉ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 请、把我的内脏搅个遍吧啊啊
+				;TranslatedMark はらわた、ほじくりまわしてくりゃしゃぃぃ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;その他
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「…如果可以避免小穴被侮辱的话」
+					;TranslatedMark 「…女裂を辱められるくらいならっ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「…如果可以避免小穴被侮辱的话」
+					;TranslatedMark 「…女裂を辱められるくらいならっ」
+				ENDIF
+			ENDIF
+		;Bおねだり
+		CASE 55
+			;MP1/4以下で乳完全開発完了済み
+			IF MAXBASE:MP/4 >= BASE:MP && TALENT:162 >= 4 && GET_BUST(TARGET) >= 5 && TALENT:130 >= 2 && TALENT:76 == 1
+				PRINTFORM 「嗬呃啊啊齁唔呜咿噫
+				;TranslatedMark 「へえあぁぎゅぅぃひぃ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　神奈子啊啊啊啊乳袋咿噫噫噫噫噫
+				;TranslatedMark がにゃごぉおおぉっばいいんっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 嗯哦哦哦齁哦哦呴
+				;TranslatedMark んぼおおほぉおご
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「哦嗯齁齁齁呜唔唔哦哦
+				;TranslatedMark 「おんっんぐうっぅ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 求呜哦哦哦这哦哦哦哦啊边咿噫噫
+				;TranslatedMark うぶゅぅうひゅぃぃ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 神奈子拼命晃动着变成异形肉瘤的乳房、用无法形成言语的声音恳求着慈悲。
+					;TranslatedMark 神奈子は、異形の肉腫と化した乳房を震わせ、言葉にならない声で慈悲をせがんだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 神奈子拼命晃动着变成异形肉瘤的乳房、用无法形成言语的声音恳求着慈悲。
+					;TranslatedMark 神奈子は、異形の肉腫と化した乳房を震わせ、言葉にならない声で慈悲をせがんだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 就像进入交配期的阴道一样、正在淫乱地渴望着插入的雌畜乳孔深处、浑浊粘稠的乳汁正汩汩冒泡。
+					;TranslatedMark 交配期に入ったヴァギナの様に、嫌らしく挿入を待ち侘びる乳穴の奥で、ヘドロ状の母乳がゴボゴボと泡立っている。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 就像进入交配期的阴道一样、正在淫乱地渴望着插入的雌畜乳孔深处、浑浊粘稠的乳汁正汩汩冒泡。
+					;TranslatedMark 交配期に入ったヴァギナの様に、嫌らしく挿入を待ち侘びる乳穴の奥で、ヘドロ状の母乳がゴボゴボと泡立っている。
+				ENDIF
+			;MP1/4以下
+			ELSEIF MAXBASE:MP/4 >= BASE:MP
+				PRINTFORM 「齁咿噫噫噫
+				;TranslatedMark 「ほひぃぃぃ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　快点、我的乳汁想被吸出来啊啊
+				;TranslatedMark はやく、しゃく乳ほしいぃよぉぉ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;発情orMP1/2以下
+			ELSEIF CFLAG:28 != 0 || MAXBASE:MP/2 >= BASE:MP
+				PRINTFORM 「呼咿噫噫
+				;TranslatedMark 「ふひぃぃっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「神奈子的淫乱乳袋、想要被虐待啊啊
+				;TranslatedMark 「かにゃこの淫乱おっぱい、はやく虐めてぇ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;その他
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「比起孕育出一个不知道是什么的怪物、还是这样更好一些！」
+					;TranslatedMark 「得体のしれない化け物を孕むよりましだ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「比起孕育出一个不知道是什么的怪物、还是这样更好一些！」
+					;TranslatedMark 「得体のしれない化け物を孕むよりましだ！」
+				ENDIF
+			ENDIF
+		;Cおねだり
+		CASE 56
+			;MP1/4以下でエクスパンデッド・オンバシラ！
+			IF MAXBASE:MP/4 >= BASE:MP && (CFLAG:42 || TALENT:121) && TALENT:170 == 3 && TALENT:171 == 1 && TALENT:172 == 2 && TALENT:177 == 1 && TALENT:178 == 1 && TALENT:180 == 4 && TALENT:185 == 2 && TALENT:186 == 2 && TALENT:187 == 1
+				PRINTFORM 「哦齁齁齁呜唔哦哦呴啊…
+				;TranslatedMark 「ぉほぉぎょぉおぉご…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　神齁哦哦奈咿噫噫噫子咿噫哦哦哦的呃呜唔唔御哦哦哦柱啊啊啊啊
+				;TranslatedMark がぁっがにゃごぉぉのッぉぉんばっひぁ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 去唔唔哦哦哦惹哦啊啊哦哦哦
+				;TranslatedMark っひぃぃぎうゆぅがぉおご
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「去惹哦哦哦齁哦哦哦嘎哦哦哦
+				;TranslatedMark 「いいぎょぉおごおあがぉ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 哦嗯嗯嗯呜唔唔唔
+				;TranslatedMark おんっんんんうぅ
+				CALL HEARTCB(0xD02830, 3)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 神奈子将、已经完全异形化的雌性肉棒顶了出来、那根已经看不出原型的御柱令人毛骨悚然地不断颤抖痉挛着、神奈子用无法形成词语的混乱声音急切地祈求着慈悲。
+					;TranslatedMark 神奈子は、異形のイチモツと化したオンバシラを痙攣する様に突き出し、言葉にならない声で慈悲をせがんだ。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 神奈子将、已经完全异形化的雌性肉棒顶了出来、那根已经看不出原型的御柱令人毛骨悚然地不断颤抖痉挛着、神奈子用无法形成词语的混乱声音急切地祈求着慈悲。
+					;TranslatedMark 神奈子は、異形のイチモツと化したオンバシラを痙攣する様に突き出し、言葉にならない声で慈悲をせがんだ。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 丑陋肿胀着的肉竿前段、是已经变成了仅为贪图快乐而存在的闪着黑光的巨大龟头、颜色浓重的前列腺液正在冒着泡泡不断涌出。
+					;TranslatedMark 醜く腫れ上がり、快楽を貪る為だけの器官に成り下がった巨大亀頭の先端には、色の濃い先走りがブクブクと泡立っている。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 丑陋肿胀着的肉竿前段、是已经变成了仅为贪图快乐而存在的闪着黑光的巨大龟头、颜色浓重的前列腺液正在冒着泡泡不断涌出。
+					;TranslatedMark 醜く腫れ上がり、快楽を貪る為だけの器官に成り下がった巨大亀頭の先端には、色の濃い先走りがブクブクと泡立っている。
+				ENDIF
+			;MP1/4以下
+			ELSEIF MAXBASE:MP/4 >= BASE:MP
+				;ふたなり
+				IF CFLAG:42 || TALENT:121
+					PRINTFORM 「御、御柱一直都在勃起着…
+					;TranslatedMark 「お、オンバシラがエレクトしっぱなしでぇ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　神之粥想要嘟biu嘟biu地出来啊
+					;TranslatedMark 神の粥どっぷどっぷしたいのぉ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 请更多的蹂躏我的御柱吧啊啊
+					;TranslatedMark いっぱいイぢめてくりゃひゃいぃ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「哈啊啊啊快点来欺负我的阴蒂吧啊啊
+					;TranslatedMark 「はぁぁっっはやぐクリ虐めてぇぇ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「神奈子的淫乱豆豆、已经麻痒的平静不下来了哦哦哦哦
+					;TranslatedMark 「かにゃこのスケベ豆ぇ、疼いて治まらないにょぉ
+					CALL HEARTCB(0xD02830, 3)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;発情orMP1/2以下
+			ELSEIF CFLAG:28 != 0 || MAXBASE:MP/2 >= BASE:MP
+				;ふたなり
+				IF CFLAG:42 || TALENT:121
+					PRINTFORM 「鸡巴已经忍不住了啊啊啊啊
+					;TranslatedMark 「おちんちんもう我慢できにゃぃ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 快把神奈子的雌肉棒欺负到坏掉吧啊啊
+					;TranslatedMark かにゃこの雌竿弄り倒してぇ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「小豆豆好麻好麻好像被欺负啊啊啊
+					;TranslatedMark 「お豆ぴくぴとまりゃないのぉっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　已经忍耐不了啊啊啊
+					;TranslatedMark もう我慢できにゃいのぉぉッ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「所以、快点来欺负我吧啊啊啊
+					;TranslatedMark 「だから、はやくクリいじめしてぇっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;その他
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「总比被种付要好一些！」
+					;TranslatedMark 「種付けされるよりはマシだ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「总比被种付要好一些！」
+					;TranslatedMark 「種付けされるよりはマシだ！」
+				ENDIF
+			ENDIF
+		;Vおねだり
+		CASE 57
+			;危険日又は苗床卵巣
+			IF CFLAG:159 >= 1 || TALENT:137 >= 3
+				PRINTFORM 「嗬呃呃呜唔啊啊啊噫噫
+				;TranslatedMark 「へええあぁあひぃ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　给我、快点射给我吧啊啊
+				;TranslatedMark にゃかにぃ、にゃかにくりゃしゃぃっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「神奈子的危险日子宫…灌进满满的精液让我怀孕啊啊啊啊
+				;TranslatedMark 「きゃにゃこの危険日子袋っ…たっぷり孕ませザーメンちょうだいぃ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 屈服于怀孕渴望的神奈子、露出了一副发情到极点的淫乱雌性表情、渴望着在危险日来临的子宫里被灌精。
+					;TranslatedMark 妊娠への欲求に負けた神奈子は、発情しきった雌の表情を浮かべ、危険日を迎えた子宮への中出しを求めた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 屈服于怀孕渴望的神奈子、露出了一副发情到极点的淫乱雌性表情、渴望着在危险日来临的子宫里被灌精。
+					;TranslatedMark 妊娠への欲求に負けた神奈子は、発情しきった雌の表情を浮かべ、危険日を迎えた子宮への中出しを求めた。
+				ENDIF
+			;MP1/4以下
+			ELSEIF MAXBASE:MP/4 >= BASE:MP
+				PRINTFORM 「已经…已经不行了
+				;TranslatedMark 「もぅ…もうらめぇえ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　小穴忍不住了啊啊
+				;TranslatedMark マンコがまんできにゃいのぉ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「神奈子的淫乱小穴！快点来侵犯、把我彻底玩坏掉吧
+				;TranslatedMark 「かにゃこの淫乱マンコっ！犯してめちゃくちゃにしてぇっ
+				CALL HEARTCB(0xD02830, 2)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;発情orMP1/2以下
+			ELSEIF CFLAG:28 != 0 || MAXBASE:MP/2 >= BASE:MP
+				PRINTFORM 「里面
+				;TranslatedMark 「なかっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　请射在里面嗯哦哦
+				;TranslatedMark にゃかにちょうだいぃぃっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			ENDIF
+	ENDSELECT
+RETURN
+
+
+;装備品使用。一応区分しているが恐らく現状ぶっちぎりの死に口上
+@BATTLE_MIKATA_KOUDOU_SOUBI_USE_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		;ARG:2はアイテムIDに対応する
+		SELECTCASE ARG:2
+			;ボム
+			CASE 20 TO 23
+
+			;風
+			CASE 25
+
+			;以下、現状では何も起きない
+			CASE 26
+
+			CASE 27
+
+			CASE 32, 36
+
+			CASEELSE
+		ENDSELECT
+RETURN
+
+;催眠系行動。キス以降は特定条件で平常でも使用可能。
+@BATTLE_MIKATA_KOUDOU_SAIMIN_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;催眠状態じゃない場合
+		CASE (CFLAG:43 == 0)
+			SELECTCASE ARG:1
+			;キス
+			CASE 83
+				SELECTCASE RAND:4
+				CASE 0
+					PRINTFORM 「嗯姆唔
+					;TranslatedMark 「んむぅ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　嗯啾呜呜
+					;TranslatedMark んっちゅっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　噗哈啊
+					;TranslatedMark ぷはぁあ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				CASE 1
+					PRINTFORM 「嗬哦哦
+					;TranslatedMark 「へぉおっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　…嗯咕呜呜啵
+					;TranslatedMark …んぐうぅぶ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　姆啾唔呜
+					;TranslatedMark むちゅっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　姆呼呼哈啊…
+					;TranslatedMark むふぅあ…っ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				CASE 2
+					PRINTFORM 「rero
+					;TranslatedMark 「れろっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　嗯姆呜
+					;TranslatedMark んむっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 　啾啵」
+						;TranslatedMark ちゅぽっ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 　啾啵」
+						;TranslatedMark ちゅぽっ」
+					ENDIF
+				CASEELSE
+					PRINTFORM 「姆啾
+					;TranslatedMark 「むちゅっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　姆哈啊……我的舌头感觉怎么样
+					;TranslatedMark むはぁ……私の舌はどうだ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　就像 蛇一样对吧
+					;TranslatedMark まるで蛇みたいだろう
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ？」
+					ENDIF
+				ENDSELECT
+			
+				;ここで終了
+				RETURN
+			
+			;手淫
+			CASE 84
+				PRINTFORM 「呼啊哈哈
+				;TranslatedMark 「ふあははっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　怎么样？…感觉舒服吗
+				;TranslatedMark どうだ？…きもちいか
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML ？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ？」
+				ENDIF
+				PRINTFORM 「手稍微有点干燥粗糙、但是呢
+				;TranslatedMark 「手荒れでガサガサだけどねぇ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　看
+				;TranslatedMark ほらっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　很舒服不是吗
+				;TranslatedMark かえって気持ちいいだろう
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML ？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ？」
+				ENDIF
+
+				;ここで終了
+				RETURN
+		
+			;フェラチオ
+			CASE 85
+				SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「嗯啵
+					;TranslatedMark 「んぶっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　咕噗
+					;TranslatedMark くぷっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　姆咕唔
+					;TranslatedMark むぐぅっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　咕啾
+					;TranslatedMark ぐちゅっ
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「噗哈啊…
+					;TranslatedMark 「ぷはぁ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　好好吃…
+					;TranslatedMark 美味し…
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%正以一副完全发情的淫乱表情品味着面前的雄根…
+						;TranslatedMark %CALLNAME:(TARGET)%は、発情しきった表情で男根を味わっている…。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%正以一副完全发情的淫乱表情品味着面前的雄根…
+						;TranslatedMark %CALLNAME:(TARGET)%は、発情しきった表情で男根を味わっている…。
+					ENDIF
+				CASEELSE
+					PRINTFORM 「咕噗…
+					;TranslatedMark 「くっぷ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　姆呜呜咕
+					;TranslatedMark むぅぅぐっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　如何，窝的舌头用起来……
+					;TranslatedMark ろうら、わらひの舌使いは…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　嗯啾啾唔…像蛇一样灵活对吧
+					;TranslatedMark ぬっちゅぅ…蛇みひゃいらろぉ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%将她像蛇一样又长又灵活的舌头、缠绕在性器的前端…
+						;TranslatedMark %CALLNAME:(TARGET)%は蛇の様に長い舌を、性器の先端に絡ませた…。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%将她像蛇一样又长又灵活的舌头、缠绕在性器的前端…
+						;TranslatedMark %CALLNAME:(TARGET)%は蛇の様に長い舌を、性器の先端に絡ませた…。
+					ENDIF
+				ENDSELECT
+			
+				;ここで終了
+				RETURN
+		
+			;パイズリ
+			CASE 86
+				SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「呜嘿嘿嘻
+					;TranslatedMark 「ふひひひ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　看吧看吧～～
+					;TranslatedMark ほれほれ～～
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「如何、我的双乳
+					;TranslatedMark 「どうだ、私のパイオツは
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%让性器埋在她的乳房当中、长长的舌头正淫乱地爬行在从胸部间露出来的龟头上…。
+						;TranslatedMark %CALLNAME:(TARGET)%は胸の中に性器を埋めさせ、間から顔を出している鈴口に舌を這わせている…。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%让性器埋在她的乳房当中、长长的舌头正淫乱地爬行在从胸部间露出来的龟头上…。
+						;TranslatedMark %CALLNAME:(TARGET)%は胸の中に性器を埋めさせ、間から顔を出している鈴口に舌を這わせている…。
+					ENDIF
+				CASEELSE
+					PRINTFORM 「呵呵呵
+					;TranslatedMark 「ふふふ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　我的胸部用起来感觉很舒服对吧
+					;TranslatedMark 私の胸は具合がいいだろう
+					CALL HEARTCB(0xD02830)
+					PRINTFORM ？ 不是我自夸、这可是我自豪的得意技哦
+					;TranslatedMark ？　自慢じゃないが得意技だ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)% 正在充分地利用她丰满的双乳为面前的性器服务…。
+						;TranslatedMark %CALLNAME:(TARGET)%は豊満な胸を駆使して性器に奉仕している…。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)% 正在充分地利用她丰满的双乳为面前的性器服务…。
+						;TranslatedMark %CALLNAME:(TARGET)%は豊満な胸を駆使して性器に奉仕している…。
+					ENDIF
+				ENDSELECT
+
+				;ここで終了
+				RETURN
+			ENDSELECT
+		CASEELSE
+		SELECTCASE ARG:1
+		;平常行動
+		CASE 71
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「糟了！这是暗示吗！」
+					;TranslatedMark 「しまった！これは暗示か！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「糟了！这是暗示吗！」
+					;TranslatedMark 「しまった！これは暗示か！」
+				ENDIF
+				
+			;感情操作
+			CASE 1
+				SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「来吧、今天也要一直开心地享受色色哦……」
+						;TranslatedMark 「さぁ、今日もたっぷりエロエロしようねぇ……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「来吧、今天也要一直开心地享受色色哦……」
+						;TranslatedMark 「さぁ、今日もたっぷりエロエロしようねぇ……」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「要是不能好好地让我怀孕的话、可是会遭到神罚的哟？」
+						;TranslatedMark 「ちゃんと孕ませてくれなきゃ神罰だぞ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「要是不能好好地让我怀孕的话、可是会遭到神罚的哟？」
+						;TranslatedMark 「ちゃんと孕ませてくれなきゃ神罰だぞ？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%就好像理所当然一般的、充满情欲地靠在了敌人的身上。
+						;TranslatedMark %CALLNAME:(TARGET)%は、さも当然であるかの様に敵の身体にしなだれかかった。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%就好像理所当然一般的、充满情欲地靠在了敌人的身上。
+						;TranslatedMark %CALLNAME:(TARGET)%は、さも当然であるかの様に敵の身体にしなだれかかった。
+					ENDIF
+				CASEELSE
+					PRINTFORM 「触手先生喜欢
+					;TranslatedMark 「触手しゃん好きぃ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「请给我更多更多黏糊糊的爱抚吧
+					;TranslatedMark 「私の事にもっとヌチョヌチョちょうだい
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%毫不犹豫的开始向触手展示自己性感又美艳的肉体、搔首弄姿地祈求着触碰。
+						;TranslatedMark %CALLNAME:(TARGET)%は何ら躊躇う事無く、触手の前に肢体を投げ出した。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%毫不犹豫的开始向触手展示自己性感又美艳的肉体、搔首弄姿地祈求着触碰。
+						;TranslatedMark %CALLNAME:(TARGET)%は何ら躊躇う事無く、触手の前に肢体を投げ出した。
+					ENDIF
+				ENDSELECT
+			;認識操作
+			;触手の事が諏訪子ちゃんや早苗さんや父親(オオクニヌシ)に見えている
+			CASEELSE
+				SELECTCASE RAND:3
+					CASE 0
+						IF FLAG:AUTOMODE
+							PRINTFORML 「嗯？！诹访子！你擅自偷吃了我的酸奶吗？！」
+							;TranslatedMark 「む？！諏訪子ー！私のヨーグルト勝手に食べたな？！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「嗯？！诹访子！你擅自偷吃了我的酸奶吗？！」
+							;TranslatedMark 「む？！諏訪子ー！私のヨーグルト勝手に食べたな？！」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL %CALLNAME:(TARGET)%正气鼓鼓地鼓着脸、对触手表示抗议。
+							;TranslatedMark %CALLNAME:(TARGET)%はぷんぷんと頬を膨らませて触手に抗議している。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW %CALLNAME:(TARGET)%正气鼓鼓地鼓着脸、对触手表示抗议。
+							;TranslatedMark %CALLNAME:(TARGET)%はぷんぷんと頬を膨らませて触手に抗議している。
+						ENDIF
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「早苗真是个好孩子、和我很像呢。长大以后说不定会有跟我一样大的胸部哦？」
+							;TranslatedMark 「早苗は私に似ていい子だねー。大きくなったら私みたいなデカパイになるんだぞ？」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「早苗真是个好孩子、和我很像呢。长大以后说不定会有跟我一样大的胸部哦？」
+							;TranslatedMark 「早苗は私に似ていい子だねー。大きくなったら私みたいなデカパイになるんだぞ？」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL %CALLNAME:(TARGET)%温柔的抓住敌人的触手，将其按在自己的胸前微笑着抚摸。
+							;TranslatedMark %CALLNAME:(TARGET)%は敵の触手を掴むと、それを自分の胸にあて微笑んだ。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW %CALLNAME:(TARGET)%温柔的抓住敌人的触手，将其按在自己的胸前微笑着抚摸。
+							;TranslatedMark %CALLNAME:(TARGET)%は敵の触手を掴むと、それを自分の胸にあて微笑んだ。
+						ENDIF
+					CASEELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 「真是的！爸爸你这个大笨蛋！我不是说了不要把我的内裤跟你的混在一起洗吗！」
+							;TranslatedMark 「もうっ！父上のバカー！私の下着と一緒に洗濯しないでって言ったではありませんかー！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「真是的！爸爸你这个大笨蛋！我不是说了不要把我的内裤跟你的混在一起洗吗！」
+							;TranslatedMark 「もうっ！父上のバカー！私の下着と一緒に洗濯しないでって言ったではありませんかー！」
+						ENDIF
+						IF FLAG:AUTOMODE
+							PRINTFORMDL %CALLNAME:(TARGET)%红着脸、对触手进行着抗议。
+							;TranslatedMark %CALLNAME:(TARGET)%は顔を真っ赤にして触手に抗議している。
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMDW %CALLNAME:(TARGET)%红着脸、对触手进行着抗议。
+							;TranslatedMark %CALLNAME:(TARGET)%は顔を真っ赤にして触手に抗議している。
+						ENDIF
+				ENDSELECT
+			ENDSELECT
+		;72　催眠自慰は46　強制自慰と共用
+		;仲間を襲う
+		CASE 73
+		;着替える
+		CASE 74
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「呜哇啊啊！身体竟然擅自的开始脱衣服……不行、停下啊啊！」
+					;TranslatedMark 「うわぁぁぁっ！身体が勝手に服を……だめだ、止せぇぇ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「呜哇啊啊！身体竟然擅自的开始脱衣服……不行、停下啊啊！」
+					;TranslatedMark 「うわぁぁぁっ！身体が勝手に服を……だめだ、止せぇぇ！」
+				ENDIF
+			;感情操作
+			CASE 1
+				IF RAND:2 == 0
+					PRINTFORM 「呵呵呵
+					;TranslatedMark 「ふふふっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「我会像脱衣舞娘一样、慢慢地脱给你看哦
+					;TranslatedMark 「ストリッパーみたいに、ゆっくり脱いであげるよ
+					CALL HEARTCB(0xD02830, 2)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ELSE
+					PRINTFORM 「如何？我引以为傲的身体
+					;TranslatedMark 「どう？私の自慢のカラダ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　比起萝莉体型的青蛙来说、我这身材很nice吧
+					;TranslatedMark ロリ体型の蛙なんかよりナイスボディだろう
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ？」
+					ENDIF
+					PRINTFORM 「随你喜欢怎么做都行哦
+					;TranslatedMark 「好きにしていいんだぞ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM ？ 我现在很悠闲呢、尽情的来玩弄我吧
+					;TranslatedMark ？　もてあましているんだ、たっぷり虐めておくれよ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				ENDIF
+			;認識操作
+			CASEELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「差不多到该换注连绳的时候了……」
+						;TranslatedMark 「そろそろ注連縄を交換しなくては……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「差不多到该换注连绳的时候了……」
+						;TranslatedMark 「そろそろ注連縄を交換しなくては……」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「……？  还没干呢、是湿的呢」
+						;TranslatedMark 「……？　まだ乾いてないのか、湿っている」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「……？  还没干呢、是湿的呢」
+						;TranslatedMark 「……？　まだ乾いてないのか、湿っている」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%用蠢蠢欲动的触手交换了自己的注连绳、将其缠绕到了自己的身上…
+						;TranslatedMark %CALLNAME:(TARGET)%は蠢く触手を、自分の注連縄と交換して身体に巻きつけた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%用蠢蠢欲动的触手交换了自己的注连绳、将其缠绕到了自己的身上…
+						;TranslatedMark %CALLNAME:(TARGET)%は蠢く触手を、自分の注連縄と交換して身体に巻きつけた…
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「嘿嘿嘿～☆和爸爸一起洗澡♪好、开、心——～♪」
+						;TranslatedMark 「えへへー☆　父上といっしょにおふろ♪うっ、れ、しーい、なーー♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「嘿嘿嘿～☆和爸爸一起洗澡♪好、开、心——～♪」
+						;TranslatedMark 「えへへー☆　父上といっしょにおふろ♪うっ、れ、しーい、なーー♪」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 『神奈子、要我来给你擦擦背吗？』
+						;TranslatedMark 「神奈子、いーっぱいお背中ながしてあげるねぇー？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 『神奈子、要我来给你擦擦背吗？』
+						;TranslatedMark 「神奈子、いーっぱいお背中ながしてあげるねぇー？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%露出了像孩子一样天真无邪的笑容、脱掉了身上的衣服。
+						;TranslatedMark %CALLNAME:(TARGET)%はまるで子供の様に無邪気な笑顔で、着ている服を脱ぎ捨てた。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%露出了像孩子一样天真无邪的笑容、脱掉了身上的衣服。
+						;TranslatedMark %CALLNAME:(TARGET)%はまるで子供の様に無邪気な笑顔で、着ている服を脱ぎ捨てた。
+					ENDIF
+				ENDIF
+			ENDSELECT
+		;催眠逃げる
+		CASE 75
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「呜呜呜啊……啊！不对！！脚、脚擅自动起来了！」
+					;TranslatedMark 「ううぅア……あっっ！違うっ！！足が、勝手にぃ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「呜呜呜啊……啊！不对！！脚、脚擅自动起来了！」
+					;TranslatedMark 「ううぅア……あっっ！違うっ！！足が、勝手にぃ！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「不，不要啊！……我不要到那边去啊啊！！」
+					;TranslatedMark 「い、嫌だぁ！……そっちへ行くなあぁ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「不，不要啊！……我不要到那边去啊啊！！」
+					;TranslatedMark 「い、嫌だぁ！……そっちへ行くなあぁ！！」
+				ENDIF
+			;感情操作
+			CASE 1
+				IF RAND:2 == 0
+					PRINTFORM 「哈啊啊啊啊嗯嗯
+					;TranslatedMark 「はぁぁあぁんんっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　更多……更多更多！
+					;TranslatedMark もっと……もっともっとぉ！
+					CALL HEARTCB(0xD02830, 2)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%一度想要逃跑，但瞬间又回过头来紧紧地抓住了触手、开始热烈地求爱。
+						;TranslatedMark %CALLNAME:(TARGET)%は一度逃げようとした後、振り返って再び触手にしがみ付き、熱っぽく求愛しはじめた。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%一度想要逃跑，但瞬间又回过头来紧紧地抓住了触手、开始热烈地求爱。
+						;TranslatedMark %CALLNAME:(TARGET)%は一度逃げようとした後、振り返って再び触手にしがみ付き、熱っぽく求愛しはじめた。
+					ENDIF
+				ELSE
+					PRINTFORM 「不要啊……神奈子想要永远和触手在一起啊
+					;TranslatedMark 「やだぁ……神奈子もうずっと触手といっしょになるのぉ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%撅起了嘴巴、突然一副任性的样子、又一次把身体交给了触手。
+						;TranslatedMark %CALLNAME:(TARGET)%は我ままな様子で口を尖らせ、再び触手に身体を預けた。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%撅起了嘴巴、突然一副任性的样子、又一次把身体交给了触手。
+						;TranslatedMark %CALLNAME:(TARGET)%は我ままな様子で口を尖らせ、再び触手に身体を預けた。
+					ENDIF
+				ENDIF
+			;認識操作
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「啊哈哈～♪让我们玩捉迷藏吧爸爸～～！我就这里倒数哦～～♪」
+					;TranslatedMark 「あははー♪鬼ごっこしましょう父上～～！こっこまっでおっいで～～♪」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「啊哈哈～♪让我们玩捉迷藏吧爸爸～～！我就这里倒数哦～～♪」
+					;TranslatedMark 「あははー♪鬼ごっこしましょう父上～～！こっこまっでおっいで～～♪」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 陷入了幼儿退行状态的%CALLNAME:(TARGET)%被强行唤起了对父亲的回忆、在敌人面前开始了幼稚的游戏。
+					;TranslatedMark 父親の思い出を掘り起こされ、幼児退行をおこした%CALLNAME:(TARGET)%は、幼稚な遊びを始めた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 陷入了幼儿退行状态的%CALLNAME:(TARGET)%被强行唤起了对父亲的回忆、在敌人面前开始了幼稚的游戏。
+					;TranslatedMark 父親の思い出を掘り起こされ、幼児退行をおこした%CALLNAME:(TARGET)%は、幼稚な遊びを始めた。
+				ENDIF
+			ENDSELECT
+		;安眠
+		CASE 76
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「呜啊……、这是…催眠诱…导……ZZZ」
+					;TranslatedMark 「ううぁ……、これは…催眠誘…導……ｚｚｚ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「呜啊……、这是…催眠诱…导……ZZZ」
+					;TranslatedMark 「ううぁ……、これは…催眠誘…導……ｚｚｚ」
+				ENDIF
+			;感情操作
+			CASE 1
+				PRINTFORM 「嗯呼～～…
+				;TranslatedMark 「んふぅ～～…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 这样抱着触手枕头……好安心啊、感觉想睡觉了呢
+				;TranslatedMark こうして(触)腕枕されてると……眠くなってきちゃうよぉ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;認識操作
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「呼啊～…咕噜咕噜……爸爸、一起睡觉吧～……」
+					;TranslatedMark 「ふわぁ～…むにゃむにゃ……父上ぇ、いっしょにねんね～……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「呼啊～…咕噜咕噜……爸爸、一起睡觉吧～……」
+					;TranslatedMark 「ふわぁ～…むにゃむにゃ……父上ぇ、いっしょにねんね～……」
+				ENDIF
+			ENDSELECT
+		;踏む
+		CASE 80
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML （可，可恶！……差一点就、能踩扁了！）
+					;TranslatedMark （くっ、くそ…！……ギリギリ、踏み潰せない！）
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （可，可恶！……差一点就、能踩扁了！）
+					;TranslatedMark （くっ、くそ…！……ギリギリ、踏み潰せない！）
+				ENDIF
+			;感情操作
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「踩上去吗？」
+					;TranslatedMark 「踏めって？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「踩上去吗？」
+					;TranslatedMark 「踏めって？」
+				ENDIF
+				PRINTFORM 「……也行啦、稍微感觉有点怪怪的呢
+				;TranslatedMark 「……まぁいいけどさ、ちょっとマニアックだよねぇ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;認識操作
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「嗯、瑕疵房屋吗？地板都嘎吱嘎吱的……」
+					;TranslatedMark 「うーん、欠陥住宅か？床板がぐにゃぐにゃだぞ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「嗯、瑕疵房屋吗？地板都嘎吱嘎吱的……」
+					;TranslatedMark 「うーん、欠陥住宅か？床板がぐにゃぐにゃだぞ……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(TARGET)%就像没有注意到触手的存在一样、一边歪着头一边在触手上踩来踩去…。
+					;TranslatedMark %CALLNAME:(TARGET)%は、触手の存在が目に入っていないかのように、首を傾げながら触手の上で足踏みを繰り返している…。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(TARGET)%就像没有注意到触手的存在一样、一边歪着头一边在触手上踩来踩去…。
+					;TranslatedMark %CALLNAME:(TARGET)%は、触手の存在が目に入っていないかのように、首を傾げながら触手の上で足踏みを繰り返している…。
+				ENDIF
+			ENDSELECT
+		;ビンタ
+		CASE 81
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「……可恶！可恶！想让我打你的话就干脆解开咒缚啊！」
+					;TranslatedMark 「……くそっ！くそぉっ！！打って欲しくば呪縛を解け！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「……可恶！可恶！想让我打你的话就干脆解开咒缚啊！」
+					;TranslatedMark 「……くそっ！くそぉっ！！打って欲しくば呪縛を解け！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「我会把你打飞到无影无踪！！」
+					;TranslatedMark 「跡形もなく吹き飛ばしてやる！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「我会把你打飞到无影无踪！！」
+					;TranslatedMark 「跡形もなく吹き飛ばしてやる！！」
+				ENDIF
+			;感情操作
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「喂！对待女孩子应该更加珍惜才对吧！？」
+					;TranslatedMark 「こら！女の子はもっと大切に扱わなきゃだめだぞ！？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「喂！对待女孩子应该更加珍惜才对吧！？」
+					;TranslatedMark 「こら！女の子はもっと大切に扱わなきゃだめだぞ！？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「就算是触手、也不能随便侮辱别人啊！」
+					;TranslatedMark 「触手だからって、好き勝手に陵辱していいわけじゃないんだからな！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「就算是触手、也不能随便侮辱别人啊！」
+					;TranslatedMark 「触手だからって、好き勝手に陵辱していいわけじゃないんだからな！」
+				ENDIF
+			;認識操作
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「哇啊啊——！！」
+					;TranslatedMark 「きゃーーー！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「哇啊啊——！！」
+					;TranslatedMark 「きゃーーー！！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「爸爸、色狼————！！！」
+					;TranslatedMark 「父上の、えっちーーーー！！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「爸爸、色狼————！！！」
+					;TranslatedMark 「父上の、えっちーーーー！！！」
+				ENDIF
+			ENDSELECT
+		;折る
+		CASE 82
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML （身体还不是不能自由行动、但是…这家伙是抖M吗？）
+					;TranslatedMark (身体の自由は相変わらず利かないが…ひょっとしてコイツはマゾなのかしら？)
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW （身体还不是不能自由行动、但是…这家伙是抖M吗？）
+					;TranslatedMark (身体の自由は相変わらず利かないが…ひょっとしてコイツはマゾなのかしら？)
+				ENDIF
+			;感情操作
+			CASE 1
+				IF FLAG:AUTOMODE
+					PRINTFORML 「是要把你折起来？原来触手里也有抖M的存在呢」
+					;TranslatedMark 「折れっていうのかい？触手にもドＭなヤツがいるんだね」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「是要把你折起来？原来触手里也有抖M的存在呢」
+					;TranslatedMark 「折れっていうのかい？触手にもドＭなヤツがいるんだね」
+				ENDIF
+				PRINTFORM 「嘛、其实我也不讨厌这种就是
+				;TranslatedMark 「ま、私も嫌いじゃないけどね
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 　这样！……呀啊！？ 什、什么东西溅出来了…」
+					;TranslatedMark それ！……きゃっ！？ な、何か飛び散った…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　这样！……呀啊！？ 什、什么东西溅出来了…」
+					;TranslatedMark それ！……きゃっ！？ な、何か飛び散った…」
+				ENDIF
+			;認識操作
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「哦、竟然在这种地方发现了吸管糖……」
+					;TranslatedMark 「お、こんな所にチューペットが……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「哦、竟然在这种地方发现了吸管糖……」
+					;TranslatedMark 「お、こんな所にチューペットが……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「把这东西折起来需要一点技巧哦……欸咿！」
+					;TranslatedMark 「こいつは折るのにコツがいるんだ……エイッ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「把这东西折起来需要一点技巧哦……欸咿！」
+					;TranslatedMark 「こいつは折るのにコツがいるんだ……エイッ！」
+				ENDIF
+			ENDSELECT
+		;キス
+		CASE 83
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「呜呜呜！！…被这种混蛋给……」
+					;TranslatedMark 「うぅぅっ！！……こんなやつらにぃ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「呜呜呜！！…被这种混蛋给……」
+					;TranslatedMark 「うぅぅっ！！……こんなやつらにぃ……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「不、不要啊……嗯嗯嗯嗯————！！！」
+					;TranslatedMark 「や、やめｒ……ンンンーーーーッ！！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「不、不要啊……嗯嗯嗯嗯————！！！」
+					;TranslatedMark 「や、やめｒ……ンンンーーーーッ！！！」
+				ENDIF
+			;感情操作
+			CASE 1
+				PRINTFORM 「嗯咕
+				;TranslatedMark 「んむっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　啾
+				;TranslatedMark ちゅく
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　噗哈……rero
+				;TranslatedMark ぷはぁっ……レロッ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「呵呵呵
+				;TranslatedMark 「ふふふっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　怎么样、我的舌头如何？
+				;TranslatedMark どうだ私の舌は
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　就像是蛇一样对吧…嗯啾
+				;TranslatedMark 蛇みたいだろう…んちゅっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+			;認識操作
+			CASEELSE
+				PRINTFORM 「欸嘿嘿～へ～……啾
+				;TranslatedMark 「えへへ～……ちゅっ
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「神奈子…要成为父亲大人的新娘子哟♪」
+					;TranslatedMark 「カナコ…お父上の、およめさんになるのー♪」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「神奈子…要成为父亲大人的新娘子哟♪」
+					;TranslatedMark 「カナコ…お父上の、およめさんになるのー♪」
+				ENDIF
+			ENDSELECT
+		;手淫
+		CASE 84
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「唔咕咕！我要捏碎你……不行…手指不受控制！」
+					;TranslatedMark 「うっぐっ！握りつぶしてや……だめだ…指が勝手に！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「唔咕咕！我要捏碎你……不行…手指不受控制！」
+					;TranslatedMark 「うっぐっ！握りつぶしてや……だめだ…指が勝手に！」
+				ENDIF
+			;感情操作
+			CASE 1
+				PRINTFORM 「呼啊哈哈
+				;TranslatedMark 「ふあははっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　怎么样？…感觉舒服吗
+				;TranslatedMark どうだ？…きもちいか
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML ？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ？」
+				ENDIF
+				PRINTFORM 「手稍微有点干燥粗糙、但是呢
+				;TranslatedMark 「手荒れでガサガサだけどねぇ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　看
+				;TranslatedMark ほらっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　很舒服不是吗
+				;TranslatedMark かえって気持ちいいだろう
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML ？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW ？」
+				ENDIF
+			;認識操作
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「嗯嗯？诹访子怎么了…想要我帮你处理一下？真是没办法呢……」
+					;TranslatedMark 「んん？諏訪子どうした…ナニ扱いてほしい？しょうがないねぇ……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「嗯嗯？诹访子怎么了…想要我帮你处理一下？真是没办法呢……」
+					;TranslatedMark 「んん？諏訪子どうした…ナニ扱いてほしい？しょうがないねぇ……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「这种事就不能自己动手解决吗……别把衣服弄脏了哦？」
+					;TranslatedMark 「センズリくらい自分でやったらどうだい…服を汚すなよ？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「这种事就不能自己动手解决吗……别把衣服弄脏了哦？」
+					;TranslatedMark 「センズリくらい自分でやったらどうだい…服を汚すなよ？」
+				ENDIF
+			ENDSELECT
+		;フェラ
+		CASE 85
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「唔、啊啊啊啊……嘴巴擅自地……」
+					;TranslatedMark 「う、あぁあ……口が勝手に……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「唔、啊啊啊啊……嘴巴擅自地……」
+					;TranslatedMark 「う、あぁあ……口が勝手に……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「咕噗噗…齁哦咕噗！！（好臭！）」
+					;TranslatedMark 「ぐぶっうぅう…おおぅぐっ！！(生臭い！)」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「咕噗噗…齁哦咕噗！！（好臭！）」
+					;TranslatedMark 「ぐぶっうぅう…おおぅぐっ！！(生臭い！)」
+				ENDIF
+			;感情操作
+			CASE 1
+				PRINTFORM 「嗯啵
+				;TranslatedMark 「んぶっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　咕噗
+				;TranslatedMark くぷっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　姆咕唔
+				;TranslatedMark むぐぅっ
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　咕啾
+				;TranslatedMark ぐちゅっ
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				PRINTFORM 「噗哈啊…
+				;TranslatedMark 「ぷはぁ…
+				CALL HEARTCB(0xD02830)
+				PRINTFORM 　触手好好吃…
+				;TranslatedMark しょくしゅ美味し…
+				CALL HEARTCB(0xD02830)
+				IF FLAG:AUTOMODE
+					PRINTFORML 」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL %CALLNAME:(TARGET)%正在以完全发情的表情品味着触手…。
+					;TranslatedMark %CALLNAME:(TARGET)%は、発情しきった表情で触手を味わっている…。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW %CALLNAME:(TARGET)%正在以完全发情的表情品味着触手…。
+					;TranslatedMark %CALLNAME:(TARGET)%は、発情しきった表情で触手を味わっている…。
+				ENDIF
+			;認識操作
+			CASEELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「嗯啾、嗯啾…嗯嗯——？」
+					;TranslatedMark 「んっちゅ、んっちゅ…んんんーー？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「嗯啾、嗯啾…嗯嗯——？」
+					;TranslatedMark 「んっちゅ、んっちゅ…んんんーー？」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「这个冰棍、有点不好吃啊？」
+					;TranslatedMark 「こにょアイスバー、おいひくないろぉぉ？」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「这个冰棍、有点不好吃啊？」
+					;TranslatedMark 「こにょアイスバー、おいひくないろぉぉ？」
+				ENDIF
+			ENDSELECT
+		;パイズリ
+		CASE 86
+			SELECTCASE FLAG:526
+			;肉体操作
+			CASE 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「嗯呃呃……呃啊！」
+					;TranslatedMark 「うぅぅっ…くっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「嗯呃呃……呃啊！」
+					;TranslatedMark 「うぅぅっ…くっ！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「身体、擅自地…嗯咿噫！」
+					;TranslatedMark 「身体が、勝手に…んひぃぃっ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「身体、擅自地…嗯咿噫！」
+					;TranslatedMark 「身体が、勝手に…んひぃぃっ！」
+				ENDIF
+			;感情操作
+			CASE 1
+				SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「呜嘿嘿嘻
+					;TranslatedMark 「ふひひひ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　看吧看吧～～
+					;TranslatedMark ほれほれ～～
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「如何、我的双乳
+					;TranslatedMark 「どうだ、私のパイオツは
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%把性器埋了在胸口、在谷尖蠕动的触手将顶端伸了出来、%CALLNAME:(TARGET)%伸出舌头在上面不断地游走着…。
+						;TranslatedMark %CALLNAME:(TARGET)%は胸の中に性器を埋めさせ、間から踊る触手に舌を這わせている…。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%把性器埋了在胸口、在谷尖蠕动的触手将顶端伸了出来、%CALLNAME:(TARGET)%伸出舌头在上面不断地游走着…。
+						;TranslatedMark %CALLNAME:(TARGET)%は胸の中に性器を埋めさせ、間から踊る触手に舌を這わせている…。
+					ENDIF
+				CASEELSE
+					PRINTFORM 「呵呵呵
+					;TranslatedMark 「ふふふ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　我的胸部用起来感觉很舒服对吧
+					;TranslatedMark 私の胸は具合がいいだろう
+					CALL HEARTCB(0xD02830)
+					PRINTFORM ？ 不是我自夸、这可是我自豪的得意技哦
+					;TranslatedMark ？　自慢じゃないが得意技だ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL %CALLNAME:(TARGET)%用丰满的乳房侍奉着触手…。
+						;TranslatedMark %CALLNAME:(TARGET)%は豊満な胸を駆使して触手に奉仕している…。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW %CALLNAME:(TARGET)%用丰满的乳房侍奉着触手…。
+						;TranslatedMark %CALLNAME:(TARGET)%は豊満な胸を駆使して触手に奉仕している…。
+					ENDIF
+				ENDSELECT
+			;認識操作
+			CASEELSE
+				IF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「来吧信徒们、褪去衣物吧」
+						;TranslatedMark 「さぁ信徒の皆さん、下着を脱ぎなさい」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「来吧信徒们、褪去衣物吧」
+						;TranslatedMark 「さぁ信徒の皆さん、下着を脱ぎなさい」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「忘了那个萝莉体型的青蛙、来崇拜我这丰满的胸部吧」
+						;TranslatedMark 「ロリ体型の蛙なんて忘れて、私のパイオツを崇めるのです」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「忘了那个萝莉体型的青蛙、来崇拜我这丰满的胸部吧」
+						;TranslatedMark 「ロリ体型の蛙なんて忘れて、私のパイオツを崇めるのです」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「欸嘿へへ～、爸爸～」
+						;TranslatedMark 「えへへ～、父上～」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「欸嘿へへ～、爸爸～」
+						;TranslatedMark 「えへへ～、父上～」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「看呐、神奈子的胸部已经成长得这么大了哦？」
+						;TranslatedMark 「かなこねー、おっぱいこんなに大きくなったんだよぉ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「看呐、神奈子的胸部已经成长得这么大了哦？」
+						;TranslatedMark 「かなこねー、おっぱいこんなに大きくなったんだよぉ？」
+					ENDIF
+				ENDIF
+			ENDSELECT
+		ENDSELECT
+	ENDSELECT
+RETURN
+
+;戦闘時発情して味方を襲うor発情した仲間に襲われる
+;NO:(ARG:2)で対象キャラ確認可能
+@BATTLE_MIKATA_KOUDOU_RAPE_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;襲われる　この口上を言うキャラが捕まっている時は口上なしで解除
+		CASE 95
+			SELECTCASE ARG:3
+				;自力脱出
+				CASE 1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「呼～～啊 呼啊～～！」
+						;TranslatedMark 「ゼェ～～ッ　ハァ～～ッ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「呼～～啊 呼啊～～！」
+						;TranslatedMark 「ゼェ～～ッ　ハァ～～ッ！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「清醒一点啊，蠢货！」
+						;TranslatedMark 「正気に戻れ、ばか者！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「清醒一点啊，蠢货！」
+						;TranslatedMark 「正気に戻れ、ばか者！」
+					ENDIF
+				;襲っている奴が拘束・丸呑み・戦意喪失・発情したことによる解除
+				CASE 2
+					IF FLAG:AUTOMODE
+						PRINTFORML 「呜呜嗯哼！可恶！这样下去战线会崩溃的！」
+						;TranslatedMark 「ううっぅっ！くそっ！このままでは戦線が崩壊するぞ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「呜呜嗯哼！可恶！这样下去战线会崩溃的！」
+						;TranslatedMark 「ううっぅっ！くそっ！このままでは戦線が崩壊するぞ！」
+					ENDIF
+				;襲われる
+				CASEELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「呜哇啊！…蠢、蠢货！冷静下来……」
+						;TranslatedMark 「うわぁ！…ば、ばか！正気に戻……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「呜哇啊！…蠢、蠢货！冷静下来……」
+						;TranslatedMark 「うわぁ！…ば、ばか！正気に戻……」
+					ENDIF
+					PRINTFORM 「―――咿噫噫噫噫嗯
+					;TranslatedMark 「―――ひぃぃいんッ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+			ENDSELECT
+		;襲う
+		CASE 96
+			SELECTCASE ARG:3
+				;ふたなり襲撃開始
+				CASE 3
+					PRINTFORM 「不、不要了啊……御柱、忍耐不了了啊啊
+					;TranslatedMark 「も、もうりゃめ…おんばひら、がみゃんれきにゃぃい
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;レズ襲撃開始
+				CASE 2
+					PRINTFORM 「哈啊……啊哈哈啊啊……已经、忍不住了
+					;TranslatedMark 「はぁっ…あはぁぁああっ…も、辛抱たまらんっ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;なんか継続系ってぜんぜん出ないんだよな……
+				;襲撃継続（ふたなり）
+				CASE 1
+					PRINTFORM 「哈啊 呼啊 哈啊嗯
+					;TranslatedMark 「はぁっ　ふぅっ　はぁぁん
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+					PRINTFORM 「哈哈哈哈，感觉太棒了啊哈哈
+					;TranslatedMark 「ははははぁ、最高に具合がいいぞおぉ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　来啊、来啊！更多地把腰动起来～
+					;TranslatedMark ほら、ほらぁ！もっと腰を振るんだよぉ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+				;襲撃継続
+				CASEELSE
+					PRINTFORM 「嘻嘻嘻…
+					;TranslatedMark 「ひひひっ…
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　女孩子之间这样子做几次、也不坏吧
+					;TranslatedMark オナゴ同士というのも、悪くないだろう
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW ？」
+					ENDIF
+					PRINTFORM 「还远远不够呢
+					;TranslatedMark 「まだまだ足らないよ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　让我来更多更多的让你舒服起来吧
+					;TranslatedMark もっともっと感じさせてやろうねぇ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+			ENDSELECT
+
+	ENDSELECT
+
+RETURN

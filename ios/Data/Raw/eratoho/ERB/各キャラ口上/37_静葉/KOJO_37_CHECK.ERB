@@ -1,0 +1,54 @@
+﻿;*************************************************************
+;		静葉口上様々な判定チェック用関数群
+;*************************************************************
+
+;隣の部屋にいるかどうか
+;PRINT_SEARCH_INFO_2を流用
+
+@CHECK_MINORIKO_INFO(ARG:0)
+	IF ARG:0 == 0
+		;現在地の上の部屋が対象
+		;5以下の部屋なら何も表示しない
+		IF FLAG:5 <= 5
+			RETURN 0
+		ENDIF
+		LOCAL:1 = FLAG:5 - 5
+	ELSEIF ARG:0 == 1
+		;現在地の左の部屋が対象
+		;5n+1の部屋なら何も表示しない
+		IF (FLAG:5 % 5) == 1
+			RETURN 0
+		ENDIF
+		LOCAL:1 = FLAG:5 - 1
+	ELSEIF ARG:0 == 2
+		;現在地の右の部屋が対象
+		;5nの部屋なら何も表示しない
+		IF (FLAG:5 % 5) == 0
+			RETURN 0
+		ENDIF
+		LOCAL:1 = FLAG:5 + 1
+	ELSEIF ARG:0 == 3
+		;現在地の下の部屋が対象
+		;26以上の部屋なら何も表示しない
+		IF FLAG:5 >= 26
+			RETURN 0
+		ENDIF
+		LOCAL:1 = FLAG:5 + 5
+	ELSEIF ARG:0 == 4
+		;現在地チェック
+		LOCAL:1 = FLAG:5
+	ENDIF
+	
+	;対象の部屋に穣子がいるかどうか
+	IF CFLAG:(CFLAG:803):4 == LOCAL:1 || CFLAG:(CFLAG:803):41 == LOCAL:1
+		CFLAG:804 = 1
+	ENDIF
+
+RETURN 1
+	
+	
+
+
+
+
+

@@ -1,0 +1,67 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 101 迷宮内で他のキャラと会った - キャラクター別 047 スターサファイア
+; ------------------------------------------------------------------------------
+
+; □ 0 通常
+@KOJO_27_0_SYSTEM_MESSAGE_101_X_0_CHARA_47(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM CHARA_ID
+
+	; 遭遇キャラは拘束されている
+	IF CFLAG:(ARG:1):504
+	
+	; 催眠行動中
+	ELSEIF CFLAG:(ARG:1):43 == 1
+	
+	; 遭遇キャラと寸前まで共闘していた
+	ELSEIF ARG:1 == PARTY_NO:1 || ARG:1 == PARTY_NO:2
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あんた、妖精の癖に結構やるじゃない」\n"
+		
+	; 通常行動中
+	ELSE
+		; 対象のキャラとは初遭遇
+		; 表示タイミングが一度しかない口上、優先口上として処理する
+		IF KOJO_27_0_GET_ENCOUNTER_COUNT(ARG:1) == 0
+			CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ちっちゃい姫様！？　……なんだ、妖精かー」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「む！　そこに居るのはウサギ狩りとかする極悪妖精！」\n"
+			
+			; パーティーにサニーとルナ両方が居るなら追加口上
+			IF CHECK_MEMBER_FROM_NO(45) && CHECK_MEMBER_FROM_NO(46)
+				CALL KOJO_27_0_ADD_MESSAGE, @"「%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(45))%、%KOJO_27_0_CALLNAME_FROM_ID(GET_ID_FROM_NO(46))%、最後の一人が見つかったわよ」\n"
+				CALL KOJO_27_0_ADD_MESSAGE, @"（三妖精が揃ったのはいいけど、これ以上大人数で動くの危なそうなのよね）\n"
+			
+			; パーティーにサニーかルナのどちらかだけ居るなら追加口上
+			ELSEIF CHECK_MEMBER_FROM_NO(45) || CHECK_MEMBER_FROM_NO(46)
+				CHARA_ID = CHECK_MEMBER_FROM_NO(45) ? GET_ID_FROM_NO(45) # GET_ID_FROM_NO(46)
+				CALL KOJO_27_0_ADD_MESSAGE, @"「%KOJO_27_0_CALLNAME_FROM_ID(CHARA_ID)%、お仲間が見つかったわよ」\n"
+			
+			; パーティーにサニーもルナも居ないなら追加口上
+			ELSEIF !(CHECK_MEMBER_FROM_NO(45) || CHECK_MEMBER_FROM_NO(46))
+				CALL KOJO_27_0_ADD_MESSAGE, @"「お仲間の二匹はどうしたの？　って妖精が群れてる方が珍しいか……」\n"
+			ENDIF
+			
+			RETURN 1
+		ENDIF
+		
+		; パーティーにサニーもルナも居ないなら追加口上
+		IF !(CHECK_MEMBER_FROM_NO(45) || CHECK_MEMBER_FROM_NO(46))
+			CALL KOJO_27_0_ADD_MESSAGE, @"「あんたまだ一人でほっつき歩いてるの？　いつものお仲間はどうしたのよ」\n"
+		ENDIF
+	ENDIF
+RETURN 1
+
+
+; □ 1 喪失中
+@KOJO_27_0_SYSTEM_MESSAGE_101_X_1_CHARA_47(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	; 遭遇キャラは拘束されている
+	IF CFLAG:(ARG:1):504
+	
+	; 遭遇キャラと寸前まで共闘していた
+	ELSEIF ARG:1 == PARTY_NO:1 || ARG:1 == PARTY_NO:2
+	
+	; 通常行動中
+	ELSE
+
+	ENDIF
+RETURN 1

@@ -1,0 +1,853 @@
+﻿
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;現在の素質を表示
+;ARG:0	対象キャラID
+;ARG:1	素質のみ表示
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@SHOW_TALENT_LIST(ARG:0, ARG:1 = 0)
+#DIM LCOUNT,3	;ループ用
+
+;LOCAL
+;0	表示素質数
+
+
+LOCAL = 0
+FOR LCOUNT, 0, 300
+
+	RESULTS = 
+	CALL PERSONAL_TALENT(ARG, LCOUNT)
+	LOCALS = %RESULTS%
+	
+	;表示できる素質があれば表示
+	IF LOCALS != ""
+		IF ARG:1 == 0
+			PRINTFORM %LOCALS:0,16,LEFT% 
+			CALL SHOW_TALENT_EXPLAIN(LCOUNT, TALENT:(ARG):(LCOUNT))
+			PRINTL  
+		ELSE
+			;図鑑のキャラ説明などでは改行と説明を抜く
+			PRINTFORM %LOCALS:0% 
+			SIF (LOCAL % 6) == 5
+				PRINTL  
+		ENDIF
+		LOCAL++
+	ENDIF
+NEXT
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;素質名＿キャラの状態等を考慮する場合
+;ARG:0	キャラID
+;ARG:1	素質ID
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@PERSONAL_TALENT(ARG:0, ARG:1)
+;特殊な条件はこっちで
+;表示されない場合の条件を入れる
+
+RESULTS = 
+
+
+;超乳の表示にはコンフィグの許可が必要
+SIF ARG:1 == 158 && FLAG:521 >= 1
+	RETURN
+;超超乳の表示にはコンフィグの許可が必要
+SIF ARG:1 == 222 && FLAG:521 >= 1
+	RETURN
+;接地乳房の表示にはコンフィグの許可が必要
+SIF ARG:1 == 223 && FLAG:521 >= 1
+	RETURN
+
+
+;排卵異常を表示するにはコンフィグの許可が必要
+SIF ARG:1 == 137 && FLAG:535 == 0
+	RETURN
+
+;拡張乳腺を表示するにはコンフィグの許可が必要
+SIF ARG:1 == 162 && FLAG:507 < 1
+	RETURN
+
+;扶他系素質の表示には[扶他]が必要
+SIF ARG:1 >= 170 && ARG:1 <= 188 && GET_PENIS(ARG:0) < 1
+	RETURN
+
+CALL TALENT_NAME(ARG:1, TALENT:(ARG):(ARG:1))
+RETURN
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;素質名＿値によって名前が変わるタイプの素質に対応する場合
+;ARG:0	素質ID
+;ARG:1	素質値（値によって名前が変わる物があるので）
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@TALENT_NAME(ARG:0, ARG:1)
+;※ここでは引数以外の値（特殊な条件）等は参照しない
+
+IF ARG:1 == 0
+	RESULTS = 
+	RETURN
+ENDIF
+
+LOCALS = 
+SELECTCASE ARG
+
+	;体型
+	CASE 100
+		IF ARG:1 == 2
+			LOCALS = [小人体型]
+		ELSEIF ARG:1 == 1
+			LOCALS = [嬌小体型]
+		ENDIF
+		
+	;各部位感度
+	CASE 101 TO 106
+		;部位
+		IF ARG == 101
+			LOCALS = [Ａ
+		ELSEIF ARG == 102
+			LOCALS = [Ｂ
+		ELSEIF ARG == 103
+			LOCALS = [Ｃ
+		ELSEIF ARG == 104
+			LOCALS = [Ｖ
+		ELSEIF ARG == 105
+			LOCALS = [肌
+		ELSEIF ARG == 106
+			LOCALS = [Ｍ
+		ENDIF
+		;感度
+		IF ARG:1 <= -1
+			LOCALS += "鈍感]"
+		ELSEIF ARG:1 == 1
+			LOCALS += "敏感]"
+		ELSEIF ARG:1 == 2
+			LOCALS += "過敏]"
+		ELSEIF ARG:1 >= 3
+			LOCALS += "異常過敏]"
+		ENDIF
+		
+	;動物耳
+	CASE 124
+		LOCALS = [動物耳
+		IF ARG:1 >= 2
+			LOCALS += "★]"
+		ELSE
+			LOCALS += "]"
+		ENDIF
+	;母乳体質
+	CASE 130
+		LOCALS = [母乳
+		IF ARG:1 == 1
+			LOCALS += "体質]"
+		ELSEIF ARG:1 == 2
+			LOCALS += "分泌過多]"
+		ELSEIF ARG:1 == 3
+			LOCALS += "異常分泌]"
+		ELSEIF ARG:1 == 4
+			LOCALS += "製造装置]"
+		ELSEIF ARG:1 == 5
+			LOCALS += "間欠泉]"
+		ELSEIF ARG:1 >= 6
+			LOCALS += "活火山]"
+		ENDIF
+		
+		
+	;排卵異常
+	CASE 137
+		IF ARG:1 == -1
+			LOCALS = [未熟卵巣]
+		ELSEIF ARG:1 == 1
+			LOCALS = [異常排卵巣]
+		ELSEIF ARG:1 == 2
+			LOCALS = [肥大化卵巣]
+		ELSEIF ARG:1 == 3
+			LOCALS = [苗床卵巣]
+		ENDIF
+		
+	;寵物
+	CASE 140
+		IF ARG:1 == 1
+			LOCALS = [寵物]
+		ELSEIF ARG:1 == 2
+			LOCALS = [新娘]
+		ELSEIF ARG:1 == 3
+			LOCALS = [奴僕]
+		ENDIF
+		
+	;超乳
+	CASE 158
+		LOCALS = [超乳
+		IF ARG:1 == 1
+			LOCALS += "]"
+		ELSEIF ARG:1 >= 2
+			LOCALS += "+" + TOSTR(ARG:1-1) + "]"
+		ENDIF
+		
+		
+	;浄化知識
+	CASE 160
+		IF ARG:1 == 1
+			LOCALS = [浄化
+		ELSEIF ARG:1 == 2
+			LOCALS = [結界
+		ENDIF
+		LOCALS += "知識]"
+		
+		
+	;体術習熟
+	CASE 161
+		IF ARG:1 == 1
+			LOCALS = [体術
+		ELSEIF ARG:1 == 2
+			LOCALS = [剣術
+		ENDIF
+		LOCALS += "習熟]"
+		
+		
+	;拡張乳腺
+	CASE 162
+		LOCALS = [拡張乳腺
+		IF ARG:1 == 1
+			LOCALS += "]"
+		ELSEIF ARG:1 >= 2
+			LOCALS += "+" + TOSTR(ARG:1-1) + "]"
+		ENDIF
+		
+		
+	;術式知識
+	CASE 164
+		IF ARG:1 == 1
+			LOCALS = [波動感知]
+		ELSEIF ARG:1 == 2
+			LOCALS = [術式知識]
+		ENDIF
+		
+		
+	;神気
+	CASE 168
+		IF ARG:1 == 1
+			LOCALS = [神気]
+		ELSEIF ARG:1 == 2
+			LOCALS = [神之血]
+		ENDIF
+		
+		
+	;------ここから、扶他系素質※[扶他]時のみ有効-----
+	;陰茎長度
+	CASE 170
+		IF ARG:1 == -1
+			LOCALS = [短小]
+		ELSEIF ARG:1 == 1
+			LOCALS = [巨根]
+		ELSEIF ARG:1 == 2
+			LOCALS = [爆根]
+		ELSEIF ARG:1 == 3
+			LOCALS = [超巨根]
+		ENDIF
+		
+		
+	;精力
+	CASE 172
+		IF ARG:1 == -1
+			LOCALS = [精力薄弱]
+		ELSEIF ARG:1 == 1
+			LOCALS = [精力超群]
+		ELSEIF ARG:1 == 2
+			LOCALS = [超精力超群]
+		ENDIF
+		
+		
+	;包茎
+	CASE 173
+		IF ARG:1 == 1
+			LOCALS = [沒有包皮]
+		ELSEIF ARG:1 == 2
+			LOCALS = [仮性包茎]
+		ELSEIF ARG:1 == 3
+			LOCALS = [真性包茎]
+		ENDIF
+		
+		
+	;先天的
+	CASE 176
+		IF ARG:1 == 1
+			LOCALS = [先天的扶他]
+		ELSEIF ARG:1 == 2
+			LOCALS = [後天的扶他]
+		ENDIF
+	;早洩
+	CASE 178
+		IF ARG:1 == -1
+			LOCALS = [晩洩]
+		ELSEIF ARG:1 == 1
+			LOCALS = [早洩]
+		ENDIF
+		
+	;玉
+	CASE 180
+		IF ARG:1 == 1
+			LOCALS = [睾丸]
+		ELSEIF ARG:1 == 2
+			LOCALS = [大睾丸]
+		ELSEIF ARG:1 == 3
+			LOCALS = [巨睾丸]
+		ELSEIF ARG:1 == 4
+			LOCALS = [超大睾丸]
+		ELSEIF ARG:1 == 11
+			LOCALS = [単個睾丸]
+		ELSEIF ARG:1 == 12
+			LOCALS = [単個大睾丸]
+		ELSEIF ARG:1 == 13
+			LOCALS = [単個巨睾丸]
+		ELSEIF ARG:1 == 14
+			LOCALS = [超単個大睾丸]
+		ENDIF
+		
+	;毛
+	CASE 181
+		IF ARG:1 == 1
+			LOCALS = [長毛睾丸]
+		ELSEIF ARG:1 == 2
+			LOCALS = [剛毛睾丸]
+		ENDIF
+		
+		
+	;液量
+	CASE 185
+		IF ARG:1 == -1
+			LOCALS = [少量射精]
+		ELSEIF ARG:1 == 1
+			LOCALS = [大量射精]
+		ELSEIF ARG:1 == 2
+			LOCALS = [超大量射精]
+		ENDIF
+		
+	;濃度
+	CASE 186
+		IF ARG:1 == -1
+			LOCALS = [精液稀薄]
+		ELSEIF ARG:1 == 1
+			LOCALS = [精液濃厚]
+		ELSEIF ARG:1 == 2
+			LOCALS = [精液特濃]
+		ENDIF
+	;-----ここまで、扶他系素質-----
+	;羽
+	CASE 213
+		IF ARG:1 == 1
+			LOCALS = [羽]
+		ELSEIF ARG:1 == 2
+			LOCALS = [翼]
+		ENDIF
+	;尻尾
+	CASE 215
+		IF (ARG:1 % 10) == 1
+			LOCALS = [尻尾
+		ELSEIF (ARG:1 % 10) == 2
+			LOCALS = [大量尾巴
+		ENDIF
+		IF ARG:1 >= 10
+			LOCALS += "★]"
+		ELSE
+			LOCALS += "]"
+		ENDIF
+	;母乳粘度
+	CASE 220
+		IF ARG:1 == 1
+			LOCALS = [さらさら母乳]
+		ELSEIF ARG:1 == 2
+			LOCALS = [とろとろ母乳]
+		ELSEIF ARG:1 == 3
+			LOCALS = [ねっとり母乳]
+		ELSEIF ARG:1 == 4
+			LOCALS = [こくまろ母乳]
+		ELSEIF ARG:1 == 5
+			LOCALS = [特濃母乳]
+		ELSEIF ARG:1 >= 6
+			LOCALS = [超特濃母乳]
+		ENDIF
+	;超超乳
+	CASE 222
+		LOCALS = [超超乳
+		IF ARG:1 == 1
+			LOCALS += "]"
+		ELSEIF ARG:1 >= 2
+			LOCALS += "+" + TOSTR(ARG:1-1) + "]"
+		ENDIF
+	;接地乳房
+	CASE 223
+		LOCALS = [接地乳房
+		IF ARG:1 == 1
+			LOCALS += "]"
+		ELSEIF ARG:1 >= 2
+			LOCALS += "+" + TOSTR(ARG:1-1) + "]"
+		ENDIF
+	;複乳
+	CASE 230
+		LOCALS = [複乳
+		IF ARG:1 == 1
+			LOCALS += "]"
+		ELSEIF ARG:1 == 2
+			LOCALS += " Lv2]"
+		ELSEIF ARG:1 >= 3
+			LOCALS += " Lv3]"
+		ENDIF
+		
+	CASEELSE
+		LOCALS = [%TALENTNAME:(ARG)%]
+		
+ENDSELECT
+
+RESULTS = %LOCALS%
+RETURN
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;素質の詳細を表示
+;ARG:0	素質ID
+;ARG:1	素質の強さ（感度で利用）
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@SHOW_TALENT_EXPLAIN(ARG:0, ARG:1)
+
+;一部の説明はわざと省略
+SELECTCASE ARG:0
+	CASE 0
+		PRINTFORM 受到V属性攻撃时会喪失処女、MP受到大量傷害
+	CASE 10
+		PRINTFORM 受到敵人攻撃時、TP略微下降
+	CASE 11
+		PRINTFORM 受到敵人攻撃時、TP略微提高　很難被邀請成為同伴
+	CASE 12
+		PRINTFORM 被寄生攻撃時受到的MP傷害降低
+	CASE 13
+		PRINTFORM 容易被邀請成為同伴
+	CASE 14
+		PRINTFORM 戦闘開始時TP降低些許
+	CASE 15
+		PRINTFORM 受到性攻撃時、TP略微提高　很難被邀請成為同伴
+	CASE 16
+		PRINTFORM 提高回避率　很難被邀請成為同伴
+	CASE 17
+		PRINTFORM 被性攻撃時受到的MP傷害降低
+	CASE 18
+		PRINTFORM 邀請成為同伴時友好度会起到更大的影響
+	CASE 20
+		PRINTFORM 很難発生自慰
+	CASE 21
+		PRINTFORM 同伴喪失戦意的時候、TP不会変化
+	CASE 22
+		PRINTFORM 各種情況下的TP変化量変小
+	CASE 23
+		PRINTFORM 提高探索的成功率
+	CASE 24
+		PRINTFORM 弱弾幕・弱攻撃的命中率上升
+	CASE 25
+		PRINTFORM HP変為0時、TP不会降低
+	CASE 26
+		PRINTFORM 自身被拘束的時候和同伴喪失戦意的時候、TP変為0
+	CASE 27
+		PRINTFORM 各種感覚・中毒能力難以提高
+	CASE 28
+		PRINTFORM 戦闘開始時処於縮短距離的状態
+	CASE 30
+		PRINTFORM 受到V属性攻撃時、TP略微下降
+	CASE 31
+		PRINTFORM 受到V属性攻撃時、TP不会変化
+	CASE 32
+		PRINTFORM 自己高潮之時TP不会変化　另外、降低高潮傷害
+	CASE 33
+		PRINTFORM 受到衣服攻撃時、TP不会降低　全裸時TP提高些許
+	CASE 34
+		PRINTFORM 容易擺脱敵人的拘束　另外、拘束中時TP略微提高
+	CASE 35
+		PRINTFORM 在全裸之時、命中率提高、MP的自然減少量変為2倍
+	CASE 36
+		PRINTFORM 在全裸之時、MP不会自然減少
+	CASE 40
+		PRINTFORM HP傷害増加1成、TP更容易変化
+	CASE 41
+		PRINTFORM HP傷害減軽1成
+	CASE 42
+		PRINTFORM 被A・V属性攻撃時受到的EP傷害増加、MP傷害降低
+	CASE 43
+		PRINTFORM 被A・V属性攻撃時受到的EP傷害降低
+	CASE 50
+		PRINTFORM 弾幕戦闘・道具戦闘容易提高
+	CASE 51
+		PRINTFORM 気配察知・危機回避容易提高、弾幕戦闘・道具戦闘更難提高
+	CASE 52
+		PRINTFORM 話術容易提高
+	CASE 53
+		PRINTFORM 消耗武器的攻撃力上升
+	CASE 54
+		PRINTFORM 受到M属性的攻撃時双方都受到追加傷害
+	CASE 55
+		PRINTFORM 探索時得到回復道具的幾率上升
+	CASE 56
+		PRINTFORM 睡眠・発情的幾率下降
+	CASE 57
+		IF FLAG:521 == 0
+			PRINTFORM NP積存的更快、容易出現愛液。
+		ELSE
+			PRINTFORM NP積存的更快、容易失禁。
+		ENDIF
+	CASE 60
+		PRINTFORM 容易発生自慰
+	CASE 61
+		PRINTFORM 丸呑拘束中時TP不会下降
+	CASE 62
+		PRINTFORM 丸呑拘束中時TP変化加倍
+	CASE 63
+		PRINTFORM 選択縮短距離指令時不会降低友好度、回避率也不会下降
+	CASE 70
+		PRINTFORM 受到性攻撃時、TP略微提高
+	CASE 71
+		PRINTFORM 各種感覚能力難以提高
+	CASE 72
+		PRINTFORM 各種中毒能力容易提高
+	;悪堕　種族が値として入っている
+	CASE 73
+		PRINTFORM 擁有悪堕的経験
+	;◆淫乱系素質
+	CASE 74
+		PRINTFORM 輸給了快感、刻下了堕落母狗的烙印。
+	CASE 75
+		PRINTFORM 只是排泄而已就能迎来高潮、出口兼入口
+	CASE 76
+		IF FLAG:507 > 0
+			PRINTFORM 乳暈下流肥大、乳頭変得又粗又長
+		ELSE
+			PRINTFORM 乳暈凸起肥大、乳頭変得又肥又長
+		ENDIF
+	CASE 77
+		PRINTFORM 過度成長到醜陋程度的淫核是暴露的弱点
+	CASE 78
+		PRINTFORM 被注入多少精液都得不到満足的可悲的肉穴
+	CASE 79
+		PRINTFORM 只是接吻而已全身就止不住的顫抖
+	;◆◆
+	;兩面通吃追加
+	CASE 81
+		PRINTFORM 百合中毒容易提高、和女性型触手的相性上升
+	;覚追加
+	CASE 94
+		PRINTFORM 能判別遇到的対方的真偽、在汚染率很高的部屋有額外消耗
+
+	CASE 100
+		PRINTFORM 回避率上升　被A・V属性攻撃時受到的MP傷害増加
+	CASE 101 TO 106
+		IF ARG:1 <= -1
+			PRINTFORM 被対応属性攻撃時受到的傷害降低
+		ELSEIF ARG:1 == 1
+			PRINTFORM 被対応属性攻撃時受到的傷害増加
+		ELSEIF ARG:1 == 2
+			PRINTFORM 被対応属性攻撃時受到的傷害大幅増加
+		;◆異常過敏
+		ELSEIF ARG:1 >= 3
+			PRINTFORM 被対応属性攻撃時受到的傷害非常大幅増加
+		;◆◆
+		ENDIF
+	;◆絶壁・爆乳実装
+	CASE 107
+		PRINTFORM 沒有乳房。但是為什麼、B属性的攻撃沒有無效呢？
+	CASE 108
+		IF FLAG:507 > 0
+			PRINTFORM 成長到身体極限的胸部　擁有巨大乳暈和粗大乳頭的有下垂傾向的碩大的乳房
+		ELSE
+			PRINTFORM 成長到衣服幾乎容納不下的下流的胸部
+		ENDIF
+	;◆◆
+	CASE 109
+		PRINTFORM 被B属性攻撃時受到的傷害増加、TP略微提高
+	CASE 110
+		PRINTFORM 片手では隠しきれない胸です　降低被B属性攻撃時受到的傷害
+	CASE 111
+		PRINTFORM 時間経過時的自然回復量上升
+	CASE 112
+		PRINTFORM 時間経過時的自然回復量下降　在睡覚後受到襲撃之時最初就処於起床状態
+	CASE 114
+		PRINTFORM 時間経過時的自然回復量、在白昼大幅下降、夜間超級大幅上升
+	CASE 115
+		PRINTFORM 時間経過時的自然回復量、在朝昼時間段大幅上升
+	CASE 116
+		PRINTFORM 時間経過時的自然回復量、在夕夜時間段大幅上升
+	CASE 117
+		PRINTFORM 戦闘結束時全体隊員的HP少量回復　很健康能強化部分道具的效果
+	CASE 118
+		PRINTFORM 戦闘結束時全体隊員的MP少量回復　很健康能強化部分道具的效果
+	;不思議な根追加
+	CASE 120
+		PRINTFORM 射精中毒容易提高扶他難以治愈、有射精耐性
+	CASE 121
+		PRINTFORM 作為扶他即使在女性之間也可以有孩子
+	CASE 122
+		PRINTFORM 是男人。V系無効、有男性器、不会百合中毒
+	;狂気追加
+	CASE 123
+		PRINTFORM 完全適応了迷宮内的空気
+	CASE 124
+		PRINTFORM 根據気配察知和危機回避的等級可以回避戦闘、肌膚傷害増加
+	;◆禁断的知識追加
+	CASE 125
+		PRINTFORM 擁有着禁断的知識……不過、只是擁有而已。対単体来説沒有什麼用
+	;◆◆
+	CASE 127
+		PRINTFORM 有一点射精耐性　降低射精時的懲罰
+	CASE 128
+		PRINTFORM 除去和部分特定敵人戦闘的場合、即使被捕食了也能当場復活
+	CASE 130
+		IF ARG:1 == 1
+			PRINTFORM 胸部高潮時受到的MP傷害増加、并回復対手的HP
+		ELSEIF ARG:1 == 2
+			PRINTFORM 胸部高潮時受到的MP傷害大量増加、并回復対手的HP
+		ELSEIF ARG:1 == 3
+			PRINTFORM 胸部高潮時受到的MP傷害非常大量増加、并回復対手的HP
+		ELSEIF ARG:1 == 4
+			PRINTFORM 一直流出的母乳需要用奶盆接着
+		ELSEIF ARG:1 == 5
+			PRINTFORM 高熱的母乳湧出時的樣子、就像是噴泉一樣
+		ELSEIF ARG:1 >= 6
+			PRINTFORM 灼熱的母乳噴出時的樣子、如同火山爆発
+		ENDIF
+	CASE 132
+		PRINTFORM 受到寄生攻撃時、降低被寄生的幾率
+	CASE 135
+		PRINTFORM 産卵体質　降低産卵時的懲罰
+	CASE 136
+		PRINTFORM 已経習慣了産卵的肉体　降低産卵時的懲罰作為代替産卵攻撃的成功率増加
+	CASE 137
+		IF ARG:1 == -1
+			PRINTFORM 少女的年幼卵巣不会排卵所以無法妊娠、但是在迷宮内充満了大人的経験
+		ELSEIF ARG:1 == 1
+			PRINTFORM 持續被玩弄到排卵間隔很短的卵巣在迷宮内是上佳的目標
+		ELSEIF ARG:1 == 2
+			PRINTFORM 膨脹肥大化的卵巣等待着被授種的快感
+		ELSEIF ARG:1 >= 3
+			PRINTFORM 醜陋肥大化的覚醒了受精快感的卵巣一直在排卵、等待着受精
+		ENDIF
+	CASE 139
+		PRINTFORM 能夠改変自身的胸部大小和体型
+	CASE 140
+		PRINTFORM 為了尽忠把肉体献給了主人
+		IF ARG:1 == 2
+			PRINTFORM  立下了一生追隨的誓言
+		ELSEIF ARG:1 == 3
+			PRINTFORM  沒有自由意志連精神也徹底屈服了
+		ENDIF
+	CASE 149
+		PRINTFORM 与寵物関連能受到各種各樣的優待
+	CASE 150
+		PRINTFORM 除去和部分特定敵人戦闘的場合、即使被捕食了也能在一段時間後復活
+	CASE 151
+		PRINTFORM 使用弾幕攻撃時、会発出炎属性弾幕
+	CASE 152
+		PRINTFORM 受到寄生攻撃時、TP略微下降
+	CASE 153
+		PRINTFORM 在非全裸状態下結束了戦闘的時候、CP少量回復
+	CASE 154
+		PRINTFORM 睡覚時容易察覚到敵人的襲撃
+	CASE 155
+		PRINTFORM 受到性攻撃・寄生攻撃時、TP不会下降
+	;◆淫魔追加
+	;従来の説明は悪堕へ移行
+	CASE 156
+		PRINTFORM 対性行為沒有厭悪感反而還追求着快感
+	;◆◆
+	CASE 157
+		PRINTFORM 主人公身心完全迷恋上触手的證明
+	;超乳を細分化
+	CASE 158
+		IF FLAG:507 < 1
+			IF ARG:1 <= 1
+				PRINTFORM 超越了成長極限的乳房　乳暈也開始変的肥大
+			ELSEIF ARG:1 <= 2
+				PRINTFORM 超越了成長極限的乳房　乳暈更加的肥大了
+			ELSEIF ARG:1 <= 3
+				PRINTFORM 越過極限的超級成熟的乳房　乳暈也拡張到了極限
+			ELSE
+				PRINTFORM 成長到連走路都会很辛苦的乳房
+			ENDIF
+		ELSE
+			IF ARG:1 <= 1
+				PRINTFORM 母乳過多的超過人類極限的醜陋乳房
+			ELSEIF ARG:1 <= 2
+				PRINTFORM 双手抱不下的醜陋肥大的乳房。裡面充満了母乳。乳房怪
+			ELSEIF ARG:1 <= 3
+				PRINTFORM 産乳機器化的双乳如同噴泉一般持續噴射着純白的母乳。
+			ELSE
+				PRINTFORM 為触手献上了從母乳機器内洶湧噴出的母乳、已経被培育成新的苗床了。
+			ENDIF
+		ENDIF
+	CASE 159
+		PRINTFORM 直到高潮為止降低母乳和B傷害
+	;浄化知識、結界知識追加
+	CASE 160
+		IF ARG:1 == 1
+			PRINTFORM 進行浄化的時候、回避触手暴走需要的条件緩和　身体不好時不会発揮效果
+		ELSEIF ARG:1 == 2
+			PRINTFORM 浄化時的触手暴走回避和結界使用的条件緩和　身体不好時不会発揮效果
+		ENDIF
+	;体術、剣術
+	CASE 161
+		IF ARG:1 == 1
+			PRINTFORM 使用非消耗武器攻撃時、根據戦闘素質獲得補正
+		ELSEIF ARG:1 == 2
+			PRINTFORM 用剣攻撃時、根據戦闘素質獲得補正
+		ENDIF
+	;拡張乳腺
+	CASE 162
+		IF ARG:1 == 1
+			PRINTFORM 像橡膠一樣能柔韌伸展的下流的乳頭和乳腺　乳姦発生率↑　乳姦時的傷害↑
+		ELSEIF ARG:1 == 2
+			PRINTFORM 像橡膠一樣能柔韌伸展的下流的乳頭和乳腺　乳姦発生率↑↑　乳姦時的傷害↑↑
+		ELSEIF ARG:1 >= 3
+			PRINTFORM 可以称之為乳膣穴的能讓触手們出入的碩大的乳頭和乳腺已経変成了下流的肉壺
+		ENDIF
+	;鷹眼
+	CASE 163
+		PRINTFORM 特別精通使用飛行道具戦闘。
+	;術式知識
+	CASE 164
+		PRINTFORM 魔法陣陷穽的回避率上升。
+	CASE 165
+		IF ARG:1 == 1
+			PRINTFORM 原来是偽娘、但是身体被変成了女性。
+		ELSEIF ARG:1 == 2
+			PRINTFORM 原来是女性、但是身体被変成了偽娘。
+		ENDIF
+	CASE 166
+		PRINTFORM 能力値和初期素質隨機取得。
+	CASE 167
+		PRINTFORM 全裸時会回復MP。
+	CASE 168
+		PRINTFORM EPCP傷害減少、隨着ABCVM感覚的増加效果逐漸降低
+	CASE 170
+		IF ARG:1 <= -1
+			PRINTFORM 像小孩般的小小的「雞雞」。既覚得可愛又感到同情
+		ELSEIF ARG:1 == 1
+			PRINTFORM 比成人男性還要大的男根対触手們来説是個好玩具
+		ELSEIF ARG:1 == 2
+			PRINTFORM 如果勃起的話高高挺起到肚臍無法隠藏的男性器讓看到的少女感到了侮辱
+		ELSEIF ARG:1 >= 3
+			PRINTFORM 可以擁抱的大小的陰茎是只為了得到快感的器官而已
+		ENDIF
+	CASE 171
+		PRINTFORM 和大小相比有着不相称的粗細
+	CASE 172
+		IF ARG:1 <= -1
+			PRINTFORM 很快就会力尽的小雞雞。受到迷宮的幇助能很快恢復元気
+		ELSEIF ARG:1 == 1
+			PRINTFORM 馬上就会復活的男性器也只是会接着受到凌辱而已
+		ELSEIF ARG:1 >= 2
+			PRINTFORM 不会萎靡。無需等待隨時都精力旺盛的肉棒
+		ENDIF
+	CASE 173
+		IF ARG:1 == 1
+			PRINTFORM 完全露出了亀頭其他部分被皮覆蓋
+		ELSEIF ARG:1 == 2
+			PRINTFORM 剥開柔軟的包皮能暴露出毫無防備的敏感的亀頭
+		ELSEIF ARG:1 >= 3
+			PRINTFORM 這個迷宮裡面多得是擁有着能尽情疼愛閉合的包皮中的亀頭的手段的生物
+		ENDIF
+	CASE 174
+		PRINTFORM 陰茎的新陳代謝好像太好了。剛洗完也会不知不覚間就変髒了
+	CASE 175
+		PRINTFORM 一直瀰漫着臭味
+	CASE 176
+		IF ARG:1 == 1
+			PRINTFORM 体質。從出生時就是身体的一部分
+		ELSEIF ARG:1 == 2
+			PRINTFORM 寄生・魔法・薬品・森林蘑菇的效果。本来是沒有這個器官的
+		ENDIF
+	CASE 177
+		PRINTFORM 顔色黝黑讓人感覚很強力的肉棒
+	CASE 178
+		IF ARG:1 <= -1
+			PRINTFORM 射精時刻来得很慢的陰茎。但是、敏感度低的話是其他話題。
+		ELSEIF ARG:1 == 1
+			PRINTFORM 馬上就会分泌前列腺液并射出白濁液的肉棒。
+		ENDIF
+	CASE 180
+		IF ARG:1 == 1
+			PRINTFORM 陰茎下面垂着睾丸
+		ELSEIF ARG:1 == 2
+			PRINTFORM 很大的睾丸。像雞蛋一樣沈甸甸的
+		ELSEIF ARG:1 == 3
+			PRINTFORM 巨大的睾丸。一隻手都握不下的那個裡面充満了精液
+		ELSEIF ARG:1 >= 4
+			PRINTFORM 特大的睾丸。需要兩手懷抱的肉蛋裡面充満了沸騰的性欲之塊
+		ENDIF
+	CASE 181
+		IF ARG:1 == 1
+			PRINTFORM 睾丸上面長着軟毛
+		ELSEIF ARG:1 == 2
+			PRINTFORM 睾丸上面長満了毛。有点悪心
+		ENDIF
+	CASE 185
+		IF ARG:1 <= -1
+			PRINTFORM 拼命榨取也只有一点点的精液。比起応援来説還是嗤声比較適合
+		ELSEIF ARG:1 == 1
+			PRINTFORM 大量精液通過尿道的感覚対少女来説就像毒品一樣
+		ELSEIF ARG:1 >= 2
+			PRINTFORM 能射出可以形成水窪的超大量精液。感覚腰部完全癱軟了
+		ENDIF
+	CASE 186
+		IF ARG:1 <= -1
+			PRINTFORM 像水一樣的稀薄的精液
+		ELSEIF ARG:1 == 1
+			PRINTFORM 像滑溜的果凍一樣濃厚的精液裡面充満了元気的精子
+		ELSEIF ARG:1 >= 2
+			PRINTFORM 像年糕一樣濃重的精塊説明了少女潜藏的繁殖欲的強烈
+		ENDIF
+	CASE 187
+		PRINTFORM 仿佛会燒傷人一樣的散発着熱気的精液
+	CASE 188
+		PRINTFORM 有点泛黄。給人不干浄的印象
+	CASE 200
+		PRINTFORM 這個遊戲被這個人所支配
+	CASE 202
+		PRINTFORM 没有左臂。它已经消失了
+	CASE 213
+		IF ARG:1 == 1
+			PRINTFORM 根據肌感度獲得相応的回避補正、隨敏感的提升而降低
+		ELSEIF ARG:1 == 2
+			PRINTFORM 根據肌感度獲得相応的回避和拘束脱出率補正、隨敏感的提升而降低
+		ENDIF
+	CASE 214
+		PRINTFORM 人外的証明
+	CASE 215
+		IF ARG:1 == 1 || ARG:1 == 11
+			PRINTFORM 根據肌感度獲得相応A・V属性攻撃的EP傷害補正、隨敏感的提升而降低
+		ELSEIF ARG:1 == 2 || ARG:1 == 12
+			PRINTFORM 根據肌感度獲得相応A・V属性攻撃的EP傷害補正、隨敏感的提升而降低 PT的睡眠効率提高
+		ENDIF
+		;母乳の粘り気
+	CASE 220
+		IF ARG:1 == 1
+			PRINTFORM 普通的母乳
+		ELSEIF ARG:1 == 2
+			PRINTFORM 有些濃稠的母乳
+		ELSEIF ARG:1 == 3
+			PRINTFORM 濃稠到有粘性的母乳
+		ELSEIF ARG:1 == 4
+			PRINTFORM 像練乳一樣的濃稠的母乳
+		ELSEIF ARG:1 == 5
+			PRINTFORM 混雜着半固形物的濃稠的母乳
+		ELSEIF ARG:1 >= 6
+			PRINTFORM 完全像酸奶一樣的過於濃稠的母乳
+		ENDIF
+	
+	;超超乳
+	CASE 222
+		PRINTFORM 已経肥大到了会妨礙走路程度的過大的胸部。乳暈也拡張到了極限
+	;接地乳房
+	CASE 223
+		PRINTFORM 乳房已経肥大到能接触到地面了。現在的乳暈看起来就像是胸膛一樣
+	;複乳
+	CASE 230
+		IF ARG:1 == 1
+			PRINTFORM 多对乳房。2对乳房、每侧一个
+		ELSEIF ARG:1 == 2
+			PRINTFORM 多对乳房。3对乳房、每侧一个
+		ELSEIF ARG:1 >= 3
+			PRINTFORM 多对乳房。4对乳房、每侧一个
+		ENDIF
+	CASEELSE
+		PRINTFORM 這個素質的説明未実装
+ENDSELECT
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡

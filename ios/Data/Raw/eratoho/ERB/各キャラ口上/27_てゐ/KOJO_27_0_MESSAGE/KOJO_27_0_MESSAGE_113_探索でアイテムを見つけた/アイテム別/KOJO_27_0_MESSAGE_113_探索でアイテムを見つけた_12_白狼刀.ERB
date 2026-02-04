@@ -1,0 +1,29 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 113 探索でアイテムを見つけた - 12 白狼刀
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_113_12(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中は何もしないで帰る
+	SIF CFLAG:29
+		RETURN 0
+	
+	; 出来るだけ専用メッセージを見せたいので、優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 初発見
+	IF KOJO_27_0_GET_ITEMGET_COUNT(ARG:1) == 0
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「でっかい刀ねー、あたしに振り回せるかしら？」\n"
+		ENDSELECT
+	
+	; 2つめ以降
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「またこの刀？　自生でもしてんじゃないの？　……なワケないか」\n"
+		ENDSELECT
+	ENDIF
+RETURN 1

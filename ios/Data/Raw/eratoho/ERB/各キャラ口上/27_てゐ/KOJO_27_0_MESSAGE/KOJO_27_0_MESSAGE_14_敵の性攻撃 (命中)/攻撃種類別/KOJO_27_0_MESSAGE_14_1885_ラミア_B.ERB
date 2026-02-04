@@ -1,0 +1,107 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 14 敵の性攻撃 (命中) - 攻撃種類別 1885 ラミア B
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_14_1885(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 追加地の文関数(前)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_BEFORE("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_BEFORE")
+
+	; 追加地の文関数(後)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_AFTER("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_AFTER")
+	
+	; 睡眠・喪失・諦め
+	SIF CFLAG:25 || CFLAG:29 || TFLAG:16 == 2
+		RETURN 0
+	
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+
+
+	; 着衣状態によって地の文が変化、地の文はランダムで分岐するので詳細対応は無理 ざっくりと
+	; 全裸時は乳首責め
+	IF BASE:CP <= 0
+		; レズ中毒LVによって口上変化
+		SELECTCASE ABL:13
+		CASE 0
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「女の子に乳首責められても、そんなに嬉しくないなあ」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「やめてよ！　女同士でそんな事する趣味はないの！」\n"
+			ENDSELECT
+		CASE 1
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"（女の子同士なの……にっ、乳首責めれるのちょっと嬉しいかも……っ♥）\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"（なんで、女の子に乳首責められてゾワゾワしなきゃなんないの……！）\n"
+			ENDSELECT
+		CASE 2
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「乳首と乳首がっ、コリコリ擦れてぇっ♥　女の子の責めって、的確すぎるぅ♥」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"（ああっ！　女の子同士で乳首キスしてっ……！　気持ちいいっ……！）\n"
+			ENDSELECT
+		CASEELSE
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「あは……ぁ♥　もっといっぱい、先っぽコリコリしようよぉ……♥」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「くうぅ……ん♥　乳首キスされて感じる……っ♥　これ、すごいよぉ……♥♥」\n"
+			ENDSELECT
+		ENDSELECT
+		
+	; 着衣時は胸責め
+	ELSE
+		; レズ中毒LVによって口上変化
+		SELECTCASE ABL:13
+		CASE 0
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱい弄られるなら、男の人のがいいなあ」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「あたしノーマルだから、そういうのはあんまり」\n"
+			ENDSELECT
+		CASE 1
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"（女の子同士なの……にっ、おっぱい責めれるのちょっと嬉しいかも……っ♥）\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"（なんで、女の子に胸責められてゾワゾワしなきゃなんないの……！）\n"
+			ENDSELECT
+		CASE 2
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「おっぱいの感じるとこ、さわさわって……ぇ♥　女の子の責めって、的確すぎるぅ♥」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"（そんな、やさしいいじめ方っ……！　女の子に胸責めされて、気持ちいいっ……！）\n"
+			ENDSELECT
+		CASEELSE
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「もっとぉ、もっとおっぱい弄ってぇ♥　好きっ♥　女の子に弄られるの好きなのぉっ♥」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"（おっぱい押しつけられてドキドキするっ♥　あたしが女の子好きなのバレちゃうっ♥）\n"
+			ENDSELECT
+		ENDSELECT
+	ENDIF
+	CALL KOJO_27_0_PARAGRAPH_MESSAGE
+	
+	; 地の文側で\nするので口上側は\nで終わること
+RETURN 1

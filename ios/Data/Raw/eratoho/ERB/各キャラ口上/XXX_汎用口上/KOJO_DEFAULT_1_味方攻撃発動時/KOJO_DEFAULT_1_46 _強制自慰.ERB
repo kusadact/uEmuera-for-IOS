@@ -1,0 +1,154 @@
+﻿
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   46    コマンドID(強制自慰)
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_46(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 催眠中
+	IF CFLAG:43
+		SELECTCASE CFLAG:43
+		; 催眠強度1
+		CASE 1
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				CALL ADD_RAND_MESSAGE, @"「操纵到脑海里……卑鄙……啊……」"
+				CALL ADD_RAND_MESSAGE, @"「不、不行！手指停不下来！？」"
+			; 発情・感情操作系
+			CASE 1
+				CALL ADD_RAND_MESSAGE, @"（没错……感觉舒服并不是坏事……）"
+				CALL ADD_RAND_MESSAGE, @"（怎么……身体暖洋洋的……）"
+			; 無意識・認識操作系
+			CASE 2
+				CALL ADD_RAND_MESSAGE, @"（嗯？为什么手淫停不下来了呢？）"
+				CALL ADD_RAND_MESSAGE, @"（女孩子感到舒服是理所当然的事情，因为这是义务……要更更更舒服……）"
+			ENDSELECT
+			
+		; 催眠強度2
+		CASE 2
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				CALL ADD_RAND_MESSAGE, @"「停下！明明不想做这种事，但身体却自己动了起来！」"
+				CALL ADD_RAND_MESSAGE, @"「讨厌！被迫自己感受到这种快感！」"
+			; 発情・感情操作系
+			CASE 1
+				CALL ADD_RAND_MESSAGE, @"（看着♥自己感到舒服的样子♥）"
+				CALL ADD_RAND_MESSAGE, @"「啊♥这真棒♥比平时更舒服♥高潮♥」"
+			; 無意識・認識操作系
+			CASE 2
+				CALL ADD_RAND_MESSAGE, @"「兴奋起来，随时都可以侵犯我哦」"
+				CALL ADD_RAND_MESSAGE, @"（更♥更舒服♥这是理所当然的♥因为是义务♥更♥更多♥）"
+			ENDSELECT
+			
+		; 催眠強度最大、又关于レッサーヒュプノの減衰あり催眠
+		CASEELSE
+			SELECTCASE FLAG:526
+			; 拘束・肉体操作系
+			CASE 0
+				CALL ADD_RAND_MESSAGE, @"（就像在展示一样！？好害羞！好害羞呀！）"
+				CALL ADD_RAND_MESSAGE, @"（身体只是自己在动而已♥所以没关系♥不是我自己的错♥没关系♥没关系♥没关系♥）"
+			; 発情・感情操作系
+			CASE 1
+				CALL ADD_RAND_MESSAGE, @"「太好了♥太舒服了♥♥边被看着边自慰最棒了♥♥」"
+				CALL ADD_RAND_MESSAGE, @"「啊♥啊♥嗯啊♥好舒服♥啊啊♥啊♥关于噗♥啊呜♥这里好舒服♥太好了♥♥♥」"
+			; 無意識・認識操作系
+			CASE 2
+				CALL ADD_RAND_MESSAGE, @"「请看可怜的肉便器的自慰表演……」"
+			ENDSELECT
+		ENDSELECT
+		RETURN 1
+	ENDIF
+	
+	; 自慰中毒LVで分岐
+	SELECTCASE ABL:10
+	; 自慰中毒LV0
+	CASE 0
+		CALL ADD_RAND_MESSAGE, @"（只是一点点……只是稍微舒服一下……）"
+		CALL ADD_RAND_MESSAGE, @"「现在不是做这种事的时候……」"
+		
+		; 戦闘中なら追加口上
+		IF TFLAG:13
+			CALL ADD_RAND_MESSAGE, @"「必须……专注……战斗……」"
+			CALL ADD_RAND_MESSAGE, @"「咕……呼……必须战斗……必须战斗……明明知道！」"
+		ENDIF
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「咕……这样……身体……不对劲……咕……」"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「卑鄙……呀……强迫我做这种事……呀……」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「（这种事情是不可以的……）"
+		ENDSELECT
+	
+	; 自慰中毒LV1
+	CASE 1
+		CALL ADD_RAND_MESSAGE, @"「分心得厉害……所以……只能稍微……」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊……啊……身体的疼痛变得更严重了……啊……」"
+		CALL ADD_RAND_MESSAGE, @"（只要一次……只要一次高潮就会停下来的……啊♥）"
+		
+		; 戦闘中なら追加口上
+		IF TFLAG:13
+			CALL ADD_RAND_MESSAGE, @"（趁对方破绽，尽快结束――）"
+			CALL ADD_RAND_MESSAGE, @"（还好……还好，所以赶快……现在就高潮♥）"
+		ENDIF
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「不行……这样淫荡的事情……不行……」"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「自己安慰……不对……不想做自慰……不想……」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"（这样不行的呀……）"
+			CALL ADD_RAND_MESSAGE, @"（我变成了淫荡的孩子……）"
+
+		ENDSELECT
+		
+	; 自慰中毒LV2
+	CASE 2
+		CALL ADD_RAND_MESSAGE, @"「不行……手停不下来……♥」"
+		CALL ADD_RAND_MESSAGE, @"「身体发热……热呀……」"
+		CALL ADD_RAND_MESSAGE, @"「暂时只一次……只一次就好了……♥」"
+		
+		; 戦闘中なら追加口上
+		IF TFLAG:13
+			CALL ADD_RAND_MESSAGE, @"（被袭击♥在敌人面前自慰绝对会被袭击♥♥）"
+			CALL ADD_RAND_MESSAGE, @"（再一点点♥啊♥再一点点♥嗯嗯♥）"
+		ENDIF
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"（只要开始了就停不下来了……呀♥想要……想要自慰……呀♥）"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"（关于不好意思的事情……♥　想要……♥　尽情地，自慰♥♥）"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"(啊……♥　发出淫荡的声音了……♥)"
+		ENDSELECT
+			
+	; 自慰中毒LV3
+	CASE 3
+		CALL ADD_RAND_MESSAGE, @"「不行了，忍不住了♥　要自慰了……呜♥♥」"
+		CALL ADD_RAND_MESSAGE, @"「啊啊……♥　一开始自慰后，就什么都想不到了……呜♥♥♥」"
+		CALL ADD_RAND_MESSAGE, @"（自慰♥♥　自慰♥♥　自慰♥♥）"
+		
+		; 戦闘中なら追加口上
+		IF TFLAG:13
+			CALL ADD_RAND_MESSAGE, @"（在这种情况下自慰♥　露骨地自慰……呜♥　感到刺激……呜♥）"
+			CALL ADD_RAND_MESSAGE, @"（停不下来♥　停不下来♥　不想停下来♥♥　这样被袭击着，湿湿地自慰……♥♥　啊啊♥♥♥♥）"
+			CALL ADD_RAND_MESSAGE, @"（不行♥　不行了♥♥　停不下来♥♥　不要停下来♥♥）"
+		ENDIF
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"（对不起，我是个淫荡的女孩♥　对不起，我是个淫荡的女孩♥　对不起，我是个淫荡的女孩♥）"
+			CALL ADD_RAND_MESSAGE, @"（啊♥　啊♥　啊♥　淫荡的声音停不下来♥♥）"
+		ENDSELECT
+	ENDSELECT
+RETURN 1
+
+

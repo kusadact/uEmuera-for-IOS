@@ -1,0 +1,49 @@
+﻿;敵の性攻撃発動
+@SYSTEM_MESSAGE_8(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SETCOLOR 0xEE1010
+
+SELECTCASE ARG:1
+	CASE 0
+
+		PRINTFORMW  (SYSTEM_MESSAGE_4)指令ID不正确 ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+
+
+	CASE 414
+		PRINTFORML %ARGS:1%的蔓藤的前端分成四瓣，露出里面藏着的鲜艳的花瓣，逼近了%ARGS:0%的上半身！
+	CASE 415
+		PRINTFORML %ARGS:1%的蔓藤的前端分成四瓣，露出里面藏着的鲜艳的花瓣，逼近了%ARGS:0%的上半身！
+		
+	CASE 953
+		PRINTFORML %ARGS:1%将沾着粘液的触手尖端向着%ARGS:0%的嘴角伸过去！
+	CASE 982
+		PRINTFORML %ARGS:1%把触手伸到了%ARGS:0%脸上！
+	CASE 983
+		PRINTFORML %ARGS:1%把沾满精液的触手塞进了%ARGS:0%嘴里！
+
+	CASE 984
+		PRINTFORML %ARGS:1%把触手插进了ARGS:0%嘴里！
+	CASE 1016
+		PRINTFORM %ARGS:1%は
+		IF FLAG:520 == 1 || FLAG:520 == 3
+			PRINTFORM 刚直的
+		ELSE
+			PRINTFORM 触手的
+		ENDIF
+		PRINTFORML 像是强迫要求她服务一般伸到了%ARGS:0%嘴边……
+	CASE 1017
+		PRINTFORML %ARGS:1%把剛直硬塞进%ARGS:0%嘴里！
+
+
+		
+		
+	CASEELSE
+
+		PRINTFORML %ARGS:1%想把触手伸进%ARGS:0%的嘴里！
+
+ENDSELECT
+
+RESETCOLOR
+
+
+

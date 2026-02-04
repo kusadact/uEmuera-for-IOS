@@ -1,0 +1,69 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 7 ペット関連
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_7(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; ペットが居ないなら帰りましょう
+	SIF !PET:0
+		RETURN 0
+
+	; 雌犬
+	IF TALENT:140 || CFLAG:400 >= 90
+		CALL KOJO_27_0_ADD_MESSAGE, @"\d%CALLNAME:TARGET%は主人である%PETNAME%を横目に見ながら息を荒げている…\d\n"
+		
+		; [ペット]所持時 追加口上
+		IF TALENT:140 == 1
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ご、ご主人様お腹減ってないかな♥　あたしのこと食べたくなってないかな♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（や、やだぁ♥　ご主人様の事考えてたら……っ、ドキドキしてきた……♥）\n"
+			
+			; 発情中
+			IF CFLAG:28
+				CALL KOJO_27_0_ADD_MESSAGE, @"（犯されたいっ♥　ご主人様にえっちな躾して欲しいっ♥）\n"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「%PETNAME%様ぁ♥　はしたない発情ペットに躾をお願いしますぅ♥♥」\n"
+			ENDIF
+			
+		; [花嫁]所持時 追加口上
+		ELSEIF TALENT:140 == 2
+			CALL KOJO_27_0_ADD_MESSAGE, @"（%PETNAME%様ってどんなセックスしたら喜ぶんだろ……♥　奥さんとしては気になる……♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（えへへ♥　旦那様と一緒ってだけで、勝手に顔がにやけちゃうわ♥）\n"
+			
+			; 発情中
+			IF CFLAG:28
+				CALL KOJO_27_0_ADD_MESSAGE, @"（お腹の中、ジンジンして止まんない♥　お嫁さんの仕事、したいなぁ♥♥）\n"
+			ENDIF
+			
+		; [しもべ]所持時 追加口上
+		ELSEIF TALENT:140 == 3
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あたしは%PETNAME%様の下僕……♥　悦んで絶頂するだけの変態マゾ奴隷……♥♥）\n"
+			
+			; 発情中
+			IF CFLAG:28
+				CALL KOJO_27_0_ADD_MESSAGE, @"（使って……っ♥　今すぐ使って欲しいっ♥\n　%PETNAME%様専用のオナホまんこっ♥　変態奴隷まんこぉ……っ♥）\n"
+			ENDIF
+		ENDIF
+		
+	; その他
+	ELSE
+		SELECTCASE CFLAG:400
+		; 堕ちかけ
+		CASE IS >= 70
+			CALL KOJO_27_0_ADD_MESSAGE, @"（%PETNAME%にごはん、あげちゃおっかな♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ごはん……♥　ペットには、ごはんをあげなきゃ……♥♥）\n"
+
+		; 中毒気味
+		CASE IS >= 50
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ペットに食べられるトコ想像して……っ♥　これじゃどっちがペットだかわかりゃしないわ……♥）\n"
+			
+		; ハマった
+		CASE IS >= 30
+			CALL KOJO_27_0_ADD_MESSAGE, @"（%PETNAME%の餌やり……　ちょっと、気持ちよかった……かも……）\n"
+
+		; 清純
+		CASE IS >= 0
+			CALL KOJO_27_0_ADD_MESSAGE, @"「うさぎがペットを飼うなんて考えてもみなかったわ」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（ペットなんて言っても元々敵の触手だし……　ちゃんと役に立つのかしら？）\n"
+		ENDSELECT
+	ENDIF
+RETURN 1

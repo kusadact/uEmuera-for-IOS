@@ -1,0 +1,25 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 113 探索でアイテムを見つけた - 汎用口上
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_113(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; アイテムを複数個拾う場合汎用口上が連続するので表示は1回だけ
+	SIF KOJO_27_0_GET_PREV_ARG(0) == 113
+		RETURN 0
+		
+	; 喪失中は何もしないで帰る
+	SIF CFLAG:29
+		RETURN 0
+	
+	SELECTCASE KOJO_MODE
+	CASE "発情"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「使える物なら何でもいいわ……　そのうち必要になると思うから……」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「何か落ちてる……」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「何かしらコレ」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「金銀財宝すら出ないなんてシケてるわねー」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「おっと、使えそうなもの発見！」\n"
+	ENDSELECT
+RETURN 1

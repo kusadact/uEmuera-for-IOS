@@ -1,0 +1,455 @@
+﻿;　東方触手宮　アルラウネゆうかりん口上
+
+;口上基礎知識
+;　口上を書く時は基本的に ARG:0 と ARG:1 の中に「シチュエーション」が入っているので、
+;　それに応じて分岐を行い、適切なメッセージを表示する……というのが基本方針になります
+;　
+;　なお、TARGET に口上を表示するキャラが指定された状態になっているので、
+;　自分の名前や自分のCFLAGを見たい時などは CALLNAME:TARGET とか CFLAG:1 とかで参照できます
+;===========================================================================================================
+;この口上のCFLAG活用
+;CFLAG:800　精神汚染行動フラグ　ビット演算で区分
+;1 発情状態で戦意喪失キャラに遭遇　2 戦闘中に仲間を襲う　4 アルラウネ系統に拘束される
+;8 アルラウネを出産する（寄生妊娠問わない）　16 アルラウネの娘を出産する
+;32 ふたなりで中出しレイプ（味方）　64 ふたなりで中出しレイプ（モンス）128 相手のふたなりを中出し治療した
+;CFLAG:800 |= 4　CFLAG:800 |= 1　CFLAG:800 |= 2をした上で
+;SIF SIGN(CFLAG:800 & 4) + SIGN(CFLAG:800 & 1) + SIGN(CFLAG:800 & 2) == 3って感じで見ることになるだろう
+;CFLAG:801　戦闘回数
+;CFLAG:802　ビット演算　2 出産経験　4 娘出産経験　8 幼体出産経験　16 寄生経験
+;CFLAG:803　精神汚染フラグ　ビット演算じゃない　触手っぽい行動をとるたびに増加、区分なし
+;CFLAG:804　仲間入り経験（主人公以外専用）　0で仲間になったことなし、1で共闘止まり、2で正式に仲間
+;CFLAG:805　口上非表示管理　1で探索時、2で出産時、3で自慰、4で戦闘開始、5でリロード二刀流、6でモンスターの多段攻撃管理
+;エンディング時のローカル変数としても使用する
+;CFLAG:806　連続絶頂管理　絶頂するたびに+1、他のところいくと０に　こっちの構文は霊夢口上と違って娘の連続絶頂管理を兼ねない
+;CFLAG:807　素質変化の管理
+;CFLAG:808　多段攻撃の管理
+;CFLAG:810～　ビット演算　幽香が主人公時に会ったキャラ（娘かエネミーでなければIDごとに全記憶）
+;IDのキャラに対して808+IDがオンになる　1 会った　2 仲間に入れた　4 レイプした
+;===========================================================================================================
+;ここは口上のシステム中枢
+;===========================================================================================================
+
+
+;修正、加筆、転載、再配布はご自由に
+;改変は元の内容をあまり削除しないレベルでお願いします
+
+;口上選択時のタイトル
+@KOJO_TITLE_34_0
+RESULTS = 東方触手宮　アルラウネゆうかりん口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_34_0
+	PRINTFORML いわゆる魔物化を取り扱う口上です。ちなみに子世代も喋ります。
+	PRINTFORML と言っても、初期段階ではあまり変わらない程度で大きな変化はゲームオーバーやEDに行ってから、ですが。
+	PRINTFORML 主人公に設定すると味方から警戒されるため、プレイ難易度が大幅に上がるので注意してください。
+	PRINTFORML オープニングが説明も兼ねているので、初使用時は見るようにお願い致します。
+
+
+;ラウングリーン。初期はフォレストグリーンだったが暗い
+;……変えてねえじゃねーかどういうことだクソックソッ(ry
+;子供はミディアムスプリンググリーン
+@KOJO_DEFAULT_COLOR_34_0
+	IF CFLAG:104
+		RETURN RGBCOLOR(0, 250, 154)
+	ELSE
+		RETURN RGBCOLOR(124, 252, 0)
+	ENDIF
+
+;口上本体
+@KOJO_34_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM LCOUNT
+
+;子世代全部
+IF CFLAG:104
+	CALL KOJO_YUUKAdaughter(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	RESETCOLOR
+	RETURN 1
+ENDIF
+
+
+;連続絶頂の管理
+;本体側に導入された連続絶頂は戦闘中と戦闘後にしか洗浄タイミングがないので性に合わない
+IF ARG:0 == 120 || ARG:0 == 122
+	CFLAG:806 += 1
+;EPダメージ・MP0になった・EPが0になった・自慰全般・自慰でイけなかった・発情が収まった・
+;母乳を吸われる・射精関連・触手スーツ以外の時にフラグをウォッシュ（回数蓄積の無効化）
+;一時的に出産関連をウォッシュしない対象にしているので注意
+ELSEIF ARG:0 != 14 && ARG:0 != 33  && ARG:0 != 34 && ARG:0 != 118 && ARG:0 != 119 && ARG:0 != 121 && ARG:0 != 123 && ARG:0 != 440 && ARG:0 != 441 && ARG:0 != 442 && ARG:0 != 451 && ARG:0 != 452 && ARG:0 != 454 && ARG:0 && ARG:0 != 127 && ARG:0 != 129
+	CFLAG:806 = 0
+ENDIF
+
+;オープニング（任意ではないほう）
+IF ARG:0 == 159
+	IF TARGET == 1
+		;姿があれなので警戒される
+		FOR LCOUNT,0, CHARANUM
+			SIF CFLAG:LCOUNT:5 > 45
+				CFLAG:LCOUNT:5 = 45
+		NEXT
+	ELSE
+		PRINTFORMDL 
+		PRINTFORMDL 幽香口上オープニング短縮版を見ますか？（見ない場合、素質変化処理のみ行います）
+		PRINTFORMDL 
+		PRINTFORMDL [0] はい
+		PRINTFORMDL [1] いいえ
+		$INPUT_LOOP_OP34_0_1
+		INPUT
+		IF RESULT == 0
+			DRAWLINE 
+			SETCOLOR CFLAG:700
+IF FLAG:AUTOMODE
+    PRINTFORML 「どうなってるのよ、これ……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「どうなってるのよ、これ……」
+ENDIF
+
+			PRINTFORMDW 迷宮内に拉致された幽香は悪態をついていた。その服はところどころ破け、体には異常が根付いている。
+			PRINTFORMDW 頭の横側には花が付着し、体の一部から伸びるのは紛れも無く植物の蔦だ。
+			PRINTFORMDW 足こそ植物に包まれず元のままだが、その姿はまるで中途半端なアルラウネのよう。
+			PRINTFORMDW 連れ去られた際に何かをされたことは、疑いようもなかった。
+			SIF TALENT:0
+				PRINTFORMDW 幸いなことに純潔は守られているようだが、気休めにしかならない。
+IF FLAG:AUTOMODE
+    PRINTFORML 「……ふん。これくらい、元凶を叩きのめして治す手段を吐かせればいいだけよ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……ふん。これくらい、元凶を叩きのめして治す手段を吐かせればいいだけよ」
+ENDIF
+
+			PRINTFORMDW この状況でもいつもと同じ、いやそれ以上に強気な態度を彼女は崩さない。
+			PRINTFORMDW 破けた服の中に蔦を押しこんだ後、頭の花を軽くいじりながら幽香は歩き出す。
+			PRINTL 
+			PRINTFORMDW ――自分自身を鼓舞するためにも。
+			RESETCOLOR
+			DRAWLINE 
+		ELSEIF RESULT == 1
+	
+		ELSE
+			GOTO INPUT_LOOP_OP34_0_1
+		ENDIF
+			;CPMPHP微減、触手中毒増加
+			BASE:CP -= 250 + RAND:100 + RAND:50 + RAND:25 + RAND:12 + RAND:6 + RAND:3
+			BASE:MP -= 500 + RAND:200 + RAND:100 + RAND:50 + RAND:25 + RAND:12 + RAND:6 + RAND:3
+			BASE:HP -= 1000 + RAND:400 + RAND:200 + RAND:100 + RAND:50 + RAND:25 + RAND:12 + RAND:6 + RAND:3
+			EXP:11 += 50 + RAND:25 + RAND:12 + RAND:6 + RAND:3
+	ENDIF
+
+;オープニング（主人公時の任意オープニング、EXオープニングにも転用）
+ELSEIF ARG:0 == 203 || ARG:0 == 299
+		PRINTFORMDL オープニングは詳細版と短縮版、どちらを見ますか？
+		PRINTFORMDL 
+		PRINTFORMDL [0] 詳細
+		PRINTFORMDL [1] 短縮
+		$INPUT_LOOP_OP34_0_0
+		INPUT
+		IF RESULT == 0
+			DRAWLINE 
+			;文字色設定
+			SETCOLOR CFLAG:700
+			PRINTFORMDW 生暖かい有機的な感触と、澱み湿った空気の匂い。
+			PRINTFORMDW 意識を現実に引き戻した幽香が、最初に感じたものがそれだった。
+IF FLAG:AUTOMODE
+    PRINTFORML （なに、これ。気持ち悪いわね。……何でこんな所で寝ているんだったかしら？
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  （なに、これ。気持ち悪いわね。……何でこんな所で寝ているんだったかしら？
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 　性懲りもなく花を荒らし回る妙な怪植物を今日も焼き払っていて……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　性懲りもなく花を荒らし回る妙な怪植物を今日も焼き払っていて……
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 　それで、今回はおかしな植物の妖怪まで大量に出てきて――あら、いい匂い）
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　それで、今回はおかしな植物の妖怪まで大量に出てきて――あら、いい匂い）
+ENDIF
+
+			PRINTFORMDW まだ視界もはっきりとしていない彼女の鼻に、濁った空気とは違う甘い香りが届く。
+			PRINTFORMDW 体を起こしながら首を振ってようやく、幽香の目は視界を回復した。
+IF FLAG:AUTOMODE
+    PRINTFORML （うっ、きっもち悪いわねぇ……あの怪植物みたいなのが壁に生えてるじゃない。
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  （うっ、きっもち悪いわねぇ……あの怪植物みたいなのが壁に生えてるじゃない。
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 　これ、頭に花びらが乗っているのかしら？　っと……いたっ、あれ？）
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  　これ、頭に花びらが乗っているのかしら？　っと……いたっ、あれ？）
+ENDIF
+
+			PRINTFORMDW 視界の端に映る花を取ろうとした手が滑る。同時に、頭が引っ張られるような感覚が走ったからだ。
+			PRINTFORMDW 何事かと手を頭に戻そうとした幽香は……破れた服の袖と、そこから覗く蔓のようなものに気づいた。
+IF FLAG:AUTOMODE
+    PRINTFORML 「…………え？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「…………え？」
+ENDIF
+
+			PRINTFORMDL さすがの幽香も、ぎょっとして自分の腕を見る。
+			PRINTFORMDW それは「蔦のようなもの」ではなく、本当に蔦だった。紛れもなく、自分の体から生えた。
+			PRINTFORMDW ぎこちない仕草で、再び頭の横側にある花に触れる。それは間違いなく彼女の頭に根付いていた。
+			PRINTFORMDW こういう特徴は見覚えがある。今日、いきなり大量に現れて幽香と激戦を繰り広げた、植物の妖怪――
+IF FLAG:AUTOMODE
+    PRINTFORML 「足は……ある」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「足は……ある」
+ENDIF
+
+			PRINTFORMDL 幸いなことに、とっさに見下ろした足は花に包まれずちゃんとあった。
+			PRINTFORMDW ……スカートも破け、腰から蔓が伸びていたが。
+			PRINTFORMDW ぞっとしながら周りを見回しても、見覚えのない生物的な地面ばかり。
+			PRINTFORMDW 破れた衣服。変わってしまった体。
+			PRINTFORMDW 連れ去られた際に何かをされたことは、疑いようもなかった。
+			SIF	TALENT:0
+				PRINTFORMDW 純潔は守られているようだが、気休めにしかならない。
+			PRINTFORMDW 状況を理解した幽香は――それでも、皮肉げな笑みを浮かべてゆらりと立ち上がった。
+IF FLAG:AUTOMODE
+    PRINTFORML 「……ふん。これくらい、元凶を叩きのめして治す手段を吐かせればいいだけよ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……ふん。これくらい、元凶を叩きのめして治す手段を吐かせればいいだけよ」
+ENDIF
+
+			PRINTFORMDW この状況でもいつもと同じ、いやそれ以上に強気な態度を彼女は崩さない。
+			PRINTFORMDW 破けた服の中に蔦を押しこんだ後、頭の花を軽くいじりながら幽香は歩き出す。
+			PRINTL 
+			PRINTFORMDW ――自分自身を鼓舞するためにも。
+			RESETCOLOR
+			DRAWLINE 
+		ELSEIF RESULT == 1
+			DRAWLINE 
+			SETCOLOR CFLAG:700
+IF FLAG:AUTOMODE
+    PRINTFORML 「ぐっ、どうなってるのよ、これ……」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ぐっ、どうなってるのよ、これ……」
+ENDIF
+
+			PRINTFORMDW 迷宮内に拉致された幽香は顔をしかめていた。その服は破け、体には異常が根付いている。
+			PRINTFORMDW 頭には花が付着し、体の一部からは少ないが蔦が伸びている。
+			PRINTFORMDW 足は植物に包まれず元のままだが、その姿はまるで中途半端なアルラウネのようだ。
+			PRINTFORMDW 連れ去られた際に何かをされたことは、疑いようもなかった。
+			SIF TALENT:0
+				PRINTFORMDW 幸いなことに純潔は守られているようだが、気休めにしかならない。
+IF FLAG:AUTOMODE
+    PRINTFORML 「……ふん。これくらい、元凶を叩きのめして治す手段を吐かせればいいだけよ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……ふん。これくらい、元凶を叩きのめして治す手段を吐かせればいいだけよ」
+ENDIF
+
+			PRINTFORMDW この状況でもいつもと同じ、いやそれ以上に強気な態度を彼女は崩さない。
+			PRINTFORMDW 破けた服の中に蔦を押しこんだ後、頭の花を軽くいじりながら幽香は歩き出す。
+			PRINTL 
+			PRINTFORMDW ――自分自身を鼓舞するためにも。
+			RESETCOLOR
+			DRAWLINE 
+		ELSE
+			GOTO INPUT_LOOP_OP34_0_0
+		ENDIF
+		RESETCOLOR
+		DRAWLINE 
+;戦闘行動ファイルへ
+ELSEIF ARG:0 == 1
+	CALL BATTLE_MIKATA_KOUDOU_HATUDOU_34_0_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;エンディングへ
+ELSEIF ARG:0 == 206 || ARG:0 == 208
+	CALL ENDING_34_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+ELSE
+	CALL KOJO_34_0_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+ENDIF
+
+
+;戦闘回数の管理
+IF ARG:0 == 54
+	CFLAG:801 += 1
+;幽香が主人公の時の他キャラ初対面のフラグ管理　娘とエネミー以外全員対象
+;バグで０番あなたに会ったりした時の保険も念の為に入れておく
+ELSEIF TARGET == 1 && ARG:0 == 101 && CFLAG:(ARG:1):104 == 0 && TALENT:(ARG:1):157 == 0 && ARG:1
+	SIF (CFLAG:(808 + (ARG:1)) & 1) == 0
+		CFLAG:(808 + (ARG:1)) |= 1
+
+;幽香が主人公の時の他キャラ仲間入りフラグ管理　娘とエネミー以外全員対象
+ELSEIF TARGET == 1 && (ARG:0 == 107 || (ARG:0 == 143 && ARG:2 == 1)) && CFLAG:(ARG:1):104 == 0 && TALENT:(ARG:1):157 == 0 && ARG:1
+	SIF (CFLAG:(808 + (ARG:1)) & 2) == 0
+		CFLAG:(808 + (ARG:1)) |= 2
+
+;幽香が主人公の時の他キャラレイプフラグ管理　娘とエネミー以外全員対象
+ELSEIF TARGET == 1 && (ARG:0 == 455 || ARG:0 == 457) && CFLAG:(ARG:1):104 == 0 && TALENT:(ARG:1):157 == 0 && ARG:1
+	SIF (CFLAG:(808 + (ARG:1)) & 4) == 0
+		CFLAG:(808 + (ARG:1)) |= 4
+
+;仲間入りフラグ管理
+ELSEIF ARG:0 == 140 || ARG:0 == 109
+	;109
+	IF ARG:0 == 109
+		SIF CFLAG:804 < 2
+			CFLAG:804 = 2
+	;140成功
+	ELSEIF ARG:2 == 1
+		;通常
+		IF ARG:1 == 0
+			SIF CFLAG:804 < 2
+				CFLAG:804 = 2
+		;共闘
+		ELSE
+			SIF CFLAG:804 == 0
+				CFLAG:804 = 1
+		ENDIF
+	ENDIF
+;仲間入りフラグ管理２
+ELSEIF ARG:0 == 144
+	SELECTCASE ARG:1
+		;そのまま立ち去る
+		CASE 0
+			IF CFLAG:504 == 0
+				SIF CFLAG:804 == 0
+					CFLAG:804 = 1
+			ENDIF
+		;仲間に入りたい
+		CASE 1
+			SIF CFLAG:804 < 2
+				CFLAG:804 = 2
+	ENDSELECT
+ENDIF
+
+CALL KOJO_34_0_FLOWER_CHANGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+RESETCOLOR
+;口上記入済み
+RETURN 1
+
+
+;===========================================================================================================
+;精神汚染値管理
+;CFLAG:800　精神汚染行動フラグ　ビット演算で区分
+;CFLAG:803　精神汚染フラグ　ビット演算じゃない　触手っぽい行動をとるたびに増加、区分なし
+;===========================================================================================================
+;並び順は口上書いてるERBの順
+@KOJO_34_0_FLOWER_CHANGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SELECTCASE ARG:0
+	;戦闘行動
+	CASE 1
+		;仲間を襲う系統
+		IF ARG:1 == 73 || ARG:1 == 96
+			CFLAG:803 += 2
+			SIF (CFLAG:800 & 2) == 0
+				CFLAG:800 |= 2
+		;諦めコマンド使用時
+		ELSEIF ARG:1 == 44 && ARG:2 == 0
+			CFLAG:803 += 1
+		;強制自慰
+		ELSEIF ARG:1 == 46
+			CFLAG:803 += 1
+		ENDIF
+	;誰かに会う
+	CASE 101
+		;喪失キャラ
+		IF ARG:2
+			;発情
+			SIF CFLAG:28 && (CFLAG:800 & 1) == 0
+					CFLAG:800 |= 1
+
+		ENDIF
+	;拘束攻撃
+	CASE 15
+		SELECTCASE ARG:1
+			;アルラウネ、レディポイズン、アルケニー、ローズフェアリー、ドリアード
+			CASE 531 TO 534
+				CFLAG:803 += 1
+				SIF (CFLAG:800 & 4) == 0
+					CFLAG:800 |= 4
+
+		ENDSELECT
+
+	;睡眠時自慰
+	CASE 117
+		CFLAG:803 += 1
+	;寄生出産
+	CASE 127
+		;アルラウネを産み落とす
+		SIF (CFLAG:800 & 8) == 0 && (CFLAG:22 == 15 || CFLAG:22 == 16)
+				CFLAG:800 |= 8
+
+		SIF ARG:1 == 2
+			CFLAG:803 += 3
+
+
+	;妊娠出産
+	CASE 129
+		;アルラウネの娘を産み落とす
+		IF ARG:2 == 1 && (CFLAG:800 & 16) == 0 && (CFLAG:22 == 15 || CFLAG:22 == 16)
+			CFLAG:800 |= 16
+		;アルラウネを産み落とす
+		ELSEIF  ARG:2 == 0 && (CFLAG:800 & 8) == 0 && (CFLAG:22 == 15 || CFLAG:22 == 16)
+			CFLAG:800 |= 8
+		ENDIF
+
+		SIF ARG:1 == 2
+			CFLAG:803 += 4
+
+	;ふたなり永久化
+	CASE 454
+		CFLAG:803 += 5
+	;性欲発散
+	CASE 455, 456
+		SELECTCASE ARG:1
+			;膣で
+			CASE 0, 1
+				CFLAG:803 += 3
+				SIF (CFLAG:800 & 32) == 0
+					CFLAG:800 |= 32
+
+			CASEELSE
+				CFLAG:803 += 2
+		ENDSELECT
+	;性欲発散（催眠）
+	CASE 457
+		SELECTCASE ARG:1
+			;膣で
+			CASE 0
+				CFLAG:803 += 3
+				SIF (CFLAG:800 & 32) == 0
+					CFLAG:800 |= 32
+			CASEELSE
+				CFLAG:803 += 2
+		ENDSELECT
+	;ふたなりで触手モンスターをおしおきする
+	CASE 460
+		SELECTCASE ARG:1
+			;膣で
+			CASE 0
+				CFLAG:803 += 3
+				SIF (CFLAG:800 & 64) == 0
+					CFLAG:800 |= 64
+			CASE 2 TO 4
+				CFLAG:803 += 2
+		ENDSELECT
+	;ふたなり治療する
+	CASE 461
+		SELECTCASE ARG:1
+			;膣で
+			CASE 0
+				CFLAG:803 += 2
+				SIF (CFLAG:800 & 128) == 0
+					CFLAG:800 |= 128
+			CASE 2 TO 4
+				CFLAG:803 += 1
+		ENDSELECT
+ENDSELECT

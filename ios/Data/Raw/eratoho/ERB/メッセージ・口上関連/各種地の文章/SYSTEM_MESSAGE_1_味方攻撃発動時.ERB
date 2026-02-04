@@ -1,0 +1,551 @@
+﻿;味方のコマンド発動
+@SYSTEM_MESSAGE_1(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SETCOLOR 0x10EEEE
+
+SELECTCASE ARG:1
+	CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML (SYSTEM_MESSAGE_1)コマンドIDが不正です ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  (SYSTEM_MESSAGE_1)コマンドIDが不正です ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+ENDIF
+
+	CASE 1
+		IF ARG:2 == 0
+			PRINTFORML %ARGS:0%守護着身体！
+		ENDIF
+		IF ARG:2 == 1
+			SELECTCASE ARG:3
+				;装備品によってメッセージ変えようかと思ったけど、思いつかなかったので投げる。
+				CASE 1
+					PRINTFORML %ARGS:0%丟掉了子弾耗尽的%ARGS:1%、拿出了新的%ARGS:1%！
+				CASE 2
+					PRINTFORML %ARGS:0%丟掉了子弾耗尽的%ARGS:1%、拿出了新的%ARGS:1%！
+				CASE 3
+					PRINTFORML %ARGS:0%丟掉了子弾耗尽的%ARGS:1%、拿出了新的%ARGS:1%！
+				CASE 4
+					PRINTFORML %ARGS:0%丟掉了子弾耗尽的%ARGS:1%、拿出了新的%ARGS:1%！
+				CASE 5
+					PRINTFORML %ARGS:0%丟掉了子弾耗尽的%ARGS:1%、拿出了新的%ARGS:1%！
+				CASE 6
+					PRINTFORML %ARGS:0%丟掉了子弾耗尽的%ARGS:1%、拿出了新的%ARGS:1%！
+				CASE 7
+					PRINTFORML %ARGS:0%丟掉了子弾耗尽的%ARGS:1%、拿出了新的%ARGS:1%！
+			ENDSELECT
+		ENDIF
+	CASE 2
+		PRINTFORML %ARGS:0%使用了%ARGS:1%！
+	CASE 3
+		PRINTFORML %ARGS:0%縮短了和敵人的距離！
+	CASE 4
+		PRINTFORML %ARGS:0%遠離了敵人！
+	CASE 5
+		PRINTFORML %ARGS:0%%TACHI()%逃跑了！
+		RESETCOLOR
+		IF ARG:2 == 0
+			PRINTFORML 但是逃跑的道路被堵住了！
+		ENDIF
+	CASE 8
+		IF FLAG:6 >= 50
+			PRINTFORML %ARGS:0%進行了応急的浄化！
+		ELSE
+			PRINTFORML %ARGS:0%試図浄化這個部屋、但是浄化力不足！
+		ENDIF
+	CASE 10
+		PRINTFORML %ARGS:0%釋放了重視命中的弾幕！
+	CASE 11
+		PRINTFORML %ARGS:0%釋放了通常弾幕！
+	CASE 12
+		PRINTFORML %ARGS:0%釋放了重視威力的弾幕！
+	CASE 13
+		IF ARG:2 == 0
+			PRINTFORML %ARGS:0%積蓄着弾幕射撃的能量！
+		ELSE
+			PRINTFORML %ARGS:0%使用了積蓄的力量、釋放了強烈的弾幕！
+		ENDIF
+	CASE 14
+		PRINTFORML %ARGS:0%為了限制敵人的行動散射着弾幕！
+	CASE 15
+		PRINTFORML %ARGS:0%釋放了貫通力很高的弾幕！
+	CASE 20
+		PRINTFORML %ARGS:0%釋放了重視命中的攻撃！
+	CASE 21
+		PRINTFORML %ARGS:0%釋放了普通攻撃！
+	CASE 22
+		PRINTFORML %ARGS:0%釋放了重視威力的攻撃！
+	CASE 23
+		PRINTFORML %ARGS:0%釋放了效率很好的攻撃！
+	CASE 24
+		PRINTFORML %ARGS:0%釋放乱射攻撃了全体敵人！
+	CASE 25
+		PRINTFORML %ARGS:0%釋放了集中在敵人弱点的攻撃！
+	CASE 30
+		PRINTFORML %ARGS:0%重視着命中攻撃了！
+	CASE 31
+		PRINTFORML %ARGS:0%平衡地攻撃了！
+	CASE 32
+		PRINTFORML %ARGS:0%重視着威力攻撃了！
+	CASE 33
+		PRINTFORML %ARGS:0%対準対手的脚下攻撃了！
+	CASE 34
+		PRINTFORML %ARGS:0%対準対手的要害攻撃了！
+	CASE 35
+		;カウンター中（ARG:0が50）の方で記述
+	CASE 42
+		IF ARG:3 == 0
+			IF ARG:2
+				PRINTFORML %ARGS:0%想要從%ARGS:1%之中逃脱！
+			ELSE
+				PRINTFORML %ARGS:0%想要從%ARGS:1%的拘束之中逃脱！
+			ENDIF
+		ELSEIF ARG:3 == 1
+			RESETCOLOR
+			PRINTFORML 但是因為高潮而失去了力気、沒有成功！
+		ELSEIF ARG:3 == 2
+			RESETCOLOR
+			IF ARG:2
+				PRINTFORML %ARGS:0%總算是從%ARGS:1%里脱離出来了！
+			ELSE
+				PRINTFORML %ARGS:0%總算是掙脱了%ARGS:1%！
+			ENDIF
+		ELSEIF ARG:3 == 3
+			RESETCOLOR
+			IF ARG:2
+				PRINTFORML %ARGS:0%稍微從%ARGS:1%体内爬出去了一点！
+			ELSE
+				PRINTFORML %ARGS:0%總算是掙脱了幾根触手！
+			ENDIF
+		ELSEIF ARG:3 == 4
+			RESETCOLOR
+			IF ARG:2
+				PRINTFORML 但是%ARGS:0%再次被%ARGS:1%呑下去了…
+			ELSE
+				PRINTFORML 但是纏繞着的触手沒有讓%ARGS:0%逃掉…
+			ENDIF
+		ENDIF
+	CASE 43
+		IF ARG:2 == 0
+			PRINTFORML %ARGS:0%積蓄着從%ARGS:1%那逃脱的力量！
+		ELSEIF ARG:2 == 1
+			RESETCOLOR
+			PRINTFORML 但是因為高潮而失去了力気、沒有成功！
+		ENDIF
+	CASE 44
+		IF ARG:2 == 0
+			CALL SYSTEM_MESSAGE_44(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		ELSEIF ARG:2 == 1
+			PRINTFORML %ARGS:0%完全放棄了、委身給了敵人…
+		ENDIF
+	CASE 45
+		PRINTFORML %ARGS:0%一動不動地老実站着…
+	CASE 46
+		PRINTFORML %ARGS:0%満腦子都在考慮着自慰的事！
+	CASE 47
+		PRINTFORML %ARGS:0%一辺自慰一辺釋放了弾幕！
+	CASE 50
+		PRINTFORML %ARGS:0%拼命隠藏着臀部！
+	CASE 51
+		PRINTFORML %ARGS:0%拼命隠藏着胸部！
+	CASE 52
+		IF GET_PENIS(TARGET)
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%拼命隠藏着股間！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%拼命隠藏着股間！
+			ENDIF
+
+					ELSE
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%拼命隠藏着陰蒂！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%拼命隠藏着陰蒂！
+			ENDIF
+
+		ENDIF
+	CASE 53
+		IF TALENT:0
+			PRINTFORML %ARGS:0%拼命守護着処女！
+		ELSE
+			PRINTFORML %ARGS:0%拼命防止着性交！
+		ENDIF
+	CASE 54
+		PRINTFORML %ARGS:0%主動求歡了！
+	CASE 55
+		PRINTFORML %ARGS:0%主動求歡了！
+	CASE 56
+		PRINTFORML %ARGS:0%主動求歡了！
+	CASE 57
+		PRINTFORML %ARGS:0%主動求歡了！
+	CASE 58
+		PRINTFORML %ARGS:0%主動求歡了！
+	CASE 60
+		IF ARG:3 == 1
+			SELECTCASE ARG:2
+				CASE 20 TO 23
+					PRINTFORML %ARGS:0%使用%ARGS:1%的力量、放出了強力的弾幕！
+				CASE 24
+					PRINTFORML %ARGS:1%掀起的狂風把%ARGS:0%%TACHI()%運送到了安全的地方！
+				CASE 25
+					PRINTFORML %ARGS:0%舉起了%ARGS:1%！
+					PRINTFORML 掀起了強烈的風暴！
+				CASE 26
+					PRINTFORML %ARGS:0%從懷中取出了%ARGS:1%！
+					PRINTFORML The・World！
+					PRINTFORML 但是什麼也沒有発生！
+				CASE 27
+					PRINTFORML %ARGS:0%緊抱着%ARGS:1%！
+					PRINTFORML 但是什麼也沒有発生！
+				CASE 28
+					PRINTFORML %ARGS:0%打開了%ARGS:1%！
+					PRINTFORML 周囲的触手化作了桜花花瓣消失在了空中！
+				CASE 32, 36
+					PRINTFORML %ARGS:0%握緊了%ARGS:1%！
+					PRINTFORML 但是什麼也沒有発生！
+				CASE 40
+					PRINTFORML 催眠獣的魔眼奇怪的発光了！
+				CASEELSE
+					PRINTFORML %ARGS:0%使用了%ARGS:1%！
+					PRINTFORML 但是什麼也沒有発生！
+			ENDSELECT
+		ELSEIF ARG:3 == 2
+			SELECTCASE ARG:2
+				CASE 20, 23
+					PRINTFORML %ARGS:1%変得粉碎！
+				CASE 21
+					PRINTFORML %ARGS:1%失去了光輝…
+				CASE 22
+					PRINTFORML %ARGS:1%的身影漸漸消散…
+				CASE 24
+					PRINTFORML %ARGS:1%変成了普通的鞋子！
+				CASE 25
+					PRINTFORML 煙幕被吹飛了！
+				CASE 28
+					PRINTFORML %ARGS:1%失去了光明…
+				CASE 40
+					PRINTFORML %ARGS:0%%TACHI()%的眼神変得空虚…
+				CASEELSE
+			ENDSELECT
+		ENDIF
+	CASE 71
+		IF FLAG:526 == 1
+			PRINTFORML %ARGS:0%親吻着眼前的敵人開始調情！
+		ELSE
+			PRINTFORML %ARGS:0%帯着空洞的眼神身体開始了熟悉的日常活動！
+		ENDIF
+	CASE 73
+		IF CFLAG:(ARG:2):10 || CFLAG:(ARG:2):20
+			IF ARG:3
+				IF FLAG:AUTOMODE
+				    PRINTFORML 再也無法忍耐的%ARGS:0%、圧在了被拘束的%ARGS:1%身上、強行把股間生長着的陰茎插了進去！
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  再也無法忍耐的%ARGS:0%、圧在了被拘束的%ARGS:1%身上、強行把股間生長着的陰茎插了進去！
+				ENDIF
+
+			ELSE
+				IF FLAG:AUTOMODE
+				    PRINTFORML 再也無法忍耐的%ARGS:0%、圧在了被拘束的%ARGS:1%身上、互相摩擦着彼此的性器！
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  再也無法忍耐的%ARGS:0%、圧在了被拘束的%ARGS:1%身上、互相摩擦着彼此的性器！
+				ENDIF
+
+			ENDIF
+		ELSE
+			IF ARG:3
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%已経忍耐不住了、從背後推倒了%ARGS:1%、強行把股間生長着的陰茎插了進去！
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%已経忍耐不住了、從背後推倒了%ARGS:1%、強行把股間生長着的陰茎插了進去！
+				ENDIF
+
+			ELSE
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%已経忍耐不住了、從背後推倒了%ARGS:1%、互相摩擦着彼此的性器！
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%已経忍耐不住了、從背後推倒了%ARGS:1%、互相摩擦着彼此的性器！
+				ENDIF
+
+			ENDIF
+		ENDIF
+			
+	CASE 74
+		IF FLAG:526 == 1
+			PRINTFORML %ARGS:0%在眼前的敵人的注視下開始換起了衣服！
+		ELSE
+			PRINTFORML %ARGS:0%注意到自己的服装後開始換起了衣服！
+		ENDIF
+	CASE 75
+		IF FLAG:526 == 1
+			PRINTFORML %ARGS:0%因為眼前的敵人的靠近露出了安心的表情！
+		ELSE
+			PRINTFORML 想要逃跑的%ARGS:0%不知為何跑向了敵人！
+		ENDIF
+	CASE 76
+		PRINTFORML %ARGS:0%当場躺下開始了沈睡
+	CASE 79
+		SELECTCASE RAND:7
+			CASE 0
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%用看着都会让人感觉不好意思的舌技、开始舔着触手……
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%用看着都会让人感觉不好意思的舌技、开始舔着触手……
+				ENDIF
+
+			CASE 1
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%用舌头仔细地在触手上爬行着、慢慢将它含进了嘴里……
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%用舌头仔细地在触手上爬行着、慢慢将它含进了嘴里……
+				ENDIF
+
+			CASE 2
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%淫乱地动起手来、开始刺激触手让它分泌粘液……
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%淫乱地动起手来、开始刺激触手让它分泌粘液……
+				ENDIF
+
+			CASE 3
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%通过手淫确认触手前端开始流出液体后、慢慢地用嘴含住了……
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%通过手淫确认触手前端开始流出液体后、慢慢地用嘴含住了……
+				ENDIF
+
+			CASE 4
+				IF FLAG:AUTOMODE
+				    PRINTFORML 闭上眼睛的%ARGS:0%慢慢地把触手含进嘴里……
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  闭上眼睛的%ARGS:0%慢慢地把触手含进嘴里……
+				ENDIF
+
+			CASE 5
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%把触手含在嘴里，开始用舌头刺激它的前端……
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%把触手含在嘴里，开始用舌头刺激它的前端……
+				ENDIF
+
+			CASE 6
+				IF FLAG:AUTOMODE
+				    PRINTFORML %ARGS:0%的嘴唇吐着气包裹住了触手……
+				    TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+				    PRINTFORMW  %ARGS:0%的嘴唇吐着气包裹住了触手……
+				ENDIF
+
+			CASEELSE
+
+		ENDSELECT
+	CASE 80
+		IF FLAG:526 == 1
+			PRINTFORML %ARGS:0%用力踐踏着触手当做触手的懲罰！
+		ELSE
+			PRINTFORML %ARGS:0%完全沒有注意到纏着自己的触手
+			PRINTFORML 為了懲罰而用力踐踏着対待女性不成熟的触手！
+		ENDIF
+	CASE 81
+		IF FLAG:526 == 1
+			PRINTFORML %ARGS:0%一次又一次用耳光懲罰着喜歡隨意玩弄自己身体的触手！
+		ELSE
+			PRINTFORML %ARGS:0%抓住了在手辺長出来的触手并開始甩它耳光用来消解圧力！
+		ENDIF
+	CASE 82
+		IF FLAG:526 == 1
+			PRINTFORML %ARGS:0%為了讓触手打開新世界的大門開始慢慢地用脚愛撫着触手！
+			PRINTFORML 但是在触手忍不住想用自己的方式附和着愛撫的時候尽情的用力踩踏着挺立起来的触手！
+		ELSE
+			PRINTFORML %ARGS:0%面無表情地踩碎了触手！
+		ENDIF
+	CASE 83
+		IF FLAG:526 == 1
+			PRINTFORML %ARGS:0%双手温柔的握住触手然後用嘴含住了！
+		ELSE
+			PRINTFORML %ARGS:0%柔軟的嘴唇被触手插了進去！
+		ENDIF
+	CASE 84
+		IF FLAG:526 == 1
+			PRINTFORML %ARGS:0%帯着陶酔的表情用手奉仕着触手！
+		ELSE
+			PRINTFORML %ARGS:0%帯着営業用表情用手摩擦着触手！
+		ENDIF
+	CASE 85
+		IF ABL:11 > 2 && ABL:14 > 2
+			PRINTFORML %ARGS:0%一辺大声吸吮着触手一辺舔舐着白濁液！
+		ELSEIF FLAG:526 == 1
+			PRINTFORML %ARGS:0%満臉高興的吸吮着触手并舔舐着臉上沾満的白濁液！
+		ELSEIF FLAG:526 == 2
+			PRINTFORML %ARGS:0%面無表情地吸吮着插入到口中的触手！
+		ELSE
+			PRINTFORML %ARGS:0%吸吮着触手并舔舐着臉上沾満的白濁液！
+		ENDIF
+	CASE 86
+		IF ABL:11 > 2 && ABL:14 > 2
+			IF GET_BUST(TARGET) >= 3 && BASE:3 > MAXBASE:3 / 2
+				PRINTFORML %ARGS:0%把触手引導進衣服内並用巨大的乳房夾住了！
+			ELSEIF GET_BUST(TARGET) >= 3
+				PRINTFORML %ARGS:0%用巨大的乳房夾住了触手完全不介意身体被体液弄髒進行着奉仕！
+			ELSEIF GET_BUST(TARGET) >= 1 && BASE:3 > MAXBASE:3 / 2
+				PRINTFORML %ARGS:0%把触手引導進衣服内並用豊満的乳房夾住了！
+			ELSEIF GET_BUST(TARGET) >= 1
+				PRINTFORML %ARGS:0%用豊満的乳房夾住了触手完全不介意身体被体液弄髒進行着奉仕！
+			ELSE
+				PRINTFORML %ARGS:0%帯着充満熱情的表情用胸部摩擦着触手！
+			ENDIF
+		ELSEIF FLAG:526 == 1
+			IF GET_BUST(TARGET) >= 3
+				PRINTFORML %ARGS:0%用巨大的乳房夾住了触手完全不介意身体被体液弄髒進行着奉仕！
+			ELSEIF GET_BUST(TARGET) >= 1
+				PRINTFORML %ARGS:0%用豊満的乳房夾住了触手完全不介意身体被体液弄髒進行着奉仕！
+			ELSE
+				PRINTFORML %ARGS:0%露出笑容用胸部摩擦着触手！
+			ENDIF
+		ELSE
+			IF GET_BUST(TARGET) >= 3
+				PRINTFORML %ARGS:0%面無表情的用巨大的乳房夾住了触手用被体液弄髒的身体進行着奉仕！
+			ELSEIF GET_BUST(TARGET) >= 1
+				PRINTFORML %ARGS:0%面無表情的用豊満的乳房夾住了触手用被体液弄髒的身体進行着奉仕！
+			ELSE
+				PRINTFORML %ARGS:0%以祈禱的姿勢用胸部摩擦着触手！
+			ENDIF
+		ENDIF
+	CASE 95
+		IF ARG:3 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%被%ARGS:1%釋放了…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%被%ARGS:1%釋放了…
+			ENDIF
+
+		ELSEIF ARG:3 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%擺脱了%ARGS:1%！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%擺脱了%ARGS:1%！
+			ENDIF
+
+		ELSE
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%被%ARGS:1%就這樣閒置着…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%被%ARGS:1%就這樣閒置着…
+			ENDIF
+
+		ENDIF
+	CASE 96
+		IF ARG:3 == 3
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%已経忍耐不住了、從背後推倒了%ARGS:1%、強行把股間生長着的陰茎插了進去！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%已経忍耐不住了、從背後推倒了%ARGS:1%、強行把股間生長着的陰茎插了進去！
+			ENDIF
+
+		ELSEIF ARG:3 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%已経忍耐不住了、從背後推倒了%ARGS:1%、互相摩擦着彼此的性器！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%已経忍耐不住了、從背後推倒了%ARGS:1%、互相摩擦着彼此的性器！
+			ENDIF
+
+		ELSEIF ARG:3 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%浮現出充満了欲望的表情継續從背後侵犯着%ARGS:1%…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%浮現出充満了欲望的表情継續從背後侵犯着%ARGS:1%…
+			ENDIF
+
+		ELSE
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%浮現出充満了欲望的表情継續摩擦互相着%ARGS:1%彼此的性器…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%浮現出充満了欲望的表情継續摩擦互相着%ARGS:1%彼此的性器…
+			ENDIF
+
+		ENDIF
+	CASE 97
+		IF ARG:3 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%被%ARGS:1%释放了…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%被%ARGS:1%释放了…
+			ENDIF
+
+		ELSEIF ARG:3 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%从%ARGS:1%的控制中逃脱了！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%从%ARGS:1%的控制中逃脱了！
+			ENDIF
+
+		ELSE
+			IF FLAG:AUTOMODE
+			    PRINTFORML %ARGS:0%任由%ARGS:1%摆布着…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  %ARGS:0%任由%ARGS:1%摆布着…
+			ENDIF
+
+		ENDIF
+	CASE 98
+		IF ARG:3 == 3
+			IF FLAG:AUTOMODE
+			    PRINTFORML 被操纵的%ARGS:0%屈服于支配、从背后推倒了%ARGS:1%、強行把股間生長着的陰茎插了進去！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  被操纵的%ARGS:0%屈服于支配、从背后推倒了%ARGS:1%、強行把股間生長着的陰茎插了進去！
+			ENDIF
+
+		ELSEIF ARG:3 == 2
+			IF FLAG:AUTOMODE
+			    PRINTFORML 被操纵的%ARGS:0%屈服于支配、从背后推倒了%ARGS:1%、互相摩擦着彼此的性器！
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  被操纵的%ARGS:0%屈服于支配、从背后推倒了%ARGS:1%、互相摩擦着彼此的性器！
+			ENDIF
+
+		ELSEIF ARG:3 == 1
+			IF FLAG:AUTOMODE
+			    PRINTFORML 被操纵的%ARGS:0%浮現出充満了欲望的表情継續從背後侵犯着%ARGS:1%…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  被操纵的%ARGS:0%浮現出充満了欲望的表情継續從背後侵犯着%ARGS:1%…
+			ENDIF
+
+		ELSE
+			IF FLAG:AUTOMODE
+			    PRINTFORML 被操纵的%ARGS:0%浮現出充満了欲望的表情継續互相摩擦着%ARGS:1%彼此的性器…
+			    TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+			    PRINTFORMW  被操纵的%ARGS:0%浮現出充満了欲望的表情継續互相摩擦着%ARGS:1%彼此的性器…
+			ENDIF
+
+		ENDIF
+	CASEELSE
+		PRINTFORML (SYSTEM_MESSAGE_1)コマンドIDが不正です ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+
+ENDSELECT
+
+RESETCOLOR
+

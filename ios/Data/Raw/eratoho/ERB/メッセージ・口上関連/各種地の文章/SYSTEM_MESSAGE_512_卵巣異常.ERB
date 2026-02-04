@@ -1,0 +1,51 @@
+﻿;卵巣異常
+@SYSTEM_MESSAGE_512(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;基本的に卵巣は成長したら不可逆のはずなので未熟卵巣への成長口上が出ることはないはずです
+
+	SELECTCASE ARG:1
+		CASE -1
+			PRINTFORML 好像初潮还没有来……
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的卵巢变成了【未熟卵巢】！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的卵巢变成了【未熟卵巢】！
+ENDIF
+
+		CASE 0
+			PRINTFORML 似乎因为大人的快乐而来了初潮、今后说不定就会怀孕了……
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的卵巢变成了【正常卵巢】！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的卵巢变成了【正常卵巢】！
+ENDIF
+
+		CASE 1
+			PRINTFORML 肉体似乎开始接受迷宫的快乐、开始对配种没有厌恶感了……
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的卵巢变成了【异常排卵巢】！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的卵巢变成了【异常排卵巢】！
+ENDIF
+
+		CASE 2
+			PRINTFORML 肉体接受了迷宫的快乐、卵巢似乎因为期待配种而变得凹凸不平、肥大起来……
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的卵巢变成了【肥大化卵巢】！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的卵巢变成了【肥大化卵巢】！
+ENDIF
+
+		CASE 3
+			PRINTFORML 肥大丑陋的卵巢继续生成着本应是有限的卵子并排卵、似乎变成了能够随时接受配种的迷宫新娘……
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的卵巢变成了【苗床卵巢】！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的卵巢变成了【苗床卵巢】！
+ENDIF
+
+	ENDSELECT

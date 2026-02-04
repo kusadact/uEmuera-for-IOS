@@ -1,0 +1,1397 @@
+﻿;◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+[SKIPSTART]
+わかさぎ姫口上デス
+この口上はエラーや不具合、バリアントの仕様変更等のやむをえない場合に限り他者による修正・改造が可能です
+この口上をコピーしてKOJO_109_1やKOJO_109_2として別口上にして、そちらを改造するのは自由ですが
+	その場合@KOJO_109_0_SERIALと@KOJO_109_0_SEARCHKOJOの中身は決してそのまま流用しないで下さい
+	流用されるとこの口上の動作が不安定になってしまいます
+
+
+[SKIPEND]
+;◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;口上タイトル
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_TITLE_109_0
+RESULTS = わかさぎ姫口上_ｶｯｺｶﾘ
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_DETAIL_109_0
+PRINTFORML わかさぎ姫口上です
+PRINTFORML といってもまだ台詞はほとんど無いけどね
+PRINTFORML 
+PRINTFORML 触手の天ぷら大好きです
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;文字色
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_DEFAULT_COLOR_109_0
+IF CFLAG:104
+	;娘
+	RETURN 0xB4D4D4
+ELSE
+	RETURN 0xA0C0C0
+ENDIF
+;RGBCOLOR(256, 256, 256)
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;連携用変数
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_109_0_LOCALFLAG(LOCALFLAG, ARG = 0)
+#DIM REF LOCALFLAG
+
+IF ARG
+	LOCAL = LOCALFLAG
+ELSE
+	LOCALFLAG = LOCAL
+ENDIF
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_109_0_SERIAL
+RETURN 2561090
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;口上本体
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+@KOJO_109_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM わかさぎPT
+#DIM 赤蛮奇PT
+#DIM 影狼PT
+#DIM 弁々PT
+#DIM 八橋PT
+#DIM 針妙丸PT
+#DIM 雷鼓PT
+
+SIF ARG == 0
+	RETURN
+	
+;－－－－－
+わかさぎPT = KOJO_109_0_SEARCHNO(109)
+CALL KOJO_109_0_SEARCHKOJO(わかさぎPT)
+SIF RESULT <= 0
+	わかさぎPT = 0
+
+赤蛮奇PT = KOJO_109_0_SEARCHNO(110)
+CALL KOJO_109_0_SEARCHKOJO(赤蛮奇PT)
+SIF RESULT <= 0
+	赤蛮奇PT = 0
+
+影狼PT = KOJO_109_0_SEARCHNO(111)
+CALL KOJO_109_0_SEARCHKOJO(影狼PT)
+SIF RESULT <= 0
+	影狼PT = 0
+	
+弁々PT = KOJO_109_0_SEARCHNO(112)
+CALL KOJO_109_0_SEARCHKOJO(弁々PT)
+SIF RESULT <= 0
+	弁々PT = 0
+	
+八橋PT = KOJO_109_0_SEARCHNO(113)
+CALL KOJO_109_0_SEARCHKOJO(八橋PT)
+SIF RESULT <= 0
+	八橋PT = 0
+	
+針妙丸PT = KOJO_109_0_SEARCHNO(115)
+CALL KOJO_109_0_SEARCHKOJO(針妙丸PT)
+SIF RESULT <= 0
+	針妙丸PT = 0
+	
+雷鼓PT = KOJO_109_0_SEARCHNO(116)
+CALL KOJO_109_0_SEARCHKOJO(雷鼓PT)
+SIF RESULT <= 0
+	雷鼓PT = 0
+;－－－－－
+
+
+
+;地の文呼び出し
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;CALL KOJO_114_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+IF CFLAG:104
+	RESETCOLOR
+	RETURN 1
+ENDIF
+
+;今はメンドイから喪失・睡眠時はカット
+IF CFLAG:戦意喪失 || CFLAG:睡眠
+	RESETCOLOR
+	RETURN 1
+ENDIF
+
+
+;口上色反映
+SETCOLOR CFLAG:700
+
+;各分岐
+SELECTCASE ARG:0
+CASE 1
+	;---味方の攻撃---
+	SELECTCASE ARG:1
+	CASE 1
+		;防御
+		PRINTDATAL
+			DATAFORM 「ここは守りで…」
+			DATAFORM 「今は耐えなきゃ…」
+		ENDDATA
+;	CASE 2
+		;アイテム使用
+		
+		
+;	CASE 3
+		;前に出る
+		
+		
+;	CASE 4
+		;後退
+		
+		
+	CASE 5
+		;逃走
+		PRINTDATAL
+			DATAFORM 「逃げましょう」
+			DATAFORM 「み、見逃してください」
+		ENDDATA
+		
+	CASE 8
+		;緊急浄化
+		PRINTDATAL
+			DATAFORM 「と、とりあえずこれで…」
+			DATAFORM 「周りを綺麗にすれば戦い易いですよね？」
+		ENDDATA
+		
+		
+	;---弾幕---
+	CASE 10 TO 12
+		;弱～強弾幕
+		PRINTDATAL
+			DATAFORM 「当たって！」
+			DATAFORM 「そこです！」
+		ENDDATA
+
+	CASE 13
+		;溜め撃ち
+		IF CFLAG:31 == 2
+			;溜め動作
+			PRINTDATAL
+				DATAFORM 「これで倒れてくれればいいんですが…」
+			ENDDATA
+			
+			
+		ELSE
+			;発射！	
+			PRINTDATAL
+				DATAFORM 「えい！」
+			ENDDATA
+			
+			
+		ENDIF
+
+	CASE 14
+		;ばら撒き弾
+		PRINTDATAL
+			DATAFORM 「よ、避けないで！」
+			DATAFORM 「こうすればきっと避けれなく…」
+		ENDDATA
+
+	CASE 15
+		;貫通弾
+		PRINTDATAL
+			DATAFORM 「まとめて倒します！」
+			DATAFORM 「貫いて！」
+		ENDDATA
+
+	CASE 19
+		;霊撃
+
+	;---消耗武器---
+	CASE 20 TO 22
+		;弱～強弾幕
+		PRINTDATAL
+			DATAFORM 「当たって！」
+			DATAFORM 「そこです！」
+		ENDDATA
+
+
+	CASE 23
+		;節約攻撃
+		PRINTDATAL
+			DATAFORM 「控えめでも当たると痛いですよ！」
+			DATAFORM （節約した方がいいですよね…）
+		ENDDATA
+
+	CASE 24
+		;みだれ撃ち
+		PRINTDATAL
+			DATAFORM 「や、やけくそです！」
+			DATAFORM 「こ、来ないで！」
+		ENDDATA
+
+	CASE 25
+		;一点集中
+		PRINTDATAL
+			DATAFORM 「そこです！」
+		ENDDATA
+
+	;---非消耗武器---
+	CASE 30 TO 32
+		;弱～強弾幕
+		PRINTDATAL
+			DATAFORM 「当たって！」
+			DATAFORM 「そこです！」
+		ENDDATA
+
+	CASE 33
+		;下段狙い
+		PRINTDATAL
+			DATAFORM 「あ、足を狙えば…」
+		ENDDATA
+
+	CASE 34
+		;急所狙い
+		PRINTDATAL
+			DATAFORM 「そこです！」
+		ENDDATA
+
+	CASE 50
+		;カウンター待機動作
+		PRINTDATAL
+			DATAFORM 「出来れば来ないで下さい…」
+		ENDDATA
+
+	CASE 51
+		;カウンター発動！
+		PRINTDATAL
+			DATAFORM 「いや！」
+		ENDDATA
+
+
+
+	;---拘束時---
+	CASE 42
+		;脱出
+		
+		IF ARG:3 == 0
+			;開始
+			PRINTDATAL
+				DATAFORM (早く抜け出さないと…)
+				DATAFORM (こ、こうすれば…)
+			ENDDATA
+
+		ELSEIF ARG:3 == 1
+			;絶頂中で結果捕まったまま
+		
+		
+		ELSEIF ARG:3 == 2
+			;結果脱出成功
+			IF ARG:2 == 1
+				;丸呑み
+				PRINTDATAL
+					DATAFORM 「どうにか出れました…」
+					DATAFORM 「体中がべとべとです…」
+				ENDDATA
+				
+			ELSE
+				;拘束
+				PRINTDATAL
+					DATAFORM 「やっと解けました…」
+					DATAFORM 「苦しかったです…」
+				ENDDATA
+			ENDIF
+		
+		ELSEIF ARG:3 == 3
+			;結果拘束レベルダウン
+		
+		ELSEIF ARG:3 == 4
+			;結果脱出失敗
+		ENDIF
+	CASE 43
+		;力溜め
+		IF ARG:2 == 0
+			PRINTDATAL
+				DATAFORM （力を溜めて一気に…）
+			ENDDATA
+		ELSE
+			;失敗
+			PRINTDATAL
+				DATAFORM （うぅ…）
+				DATAFORM （くぅっ…）
+			ENDDATA
+		ENDIF
+		
+	CASE 44
+		;諦める
+		IF ARG:2 == 0
+			;諦めた
+			PRINTDATAL
+				DATAFORM （もう…むりですぅ…）
+			ENDDATA
+			
+			
+		ELSE
+			;諦め状態
+			
+			
+		ENDIF
+		
+	CASE 45
+		;何もしない
+		PRINTDATAL
+			DATAFORM 「うぅ…」
+		ENDDATA
+		
+		
+		
+		
+	CASE 46
+		;強制自慰
+		PRINTDATAL
+			DATAFORM （か、体がかってに…）
+			DATAFORM （わ、私…何して…）
+		ENDDATA
+		
+		
+		
+	CASE 50
+		;A防御
+		
+		
+		
+		
+	CASE 51
+		;B防御
+		
+		
+		
+	CASE 52
+		;C防御
+		
+		
+		
+	CASE 53
+		;V防御
+		
+		
+		
+		
+		
+	ENDSELECT
+	
+CASE 2 TO 7
+	;敵攻撃発動
+		
+		
+CASE 9
+	;悪堕キャラ攻撃時の追加の発言
+	
+	
+CASE 11
+	;味方の攻撃命中
+	
+	
+CASE 12
+	;敵の攻撃命中
+	IF BASE:MP > 200
+		PRINTDATAL
+			DATAFORM 「くっ…」
+			DATAFORM 「痛い！…」
+			DATAFORM 「痛ッ！」
+			DATAFORM 「痛ッ、やめてください！」
+			DATAFORM 「酷いことしないで」
+		ENDDATA
+	ELSE
+		;若干弱気に
+		PRINTDATAL
+			DATAFORM 「うぐッ…」
+			DATAFORM 「うぅ、やめ…」
+			DATAFORM 「痛い！…や、やめて！」
+			DATAFORM 「痛い！痛いですから！」
+			DATAFORM 「痛ッ、もう、やめて！」
+		ENDDATA
+	ENDIF
+	
+	
+	
+CASE 13
+	;敵の衣服攻撃命中
+	IF BASE:MP > 200
+		PRINTDATAL
+			DATAFORM 「…な、何するんですか」
+		ENDDATA
+	ELSE
+		;若干弱気に
+		PRINTDATAL
+			DATAFORM 「…な、何するんですか」
+		ENDDATA
+	ENDIF
+	
+	
+	
+	
+CASE 14
+	;敵の性攻撃命中
+	IF RAND:10 == 0
+		IF ARG:2 == 0
+			;A攻撃
+			PRINTDATAL
+				DATAFORM 「わわ！？どこ触ってるんですか！」
+				DATAFORM 「き、汚いですから！」
+				DATAFORM 「そ、そんなところ触らないでください！」
+			ENDDATA
+		ENDIF
+		IF ARG:2 == 1
+			;B攻撃
+			PRINTDATAL
+				DATAFORM 「む、胸はやめてください！」
+				DATAFORM 「も、揉まないで！」
+			ENDDATA
+		ENDIF
+		IF ARG:2 == 2
+			;C攻撃
+			PRINTDATAL
+				DATAFORM 「いやっ、摘まま…ないで…」
+				DATAFORM 「いや…撫でないでぇ…」
+			ENDDATA
+		ENDIF
+		IF ARG:2 == 3
+			;V攻撃
+			PRINTDATAL
+				DATAFORM 「ひゃう！？やめて！入れないで！」
+			ENDDATA
+		ENDIF
+	ELSE
+		PRINTDATAL
+			DATAFORM 「うぅ…触らないで下さい…」
+			DATAFORM 「そこッ…ダメッ…」
+			DATAFORM 「や、やめ…ひぅ！」
+			DATAFORM 「触…らないで…！」
+		ENDDATA
+	ENDIF
+	
+CASE 15
+	;敵の拘束攻撃命中
+	PRINTDATAL
+		DATAFORM 「は、放して下さい！」
+		DATAFORM 「放して！」
+	ENDDATA
+	
+CASE 16
+	;敵の寄生攻撃命中
+	
+CASE 17
+	;敵のその他攻撃命中
+	
+CASE 22 TO 27
+	;敵の攻撃を避けた
+	PRINTDATAL
+		DATAFORM 「わわっ！」
+		DATAFORM 「何とか免れました…」
+	ENDDATA
+
+
+;＝＝＝戦闘前・後＝＝＝
+CASE 54
+	;戦闘開始時
+	IF TARGET == 1
+		;主役の時だけ
+		IF ARG:1 == 0
+			;通常戦闘
+			PRINTDATAL
+				DATAFORM 「あわわ、向かって来ます…」
+			ENDDATA
+
+
+		ELSEIF ARG:1 == 1
+			;ラスボス
+
+		ELSEIF ARG:1 == 2
+			;ガーディアン
+
+		ENDIF
+	ENDIF
+
+
+CASE 55
+	;逃走
+	IF TARGET == 1
+		;主役の時だけ
+		IF ARG:1 == 0
+			;通常戦闘
+			PRINTDATAL
+				DATAFORM 「なんとか振り切りました…」
+			ENDDATA
+
+
+		ELSEIF ARG:1 == 1
+			;ラスボス
+
+		ELSEIF ARG:1 == 2
+			;ガーディアン
+
+		ENDIF
+
+	ENDIF
+CASE 61
+	;敵初遭遇時
+	IF TARGET == 1
+		;主役の時だけ
+		SELECTCASE ARG:1
+		CASE 1
+			;クイーン
+			PRINTFORML 「あ、あなたがここの主ですね！」
+		CASE 3
+			;ガーディアン
+			PRINTFORML 「うぅ、通してくれなさそうです…」
+		CASEELSE
+			PRINTDATAL
+				DATAFORM 「新手ですね…」
+			ENDDATA
+		ENDSELECT
+	ENDIF
+	
+CASE 62
+	;仲間を見捨てて逃げた
+	
+CASE 63
+	;仲間に見捨てられた
+
+
+
+
+;＝＝＝味方遭遇会話＝＝＝
+CASE 103
+	;雑談ARG:1に相手ID
+	
+	
+	CALL KOJO_109_0_SEARCHKOJO(ARG:1)
+	LOCAL = RESULT
+	SELECTCASE LOCAL
+		CASE 109
+			;わかさぎ姫
+			IF CFLAG:104
+				;娘
+				
+			ELSE
+				
+				
+			ENDIF
+			
+			
+		CASE 111
+			;自分（娘？）
+			
+			
+			
+			
+		CASE 114
+			;正邪
+			IF CFLAG:104
+				;娘
+				
+			ELSE
+				
+				
+			ENDIF
+			
+			
+			
+			
+		CASE 115
+			;針妙丸
+			IF CFLAG:104
+				;娘
+				
+			ELSE
+				
+				
+			ENDIF
+			
+			
+			
+			
+			
+		CASEELSE
+			PRINTDATAL
+				DATAFORM 「…ということがありまして…」
+			ENDDATA
+	ENDSELECT
+
+	
+;＝＝＝会話＿情報交換＝＝＝
+CASE 104
+	;情報交換
+	IF TARGET == 1
+		;メイン
+		PRINTDATAL
+			DATAFORM 「…ということがありまして…」
+		ENDDATA
+	ENDIF
+
+CASE 137
+	;遭遇時会話：固定イベント情報取得(NPC時)
+CASE 165
+	;遭遇時会話：固定イベント情報取得(PTM時)
+
+
+
+;＝＝＝会話＿アイテム頂戴＝＝＝
+CASE 138
+	;アイテム強請り開始
+	IF TARGET == 1
+		;メイン
+		IF ARG:2 == 1
+			;対象が喪失
+		ELSE
+			
+		ENDIF
+	ENDIF
+
+	
+CASE 139
+	;アイテムを強請られた(NPC時)
+	
+	CALL KOJO_109_0_SEARCHKOJO(1)
+	LOCAL = RESULT
+	
+	IF CFLAG:29
+		;喪失中
+		
+		
+		
+	ELSEIF ARG:1 == 0
+		;強請り失敗
+		
+		
+	ELSE
+		;成功
+		;ARG:1 にアイテムID
+		
+		
+		
+	ENDIF
+
+
+CASE 105
+	;アイテム強請り成功
+	IF TARGET == 1
+		;メイン
+		IF ARG:2 == 1
+			;対象が喪失
+			
+			
+		ELSE
+			
+			
+		ENDIF
+	ENDIF
+	
+	
+CASE 106
+	;アイテム強請り失敗
+	IF TARGET == 1
+		;メイン
+		IF ARG:2 == 1
+			;対象が喪失
+			
+		ELSE
+			
+		ENDIF
+	ENDIF
+
+;＝＝＝会話＿仲間に誘う＝＝＝
+CASE 107
+	;勧誘成功
+
+	IF TARGET == 1
+		;自分がメイン
+		
+		
+		
+		
+	ENDIF
+CASE 108
+	;勧誘失敗
+
+	IF TARGET == 1
+		;自分がメイン
+		
+
+
+	ENDIF
+
+
+
+CASE 140
+	;PTに勧誘された(NPC時)
+	
+	
+	CALL KOJO_114_0_SEARCHKOJO(1)
+	LOCAL = RESULT
+	
+	IF ARG:1 == 1
+		;共闘
+		IF ARG:2 == 0
+			;失敗
+			
+			SELECTCASE LOCAL
+			CASE 109
+				;わかさぎ姫
+				PRINTDATAL
+					DATAFORM 
+					DATAFORM 
+				ENDDATA
+			CASE 114
+				;正邪
+				PRINTDATAL
+					DATAFORM 
+					DATAFORM 
+				ENDDATA
+			CASEELSE
+				PRINTDATAL
+					DATAFORM 
+					DATAFORM 
+				ENDDATA
+			ENDSELECT
+			
+		ELSE
+			;成功
+			
+			SELECTCASE LOCAL
+			CASE 109
+				;わかさぎ姫
+				PRINTDATAL
+					DATAFORM 
+					DATAFORM 
+				ENDDATA
+			CASE 114
+				;正邪
+				PRINTDATAL
+					DATAFORM 
+					DATAFORM 
+				ENDDATA
+			CASEELSE
+				PRINTDATAL
+					DATAFORM 
+					DATAFORM 
+				ENDDATA
+			ENDSELECT
+			
+		ENDIF
+	ELSE
+		;本加入
+		IF ARG:2 == 0
+			;失敗
+			
+			SELECTCASE LOCAL
+			CASE 109
+				;わかさぎ姫
+				PRINTDATAL
+					DATAFORM 
+					DATAFORM 
+				ENDDATA
+			CASE 114
+				;正邪
+				PRINTDATAL
+					DATAFORM 
+					DATAFORM 
+				ENDDATA
+			CASEELSE
+				PRINTDATAL
+					DATAFORM 
+					DATAFORM 
+				ENDDATA
+			ENDSELECT
+		ENDIF
+	ENDIF
+	
+	
+CASE 109
+	;PT本加入時（共闘以外）(NPC時)
+	
+	CALL KOJO_114_0_SEARCHKOJO(1)
+	LOCAL = RESULT
+	
+	IF CFLAG:29
+		
+	ELSE
+		
+		SELECTCASE LOCAL
+		CASE 109
+			;わかさぎ姫
+		
+		
+		CASE 114
+			;正邪
+		
+		
+		CASEELSE
+			PRINTDATAL
+				DATAFORM 
+				DATAFORM 
+			ENDDATA
+		ENDSELECT
+		
+	ENDIF
+	
+	
+CASE 110
+	;離脱時
+	IF ARG:2 == 0
+		;確認時
+		IF CFLAG:29
+			;喪失
+			
+		ELSE
+			
+		ENDIF
+	;離脱した　※こっちは自分がメインの時も呼ばれる
+	ELSEIF ARG:2 == 1
+		IF CFLAG:29
+			
+		ELSE
+			IF TARGET == 1
+				;メイン
+				
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「ま、また後で…」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「ま、また後で…」
+					ENDDATA
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+
+
+;＝＝＝会話＿逆襲＝＝＝
+CASE 111
+	;逆襲：アイテム取られる
+CASE 112
+	;逆襲：攻撃される
+CASE 141
+	;逆襲：襲い掛かられた
+CASE 142
+	;逆襲：襲い掛かった
+	
+	
+;＝＝＝会話＿喪失キャラ回復＝＝＝
+CASE 166
+	;喪失キャラを浄化した
+	
+CASE 143
+	;遭遇時喪失キャラに気付け薬を使った
+	
+CASE 144
+	;喪失中に遭遇し気付け薬を使ってもらう
+	SELECTCASE ARG:1
+	CASE 0
+		;お礼を言って去る
+
+	CASE 1
+		;仲間に入りたい
+		
+	CASE 2
+		;入った
+		
+		
+	CASE 3
+		;断られた
+		
+	CASE 4
+		;お酒まで貰った
+	CASE 5
+		;でも触手酒だった
+	CASE 6
+		;乳搾り無理矢理
+	CASE 7
+		;乳搾り同意
+	CASE 8
+		;乳搾り失敗(低好感度)
+	CASE 9
+		;ふたなりちんちんぶちぃ
+	CASE 10
+		;搾精
+	CASE 11
+		;搾精終わり
+	CASE 12
+		;搾乳終わり
+	CASE 13
+		;魔法の拘束具
+	CASE 14
+		;優しくされた
+	ENDSELECT
+
+;＝＝＝会話＿アイテムを渡す＝＝＝
+CASE 163
+	;アイテムをプレゼントした
+	IF TARGET == 1
+		;自分がメイン
+		
+	ENDIF
+	
+CASE 164
+	;アイテムをプレゼントされた(NPC時)
+	IF ARG:3 == 1
+		;実はドッペル
+		
+		
+	ENDIF
+
+	
+	
+	
+	
+	
+;＝＝＝探索系＝＝＝
+CASE 135
+	;探索開始
+	IF TARGET == 1
+		;自分がメイン
+		
+	ENDIF
+
+
+CASE 113
+	;探索でアイテムを見つけた
+	IF TARGET == 1
+		;自分がメイン
+		
+	ENDIF
+
+
+CASE 202
+	;遺品イベント
+
+
+	IF TARGET == 1
+		;メイン
+		
+		SELECTCASE NO:(ARG:1)
+		CASEELSE
+		ENDSELECT
+
+	ELSE
+		
+		
+	ENDIF
+
+	
+	
+;＝＝＝就寝系＝＝＝
+CASE 114
+	;睡眠開始
+
+
+
+
+CASE 115
+	;重度汚染部屋で睡眠開始した
+
+
+
+
+CASE 116
+	;重度汚染部屋で睡眠して蟲に襲われた
+	;※必ず二回起きる
+	SELECTCASE ARG:1
+		CASE 0
+			;A
+		CASE 1
+			;B
+		CASE 2
+			;C
+		CASE 3
+			;V
+	ENDSELECT
+
+
+
+;＝＝＝浄化系＝＝＝
+CASE 130
+	;部屋の浄化実行
+
+
+CASE 149
+	;部屋に結界を張った＋入浴
+
+
+
+
+
+
+;＝＝＝行動＝＝＝
+CASE 131
+	;眠気が進行
+	;FLAG:7	眠気
+
+
+CASE 132
+	;部屋を移動：突撃
+	IF TARGET == 1
+		;自分がメイン
+		
+		IF FLAG:AUTOMODE
+			PRINTDATAL
+				DATAFORM 「こ、ここは激流に身をまかせて！」
+			ENDDATA
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTDATAW
+				DATAFORM 「こ、ここは激流に身をまかせて！」
+			ENDDATA
+		ENDIF
+	ENDIF
+
+CASE 133
+	;部屋を移動：慎重
+	IF TARGET == 1
+		;自分がメイン
+		
+		IF FLAG:AUTOMODE
+			PRINTDATAL
+				DATAFORM 「慎重に行きましょう…」
+			ENDDATA
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTDATAW
+				DATAFORM 「慎重に行きましょう…」
+			ENDDATA
+		ENDIF
+	ENDIF
+
+CASE 134
+	;部屋を移動：待ち伏せ
+	IF TARGET == 1
+		;自分がメイン
+		IF FLAG:AUTOMODE
+			PRINTDATAL
+				DATAFORM 「出来れば来てほしくないんですが…」
+			ENDDATA
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTDATAW
+				DATAFORM 「出来れば来てほしくないんですが…」
+			ENDDATA
+		ENDIF
+	ENDIF
+
+
+;＝＝＝自慰＝＝＝
+CASE 117
+	;睡眠時自慰発生　※自慰の内容自体はCASE 118が呼ばれる
+
+
+
+
+CASE 118
+	;自慰メッセージ
+	;※戦闘中、桃色ガス等でも出る
+	;ARG:1	部位
+
+	IF ARG:2
+		;道具使用
+		
+	ELSE
+		;指
+		
+	ENDIF
+
+
+CASE 119
+	;自慰で絶頂失敗
+
+
+
+;＝＝＝よろず＝＝＝
+
+CASE 120
+	;絶頂の瞬間
+CASE 121
+	;発情がおさまった
+CASE 122
+	;戦意喪失中に絶頂
+CASE 123
+	;母乳を吸われる　※母乳体質のとき戦闘中に敵から胸でイかされてると呼ばれるEXTASY.ERB参照
+CASE 136
+	;処女喪失
+		;ARG:3が1の場合は「処女を喪失しそうなとき」
+		;V防御などで処女喪失を防げる場合も表示されます
+		;本当に喪失するかどうかチェックしたい場合は、上級編でやっているように LOST_VIRGIN_CHECK を使います		
+		;ARG:3が0の場合が本当の処女喪失時なので注意
+	IF ARG:0 == 0
+		PRINTFORML 「うぅ、痛い…」
+	ELSEIF ARG:0 == 1
+		PRINTFORML 「ひっ！やめて！」
+	ENDIF
+	
+CASE 153
+	;リザレクション発生
+CASE 156
+	;敵ランクアップ
+CASE 158
+	;主人公復活
+	;「○○の瞳に、かすかな光が灯った」の所
+	SELECTCASE ARG:1
+		;助けてもらった
+		CASE 0
+		
+		;捨てられた
+		CASE 1
+		
+	ENDSELECT
+CASE 160
+	;MAP表示時
+	
+;＝＝＝妊娠・寄生＝＝＝
+CASE 125
+	;寄生が進行
+CASE 126
+	;妊娠が進行
+CASE 221, 225
+	;A寄生が進行(221は卵、225は幼体)
+	IF ARG:1 >= 12
+		;%ARGS:0%に寄生した幼体が育つにはまだ時間がかかるようだ…
+	ELSEIF ARG:1 >= 8
+		;%ARGS:0%は少し体に違和感を覚えた。寄生した幼体が徐々に育ち始めたようだ…
+	ELSEIF ARG:1 >= 4
+		;%ARGS:0%は時折息を荒げている。寄生した幼体がかなり育ってきたようだ…
+	ELSEIF ARG:1 >= 2
+		;%ARGS:0%は辛そうな表情を見せている。寄生した幼体がもうすぐ産まれそうだ…
+	ELSEIF ARG:1 >= 1
+		;%ARGS:0%の様子がおかしい。もはや一刻の猶予も無いようだ…
+	ENDIF
+CASE 222, 226
+	;A寄生が進行(PT側)
+	;CHECK_A_PARASITE参照
+	
+CASE 127
+	;寄生出産　※寄生出産は地の文で何が生まれたかは分からない、CFLAG:22には上位も入っている　A寄生はCASE 223で別枠
+
+	IF ARG:1 == 0
+		;開始
+		
+	ELSEIF ARG:1 == 3
+		;汚染部屋の触手が襲ってきた　※ARG:1はこっちの方が大きいが先に呼ばれる
+		
+	ELSEIF ARG:1 == 1
+		;授乳
+
+
+	ELSE
+		;立ち去った
+
+	ENDIF
+CASE 223, 227
+
+
+CASE 129
+	;妊娠出産　※無理にでも違いをつけるとしたら寄生…ある程度形に　妊娠…卵、まだ形になってない　といった感じに
+
+CASE 223, 227
+	;A寄生出産
+	
+	
+CASE 224, 228
+	;A寄生が進行(PT側)
+	
+
+
+
+CASE 145
+	;味方の寄生が進行
+CASE 146
+	;味方の妊娠が進行
+CASE 147
+	;味方が寄生出産
+CASE 148
+	;味方が妊娠出産
+	
+	
+	
+	
+	
+	
+	
+;＝＝＝捕食＝＝＝
+CASE 150
+	;捕食開始
+CASE 151
+	;捕食されている
+CASE 152
+	;捕食され尽くした
+
+
+
+
+
+
+;＝＝＝イベント＝＝＝
+CASE 200
+	;ランダムイベント
+	
+	
+	
+	
+	
+CASE 201
+	;PT分断テレポート
+
+
+
+
+;＝＝＝その他＝＝＝
+CASE 511
+	;エネミー図鑑
+	
+;＝＝＝オープニングとか＝＝＝
+CASE 159
+	;ゲーム開始時 ※OP口上的な　必ず通したい処理があるときに
+	;他のバリアントで言う処女モードの設定など、お好きにどうぞ
+
+
+CASE 203
+	;OP、ゲーム開始直前 ※飛ばされる可能性あり
+	
+	IF FLAG:AUTOMODE
+		PRINTFORML 「ここはどこなんでしょう…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「ここはどこなんでしょう…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「うぅ、水中に綺麗な石を見つけて取ろうとしたのまでは覚えてるんですが…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「うぅ、水中に綺麗な石を見つけて取ろうとしたのまでは覚えてるんですが…」
+	ENDIF
+	IF FLAG:AUTOMODE
+		PRINTFORML 「と、とりあえず出口を探しましょう…」
+		TWAIT FLAG:AUTOMODE * 400, 0
+	ELSE
+		PRINTFORMW 「と、とりあえず出口を探しましょう…」
+	ENDIF
+	
+CASE 299
+	;EXオープニング (Extra、Phantasmのときのオープニング) ※飛ばされる可能性あり
+	
+;＝＝＝　　　＝＝＝
+CASE 204
+	;エンディング１・仲間を囮にして逃げる
+CASE 205
+	;エンディング１・仲間を囮にして逃げる(仲間時)
+CASE 206
+	;エンディング２・ガーディアン撃破
+CASE 207
+	;エンディング２・ガーディアン撃破(仲間時)
+CASE 208
+	;エンディング３・転移門発見
+CASE 209
+	;エンディング３・転移門発見(仲間時)
+CASE 210
+	;エンディング４・クイーン撃破
+CASE 211
+	;エンディング４・クイーン撃破(仲間時)
+CASE 212
+	;エンディング５・クイーンソロ撃破
+
+
+;＝＝＝　　　＝＝＝
+CASE 213
+	;転移門(光の渦)・ラスボス部屋に転送
+CASE 214
+	;転移門(光の渦)・触手の巣に転送
+CASE 157
+	;ゲームオーバー
+
+
+;＝＝＝　　　＝＝＝
+CASEELSE
+ENDSELECT
+
+RESETCOLOR
+
+;口上記入済み
+RETURN 1
+
+
+;=================================================
+;指定NOキャラがPTにいるかどうか(娘は無視、ｵﾘｼﾞﾅﾙを探す)
+;ARG:0	確認したいNO
+;RETURNF	0:いない　IS>0:いる
+;=================================================
+@KOJO_109_0_SEARCHNO(ARG:0)
+#FUNCTION
+
+
+SIF NO:1 == ARG && CFLAG:1:104 == 0
+	RETURNF 1
+
+SIF FLAG:10 > 0 && NO:(FLAG:10) == ARG && CFLAG:(FLAG:10):104 == 0
+	RETURNF FLAG:10
+
+SIF FLAG:11 > 0 && NO:(FLAG:11) == ARG && CFLAG:(FLAG:11):104 == 0
+	RETURNF FLAG:11
+
+RETURNF 0
+
+
+;=================================================
+;指定IDのキャラに同作者の口上が使用されているか
+;RETURN	使用されているならキャラNOを返す
+;=================================================
+@KOJO_109_0_SEARCHKOJO(ARG)
+SIF ARG <= 0
+	RETURN 0
+	
+LOCAL = 0
+RESULT = 0
+TRYCALLFORM KOJO_{NO:(ARG)}_{CFLAG:(ARG):701}_SERIAL
+LOCAL = RESULT
+SELECTCASE NO:(ARG)
+CASE 109
+	;わかさぎ姫
+	LOCAL = LOCAL == 2561090 ? 109 # 0
+CASE 110
+	;赤蛮奇
+	LOCAL = LOCAL == 2561100 ? 110 # 0
+CASE 111
+	;影狼
+	LOCAL = LOCAL == 2561110 ? 111 # 0
+CASE 112
+	;弁々
+	LOCAL = LOCAL == 2561120 ? 112 # 0
+CASE 113
+	;八橋
+	LOCAL = LOCAL == 2561130 ? 113 # 0
+CASE 114
+	;正邪
+	LOCAL = LOCAL == 2561140 ? 114 # 0
+CASE 115
+	;針妙丸
+	LOCAL = LOCAL == 2561150 ? 115 # 0
+CASE 116
+	;雷鼓
+	LOCAL = LOCAL == 2561160 ? 116 # 0
+CASEELSE
+	LOCAL = 0
+ENDSELECT
+RETURN LOCAL
+
+
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+;-以下雑記-
+[SKIPSTART]
+
+
+	IF GROUPMATCH()
+[SKIPEND]
+;≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+

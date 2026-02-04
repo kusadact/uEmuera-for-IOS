@@ -1,0 +1,62 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 14 敵の性攻撃 (命中) - 攻撃種類別 0340 クラーケン B吸収
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_14_340(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 追加地の文関数(前)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_BEFORE("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_BEFORE")
+	
+	; 追加地の文関数(後)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_AFTER("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_AFTER")
+	
+	; 敵のその他攻撃(命中) 0018 吸収効果 を汎用口上として利用する
+	CALL KOJO_27_0_SYSTEM_MESSAGE_17_18(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL KOJO_27_0_FIX_MESSAGE
+	
+	; ここからは専用口上記述
+	
+	; 喪失時
+	SIF CFLAG:29
+		RETURN RESULT
+	
+	; 睡眠時
+	SIF CFLAG:25
+		RETURN RESULT
+	
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN RESULT
+		ENDSELECT
+	ENDIF
+
+	; 通常時
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「へぇ♪　海の生き物でもおっぱいって吸うんだ～♪」\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「あんた海の生き物でしょ！？　陸の生き物のおっぱいなんていらないでしょ！？」\n"
+	ENDSELECT
+	
+	; 母乳体質時 追加口上
+	IF TALENT:130
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「海の生き物も必死でおっぱい吸うのねぇ♥　よしよし、ママのおっぱいでちゅよ～♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「なんで海の生き物がおっぱいなんて吸うのよぉっ！？　ああぁっ！　出ちゃううぅっ！！」\n"
+		ENDSELECT
+	ENDIF
+	
+RETURN 1

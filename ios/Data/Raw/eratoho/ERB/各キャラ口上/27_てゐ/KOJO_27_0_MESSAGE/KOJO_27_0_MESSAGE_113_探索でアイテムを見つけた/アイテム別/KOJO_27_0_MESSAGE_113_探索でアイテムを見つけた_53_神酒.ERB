@@ -1,0 +1,27 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 113 探索でアイテムを見つけた - 53 神酒
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_113_53(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 喪失中は何もしないで帰る
+	SIF CFLAG:29
+		RETURN 0
+	
+	; 出来るだけ専用メッセージを見せたいので、優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	SELECTCASE KOJO_MODE
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「うっわ、高そうなお酒」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「神様がそこらへんほっつき歩いてると、お神酒のありがたみって薄れるよねえ」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「お神酒ね……　飲むより、そこらへんの奴にぶちまけた方が効果的なんじゃない？」\n"
+	ENDSELECT
+	CALL KOJO_27_0_FIX_MESSAGE
+	
+	; 日本酒, 神酒共通口上 呼び出し
+	; 52 日本酒側で実装
+	CALL KOJO_27_0_SYSTEM_MESSAGE_113_SAKE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+RETURN 1

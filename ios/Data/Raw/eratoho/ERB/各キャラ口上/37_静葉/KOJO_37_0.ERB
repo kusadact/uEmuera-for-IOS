@@ -1,0 +1,4873 @@
+﻿;*********************************************************
+;　東方触手宮　静葉口上
+;		2012/06/20	ver 0.01
+;*********************************************************
+
+;	CFLAG
+;	800	スーパー静姉モード　１オン　２オフ
+;	801	トラウマ値	エンディング分岐につかおうかなー
+;	802	穣子関連　０そもそも迷宮内にいない　１迷宮内にいる　２目撃情報あり　３であった　４遺品発見済み　５穣子生還せず(エンディングで使用)　６穣子がいないといわれた
+;	803 穣子のキャラID
+;	804 雑多な判定
+
+;口上選択時のタイトル
+@KOJO_TITLE_37_0
+RESULTS = 東方触手宮　静葉口上
+
+
+;口上選択時の詳細説明
+;フリーフォーマットです。ご自由にどうぞ
+@KOJO_DETAIL_37_0
+PRINTFORML 秋の異常なテンションの壊れた秋姉妹も好き、穣子の一歩後ろでニコニコ静かにしている静葉お姉ちゃんも好き
+PRINTFORML じゃあ両方いれちゃおうなんて欲張った結果がこれだよ！
+PRINTFORML やりたい放題の秋モードは最悪触手宮の世界観をぶち壊す危険性しかないので使用の際には『自己責任』でお願いします。
+PRINTFORML 口上作者は一切の責任を取りません。
+PRINTFORML また、通常モードではビクビクおどおどしている泣き虫のお姉ちゃんを楽しめます。
+PRINTFORML 通常モードでは穣子が一緒に閉じ込められているといないとでエンディング、一部口上が変化します
+PRINTFORML では、よい触手ライフを…
+
+;文字色　山吹色、娘は赤朽ち葉
+@KOJO_DEFAULT_COLOR_37_0
+IF CFLAG:104
+	RETURN RGBCOLOR(236, 124, 79)
+ELSE
+	RETURN RGBCOLOR(228, 162, 11)
+ENDIF
+
+;口上本体
+@KOJO_37_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;娘は専用口上へ
+IF CFLAG:104
+	CALL KOJO_37_0_MUSUME(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	RETURN 1
+ENDIF
+
+
+;OP、EDスキップの為にシステムメッセージとばす
+CALL KOJO_37_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;文字色設定
+SETCOLOR CFLAG:700
+
+	SELECTCASE ARG:0
+		;オープニング
+		CASE 203
+			PRINTFORMDL
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ………
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ………
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL ……
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW ……
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL …
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW …
+			ENDIF
+			PRINTFORMDL	
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 穣子が人里に出かけてから既に三日
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 穣子が人里に出かけてから既に三日
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 未だに静葉は穣子と連絡を取れずにいた…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 未だに静葉は穣子と連絡を取れずにいた…
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 最近、神隠しが増えているという噂を耳にはしていたが神そのものである穣子がであったとは考え辛い…
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 最近、神隠しが増えているという噂を耳にはしていたが神そのものである穣子がであったとは考え辛い…
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL だが、心配せずにはいられなかった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW だが、心配せずにはいられなかった
+			ENDIF
+			PRINTFORMDL 
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 自分ひとりの足で穣子を探すのは難しい
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 自分ひとりの足で穣子を探すのは難しい
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL そう考えた静葉は山頂の二柱の神に力を借りようと妖怪の山の奥地へと足をむけたのであった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW そう考えた静葉は山頂の二柱の神に力を借りようと妖怪の山の奥地へと足をむけたのであった
+			ENDIF
+			
+		;キャラ選択
+		CASE 159
+			;こっそり穣子がいるかチェック
+			;いればCFLAG:802は1いなければ0
+			FOR LOCAL:0, 21, 19 + CHARANUM
+				IF FLAG:(LOCAL:0) == 38
+				CFLAG:802 = 1
+				CFLAG:803 = LOCAL:0 - 19
+				ENDIF
+			NEXT
+
+			PRINTFORMDL 今の季節は？
+			PRINTFORMDL [0] もちろん秋姉妹のテンションが荒ぶり狂気に満ちる秋！
+			PRINTFORMDL [1] 秋以外
+			
+			INPUT
+			IF RESULT == 0
+				PRINTFORML 「秋の私は一味違うわ！」
+				PRINTFORML 「言うなれば…そうッ！超強気な幸せもの！スーパーゴッド静葉よッッッ！」
+				PRINTFORML 「この謎の迷宮には何よりも秋らしさが足りないッ！」
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ならば神として私がすべきことはひとぉぉぉつ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ならば神として私がすべきことはひとぉぉぉつ！！」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「この迷宮を秋の『朱』に沈めることよッ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「この迷宮を秋の『朱』に沈めることよッ！」
+				ENDIF
+				PRINTFORMDL 静葉にとって秋は麻薬も同然ッ！
+				PRINTFORMDL 秋に毒された異常なテンションが静葉の性格すらも捻じ曲げてしまう！
+				PRINTFORMDL 静葉は超強気な幸せ者として触手宮に君臨したッ！
+				IF FLAG:AUTOMODE
+					PRINTFORMDL その姿は否が応でも人々の目を引き、目立つつもりがなくとも目立ってしまうことだろう…ッ！
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW その姿は否が応でも人々の目を引き、目立つつもりがなくとも目立ってしまうことだろう…ッ！
+				ENDIF
+				PRINTL
+				PRINTFORMDL [0] 秋foooooooo！！
+				PRINTFORMDL [1] やっぱり秋以外で…
+				INPUT
+				IF RESULT == 0
+					CFLAG:100 = 7
+					CFLAG:12 = 40
+					TALENT:26 = 0
+					TALENT:28 = 1
+					;スーパー静姉モードオン
+					CFLAG:800 = 1
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 静葉の性格と素質が変化しました。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 静葉の性格と素質が変化しました。
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 通常の状態でスタートします。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 通常の状態でスタートします。
+					ENDIF
+
+					;スーパー静姉モードオフ
+					CFLAG:800 = 0
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 通常の状態でスタートします。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 通常の状態でスタートします。
+				ENDIF
+				;スーパー静姉モードオフ
+				CFLAG:800 = 0
+			ENDIF
+
+			PRINTFORMDL オープニングの続きを見ますか？
+			PRINTFORMDL [0] はい
+			PRINTFORMDL [1] いいえ
+
+			INPUT
+			IF RESULT == 0
+				;スーパーオープニング
+				IF CFLAG:800
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 以上が建前である
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 以上が建前である
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 確かに穣子は心配ではある
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 確かに穣子は心配ではある
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL だが、彼女が二柱の元へ向かったのは異変解決のためであった
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW だが、彼女が二柱の元へ向かったのは異変解決のためであった
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL というのも秋静葉は悲しんでいた。そして怒りに震えていた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW というのも秋静葉は悲しんでいた。そして怒りに震えていた
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 今、季節は秋。美しい紅葉、美味しい作物、そしてやっぱり紅葉…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 今、季節は秋。美しい紅葉、美味しい作物、そしてやっぱり紅葉…
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 風の心地よいこんなにも素晴らしい季節だというのに、人妖の興味は秋には少しも向いていない
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 風の心地よいこんなにも素晴らしい季節だというのに、人妖の興味は秋には少しも向いていない
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 何故か？
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 何故か？
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「忌まわしい…本当に忌まわしい異変ね…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「忌まわしい…本当に忌まわしい異変ね…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 先ほども言った通り最近、幻想郷では神隠しが多発している
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 先ほども言った通り最近、幻想郷では神隠しが多発している
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL それも人、妖怪、神と無差別に女性ばかりを狙って発生するのだ
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW それも人、妖怪、神と無差別に女性ばかりを狙って発生するのだ
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 人々は明日は自分や自分の大切な人が被害に遭うかもしれないと家で震えているのだ
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 人々は明日は自分や自分の大切な人が被害に遭うかもしれないと家で震えているのだ
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 秋のイベントをことごとく台無しにしただけでなく、秋の神である妹すらも毒牙にかけたであろう異変…！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 秋のイベントをことごとく台無しにしただけでなく、秋の神である妹すらも毒牙にかけたであろう異変…！
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL これは明らかな秋に対する挑戦であり冒涜であった！
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW これは明らかな秋に対する挑戦であり冒涜であった！
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こうなったらこの私自らが殴りこみ異変を解決してやるわ！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こうなったらこの私自らが殴りこみ異変を解決してやるわ！！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 静葉は大股でずかずかと歩きながら静葉は怒りに任せて酔っ払いのように怒鳴る
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 静葉は大股でずかずかと歩きながら静葉は怒りに任せて酔っ払いのように怒鳴る
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「さあ出てきなさい神隠しの正体！この私がギャフンといわせてやるわ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「さあ出てきなさい神隠しの正体！この私がギャフンといわせてやるわ！」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 静葉が吼えると同時に、応えるように地面が消えた…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 静葉が吼えると同時に、応えるように地面が消えた…
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「へ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「へ？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL あちこちをぶつけながら悲鳴を上げて地底へと転がり落ちていく間に意識を失った静葉が意識を取り戻した時には
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW あちこちをぶつけながら悲鳴を上げて地底へと転がり落ちていく間に意識を失った静葉が意識を取り戻した時には
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL あたり一面に不気味な触手が蠢く迷宮の一室にいたのであった…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW あたり一面に不気味な触手が蠢く迷宮の一室にいたのであった…
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「穣子ちゃん…どうか無事でいて…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「穣子ちゃん…どうか無事でいて…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 心配のし過ぎかもしれないと自分でも分かっている
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 心配のし過ぎかもしれないと自分でも分かっている
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL だが、もし万が一の事があったら…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW だが、もし万が一の事があったら…
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「穣子ちゃん……」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「穣子ちゃん……」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 静葉の目頭がカーッと熱くなる
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 静葉の目頭がカーッと熱くなる
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL こんなところを穣子に見られてしまったら『お姉ちゃんは心配性ね』なんて笑われてしまうだろうか？
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW こんなところを穣子に見られてしまったら『お姉ちゃんは心配性ね』なんて笑われてしまうだろうか？
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML (いっそ、今すぐ目の前に私を笑いに出て来てくれればいいのに…)
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW (いっそ、今すぐ目の前に私を笑いに出て来てくれればいいのに…)
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 心身共に疲れがたまってきていた静葉は木陰に座り込み、滲んだ涙を人差し指で拭うと小さなため息をついた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 心身共に疲れがたまってきていた静葉は木陰に座り込み、滲んだ涙を人差し指で拭うと小さなため息をついた
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 眠い…そういえば昨日の夕方辺りからずっと寝ていなかったっけか
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 眠い…そういえば昨日の夕方辺りからずっと寝ていなかったっけか
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 眠い…まるで何かに強制的に眠らせられているかのように凶悪な眠気がやってくる…
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 眠い…まるで何かに強制的に眠らせられているかのように凶悪な眠気がやってくる…
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML (目が覚めたら穣子ちゃん…帰ってくるかしら…)
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW (目が覚めたら穣子ちゃん…帰ってくるかしら…)
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL はっと慌てて目を覚ました静葉の目の前には見たこともない世界が広がっていた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW はっと慌てて目を覚ました静葉の目の前には見たこともない世界が広がっていた
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 床にも天井にもそして静葉がもたれかかっている壁にも触手が生えている不気味な洞窟にいつの間にか移動していた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 床にも天井にもそして静葉がもたれかかっている壁にも触手が生えている不気味な洞窟にいつの間にか移動していた
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 壁の触手が静葉の尻をいやらしく撫で回し始めたので静葉は大きな悲鳴をあげて立ち上がった
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 壁の触手が静葉の尻をいやらしく撫で回し始めたので静葉は大きな悲鳴をあげて立ち上がった
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「何！？何が起きてるの！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「何！？何が起きてるの！？」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 叫んでも誰も答えてはくれない
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 叫んでも誰も答えてはくれない
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 静葉は大きく何度か深呼吸をすると落ち着いて自分のおかれた状況をゆっくりと考えはじめた
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 静葉は大きく何度か深呼吸をすると落ち着いて自分のおかれた状況をゆっくりと考えはじめた
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML (まさか…私も神隠しに！？)
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW (まさか…私も神隠しに！？)
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML (なら…ここに穣子ちゃんも…)
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW (なら…ここに穣子ちゃんも…)
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORMDL …静葉は覚悟を決めたようにぐっと拳を握るとこの洞窟を探索することを決心した
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW …静葉は覚悟を決めたようにぐっと拳を握るとこの洞窟を探索することを決心した
+					ENDIF
+				ENDIF
+			ENDIF
+				PRINTFORML 
+				PRINTFORML 
+
+			
+			
+		ENDSELECT
+
+
+
+
+;スーパー静姉モード口上
+IF CFLAG:800 == 1
+
+	;寝てる
+	IF CFLAG:25 && CFLAG:29 != 1
+
+	SELECTCASE ARG:0
+		;HPダメージ
+		CASE 12
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「冬が…冬が……」
+				CASE 1
+					PRINTFORML 「もう秋…？」
+				CASEELSE
+					PRINTFORML 「……まだ眠いわ」
+			ENDSELECT
+		;寄生、性攻撃
+		CASE 14 ,16
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「えっちぃ、ダメだってばぁ♪…zzz」
+				CASE 1
+					PRINTFORML 「そういうスポーツの秋がすきなのかしら？ふふっ…むにゃ」
+				CASEELSE
+					PRINTFORML 「あなたは性欲の秋…なのね…すぅ……」
+			ENDSELECT
+	ENDSELECT
+
+;*****************************************************
+	
+;通常時
+ELSE
+	SELECTCASE ARG:0
+		
+		CASE 1
+			SELECTCASE ARG:1
+				;防御
+				CASE 1
+					;発情
+					IF CFLAG:28
+						PRINTFORML 「体が火照っちゃって…戦えないの♪」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「ふふふ…秋とは耐えることにあるのよっ！」
+							CASE 1
+								PRINTFORML 「諦めているように見えるかしら？それなら貴方は秋ド素人よ！」
+							CASE 2
+								PRINTFORML 「そろそろ誰かが助けてくれないかなーって…えへへ」
+						ENDSELECT
+	;				;全裸
+	;				ELSEIF !BASE:CP
+	;					SELECTCASE RAND:3
+	;						CASE 0
+	;							PRINTFORML 
+	;						CASE 1
+	;							PRINTFORML 
+	;						CASE 2
+	;							PRINTFORML 
+	;					ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「秋の溢れるパワーが可能にしたこのッ！隙のない完全な防御ッ！」
+							CASE 1
+								PRINTFORML 「私はただ立っているだけでも秋の力でガードできるのよ！さあっ来なさい！」
+								PRINTFORMDL 静葉は両手を広げて攻撃に備えて？いる？
+							CASE 2
+								PRINTFORML 「今の私はたとえ巫女の弾幕を喰らおうとも立っていられる気がするわ！」
+								PRINTFORMDL そもそも巫女に攻撃されることが神として間違っている気がする
+						ENDSELECT
+					ENDIF
+				;アイテム
+				CASE 2
+					PRINTFORML 「パーフェクトッ！ゴッドツゥゥゥゥゥル！」
+				;前進
+				CASE 3
+					PRINTFORML 「ふふふっ、どうやら私の出番のようね」
+				;後退
+				CASE 4
+					PRINTFORML 「完璧な間合いね。秋の力が戦略的に働いているのを感じるわ！」
+				;逃走
+				CASE 5
+					;発情
+					IF CFLAG:28
+						PRINTFORML 「私は今からオ○ニーするの！」
+						PRINTFORML 「だから追いかけてくるんじゃないわよ！」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「くそっ！秋の力が足りないというの！？」
+							CASE 1
+								PRINTFORML 「覚えてなさい！次会う時までその命は預けておいてやるわ！」
+							CASE 2
+								PRINTFORML 「秋パワーが溜まったらまた相手をしてあげるわ！」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「戦略的撤退よ！逃げるわけじゃないわ！」
+							CASE 1
+								PRINTFORML 「次に会うときが貴方が秋色に染まる時よ！」
+							CASE 2
+								PRINTFORML 「運がよかったわね！運動会の時間だから帰ってあげるわ！」
+						ENDSELECT
+					ENDIF
+				
+				;弾幕攻撃
+				;弱弾幕
+				CASE 10
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						PRINTFORML 「ぜーぜー…あ、秋パワーを使うまでもないわ…」
+					;その他
+					ELSE
+						PRINTFORML 「秋パワーを使うまでもないわ！」
+					ENDIF
+				;中弾幕
+				CASE 11
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						PRINTFORML 「ぜーぜー…この脚で…私は……ぜーぜー･･･ええい！めんどくさい！」
+						PRINTFORML 「秋キック！」
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORMDL へろへろとした回し蹴りが放たれた……
+							CASE 1
+								PRINTFORMDL ほとんど飛んでいない飛び膝蹴りが繰り出される……
+							CASE 2
+								PRINTFORMDL 力ないヤクザキックが哀愁を誘う……
+							CASE 3
+								PRINTFORMDL 大して脚が上がっていないが多分かかと落としだろう……
+						ENDSELECT
+					;その他
+					ELSE
+						PRINTFORML 「ふふふふふ！この脚で私は何万という枯葉を散らしてきたのよ！」
+						PRINTFORML 「喰らいなさい！静葉最強の弾幕秋キック！」
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORMDL 風を切る見事な回し蹴りが放たれた！
+							CASE 1
+								PRINTFORMDL 弾丸のような飛び膝蹴りが繰り出される！
+							CASE 2
+								PRINTFORMDL 卑劣なヤクザキックを連続で叩き込まれる！
+							CASE 3
+								PRINTFORMDL 恥じらいを捨てた見事なかかと落しだ！
+						ENDSELECT
+					ENDIF
+				;強弾幕
+				CASE 12
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						PRINTFORML 「ぜーぜー…私の心が…狂いの落ち葉……」
+					;その他
+					ELSE
+					PRINTFORML 「これがルナティックを制する弾幕よっ！」
+					PRINTFORML 「くるうぅぅういのっ！落ち葉ぁあ！！」
+					ENDIF
+				;溜め撃ち
+				CASE 13
+					;溜め
+					IF CFLAG:31 == 2
+						PRINTFORML 「秋パワーが漲ってくるわ！！」
+					;発射
+					ELSE
+						PRINTFORML 「秋パワー充填完了！天狗に攻撃すらさせない秋過ぎる弾幕をくらうがいいわ！」
+						PRINTFORML 「フォオオオオオオオオオオオオオオオリンブラアアアアアアアアアァァァァ！！」
+					ENDIF
+				;ばら撒き弾
+				CASE 14
+					PRINTFORML 「くっ！ほどばしる秋パワーが自分でも抑えられない！」
+					PRINTFORML 「ごめんなさい、手加減できなくて！」
+					PRINTFORMDL 無駄な自信と共に初心者にも優しい弾幕が放たれた！
+				;貫通弾
+				CASE 15
+					PRINTFORML 「全てを貫く秋の力よ！」
+				;消耗武器
+				CASE 20 TO 25
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「この武器をもった私は最強よ！ほんとなんて強力な武器なのかしら！」
+						CASE 1
+							PRINTFORML 「私の弾幕以上の威力があるだなんて道具もバカにならないわね」
+						CASE 2
+							PRINTFORML 「さあみるがいいわ！私の活躍を！」
+					ENDSELECT
+				
+				;非消耗武器
+				CASE 30 TO 34
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ククククク…乱れ秋月花を使わざるを得ないわね！」
+						CASE 1
+							PRINTFORML 「今の私なら武器だってバンバン使える気がするわ！」
+						CASE 2
+							PRINTFORML 「ひゃっはあー！超秋武神羅斬！」
+					ENDSELECT
+				
+				;拘束離脱
+				CASE 42
+					IF ARG:3 == 0
+						;丸呑み
+						IF CFLAG:21
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「わ、私を食べたら秋がこなくなるわよ！？いいの！？」
+								CASE 1
+									PRINTFORML 「ほらほら、吐き出すなら今のうちよ！ねえ？きいてる！？」
+								CASE 2
+									PRINTFORMDL 静葉はギャーギャー騒ぎながら必死に暴れている
+								CASE 3
+									PRINTFORML 「そろそろ出したほうが身の為よ？」
+									PRINTFORMDL 答えるように肉壁が激しく蠢いた
+									PRINTFORML 「うそです！出してください！ほんとお願いします！」
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「私を食べて満足してるようね」
+									PRINTFORML 「しかしっ！神はそう簡単に食べられないわ！」
+								CASE 1
+									PRINTFORML 「神はかっこよく脱出するのが相場ってものなのよ！」
+								CASE 2
+									PRINTFORML 「ひぃぃ！いいから出して出して！」
+								CASE 3
+									PRINTFORML 「私の秋パワーが欲しいのは分かるけど、神以外にはあつかえないわよ？」
+							ENDSELECT
+							ENDIF
+						;拘束
+						ELSE
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「そろそろ離したほうが身の為よ？」
+								CASE 1
+									PRINTFORML 「悔しい…秋パワーがもっとあればこんな奴に…」
+								CASE 2
+									PRINTFORML 「いやー！さすがにもう無理よー！」
+								CASE 3
+									PRINTFORMDL 静葉は真剣な表情で必死に暴れている
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:4
+								CASE 0
+									PRINTFORML 「ふふふ、動きを封じれば勝てると思ったのかしら？」
+								CASE 1
+									PRINTFORML 「私が可愛いから独り占めしたい気持ちはわかるけど、だ・め・よ？」
+								CASE 2
+									PRINTFORML 「秋縄抜けを披露するときがきたようね…」
+								CASE 3
+									PRINTFORML 「そういや昔、枯らそうとしたツタ植物に絡みつかれたこともあったわね…」
+							ENDSELECT
+							ENDIF
+						ENDIF
+					ENDIF
+				;力溜め
+				CASE 43
+					;発情
+					IF CFLAG:28
+						PRINTFORML 「秋パワー集めるのきもちいいのおお！」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「ふっふっふ！一発逆転の必殺技はピンチまでとっておくものなのよ！」
+							CASE 1
+								PRINTFORML 「秋静はが宣言するわ！次でかならずこのふざけた呪縛から解き放たれる秋の到来を！」
+								PRINTFORMDL 追い詰められた静葉は声も震え、冷や汗と粘液でベタベタな挙句、台詞も意味のわからないものとなっていた
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「チャアアアジ！秋ッ！パウワァー！」
+							CASE 1
+								PRINTFORML 「うおおーー！！くああーー！！ざけんなーーっ！」
+						ENDSELECT
+					ENDIF
+				
+				;諦め
+				CASE 44
+					
+					SELECTCASE RAND:7
+						CASE 0
+							PRINTFORML 「ああ…秋パワーが抜けていく……」
+						CASE 1
+							PRINTFORML 「実は諦めた振りしてチャンスを伺っていたんだけど…」
+							PRINTFORMDL 静葉はもうどんなに暴れても解けそうにないほど触手が巻きついた体を見てため息をついた
+						CASE 2
+							PRINTFORML 「そろそろ誰かが助けに来てくれるころかしら？なんて……はぁ」
+						CASE 3
+							PRINTFORML 「いやー！やっぱり助けて離してー！」
+						CASE 4
+							PRINTFORML 「もっと…もっと秋が深ければこんな奴らに…」
+						CASE 5
+							PRINTFORML 「だれがだじゅげでえ……調子乗ってずびばぜんでじだぁ……」
+						CASEELSE
+							PRINTFORML 「わ、私は秋のテンションにやれれてなんて事を……」
+					ENDSELECT
+				;動けない
+				CASE 45
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「秋パワーのフラッシュバックがっ！？」
+						CASE 1
+							PRINTFORML 「ふぁ、息がつまって…」
+					ENDSELECT
+				
+				;Ａを守る
+				CASE 50
+					PRINTFORML 「ちょっとマニアックな場所を狙われてお姉ちゃんびっくりよ」
+					PRINTFORMDL 静葉は必死におしりを庇っている
+				;Ｂを守るなんてとんでもない！
+				CASE 51
+					PRINTFORML 「私の美しい侘しく寂しい胸に興奮する気持ちはわかるけどダメよ」
+					PRINTFORMDL 静葉は胸を守ろうと必死に身をよじった
+				;Ｃを守る
+				CASE 52
+					PRINTFORML 「そこ弄られると気持ちよすぎておかしくなっちゃう♪なんて…いやマジやめてください」
+					PRINTFORMDL 静葉は太ももを這い上がる触手の気配に慌てて前を隠した
+				;Ｖを守る
+				CASE 53
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「責任とれないのに生はダメ、お姉ちゃんとの約束よ？」
+						CASE 1
+							PRINTFORML 「若いっていいわね、でもおあずけよ、ふふっ」
+						CASE 2
+							PRINTFORML 「もっと健康的なスポーツの秋にしましょ、ね？」
+					ENDSELECT
+					PRINTFORMDL 静葉はとろんとした笑顔で下半身を守っている。
+			ENDSELECT
+		;拘束攻撃
+		CASE 5
+			IF CFLAG:29
+			
+			ELSE
+			SELECTCASE ARG:3
+				;拘束
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「きゃっ…ちょっとデリカシーにかけるんじゃないかしら？」
+						CASE 1
+							PRINTFORML 「最近のナンパは強引ね♪」
+						CASE 2
+							PRINTFORML 「押さえつければ勝てると思ったのかしら？ふふふふふ…」
+					ENDSELECT
+				;丸呑み
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「穣子ちゃんのほうが食べ甲斐があるわよー！？」
+						CASE 1
+							PRINTFORML 「食欲の秋なら仕方ないわね…ううん、よくないわよ！」
+						CASE 2
+							PRINTFORML 「どいつもこいつも食欲の秋食欲の秋…紅葉の美しさに気づかぬ愚か者共ばかり……」
+					ENDSELECT
+			ENDSELECT
+			ENDIF
+			
+		;寄生攻撃
+		;下のお口からいっぱいいっぱいミルクごくごくしようねー
+		CASE 6
+			IF CFLAG:29
+			
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ちょ、ちょ、ちょ、ちょっと！そそそそそそれはさすがにダダダダダメだよ！」
+				CASE 1
+					PRINTFORML 「せめて外に！ね、責任とらせに家まで押しかけられたくはないでしょ？ね？」
+				CASE 2
+					PRINTFORML 「これで穣子ちゃんもおばちゃんねー…って言ってる場合じゃないわよねこれ！？」
+			ENDSELECT
+			ENDIF
+				
+		;HPダメージ
+		CASE 12
+			SELECTCASE ARG:1
+			;ライバルのツタ系
+			CASE 111
+				;HPがないまたは喪失
+				IF BASE:HP == 0 || CFLAG:29
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ごふっ…死体に鞭打つような…ことを…」
+						CASE 1
+							PRINTFORML 「わ、私のライバルとして…それは……卑怯……」
+						CASEELSE
+							PRINTFORML 「……ぅぅ」
+					ENDSELECT
+				;少し痛い
+				ELSEIF ARG:2 >= 500
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「こここここ…これでこそ私のライバル…」
+							PRINTFORMDL 静葉は膝をガクガクさせながらふらふらと立ち上がった
+						CASE 1
+							PRINTFORML 「ちょ…やめっ…おま……話っ…きいて…」
+							PRINTFORMDL ツタが小気味いい乾いた音と共に何度もリズミカルに静葉の頬を往復ビンタした
+						CASEELSE
+							PRINTFORML 「痛いっ！ちょっと、ちょっとタイム！ドクターストッぷべらっ！？」
+							PRINTFORML 強烈なツタの一撃を腹部に喰らって静葉は豪快にふっとんだ
+					ENDSELECT
+				;あんまり痛くない
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「この程度で私のライバルを名乗ろうとは３００億万秋早いわ！」
+						CASE 1
+							PRINTFORML 「まるで秋風ね、あなたの攻撃はっ！」
+						CASEELSE
+							PRINTFORML 「私が強くなりすぎたのかしら？ライバルの貴方の攻撃もあまり痛くないわ」
+							PRINTFORMDL だが静葉は涙目だ
+					ENDSELECT
+				ENDIF
+			;その他
+			CASEELSE
+			;HPがないまたは喪失
+			IF BASE:HP == 0 || CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「げほっ…私が何をしたって言うの……」
+					CASE 1
+						PRINTFORML 「暴力の秋……」
+					CASEELSE
+						PRINTFORML 「……ぅぅ」
+				ENDSELECT
+			;少し痛い
+			ELSEIF ARG:2 >= 500
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ま、待ちなさい。話し合えば分かり合えることもあるはずよ…」
+					CASE 1
+						PRINTFORML 「もみじっ！？」
+					CASEELSE
+						PRINTFORML 「げほっげほっ、秋リバースしかけたわ……」
+				ENDSELECT
+			;あんまり痛くない
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「この程度の攻撃で秋が終わると思ったかしら！？」
+					CASE 1
+						PRINTFORML 「ふははははは！この完璧なグレイズ！秋の私は無敵よ！」
+					CASEELSE
+						PRINTFORML 「あら、毛玉にぶつかったかとおもったわ」
+				ENDSELECT
+			ENDIF
+			ENDSELECT
+		;衣服攻撃
+		CASE 13
+		
+		;EPダメージ
+		CASE 14
+			SELECTCASE ARG:1
+			;ライバルのツタ系
+			CASE 322,325
+			;喪失
+			IF CFLAG:29
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「それでこそ我がライバルぅぅうう%UNICODE(0x2665)%」
+						CASE 1
+							PRINTFORML 「もう勘弁してぇえええ！」
+						CASEELSE
+							PRINTFORMDL 静葉は言葉にならない声をあげ全身を痙攣させている……
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ライバルの手で…最後を迎えるのも……」
+						CASE 1
+							PRINTFORML 「あはぁ…さすがね……私が認めただけはあるわ……」
+						CASEELSE
+							PRINTFORML 「もっと…ちょうだい……ふふっ…」
+					ENDSELECT
+				ENDIF
+			ELSE
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「くるくるくるぅ！秋がくるわぁ！……っーーーーー！」
+						CASE 1
+							PRINTFORML 「あ……もうダメ♪」
+						CASEELSE
+							PRINTFORMDL 静葉はだらしなく顔をゆるませ甘えるような声をあげた
+					ENDSELECT
+				;EPダメージ3000以上
+				ELSEIF ARG:3 >= 3000
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「お姉ちゃんこのままじゃどうかしちゃいそう…♪」
+						CASEELSE
+							PRINTFORML 「ふふっ…いかされちゃうかと思ったわ…」
+					ENDSELECT
+				;EPダメージ3000未満
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「やんっ、えっちなんだから」
+						CASE 1
+							PRINTFORML 「こーら、ダメよ女の子のそんな場所さわっちゃ」
+						CASE 2
+							PRINTFORML 「ふふふっ、あまえんぼさんね」
+						CASEELSE
+							PRINTFORML 「ひゃっ…急に触られたらおどろいちゃう」
+					ENDSELECT
+				ENDIF
+			ENDIF
+			;通常
+			CASEELSE
+			IF CFLAG:29
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「あぁぁぁ！？秋が深まっちゃうのぉお！」
+						CASE 1
+							PRINTFORML 「落ちちゃう！落ちちゃう！！意識がつるべ落とししちゃうぅ！」
+						CASEELSE
+							PRINTFORMDL 静葉は言葉にならない声をあげ全身を痙攣させている……
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「もう…このままでいっか…ぁん」
+						CASE 1
+							PRINTFORML 「あんまりがっついちゃダメよぉ…」
+						CASEELSE
+							PRINTFORML 「もっと気持ちよくしていいのよ、うふふ」
+					ENDSELECT
+				ENDIF
+			ELSE
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「くるくるくるぅ！秋がくるわぁ！……っーーーーー！」
+						CASE 1
+							PRINTFORML 「あ……もうダメ♪」
+						CASEELSE
+							PRINTFORMDL 静葉はだらしなく顔をゆるませ甘えるような声をあげた
+					ENDSELECT
+				;EPダメージ3000以上
+				ELSEIF ARG:3 >= 3000
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「お姉ちゃんこのままじゃどうかしちゃいそう…♪」
+						CASEELSE
+							PRINTFORML 「ふふっ…いかされちゃうかと思ったわ…」
+					ENDSELECT
+				;EPダメージ3000未満
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「やんっ、えっちなんだから」
+						CASE 1
+							PRINTFORML 「こーら、ダメよ女の子のそんな場所さわっちゃ」
+						CASE 2
+							PRINTFORML 「ふふふっ、あまえんぼさんね」
+						CASEELSE
+							PRINTFORML 「ひゃっ…急に触られたらおどろいちゃう」
+					ENDSELECT
+				ENDIF
+			ENDIF
+			ENDSELECT
+		;寄生攻撃命中
+		;だけどV防御中に矛盾でちゃったから一旦封印。そのうちいじろう
+		CASE 16
+			;喪失
+			IF CFLAG:29
+			
+			;中古
+			ELSEIF TALENT:0 == 0
+				SELECTCASE ARG:1
+				CASE 811,813
+					SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「ライバルといえどもその手のオトナ行為はちょっとノーサンキューっていうか…」
+						PRINTFORML 「ぎゃあああああ！？だからやめてってばあああ！！」
+					CASE 1
+						PRINTFORML 「ちょっ…ゴムゴム！！話きいってぇえ！！」
+					CASE 2
+						PRINTFORML 「ライバルと友情はともかく愛情って出すなぁ！やめろー！ぎゃーーー！」
+					CASEELSE
+						PRINTFORMDL 静葉はダラダラと冷や汗を流しながら下腹部で脈動する触手を見つめている…
+					ENDSELECT
+					
+				CASEELSE
+					SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「ちょっとちょっと秋パワーがあってもこれはほらそのえーっと…」
+						PRINTFORML 「いやああああああ！今からでもいいから抜いてやめて離してーー！」
+					CASE 1
+						PRINTFORML 「あ、あらら……手遅れかしら？」
+					CASE 2
+						PRINTFORML 「こんなよくわかんない生き物の子供ができたら信仰激減で私の神生が終焉しちゃうかもぉ！？」
+					CASEELSE
+						PRINTFORML 「コーラで洗えば大丈夫…コーラで洗えば大丈夫……うん、大丈夫！」
+						PRINTFORMDL 静葉はダラダラと冷や汗を流しながら下腹部で脈動する触手を見つめている…
+					ENDSELECT
+				ENDSELECT
+			ENDIF
+		;攻撃回避
+		CASE 22 TO 25, 27
+			;発情
+			IF CFLAG:28
+				PRINTFORML 「お・あ・ず・け♪」
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「秋回避！秋回避！」
+					CASE 1
+						PRINTFORML 「弱ってると思ったかしら？これは演戯よ！だからもう狙わないでください」
+					CASEELSE
+						PRINTFORML (……秋じゃなかったらやられていたわね)
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「秋の私に攻撃をあてようだなんて甘すぎるわね！」
+					CASE 1
+						PRINTFORML 「秋の私の戦闘力は妖精をも凌駕するのよ！」
+					CASEELSE
+						PRINTFORML 「これが秋にのみ許された回避法『秋ステップ』よっ！」
+				ENDSELECT
+			ENDIF
+		;寄生攻撃回避
+		;つまり防御したとき？
+		CASE 26
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ぜーぜー…なんとかなったみたいね…」
+				CASE 1
+					PRINTFORML 「秋パワーがなかったら妊娠してたかもしれないわ……」
+				CASE 2
+					PRINTFORML 「お姉ちゃんだってそうぽんぽん赤ちゃんは作らせないんだから！」
+			ENDSELECT
+		;敵を撃破
+		CASE 31
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「みたか神の力！秋の力！」
+				CASE 1
+					PRINTFORML 「ひゃっはー！なんびとたりとも今の私を止められないわ！」
+				CASE 2
+					PRINTFORML 「アイアムウィナアアアアアアアアアアア！！」
+			ENDSELECT
+		;戦意喪失
+		CASE 33
+			;発情
+			IF CFLAG:28
+				PRINTFORML 「もう…気持ちい秋のことしか考えられない……」
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「秋だというのに…なぜ……」
+					CASE 1
+						PRINTFORML 「まさか私がザコとでもいうの…？」
+					CASEELSE
+						PRINTFORML 「ぁぁ……なんか目の前がかすんで…」
+				ENDSELECT
+			ENDIF
+		;服の破れ強度
+		CASE 35
+			IF CFLAG:29
+			
+			ELSE
+			SELECTCASE ARG:1
+			;全裸
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ふふふっ、見られて恥ずかしい体はしてないつもりだけど」
+						PRINTFORML 「でも見ないでえええええ！！」
+					CASE 1
+						PRINTFORML 「芸術の秋らしくお姉ちゃんの美しい肢体にみとれていいのよ！」
+						PRINTFORML 「うそうそうそ！無理無理無理！見ないで！！」
+					CASEELSE
+						PRINTFORML 「秋ヌード！秋ヌード！いやなに言ってるの私きゃーーー！」
+				ENDSELECT
+			;半裸
+			CASE 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「きゃっ、秋下着まで痛んできてる！？」
+					CASE 1
+						PRINTFORML 「とりあえず乳首に紅葉を張っておけばなんとか…」
+					CASEELSE
+						PRINTFORML 「うぐぐぐぐぐ…こんなにされたらちょっとやそっとじゃ直せないわね…」
+				ENDSELECT
+			;破れ始め
+			CASE 2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「秋スカートの紅葉が全部ちっちゃうっ！」
+					CASE 1
+						PRINTFORML 「けっこう派手に穴があいたわね」
+					CASEELSE
+						PRINTFORML 「この程度の穴、秋裁縫上手の前ではただの穴よ！」
+				ENDSELECT
+			ENDSELECT
+			ENDIF
+		;寄生された
+		CASE 40
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「秋パワーの塊が腹部に広がっていくのを…ち、ちがうわコレ！？」
+				CASE 1
+					PRINTFORML 「お、おのれ！私の秋パワーで異物なんて消化吸収しつくしてやるわ！」
+				CASEELSE
+					PRINTFORML 「ちょっと！どうしたらいいのこれ！」
+			ENDSELECT
+			
+		;逃走成功
+		CASE 55
+			IF CFLAG:20 || CFLAG:29
+				;
+			;発情
+			ELSEIF CFLAG:28
+				PRINTFORML 「ふぅ、これでうーんと羽を伸ばしてオナニーできるわ！」
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぜーぜーぜー…冗談じゃないわ…」
+					CASE 1
+						PRINTFORML 「秋ダッシュがなければ死んでいたわね…」
+					CASEELSE
+						PRINTFORML 「はぁ……秋じゃなかったら逃げれたかどうか…」
+				ENDSELECT
+			;その他
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「我ながら完璧な逃げ方だったわ！」
+				CASE 1
+					PRINTFORML 「完全にまいたわね。ん？後ろに気配が……ふう、気のせいか」
+				CASEELSE
+					PRINTFORML 「秋の私を捉えるだなんてあのやたらつよい紅白の巫女くらいよ！」
+			ENDSELECT
+			ENDIF
+		;初回遭遇
+		CASE 61
+			SIF CFLAG:29
+				PRINTFORMDL 静葉の瞳に光が戻った！
+				
+			SELECTCASE ARG:1
+				 ;リビングバインはライバル
+				 CASE 5
+				 PRINTFORML 「私の前に緑の葉をつけて現れるとは…愚か！本当に愚か！！」
+				 PRINTFORML 「貴様の葉という葉を全て鮮やかな朱に染め上げ秋の礎としてやるわ！！」
+				 PRINTFORMDL リビングバインは戸惑っている…
+				 
+				 ;スカーレットバインは邪道
+				 CASE 6
+				 PRINTFORMDL スカーレットバインを前に静葉は怒りに打ち震えていた…
+				 PRINTFORML 「違う……」
+				 PRINTFORMDL 殺気を放ちながら静葉が吼える！
+				 PRINTFORML 「そんな品のない紅は秋の赤ではないわ！許せない！秋に対する侮辱よ！」
+				 PRINTFORML 「私があなたを打ち倒し！本当の秋色にしてやる！絶対に！」
+				 ;でもソロだったらきっと返り討ちだよね
+			ENDSELECT
+			
+			IF CFLAG:29
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 言いたいことだけ言って静葉は再び力尽きた…
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 言いたいことだけ言って静葉は再び力尽きた…
+				ENDIF
+			ENDIF
+			
+
+				 
+		
+		;!!! v0.05.3で逃走口上の仕様が変わったため、勝手に改変
+		CASE 62
+			PRINTFORML 「秋には犠牲がつき物なの…うらまないでね！」
+		CASE 63
+			IF TARGET == 1
+				IF CFLAG:21
+					PRINTFORMDL 騒がしかった外が急に静かになった
+					PRINTFORMDL 戦闘がおわったのだろうか？
+					PRINTFORMDL それならばと静葉はこの不快な肉の中から這い出そうと体をよじると肉壁が全身を揉みしだく
+					PRINTFORML (…まだ生きてるじゃない)
+					PRINTFORML (まさかとは思うけど…いやそんな秋の神である私を捨て駒にして逃げ出すなんて罰当たりな事するわけが……)
+					PRINTFORML 「っておおおい！私はここよー！みんな大好き秋のお姉さんはお腹の中で助けをまってるのよー！？」
+					PRINTFORML 「ちょ、ちょっと秋とはいえこの状況はちょっとお姉ちゃん大ピンチ的なアレよアレ！」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「聞いてる！？うわなんかやばそうな液体がぎゃあなんかいかにもアレな感じの触手が！？助けてーーー！！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「聞いてる！？うわなんかやばそうな液体がぎゃあなんかいかにもアレな感じの触手が！？助けてーーー！！」
+					ENDIF
+				ELSE
+					PRINTFORML 「あらあら、みんなそんなに距離をとって何をする気かしら？」
+					PRINTFORML 「まさか私を囮にして逃げようなーんて…」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 申し訳なさそうな視線をちらりと一瞬だけ向けた仲間達が何も言わずに走り出した。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 申し訳なさそうな視線をちらりと一瞬だけ向けた仲間達が何も言わずに走り出した。
+					ENDIF
+					PRINTFORML 「ちょっとーー！私がまだ捕まってるわよー？」
+					PRINTFORML 「まちなさい！秋パワーで神罰を下すわよ！？助けなさい！助けてください！紅葉一年分あげるから！！」
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 触手はうるさいと言わんばかりに静葉の口に自身をねじ込ませた。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 触手はうるさいと言わんばかりに静葉の口に自身をねじ込ませた。
+					ENDIF
+					PRINTFORML 「むぐーー！もがもがむぐぐぐぐぐー！！」
+					IF FLAG:AUTOMODE
+						PRINTFORML 「むーーーーぐーーーーーーー！？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「むーーーーぐーーーーーーー！？」
+					ENDIF
+				ENDIF
+			ELSE
+				IF CFLAG:21
+					PRINTFORMDL 呑み込まれている静葉の救出を諦めた%CALLNAME:1%はこの場を離れることにした…
+					PRINTFORMDL 妙に賑やかなモンスターの腹部を見る限りまだ元気はあるのだろう…
+					PRINTFORMDL 次に出会うときまでに秋パワーが持つことを願うばかりだ…
+				ELSE
+					PRINTFORML 「あらあら、みんなそんなに距離をとって何をする気かしら？」
+					PRINTFORML 「まさか私を囮にして逃げようなーんて…」
+					PRINTFORMDL ぎくりとして思わず後ろを振り返った%CALLNAME:1%と静葉の視線が一瞬だけあった。
+					PRINTFORMDL すぐに前へと向き直ったが背中を焦がすような乾いたぎこちない笑顔の静葉の視線に耐えられず%CALLNAME:1%は思わず駆け出した！
+					PRINTFORML 「まちなさい！秋パワーで神罰を下すわよ！？助けなさい！助けてください！もみじ一年分あげるから！！」
+					PRINTFORMDL いらない
+					PRINTFORMDL 心底そう思いながら%CALLNAME:1%は逃げ出した。
+				ENDIF
+			ENDIF
+		;戦闘勝利
+		CASE 57
+			;喪失中は静かにしようねえ
+			IF CFLAG:29
+			;
+			ELSE
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「相手が悪かったわね！」
+				CASE 1
+					PRINTFORML 「次からは相手を見てケンカを売ることね！」
+				;仲間がいる
+				CASE 2
+					IF (TARGET == 1 && FLAG:10) || TARGET != 1
+						PRINTFORML 「さ、服が残ってる人がいたら秋パワーで直すわよー！超直すわよー！」
+					;一人で服着てる
+					ELSEIF BASE:3
+						PRINTFORML 「さあさあ秋パワーで傷んだ服を修理っと、紅葉いっぱいくっつけるわよー！」
+					;一人で全裸
+					ELSE
+						PRINTFORML 「…修理する服がないと流石に秋パワーがあってもむりね」
+					ENDIF
+				CASEELSE
+					PRINTFORML 「あなたの敗因は一つ。私と出会ってしまったことだけよ！」
+			ENDSELECT
+			ENDIF
+		;誰かに会う
+		CASE 101
+			IF ARG:2
+				PRINTFORMDL …？
+				PRINTFORMDL 誰かの弱々しい息遣いが聞えた気がした。
+			ELSEIF CFLAG:29 != 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「熱心な信者の気配を感じるわ！」
+					CASE 1
+						PRINTFORML 「私の秋パワーを必要としているのはだれ！？」
+					CASEELSE
+						PRINTFORML 「だれかいるのかしら？」
+				ENDSELECT
+			ENDIF
+
+		;別れる
+		CASE 102
+			;喪失キャラ
+			IF CFLAG:29
+			
+			ELSEIF ARG:2
+				PRINTFORML 「私が様子を見てくるわ。あなたはここで待っていて。私が帰るまで動いちゃダメよ？」
+			ELSE
+				PRINTFORML 「ここは二手にわかれましょう！大丈夫！秋の加護は離れていてもあるのよ！」
+			ENDIF
+		;雑談
+		CASE 103
+			IF CFLAG:29
+			
+			ELSE
+				SELECTCASE NO:(ARG:1)
+					;レティ
+					CASE 12
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「今の私は気分がいいわ！冬の化身相手でも引かぬこびぬ省みぬぅぅ！！」
+							CASE 1
+								PRINTFORML 「どうしてあなたがいるかわからないけれど今は秋よ秋！残念だったわね！！」
+						ENDSELECT
+					;穣子
+					CASE 38
+						SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「穣子ちゃん！あなたもこの迷宮を秋色に染め上げましょう！」
+						CASE 1
+							PRINTFORML 「うふふふふ、秋だとなんだかとっても気持ちいいわね」
+						ENDSELECT
+					;リリー白黒
+					CASE 15, 56
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「春を告げるつもりかしら？残念だったわね！今は秋なのよ！！」
+							CASE 1
+								PRINTFORML 「ねえ、よかったら秋告げ精になるきはないかしら？」
+						ENDSELECT
+					;ひーちゃん
+					CASE 99
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「そのひまわりは何かしら！？もう秋よ！そんなもの捨てて楓の木をもちなさい！」
+							CASE 1
+								PRINTFORML 「ひまわりをもっていられるのも今のうちよ？すぐに秋の植物を持たせてやるわ…」
+						ENDSELECT
+					CASEELSE
+						SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「いい秋してる？」
+						CASE 1 
+							PRINTFORML 「さあ！秋について！素晴らしい秋について！特に紅葉について語りましょうか！」
+						CASE 2
+							PRINTFORML 「ふっふっふ、秋パワー溢れる私のマシンガントークについてこれるかしら？」
+						ENDSELECT
+				ENDSELECT
+			ENDIF
+		;パーティー勧誘成功
+		CASE 107
+			IF CFLAG:29
+				PRINTFORMDL 冬が…冬が…と虚ろな瞳で呟く静葉をほうっておけない
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「あなたの判断は正しいわ！」
+					CASE 1
+						PRINTFORML 「ふふっ…モてる神様はつらいわね…」
+					CASEELSE
+						PRINTFORML 「私の秋パワーは魅力的ですものね、」
+				ENDSELECT
+			ENDIF
+
+
+		;パーティ加入
+		CASE 109
+			IF CFLAG:29
+				PRINTFORMDL 目を覚ましたらめんどくさそうだと思いながらも%CALLNAME:1%は静葉の手を取った
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「秋パワーを吸収したこの究極の力ですべてをフュージョンしつくしてやるわ！！」
+					CASE 1
+						PRINTFORML 「さあ！紅葉を支配する紅蓮の力をみせてあげる！！」
+					CASEELSE
+						PRINTFORML 「さあ私の秋パワーに震え上がるがいいわ！」
+				ENDSELECT
+			ENDIF
+		CASE 110
+			;PTメンバーと別れる
+			IF CFLAG:29
+			
+			ELSEIF ARG:2
+				IF TARGET == 1
+					;主人公として表示する場合、ARG:1のキャラを見送る
+					PRINTFORML 「ここは二手にわかれましょう！大丈夫！秋の加護は離れていてもあるのよ！」
+				ELSE
+					;それ以外の場合、自分が抜ける
+					;喪失中
+					IF CFLAG:29
+						PRINTFORMDL 完全に燃え尽きて力尽きた静葉を守りながら探索は出来そうにない
+						PRINTFORMDL そう判断した%CALLNAME:1%は静かになるし静葉をおいていくことにした……
+					ELSE
+						PRINTFORML 「私の力がいらないと言うのね？」
+						PRINTFORML 「まあ、あなたなら私がいなくても大丈夫でしょう」
+						PRINTFORML 「私は私の秋パワーを必要とする秋の足りない奴らに秋パワーをわけてくるわ！またね！」
+					ENDIF
+				ENDIF
+			ENDIF
+
+		CASE 125
+			;寄生が進行
+			IF CFLAG:29
+			
+			ELSEIF ARG:1 == 8
+				PRINTFORML 「？」
+				PRINTFORML 「まだ秋なのになんだか寒気が…」
+			ELSEIF ARG:1 == 4
+				PRINTFORML 「な、何かしら…？」
+				PRINTFORML 「おなかの中に冬の気配が……」
+			ELSEIF ARG:1 == 1
+				PRINTFORML 「……ぅぅぅぅぅ」
+				PRINTFORML 「秋だからって調子に乗りすぎた報いね…」
+				PRINTFORML 「誰か…誰か万能薬を……早く…」
+			ENDIF
+		CASE 126
+			;妊娠が進行
+			IF CFLAG:29
+			
+			ELSEIF ARG:1 == 11
+				PRINTFORML 「なにかしら…気分が……」
+			ELSEIF ARG:1 == 8
+				;セーフ
+				IF CFLAG:36 == 1
+					PRINTFORML 「ふぁ、こんな場所にいるストレスだったのかしら？秋度が足りないわねやっぱり！」
+				;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+				ELSE
+					PRINTFORML 「……お姉ちゃんちょっと火遊びが過ぎちゃったかしら」
+				ENDIF
+			ELSEIF ARG:1 == 3
+				PRINTFORML 「ううう、お腹けんないで…」
+				PRINTFORML 「ほんとどうしたらいいのかしら…」
+			ELSEIF ARG:1 == 1
+				PRINTFORML 「秋の本能なのかしら…あいたたたた…なんとなくもうすぐ産まれるって分かるわ」
+			ENDIF
+			
+		CASE 127
+			;寄生出産
+			SELECTCASE ARG:1
+				CASE 0
+					;
+				CASE 1
+					;
+				CASE 2
+					;
+				ENDSELECT
+				
+		CASE 132
+			;部屋を移動（突撃）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「誰か！誰かたすけてー！」
+						CASE 1
+							PRINTFORML 「私を助けてくれる人はいないの！？」
+						CASEELSE
+							PRINTFORML 「こうなったらヤケだ！秋突撃！」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「秋ですよー！」
+						CASE 1
+							PRINTFORML 「オラァ！！秋の登場よ！！」
+						CASEELSE
+							PRINTFORML 「秋が足りない奴らはいねーかー！！」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 133
+			;部屋を移動（慎重）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「秋オーラで気づかれたらどうしようかしら…」
+						CASE 1
+							PRINTFORML (とにかく見つからないように…)
+						CASEELSE
+							PRINTFORML (秋パワーがチャージされるまでは大人しく……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「はぁっ！秋忍び足！！」
+						CASE 1
+							PRINTFORML 「静けさと終焉を司る私にかかれば静かに部屋を移動するなんて朝飯前よ！」
+						CASEELSE
+							PRINTFORML (ああ、もっと叫びながら移動したい…)
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 134
+			;部屋を移動（待ち伏せ）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「今は部屋を出れそうにないわね…」
+						CASE 1
+							PRINTFORML 「こんな状態だからこそクールに秋らしく待ち伏せよ…」
+						CASEELSE
+							PRINTFORML 「ぜーぜー…動くのが辛いわけじゃぜーぜーぜー…ないわよ？」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「秋の108の殺人技が一つ！秋待ち伏せ！」
+						CASE 1
+							PRINTFORML 「のこのこやってきたところをこうガツンって寸法よ！」
+						CASEELSE
+							PRINTFORML 「ふふふ…この部屋に脚を踏み入れたその時が奴らの終焉よ」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 135
+			;部屋を移動（探索）
+			IF CFLAG:29
+			
+			ELSEIF TARGET == 1
+			;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「秋パワー…秋パウワァはないの…？」
+						CASE 1
+							PRINTFORML 「何か…何か役に立つものは」
+						CASEELSE
+							PRINTFORML 「秋が！秋が足りないぃぃぃいい！！」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「秋アイテムはどこ！？」
+						CASE 1
+							PRINTFORML 「ふふふ、こう見えても昔から物探しは得意なのよ」
+						CASEELSE
+							PRINTFORML 「さあ！小さな秋を探しましょう！」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;処女喪失
+		CASE 136
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE ARG:3
+						CASE 1
+							SELECTCASE RAND:5
+								CASE 0
+									PRINTFORML 「秋といえどもそれはさすがにいただけないわ！」
+								CASE 1
+									PRINTFORML 「やめて！私に酷いことするつもりでしょ！冬みたいに！」
+								CASEELSE
+									PRINTFORML 「そこはさすがにお姉ちゃんも勘弁願いたいわ」
+							ENDSELECT
+						CASE 2
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「秋じゃなかったらヤられていたかも…」
+								CASE 1
+									PRINTFORML 「秋なのにひと夏の思い出をつくらされるとこだったわ…」
+								CASEELSE
+									PRINTFORML 「セーフ！セーフよね今の！」
+							ENDSELECT
+						CASEELSE
+							PRINTFORML 「いたたたたたたた！？」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 静葉は下腹部の圧迫感に思わず涙を滲ませた…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 静葉は下腹部の圧迫感に思わず涙を滲ませた…
+							ENDIF
+							PRINTFORML 「ああ…もう……秋じゃなかったらショックで三日は寝込んでたわよ…」
+							IF FLAG:AUTOMODE
+								PRINTFORML 「うう…やっぱり秋とはいえさすがに…お姉ちゃんこれはショックだわ…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「うう…やっぱり秋とはいえさすがに…お姉ちゃんこれはショックだわ…」
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+			
+			;おふろ
+			CASE 149
+			;静葉お姉ちゃんの死に風呂
+			IF CFLAG:29
+			;
+			ELSE
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「温泉の秋！健康の秋！さあ汗を精一杯ながして秋を堪能するのよー！」
+					CASE 1
+						PRINTFORML 「はぁぁ…やっぱり秋は秋風呂に限るわ」
+					CASE 2
+						PRINTFORML 「さあ！風流に紅葉を散らしてあげるわ！今ならこのお湯全てを埋め尽くすほどに紅葉をだしても！」
+						PRINTFORML 「ほら！ほらほらほら！もっと紅葉を！もっと秋を！ひゃっはああああ！！」
+						PRINTFORML まるで吹雪のようにどこからか真っ赤な紅葉が吹き付けてくる…
+					CASE 3
+						PRINTFORML 「よきかなよきかな。はぁ…幸せ…神様やっててよかったわー」
+					CASEELSE
+						PRINTFORMDL 静葉は幸せそうに湯船に浸かっている
+				ENDSELECT
+			ENDIF
+		;完全捕食
+		CASE 152
+			IF FLAG:AUTOMODE
+				PRINTFORML 「秋がある限り……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「秋がある限り……」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORML 「魂は……不滅……」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「魂は……不滅……」
+			ENDIF
+		;復活！
+		CASE 158
+			SELECTCASE ARG:1
+				;助けてもらった
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「う、うぅぅ…あやうく調子に乗りすぎて死ぬところだったわ…」
+						CASE 1
+							PRINTFORMDL 静葉は濁った瞳でふらふらと立ち上がった…
+						CASEELSE
+							PRINTFORML 「秋リザレクション！」
+							PRINTFORMDL そう突如叫び立ち上がった静葉だがすぐにバタリと倒れてしまった…
+					ENDSELECT
+				;捨てられた
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ちゃ、チャンス！はやくにげないと…」
+							PRINTFORML 「今のうちに……！」
+						CASE 1
+							PRINTFORMDL 静葉はふらつく足取りで必死に逃げ出した……
+						CASEELSE
+							PRINTFORML 「ひぃぃぃ…ずびばぜんでじだー！」
+					ENDSELECT
+			ENDSELECT
+
+		;好感度でPT離脱
+		CASE 161
+		;穣子
+		IF NO:(ARG:1) == 38
+			PRINTFORML 「みーのーりーこーちゃーん？」
+			PRINTFORML 「なーんか私に冷たすぎるんじゃないかしらー？」
+			PRINTFORML 「まあお姉ちゃんの漲る秋の力に嫉妬する気持ちはわかるわよ？」
+			PRINTFORML 「だけど、そんなことしてる場合じゃないでしょう？」
+			PRINTFORML 「…しばらく頭ひやしてなさい。お姉ちゃんは一人で行くからね！熱い秋がそこにあるから！！」
+			
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「今ッ！最高潮に秋の力でパワーが漲る最強の神とも言える私を頼りにしたくなる気持ちはよーくわかるわ…」
+					PRINTFORML 「でもっ！でもよっ！」
+					PRINTFORML 「だからといってまるでこいつうるさい邪魔くさいいっそ囮にしてしまえみたいな扱いは許されないわ！」
+					PRINTFORML 「さすがにそこまでは思ってないとは私も分かってはいるけれどそう勘違いされてもしかたないわよ？」
+					PRINTFORML 「反省したらまた少し力を貸してあげなくもないわよ？それまでさようなら
+				CASE 1
+					PRINTFORML 「…ちょっとお姉ちゃんカチンときてなくもないわけじゃなかったりするかなー」
+					PRINTFORML 「この場で即、落ち葉に生き埋めになんて酷いことはしないわ」
+					PRINTFORML 「でも、もう貴方とは行動する気なんてないから。それじゃあね」
+				CASEELSE
+					PRINTFORML 「もう怒ったわ！秋エスケープ！秋アディオス！ばーかばーか！」
+			ENDSELECT
+		ENDIF
+
+		;好感度でPT離脱される
+		CASE 162
+		IF CFLAG:29
+		
+		ELSEIF NO:(ARG:1) == 38
+			PRINTFORML 「穣子ちゃーん？どうしたのそんなこわーい顔して」
+			PRINTFORML 「ほらほらビークールビークール…み、穣子ちゃん？」
+			PRINTFORML 「ちょ、ちょっとどこ行くの！？一人じゃ危ないわよ！？」
+			PRINTFORML 「ほらっ！お姉ちゃんと決めポーズして落ち着いて…おーーい？」
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ま、待って！一体私の秋の何が気に食わなかったというの！？」
+				CASE 1
+					PRINTFORML 「いいのいいの、私の秋パワーが強力すぎて一緒にいると辛いんでしょう？」
+					PRINTFORML 「つらいわー、力がありすぎるのも考えすぎねえ」
+					PRINTFORML 「ちょ、ちょっと？無視は酷いんじゃないかしらー？」
+				CASEELSE
+					PRINTFORML 「ふっ…去るものは追わない。別れもまた秋の一部…」
+		ENDSELECT
+		ENDIF
+		
+	;遺品
+	CASE 202
+		;穣子
+		IF NO:(ARG:1) == 38
+			PRINTFORMDL 静葉の目の前には穣子が帽子につけていたブドウの飾りの粒がバラバラになって散らばっていた…
+			PRINTFORML 「穣子ちゃんがやられたようだな…」
+			PRINTFORML 「だが奴は妖怪の山最弱……」
+			PRINTFORML 「この私は穣子とは違う！！」
+			PRINTFORML 「穣子の無念は私が晴らすッ！！」
+			PRINTFORML 「やるぞ！」
+			PRINTFORMDL 穣子は目に涙を蓄えながらビシッとポーズを決めた
+			SIF CFLAG:29
+				PRINTFORML そして再び力尽きた…
+		ELSEIF CFLAG:29 != 1
+			PRINTFORML 「また私は救えなかったの！？おのれ化物め！酷いことを！！」
+		ENDIF
+
+	;MAP表示時に一言
+	CASE 160
+		;開始時
+		IF DAY == 1 && TIME:0 == 0
+			PRINTFORML 「ここはどこ！？ええいどうでもいい！まずは探索よ！秋度を見つけ出すのだああ！」
+		;睡眠中は静かにしようね
+		ELSEIF CFLAG:25
+		;
+		;喪失時
+		ELSEIF CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「………ぁきぃ」
+				CASE 1
+					PRINTFORML 「………………」
+				CASE 2
+					PRINTFORMDL 静葉は口を何度もパクパクさせている…
+			ENDSELECT
+		;汎用メッセージ、元気があればあれこれ喋るよ！
+		ELSEIF RAND:3 == 0 && (MAXBASE:MP/4 < BASE:MP || BASE:HP != 0)
+			SELECTCASE RAND:11
+				CASE 0
+					PRINTFORML 「秋！最☆高！」
+				CASE 1
+					PRINTFORML 「さあ出口はどこかしら！？」
+				CASE 2
+					PRINTFORML 「ふっふっふ、私を拉致った事を後悔させてやるわ」
+				CASE 3
+					PRINTFORML 「…怖い。私の強さがね！！」
+				CASE 4
+					PRINTFORML 「もう少し私に力があれば化物どもも真っ赤にぬれるのだけどねー」
+				CASE 5
+					PRINTFORML 「紅葉を塗りたい…？ああ！禁断症状が！」
+				CASE 6
+					PRINTFORML 「敵ね！？気のせいだったわ！」
+				CASE 7
+					PRINTFORML 「外に出たら秋が終わっていたりして……い、いや！そんなはずないわ！」
+				CASE 8
+					PRINTFORML 「っしゃー！張り切っていくわよ！」
+				CASE 9
+					PRINTFORML 「秋…それは時に美しく時に神を狂わせる」
+				CASEELSE
+					PRINTFORML 「うーん、もっとさくっと外に出れるとおもたのだけど」
+			ENDSELECT
+		
+		;MPが1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「秋パワーがたりない…」
+				CASE 1
+					PRINTFORML 「私が…ここまで追い詰められるとは…」
+				CASE 2
+					PRINTFORML 「……奴らは神をも越えているというの！？」
+			ENDSELECT
+		;朦朧
+		ELSEIF FLAG:7 >= 11
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「やだー寝ると冬が近づくのやだー」
+				CASE 1
+					PRINTFORML 「早く寝ないとくまができちゃうわ…」
+				CASE 2
+					PRINTFORML 「ふぁあ…ねーむーいーのーよー」
+			ENDSELECT
+		;要睡眠
+		ELSEIF FLAG:7 >= 7
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「早く寝たいわ…」
+				CASE 1
+					PRINTFORML （休憩したい……）
+				CASE 2
+					PRINTFORML 「睡眠の秋なのよー寝たいのー！」
+			ENDSELECT
+		
+		ELSEIF CFLAG:22
+		;寄生時
+			IF CFLAG:23 == 12
+				PRINTFORML 「私の秋パワーを吸い取ろうなんて罰当たりな化物ね！」
+			ELSEIF CFLAG:23 == 8
+				PRINTFORML 「…そろそろ出て行ってくれないかしら？」
+			ELSEIF CFLAG:23 == 4
+				PRINTFORML 「あの…秋パワーあげるんで出て行ってくれませんか？」
+			ELSEIF CFLAG:23 == 2
+				PRINTFORML 「ぎゃああ！なんかヤバイ！マジヤバイ！秋ヤバイ！！」
+			ELSE
+				PRINTFORML 「秋パワーがすーわーれーるー」
+			ENDIF
+		ELSEIF CFLAG:36
+		;妊娠時
+			IF CFLAG:23 == 11
+				PRINTFORML 「ううん、冬が近いのかしら？」
+			ELSEIF CFLAG:23 == 9
+				PRINTFORML 「いまいち秋って感じがしないのよね」
+			ELSEIF CFLAG:23 == 5
+				PRINTFORML 「妊娠の秋なんてきいたことないわよー！」
+			ELSEIF CFLAG:23 == 3
+				PRINTFORML 「ちょっと…シャレになってないわ…」
+			ELSEIF CFLAG:23 == 1
+				PRINTFORML 「やーだー！化物のままになんてなりたくないわよー！」
+			ELSE
+				PRINTFORML 「秋なのに体調不良なんて…急性秋中毒かしら」
+			ENDIF
+		ELSEIF BASE:EP <= 1000 || CFLAG:28
+		;絶頂間際or発情
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML (うう、ムズムズするぅ)
+				CASE 1
+					PRINTFORML (どこかで落ち着いて一発…)
+				CASE 2
+					PRINTFORML 「はぁ…はぁ……やりてええええ！！」
+			ENDSELECT
+		ELSEIF BASE:CP <= 0
+		;全裸
+			IF ITEM:54
+			;着替えセット所持
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「私の美しい肢体をいつまでも晒しているわけにもいかないわね」
+					CASE 1
+						PRINTFORML 「着替えとっとと使ってパーフェクト秋静葉になりましょ」
+					CASE 2
+						PRINTFORML 「視線を感じるわ…人気者はつらいわね」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「全裸はさすがに抵抗あるわねえ、どこかに着替えないかしら」
+					CASE 1
+						PRINTFORML 「紅葉をてぃくびとあそこに貼り付けて～♪･･･無理無理！」
+					CASE 2
+						PRINTFORML 「ゴールド秋クロスを破壊するとは…」
+				ENDSELECT
+			ENDIF
+		ELSEIF BASE:CP <= MAXBASE:CP / 3
+		;半裸
+			IF ITEM:54
+			;着替えセット所持
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「そろそろ着替え（オータムチェンジ）をすべきよね」
+					CASE 1
+						PRINTFORML 「もうちょっと着替えず粘れるかしら？全裸チキンレース♪」
+					CASE 2
+						PRINTFORML 「この程度なら秋パワーで直せるわ！」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「替えの服がないわ…秋だというのに！」
+					CASE 1
+						PRINTFORML 「そろそろ着替えを探しましょうか」
+					CASE 2
+						PRINTFORML 「秋サーチ！着替えセットはどこ！？」
+				ENDSELECT
+			ENDIF
+		;きちゃない
+		ELSEIF BASE:DP >= 90
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「くううう！私の秋の香りが悪臭に…」
+				CASE 1
+					PRINTFORML 「秋度が汚れて力が出ない…」
+				CASE 2
+					PRINTFORML 「お風呂でさっぱりしたいわね」
+			ENDSELECT
+		ELSEIF BASE:DP >= 60
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「秋に相応しくない匂いがするわ…」
+				CASE 1
+					PRINTFORML 「うう、べたべたよ」
+				CASE 2
+					PRINTFORML 「メープルシロップでべたべたなら歓迎なんだけどねー」
+			ENDSELECT
+		ELSEIF BASE:DP >= 30
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ！？へんなベタベタが」
+				CASE 1
+					PRINTFORML 「汚れてる！？秋の私を怒らせるとは死にたいようね…」
+				CASE 2
+					PRINTFORML 「変な粘液が…私から分泌されたメープルシロップ？なわけないわね」
+			ENDSELECT
+		;全部ぬけたら(服着ていて元気があって清潔で眠くない)
+		;汎用一言２
+		ELSE
+			SELECTCASE RAND:8
+				CASE 0
+					PRINTFORML 「突撃よー！」
+				CASE 1
+					PRINTFORML 「秋パワーが溢れてヤヴァイわ」
+				CASE 2
+					PRINTFORML 「入ったときより強くなってる気がする！」
+				CASE 3
+					PRINTFORML 「段々と戦闘にもなれてきたわ」
+				CASE 4
+					PRINTFORML 「ふぅぅ…さすがに疲れるわねえ」
+				CASE 5
+					PRINTFORML 「この洞窟を秋色に染めるには…」
+				CASE 6
+					PRINTFORML 「塗り損ねた樹を早く塗りたいわ」
+				CASEELSE
+					PRINTFORML 「ひゃっはぁあ！！理由はないけどテンション上がるー♪」
+			ENDSELECT
+		ENDIF
+		
+	CASE 204, 206, 208, 212
+		CALL KOJO_37_0_ENDING_SUPERSIZUHA
+		;クイーン撃破
+	CASE 210
+		CALL KOJO_37_0_ENDING_SUPERSIZUHA_2
+		
+		CASEELSE
+			;汎用
+	ENDSELECT
+	ENDIF
+
+;**********************************************************
+;	弱気でおどおどビクビクなお姉ちゃん
+;**********************************************************
+;通常口上
+ELSE
+
+	;寝てる
+	IF CFLAG:25 && CFLAG:29 != 1
+
+	SELECTCASE ARG:0
+		;HPダメージ
+		CASE 12
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「うくっ…」
+				CASE 1
+					PRINTFORML 「……んっ」
+				CASEELSE
+					PRINTFORML 「……けほっ…げほっげほっ！」
+			ENDSELECT
+		;寄生、性攻撃
+		CASE 14 ,16
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「や…やめてくださいっ……ぅぅ…」
+				CASE 1
+					PRINTFORML 「あ、あの…手があたって……むにゃ…」
+				CASEELSE
+					PRINTFORML 「すぅ……大声…だしますよ？」
+			ENDSELECT
+	ENDSELECT
+
+	;*****************************************************
+
+	;通常時
+	ELSE
+
+	SELECTCASE ARG:0
+		
+		CASE 1
+			SELECTCASE ARG:1
+				;防御
+				CASE 1
+					;発情
+					IF CFLAG:28
+						PRINTFORML (いやッ……こんな状態で触られたら…)
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「こないで…こないでください……」
+							CASE 1
+								PRINTFORML 「許して……お願いです……」
+							CASE 2
+								PRINTFORMDL 静葉は肩を抱き震えて座り込んでいる…
+						ENDSELECT
+					;全裸
+					ELSEIF !BASE:CP
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「みちゃヤです…」
+							CASE 1
+								PRINTFORML 「お願い…来ないで……」
+							CASE 2
+								PRINTFORML 「も、もう脱がすものなんてないですよぉ…」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (できるだけ…できるだけ目立たないように…)
+							CASE 1
+								PRINTFORMDL 静葉は身を硬くして震えている…
+							CASE 2
+								PRINTFORML 「いやっ……こないで……」
+						ENDSELECT
+					ENDIF
+				;アイテム
+				CASE 2
+					PRINTFORML 「ど、道具を使えば……」
+				;前進
+				CASE 3
+				;仲間が居る
+				IF FLAG:10
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「怖いっ…」
+						CASE 1
+							PRINTFORML 「私に囮になれと？そんな…」
+						CASE 2
+							PRINTFORML 「……何かあったら助けてくださいね」
+					ENDSELECT
+				;ソロ
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「…今は距離を詰めるべきね」
+						CASE 1
+							PRINTFORML 「怖いけど…でも…」
+						CASE 2
+							PRINTFORML 「少しでもいい位置に…」
+					ENDSELECT
+				ENDIF
+				;後退
+				CASE 4
+				;仲間が居る
+				IF FLAG:10
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「もう無理ですっ…」
+						CASE 1
+							PRINTFORML 「ごめんなさいっ！もうダメっ！」
+						CASE 2
+							PRINTFORML 「……いやっ！怖いっ！」
+					ENDSELECT
+				;ソロ
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「…は、離れなきゃ！」
+						CASE 1
+							PRINTFORML 「怖いっ……」
+						CASE 2
+							PRINTFORML 「少しでもいい位置に…」
+					ENDSELECT
+				ENDIF
+				;逃走
+				CASE 5
+					;発情
+					IF CFLAG:28
+						PRINTFORML 「いやっ……こんな時に追いかけてこないで！」
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「もうイヤァァ！」
+							CASE 1
+								PRINTFORML (逃げなきゃ…逃げなくちゃ……)
+							CASE 2
+								PRINTFORML 「誰か…誰か助けて……」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「み、見逃してくださいっ…！」
+							CASE 1
+								PRINTFORML (とにかく今は逃げないと……)
+							CASE 2
+								PRINTFORML 「追いかけてこないでぇ！」
+						ENDSELECT
+					ENDIF
+				
+				;弾幕攻撃
+				;弱弾幕～強弾幕、ばらまき、貫通
+				CASE 10 TO 12 ,14 ,15
+					;MP1/4以下またはHP0
+					IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「どうして倒れてくれないの……ぐすっ…」
+							CASE 1
+								PRINTFORML 「もうあっち行ってよぉ……」
+							CASE 2
+								PRINTFORML 「お願い……当たって…」
+							CASEELSE
+								PRINTFORMDL 静葉は怯えながら弱々しい弾幕を放っている
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「あまり弾幕ごっこは得意じゃないけど…」
+							CASE 1
+								PRINTFORML 「おねがいっ！あっち行って！」
+							CASE 2
+								PRINTFORML 「当てさえ出来れば私でも……」
+							CASEELSE
+								PRINTFORML 「えいっ！えいっ…！」
+						ENDSELECT
+					ENDIF
+				;溜め撃ち
+				CASE 13
+					;溜め
+					IF CFLAG:31 == 2
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「集中…集中……」
+							CASE 1
+								PRINTFORML 「しっかり頑張れば…」
+							CASEELSE
+								PRINTFORML 「震えてる場合じゃないわ……頑張らないと…」
+						ENDSELECT
+					;発射
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「スペルカード発動ッ！」
+							CASE 1
+								PRINTFORML 「秋の弾幕、フォーリンブラスト！」
+							CASEELSE
+								PRINTFORML 「お願いッ！スペルカード！」
+						ENDSELECT
+					ENDIF
+
+				;消耗武器
+				CASE 20 TO 25
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「道具があれば少しは……」
+						CASE 1
+							PRINTFORML 「こ、これ当たったら痛いわよ？」
+						CASE 2
+							PRINTFORML 「近づかないでーー！」
+					ENDSELECT
+				
+				;非消耗武器
+				CASE 30 TO 34
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「お、重い……」
+						CASE 1
+							PRINTFORML 「このぉ！きゃっ！」
+							PRINTFORMDL 静葉は思い切り振り回した武器に引っ張られバランスを崩してしまった
+						CASE 2
+							PRINTFORML 「あたって……！」
+					ENDSELECT
+				
+				;拘束離脱
+				CASE 42
+					IF ARG:3 == 0
+						;丸呑み
+						IF CFLAG:21
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「もう…たすからないのかしら……ふぇ…ふぇぇぇ…」
+									PRINTFORMDL 静葉は泣きながらも必死に這い出そうともがいた
+								CASE 1
+									PRINTFORML 「出して…出して……ひっく…出してぇ……」
+								CASE 2
+									PRINTFORMDL 静葉は手足を使って弱々しいながらも肉壁を攻撃している
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「こうみえても私神様なんですよ！」
+									PRINTFORML 「食べていいものじゃないんですから！」
+								CASE 1
+									PRINTFORML 「出して！お願い…！」
+								CASE 2
+									PRINTFORMDL 静葉は必死な形相で暴れている
+							ENDSELECT
+							ENDIF
+						;拘束
+						ELSE
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「もう…たすからないのかしら……ふぇ…ふぇぇぇ…」
+									PRINTFORMDL 静葉は泣きながらも必死に絡みついた触手を掴み引き剥がそうとしている
+								CASE 1
+									PRINTFORML 「離して…離して…もう…ひっく……壊れちゃう…」
+								CASE 2
+									PRINTFORML (暴れても……もうダメよね………)
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「動けないでしょう！？離してっ…！」
+								CASE 1
+									PRINTFORML 「神様に対してしていい扱いじゃないわよ？だから離して……」
+								CASE 2
+									PRINTFORML 「そんなに絡みつかないで…！」
+							ENDSELECT
+							ENDIF
+						ENDIF
+					;絶頂で失敗
+					ELSEIF ARG:3 == 1
+						;丸呑み
+						IF CFLAG:21
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORMDL 抵抗を試みようとした静葉の四肢からは力が感じられず、肉壁と触手に嬲られ華奢な背中を時折のけぞらせるだけだった…
+								CASE 1
+									PRINTFORMDL 口からただ甘い声を漏らすだけの静葉の身体は抵抗など出来ずゆっくりと肉の中へと沈んでいく…
+								CASE 2
+									PRINTFORML (だめ…頭…ボーっとして……力…抜け……)
+							ENDSELECT
+						;拘束
+						ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML (だめ…頭…ボーっとして……力…抜け……)
+								CASE 1
+									PRINTFORMDL 快楽に屈服した静葉の手足からは少しも抵抗の意思は感じられない…
+								CASE 2
+									PRINTFORMDL ぼーっとした瞳で快楽に震える静葉の肉体は触手に求められるがままとなっている
+							ENDSELECT
+						ENDIF
+					;脱出
+					ELSEIF ARG:3 == 2
+						;丸呑み
+						IF CFLAG:21
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「はぁっ…はぁっ……」
+									PRINTFORMDL 汚濁液と共に吐き出された静葉はよろめきながらも%SAVESTR:(ARG:4)%から逃げ出した
+								CASE 1
+									PRINTFORML 「出れ…たの……？」
+									PRINTFORMDL 弱々しく呟く吐き出された静葉は憔悴しきっている
+								CASE 2
+									PRINTFORMDL 咽るように汚濁液を撒き散らす%SAVESTR:(ARG:4)%から静葉も吐き出された…
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「吐き出し…きゃぁ！？」
+									PRINTFORMDL 静葉が暴れた拍子に肉壁が大きくうねったかと思うと静葉を吐き出した！
+								CASE 1
+									PRINTFORML 「出して…出れそう…？」
+									PRINTFORMDL %SAVESTR:(ARG:4)%の口から静葉はなんとか手足の力で這い出した
+								CASE 2
+									PRINTFORMDL 吐き出された静葉は悲鳴を上げながら逃げ出した
+							ENDSELECT
+							ENDIF
+						;拘束
+						ELSE
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「ひぃっ…」
+									PRINTFORMDL するりとぬめる触手から抜け出せた静葉は這うように逃げ出した
+								CASE 1
+									PRINTFORML 「ぁ……ぁぁ…誰か……」
+									PRINTFORMDL 静葉は%SAVESTR:(ARG:4)%が自分を嬲る為にわざと自分を解放したように感じた
+								CASE 2
+									PRINTFORML (え……離して……くれた……？どうして…)
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「きゃっ…た、助かった……？」
+								CASE 1
+									PRINTFORML 「あまり酷いとととと…？きゃぁ！？」
+									PRINTFORMDL 触手から逃れた拍子に静葉は思い切りしりもちをついた
+								CASE 2
+									PRINTFORML 「はなしてっ･･･こーのー…おーねーがーいーー…ひゃっ」
+									PRINTFORMDL 触手の数本が離れた拍子に静葉は他の触手も振りほどき距離をとった
+							ENDSELECT
+							ENDIF
+						ENDIF
+					;拘束レベルダウン
+					ELSEIF ARG:3 == 3
+						;丸呑み
+						IF CFLAG:21
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「あ……ぁぁ」
+									PRINTFORMDL 少し這い出したところで静葉の身体を肉壁が包んでいる事にはかわらない…
+									PRINTFORMDL 静葉は生気のない目で言葉を失っている…
+								CASE 1
+									PRINTFORML 「出して…出して………出し…」
+								CASE 2
+									PRINTFORMDL 静葉が這い出したのか、それとも%SAVESTR:(ARG:4)%の肉壁の自然な動きなのか…
+									PRINTFORMDL どちらにせよ静葉が捕らえられたままということには変わりはない…
+							ENDSELECT
+							ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「ぅぅ…出してぇ……」
+								CASE 1
+									PRINTFORML 「この調子…なら……」
+								CASE 2
+									PRINTFORMDL 静葉は四肢に力をいれ少しずつ少しずつ這い上がった
+							ENDSELECT
+							ENDIF
+						;拘束
+						ELSE
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「ぁ……ぁぁ………」
+									PRINTFORMDL 数本の触手から逃れたもののまだ静葉の身体はがっちりと触手に絡め獲られている
+								CASE 1
+									PRINTFORML 「誰か……」
+								CASE 2
+									PRINTFORML 「はぁ…はぁ……」
+									PRINTFORMDL 静葉は未だに絡みついている触手を絶望的な眼差しで見つめている…
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「くぅ…きりがないわ……」
+								CASE 1
+									PRINTFORML 「だめ……私の力じゃやっぱり…」
+									PRINTFORMDL 未だに身体を捕らえている触手を前に静葉は弱々しく呟いた…
+								CASE 2
+									PRINTFORMDL 身体をねじり手足を無様に振り回しなんとか静葉は数本の触手から逃れた
+							ENDSELECT
+							ENDIF
+						ENDIF
+					;脱出失敗
+					ELSEIF ARG:3 == 4
+						;丸呑み
+						IF CFLAG:21
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「ひっく…このまま…きっと……」
+									PRINTFORMDL 静葉の啜り泣く声はどんどん弱々しくなっていく…
+								CASE 1
+									PRINTFORML 「出して…出して………出し…て……」
+								CASE 2
+									PRINTFORMDL 静葉の弱っていく抵抗をあざ笑うかの用にぬめる肉壁は静葉の体をどんどん奥深くへ引きずり込む…
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「っくぅ…！そんなっ……」
+								CASE 1
+									PRINTFORML 「出してってばぁ！お願い……出して…」
+								CASE 2
+									PRINTFORMDL 暴れる静葉の手足は柔らかい肉に沈みすべり脱出への取っ掛かりなど少しもできなかった
+							ENDSELECT
+							ENDIF
+						;拘束
+						ELSE
+							;MP1/4以下またはHP0
+							IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「もう……ダメ……」
+									PRINTFORMDL 抵抗する静葉の手足に次々と絡みつく触手を前に静葉の手足から力が抜けていった
+								CASE 1
+									PRINTFORML 「壊れ…ちゃう……私…もう…」
+								CASE 2
+									PRINTFORML (やっぱり………私の力じゃ……)
+							ENDSELECT
+							;その他
+							ELSE
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「離してっ…！聞いてるのっ！」
+								CASE 1
+									PRINTFORML 「天罰が怖くないのっ…許してぇ……」
+								CASE 2
+									PRINTFORML 「やめっ……そんなとこに……きゃぁ！？」
+							ENDSELECT
+							ENDIF
+						ENDIF
+					ENDIF
+				;力溜め
+				CASE 43
+					IF ARG:2 == 1
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML (だめ…力………抜けて…)
+							CASE 1
+								PRINTFORMDL 力を込めようと強く握られていた手も今はだらりと垂れ下がり快楽に痙攣している…
+						ENDSELECT
+					;MP1/4以下またはHP0
+					ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML (次が最後のチャンスかもしれない…)
+							CASE 1
+								PRINTFORML 「う……くぅ……」
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML (力に差があっても隙をつけばきっと…)
+							CASE 1
+								PRINTFORML 「私だって……必死になればきっと……」
+						ENDSELECT
+					ENDIF
+				
+				;諦め
+				CASE 44
+					
+					SELECTCASE RAND:7
+						CASE 0
+							PRINTFORML 「私みたいに弱い神様じゃ…どうしょうもないのね……ぐすっ…」
+						CASE 1
+							PRINTFORML 「ひっく……えっく……」
+						CASE 2
+							PRINTFORML 「ごめんね…穣子ちゃん……」
+						CASE 3
+							PRINTFORML 「ひっく…幻想郷の秋…どうなるのかしら……ごめんなさい……」
+						CASE 4
+							PRINTFORML 「早く…楽にして……ください…」
+						CASE 5
+							PRINTFORMDL 静葉は静かに啜り泣き続けている……
+						CASEELSE
+							PRINTFORML 「死にたく…ないよぉ……」
+					ENDSELECT
+				;動けない
+				CASE 45
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「きゃぁ･･･！？」
+						CASE 1
+							PRINTFORML 「くぅ…」
+					ENDSELECT
+				
+				;Ａを守る
+				CASE 50
+					PRINTFORML 「そ、そんなところ汚いですよ！？」
+					PRINTFORMDL 静葉は必死におしりを庇っている
+				;Ｂを守るなんてとんでもない！
+				CASE 51
+					PRINTFORML 「や、やだ…！不届きもの！」
+					PRINTFORMDL 静葉は胸を守ろうと必死に身をよじった
+				;Ｃを守る
+				CASE 52
+					PRINTFORML 「いやっ！ヘンなとこ触ろうとしないで！」
+					PRINTFORMDL 静葉は太ももを這い上がる触手の気配に慌てて前を隠した
+				;Ｖを守る
+				CASE 53
+				IF TALENT:0
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORML 「いやぁ！やめてください！」
+					CASE 1
+						PRINTFORML 「それだけは…それだけはやめてっ…！」
+					CASE 2
+						PRINTFORML 「ま、まだ初めてなんです…だからお願い……」
+					CASEELSE
+						PRINTFORMDL 静葉はブンブンと首を横に必死に振っている。
+				ENDSELECT
+						PRINTFORMDL 初めてを死守しようと静葉は必死に抵抗している！
+				ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やめて…赤ちゃんできちゃう…！」
+					CASE 1
+						PRINTFORML 「お願いだから…いれないで……」
+					CASE 2
+						PRINTFORML 「壊れちゃうから……やめてぇ……」
+				ENDSELECT
+						PRINTFORMDL 静葉は涙に濡れた瞳で必死に訴え、下半身を守っている……
+				ENDIF
+			ENDSELECT
+		;拘束攻撃
+		CASE 5
+			;喪失中
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML (避けなきゃ……でも…もう…)
+					CASE 1
+						PRINTFORML 「やめ……」
+					CASE 2
+						PRINTFORML 「………」
+				ENDSELECT
+			ELSE
+			
+			SELECTCASE ARG:3
+				;拘束
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ち、近づかないで！」
+						CASE 1
+							PRINTFORML 「やだっ！気持ち悪いっ！」
+						CASE 2
+							PRINTFORML (いけない！捕まっちゃう！)
+					ENDSELECT
+				;丸呑み
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「いやっいやぁっ！」
+						CASE 1
+							PRINTFORML 「か、神様を食べようっていうのですか！？」
+						CASE 2
+							PRINTFORMDL 静葉は怯えた瞳で迫る巨大な口を見つめている…
+					ENDSELECT
+			ENDSELECT
+			ENDIF
+			
+		;寄生攻撃
+		;下のお口からいっぱいいっぱいミルクごくごくしようねー
+		CASE 6
+			IF CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ぁ……ぅぁ……」
+				CASE 1
+					PRINTFORML 「また……ふふっ…」
+				CASE 2
+					PRINTFORML 「……やだ…もうやだぁ」
+			ENDSELECT
+			;しょじょ
+			ELSEIF TALENT:0
+			SELECTCASE ARG:1
+			;クイーン本体、お供
+				;特殊寄生
+				CASE 801,804
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「痛いッ！痛いぃ！」
+						CASE 1
+							PRINTFORML 「やめてっ…ぁ…ぁぁぁぁあ！」
+						CASE 2
+							PRINTFORML 「ーーーーっ！！」
+					ENDSELECT
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORMDL 蠢く触手の幼体が静葉の処女膜の隙間から次々と潜り込んでいった
+					CASE 1
+						PRINTFORMDL 白濁液に混じって数匹の寄生し損ねた幼体が静葉の股間から零れ落ち床をのた打ち回った
+					ENDSELECT
+				;特殊妊娠
+				CASE 802
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「いやぁ！！いやぁあ！！」
+						CASE 1
+							PRINTFORML 「止めて！出すのやめてぇ！」
+						CASE 2
+							PRINTFORML 「中に･･･中に入ってる……ぁぁ…」
+					ENDSELECT
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORMDL 膣口に押し付けられた触手からとめどなく白濁液が噴出し静葉の膣を汚した…
+					CASE 1
+						PRINTFORMDL 射精の度に膣へ侵入できなかった精液が静葉の全身を白く染め上げていった…
+					ENDSELECT
+			;ガーディアン
+				;特殊寄生
+				CASE 806
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「やっ…やめてっ…ひぃぃ…」
+						CASE 1
+							PRINTFORMDL 全身を汚され静葉は体を庇うことを諦めなすがままとなっている
+						CASE 2
+							PRINTFORMDL 静葉は全身を汚される嫌悪感に声にならない悲鳴をあげた
+					ENDSELECT
+				;特殊寄生　高威力低寄生率
+				CASE 807
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ぁ…ぁぁ…こんなに……」
+						CASE 1
+							PRINTFORMDL 射精の勢いはすさまじく、挿入されていないにも関わらず静葉の子宮へと不快感が満ちていく…
+						CASE 2
+							PRINTFORMDL 静葉は口をパクパクさせながら濁った瞳を出口へと向けている…
+					ENDSELECT
+			;バイオプラント
+				;特殊寄生
+				CASE 809
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「私はッ…私は苗床なんていやぁ！」
+						CASE 1
+							PRINTFORML 「離してぇ！家に帰してぇえ！」
+						CASE 2
+							PRINTFORML 「ナカに…入ってないのに…そんな……」
+					ENDSELECT
+			;リビングバイン、スカーレットバイン
+				;寄生
+				CASE 811,813
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「植物のくせに…酷い……」
+						CASE 1
+							PRINTFORMDL 本来自分が管理し秋色に染めるはずの植物に陵辱される悔しさに静葉はボロボロと大粒の涙を流した
+						CASE 2
+							PRINTFORML 「ぅぅぅ…こんなのって…」
+					ENDSELECT
+			;ワーム
+				;寄生
+				CASE 815
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「た、卵！？や、やめっ…！」
+						CASE 1
+							PRINTFORMDL 触手越しに伝わってくるゴロリとした何かが進入する感触に静葉は言葉を失った
+						CASE 2
+							PRINTFORMDL 暗いワームの体内でもみくちゃにされながらもはっきりとわかる異物感に静葉は叫び声をあげた
+					ENDSELECT
+			;サンドワーム
+				;寄生
+				CASE 817
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「やだっ！気持ち悪いっ！卵やだぁあ！」
+						CASE 1
+							PRINTFORMDL 暗い体内で抵抗することも出来ず静葉は胎内へ卵を産み付けられる感覚に耐えることしかできなかった
+						CASE 2
+							PRINTFORMDL 半狂乱でもがく静葉の膣口から卵管が引き抜かれるとポロポロと産み付けられた卵のいくつかが零れ落ちた
+					ENDSELECT
+			;オクトパス、クラーケン
+				;妊娠
+				CASE 819,821
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「赤ちゃんやだぁ！もう出さないでぇ！」
+						CASE 1
+							PRINTFORMDL 膣口で暴れる触手を押える静葉の小さな手に伝わる精液がほどばしり脈打つ感触に引きつった悲鳴を上げた
+						CASE 2
+							PRINTFORML 「どうして…こんな……」
+					ENDSELECT
+			;イソツビ、アクティニア
+				;妊娠
+				CASE 823,825
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ぅえ…ぅぇぇええぇぇ……」
+						CASE 1
+							PRINTFORMDL 静葉は挿入を防いだにも関わらず膣内を汚され、妊娠の恐怖に震えている…
+						CASE 2
+							PRINTFORML 「あはっ……あはは…ドロドロ…」
+					ENDSELECT
+				;低威力大量射精
+				CASE 824,826
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「お腹が…こんなに……どうして………こんな…」
+						CASE 1
+							PRINTFORMDL いつまでも止まらない射精に静葉は言葉にならないうめき声をあげている…
+						CASE 2
+							PRINTFORML 子宮へと生暖かい感触が満ちていく感覚から逃れようと身を捩るたびにワレメから外れた触手が静葉の身体へ精を吐きかけた
+					ENDSELECT
+			;スライム、ブロブ
+				;寄生
+				CASE 827,829
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「んんんっ！？」
+							PRINTFORMDL スライムのプールの中で膣へと侵入していく白濁した塊を止めようと静葉は暴れた
+						CASE 1
+							PRINTFORMDL 必死に秘所を両手で覆うがスライムの体は指の隙間をズルズルとすり抜け処女膜の隙間から体内へと入り込む
+						CASE 2
+							PRINTFORML (おなかの中か溶かされちゃう…！？)
+					ENDSELECT
+				;寄生　高威力低寄生率
+				CASE 828,830
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「げほっ！？ゴバッゴホッ……！？」
+						CASE 1
+							PRINTFORMDL 喉奥まで犯される息苦しさに静葉はスライムを掴もうと何度も手を動かすがスライムの中へ指が沈むだけだった
+						CASE 2
+							PRINTFORMDL 全身の穴を押し広げられる快感と不快感に静葉は全身をビクビクと痙攣させながらも処女だけは守ろうと下半身を庇っている
+					ENDSELECT
+			;アルラウネ、ドリアード
+				;妊娠
+				CASE 831,833
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「あぁ…あーーっ……ぁぁあぁ……」
+						CASE 1
+							PRINTFORMDL 唇を貪られ口内へと唾液とともに送られる媚薬に全身の感覚を溶かされながらも挿入だけは防いだ
+						CASE 2
+							PRINTFORML (もう……唇…痺れ……舌が……)
+					ENDSELECT
+				;妊娠　多段
+				;CASE 832,834
+			;ドッペルゲンガー
+				;特殊妊娠
+				CASE 837
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「いやっ！お願い許してっ……！」
+						CASE 1
+							PRINTFORML 「やだっ…ナカにっ……！？」
+						CASE 2
+							PRINTFORMDL 静葉は膣へと流れ込む粘液の気持ち悪さにひたすら悲鳴をあげている
+					ENDSELECT
+				;特殊妊娠　低威力大量射精
+				CASE 838
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「いやっ！お願い許してっ……！」
+						CASE 1
+							PRINTFORML 「やだぁあ！やめてやだやだやだぁ！」
+							PRINTFORMDL 静葉は子供のように泣き叫んでいる…
+						CASE 2
+							PRINTFORMDL ポンプから押し出されているかのような勢いで吐き出される精液が処女膜の隙間から子宮へと注がれていく
+							PRINTFORMDL 必死に体液の侵入を拒もうと身を捩るが身体はがっちりと固定されていて挿入を防ぐ以上のことはできなかった
+					ENDSELECT
+			CASEELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「だめぇ！ここだけは許してぇ！」
+					CASE 1
+						PRINTFORMDL 静葉は吐き出される新鮮な精液で手を汚しながらも挿入を拒み抵抗している
+					CASE 2
+						PRINTFORML 「いや………やめて…そこだけは…」
+				ENDSELECT
+			ENDSELECT
+			ELSE
+			SELECTCASE ARG:1
+			;クイーン本体、お供
+				;特殊寄生
+				CASE 801,804
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「痛いッ！痛いぃ！」
+						CASE 1
+							PRINTFORML 「やめてっ…ぁ…ぁぁぁぁあ！」
+						CASE 2
+							PRINTFORML 「ーーーーっ！！」
+					ENDSELECT
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORMDL 蠢く触手の幼体が静葉の子宮口を押し広げる痛みに静葉は思わず叫び声をあげた
+					CASE 1
+						PRINTFORMDL 白濁液に混じって寄生し損ねた数匹の幼体が静葉の股間から零れ落ち床をのた打ち回った
+					ENDSELECT
+				;特殊妊娠
+				CASE 802
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「いやぁ！！いやぁあ！！」
+						CASE 1
+							PRINTFORML 「止めて！出すのやめてぇ！」
+						CASE 2
+							PRINTFORML 「こわれ…！こわれるっ！おなかこわれちゃうぅぅ…！」
+					ENDSELECT
+					SELECTCASE RAND:2
+					CASE 0
+						PRINTFORMDL 子宮へと粘つく特濃の精液を注ぎ込まれる度に静葉の腹部がにわかに膨らむ…
+					CASE 1
+						PRINTFORMDL 射精の度に結合部から子宮に入りきらなかった粘つく精液が噴出し内腿を汚した
+					ENDSELECT
+			;ガーディアン
+				;特殊寄生
+				CASE 806
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「やっ…やめてっ…ひぃぃ…」
+						CASE 1
+							PRINTFORMDL 体内と体外を同時に汚され静葉は体を庇うことを諦めなすがままとなっている
+						CASE 2
+							PRINTFORMDL 静葉は全身を汚される嫌悪感に声にならない悲鳴をあげた
+					ENDSELECT
+				;特殊寄生　高威力低寄生率
+				CASE 807
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ぁ…ぁぁ…こんなに……」
+						CASE 1
+							PRINTFORMDL 数十秒以上続く子宮を内側から舐められるような感触に静葉の絶叫は次第に弱々しくなっていった
+						CASE 2
+							PRINTFORMDL 静葉は口をパクパクさせながら濁った瞳を出口へと向けている…
+					ENDSELECT
+			;バイオプラント
+				;特殊寄生
+				CASE 809
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「私はッ…私は苗床なんていやぁ！」
+						CASE 1
+							PRINTFORML 「離してぇ！家に帰してぇえ！」
+						CASE 2
+							PRINTFORML 「神に対して…許されな……こんな…ぐすっ…こんなこと…」
+					ENDSELECT
+			;リビングバイン、スカーレットバイン
+				;寄生
+				CASE 811,813
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「植物のくせに…酷い……」
+						CASE 1
+							PRINTFORMDL 本来自分が管理し秋色に染めるはずの植物に陵辱される悔しさに静葉はボロボロと大粒の涙を流した
+						CASE 2
+							PRINTFORML 「ぅぅぅ…こんなのって…
+					ENDSELECT
+			;ワーム
+				;寄生
+				CASE 815
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「た、卵！？や、やめっ…！」
+						CASE 1
+							PRINTFORMDL 触手越しに伝わってくるゴロリとした何かが進入する感触に静葉は言葉を失った
+						CASE 2
+							PRINTFORMDL 暗いワームの体内でもみくちゃにされながらもはっきりとわかる異物感に静葉は叫び声をあげた
+					ENDSELECT
+			;サンドワーム
+				;寄生
+				CASE 817
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「やだっ！気持ち悪いっ！卵やだぁあ！」
+						CASE 1
+							PRINTFORMDL 暗い体内で抵抗することも出来ず静葉は胎内へ卵を産み付けられる感覚に耐えることしかできなかった
+						CASE 2
+							PRINTFORMDL 半狂乱でもがく静葉の膣口から卵管が引き抜かれるとポロポロと産み付けられた卵のいくつかが零れ落ちた
+					ENDSELECT
+			;オクトパス、クラーケン
+				;妊娠
+				CASE 819,821
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「赤ちゃんやだぁ！もう出さないでぇ！」
+						CASE 1
+							PRINTFORMDL 静葉は必死に触手を抜こうともがくが吸盤の付いた太い触手は少しも静葉の自由を許さなかった
+						CASE 2
+							PRINTFORML 「どうして…こんな……」
+					ENDSELECT
+			;イソツビ、アクティニア
+				;妊娠
+				CASE 823,825
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ぅえ…ぅぇぇええぇぇ……」
+						CASE 1
+							PRINTFORMDL 引き抜かれた触手の先端から見せ付けるように滴り落ちた白濁液が静葉の肌を汚した
+						CASE 2
+							PRINTFORML 「あはっ……あはは…ドロドロ…」
+					ENDSELECT
+				;低威力大量射精
+				CASE 824,826
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「お腹が…こんなに……どうして………こんな…」
+						CASE 1
+							PRINTFORMDL いつまでも止まらない射精に静葉は言葉にならないうめき声をあげている…
+						CASE 2
+							PRINTFORML 子宮いっぱいに生暖かい感触が満ちてもなお続く射精に静葉はなすがままだ
+					ENDSELECT
+			;スライム、ブロブ
+				;寄生
+				CASE 827,829
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「んんんっ！？」
+							PRINTFORMDL スライムのプールの中で膣へと侵入していく白濁した塊を止めようと静葉は暴れた
+						CASE 1
+							PRINTFORMDL 必死に秘所を両手で覆うがスライムの体は指の隙間をズルズルとすり抜けて体内へと入り込む
+						CASE 2
+							PRINTFORML (おなかの中か溶かされちゃう…！？)
+					ENDSELECT
+				;寄生　高威力低寄生率
+				CASE 828,830
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「げほっ！？ゴバッゴホッ……！？」
+						CASE 1
+							PRINTFORMDL 喉奥まで犯される息苦しさに静葉はスライムを掴もうと何度も手を動かすがスライムの中へ指が沈むだけだった
+						CASE 2
+							PRINTFORMDL 全身の穴を押し広げられる快感と不快感に静葉は全身をビクビクと痙攣させている
+					ENDSELECT
+			;アルラウネ、ドリアード
+				;妊娠
+				CASE 831,833
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「あぁ…あーーっ……ぁぁあぁ……」
+						CASE 1
+							PRINTFORMDL 唇を貪られ口内へと唾液とともに送られる媚薬に全身の感覚を溶かされ静葉はとろんとした目でなすがままだ…
+						CASE 2
+							PRINTFORML (もう……唇…痺れ……舌が……)
+					ENDSELECT
+				;妊娠　多段
+				;CASE 832,834
+			;ドッペルゲンガー
+				;特殊妊娠
+				CASE 837
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「いやっ！お願い許してっ……！」
+						CASE 1
+							PRINTFORML 「おねがいっ…抜いてっ…抜いてぇえ！」
+						CASE 2
+							PRINTFORMDL 静葉は膣内に射精されると抵抗を諦め、虚ろな瞳で陵辱が終わるを待っていた…
+					ENDSELECT
+				;特殊妊娠　低威力大量射精
+				CASE 838
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「いやっ！お願い許してっ……！」
+						CASE 1
+							PRINTFORML 「おねがいっ…抜いてっ…抜いてぇえ！」
+						CASE 2
+							PRINTFORMDL 突かれていると錯覚するほど強い勢いで吐き出される精液が子宮の奥を叩くたび
+							PRINTFORMDL 静葉の肺から苦しげな呻き声がこぼれた
+					ENDSELECT
+			CASEELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「やめて！それだけは！いやあああああ！！」
+					CASE 1
+						PRINTFORMDL 静葉は恐怖のあまり声もだせず唇を震わせている…
+					CASE 2
+						PRINTFORML 「いや………やめて…」
+				ENDSELECT
+			ENDSELECT
+			ENDIF
+				
+		;HPダメージ
+		CASE 12
+			;HPがないor喪失中
+			IF BASE:HP == 0 || CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「……」
+						PRINTFORMDL 静葉は光のない瞳でなすがままだ……
+					CASE 1
+						PRINTFORML 「げほっ……許して……」
+					CASEELSE
+						PRINTFORML 「……死んじゃう」
+				ENDSELECT
+			;平常時
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「きゃあ！」
+					CASE 1
+						PRINTFORML 「やめてっ！痛いことしないで…！」
+					CASEELSE
+						PRINTFORML 「痛いっ、痛いっ！」
+				ENDSELECT
+			ENDIF
+		;衣服ダメージ（そのうち細かく分岐させたい
+		CASE 13
+			;服あり
+			IF BASE:3 > 0
+				;戦意喪失中
+				IF CFLAG:29
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「服……破けて……」
+						CASE 1
+							PRINTFORML 「もう……ダメ………」
+						CASEELSE
+							PRINTFORMDL 静葉は自分の服が破けていく様をまるで他人事のように見つめている…
+					ENDSELECT
+					;全裸になった
+					IF BASE:3 <= ARG:3
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「あはは…このまま…私……」
+							CASE 1
+								PRINTFORMDL 生まれたままの姿になってなお静葉は抵抗の意思を見せようとしない
+							CASEELSE
+								PRINTFORML (このまま…陵辱されて……もう…助からない……)
+						ENDSELECT
+					ELSE
+					
+					ENDIF
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「きゃっ…服がっ！？」
+						CASE 1
+							PRINTFORML 「きゃあ！？」
+						CASEELSE
+							PRINTFORML 「服っ…破け……」
+					ENDSELECT
+					;全裸になった
+					IF BASE:3 <= ARG:3
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「いやぁ！？ふ、服が全部っ…」
+							CASE 1
+								PRINTFORMDL 静葉は大きな悲鳴をあげると一糸纏わぬ身体を庇ってしゃがみこんだ
+							CASEELSE
+								PRINTFORML 「きゃぁああああ！？」
+						ENDSELECT
+					ELSE
+					
+					ENDIF
+				ENDIF
+			;裸
+			ELSE
+				IF CFLAG:29
+						;絶頂時
+					IF BASE:EP < ARG:4
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「もうイきたくないーーーっ！」
+							CASE 1
+								PRINTFORML 「壊れちゃう…心も…体も…っーー！」
+							CASEELSE
+								PRINTFORMDL 静葉は泣きながら全身を痙攣させている…
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「まだ…続けるの？」
+							CASE 1
+								PRINTFORML 「……」
+								PRINTFORMDL 静葉は時々甘い声を漏らす以外、反応をみせずまるで人形のようだ…
+							CASEELSE
+								PRINTFORMDL 時折手足の先をピクリと痙攣させる以外に静葉は動かない…
+						ENDSELECT
+					ENDIF
+				ELSE
+					;絶頂時
+					IF BASE:EP < ARG:4
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「いやっ！こんな化物にっ……！」
+							CASE 1
+								PRINTFORML 「もうダメ……っあああ！」
+							CASEELSE
+								PRINTFORMDL 静葉は下唇を噛んで声を押し殺している
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:4
+							CASE 0
+								PRINTFORML 「きゃあ！？」
+							CASE 1
+								PRINTFORML 「や、やめなさい！」
+							CASE 2
+								PRINTFORML 「気持ち悪い…！」
+							CASEELSE
+								PRINTFORMDL 静葉は顔を真っ赤にして耐えている
+						ENDSELECT
+					ENDIF
+				ENDIF
+			ENDIF
+		;EPダメージ
+		CASE 14
+		;喪失時
+			IF CFLAG:29
+					;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「もうイきたくないーーーっ！」
+						CASE 1
+							PRINTFORML 「壊れちゃう…心も…体も…っーー！」
+						CASEELSE
+							PRINTFORMDL 静葉は泣きながら全身を痙攣させている…
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「まだ…続けるの？」
+						CASE 1
+							PRINTFORML 「……」
+							PRINTFORMDL 静葉は時々甘い声を漏らす以外、反応をみせずまるで人形のようだ…
+						CASEELSE
+							PRINTFORMDL 時折手足の先をピクリと痙攣させる以外に静葉は動かない…
+					ENDSELECT
+				ENDIF
+			ELSE
+				;絶頂時
+				IF BASE:EP < ARG:3
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「いやっ！こんな化物にっ……！」
+						CASE 1
+							PRINTFORML 「もうダメ……っあああ！」
+						CASEELSE
+							PRINTFORMDL 静葉は下唇を噛んで声を押し殺している
+					ENDSELECT
+				;EPダメージ3000以上
+				ELSEIF ARG:3 >= 3000
+					SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「ふぇえええ！？」
+						CASEELSE
+							PRINTFORMDL 声を出しかけた静葉は慌てて口を押えた
+					ENDSELECT
+				;EPダメージ3000未満
+				ELSE
+					SELECTCASE RAND:4
+						CASE 0
+							PRINTFORML 「きゃあ！？」
+						CASE 1
+							PRINTFORML 「や、やめなさい！」
+						CASE 2
+							PRINTFORML 「気持ち悪い…！」
+						CASEELSE
+							PRINTFORMDL 静葉は顔を真っ赤にして耐えている
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;拘束攻撃命中
+		CASE 15
+			;喪失中
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML (もう……抵抗できない……)
+					CASE 1
+						PRINTFORML 「誰か…助けて……」
+					CASE 2
+						PRINTFORML 「あ………」
+						PRINTFORMDL 静葉は小さく悲鳴を漏らすが何も抵抗をしなかった…
+				ENDSELECT
+			ELSE
+			
+			SELECTCASE ARG:3
+				;拘束
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「は、離して！」
+						CASE 1
+							PRINTFORML 「やだっ！気持ち悪いっ！」
+						CASE 2
+							PRINTFORML (なんとか振りほどかないと…！)
+					ENDSELECT
+				;丸呑み
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「いやああ！食べないで…！」
+						CASE 1
+							PRINTFORML 「あ……あぁ…私…食べられちゃったの？」
+						CASE 2
+							PRINTFORMDL 静葉は肉壁に包まれた状態でどうしたらいいか分からずおろおろしている
+					ENDSELECT
+			ENDSELECT
+			ENDIF
+
+
+		;寄生攻撃命中
+		;だけどV防御中に矛盾でちゃったから一旦封印。そのうちいじろう
+		CASE 16
+			SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML 「あ……ぁぁ……」
+			CASE 1
+				PRINTFORML 「ナカに……ひっく…ナカに……」
+			CASE 2
+				PRINTFORML 「どうしたら…どうしたらいいの……」
+			CASEELSE
+				PRINTFORMDL 静葉は真っ青になって下腹部で脈動する触手を見つめている…
+			ENDSELECT
+
+		;攻撃回避
+		CASE 22 TO 25, 27
+			;MP1/4以下またはHP0
+			IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ひぃ！？」
+					CASE 1
+						PRINTFORML 「もう痛いのいやっ……」
+					CASEELSE
+						PRINTFORML (よかった…外れてくれた…)
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「きゃあっ！あぶないっ！」
+					CASE 1
+						PRINTFORML 「ひゃっ！？……はずれた？」
+					CASEELSE
+						PRINTFORML 「きゃああ！」
+				ENDSELECT
+			ENDIF
+		;寄生攻撃回避
+		;つまり防御したとき？
+		CASE 26
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「はぁはぁ…なんとか最悪の事態は回避できたわね……」
+				CASE 1
+					PRINTFORML 「こんな奴の…赤ちゃんなんて作るわけにいかないわ……」
+				CASE 2
+					PRINTFORMDL 静葉は体にかかった白濁液を気持ち悪そうに見つめている……
+			ENDSELECT
+		;敵を撃破
+		CASE 31
+			IF CFLAG:29
+			
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「た、たおしたっ！」
+					CASE 1
+						PRINTFORML 「たおせた…の…？」
+					CASE 2
+						PRINTFORML 「もう…動かないで……」
+				ENDSELECT
+			ENDIF
+		;HP0
+		CASE 32
+			IF CFLAG:29
+			
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML (目の前が…かすむ……)
+					CASE 1
+						PRINTFORML 「動けるうちに…にげないと…」
+					CASE 2
+						PRINTFORML 「もうこれ以上戦えないわ…」
+				ENDSELECT
+			ENDIF
+		;戦意喪失
+		CASE 33
+			;発情
+			IF CFLAG:28
+				PRINTFORML 「壊れちゃうのに……壊れたい……」
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「もう……ダメ……」
+					CASE 1
+						PRINTFORML 「穣子ちゃん………」
+					CASEELSE
+						PRINTFORML 「ここまで……ね…」
+				ENDSELECT
+			ENDIF
+		;服の破れ強度
+		CASE 35
+			IF CFLAG:29
+			
+			ELSE
+				CALL KOJO_37_0_CLOTHE_BREAK(ARG:1)
+			ENDIF
+		;アイテム使用
+		CASE 36
+			;喪失＆拘束中は静かに
+			IF CFLAG:29 || CFLAG:20
+			
+			ELSE
+			SELECTCASE ARG:1
+				CASE 54
+					CALL KOJO_37_0_CLOTHE
+			ENDSELECT
+			ENDIF
+		;寄生された
+		CASE 40
+			IF CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORMDL 静葉は呆然と自分の下腹部を見つめている…
+					CASE 1
+						PRINTFORMDL 静葉は苦しそうなうめき声を漏らした
+					CASEELSE
+						PRINTFORML 「うそ……何か産み付けられちゃったの…？」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「や、やだっ…何が入って…」
+					CASE 1
+						PRINTFORML 「え…え…お腹の中に…え…？」
+					CASEELSE
+						PRINTFORML 「うそ……何か産み付けられちゃったの…？」
+				ENDSELECT
+			ENDIF
+		;戦闘開始
+		CASE 54
+			IF (FLAG:15 == CFLAG:803 || FLAG:16 == CFLAG:803) && CFLAG:802 != 0
+				;穣子拘束中
+				IF CFLAG:(CFLAG:803):20
+					PRINTFORML 「ま、待っててね穣子ちゃん！お姉ちゃんがすぐに助けてあげる！」
+				ELSEIF CFLAG:802 != 3
+					PRINTFORML 「穣子ちゃん…よかった、無事だったのね」
+					PRINTFORML 「ううん、それより今は…目の前の化物をなんとかしましょ！」
+				ENDIF
+			CFLAG:802 = 3
+			ENDIF
+		
+		
+		;逃走成功
+		CASE 55
+			;拘束中は静かに
+			IF CFLAG:20 || CFLAG:29
+				;
+			;MP1/4以下またはHP0
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「よかった……本当によかった……」
+					CASE 1
+						PRINTFORML 「はぁっ…はぁっ…もう……追ってこないわよね？」
+					CASEELSE
+						PRINTFORML 「怖かった……怖かった……」
+						PRINTFORMDL 静葉は安心して気が抜けたのかその場に座り込むとめそめそ泣きはじめた。
+				ENDSELECT
+			;その他
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「よかった…逃げれたみたいね」
+				CASE 1
+					PRINTFORML 「息が…あがって……くるしっ……」
+				CASEELSE
+					PRINTFORML 「怖かった……」
+			ENDSELECT
+			ENDIF
+		;!!! v0.05.3で逃走口上の仕様が変わったため、勝手に改変
+		CASE 62
+			;穣子を見捨てた
+			IF ARG:2 == 38 || ARG:3 == 38
+				PRINTFORML 「穣子ちゃん！お姉ちゃん助けをよんでくるから！」
+				PRINTFORML 「だからもう少しだけ我慢して…！」
+			ELSE
+				PRINTFORML 「ごめんなさい…私の力じゃどうすることもできないの……」
+			ENDIF
+		CASE 63
+			IF TARGET == 1
+				;穣子に見捨てられた
+				IF ARG:2 == 38 || ARG:3 == 38
+					IF CFLAG:21
+						PRINTFORMDL 騒がしかった外が急に静かになった
+						PRINTFORMDL まさか穣子も捕まってしまったのだろうか？
+						PRINTFORMDL 静葉はゾッとして暴れるが静葉の全身を咥えこむ肉壁は彼女の全身を完全に包み込み抵抗を許さない。
+						PRINTFORMDL そんな静葉に押し付けられた肉壁の向こうから少しずつ遠のいていく足音が耳に入った…
+						PRINTFORML (……よかった。穣子ちゃんは逃げられたのね)
+						PRINTFORML (でも…私はきっともう助からないわね……)
+						PRINTFORMDL 静葉は肉壁から次々と生える触手に絡みつかれ、と噴き出す気味の悪い粘液を浴びながら抵抗を諦める……
+						PRINTFORML (せめて…せめて穣子ちゃんだけでも無事にかえって……)
+					ELSE
+						PRINTFORML 「穣子ちゃん逃げてええ！！」
+						PRINTFORMDL 必死に戦う穣子は困惑した表情で静葉と触手へ顔を向けた。
+						PRINTFORML 「お姉ちゃんは大丈夫だから！だから穣子ちゃんは逃げて！」
+						PRINTFORMDL 穣子は下唇を噛み、少し俯いた後、全力で駆け出した。
+						PRINTFORMDL 何度も何度も振り返る穣子に静葉は快感と不快感で声が漏れそうになるのを必死に堪えながら
+						PRINTFORMDL それでも精一杯の笑顔で穣子を見送った…
+						PRINTFORMDL 穣子の姿が見えなくなったところで静葉は溜め込んでいた涙を溢れさせた…
+					ENDIF
+				ELSE
+					IF CFLAG:21
+						PRINTFORMDL 騒がしかった外が急に静かになった
+						PRINTFORMDL まさか全滅してしまったのだろうか？
+						PRINTFORMDL 静葉はゾッとして暴れるが静葉の全身を咥えこむ肉壁は彼女の全身を完全に包み込み抵抗を許さない。
+						PRINTFORMDL そんな静葉に押し付けられた肉壁の向こうから少しずつ遠のいていく足音が耳に入った…
+						PRINTFORML (もしかして……見捨てられたの？)
+						PRINTFORML (ううん、きっと助けを呼びに行ったのよね……）
+						PRINTFORMDL 静葉の瞳から大粒の涙がこぼれた。
+						IF FLAG:AUTOMODE
+							PRINTFORML (そんなわけ…ないじゃない……私……見捨てられたのね…)
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW (そんなわけ…ないじゃない……私……見捨てられたのね…)
+						ENDIF
+						PRINTFORMDL 静葉は肉壁から次々と生える触手に絡みつかれ、噴き出す気味の悪い粘液を浴びながら抵抗を諦めた……
+					ELSE
+						PRINTFORMDL %CALLNAME:(ARG:2)%が申し訳なさそうな視線を静葉に向けたかと思うとくるりと踵を返した
+						PRINTFORML 「え……どうして…？」
+						PRINTFORMDL 静葉よりも先に状況を理解した触手が不幸な獲物をしゃぶりつくそうと殺到する…！
+						PRINTFORML 「お願いっ！助けてぇ！」
+						PRINTFORMDL 静葉は精一杯の大声を出すが、それっきりぐったりと全身の力を抜いた…
+						PRINTFORMDL (助けられたら……置いていくわけないわ……)
+						PRINTFORMDL もう助からない。そう思った静葉は触手に身をゆだねた……
+					ENDIF
+				ENDIF
+			ELSE
+				;穣子が見捨てた
+				IF ARG:2 == 38 || ARG:3 == 38
+					IF CFLAG:21
+						PRINTFORMDL 呑み込まれている静葉を置いて逃げることを決めた穣子は何度も静葉が呑まれている方を振り返っている…
+					ELSE
+						PRINTFORMDL 捕らえられた静葉を置いて逃げることができず必死に戦っている穣子に静葉が叫んだ。
+						PRINTFORML 「穣子ちゃん逃げてええ！！」
+						PRINTFORML 「お姉ちゃんは大丈夫だから！だから穣子ちゃんは逃げて！」
+						PRINTFORMDL そんなわけがないと頭で分かっていても、従うしかない自分が悔しくて穣子は俯き、下唇を噛んだ。
+						PRINTFORMDL 穣子は何度も後ろを振り返りながらも静葉を置いて逃げ出した。
+						PRINTFORMDL 静葉は穣子の姿が見えなくなるまで、安心させるかのようにずっと笑顔だった……
+					ENDIF
+				ELSE
+					IF CFLAG:21
+						PRINTFORMDL 呑み込まれている静葉の救出を諦めた%CALLNAME:1%はこの場を離れることにした…
+						PRINTFORMDL 静葉は自身が助からないと悟ったのか少しも抵抗をしている様子がない……
+					ELSE
+						PRINTFORML 「お願いっ！助けてぇ！」
+						PRINTFORMDL それだけ叫んだ静葉だが、すぐに諦めたのかそれっきり言葉を発しなかった。
+						PRINTFORMDL %CALLNAME:1%がちらりと後ろへ視線をやるとぐったりとした静葉が少しの抵抗もせずに触手に陵辱されていた……
+					ENDIF
+				ENDIF
+			ENDIF
+		;戦闘勝利
+		CASE 57
+			;喪失中は静かにしようねえ
+			IF CFLAG:29
+			;戦闘が終わったみたいだけどもうどうでもいいや早く帰りたいこれ以上動けない的な気持ち
+			ELSE
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「はぁ…はぁ……終わったの？」
+				CASE 1
+					PRINTFORML 「もう…大丈夫かしら……？」
+				;仲間がいる
+				CASE 2
+					IF (TARGET == 1 && FLAG:10) || TARGET != 1
+						PRINTFORML 「服の穴、直してあげる。ほら、見せてね」
+					;一人で服着てる
+					ELSEIF BASE:3
+						PRINTFORML 「早めに破れたところを直しておかなくちゃ…」
+					;一人で全裸
+					ELSE
+						PRINTFORML 「恥ずかしい……新しい服はないの……？」
+					ENDIF
+				CASEELSE
+					PRINTFORML 「もう…帰りたい……」
+			ENDSELECT
+			ENDIF
+		;誰かに会う
+		CASE 101
+			IF ARG:2
+				PRINTFORMDL …？
+				PRINTFORMDL 誰かの弱々しい息遣いが聞えた気がした。
+			;喪失中
+			ELSEIF CFLAG:29
+				;穣子にだけ反応
+				IF ARG:1 == 38
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「み……みの……ぁぁ…」
+						CASE 1
+							PRINTFORML 「ぁぁ………ぁぁっ…ぁ…」
+						CASEELSE
+							PRINTFORML (……何か…穣子ちゃんに)
+					ENDSELECT
+				ENDIF
+			ELSE
+			;穣子
+				IF ARG:1 == CFLAG:803
+					;穣子未遭遇
+					IF CFLAG:802 < 3
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML 「穣子ちゃん！？」
+							CASE 1
+								PRINTFORML （やっと見つけた…）
+							CASEELSE
+								PRINTFORML (やっぱり穣子ちゃんも攫われていたのね…)
+						ENDSELECT
+					;穣子遭遇済みフラグ
+					CFLAG:802 = 3
+					ELSEIF CFLAG:802 == 3
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (穣子ちゃんの顔を見ると安心するわね）
+							CASE 1
+								PRINTFORML （一緒に行動するべきかしら？）
+							CASEELSE
+								PRINTFORML (んー…声をかけたら邪魔しちゃうかな？)
+						ENDSELECT
+					ELSEIF CFLAG:802 == 4
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORML (穣子ちゃん！？でもあれは間違いなく穣子ちゃんの…）
+							CASE 1
+								PRINTFORML （よかった…帽子を落としただけだったのね…）
+							CASEELSE
+								PRINTFORML (どうして…ううん、今は素直に穣子ちゃんが生きていたことを喜びましょ！)
+						ENDSELECT
+					ENDIF
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML (誰かいるの……？)
+						CASE 1
+							PRINTFORML 「人……？妖怪……？」
+						CASEELSE
+							PRINTFORML 「あ……」
+					ENDSELECT
+				ENDIF
+			ENDIF
+
+		;別れる
+		CASE 102
+			;喪失キャラ
+			IF ARG:2 && NO:(ARG:1) == 38
+				PRINTFORML 「穣子ちゃん…また助けに戻るから…」
+			ELSEIF ARG:2
+				PRINTFORML （ごめんなさい…あなたを守りながらじゃとても戦えないの……）
+			ELSE
+				PRINTFORML （今はお話している場合じゃないわね）
+			ENDIF
+		;雑談
+		CASE 103
+			IF CFLAG:29
+			
+			ELSE
+				SELECTCASE NO:(ARG:1)
+					;レティ
+					CASE 12
+						SELECTCASE RAND:2
+							CASE 0
+								PRINTFORML 「…はぁ、さすがに今日はケンカする気なんてないわよ？」
+							CASE 1
+								PRINTFORML 「あなたもついてないわね…」
+						ENDSELECT
+					;穣子
+					CASE 38
+						SELECTCASE RAND:2
+						CASE 0
+							PRINTFORML 「大丈夫？怪我はない？」
+						CASE 1
+							PRINTFORML 「穣子ちゃん気をつけてね。お姉ちゃんも気をつけるから、ね？」
+						ENDSELECT
+					CASEELSE
+						SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「時間の感覚がくるってくるわ……」
+						CASE 1 
+							PRINTFORML 「ふふっ…お話ってこんなに楽しかったのね」
+						CASE 2
+							PRINTFORML 「こんな場所だけど出会えたのも何かの縁、外に出れたら一緒に紅葉狩りしましょう」
+						ENDSELECT
+				ENDSELECT
+			ENDIF
+			
+		;情報交換、穣子の情報を聞き出そうと必死
+		CASE 104
+			IF CFLAG:29
+			
+			;穣子と
+			ELSEIF ARG:1 == CFLAG:803
+				SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「お姉ちゃんと情報交換しましょ」
+				CASE 1 
+					PRINTFORML 「私が知ってることは…」
+				CASE 2
+					PRINTFORML 「あそこは危ないから穣子ちゃん近づいちゃダメよ。あとね…」
+				ENDSELECT
+			;探し中
+			ELSEIF CFLAG:802 <= 1
+				SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「あの…穣子ちゃんを見ませんでしたか？」
+				CASE 1 
+					PRINTFORML 「穣子ちゃんを探しているんです…」
+				CASE 2
+					PRINTFORML 「穣子ちゃんが神隠しにあってしまって…きっとここのいると思うのだけど…」
+				ENDSELECT
+					IF CFLAG:802
+					FOR LOCAL:0, 0, 5
+						CALL CHECK_MINORIKO_INFO(LOCAL:0)
+					NEXT
+						;隣の部屋でリタイア
+						IF CFLAG:804 == 1 && CFLAG:(CFLAG:803):2
+							SELECTCASE CFLAG:(ARG:1):100
+							;やさしいひと、おせっかい
+							CASE 1, 13
+								PRINTFORMDL 穣子はこの迷宮には居ないので自分の身を守ることを優先するように諭された…
+								PRINTFORML 「心配してくれてありがとう。そう…穣子ちゃんはいないのね…よかった……」
+								PRINTFORMDL %CALLNAME:(ARG:1)%の顔が悲しげに曇ったことに静葉は気づかなかった…
+								CFLAG:802 = 6
+							;がんこもの、きれもの、ねっけつかん、おてんば、がんばりもの　素直に教えてくれそうな人達
+							CASE 2, 3, 4, 5, 10
+								PRINTFORMDL 近くで穣子の持ち物が落ちていたことを教えてくれた
+								PRINTFORML 「そう、穣子もここに…ありがとう、教えてくれて」
+								CFLAG:802 = 2
+							CASEELSE
+								PRINTFORMDL %CALLNAME:(ARG:1)%は迷宮の中で穣子らしき人をみたらしい
+								PRINTFORMDL しかし…この胸騒ぎは何なのだろうか…？
+								CFLAG:802 = 2
+							ENDSELECT
+						
+						;隣の部屋で拘束、喪失
+						ELSEIF CFLAG:804 == 1 && (CFLAG:(CFLAG:803):20 || CFLAG:(CFLAG:803):29)
+							SELECTCASE CFLAG:(ARG:1):100
+							;やさしいひと、頑固者、がんばりや、おせっかい、きれもの、ねっけつかん
+							CASE 1, 3, 4, 5, 10, 13,
+								PRINTFORMDL ついさっき危険な状態の穣子を見かけたので急いだほうがいいと言われた
+								PRINTFORML 「そんな…！？教えてくれてありがとう！」
+							CASEELSE
+								PRINTFORMDL 最近、穣子を見かけた気がすると教えてもらえた
+								PRINTFORML 「穣子ちゃんもここにいるのね…教えてくれてありがとう」
+							ENDSELECT
+							CFLAG:802 = 2
+							
+						;隣の部屋にいると必ず、迷宮内に居ると3%くらいでおしえてくれる
+						ELSEIF (RAND:30 == 0 && CFLAG:802 != 0) || CFLAG:804
+							PRINTFORMDL %CALLNAME:(ARG:1)%は迷宮の中で穣子らしき人をみたらしい
+							;だがもう穣子はいない…
+							SIF CFLAG:(CFLAG:803):2 || CFLAG:(CFLAG:803):29 || CFLAG:(CFLAG:803):20
+								PRINTFORMDL しかし…この胸騒ぎは何なのだろうか…？
+							;穣子目撃証言フラグ
+							CFLAG:802 = 2
+						ELSE
+							PRINTFORMDL %CALLNAME:(ARG:1)%に尋ねたが穣子の行方はわからなかった…
+							IF DAY > 13
+								PRINTFORMDL これだけ探しても誰も見ていないのなら最初からいないのでは？
+								PRINTFORMDL 静葉は複雑な表情で「そうかもしれません」と呟くと俯いた
+								PRINTFORML 「穣子…」
+									CFLAG:802 = 6
+							ENDIF
+						ENDIF
+						CFLAG:804 = 0
+					;穣子がそもそもダンジョンに居ない場合
+					ELSE
+						PRINTFORMDL %CALLNAME:(ARG:1)%に尋ねたが穣子の行方はわからなかった…
+						IF DAY > 13
+							PRINTFORMDL これだけ探しても誰も見ていないのなら最初からいないのでは？
+							PRINTFORMDL 静葉は複雑な表情で「そうかもしれません」と呟くと俯いた
+							PRINTFORML 「穣子…」
+								CFLAG:802 = 6
+						ENDIF
+					ENDIF
+			ELSE
+				SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「情報交換しましょうか」
+				CASE 1 
+					PRINTFORML 「きっと…情報があればお互いの為になると思うんです」
+				CASE 2
+					PRINTFORML 「以上が私の知っていることです。役に立つと嬉しいです」
+				ENDSELECT
+			
+			ENDIF
+		;パーティー加入誘われた
+		CASE 140
+			IF CFLAG:29
+				
+			ELSEIF ARG:2
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「よかった……一人だと心細かったの……」
+					CASE 1
+						PRINTFORML 「嬉しい…怖かった…」
+					CASEELSE
+						PRINTFORML 「私でいいの…？」
+				ENDSELECT
+			ENDIF
+		
+		;パーティー勧誘成功
+		CASE 107
+			IF CFLAG:29
+				PRINTFORMDL 力なく横たわっている%CALLNAME:(ARG:1)%の手を静葉はそっととった…
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「身を守る為には協力は必須よね」
+					CASE 1
+						PRINTFORML 「迷惑かけないように気をつけるわ…」
+					CASEELSE
+						PRINTFORML 「戦闘はお願いしちゃってもいいかしら？」
+				ENDSELECT
+			ENDIF
+		
+		;パーティ加入
+		CASE 109
+			IF CFLAG:29
+				PRINTFORMDL 静葉は弱々しくありがとうと唇を震わせている……
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「早く外にでたいわね…」
+					CASE 1
+						PRINTFORML 「戦闘は苦手だけど……お裁縫なら力になれるわ」
+					CASEELSE
+						PRINTFORML 「みんなでこんな場所から逃げましょう」
+				ENDSELECT
+			ENDIF
+		CASE 110
+			;PTメンバーと別れる
+			IF TARGET == 1 && CFLAG:29 != 1
+				;主人公として表示する場合、ARG:1のキャラを見送る
+				;穣子なら
+				IF NO:(ARG:1) == 38
+					IF CFLAG:(ARG:1):29
+						PRINTFORML 「穣子ちゃん、ごめんね。ちょっとだけここで待ってて…」
+						PRINTFORML 「必ず助けに戻るから……」
+					ELSE
+						PRINTFORML 「穣子ちゃん、二手に分かれて行動しましょう。
+						PRINTFORML 「心配しないで、お姉ちゃんは大丈夫よ。」
+					ENDIF
+				ELSE
+					IF CFLAG:(ARG:1):29
+						PRINTFORML 「ごめんなさい…あなたを守りながらじゃとても戦えないの……」
+					ELSE
+						PRINTFORML 「ここは二手にわかれましょう」
+					ENDIF
+				ENDIF
+			ELSE
+				;それ以外の場合、自分が抜ける
+				;喪失中
+				IF CFLAG:29
+					PRINTFORMDL 身も心もボロボロで自分で歩くことも出来ない静葉を守りながら探索を続けるのは難しい…
+					PRINTFORMDL そう判断した%CALLNAME:1%は静葉をおいていくことにした……
+				ELSE
+					PRINTFORML 「二手に…ですね」
+					PRINTFORML 「……不安じゃないといえば嘘になっちゃうけれどそのほうがいいというなら」
+					PRINTFORML 「お互いに無事に逃げられるように頑張りましょう」
+				ENDIF
+			ENDIF
+			;アイテム発見
+			CASE 113
+			;喪失中はだまr
+			IF CFLAG:29
+			;
+			ELSE
+				;ARG:1にアイテムID
+				SELECTCASE ARG:1
+					;着替えセット
+					CASE 54
+					;全裸
+						IF BASE:3 == 0
+							IF RAND:2 == 0
+								PRINTFORML 「ぅぅ…これで着替えられるわ」
+							ELSE
+								PRINTFORML 「早く服をきちゃいましょ…恥ずかしくて恥ずかしくて…」
+							ENDIF
+						ELSE
+							IF RAND:2 == 0
+								PRINTFORML 「万が一、服を破かれてもこれで安心ね」
+							ELSE
+								PRINTFORML 「こんなに服をありがたく感じる日がくるとは…はぁ…」
+							ENDIF
+						ENDIF
+				
+				ENDSELECT
+				
+				
+			ENDIF
+	;睡眠開始
+	CASE 114
+		IF CFLAG:29
+		
+		ELSE
+		SELECTCASE ARG:1
+			;見張りなし
+			CASE 0
+				;朦朧
+				IF FLAG:7 >= 11
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「もう…これ以上は…」
+						CASE 1
+							PRINTFORML 「限界……よ…」
+						CASEELSE
+							PRINTFORMDL 静葉はその場で崩れ落ちるように倒れると寝息を立て始めた
+					ENDSELECT
+				;妊娠か寄生
+				ELSEIF CFLAG:36 >= 3 || CFLAG:22
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「お腹…くるし…」
+						CASE 1
+							PRINTFORML 「……なかなか寝付けないわ」
+						CASEELSE
+							PRINTFORML 「睡魔が襲ってきても…なんだかお腹が気になる…」
+					ENDSELECT
+				;要睡眠
+				ELSEIF FLAG:7 >= 7
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ふぁ…おやすみなさい…」
+						CASE 1
+							PRINTFORML 「こんな場所でも…寝れそうなくらい眠いわ…」
+						CASEELSE
+							PRINTFORML 「ん……寝れなくはないわね…」
+					ENDSELECT
+				;睡眠可
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「おふとん……ほしいわ…」
+						CASE 1
+							PRINTFORML 「…生暖かいのに横になるとちょっと寒い」
+						CASEELSE
+							PRINTFORML 「おやすみなさい…」
+					ENDSELECT
+				ENDIF
+			;PTで見張り
+			CASE 1
+				;朦朧
+				IF FLAG:7 >= 11
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「もう…これ以上は…」
+						CASE 1
+							PRINTFORML 「限界……よ…」
+						CASEELSE
+							PRINTFORMDL 静葉はその場で崩れ落ちるように倒れると寝息を立て始めた
+					ENDSELECT
+				;妊娠か寄生
+				ELSEIF CFLAG:36 >= 3 || CFLAG:22
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「…交代ね」
+							PRINTFORML 「大丈夫よ、ちゃんと寝れてるわ…」
+						CASE 1
+							PRINTFORML 「……あ、もう交代なのね」
+							PRINTFORML (全然眠った気がしないわ…)
+						CASEELSE
+							PRINTFORML 「睡魔が襲ってきても…なんだかお腹が気になって…」
+					ENDSELECT
+				;要睡眠
+				ELSEIF FLAG:7 >= 7
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ふぁ…おやすみなさい…」
+						CASE 1
+							PRINTFORML 「ん～…まぁまぁ寝れたかしら。見張りの交代しましょ」
+						CASEELSE
+							PRINTFORML 「意外と寝れなるものね…」
+					ENDSELECT
+				;睡眠可
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「おふとんが恋しい…」
+						CASE 1
+							PRINTFORML 「交代ね、おかげさまでちょっとすっきりしたわ」
+						CASEELSE
+							PRINTFORML 「おやすみなさい…」
+					ENDSELECT
+				ENDIF
+			;NPCに見張り ARG:2で見張りキャラ
+			CASE 2
+				;朦朧
+				IF FLAG:7 >= 11
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ごめんなさい…もう…眠くて…」
+						CASE 1
+							PRINTFORML 「限界なの…見張り…お願いします…」
+						CASEELSE
+							PRINTFORMDL 静葉はその場で崩れ落ちるように倒れると寝息を立て始めた
+					ENDSELECT
+				;妊娠か寄生
+				ELSEIF CFLAG:36 >= 3 || CFLAG:22
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「お腹…くるし…」
+						CASE 1
+							PRINTFORML 「……面倒な仕事押し付けてごめんなさい」
+						CASEELSE
+							PRINTFORML 「ありがとう。体調が悪くて…とても助かります」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「面倒ごと押し付けてごめんなさい」
+						CASE 1
+							PRINTFORML 「とっても助かります…」
+						CASEELSE
+							PRINTFORML 「このお礼はいつか…」
+					ENDSELECT
+				ENDIF
+		ENDSELECT
+		ENDIF
+		;絶頂
+		CASE 120
+			;諦めた
+			IF TFLAG:16 == 2
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「もう、もうやだぁあ！」
+					CASE 1
+						PRINTFORML 「らくにっ！早くらくにしてよぉ！」
+					CASE 2
+						PRINTFORML 「いっそ一思いに殺して！殺してぇえ！」
+					CASE 3
+						PRINTFORML 「いやっ！もういやぁあ！」
+					CASE 4
+						PRINTFORML 「心まで汚されたくないのに…ぁ…いやぁあ！？」
+				ENDSELECT
+			;MP1/4以下か喪失
+			ELSEIF MAXBASE:MP/4 >= BASE:MP || CFLAG:29
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「ぁ…ぁあぁ！？」
+					CASE 1
+						PRINTFORML 「こわれちゃう…こわれ…ぁあっいやあぁああ！」
+					CASEELSE
+						PRINTFORMDL 静葉は声も出せずに背中をのけぞらせ全身を激しく痙攣させた…
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORM 「やっ…だめ…ぁ…ぁぁ……
+						CALL HEARTC()
+						PRINTFORML 」
+					CASE 1
+						PRINTFORML 「ふぁあぁあ！？」
+					CASEELSE
+						PRINTFORM 「やめて！やめてぇ！やめぇえぇえええ！
+						CALL HEARTC()
+						PRINTFORML 」
+				ENDSELECT
+			ENDIF
+		
+		CASE 125
+			;寄生が進行
+			IF CFLAG:29
+			
+			ELSEIF ARG:1 == 8
+				PRINTFORML 「ひっ……」
+				PRINTFORML (お腹の中に何か……まさか……)
+				PRINTFORMDL 静葉は呆然と立ち尽くしている
+			ELSEIF ARG:1 == 4
+				PRINTFORML 「どうしよう…何かがおなかの中に……」
+				PRINTFORMDL 腹の中で時折這い回る何かに対する恐怖の為か静葉は元気がない…
+			ELSEIF ARG:1 == 1
+				PRINTFORMDL 時折腹部を押える静葉は今にも泣き出しそうな顔をしている。
+				PRINTFORML 「なんとなくわかるの…もう間に合わないって……」
+			ENDIF
+		CASE 126
+			;妊娠が進行
+			IF CFLAG:29
+				IF ARG:1 == 9
+					PRINTFORML 「………できちゃったの？」
+				ELSEIF ARG:1 == 8
+					;セーフ
+					IF CFLAG:36 == 1
+						PRINTFORML 「………また…どうせ…すぐに」
+					;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+					ELSE
+						PRINTFORML 「ふふ……あかちゃん…ばけものの……」
+					ENDIF
+				ELSEIF ARG:1 == 3
+					PRINTFORMDL 腹部を押えた静葉は声もださずただ涙を流し続けている…
+				ELSEIF ARG:1 == 1
+					PRINTFORMDL 静葉は膨らみきった腹をなでながら呆然としている…
+				ENDIF
+			;平常時
+			ELSE
+				IF ARG:1 == 11
+					PRINTFORML 「……あ…あら？」
+					PRINTFORML 「……めまいが」
+				ELSEIF ARG:1 == 8
+					;セーフ
+					IF CFLAG:36 == 1
+						PRINTFORML 「少しは体の調子…もどったかしら？」
+					;ﾃﾞﾃﾞｰﾝｱｳﾄｰ
+					ELSE
+						PRINTFORML 「あ…あぁ……お腹が…ふくらんで…そんな…だって相手は化物で……」
+					ENDIF
+				ELSEIF ARG:1 == 3
+					PRINTFORML 「ごめんなさい…貴方がこの世に産まれてくることをお母さんは素直に喜んであげられないの…」
+				ELSEIF ARG:1 == 1
+					PRINTFORML 「もうすぐなのね……私…どうしたら……」
+				ENDIF
+			ENDIF
+			
+		CASE 127
+			;寄生出産
+			SELECTCASE ARG:1
+				CASE 0
+					;
+				CASE 1
+					;
+				CASE 2
+					;
+				ENDSELECT
+		;浄化
+		CASE 130
+			IF CFLAG:29
+			
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「あまり終焉の力をこんなことに使いたくはないけれど…」
+					CASE 1
+						PRINTFORML 「秋の風よ、静寂と平穏を…」
+					CASEELSE
+						PRINTFORML 「さあ、綺麗にするわよ」
+				ENDSELECT
+			ENDIF
+		
+		CASE 132
+			;部屋を移動（突撃）
+			IF TARGET == 1 && CFLAG:29 != 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「はぁっ…はぁっ……」
+						CASE 1
+							PRINTFORML 「誰か……助けて……」
+						CASEELSE
+							PRINTFORML 「少しでも早く……移動しないと……」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「覚悟を決めて……」
+						CASE 1
+							PRINTFORML 「と、突撃ー！」
+						CASEELSE
+							PRINTFORML 「思い切って…やあああ！」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 133
+			;部屋を移動（慎重）
+			IF TARGET == 1 && CFLAG:29 != 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「気づかれたら……きっともうダメ……」
+						CASE 1
+							PRINTFORML (とにかく見つからないように…うう…見つかる気がするわ…)
+						CASEELSE
+							PRINTFORML (お願い……誰も私に気づかないで……)
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「そーっと……」
+						CASE 1
+							PRINTFORML 「静けさを司っているけど…こういうことは……」
+						CASEELSE
+							PRINTFORML (私、運動苦手だしきっと枝踏んづけたり転んだりするんだわ…)
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 134
+			;部屋を移動（待ち伏せ）
+			IF TARGET == 1 && CFLAG:29 != 1
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「危険が去るまでは隠れましょう……」
+						CASE 1
+							PRINTFORML (隠れていれば…きっと誰かが助けにきてくれる……わけないわよね･･･ぐすっ)
+						CASEELSE
+							PRINTFORML 「ほんとは動くのが辛いだけ……」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「待ち伏せなんて卑怯な気もするけど…そんなこと言ってる場合じゃないわよね」
+						CASE 1
+							PRINTFORML 「今は身を潜めましょう…」
+						CASEELSE
+							PRINTFORML 「ちょっと休憩も兼ねて…ね？」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		CASE 135
+			;部屋を移動（探索）
+			IF TARGET == 1 && CFLAG:29 != 1
+			;MP1/4以下またはHP0
+				IF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「何か…助けになるもの……そんな都合よくみつからないわよね」
+						CASE 1
+							PRINTFORML 「こういうときに限って罠にひっかかるのよね…」
+						CASEELSE
+							PRINTFORMDL 静葉は深刻な表情で部屋を探索している。
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「少しでも身を守るものを見つけないと」
+						CASE 1
+							PRINTFORML 「何か外に出るヒントはないのかしら…」
+						CASEELSE
+							PRINTFORML 「罠を見つけなければいいのだけど…」
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;処女喪失
+		CASE 136
+			SELECTCASE ARG:1
+				CASE 0
+					SELECTCASE ARG:3
+						CASE 1
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「こんな初めてなんてイヤっ！」
+								CASE 1
+									PRINTFORML 「やめて……ここ以外には何してもいいから……」
+								CASEELSE
+									PRINTFORMDL 静葉は普段出さないような叫び声をあげて暴れている
+							ENDSELECT
+						CASE 2
+							SELECTCASE RAND:3
+								CASE 0
+									PRINTFORML 「ひっく…えっく……このままじゃいつか奪われちゃう…」
+								CASE 1
+									PRINTFORML 「よかった……」
+								CASEELSE
+									PRINTFORMDL 静葉は安堵とまだ残る恐怖とで肩で激しく息をしている
+							ENDSELECT
+						CASEELSE
+							PRINTFORML 「いやぁああああ！！」
+							IF FLAG:AUTOMODE
+								PRINTFORMDL 静葉は下腹部の圧迫感に思わず涙を滲ませた…
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMDW 静葉は下腹部の圧迫感に思わず涙を滲ませた…
+							ENDIF
+							PRINTFORML 「どうして…どうして初めてが……化物なんかに…」
+							IF FLAG:AUTOMODE
+								PRINTFORML 「どうして……どうして…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「どうして……どうして…」
+							ENDIF
+					ENDSELECT
+			ENDSELECT
+		
+		CASE 142
+			;ドッペる
+			IF ARG:2 == 1
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「稔子ちゃんを見ませんでしたか？ふふ…ねえ、教えてください」
+					CASE 1
+						PRINTFORML 「ﾐﾉﾙｺﾁｬﾝﾐﾉﾙｺﾁｬﾝﾐﾉﾙｺﾁｬﾝﾐﾉﾙｺﾁｬﾝﾐﾉﾙｺﾁｬﾝﾐﾉﾙｺﾁｬﾝﾐﾉﾙｺﾁｬﾝﾐﾉﾙｺﾁｬﾝ」
+					CASEELSE
+						PRINTFORML 「私、葉っぱだけじゃなくて女の子の顔を絶望色に塗るのも得意なんですよ、ふふっ♪」
+				ENDSELECT
+			ENDIF
+		
+		;完全捕食
+		CASE 152
+			IF CFLAG:802 == 4
+				IF FLAG:AUTOMODE
+					PRINTFORML 「穣子ちゃん……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「穣子ちゃん……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「今…あいにいく…ね……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「今…あいにいく…ね……」
+				ENDIF
+			ELSEIF CFLAG:802 == 3 || CFLAG:802 == 2
+				IF FLAG:AUTOMODE
+					PRINTFORML 「穣子ちゃん…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「穣子ちゃん…」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あなただけでも……無事に…逃……げ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あなただけでも……無事に…逃……げ…」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「ごめん…ね…穣子ちゃん……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「ごめん…ね…穣子ちゃん……」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「お姉ちゃんは……もう…ダ………メ…」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「お姉ちゃんは……もう…ダ………メ…」
+				ENDIF
+			ENDIF
+		;復活！
+		CASE 158
+			SELECTCASE ARG:1
+				;助けてもらった
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「ありが……とう…」
+						CASE 1
+							PRINTFORMDL 静葉は濁った瞳でふらふらと立ち上がった…
+						CASEELSE
+							PRINTFORML 「たすか…ったの？」
+					ENDSELECT
+				;捨てられた
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「逃げなくちゃ…」
+						CASE 1
+							PRINTFORMDL 静葉はふらつく足取りで必死に逃げ出した……
+						CASEELSE
+							PRINTFORML 「誰か……助けて……」
+					ENDSELECT
+			ENDSELECT
+			
+	;静葉お姉ちゃんとお風呂に入ったら「あんまり体に自信はなくて…」って前をがっちり隠しているんだけど
+	;背中、お姉ちゃんが流してあげるって言ってくれたり鏡にはばっちり静葉お姉ちゃんの貧相な体が映っているのに本人は気づいていなくて
+	;腕を動かすたびに侘しい胸が上下して（中略）少しゆっくりしすぎてのぼせて上気した頬と肌が（中略）お姫様抱っこ（中略）そのままベッドに放り投げ（中略）白濁液（中略）泣きじゃくる静葉お姉ちゃん（中略）サニーちゃんが目撃(中略）包丁（中略）言い訳をきいてk（中略）[0]タイトルに戻る
+	;
+	;おふろ
+	CASE 149
+	;静葉お姉ちゃんの死に風呂
+	IF CFLAG:29
+	;
+	ELSE
+		SELECTCASE RAND:5
+			CASE 0
+				PRINTFORML 「ふぅ……なんだか元気になる気がするわ」
+			CASE 1
+				PRINTFORML 「んーっ…家に帰ったら穣子ちゃんとのんびりお風呂に入りたいわね」
+			CASE 2
+				PRINTFORML 「少し趣向をこらして紅葉を浮かべてみたの」
+			CASE 3
+				PRINTFORML 「……数刻後にはまた汚れてしまうのよね、きっと」
+			CASEELSE
+				PRINTFORMDL 静葉は幸せそうに湯船に浸かっている
+		ENDSELECT
+	ENDIF
+
+		
+
+		;好感度でPT離脱
+		CASE 161
+			;穣子
+			IF NO:(ARG:1) == 38
+				PRINTFORML 「穣子ちゃん…お姉ちゃんはね。穣子ちゃんだけでもいいから無事に帰って欲しいって思ってるわ」
+				PRINTFORML 「でもね、できれば二人で一緒に外に出たい…」
+				PRINTFORML 「だからこれからもお姉ちゃんを利用してでも助かろうなんて事をするなら……」
+				PRINTFORML 「……穣子ちゃんも必死なのは分かってあげたいわ」
+				PRINTFORML 「でも、しばらくは別々に行動しましょう。お姉ちゃん、穣子ちゃんを嫌いになんてなりたくないの」
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「…私が幻想郷の秋を司る神だということを忘れてはいませんか？」
+						PRINTFORML 「信仰を強要するつもりはありません」
+						PRINTFORML 「ですが、私への扱いは余りにも礼節に欠けるとは思いませんか？」
+						PRINTFORMDL 静葉は静かに、だが強い調子でそう言い残した。
+					CASE 1
+						PRINTFORML 「…私は戦闘は得意じゃありません」
+						PRINTFORML 「ですので同行してくれたことには少なからず感謝をしていないわけではないですよ」
+						PRINTFORML 「けれども貴方は私の事を便利な囮程度にしか思ってはいないのでしょう？」
+					CASEELSE
+						PRINTFORML 「ごめんなさい。これ以上貴方について行っても危険なだけとしか思えません」
+				ENDSELECT
+			ENDIF
+
+		;好感度でPT離脱される
+		CASE 162
+			;穣子
+			IF NO:(ARG:1) == 38
+				PRINTFORML 「あ…穣子ちゃん…お姉ちゃんそんなつもりじゃ……」
+				PRINTFORML 「一人じゃあぶないわよ！？お願い！お姉ちゃんの言うことを聞いて！」
+				PRINTFORML 「……いいわ！お姉ちゃん、もう穣子ちゃんのことなんて知らないんだから！ばかっ！」
+				PRINTFORML 「………ばか…もう知らないっ」
+				PRINTFORML 「……無事でいて」
+			ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「…ごめんなさい。少し気遣いがたりなかったです」
+				CASE 1
+					PRINTFORML 「あ……」
+					PRINTFORMDL 静葉は申し訳なさそうな表情で佇んでいる。
+				CASEELSE
+					PRINTFORML 「……私はこれからどうしたら」
+			ENDSELECT
+			ENDIF
+
+	;MAP表示時に一言
+	CASE 160
+		;開始時
+		IF DAY == 1 && TIME:0 == 0
+			PRINTFORML 「まずは落ち着いて…うん、落ち着いて探索して状況を確認しましょう」
+		;睡眠中は静かにしようね
+		ELSEIF CFLAG:25
+		;
+		;喪失時
+		ELSEIF CFLAG:29
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「………ぁぁぁ」
+				CASE 1
+					PRINTFORML 「………………」
+				CASE 2
+					PRINTFORMDL 静葉は濁った瞳から涙を流している…
+			ENDSELECT
+		;汎用メッセージ、元気があればあれこれ喋るよ！
+		ELSEIF RAND:3 == 0 && (MAXBASE:MP/4 < BASE:MP || BASE:HP != 0)
+			SELECTCASE RAND:11
+				CASE 0
+					PRINTFORML 「家に泥棒とかはいってないといいけど…」
+				CASE 1
+					PRINTFORML 「はぁ…もうどのくらいここにいるのかしら…」
+				CASE 2
+					PRINTFORML 「せめて今が秋なら…」
+				CASE 3
+					PRINTFORML 「…怖い」
+				CASE 4
+					PRINTFORML 「少しずつこの環境に慣れてる自分が怖いわ」
+				CASE 5
+					PRINTFORML 「私の事、みんな心配しているわよね…」
+				CASE 6
+					PRINTFORML 「ひっ！？……気のせい･･･？」
+				CASE 7
+					PRINTFORML 「一体今はここに来て何日目なのかしら？」
+				CASE 8
+					PRINTFORML 「脱出できた人…いるのかしら？」
+				CASE 9
+					PRINTFORML 「髪の毛ぼさぼさ…」
+				CASEELSE
+					PRINTFORML 「誰が何のためにこんな場所を…」
+			ENDSELECT
+		
+		;MPが1/4以下またはHP0
+		ELSEIF MAXBASE:MP/4 >= BASE:MP || BASE:HP == 0
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もう…疲れちゃった…」
+				CASE 1
+					PRINTFORML 「ぐすっ……」
+				CASE 2
+					PRINTFORML 「……もう…ダメかも」
+			ENDSELECT
+		;朦朧
+		ELSEIF FLAG:7 >= 11
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「もう…眠気が限界…」
+				CASE 1
+					PRINTFORML 「どこか眠れそうな場所……」
+				CASE 2
+					PRINTFORML 「眠すぎて…欠伸すらでない…」
+			ENDSELECT
+		;要睡眠
+		ELSEIF FLAG:7 >= 7
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「ふぁぁ…眠いわ……」
+				CASE 1
+					PRINTFORML （休憩したい……）
+				CASE 2
+					PRINTFORML 「こんな状態で化物にあったら…」
+			ENDSELECT
+		
+		ELSEIF CFLAG:22
+		;寄生時
+			IF CFLAG:23 == 12
+				PRINTFORML 「…ぐすっ…はやくなんとかしないと」
+			ELSEIF CFLAG:23 == 8
+				PRINTFORML 「おなかの中で動いてる……」
+			ELSEIF CFLAG:23 == 4
+				PRINTFORML 「はぁ……はぁ……おなかが…」
+			ELSEIF CFLAG:23 == 2
+				PRINTFORML 「痛い…産まれそう……」
+			ELSE
+				PRINTFORML 「調子…悪いわ…」
+			ENDIF
+		ELSEIF CFLAG:36
+		;妊娠時
+			IF CFLAG:23 == 11
+				PRINTFORML 「だるい…疲れがとれない……」
+			ELSEIF CFLAG:23 == 9
+				PRINTFORML 「疲れがたまってるのかしら…」
+			ELSEIF CFLAG:23 == 5
+				PRINTFORML 「赤ちゃん…どうしたらいいの……」
+			ELSEIF CFLAG:23 == 3
+				PRINTFORML 「もう化物を産むしかないのね…」
+			ELSEIF CFLAG:23 == 1
+				PRINTFORML 「誰でもいいの…助けて…」
+			ELSE
+				PRINTFORML 「調子…悪いわ…」
+			ENDIF
+		ELSEIF BASE:EP <= 1000 || CFLAG:28
+		;絶頂間際or発情
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML (全身気持ちよくて…もう…)
+				CASE 1
+					PRINTFORML (はしたないのに…いけないのに…)
+				CASE 2
+					PRINTFORML 「はぁ…はぁ……」
+			ENDSELECT
+		ELSEIF BASE:CP <= 0
+		;全裸
+			IF ITEM:54
+			;着替えセット所持
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「はやく着替えないと…恥ずかしい」
+					CASE 1
+						PRINTFORML 「着替え…あったわよね？」
+					CASE 2
+						PRINTFORML 「裸は…さすがに…ぅぅぅ」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「今は何よりも着替えよ着替え！」
+					CASE 1
+						PRINTFORML 「服を見つけなくちゃ…恥ずかしくて死んじゃいそう…」
+					CASE 2
+						PRINTFORML 「何でもいいから体を隠せるものが欲しい…」
+				ENDSELECT
+			ENDIF
+		ELSEIF BASE:CP <= MAXBASE:CP / 3
+		;半裸
+			IF ITEM:54
+			;着替えセット所持
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「着替えるべきかまだ取っておくべきか…うーん…」
+					CASE 1
+						PRINTFORML 「もうこんなにボロボロ…着替えようかしら」
+					CASE 2
+						PRINTFORML 「頑張って直せばまだ大丈夫そうだけど…」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORML 「着替えがないのは不安ね…」
+					CASE 1
+						PRINTFORML 「もう布が殆どのこってないわ…」
+					CASE 2
+						PRINTFORML 「着替え…ないかしら」
+				ENDSELECT
+			ENDIF
+		;きちゃない
+		ELSEIF BASE:DP >= 90
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「すごいにおい……」
+				CASE 1
+					PRINTFORML 「こんなに汚れちゃったら洗ってもそう簡単にはおちないわね」
+				CASE 2
+					PRINTFORML 「早くお風呂にはいりたいわ」
+			ENDSELECT
+		ELSEIF BASE:DP >= 60
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「だいぶ汚れちゃったわ…」
+				CASE 1
+					PRINTFORML 「･･･この匂い、私の体からしているの？」
+				CASE 2
+					PRINTFORML 「ひっ…こんなとこにまで粘液が…」
+			ENDSELECT
+		ELSEIF BASE:DP >= 30
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「きゃっ！？…いつのまに汚れたのかしら」
+				CASE 1
+					PRINTFORML 「ちょっと汚れちゃったわ」
+				CASE 2
+					PRINTFORML 「気にするほどの汚れではないけど…」
+			ENDSELECT
+		;全部ぬけたら(服着ていて元気があって清潔で眠くない)
+		;汎用一言２
+		ELSE
+			;穣子と一緒
+			IF FLAG:10 && (FLAG:10 == CFLAG:803 || FLAG:11 == CFLAG:803 || NO:1 == 38) && RAND:2
+				;穣子喪失で気付薬あり
+				IF CFLAG:(CFLAG:803):29 && ITEM:58
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「穣子ちゃん、しっかりして！」
+						CASE 1
+							PRINTFORML 「気付薬…使わないと…」
+						CASE 2
+							PRINTFORML 「穣子ちゃん、もう少しの辛抱だからね…」
+					ENDSELECT
+				;穣子喪失で気付薬なし
+				ELSEIF CFLAG:(CFLAG:803):29
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「穣子ちゃん、お姉ちゃんが守るから…」
+						CASE 1
+							PRINTFORML 「気付薬…早く見つけないと…」
+						CASE 2
+							PRINTFORML 「穣子ちゃん…ごめんね、もう少しだけ我慢してね…」
+					ENDSELECT
+				;穣子妊娠又は寄生
+				ELSEIF (CFLAG:(CFLAG:803):22 || CFLAG:(CFLAG:803):36 == 3) && RAND:2
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML (どうして私じゃなくて穣子ちゃんなの…)
+						CASE 1
+							PRINTFORML (穣子ちゃんのおなか…あんなになっちゃって…)
+						CASE 2
+							PRINTFORML (かける言葉が思いつかないわ…私…ダメなお姉ちゃんね…)
+					ENDSELECT
+				;穣子全裸でセット有り
+				ELSEIF !BASE:(CFLAG:803):CP && ITEM:54
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML (着替えセット…穣子ちゃんに使わなくちゃ)
+						CASE 1
+							PRINTFORML 「穣子ちゃん、着替えあるわよ？」
+						CASE 2
+							PRINTFORML 「穣子ちゃん…早く着替えたほうが…」
+					ENDSELECT
+				;穣子全裸でセットなし
+				ELSEIF !BASE:(CFLAG:803):CP
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORML 「穣子ちゃん、お姉ちゃんの服…着る？」
+						CASE 1
+							PRINTFORML 「お姉ちゃんの服使う？サイズ…あわないか」
+						CASE 2
+							PRINTFORML 「急いで服を見つけるからもう少しだけ我慢してね」
+					ENDSELECT
+				ELSE
+					SELECTCASE RAND:8
+						CASE 0
+							PRINTFORML 「穣子ちゃん大丈夫？」
+						CASE 1
+							PRINTFORML 「早く脱出したいわね」
+						CASE 2
+							PRINTFORML 「帰ったらまずはお風呂かしら…」
+						CASE 3
+							PRINTFORML 「怖いけど…穣子ちゃんがいるからお姉ちゃんは大丈夫よ」
+						CASE 4
+							PRINTFORML 「せめて今が秋ならよかったわね」
+						CASE 5
+							PRINTFORML 「はぁ……あ、ちょっと疲れただけよ」
+						CASE 6
+							PRINTFORML 「穣子ちゃん…大丈夫？」
+						CASEELSE
+							PRINTFORML 「ふぅ…お姉ちゃん、ちょっとだけ休んでもいい？」
+					ENDSELECT
+				ENDIF
+			;穣子遺品発見
+			ELSEIF CFLAG:802 == 4
+			SELECTCASE RAND:8
+				CASE 0
+					PRINTFORML 「穣子ちゃん…」
+				CASE 1
+					PRINTFORML 「どうして…どうして穣子ちゃんが…」
+				CASE 2
+					PRINTFORML 「ごめんね…穣子ちゃん…」
+				CASE 3
+					PRINTFORML 「…穣子ちゃん！？…そうよね、気のせいよね」
+				CASE 4
+					PRINTFORML 「……ぐすっ」
+				CASE 5
+					PRINTFORML 「……」
+				CASE 6
+					PRINTFORML 「私…これから一人でどうすればいいの…？」
+				CASEELSE
+					PRINTFORML 「妹一人守れないで何が神様よ…」
+			ENDSELECT
+			;穣子見たりきいたり
+			ELSEIF (CFLAG:802 == 2 || CFLAG:802 == 3) && RAND:2
+			SELECTCASE RAND:8
+				CASE 0
+					PRINTFORML 「穣子ちゃん…無事かしら？」
+				CASE 1
+					PRINTFORML 「せめて穣子ちゃんだけでも脱出してくれればいいのだけど…」
+				CASE 2
+					PRINTFORML 「会いたいよ…穣子ちゃん…」
+				CASE 3
+					PRINTFORML 「穣子ちゃん！？…気のせい…よね」
+				CASE 4
+					PRINTFORML 「せめて誰か強い人と一緒にいてくれればいいのだけど」
+				CASE 5
+					PRINTFORML 「はぁ……心配ね…」
+				CASE 6
+					PRINTFORML 「穣子ちゃん…」
+				CASEELSE
+					PRINTFORML 「穣子ちゃん、今どこで何をしてるのかしら…」
+			ENDSELECT
+			ELSE
+			SELECTCASE RAND:8
+				CASE 0
+					PRINTFORML 「今は進むしかないわね…」
+				CASE 1
+					PRINTFORML 「出口…どこかしら？」
+				CASE 2
+					PRINTFORML 「もう、散々ね…」
+				CASE 3
+					PRINTFORML 「あら？……気のせいかしら」
+				CASE 4
+					PRINTFORML 「せめて身を隠せる場所だけでもあれば…」
+				CASE 5
+					PRINTFORML 「はぁ……」
+				CASE 6
+					PRINTFORML 「帰れるのかしら……」
+				CASEELSE
+					PRINTFORML 「私の能力…役に立たないわね…くすん」
+			ENDSELECT
+			ENDIF
+		ENDIF
+
+
+
+	
+	;遺品
+	CASE 202
+		;穣子
+		IF NO:(ARG:1) == 38
+			PRINTFORMDL 静葉の目の前には穣子が帽子につけていたブドウの飾りの粒がバラバラになって散らばっていた…
+			;再会は遺品でした
+			IF CFLAG:802 == 1
+				PRINTFORML 「そんな……穣子ちゃん……」
+				PRINTFORML 「嘘でしょ…ねえ……」
+				PRINTFORML 「やっと…やっと遭えたのにこんなのって…」
+				PRINTFORML 「お姉ちゃん…これから一人ぼっちでどうしたらいいの？」
+				PRINTFORML 「ごめんね…お姉ちゃん、穣子ちゃんを助けられなかった…ダメなお姉ちゃんでごめんね…」
+				PRINTFORML 「ごめんね…ごめんね……ごめん…なさい……」
+				PRINTFORMDL 静葉は大声を上げて子供のように泣き続けた…
+				PRINTFORML 
+			;見たって話はきいていたけどやっぱり遺品でした
+			ELSEIF CFLAG:802 == 2
+				PRINTFORML 「どうして……なんでこんなものが…」
+				PRINTFORML 「…ねえ……どうしてなの…？」
+				PRINTFORML 「さっきまでここにいたんでしょう？…あなたを見た人がいたのよ？」
+				PRINTFORML 「それなのに…お姉ちゃんが…お姉ちゃんが遅かったから……
+				PRINTFORML 「もっと…早く…穣子ちゃんのことを見つけてあげられれば…」
+				PRINTFORML 「ごめんね…お姉ちゃん、穣子ちゃんを助けられなかった…ダメなお姉ちゃんでごめんね…」
+				PRINTFORML 「ごめんね…ごめんね……ごめん…なさい……」
+				PRINTFORMDL 静葉は大声を上げて子供のように泣き続けた…
+				PRINTFORML 
+			;別れたらこんなになってました
+			ELSEIF CFLAG:802 == 3
+				PRINTFORML 「そんな……穣子ちゃん……」
+				PRINTFORML 「ついこの間まで……元気だったのに…」
+				PRINTFORML 「ごめんね…お姉ちゃん、穣子ちゃんの側にいてあげるべきだった…」
+				PRINTFORML 「そうすれば……身代わりにだってなれたかもしれないのに…」
+				PRINTFORML 「どうして穣子ちゃんなの…？私じゃダメだったの･･･？」
+				PRINTFORML 「ごめんね…ごめんね……ごめん…なさい……お姉ちゃんの事…いっぱい責めていいから…」
+				PRINTFORML 「ごめん…なさい…」
+				PRINTFORMDL 静葉は大声を上げて子供のように泣き続けた…
+				PRINTFORML 
+			;いないと思っていたらすでにいませんでした
+			ELSEIF CFLAG:802 == 6
+				PRINTFORMDL 静葉は口元をおさえ目を見開きガクガクと震えだした
+				PRINTFORML 「どうりで…誰も見てないわけね……」
+				PRINTFORML 「穣子ちゃん……」
+				PRINTFORML 「お姉ちゃんがもっと早く神隠しにあっていれば……」
+				PRINTFORML 「そうしたら…穣子ちゃんのこと……」
+				PRINTFORML 「穣子…ちゃんのこと……助けられたのに…」
+				PRINTFORML 「ごめんね…ごめんね……ごめん…なさい……お姉ちゃん…なにもできなかった……」
+				PRINTFORML 「ごめん…なさい…」
+				PRINTFORMDL 静葉は大声を上げて子供のように泣き続けた…
+				PRINTFORML 
+			ENDIF
+				
+			PRINTFORMDL 静葉のTPが0になった…
+				BASE:4 = 0
+				IF BASE:1 < 100
+				PRINTFORMDL 静葉のMPが100になった…
+					BASE:1 = 100
+				ENDIF
+			PRINTFORML 
+			
+			;遺品発見フラグ
+			CFLAG:802 = 4
+		ELSE
+			PRINTFORML 「早く逃げ出さないと…私もいつかここにいた人みたいに…」
+		ENDIF
+		
+		;エンディング
+		;後日談？
+		;クイーン撃破
+		CASE 210
+			PRINTFORML 
+			PRINTFORML 
+
+			;穣子生存
+			;迷宮内にそもそもいない
+			IF CFLAG:802 == 0
+			CALL KOJO_37_0_ENDING_1
+			
+				;穣子リタイア
+				IF CFLAG:803 == 1
+					IF CFLAG:(CFLAG:803):2
+					CALL KOJO_37_0_ENDING_2
+					ENDIF
+				ENDIF
+			
+			;穣子生存
+			ELSE
+			CALL KOJO_37_0_ENDING_3
+			
+			ENDIF
+			
+			PRINTFORML 
+			PRINTFORML 
+		
+		;囮
+		CASE 204
+			PRINTFORML 
+			PRINTFORML 
+			;妊娠末期又は寄生
+			IF CFLAG:22 || CFLAG:36 == 3
+			CALL KOJO_37_0_ENDING_4
+			
+			;穣子が迷宮にいないで脱出
+			ELSEIF CFLAG:802 == 0
+			CALL KOJO_37_0_ENDING_5
+			
+			;穣子を囮に脱出
+			ELSEIF NO:(FLAG:10) == 38 || NO:(FLAG:11) == 38
+			CALL KOJO_37_0_ENDING_6
+			
+			;その他
+			ELSE
+			CALL KOJO_37_0_ENDING_7
+			
+			ENDIF
+
+			PRINTFORML 
+			PRINTFORML 
+		
+		;ガーディアン撃破、渦発見
+		CASE 206, 208
+		
+			PRINTFORML 
+			PRINTFORML 
+			;穣子と脱出
+			IF NO:(FLAG:10) == 38 || NO:(FLAG:11) == 38 
+			CALL KOJO_37_0_ENDING_10
+			
+			;妊娠末期又は寄生かつPTに穣子がいない
+			ELSEIF CFLAG:22 || CFLAG:36 == 3
+			CALL KOJO_37_0_ENDING_4
+
+			;穣子がPTに居ない状態でガーディアン倒して脱出
+			;置き去りの帰らぬ穣子心配エンド
+			ELSEIF (CFLAG:802 == 2 || CFLAG:802 == 3) && ARG:0 == 206
+			CALL KOJO_37_0_ENDING_8
+			
+			;穣子が迷宮にいなかった
+			ELSEIF CFLAG:802 == 0
+			CALL KOJO_37_0_ENDING_9
+			
+			;穣子が迷宮内に居ることをしらなかった
+			;ほぼ不可能？
+			ELSEIF (CFLAG:802 == 1 || CFLAG:802 == 6) && CFLAG:803
+			CALL KOJO_37_0_ENDING_11
+
+			
+			;穣子生還(渦エンドで穣子がPT外で生存)、またはリタイア
+			ELSE
+			CALL KOJO_37_0_ENDING_12
+				
+			ENDIF
+		PRINTFORML 
+		PRINTFORML 
+		
+		;クイーンソロとかできねーよ！
+		CASE 212
+		;最初からボッチ
+		IF CHARANUM <= 2
+			CALL KOJO_37_0_ENDING_13
+		ELSE
+			CALL KOJO_37_0_ENDING_14
+		ENDIF
+		
+		CASEELSE
+			;汎用
+	ENDSELECT
+	ENDIF
+
+ENDIF
+
+
+
+
+
+CALL KOJO_37_0_TORAUMA(ARG:0, ARG:1, ARG:2, ARG:3, ARG:4)
+
+RESETCOLOR
+
+;口上記入済み
+RETURN 1
+

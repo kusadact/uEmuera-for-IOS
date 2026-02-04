@@ -1,0 +1,28 @@
+﻿
+
+@GET_PT_CHAR_NO_9_0(ARG:0, ARG:1)
+;パーティに指定キャラが居ればそのキャラワーク番号を取得
+;ARG:0 キャラ種別
+;ARG:1 0:通常、1:健在チェック
+;小悪魔口上から拝借。感謝。
+
+	IF NO:1 == ARG:0 && CFLAG:1:104 == 0
+		LOCAL:0 = 1
+	ELSEIF (FLAG:10 != 0) && (NO:(FLAG:10) == ARG:0) && (CFLAG:(FLAG:10):104 == 0)
+		LOCAL:0 = FLAG:10
+	ELSEIF (FLAG:11 != 0) && (NO:(FLAG:11) == ARG:0) && (CFLAG:(FLAG:11):104 == 0)
+		LOCAL:0 = FLAG:11
+	ELSE
+		RETURN 0
+	ENDIF
+	
+	;健在チェック
+	IF ARG:1
+		; 拘束か喪失してる
+		IF CFLAG:(LOCAL:0):10 || CFLAG:(LOCAL:0):20 || CFLAG:(LOCAL:0):21 || CFLAG:(LOCAL:0):29
+			LOCAL:0 = 0
+		ENDIF
+	ENDIF
+	
+	RETURN LOCAL:0
+

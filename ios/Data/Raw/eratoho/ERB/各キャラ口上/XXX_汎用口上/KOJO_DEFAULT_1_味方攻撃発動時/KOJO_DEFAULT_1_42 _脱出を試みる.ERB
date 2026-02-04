@@ -1,0 +1,254 @@
+﻿
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   42    コマンドID(脱出を試みる)
+; / ARG:2    0    丸呑みフラグ 0:拘束 1:丸呑み
+; / ARG:3    0    状況 0:脱出開始
+; / ARG:4         拘束している敵のID
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_42_0_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;絶頂時
+IF CFLAG:35 > 0
+
+	CALL ADD_RAND_MESSAGE, @"「虽然，虽然不得不挣脱……」"
+	CALL ADD_RAND_MESSAGE, @"「力量，力量不需要的啦……」"
+	CALL ADD_RAND_MESSAGE, @"「一、一直随你喜欢……嗯……」"
+	CALL ADD_RAND_MESSAGE, @"「请、请收敛一点……嗯……」"
+	CALL ADD_RAND_MESSAGE, @"「因为被……被弄得力气不……啊」"
+	CALL ADD_RAND_MESSAGE, @"「哎呀，冷静下来不要逃出去啊……」"
+	CALL ADD_RAND_MESSAGE, @"「不、不要逃出去啊……」"
+
+	CALL ADD_RAND_MESSAGE, @"「感、感觉好……不行……呼……」"
+	CALL ADD_RAND_MESSAGE, @"「这、这样下去的话……」"
+	CALL ADD_RAND_MESSAGE, @"「放开我……关于……」"
+
+	CALL ADD_RAND_MESSAGE, @"「你、你竟然……这样……啊」"
+
+	CALL ADD_RAND_MESSAGE, @"「还、还想……继续……」"
+
+	CALL ADD_RAND_MESSAGE, @"「已、已经……足够了……了……」"
+
+	RETURN 1
+ENDIF
+
+
+
+
+	CALL ADD_RAND_MESSAGE, @"「希望能顺利进行！」"
+	CALL ADD_RAND_MESSAGE, @"「快点解脱吧！」"
+	CALL ADD_RAND_MESSAGE, @"「按照我的意愿……」"
+	CALL ADD_RAND_MESSAGE, @"「一直随心所欲……」"
+	CALL ADD_RAND_MESSAGE, @"「再多一点……关于……」"
+	CALL ADD_RAND_MESSAGE, @"「在为时已晚之前……」"
+	CALL ADD_RAND_MESSAGE, @"「只能集结净化之力……」"
+
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+
+		CASE 性格_おせっかい
+			CALL ADD_RAND_MESSAGE, @"「在受到更大的侮辱之前……」"
+			CALL ADD_RAND_MESSAGE, @"「能自由活动的部分……」"
+			CALL ADD_RAND_MESSAGE, @"「不要以为会一直有效……」"
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「如果这样的话只能强行……」"
+		CASE 性格_がんばりや
+			CALL ADD_RAND_MESSAGE, @"「在受到更大的侮辱之前……」"
+			CALL ADD_RAND_MESSAGE, @"「还没结束呢！」"
+			CALL ADD_RAND_MESSAGE, @"「不要以为会一直有效……」"
+			CALL ADD_RAND_MESSAGE, @"「不能就这样默默接受……」"
+			CALL ADD_RAND_MESSAGE, @"「即使只是挣扎……！」"
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"「就为了这点小事！」"
+			CALL ADD_RAND_MESSAGE, @"「在受到更大的侮辱之前……」"
+			CALL ADD_RAND_MESSAGE, @"「不要以为会一直有效……」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「在受到更大的侮辱之前……」"
+			CALL ADD_RAND_MESSAGE, @"「冷静下来。重要的是从这里开始……」"
+			CALL ADD_RAND_MESSAGE, @"「能自由活动的部分……」"
+
+		CASE 性格_くろうにん
+			CALL ADD_RAND_MESSAGE, @"「拜托，希望能顺利！」"
+			CALL ADD_RAND_MESSAGE, @"「怎么办，这样下去……」"
+			CALL ADD_RAND_MESSAGE, @"「不能就这样默默接受……」"
+
+
+		CASE 性格_セクシーギャル
+
+			CALL ADD_RAND_MESSAGE, @"「不可能从女人嘴里说出想要被抱吧？」"
+			CALL ADD_RAND_MESSAGE, @"「女人的心思很复杂的哦？」"
+			CALL ADD_RAND_MESSAGE, @"「我觉得你不是能喜欢上我的人」"
+			CALL ADD_RAND_MESSAGE, @"「很遗憾，现在结账！」"
+			CALL ADD_RAND_MESSAGE, @"「对于演技实力我还是很有自信的……」"
+			CALL ADD_RAND_MESSAGE, @"「偶尔见面的人更加燃吧？」"
+			CALL ADD_RAND_MESSAGE, @"「离别的航班呢。好好送我吧」"
+
+		CASE 性格_しあわせもの
+			CALL ADD_RAND_MESSAGE, @"「到了这个地步，就只能冒险一试了！」"
+			CALL ADD_RAND_MESSAGE, @"「总会有办法的！」"
+		CASE 性格_ぬけめがない
+			CALL ADD_RAND_MESSAGE, @"「机会很重要……现在！」"
+			CALL ADD_RAND_MESSAGE, @"「冷静下来。重要的是从这里开始……」"
+			CALL ADD_RAND_MESSAGE, @"「能自由活动的部分……」"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「如果这样的话只能强行……」"
+			CALL ADD_RAND_MESSAGE, @"「别以为这样就可以了……」"
+		CASE 性格_のんきもの
+			CALL ADD_RAND_MESSAGE, @"「多此一举！」"
+			CALL ADD_RAND_MESSAGE, @"「到了这个地步，就只能冒险一试了！」"
+			CALL ADD_RAND_MESSAGE, @"「喂，放开我一点！」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「拜托，希望能顺利！」"
+			CALL ADD_RAND_MESSAGE, @"「怎么办，这样下去……」"
+		CASE 性格_やさしいひと
+			CALL ADD_RAND_MESSAGE, @"「拜托，希望能顺利！」"
+			CALL ADD_RAND_MESSAGE, @"「怎么办，这样下去……」"
+		CASE 性格_わがまま
+			CALL ADD_RAND_MESSAGE, @"「别以为这样就可以了……」"
+			CALL ADD_RAND_MESSAGE, @"「如果这样的话只能强行……」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   42    コマンドID(脱出を試みる)
+; / ARG:2    0    丸呑みフラグ 0:拘束 1:丸呑み
+; / ARG:3    4    状況 0:脱出失敗
+; / ARG:4         拘束している敵のID
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_42_0_4(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL ADD_RAND_MESSAGE, @"「身体的自由……」"
+	CALL ADD_RAND_MESSAGE, @"「这样下去不行……但是……」"
+	CALL ADD_RAND_MESSAGE, @"「好，好难受……」"
+	CALL ADD_RAND_MESSAGE, @"「好，好紧……」"
+	CALL ADD_RAND_MESSAGE, @"「怎么，怎么就出不来了……」"
+	CALL ADD_RAND_MESSAGE, @"「怎么，为什么！？」"
+	CALL ADD_RAND_MESSAGE, @"「嘛，好难吃……」"
+	CALL ADD_RAND_MESSAGE, @"「被读出来了！？」"
+
+
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+
+	CASE 性格_おせっかい
+
+		CALL ADD_RAND_MESSAGE, @"「敌人也拼命呢……」"
+		CALL ADD_RAND_MESSAGE, @"「事情不会这么简单的……」"
+		CALL ADD_RAND_MESSAGE, @"「猎物不会轻易放手的……」"
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「解，解不开了！」"
+		CALL ADD_RAND_MESSAGE, @"「明明还有自信的」"
+		CALL ADD_RAND_MESSAGE, @"「诶诶……那种事情……」"
+
+	CASE 性格_がんばりや
+
+		CALL ADD_RAND_MESSAGE, @"「失败是成功的基础……！」"
+		CALL ADD_RAND_MESSAGE, @"「……这个失败要好好利用下次……」"
+
+
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「要考虑下一步了……」"
+		CALL ADD_RAND_MESSAGE, @"「这个方法不行」"
+		CALL ADD_RAND_MESSAGE, @"「对方的应对超出了预料……」"
+
+		CALL ADD_RAND_MESSAGE, @"「敌人也拼命呢……」"
+		CALL ADD_RAND_MESSAGE, @"「事情不会这么简单的……」"
+		CALL ADD_RAND_MESSAGE, @"「猎物不会轻易放手的……」"
+
+
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「果然还是不行……」"
+
+
+	CASE 性格_セクシーギャル
+
+		CALL ADD_RAND_MESSAGE, @"「……勉强这样做只会让分别更加痛苦吧？」"
+		CALL ADD_RAND_MESSAGE, @"「哎呀，你希望延长战斗吗……但是这有点太无情了吧」"
+		CALL ADD_RAND_MESSAGE, @"「……是不是刺激得太过分了呢」"
+		CALL ADD_RAND_MESSAGE, @"「……我们还是分开一段时间，整理一下彼此的感受比较好吧」"
+		CALL ADD_RAND_MESSAGE, @"「……居然看穿了我的表演」"
+		CALL ADD_RAND_MESSAGE, @"「也就是说，还有礼物吗……我可能要变成个哭包了」"
+		CALL ADD_RAND_MESSAGE, @"「……相爱的时间并不是永远的意思呢」"
+		CALL ADD_RAND_MESSAGE, @"「……恋爱的舞台并不会按照练习的计划进行呢」"
+		CALL ADD_RAND_MESSAGE, @"「……你是不是更想看我生气的样子？」"
+
+
+	CASE 性格_ぬけめがない
+
+		CALL ADD_RAND_MESSAGE, @"「对方的应对超出了预料……」"
+		CALL ADD_RAND_MESSAGE, @"「要考虑下一步了……」"
+		CALL ADD_RAND_MESSAGE, @"「这个方法不行」"
+
+		CALL ADD_RAND_MESSAGE, @"「敌人也拼命呢……」"
+		CALL ADD_RAND_MESSAGE, @"「事情不会这么简单的……」"
+		CALL ADD_RAND_MESSAGE, @"「猎物不会轻易放手的……」"
+
+	CASE 性格_ねっけつかん
+		CALL ADD_RAND_MESSAGE, @"「唔，好强大」"
+		CALL ADD_RAND_MESSAGE, @"「嘿，你能做到吗！」"
+
+	CASE 性格_ひっこみじあん
+
+		CALL ADD_RAND_MESSAGE, @"「果然还是不行……」"
+		CALL ADD_RAND_MESSAGE, @"「唔，放开我啊……」"
+
+	CASE 性格_やさしいひと
+
+		CALL ADD_RAND_MESSAGE, @"「果然还是不行……」"
+		CALL ADD_RAND_MESSAGE, @"「唔，放开我啊……」"
+	ENDSELECT
+RETURN 1
+
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   42    コマンドID(脱出を試みる)
+; / ARG:2    1    丸呑みフラグ 0:拘束 1:丸呑み
+; / ARG:3    0    状況 0:脱出開始
+; / ARG:4         拘束している敵のID
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_42_1_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL ADD_RAND_MESSAGE, @"「如果不快点离开这里的话！」"
+	CALL ADD_RAND_MESSAGE, @"「喂，喂，快把我从这里放出去」"
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「呀，这个有点不好玩呢……」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「这样下去……我会被吃掉的……」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0    1    味方の攻撃(発動時)
+; / ARG:1   42    コマンドID(脱出を試みる)
+; / ARG:2    1    丸呑みフラグ 0:拘束 1:丸呑み
+; / ARG:3    4    状況 0:脱出失敗
+; / ARG:4         拘束している敵のID
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_1_42_1_4(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	CALL ADD_RAND_MESSAGE, @"「怎么才能出去呢……」"
+	CALL ADD_RAND_MESSAGE, @"「这样下去不行……但是……」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「放我出去！快放我出去！」"
+		CALL ADD_RAND_MESSAGE, @"「怎、怎么才能出去啊！」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「这个方法不行」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「真的要被吃掉了呢……」"
+		CALL ADD_RAND_MESSAGE, @"「果然还是不行……」"
+		CALL ADD_RAND_MESSAGE, @"「唔，放我出去啊……」"
+	ENDSELECT
+RETURN 1
+
+
+
+

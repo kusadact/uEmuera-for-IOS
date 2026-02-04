@@ -1,0 +1,1323 @@
+﻿;使う方の戦闘行動ファイルのXXをキャラのNoに置き換え、使わない戦闘行動ファイルを削除する
+;ARG:0 == 1の管理
+@BATTLE_MIKATA_KOUDOU_HATUDOU_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	IF ARG:1 < 10
+		CALL BATTLE_MIKATA_KOUDOU_SONOTA_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 35
+		CALL BATTLE_MIKATA_KOUDOU_KOUGEKI_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 54
+		CALL BATTLE_MIKATA_KOUDOU_KOUSOKU_NOW_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 59
+		CALL BATTLE_MIKATA_KOUDOU_ONEDARI_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 62
+		CALL BATTLE_MIKATA_KOUDOU_SOUBI_USE_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 90
+		CALL BATTLE_MIKATA_KOUDOU_SAIMIN_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ELSEIF ARG:1 < 100
+		CALL BATTLE_MIKATA_KOUDOU_RAPE_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	ENDIF
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_SONOTA_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+	SELECTCASE ARG:1
+		;防御
+		CASE 1
+			;身を守る
+			IF ARG:2 == 0
+				;苗床で寄生中
+				IF CFLAG:801 && (CFLAG:22 || CFLAG:36 >= 2)
+					CALL SPLIT_HEARTW_K97("「下手に動くと産まれちゃいそうなの。ぶたないでね♥」")
+				;苗床非妊娠
+				ELSEIF CFLAG:801
+					CALL SPLIT_HEARTW_K97("「体力をたくわえないと。いっぱい孕むためにも…♥」")
+				;発情
+				ELSEIF CFLAG:28
+					;服全壊
+					IF BASE:3 == 0
+						PRINTFORMDW しかしぬえの秘所は無防備に涎を垂らしている……
+					;衣服がまだ半分以上残存
+					ELSE
+						CALL SPLIT_HEARTW_K97("「お腹があつい♥　防ぎきれるかな……」")
+					ENDIF
+				;その他
+				ELSE
+					IF RAND:2 == 0
+						CALL SPLIT_HEARTW_K97("「今のうちにせいぜいいきがってなさい！」")
+					ELSE
+						CALL SPLIT_HEARTW_K97("「隙を作らなきゃ…」")
+					ENDIF
+				ENDIF
+				;リロードフラグ洗浄
+				SIF CFLAG:805 == 5
+					CFLAG:805 = 0
+			;リロード
+			ELSEIF ARG:2 == 1
+				;リロード二刀流
+				IF CFLAG:805 == 5
+					CFLAG:805 = 0
+				;一回目
+				ELSE
+					CALL SPLIT_HEARTW_K97("「次弾装填よーそろー」")
+					CFLAG:805 = 5
+				ENDIF
+			ENDIF
+		;アイテム
+		;※あとで詳細に分岐させる
+		CASE 2
+			PRINTDATADL
+				DATAFORM 「備えあれば憂いなし！」
+				DATAFORM 「こつこつ集めていたのがこういう時にモノを言うのね」
+				DATAFORM 「正体不明じゃないアイテムよ！」
+			ENDDATA
+		;前進
+		CASE 3
+			;苗床
+			IF CFLAG:801
+				CALL SPLIT_HEARTL_K97("「私が囮になるから…おとり、おとり…アハハ♥♥」")
+				PRINTFORMDW ぬえはうつろな目で歩みを進めてゆく…
+			;発情
+			ELSEIF CFLAG:28
+				CALL SPLIT_HEARTW_K97("「正体不明少女のお相手、お前たちに務まるかしら♥」")
+			;その他
+			ELSE
+				CALL SPLIT_HEARTW_K97("「こんな奴らに舐められるのは癪ね、前に出て叩くよ」")
+			ENDIF 
+		;後退
+		CASE 4
+			;苗床
+			IF CFLAG:801
+				CALL SPLIT_HEARTL_K97("「こっちまでおーいで、おいかけてきてごらん。罠かも知れないけど♥」")
+				PRINTFORMDW ぬえは秘所を広げて見せびらかせつつ距離をとった
+			;発情
+			ELSEIF CFLAG:28
+				CALL SPLIT_HEARTW_K97("「離れないと。体が熱い……。」")
+			;その他
+			ELSE
+				CALL SPLIT_HEARTW_K97("「おっと、あんまり近くでじろじろ見られるのは好みじゃない」")
+			ENDIF 
+		;逃走
+		CASE 5
+	ENDSELECT
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_KOUGEKI_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+SELECTCASE ARG:1
+;攻撃系
+;ぬえちゃんの決め台詞は頻度多めで
+	;弱、中弾幕
+	CASE 10,11
+		;苗床
+		IF CFLAG:801
+			SELECTCASE RAND:4
+				CASE 0
+					CALL SPLIT_HEARTW_K97("「この程度は耐えてくれないと、犯されてあげないよお♥」")
+				CASE 1
+					CALL SPLIT_HEARTW_K97("「オチンポ前の軽い運動♥」")
+				CASE 2
+					CALL SPLIT_HEARTW_K97("「強い子種が欲しいのよね。雑魚はいらないもんっ♥」")
+				CASE 3
+					CALL SPLIT_HEARTW_K97("「は～や～くぅ、ブチ犯してよおん♥」")
+			ENDSELECT
+		;発情
+		ELSEIF CFLAG:28
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「よく…、狙わなきゃ…。体が熱い。けど……」
+					DATAFORM 「はあっ、ん……、これくらいで……、落ち着け……。」
+					DATAFORM 「はっ…弾幕打とうとすると…、アソコがこすれちゃう」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「よく…、狙わなきゃ…。体が熱い。けど……」
+					DATAFORM 「はあっ、ん……、これくらいで……、落ち着け……。」
+					DATAFORM 「はっ…弾幕打とうとすると…、アソコがこすれちゃう」
+				ENDDATA
+			ENDIF
+		;その他
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「小手調べよ」
+					DATAFORM 「UFOでも直接ぶつけてやろうか」
+					DATAFORM 「お前にはこのくらいで十分ね」
+					DATAFORM 「正体不明の飛行物体（だんまく）に怯えて死ね！！」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「小手調べよ」
+					DATAFORM 「UFOでも直接ぶつけてやろうか」
+					DATAFORM 「お前にはこのくらいで十分ね」
+					DATAFORM 「正体不明の飛行物体（だんまく）に怯えて死ね！！」
+				ENDDATA
+			ENDIF
+		ENDIF	
+	;強弾幕
+	CASE 12
+		;苗床
+		IF CFLAG:801
+			SELECTCASE RAND:4
+				CASE 0
+					CALL SPLIT_HEARTW_K97("「この程度は耐えてくれないと、犯されてあげないよお♥」")
+				CASE 1
+					CALL SPLIT_HEARTW_K97("「怒った？いーっぱいお返しちょうだい♥」")
+				CASE 2
+					CALL SPLIT_HEARTW_K97("「強い子種が欲しいのよね。雑魚はいらないもんっ♥")
+				CASE 3
+					CALL SPLIT_HEARTW_K97("「タダマンはさせてあげられないなあ♥　やる気みせてよっ」")
+			ENDSELECT
+		;発情
+		ELSEIF CFLAG:28
+			SELECTCASE RAND:4
+				CASE 0
+					CALL SPLIT_HEARTW_K97("「このっ…！性欲なんかに負けるかあっ♥」")
+				CASE 1
+					CALL SPLIT_HEARTW_K97("「ふうっ、ふうっ、こいつらをはやくぶっ飛ばして……♥」")
+				CASE 2
+					CALL SPLIT_HEARTW_K97("「原理不明の妖怪玉ああっ♥」")
+				CASE 3
+					CALL SPLIT_HEARTW_K97("「弾幕アクメ♥」って、何言ってんだ私！「弾幕キメラ」！はやく、こいつら倒して……オナニー♥」")
+			ENDSELECT
+		;その他
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTDATAL
+					DATAFORM 「油断してると死ぬよ！「原理不明の妖怪玉」！！」
+					DATAFORM 「見た目で甘く見た？死にな！」
+					DATAFORM 「大玉食らってみる？」
+					DATAFORM 「正体不明の飛行物体（だんまく）に怯えて死ね！！」
+				ENDDATA
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTDATAW
+					DATAFORM 「油断してると死ぬよ！「原理不明の妖怪玉」！！」
+					DATAFORM 「見た目で甘く見た？死にな！」
+					DATAFORM 「大玉食らってみる？」
+					DATAFORM 「正体不明の飛行物体（だんまく）に怯えて死ね！！」
+				ENDDATA
+			ENDIF
+		ENDIF	
+	;溜め撃ち
+	CASE 13
+		;溜め
+		IF CFLAG:31 == 2
+			;苗床
+			IF CFLAG:801
+				SELECTCASE RAND:3
+					CASE 0
+						CALL SPLIT_HEARTL_K97("「あー、溜めてる間は隙だらだなあ、今攻撃されるとマズイなあ♥」")
+						PRINTFORMDW ぬえはわざとらしく隙を見せて触手を誘っている…
+					CASE 1
+						CALL SPLIT_HEARTW_K97("「本気出しちゃうよ？　いいの？　さっさとぬえちゃんレイプしないの？」")
+					CASE 2
+						CALL SPLIT_HEARTL_K97("「あっ、あっ♥　魔力貯めると、オマンコ気持ちよくなっちゃんだ♥　これじゃあ戦えない♥」")
+						PRINTFORMDW 苗床堕ちしたぬえの体では集中するのも一苦労のようだ…
+				ENDSELECT
+			;発情
+			ELSEIF CFLAG:28
+				;衣服有り
+				IF RAND:2 == 0 && BASE:3 == MAXBASE:3
+					CALL SPLIT_HEARTL_K97("「ああっ、やあああっ♥　集中、集中しなくちゃ……」")
+					PRINTFORMDW 尖りきったクリトリスや乳首が衣擦れで発情し、ぬえの集中を乱してくる……
+				ELSE	
+					SELECTCASE RAND:4
+						CASE 0
+							CALL SPLIT_HEARTW_K97("「力…、溜めると、体も熱く……♥　んくうっ♥」")
+						CASE 1
+							CALL SPLIT_HEARTL_K97("（やだ、濡れてる…はやく打たなきゃ…）")
+							PRINTFORMDW 発情したぬえの体はどんどん敏感になっていく……
+						CASE 2
+							CALL SPLIT_HEARTW_K97("「魔力を高めると感度もいっしょに…♥　これは困るわね♥」")
+						CASE 3
+							CALL SPLIT_HEARTL_K97("「集中……しなきゃ……♥、私がちゃちゃ入れられてどーする！」")
+							PRINTFORMDW ぬえはいやらしく蠢く触手から視線を切って魔力を溜めている……
+					ENDSELECT
+				ENDIF
+			;その他
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「ベントラー、ベントラー……。UFOよ来い……」
+						DATAFORM 「時間が経てば経つほど正体はわからなくなる。お前はいつまで耐えられるかしら」
+						DATAFORM 「鵺の鳴き声、聞かせてやるよ」
+						DATAFORM 「大妖怪の力、見たいようね」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「ベントラー、ベントラー……。UFOよ来い……」
+						DATAFORM 「時間が経てば経つほど正体はわからなくなる。お前はいつまで耐えられるかしら」
+						DATAFORM 「鵺の鳴き声、聞かせてやるよ」
+						DATAFORM 「大妖怪の力、見たいようね」
+					ENDDATA
+				ENDIF
+			ENDIF	
+		;発射
+		ELSE
+			;苗床
+			IF CFLAG:801
+				SELECTCASE RAND:3
+					CASE 0
+						CALL SPLIT_HEARTW_K97("「「源三位頼政の弓」！！あいつよりも弱いヤツになんか、犯されてあげないわ」")
+					CASE 1
+						CALL SPLIT_HEARTW_K97("「おいで、「平安のダーククラウド」！さあ、まだ立ってる元気のいいのはいるかな～」")
+					CASE 2
+						CALL SPLIT_HEARTW_K97("「まだ焦らすの？　さっさとアンタなんか倒して、もっと強いオス探しに行かなきゃ♥")
+				ENDSELECT
+			;発情
+			ELSEIF CFLAG:28
+				SELECTCASE RAND:4
+					CASE 0
+						CALL SPLIT_HEARTL_K97("「喰らええっ！…ふう、溜めたモノを一気に放出するのは爽快ね……♥」")
+						PRINTFORMDW ぬえの秘所からトロリと愛液が垂れた……
+					CASE 1
+						CALL SPLIT_HEARTL_K97("「く…やあっ、魔力が暴走して……ひうっ…♥」")
+						PRINTFORMDW ぬえは蓄えた魔力を放出すると同時に軽くイってしまったようだ…
+					CASE 2
+						 CALL SPLIT_HEARTL_K97("「平安のダーククラウド」……っ、はあんっ……ふうっ」")
+						PRINTFORMDW 弾幕を放ち終わったぬえはぺたりとその場に座り込んで軽く身を震わせた……
+					CASE 3
+						CALL SPLIT_HEARTL_K97("「平安のダーククリトリス♥」じゃあ、なくて、「平安のダーククラウド」！んんっ♥」")
+				ENDSELECT
+			;その他
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「おいで！「忿怒のレッドUFO襲来」！！」
+						DATAFORM 「行けっ、「哀愁のブルーUFO襲来」！」
+						DATAFORM 「さあ準備は整った！「義心のグリーンUFO襲来」」
+						DATAFORM 「お前みたいな雑魚には勿体ないくらいね、「恐怖の虹色UFO襲来」！」
+						DATAFORM 「正体不明の飛行物体（だんまく）に怯えて死ね！！」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「おいで！「忿怒のレッドUFO襲来」！！」
+						DATAFORM 「行けっ、「哀愁のブルーUFO襲来」！」
+						DATAFORM 「さあ準備は整った！「義心のグリーンUFO襲来」」
+						DATAFORM 「お前みたいな雑魚には勿体ないくらいね、「恐怖の虹色UFO襲来」！」
+						DATAFORM 「正体不明の飛行物体（だんまく）に怯えて死ね！！」
+					ENDDATA
+				ENDIF
+			ENDIF	
+		ENDIF
+	;ばらまき弾
+	CASE 14
+			;苗床
+			IF CFLAG:801
+				SELECTCASE RAND:3
+					CASE 0
+						CALL SPLIT_HEARTW_K97("「「赤マンコ青マンコ♥」くぐりぬけて鵺マンコまでよっておいで♥」")
+					CASE 1
+						CALL SPLIT_HEARTW_K97("「姿態不明のちんぽ♥」じゃなかった、「姿態不明の空魚」！ああっ、いっぱい欲しいよお♥」")
+					CASE 2
+						CALL SPLIT_HEARTW_K97("「姿態不明の空魚」くうっんぅ♥　なかなか…イイね♥」")
+						PRINTFORMDW ぬえの股間で何かがビチビチと跳ねているように見える……
+				ENDSELECT
+			;発情
+			ELSEIF CFLAG:28
+				SELECTCASE RAND:3
+					CASE 0
+						CALL SPLIT_HEARTW_K97("「くうっ…♥　体がこんなじゃあこれだけの魔力を制御するのは難儀ね…」")
+					CASE 1
+						CALL SPLIT_HEARTW_K97("「いっぱいぶちまけちゃおうか♥」")
+					CASE 2
+						CALL SPLIT_HEARTW_K97("「姿態不明のちんぽ♥」……ちがっ、「姿態不明の空魚」！ああっ、いっぱい欲しいよお♥」")
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						CALL SPLIT_HEARTW_K97("「赤マントと青マント、どっちが欲しい？どっちもあげるわよ！」")
+					CASE 1
+						CALL SPLIT_HEARTW_K97("「軌道不明の鬼火」　どう？もう動けないでしょ」")
+					CASE 2
+						CALL SPLIT_HEARTW_K97("「正体不明の飛行物体（だんまく）に怯えて死ね！！」")
+				ENDSELECT
+			ENDIF	
+
+	;貫通弾、乱れ打ち
+	CASE 15, 24
+			;苗床
+			IF CFLAG:801
+				SELECTCASE RAND:3
+					CASE 0
+						CALL SPLIT_HEARTW_K97("「自分でアソコに弾幕を当てたら気持ちいいかも♥　いいアイデアだと思わない？」")
+					CASE 1
+						CALL SPLIT_HEARTW_K97("「極太、欲しいなあ♥」")
+					CASE 2
+						CALL SPLIT_HEARTW_K97("「はやくっ♥　押し倒してレイプしてっ♥　こんなのはお遊びだよっ♥」")
+				ENDSELECT
+			;発情
+			ELSEIF CFLAG:28
+				SELECTCASE RAND:2
+					CASE 0
+						CALL SPLIT_HEARTW_K97("「自分でアソコに弾幕を当てたら…♥　…って何考えてんのよ私！」")
+					CASE 1
+						CALL SPLIT_HEARTL_K97("「はあ…はあ…、落ち着いて……、…いけえっ！」")
+						PRINTFORMDW ぬえは荒いあえぎを抑えてレーザーを放った…
+				ENDSELECT
+			;その他
+			ELSE
+				SELECTCASE RAND:3
+					CASE 0
+						CALL SPLIT_HEARTW_K97("「まとめて射抜いてあげるわ！「源三位頼政の弓」でね！！」")
+					CASE 1
+						CALL SPLIT_HEARTW_K97("「怪力線照射！UFOならなんでもできるのよ！」")
+					CASE 2
+						CALL SPLIT_HEARTW_K97("「正体不明の飛行物体（だんまく）に怯えて死ね！！」")
+				ENDSELECT
+			ENDIF	
+
+	;非消耗武器
+	CASE 30 to 34
+			;苗床
+			IF CFLAG:801
+				;こんぼう
+				IF TFLAG:67 == 10
+					CALL SPLIT_HEARTW_K97("「ぶっとくってステキ♥」")
+				ELSE
+					CALL SPLIT_HEARTW_K97("「これでオマンコずぽずぽしても私なら大丈夫かも♥」")
+				ENDIF
+			;発情
+			ELSEIF CFLAG:28
+				;こんぼう
+				IF TFLAG:67 == 10
+					CALL SPLIT_HEARTW_K97("「これ、入るかな……♥　って私は何を！」")
+				;マジカルステッキ
+				ELSEIF TFLAG:67 == 13
+					CALL SPLIT_HEARTW_K97("「このステッキでオナニーしたら気持ちいいかも……」")
+				;その他
+				ELSE
+					CALL SPLIT_HEARTL_K97("「ふうっ…ふうっ…♥」")
+					PRINTFORMDW ぬえは甘く息を吐きながら必死に武器を振るった！
+			ENDIF
+		;発情してない
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					CALL SPLIT_HEARTW_K97("「私が化け物退治をする側になるなんてね」")
+				CASE 1
+					CALL SPLIT_HEARTW_K97("「近寄るなあっ！」")
+				CASE 2
+					CALL SPLIT_HEARTW_K97("「よっ、はっ！こんくらいの武器の扱いなら軽いわね！」")
+			ENDSELECT
+		ENDIF
+ENDSELECT
+RETURN
+
+@BATTLE_MIKATA_KOUDOU_KOUSOKU_NOW_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	SELECTCASE ARG:1
+		;拘束離脱
+		CASE 42
+			;コマンド使用時
+			IF ARG:3 == 0
+				;絶頂中
+				IF CFLAG:35 != 0
+					;苗床
+					IF CFLAG:801
+						SELECTCASE RAND:3
+							CASE 0
+								CALL SPLIT_HEARTL_K97("「おほおぉっ♥♥　ひいﾞんっ♥♥」")
+								PRINTFORMDW 絶頂に溺れるぬえは弱々しく身をよじった……
+							CASE 1
+								CALL SPLIT_HEARTL_K97("「に、逃げなきゃ！また、孕まされて、産まされちゃうっ♥」")
+								PRINTFORMDW 口とは裏腹にぬえは明らかに興奮している……
+							CASE 2
+								CALL SPLIT_HEARTL_K97("「逃げなきゃ……逃げ……逃げて……どうするんだっけ……？こんなに気持ちいいのに♥」")
+								PRINTFORMDW 頭にかかった桃色の霧がぬえの行動を胡乱なものにする……
+						ENDSELECT
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								CALL SPLIT_HEARTL_K97("「くうっ…んっ♥　今度こそぉ…」")
+								PRINTFORMDW ぬえは全身を這いまわる絶頂感を抑えて力を込めた…
+							CASE 1
+								CALL SPLIT_HEARTW_K97("「ひっ、腰、砕けちゃ……立たなきゃ……」")
+							CASE 2
+								CALL SPLIT_HEARTL_K97("「やっ……はひっ……、また、イカされちゃった……こんなやつに……」")
+								PRINTFORMDW 否応なく味わわされる絶頂がぬえのプライドを削っていく
+						ENDSELECT
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTDATAL
+							DATAFORM 「暗くて狭い場所に閉じ込められるなんて勘弁よ！」
+							DATAFORM 「鵺なんか食べてもお腹壊すだけだって！はーな～せ！」
+							DATAFORM 「私なんか食べてもおいしくないって！だから離せって！」
+							DATAFORM 「このっ……大妖怪のぬえさまを抑えておけると思って……」
+						ENDDATA
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTDATAW
+							DATAFORM 「暗くて狭い場所に閉じ込められるなんて勘弁よ！」
+							DATAFORM 「鵺なんか食べてもお腹壊すだけだって！はーな～せ！」
+							DATAFORM 「私なんか食べてもおいしくないって！だから離せって！」
+							DATAFORM 「このっ……大妖怪のぬえさまを抑えておけると思って……」
+						ENDDATA
+					ENDIF
+				ENDIF
+			;絶頂により離脱失敗
+			ELSEIF ARG:3 == 1
+				;苗床
+				IF CFLAG:801
+					SELECTCASE RAND:4
+						CASE 0
+							CALL SPLIT_HEARTL_K97("「あひっ…ひゃうっ♥　わ、私は何を…おおﾞおﾞんっ♥♥」")
+							PRINTFORMDW ぬえの腕は無意識に自分の性感帯をまさぐっている！
+						CASE 1
+							CALL SPLIT_HEARTL_K97("「に、逃げ…なきゃ…？こんな気持ちいいのから逃げる必要なんてないじゃない♥」")
+							PRINTFORMDW ぬえはいやらしい笑みを浮かべて触手の海に溺れている……
+						CASE 2
+							CALL SPLIT_HEARTL_K97("「イきすぎ…♥、もう、力なんてはいらにゃいぃ♥♥」")
+							PRINTFORMDW ぬえの体は絶頂に震えるばかりでまったく動こうとしない…
+						CASE 3
+							CALL SPLIT_HEARTL_K97("「そんなに私を捕まえるのに必死なんだ……。かわいいやつ♥」")
+							PRINTFORMDW 脱出を諦めたぬえは周囲を蠢く触手に身を委ねている……
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE RAND:2
+						CASE 0
+							CALL SPLIT_HEARTW_K97("「ああっ、ダメだぁ……、力が入らない」")
+						CASE 1
+							CALL SPLIT_HEARTW_K97("「やっ、やだ、出してっ！！もう、これ以上イくのはヤダああっ！」")
+						CASE 2
+							CALL SPLIT_HEARTL_K97("「わかっ…ひゃあ…、あばりぇないから……、も…、いっへるからああぁぁ♥」")
+							PRINTFORMDW ぬえは絶頂して無様にビクビクと震える肢体を更になぶられ続けている……
+					ENDSELECT
+				ENDIF
+			;結果脱出成功
+			;丸呑み／拘束の別は気が向いたら
+			ELSEIF ARG:3 == 2
+				;苗床
+				IF CFLAG:801
+					SELECTCASE RAND:2
+						CASE 0
+							CALL SPLIT_HEARTL_K97("「次はどいつのタネをもらいに行こうかしらん♥」")
+							PRINTFORMDW 粘液に塗れたままので触手に目を向け舌なめずりしている…
+						CASE 1
+							CALL SPLIT_HEARTL_K97("「ちょっとお、手加減してあげてたからってだらしない、ちゃんと押さえつけててよ！」")
+							PRINTFORMDW ぬえは犯されたりなかったらしく不満顔だ…
+					ENDSELECT
+				;発情
+				ELSEIF CFLAG:28
+					SELECTCASE  RAND:2
+						CASE 0
+							CALL SPLIT_HEARTL_K97("「いろんな汁でベチョベチョだわ……。でもこのニオイたまんない♥♥」")
+							PRINTFORMDW ぬえはうっとりとした表情で体にまとわりつく性のにおいを嗅いでいる…
+						CASE 1
+							CALL SPLIT_HEARTL_K97("「ようやく出られたけど頭クラクラする…。ちょっとタンマ……」")
+							PRINTFORMDW ぬえの股間を濡らしているのは触手の粘液だけではないようだ……
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE  RAND:3
+						CASE 0
+							CALL SPLIT_HEARTL_K97("「ううっ、くそ……逃げられたのはいいけどニオイがとれないよ…」")
+							PRINTFORMDW ぬえは体にまとわりつく腐臭に眉をひそめている…
+						CASE 1
+							CALL SPLIT_HEARTL_K97("「さあ、私の正体にちょっとでも触れた奴は葬って正体不明を取り戻さないとね」")
+							PRINTFORMDW 拘束を脱したぬえは陵辱者に制裁を与えるべく態勢を整えた
+						CASE 2
+							CALL SPLIT_HEARTL_K97("「こんな雑魚に私の正体を暴かれる訳にはいかないわね。きっちり消さなきゃ」")
+							PRINTFORMDW ぬえは濃密な殺気をたたえた瞳で相手を睨みつけた
+						ENDSELECT
+				ENDIF
+			;結果拘束レベルダウン
+			ELSEIF ARG:3 == 3
+				;発情
+				IF CFLAG:28
+					CALL SPLIT_HEARTW_K97("「もうちょっと、もうちょっとで、イける…♥」")
+				;その他
+				ELSE
+					CALL SPLIT_HEARTW_K97("「もうちょっとで逃げられそうなのに、くそっ、ああん……」")
+				ENDIF
+			;結果脱出失敗
+			ELSEIF ARG:3 == 4
+				;苗床
+				IF CFLAG:801
+					SELECTCASE RAND:2
+						CASE 0
+							CALL SPLIT_HEARTL_K97("「やあん、逃げられない。まあ逃げるつもりもないんだけど♥」")
+							PRINTFORMDW ぬえは触手の海に溺れてうっとりとしている…
+						CASE 1
+							CALL SPLIT_HEARTL_K97("「ちょっと抵抗した方が燃えるでしょ？　さあ、本気種付けおねがい…♥」")
+							PRINTFORMDW 触手に引きずり込まれていくぬえは心底嬉しそうだ…
+					ENDSELECT
+				;発情
+				ELSEIF CFLAG:28
+					SELECTCASE  RAND:3
+						CASE 0
+							CALL SPLIT_HEARTL_K97("「ううっ、逃げられない…、ちょっと休憩しよ……」")
+							CALL SPLIT_HEARTW_K97("「気持ちいいことは気持ちいいし、もうちょっと楽しんでからでもいいかも……♥」")
+						CASE 1
+							CALL SPLIT_HEARTL_K97("「はあっ、はあっ、はあっ、はあっ♥」")
+							CALL SPLIT_HEARTW_K97("「苦しい……んじゃなくて、体がアツいのね……」")
+						CASE 2
+							CALL SPLIT_HEARTL_K97("「どうしても私を苗床にしたいみたいね」")
+							CALL SPLIT_HEARTW_K97("「熱いアプローチはきらいじゃないけど…」")
+					ENDSELECT
+				;その他
+				ELSE
+					SELECTCASE  RAND:3
+						CASE 0
+							CALL SPLIT_HEARTW_K97("「ああもうっ！ナカから食い破ってやろうか！」")
+						CASE 1
+							CALL SPLIT_HEARTW_K97("「人間の小娘にも負けて、最近負け続きね…」")
+						CASE 2
+							CALL SPLIT_HEARTW_K97("「いや、私結構な実力者のはずなんだけど？こいつらどんだけなのよ！？」")
+					ENDSELECT
+				ENDIF
+			ENDIF
+		;力溜め
+		CASE 43
+			;コマンド使用時
+			IF ARG:2 == 0
+				IF FLAG:AUTOMODE
+					PRINTDATAL
+						DATAFORM 「力を溜めて……」
+						DATAFORM 「気づいた時にはもう遅いわよ」
+						DATAFORM 「あんたの命も残り少しよ！」
+					ENDDATA
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTDATAW
+						DATAFORM 「力を溜めて……」
+						DATAFORM 「気づいた時にはもう遅いわよ」
+						DATAFORM 「あんたの命も残り少しよ！」
+					ENDDATA
+				ENDIF
+			ENDIF
+		;諦め
+		CASE 44
+			;コマンド使用時
+			IF ARG:2 == 0
+				;やっぱりこれを入れないと
+				CALL SPLIT_HEARTW_K97("「私はここで終わりかもね……」")
+				;苗床
+				IF CFLAG:801
+					;寄生されてる
+					IF CFLAG:22 || CFLAG:36 >= 2
+						CALL SPLIT_HEARTL_K97("「こん……なっ、赤子を宿している状態でどう戦えっていうのよおっ♥♥」")
+						CALL SPLIT_HEARTW_K97("「もっと、もっと孕ませて♥　ぬえのお腹正体不明にしてえっ♥」")
+					;その他
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								CALL SPLIT_HEARTL_K97("「子宮がアツいぃ、子種がほしいよう…♥　もう、何も考えられないいぃっ！」")
+								CALL SPLIT_HEARTW_K97("「私の体、めちゃくちゃにしてえっ♥」")
+							CASE 1
+								CALL SPLIT_HEARTL_K97("「オマンコの奥、埋めて欲しいの…♥　ぶっとい触手で、ドロドロのザーメンでえっ♥♥」")
+								PRINTFORMDW ぬえは瞳からハートを飛ばして触手に歩み寄った……
+							CASE 2
+								CALL SPLIT_HEARTL_K97("「クリも乳首もずっとビンビンでアソコもうずきっぱなし……こんな体でどう戦えっていうのよ！」")
+								CALL SPLIT_HEARTL_K97("「私もう触手のおよめさんになる！責任とってよね！」")
+								PRINTFORMDW ぬえは錯乱した様子で身を投げだした……
+						ENDSELECT
+					ENDIF
+				;発情
+				ELSEIF CFLAG:28
+					CALL SPLIT_HEARTL_K97("（あ…れ、私は何を…？化物に降参しようとしているの……？）")
+					CALL SPLIT_HEARTW_K97("（相手は強いし、体もアツいし。仕方ないな……♥）")
+				;その他
+				ELSE
+					CALL SPLIT_HEARTL_K97("「はー、もう降参ー、好きにしたら？」")
+					CALL SPLIT_HEARTW_K97("（スキを突いて抜け出してやる……鵺は永久不滅なのよ！）")
+				ENDIF
+			ENDIF
+		;何もしない
+		;ひるみ、睡眠、喪失時。多分それぞれで処理したほうが齟齬が出ない
+		CASE 45
+			
+		;強制自慰
+		;発情レベル4以上で自慰確定　
+		;敵の攻撃による強制自慰の処理はどうなっているんだろうか
+		CASE 46
+			;催眠
+			IF CFLAG:43
+				;肉体操作
+				IF FLAG:526 == 0
+					SELECTCASE RAND:2
+					CASE 1
+						CALL SPLIT_HEARTL_K97("「うあっ、手が勝手に……エイリアンハンドなんて洒落にもなんないわっ！」")
+						PRINTFORMDW 意思とは裏腹にぬえの手は秘所へと伸びていく……
+					CASE 0
+						CALL SPLIT_HEARTW_K97("「こ……の……　私が体のコントロールを奪われるなんて……」")
+					ENDSELECT
+				;感情操作
+				ELSEIF FLAG:526 == 1
+					CALL SPLIT_HEARTW_K97("「オナニー見せるなんてとんでもないけど……あなたの頼みなら……」")
+				;認識操作
+				ELSE
+					SELECTCASE RAND:2
+					CASE 1
+						CALL SPLIT_HEARTL_K97("「私に催眠なんて効かないわよ！オナってイけば解けるって知ってるんだから！」")
+						PRINTFORMDW ぬえはくちゅくちゅと水音を高らかに響かせ、真顔で必死にオナニーをしている……
+					CASE 0
+						CALL SPLIT_HEARTL_K97("「オナニーしておまんこほぐしておけってことね？」")
+						CALL SPLIT_HEARTW_K97("「はいはい、そんなのなら朝飯前よ。ほらっ、ほらっ、ほらあっ♥」")
+					ENDSELECT
+				ENDIF
+			;もはや自慰狂い
+			ELSEIF CFLAG:28 >= 4 && ABL:10 >= 3
+				CALL SPLIT_HEARTL_K97("「はっ♥　はっ♥　ひい～～っ♥　オナニー、おなにーきもひいいっ♥♥")
+				CALL SPLIT_HEARTW_K97("　鵺的オナニーショーしちゃう♥　ぬえちゃんの正体がオナ狂いの破廉恥妖怪だってばれちゃうう♥」")
+				PRINTFORMDW ぬえは白痴のように蕩けた表情で激しく股間をまさぐっている！
+			;苗床
+			ELSEIF CFLAG:801
+				SELECTCASE RAND:3
+					CASE 0
+						CALL SPLIT_HEARTL_K97("「おまんこっ♥　ほしいの♥　焦らさないでぶっといのでハメてよ～う♥」")
+						PRINTFORMDW ぬえは触手たちの劣情を誘うかのように大股を広げて秘所をかき回している……
+					CASE 1
+						CALL SPLIT_HEARTL_K97("「ぬええﾞえﾞんっ♥　おなにーしゅきっ♥　すきだけど、せつないよお♥」")
+						PRINTFORMDW もはや自分で慰めるだけではぬえの肉欲が治まることはないようだ……
+					CASE 2
+						CALL SPLIT_HEARTL_K97("「くうぅっ、お前らあ、そんなものを…♥　んっはあ…ぶっといちんぽぉ♥　食べたい、ハメたい♥」")
+						PRINTFORMDW ぬえは粘液をまとっていやらしく光る触手をオカズに自慰にふけっている……
+				ENDSELECT
+			;発情
+			ELSEIF CFLAG:28
+				SELECTCASE RAND:3
+					CASE 0
+						CALL SPLIT_HEARTW_K97("「やっ…ああっ♥　手が、勝手に♥　きもちいいのほしいっ♥」")
+					CASE 1
+						CALL SPLIT_HEARTL_K97("「こんな状況で自分で慰められるわけが……わけが……」")
+						CALL SPLIT_HEARTW_K97("「んんんっ、ダメ……！オナニー以外のこと考えらんないっ♥」")
+					CASE 2
+						CALL SPLIT_HEARTW_K97("「こんっ♥　なっ、肉欲に逆らえないっ♥　オナニーしちゃううぅ♥」")
+				ENDSELECT
+			;その他
+			ELSE
+				CALL SPLIT_HEARTW_K97("「くっ……とりあえず鎮めないと……」")
+			ENDIF
+		;V以外のガードは一括。A=50 B=51 C=52
+		CASE 50 to 52
+			;苗床
+			IF CFLAG:801
+				CALL SPLIT_HEARTW_K97("「ここはダメよ…♥　お前たちが犯したいのは私の子宮でしょ…♥」")
+			;その他
+			ELSE
+				CALL SPLIT_HEARTW_K97("「いまココを責められたらっ……！」")
+			ENDIF
+		;挿入ガード
+		CASE 53
+			;苗床
+			IF CFLAG:801
+				CALL SPLIT_HEARTL_K97("「おまんこはダ～メだよう♥　こっちずぽずぽされたらあたまパーになって壊れひゃうからぁ♥」")
+				PRINTFORMDW 拳が入るほどに拡がりきった膣口を守るのは難しそうだ…
+			;発情
+			ELSEIF CFLAG:28
+				CALL SPLIT_HEARTL_K97("「ひゃっ♥　あふ♥　ここだけは、守りきらなきゃ、堕ちちゃう…♥」")
+				CALL SPLIT_HEARTW_K97("「ああ……でもこんなに疼いて……ほしいいぃっ……♥」")
+			;その他
+			ELSE
+				CALL SPLIT_HEARTW_K97("「こんな雑魚に挿れられてたまるもんか！」")
+			ENDIF
+	ENDSELECT
+RETURN
+
+;おねだり
+@BATTLE_MIKATA_KOUDOU_ONEDARI_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	;苗床か淫乱
+	IF CFLAG:801 || TALENT:74
+		;現在寄生され中
+		IF CFLAG:22 || CFLAG:36 >= 3
+			SELECTCASE RAND:3
+				CASE 0
+					CALL SPLIT_HEARTL_K97("「おなかに赤ちゃんいるのにおまんこのうずきとまらにゃいのお♥」")
+					CALL SPLIT_HEARTW_K97("「鵺の正体は強欲淫乱妖怪だったの♥　もっと濃い子種汁ちょうらいぃ…♥」")
+				CASE 1
+					CALL SPLIT_HEARTL_K97("「ほらぁ見てえん♥　ぬえのおまんこ、こぉんなにひろがるようになっちゃったのお♥♥」")
+					CALL SPLIT_HEARTW_K97("「ガバガバおまんこで良かったらいっぱい触手くだひゃい♥　十本でも……百本でも♥♥♥」")
+				CASE 2
+					PRINTFORMDL ぬえは足をM字に開き蜜を溢れさせ続ける秘裂をさらけ出し、体だけでなく心も触手に媚びきっている……
+					CALL SPLIT_HEARTW_K97("「わらひの子宮、まだ入るからあ…♥　ぬへへへへっ、大妖怪を舐めるんじゃないわよ♥」")
+				CASE 3
+					CALL SPLIT_HEARTL_K97("「お腹の赤ちゃんが触手ザーメン欲しがってるのっ♥　子宮コツコツってしてるのおっ♥」")
+					CALL SPLIT_HEARTW_K97("「逆らえないよ……♥　オマンコに特濃ミルク欲しくてたまんなくなっちゃうんだよお♥」")
+			ENDSELECT
+		;危険日
+		ELSEIF CFLAG:159 == 2
+			SELECTCASE RAND:3
+				CASE 0
+					CALL SPLIT_HEARTL_K97("「にんしんかくじつ危険日おまんこっ　ぶちこんでよおおおっ♥」")
+					CALL SPLIT_HEARTW_K97("　ぷりっぷりの卵子出ちゃってるからぁ……♥　はやくちょうだいいいいぃっ♥」")
+				CASE 1
+					CALL SPLIT_HEARTL_K97("「はっ　はへっ　はひゅえ♥　ちんぽっ　ザーメンつまった種付けちんぽぉ♥」")
+					CALL SPLIT_HEARTW_K97("「ほひいっ♥　レイプ待ちの淫乱卵子に種付けっ♥　どろっどろに煮詰まったやつほしいよおぉ♥")
+				CASE 2
+					CALL SPLIT_HEARTL_K97("「いま膣内射精されたら孕んじゃうよ……。危険日おまんこ妊娠待ち状態になっちゃってるううぅっ♥」")
+					CALL SPLIT_HEARTW_K97("「でも欲しいいっ！遺伝子ちょうらいっ♥　セックス用おまんこ、触手の孕み袋にしてほしいのおおぉぉっっ♥♥」")
+				CASE 3
+					CALL SPLIT_HEARTL_K97("「おなか　あついぃ……　子宮が孕みたがってる」")
+					CALL SPLIT_HEARTW_K97("「着床率100%の苗床用おまんこに、触手さまのザーメンめぐんでくらひゃいいぃ……♥♥」")
+			ENDSELECT
+		;コブクロ空いてますよ
+		ELSE
+			SELECTCASE ARG:1
+				;Aおねだり
+				CASE 54
+					SELECTCASE RAND:4
+						CASE 0
+							CALL SPLIT_HEARTL_K97("「アナルでにんっしんっ♥　でっきるかな～」")
+							CALL SPLIT_HEARTW_K97("「うひひっ♪チャレンジしてみない？正体不明ケツマンコに種付けしてさあ♥」")
+						CASE 1
+							CALL SPLIT_HEARTL_K97("「ううんっ　もう無理ぃっ♥　ケツ穴うずいてぐじゅぐじゅになっちゃってるのっ♥」")
+							CALL SPLIT_HEARTW_K97("「おしりっ、いますぐホジってえええっ♥　あっつい触手ザーメンでアナル調伏してええっ♥」")
+						CASE 2
+							PRINTFORMDL ぬえが自らの手で尻肉を割り裂くとぬぱぁ……と粘着性の音を立てて肉の薔薇が開花した
+							CALL SPLIT_HEARTW_K97("「あはぁ……私のおしり、こぉんなガバガバになっちゃってる♥　もちろん、ぶっといのくれるんだよねえ？」")
+						CASE 3
+							CALL SPLIT_HEARTL_K97("「ほら、見てよこのケツオナホ♥　ここでチンポしごいてどぴゅどぴゅしたら気持ちい～よ♪」")
+							CALL SPLIT_HEARTW_K97("「だからぁ……ぶっといのちょうらいよぉ♥♥　ケツ穴ほじくりまわしてちょーだい♪」")
+					ENDSELECT
+				;Bおねだり
+				CASE 55
+					;母乳体質
+					IF TALENT:130
+						SELECTCASE RAND:3
+							CASE 0
+								CALL SPLIT_HEARTL_K97("「ああっ、触手チンポでおっぱい発情しちゃってる♥」")
+								CALL SPLIT_HEARTW_K97("「ミルクしみちゃってるよお……♥ああもったいない♥」")
+							CASE 1
+								CALL SPLIT_HEARTL_K97("「ミルクでパンパンのおっぱい、イジるの好きでしょ？」")
+								CALL SPLIT_HEARTW_K97("「ああん♥　興奮で漏れちゃってる♥　バキューム搾乳おねがいねっ♥」")
+							CASE 2
+								CALL SPLIT_HEARTL_K97("「ふふっ、正体不明の母乳♥　どんな味がするか気になるでしょ？」")
+								CALL SPLIT_HEARTW_K97("「遠慮はいらないよ、あ、いっぱい乳首イジメてイカせてくれるのが条件かな♥」")
+						ENDSELECT
+					;母乳出ない
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								CALL SPLIT_HEARTL_K97("「もうだめぇ……♥　おっぱいイジってもらうことしか考えらんないよ♥」")
+								CALL SPLIT_HEARTW_K97("「谷間で、乳首で、どこでもこすりつけていいからっ♥　ぬえちゃんの柔らかおっぱいとセックスしよっ♥」")
+							CASE 1
+								CALL SPLIT_HEARTL_K97("「んふ、パイズリ、してあげよっか？」")
+								CALL SPLIT_HEARTW_K97("「おっぱいでむにゅむにゅ包みながら舌でチロチロ、ザーメンいっぱい搾ったげるね♥」")
+							CASE 2
+								CALL SPLIT_HEARTL_K97("「はあ、はあぁん♥　ちくび、あついの……」")
+								CALL SPLIT_HEARTW_K97("「そんなエッチなの見せつけてさ、私のおっぱいレイプするやつだよね？はやくぅ、ちょうだいよお！」")
+						ENDSELECT
+					ENDIF
+				;Cおねだり
+				CASE 56
+					;ふたなり
+					IF CFLAG:42 || TALENT:121
+						SELECTCASE RAND:3
+							CASE 0
+								CALL SPLIT_HEARTL_K97("「おちんぽビンビン♥　もう血が全部おちんぽに行っちゃって何も考えられないよっ♥」")
+								CALL SPLIT_HEARTW_K97("「ねえ、そのオナホっぽい触手さあ、もちろんおちんぽじゅぽじゅぽするヤツだよね？ちょうだいっ♥」")
+							CASE 1
+								CALL SPLIT_HEARTL_K97("「ああ……はあ♥　おちんぽがザーメンのにおいに反応しちゃうううぅ♥」")
+								CALL SPLIT_HEARTW_K97("「自分でシコシコしてもいいけど、目の前にもっと気持ちよさそうなのがあるんだよね……♥」")
+							CASE 2
+								CALL SPLIT_HEARTL_K97("「ま、負けちゃったぁ♥　おチンポいじって欲しくって触手に屈服しちゃった……」")
+								CALL SPLIT_HEARTW_K97("「はやくっ、ちんぽ、ちんぽイジって♥♥　もうチンポアクメの事しか考えらんないのっ♥♥」")
+						ENDSELECT
+					;ふたなりじゃない
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								CALL SPLIT_HEARTL_K97("「見てよ、このぷっくりお豆。触ったらはじけちゃいそうでしょ♥」")
+								CALL SPLIT_HEARTW_K97("「いいよ、メチャクチャにして。ううん、おねがいします……♥　クリアクメ欲しいのっ♥」")
+							CASE 1
+								CALL SPLIT_HEARTL_K97("「私、もともとこっち敏感だったんだけどさあ」")
+								CALL SPLIT_HEARTW_K97("「あんたたちに開発されて疼きが止まんなくなっちゃったの♥　責任とってよね♥」")
+							CASE 2
+								PRINTFORMDL ぬえは真っ赤に充血して震えるクリトリスに手を添え、ねだるように腰を突き出している……
+								CALL SPLIT_HEARTW_K97("「ここっ、ここイジって♥　クリでマジイキさせて♥」")
+						ENDSELECT
+					ENDIF
+				;Vおねだり
+				CASE 57
+					SELECTCASE RAND:4
+						CASE 0
+							CALL SPLIT_HEARTL_K97("「そんな、雄のニオイぷんぷんさせられちゃ…♥　さからえるわけないれしょおお♥♥」")
+							CALL SPLIT_HEARTW_K97("「特濃しょくしゅざーめんで着床アクメキメさせてっ♥　ほらっ、おまんこはやくううっ♥」")
+						CASE 1
+							CALL SPLIT_HEARTL_K97("「しょくしゅのよーしょくじょうになったぬえのおまんこぬえっちょぬえっちょしてくらひゃいぃ♥♥")
+							CALL SPLIT_HEARTW_K97("「あたまもおまんこももうトロトロなの……♥　ちょうだぃ♥　ちょうだい♥」")
+						CASE 2
+							PRINTFORMDL ぬえは上の口からも下の口からも涎をボトボトと垂らしながら雄の象徴に熱い視線を送る
+							CALL SPLIT_HEARTW_K97("「はーっ♥　はあー♥　子宮ぅ……、寂しいのぉ……。子種をおくれよぅ……♥」")
+						CASE 3
+							CALL SPLIT_HEARTL_K97("「こっちだよね…？あんたたちがめちゃくちゃにかき回して、くっさい汁をドプドプ注ぎたいのは♥」")
+							CALL SPLIT_HEARTW_K97("「私の苗床袋、一秒たりとも空にはしてほしくないなあ……♥♥」")
+					ENDSELECT
+				;その他おねだり
+				CASE 58
+					SELECTCASE RAND:3
+						CASE 0
+							CALL SPLIT_HEARTL_K97("「もうどこでもいいから気持よくさせて、おねがいおねがいっ♥」")
+							CALL SPLIT_HEARTW_K97("「とことんまでイカせてね♥　ふふっ、あんたたちには言うまでもないかな♥」")
+						CASE 1
+							PRINTFORMDL ぬえはとろけきった表情で発情した突起を強調するようになまめかしく腰をくねらせた……
+							CALL SPLIT_HEARTW_K97("「んふ♥　どう、鵺的チンポおねだりスネークショー♥　どこでもいいよっ♥」")
+						CASE 2
+							CALL SPLIT_HEARTL_K97("「どこかな～？ビンビンの乳首？とろっとろのアナル？それともやっぱり、お・ま・ん・こ？」")
+							CALL SPLIT_HEARTW_K97("「ああん、待ちきれないよ～♥　どこでもいいから早くハメ倒して♥」")
+					ENDSELECT
+			ENDSELECT
+		ENDIF
+	;発情中
+	ELSEIF CFLAG:28
+		;触手中毒2以上
+		IF ABL:11 >=2
+			SELECTCASE ARG:1
+				;Aおねだり
+				CASE 54
+					CALL SPLIT_HEARTL_K97("「ほらぁっ……♥　もう、ケツ穴ほぐれきっているからぁ♥")
+					CALL SPLIT_HEARTW_K97("　なにか入っていないとおかしくなりそうなのぉ♥♥」")
+				;Bおねだり
+				CASE 55
+					CALL SPLIT_HEARTW_K97("「乳首がぴんっぴんで、熱くて、苦しいの♥　その粘液塗りつけてくんないかな♥」")
+				;Cおねだり
+				CASE 56
+					CALL SPLIT_HEARTW_K97("「ね♥　ね♥　このビンカン勃起クリちゃんのうずき、お前に止められるかな…？」")
+				;Vおねだり
+				CASE 57
+					CALL SPLIT_HEARTW_K97("「未確認少女の未知おまんこ、じっくりねっちょり調査してほしいなあ♥♥」")
+				;その他おねだり
+				CASE 58
+					CALL SPLIT_HEARTW_K97("「ほしいっ、ほしいよぉっ♥　そのぬるぬるで、ぐちょぐちょのが…♥♥」")
+			ENDSELECT
+		;発情中そのた
+		ELSE
+			SELECTCASE ARG:1
+				;Aおねだり
+				CASE 54
+					CALL SPLIT_HEARTW_K97("「今なら……おしりの穴で思いっきり気持ちよくなれそう♥」")
+				;Bおねだり
+				CASE 55
+					CALL SPLIT_HEARTW_K97("「う、あ……♥　このっ、ちくびが、いうこときかないぃ……♥」")
+				;Cおねだり
+				CASE 56
+					CALL SPLIT_HEARTW_K97("(なんでだろう……。頭に霧がかかって……、あれ、私はなにをしているんだろ……♥)")
+				;Vおねだり
+				CASE 57
+					CALL SPLIT_HEARTW_K97("「こんなにアソコがびしょびしょだと戦えないわね…♥　ちょっと啜ってみない？」")
+				;その他おねだり
+				CASE 58
+					CALL SPLIT_HEARTL_K97("「こんな化物におねだりなんて……屈辱ね、でも……♥」")
+					PRINTFORMDW 自らの痴態にぬえの興奮はますます高められているようだ……
+			ENDSELECT
+		ENDIF
+	;発情中でない
+	ELSE
+		;苗床で現在寄生中でなくVおねだり
+		IF CFLAG:801 >= 100 && CFLAG:22 == 0 && CFLAG:50 == 57
+			SELECTCASE RAND:3
+				CASE 2
+					CALL SPLIT_HEARTL_K97("「こっちに、注ぎ込みたいんじゃない？」")
+					CALL SPLIT_HEARTW_K97("「いっぱい孕まされて産まされたぼってり肉厚おまんこ♥　お前たち専用だよ♥」")
+				CASE 1
+					CALL SPLIT_HEARTL_K97("「バケモノ繁殖用おねだりおまんこはこっちだよお♥」")
+					CALL SPLIT_HEARTW_K97("「ぶっといのでかきまわしてぇ……濃い～のびゅーってしてほしくてたまらないの♥」")
+				CASE 0
+					CALL SPLIT_HEARTL_K97("「ほぉら、ぬえちゃんの子宮、射抜くなら今がチャンスよ♥」")
+					PRINTFORMDW ぬえは２本の指で挑発的に膣口を広げて触手をおねだりしている……
+			ENDSELECT
+		;触手中毒2以上
+		ELSEIF ABL:11 >=2
+			SELECTCASE ARG:1
+				;Aおねだり
+				CASE 54
+					CALL SPLIT_HEARTL_K97("「ううう、ああ……、こっち、こっちで気持よくして欲しいの！」")
+					CALL SPLIT_HEARTW_K97("「ぬるぬるの触手でアナルずぽずぽされるとすっごいって知っちゃったからあ♥」")
+				;Bおねだり
+				CASE 55
+					CALL SPLIT_HEARTW_K97("「私の乳首、おかしくした責任はとってもらおうかしら……♥♥」")
+				;Cおねだり
+				CASE 56
+					CALL SPLIT_HEARTW_K97("「ふふ…知ってる？鵺の弱点はビンビンに固くなった\@ CFLAG:42 || TALENT:121 ? ちんぽ # お豆さん \@だってこと……♥」")
+				;Vおねだり
+				CASE 57
+					CALL SPLIT_HEARTW_K97("「未知の交配、試してみる？どんな化物が産まれて来るか興味あるんだよね♥」")
+				;その他おねだり
+				CASE 58
+					CALL SPLIT_HEARTW_K97("「そんなにやらしいことしたいならさあ……ちょっと付き合ってあげようか♥」")
+			ENDSELECT
+		;その他
+		ELSE
+			;体力半分以下
+			IF BASE:0 <= MAXBASE:0/2
+				SELECTCASE RAND:2
+					CASE 0
+						CALL SPLIT_HEARTW_K97("（ちょっと体力がヤバイわね……。一旦こっちで気を引いて……）")
+					CASE 1
+						CALL SPLIT_HEARTW_K97("「んふ……手負いの妖怪の誘い、乗ってみる勇気はお前にあるかな？」")
+				ENDSELECT
+			ELSE	
+				SELECTCASE ARG:1
+					;Aおねだり
+					CASE 54
+						CALL SPLIT_HEARTW_K97("（油断したトコロで背中の触手で……）")
+					;Bおねだり
+					CASE 55
+						CALL SPLIT_HEARTW_K97("（胸に気を引かれたところで取り込んでやろうか）")
+					;Cおねだり
+					CASE 56
+						CALL SPLIT_HEARTW_K97("（こっちは敏感なんだけど……ちょっとまずったかな？）")
+					;Vおねだり
+					CASE 57
+						CALL SPLIT_HEARTW_K97("「こっち、試してみる？中には歯がびっしりかもよ？」")
+					;その他おねだり
+					CASE 58
+						;仲間有り
+						IF FLAG:10
+							CALL SPLIT_HEARTW_K97("「私が囮になるからその間に退治しなさいよ。大丈夫、気を引くのは慣れているわ」")
+						;単独行動
+						ELSE
+							CALL SPLIT_HEARTW_K97("「正体不明の妖怪の誘い、乗ってみる勇気はお前にあるかな？」")
+						ENDIF
+				ENDSELECT
+			ENDIF
+		ENDIF
+	ENDIF
+
+
+RETURN
+
+
+;装備品使用。一応区分しているが恐らく現状ぶっちぎりの死に口上
+@BATTLE_MIKATA_KOUDOU_SOUBI_USE_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		;ARG:2はアイテムIDに対応する
+		SELECTCASE ARG:2
+			;ボム
+			CASE 20 TO 23
+				CALL SPLIT_HEARTW_K97("「こいつ、ボム無効だったりしないわよね？」")
+			;風
+			CASE 25
+
+			;以下、現状では何も起きない
+			CASE 26
+
+			CASE 27
+
+			CASE 32, 36
+
+			CASEELSE
+		ENDSELECT
+RETURN
+
+;催眠系行動。キス以降は特定条件で平常でも使用可能。
+;FLAG:426で分岐　0=拘束・肉体操作系 1=発情・感情操作系 2= 無意識・認識操作系
+;催眠強度 CFLAG:43
+@BATTLE_MIKATA_KOUDOU_SAIMIN_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;平常行動
+		CASE 71
+			;拘束・肉体操作系
+			IF FLAG:526 == 0
+				PRINTFORMDL ぬえの腕や背中に触手が這い回る
+				CALL SPLIT_HEARTW_K97("「日ごろから触手を弄んでいるって、確かにそれはそうだけど……」")
+			;発情・感情操作系、地の文が変わる
+			ELSEIF FLAG:526 == 1
+				CALL SPLIT_HEARTL_K97("「えっ……ちょ、いきなりキスなんかしてどうしたのよ！？")
+				CALL SPLIT_HEARTW_K97("「そういうの……慣れてないんだから……」")
+			;無意識・認識操作系
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						CALL SPLIT_HEARTL_K97("「にへへっ、星が大事にしている宝塔を盗ってやったわ。さ～てどうしようかな？」")
+						PRINTFORMDW ぬえは触手の塊を手のひらでこねてにやにやしている……
+					CASE 1
+						CALL SPLIT_HEARTL_K97("「正体不明の種をつければ私の正体は誰にもばれない。これが無いとね♪」")
+						PRINTFORMDW ぬえは体にぺたぺたと触手を貼り付けている……
+				ENDSELECT
+			ENDIF
+		;72　催眠自慰は46　強制自慰と共用
+		;仲間を襲う
+		CASE 73
+			;拘束・肉体操作系
+			IF FLAG:526 == 0
+				CALL SPLIT_HEARTL_K97("「やっ、違う……。これは私の意思じゃなくて身体が勝手に……」")
+				CALL SPLIT_HEARTW_K97("「ひゃっ♥　あんたもけっこう乗り気…。ってこれじゃ敵の思う壺だ！」")
+			;発情・感情操作系、
+			ELSEIF FLAG:526 == 1
+				CALL SPLIT_HEARTL_K97("「どうしたの？私たちは恋人同士でしょ。")
+				CALL SPLIT_HEARTW_K97("　さあ、正体不明になるまでまぐわろうよ……♥」")
+			;無意識・認識操作系
+			ELSE
+				CALL SPLIT_HEARTL_K97("「くそっ、くそっ♥　なんでこんなにイってるのに催眠が解けないんだっ♥」")
+				PRINTFORMDW ぬえは真剣な表情で%ARGS:1%に腰を打ち付けている…
+			ENDIF
+		;着替える
+		CASE 74
+			;拘束・肉体操作系
+			IF FLAG:526 == 0
+				CALL SPLIT_HEARTL_K97("（ひゃっ♥　身体が勝手に……、気持ち悪いっ！）")
+				PRINTFORMDW 催眠にかかったぬえの体は機械的に触手を身にまとわりつかせていった…
+			;発情・感情操作系、
+			ELSEIF FLAG:526 == 1
+				CALL SPLIT_HEARTL_K97("「あら、こいつはオシャレね。今風かな？」")
+				PRINTFORMDW ぬえはヒトデに似た触手生物を乳首と陰核に貼り付けてすまし顔だ……
+			;無意識・認識操作系
+			ELSE
+				CALL SPLIT_HEARTL_K97("「うわっ！なんで私はこんな汚い布なんか着てるの！？」")
+				CALL SPLIT_HEARTW_K97("「早く触手を身につけて気持ちよくならなくちゃ…♥」")
+			ENDIF
+		;催眠逃げる
+		CASE 75
+			;拘束・肉体操作系
+			IF FLAG:526 == 0
+				CALL SPLIT_HEARTL_K97("「あ……れ、逃げられたと思ったのに…。くっそ、化物のくせにお釈迦様きどりか……」")
+			;発情・感情操作系、
+			ELSEIF FLAG:526 == 1
+				CALL SPLIT_HEARTL_K97("「はあ…はあ、ふうー、いい汗をかいた！！」")
+				CALL SPLIT_HEARTW_K97("「運動したあとはすぐセックスだって？しょうがないヤツね…♥」")
+			;無意識・認識操作系
+			ELSE
+				CALL SPLIT_HEARTL_K97("「よし、逃げ切ったわ！」")
+				CALL SPLIT_HEARTW_K97("「ちょうどイイところにレイプしてくれそうな触手が……。ここで休憩しましょ」")
+			ENDIF
+		;安眠
+		CASE 76
+			;拘束・肉体操作系
+			IF FLAG:526 == 0
+				CALL SPLIT_HEARTL_K97("（いやいやいや、何をしているの私は？今は寝てられる状況じゃないでしょ！）")
+				PRINTFORMDW ぬえの体は勝手に動き、触手を集めて寝床を作っている……
+			;発情・感情操作系、
+			ELSEIF FLAG:526 == 1
+				CALL SPLIT_HEARTL_K97("「すやすや……ぐう……。寝てる間は無防備だから何されても抵抗できないなあ♥」")
+				PRINTFORMDW 横になったぬえは何かを期待するかのように薄目でチラチラと触手を見ている…
+			;無意識・認識操作系
+			ELSE
+				CALL SPLIT_HEARTL_K97("「暗くて適度に湿っていて、それに暖かい。最高のベッドね」")
+				PRINTFORMDW ぬえは細い触手が蠢く床に身を横たえた……
+			ENDIF
+		;踏む
+		CASE 80
+			;拘束・肉体操作系
+			IF FLAG:526 == 0
+				CALL SPLIT_HEARTL_K97("「体が動く！今のうちに攻撃よ！」")
+				PRINTFORMDW 一気に踏み潰そうとしたぬえだったがそれ以上は体が動かず、心地良い強さで足裏愛撫をさせられる格好になってしまった
+			;発情・感情操作系、
+			ELSEIF FLAG:526 == 1
+				CALL SPLIT_HEARTL_K97("「んんんん♥　足裏にゾワゾワした感触がああぁぁ♥」")
+				CALL SPLIT_HEARTW_K97("「これ、クセになるわっ♥　えい、えいっ！」")
+			;無意識・認識操作系
+			ELSE
+				CALL SPLIT_HEARTL_K97("「なるほど、触手を倒すには足で踏みつければいいわけね」")
+				CALL SPLIT_HEARTW_K97("「弱点をさらすとは愚かね！さっさと退治してあげる！」")
+			ENDIF
+		;ビンタ
+		CASE 81
+			;拘束・肉体操作系
+			IF FLAG:526 == 0
+				CALL SPLIT_HEARTL_K97("「あー…、ビンタはしていいけれどそれ以外はさせない？意をはかりかねるわね」")
+				CALL SPLIT_HEARTW_K97("「まあこんなやつらの考えなんて理解しても詮ないことだろうけれど」")
+			;発情・感情操作系、
+			ELSEIF FLAG:526 == 1
+				CALL SPLIT_HEARTL_K97("「この腑抜けっ！もっと気合を入れなさい！！」")
+				CALL SPLIT_HEARTL_K97("「ふう……さて、おしおきがすんだから次はそっちの番ね……♥」")
+				PRINTFORMDW ぬえは濡れそぼった秘裂を触手に向かって突きだした……
+			;無意識・認識操作系
+			ELSE
+				CALL SPLIT_HEARTL_K97("「にははっ！弱くてあわれな触手をいじめるのは楽しいわね」")
+				CALL SPLIT_HEARTW_K97("「この弱っちい触手を叩けば叩くほど後で手ひどくレイプされるっていうから余計に最高じゃん♪」")
+			ENDIF
+		;折る
+		CASE 82
+			;拘束・肉体操作系
+			IF FLAG:526 == 0
+				CALL SPLIT_HEARTW_K97("「自分からこうするように仕向けた？一体何を考えてるのこいつらは……」")
+			;発情・感情操作系、
+			ELSEIF FLAG:526 == 1
+				CALL SPLIT_HEARTW_K97("「そこはダメ～♥　それともおしおきしてほしかったの？」")
+			;無意識・認識操作系
+			ELSE
+				CALL SPLIT_HEARTW_K97("「なんで白蓮は急に触手を踏めなんて言い出したんだろ？まあ適当にやっておくか～」")
+			ENDIF
+		; 触手中毒2以上 + 精液中毒2以上でキス・手淫が非催眠でも使用可能
+		;キス
+		CASE 83
+			;催眠
+			IF CFLAG:43
+				;拘束・肉体操作系
+				IF FLAG:526 == 0
+					;催眠深度中以上
+					IF CFLAG:43 >= 2
+						CALL SPLIT_HEARTL_K97("（あれ…、イヤだったはずなのに…頭がボーっと……♥）")
+						PRINTFORMDW 触手キスを覚えさせられたぬえの舌はそのままねっとりと絡み合った……
+					;催眠浅い
+					ELSE
+						CALL SPLIT_HEARTL_K97("「うええ……きたない……、ひゃ…ひええええええ！！」")
+						PRINTFORMDW 唇を這うおぞましい感触にぬえは身を震わせた……
+					ENDIF
+				;発情・感情操作系、
+				ELSEIF FLAG:526 == 1
+					CALL SPLIT_HEARTL_K97("「んむっ…ちゅっ♥　ちゅう…♥　すごく……ドキドキしちゃう……♥」")
+					PRINTFORMDW ぬえは目を閉じて熱心に触手と舌を絡めている……
+				;無意識・認識操作系
+				ELSE
+					CALL SPLIT_HEARTL_K97("「んぶっ…ちゅぶっぷちゅっ…ヘンね、急におとなしくなった？　何を狙ってるの？　じゅぞぞぞ……」")
+					PRINTFORMDW ぬえは臨戦態勢のまま触手に唇を蹂躙されている……
+				ENDIF
+			;催眠にかかっていないけれど自発的に
+			ELSE
+				;苗床
+				IF CFLAG:801
+					CALL SPLIT_HEARTL_K97("「むぷっ、ぷひぇっ♥　ああん、今度は口を孕ませるっていうのかしら♥」")
+					CALL SPLIT_HEARTW_K97("「キスだけでとろとろになっちゃった発情マンコも相手してね…♥」")
+				;発情
+				ELSEIF CFLAG:28
+					CALL SPLIT_HEARTL_K97("「んっ♥　ぐちゅっ♥　むじゅっ♥　じゅぷうっ♥」")
+					PRINTFORMDW ぬえは涎と白濁があふれるのも気にせず触手の気の向くまま口内を蹂躙させている……
+				;その他　とはいってもかなり開発されてる
+				ELSE
+					CALL SPLIT_HEARTW_K97("「口を汚されるだけですむならそれに越したことはないんだけど……」")
+				ENDIF
+			ENDIF
+		;手淫
+		CASE 84
+			;催眠
+			IF CFLAG:43
+				;拘束・肉体操作系
+				IF FLAG:526 == 0
+					CALL SPLIT_HEARTL_K97 ("（いやだいやだいやだあっ！こんなの触りたくないのにいっ！！）")
+					PRINTFORMDW 意思に反してぬえの指は巧みなテクで触手をいじり続ける……
+				;発情・感情操作系、
+				ELSEIF FLAG:526 == 1
+					CALL SPLIT_HEARTW_K97("「にししっ、こうされるのが好いんでしょ♥」")
+				;無意識・認識操作系
+				ELSE
+					CALL SPLIT_HEARTL_K97("「よし、次っ。どんどんいくよ。あと何本射精させればいいんだっけ？」")
+					PRINTFORMDW 頭も顔も白濁まみれになっているのを気にせず、ぬえは次々と触手を射精させている
+				ENDIF
+			;催眠にかかっていないけれど自発的に
+			ELSE
+				;苗床
+				IF CFLAG:801
+					CALL SPLIT_HEARTL_K97("「えー、出すならおまんこに出してほしいんだけどー」")
+					CALL SPLIT_HEARTW_K97("「ああ勿体ない、ぷりっぷりの濃厚ザーメンが無駄射ちしちゃってる……」")
+				;発情
+				ELSEIF CFLAG:28
+					CALL SPLIT_HEARTL_K97("「あ、あれ……手が勝手に……ひゃうんっ♥」")
+					CALL SPLIT_HEARTW_K97("「あは…♥　ぶっかけられるのも悪くないわね……♥」")
+				;その他　とはいってもかなり開発されてる
+				ELSE
+					CALL SPLIT_HEARTW_K97("「こいつらの目的は性欲処理よね。なら先手を打ってこちらが手でしてやれば……」")
+				ENDIF
+			ENDIF
+		; 触手中毒3以上 + 精液中毒3以上でフェラ・パイズリが非催眠でも使用可能
+		;フェラ
+		CASE 85
+			;催眠
+			IF CFLAG:43
+				;拘束・肉体操作系
+				IF FLAG:526 == 0
+					CALL SPLIT_HEARTL_K97 ("（おごっ……、ぐっ、げええﾞえﾞっ！！そごはああﾞあﾞあﾞあﾞ！！！！）")
+					PRINTFORMDW 異物を吐き出そうとする嘔吐反射まで操られ、喉奥に触手の侵入を許してしまう……
+				;発情・感情操作系、
+				ELSEIF FLAG:526 == 1
+					CALL SPLIT_HEARTL_K97("「じゅるっ…じゅず…♥　ぷはあっ♥　おいしいなあ♥」")
+					CALL SPLIT_HEARTW_K97("「まだ出るわよね…？じゃあおかわり♪　あ～ん♥」")
+				;無意識・認識操作系
+				ELSE
+					CALL SPLIT_HEARTL_K97("「ねえマミゾウ、これを舐め続けたら極上の酒が出てくるって本当？」")
+					CALL SPLIT_HEARTW_K97("「あれ、マミゾウどこいったんだろ……。まあいっか、はむっ……ちゅるっ……ちゅ……」")
+				ENDIF
+			;催眠にかかっていないけれど自発的に
+			ELSE
+				;苗床
+				IF CFLAG:801
+					CALL SPLIT_HEARTL_K97("「じゅぶうっ♥　じゅっ♥　ずぞぞぞぞぞ～♥")
+					CALL SPLIT_HEARTL_K97("　えへぇ♥　胃袋も孕ませてくれるのかな…♥」")
+					PRINTFORMDW ぬえは逆流した白濁を鼻からも溢れさせながら熱心に触手をしゃぶり続けている……
+				;発情
+				ELSEIF CFLAG:28
+					CALL SPLIT_HEARTL_K97("（もうやめなきゃと思ってるのに……ザー汁ほしいっ♥　お腹いっぱいになりたい♥）")
+					PRINTFORMDW ぬえは尻を左右に振りながら触手にむしゃぶりついている……
+				;その他　とはいってもかなり開発されてる
+				ELSE
+					CALL SPLIT_HEARTW_K97("（飲むくらいならそんなに害はないよね……ちゅるっ♥）")
+				ENDIF
+			ENDIF
+		;パイズリ
+		CASE 86
+			;催眠
+			IF CFLAG:43
+				;拘束・肉体操作系
+				IF FLAG:526 == 0
+					;服が半分以上残っている
+					IF BASE:3 > MAXBASE:3 / 2
+						CALL SPLIT_HEARTL_K97("「ひゃああっ……余計に気持ち悪い……」")
+						PRINTFORMDW 服の裾から入り込んだ触手が音を立てながら蠢いている……
+					;服が半壊
+					ELSE
+						CALL SPLIT_HEARTL_K97("「くう…こんな無意味な行為を……」")
+						PRINTFORMDW ぬえはくやしそうな表情を見せている……
+					ENDIF
+				;発情・感情操作系、
+				ELSEIF FLAG:526 == 1
+					CALL SPLIT_HEARTW_K97("「あはっ♥　私のおっぱいで気持ちよくなってくれるなんて嬉しいよ♥」")
+				;無意識・認識操作系
+				ELSE
+					CALL SPLIT_HEARTL_K97("「白蓮から教わったわ。こうやっておっぱいで搾り取ればこいつは退治できるってね」")
+					CALL SPLIT_HEARTW_K97("「ひゃうっ……射精たあっ……。しぶといわね、この、このっ！」")
+				ENDIF
+			;催眠にかかっていないけれど自発的に
+			ELSE
+				;苗床
+				IF CFLAG:801
+					CALL SPLIT_HEARTL_K97("「あはあっ♥　きもちいいのね♥　顔も、胸も、ドロドロだあ♥」")
+					CALL SPLIT_HEARTW_K97("「あっ♥　あっ♥　乳首も固くなってえ♥　しゃいこおおおおぉぉ♥」")
+				;発情
+				ELSEIF CFLAG:28
+					CALL SPLIT_HEARTL_K97("「触手なんだから手なづけられれば便利よね。んしょ、んしょ……♥」")
+					PRINTFORMDW ぬえは火照る乳頭を冷やすかのように触手の粘液を塗りたくった……
+				;その他　とはいってもかなり開発されてる
+				ELSE
+					PRINTFORMDL じっと触手を見つめていたぬえはおもむろに胸で奉仕し始めた！
+					CALL SPLIT_HEARTW_K97("「こう……、しなければいけないような気が……♥　んっ、なんでだろう……♥」")
+				ENDIF
+			ENDIF
+	ENDSELECT
+RETURN
+
+;戦闘時発情して味方を襲うor発情した仲間に襲われる
+;NO:(ARG:2)で対象キャラ確認可能
+@BATTLE_MIKATA_KOUDOU_RAPE_97_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	SELECTCASE ARG:1
+		;襲われる　この口上を言うキャラが捕まっている時は口上なしで解除
+		CASE 95
+			SELECTCASE ARG:3
+				;自力脱出
+				CASE 1
+				;襲っている奴が拘束・丸呑み・戦意喪失・発情したことによる解除
+				CASE 2
+
+				;襲われる
+				CASEELSE
+				
+			ENDSELECT
+		;襲う
+		CASE 96
+			SELECTCASE ARG:3
+				;ふたなり襲撃開始
+				CASE 3
+
+				;レズ襲撃開始
+				CASE 2
+
+				;なんか継続系ってぜんぜん出ないんだよな……
+				;襲撃継続（ふたなり）
+				CASE 1
+
+				;襲撃継続
+				CASEELSE
+
+			ENDSELECT
+
+	ENDSELECT
+
+RETURN

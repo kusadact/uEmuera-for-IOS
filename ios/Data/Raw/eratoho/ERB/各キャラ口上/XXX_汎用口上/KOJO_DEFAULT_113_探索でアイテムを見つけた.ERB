@@ -1,0 +1,233 @@
+﻿
+; ////////////////////////////
+; / ARG:0  113    探索でアイテムを見つけた
+; / ARG:1         アイテムID
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_113(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; ストック上限、もう持てない
+	IF ITEM:(ARG:1) == GET_ITEM_MAX(ARG:1)
+		CALL ADD_RAND_MESSAGE, @"「这个已经够了吧，我已经有很多了」"
+		CALL ADD_RAND_MESSAGE, @"「大量拥有相同的东西也没什么意义啊」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「就算看起来好像能用，也不能大量拥有相同的东西啊」"
+		CASE 性格_わがまま
+			CALL ADD_RAND_MESSAGE, @"「肯定有人只会掉同样的东西吧」"
+			CALL ADD_RAND_MESSAGE, @"「掉落的东西也想要一些变化啊」"
+		ENDSELECT
+		
+	; まだ持てる
+	ELSE
+		CALL ADD_RAND_MESSAGE, @"「哎呀，有东西掉了」"
+		CALL ADD_RAND_MESSAGE, @"「是谁掉的呢」"
+		CALL ADD_RAND_MESSAGE, @"「为什么会有这种东西掉在这里呢」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_おせっかい
+			CALL ADD_RAND_MESSAGE, @"「真是乱七八糟啊，哎呀，这个可能有用」"
+		CASE 性格_おてんば
+			CALL ADD_RAND_MESSAGE, @"「捡到好东西♪」"
+			CALL ADD_RAND_MESSAGE, @"「太好了！找到好东西了！」"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"「看起来能用呢」"
+		CASE 性格_くろうにん
+			CALL ADD_RAND_MESSAGE, @"「掉落物周围应该没有陷阱吧……」"
+		CASE 性格_しあわせもの
+			CALL ADD_RAND_MESSAGE, @"「掉落的东西看起来能用，这是平时的行为带来的好处啊」"
+		CASE 性格_ぬけめがない
+			CALL ADD_RAND_MESSAGE, @"「在物体的阴影下掉了什么……」"
+			CALL ADD_RAND_MESSAGE, @"「这个能对什么有帮助吗」"
+		CASE 性格_ねっけつかん
+			CALL ADD_RAND_MESSAGE, @"「在这种地方掉落重要的工具，真是不可思议」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「会好好使用的……掉落的人，对不起……」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  113    探索でアイテムを見つけた
+; / ARG:1   10    アイテムID 10:こんぼう
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_113_10(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「看起来没什么用处……」"
+	CALL ADD_RAND_MESSAGE, @"「比起空手来说还是好一点吧」"
+		
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「哦，这个不错！嘿嘿！」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「比没有要好……就这样吧」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  113    探索でアイテムを見つけた
+; / ARG:1   26    アイテムID 26:咲夜の時計
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_113_26(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; important属性付与
+	; 一度しか拾えない固定イベントアイテムなので必ず専用口上を呼び出す
+	CALL SET_IMPORTANT_FLAG
+	
+	CALL ADD_RAND_MESSAGE, @"「奇怪的时钟啊，好像能稍微停下周围的时间」"
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  113    探索でアイテムを見つけた
+; / ARG:1   39    アイテムID 39:媚薬
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_113_39(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「这、这个药……难道……」"
+	CALL ADD_RAND_MESSAGE, @"「这个是……色情的东西吗……？」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「这是什么？……不是饮料吗」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「这个药看起来像是浓缩了这里生物的体液……」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"「为什么总是找到这种东西呢……」"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「啊啊啊♪　找到了这样的东西♪」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  113    探索でアイテムを見つけた
+; / ARG:1   52    アイテムID 52:日本酒
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_113_52(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	CALL ADD_RAND_MESSAGE, @"「掉落酒这种东西，好可疑啊……」"
+	CALL ADD_RAND_MESSAGE, @"「在这种地方有酒……这样没问题吗？」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「好像在说让我喝掉掉落的酒呢，嗯」"
+	CASE 性格_きれもの
+		CALL ADD_RAND_MESSAGE, @"「可能有奇怪的东西混进去了，喝之前要好好检查一下」"
+	CASE 性格_しあわせもの
+		CALL ADD_RAND_MESSAGE, @"「啊，真幸运。希望很好喝」"
+	CASE 性格_ぬけめがない
+		CALL ADD_RAND_MESSAGE, @"「尝一口……嗯，很好喝」"
+	CASE 性格_のんきもの
+		CALL ADD_RAND_MESSAGE, @"「真大方啊，居然有酒掉下来」"
+	CASE 性格_ひっこみじあん
+		CALL ADD_RAND_MESSAGE, @"「这种地方会有酒掉下来，到底是谁放的呢」"
+	ENDSELECT
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  113    探索でアイテムを見つけた
+; / ARG:1   54    アイテムID 54:着替えセット
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_113_54(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 着替えのストック十分、もう持てない
+	IF ITEM:(73) == GET_ITEM_MAX(73)
+		CALL ADD_RAND_MESSAGE, @"「衣服嘛，应该不需要了吧，毕竟不是去旅行」"
+		CALL ADD_RAND_MESSAGE, @"「在这种地方没法打扮得漂亮……」"
+		
+	
+	; まだ持てる
+	ELSE
+		CALL ADD_RAND_MESSAGE, @"「衣服啊，在这里可是珍贵的东西……」"
+		CALL ADD_RAND_MESSAGE, @"「换洗衣物要好好保管呢」"
+		
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_しあわせもの
+			CALL ADD_RAND_MESSAGE, @"「啊，这件衣服好可爱」"
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"「啊，这件内衣……呵呵呵」"
+		CASE 性格_ひっこみじあん
+			CALL ADD_RAND_MESSAGE, @"「太好了……有备用衣服真是让人放心」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  113    探索でアイテムを見つけた
+; / ARG:1   60    アイテムID 60:大人の玩具
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_113_60(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; important属性付与
+	; 一度しか拾えない固定イベントアイテムなので必ず専用口上を呼び出す
+	CALL SET_IMPORTANT_FLAG
+	
+	CALL ADD_RAND_MESSAGE, @"「为、为什么会有这种东西……！？」"
+	CALL ADD_RAND_MESSAGE, @"「等等……！为什么会有这种东西掉在这里……」"
+	
+	; 性格別 追加口上
+	SELECTCASE CFLAG:100
+	CASE 性格_おてんば
+		CALL ADD_RAND_MESSAGE, @"「哇，这是什么？形状奇怪还在颤抖」"
+	CASE 性格_くろうにん
+		CALL ADD_RAND_MESSAGE, @"（比起被侵犯，自己动手可能更好吧……）"
+	CASE 性格_セクシーギャル
+		CALL ADD_RAND_MESSAGE, @"「是在说如果要被侵犯就自己动手吗？」"
+	ENDSELECT
+	
+		; 自慰中毒LVで分岐
+	SELECTCASE ABL:10
+	
+	; 自慰中毒LV1
+	CASE 1
+		CALL ADD_RAND_MESSAGE, @"（不、不可能……这个是♥）"
+		CALL ADD_RAND_MESSAGE, @"（可以……使用吗……♥）"
+
+		
+	; 自慰中毒LV2
+	CASE 2
+		CALL ADD_RAND_MESSAGE, @"（不、不要……♥ 想象到使用的样子了……♥）"
+		CALL ADD_RAND_MESSAGE, @"（这种东西……♥ 现在就想要使用……♥）"		
+
+	; 自慰中毒LV3
+	CASE 3
+		CALL ADD_RAND_MESSAGE, @"（啊♥ 不要♥ 想象♥ 只是♥ 就要♥ 高潮♥ 了♥）"
+		CALL ADD_RAND_MESSAGE, @"（快点……♥♥ 快点使用♥ 在一个……在一个……不被人看到的地方……♥♥）"
+	ENDSELECT
+	
+	; 発情中 追加口上
+	IF CFLAG:28
+	CALL ADD_RAND_MESSAGE, @"「是、是让我使用吧……♥」"
+		; 性格別 追加口上
+		SELECTCASE CFLAG:100
+		CASE 性格_がんこもの
+			CALL ADD_RAND_MESSAGE, @"（使用这个或许可以缓解疼痛…… 但是……）"
+		CASE 性格_きれもの
+			CALL ADD_RAND_MESSAGE, @"（恨自己居然知道如何使用……）"
+		CASE 性格_セクシーギャル
+			CALL ADD_RAND_MESSAGE, @"「身体发热的时候掉下来这种东西，太巧合了吧♥」"
+		CASE 性格_ぬけめがない
+			CALL ADD_RAND_MESSAGE, @"「被迫发情，还找到这种东西……只感到恶意……」"
+		ENDSELECT
+	ENDIF
+RETURN 1
+
+; ////////////////////////////
+; / ARG:0  113    探索でアイテムを見つけた
+; / ARG:1   65    アイテムID 65:胡蝶夢丸ナイトメア
+; / ARGS:0        自分の名前
+@KOJO_DEFAULT_113_65(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; important属性付与
+	; 一度しか拾えない固定イベントアイテムなので必ず専用口上を呼び出す
+	CALL SET_IMPORTANT_FLAG
+	
+	CALL ADD_RAND_MESSAGE, @"「只是ふつう的安眠药……但感觉不好……」"
+	CALL ADD_RAND_MESSAGE, @"这个……可以用吗……？"
+RETURN 1
+

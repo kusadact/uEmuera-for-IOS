@@ -1,0 +1,109 @@
+﻿;固定イベント
+;RETURN	0:失敗した　1:成功した　2:以後のイベントスキップ
+@CHECK_FIXED_EVENT_208
+;LOCAL
+;0	LOOP
+;1	目標値
+;2	達成値
+;3	戻り値
+
+LOCAL:3 = 0
+
+;目標値（イベント難易度）決定
+LOCAL:1 = 50
+
+
+;達成値決定
+CALL GET_SEARCH_RATE
+LOCAL:2 = RESULT
+
+
+IF LOCAL:2 >= LOCAL:1
+	;何度も発生
+	FLAG:208 = RAND:30 + 1
+	
+	PRINTFORML %CALLNAME:1%的腦海中直接響起了不可思議的声音…
+	IF LOCAL:2 < 100
+		SELECTCASE RAND:5
+			CASE 0
+				PRINTFORML 『要時常保存』
+			CASE 1
+				PRINTFORML 『装備品…特別是装飾品非常的重要』
+			CASE 2
+				PRINTFORML 『把装備品送給NPC的話、能讓関係変好』
+			CASE 3
+				PRINTFORML 『把装備品送給NPC的話、能讓降低敵意』
+			CASEELSE
+				PRINTFORML 『在清浄的部屋里、汚垢的消失速度和回復速度会加快』
+		ENDSELECT
+	ELSEIF LOCAL:2 < 150
+		SELECTCASE RAND:5
+			CASE 0
+				PRINTFORML 『同伴被送上高潮的話会讓好感度稍微降低一点』
+			CASE 1
+				PRINTFORML 『戦闘中回合終了時自慰了的場合、EP完全回復需要一点時間』
+			CASE 2
+				PRINTFORML 『会話等級很高的話、和NPC雑談時也能得到各種各樣的情報』
+			CASE 3
+				PRINTFORML 『即使是什麼都找不到的部屋、如果提高探索技能的話説不定也能找到些什麼』
+			CASEELSE
+				PRINTFORML 『只想通過探索脱離迷宮的話、石碑和石版非常重要。　請做好地点的筆記』
+		ENDSELECT
+	ELSEIF LOCAL:2 < 200
+		SELECTCASE RAND:5
+			CASE 0
+				PRINTFORML 『NPC的CP会一点点的回復。　如果替換衣物不夠的話就先暫時分別吧』
+			CASE 1
+				IF FLAG:201 >= 100 && FLAG:201 < 200 && FLAG:207
+					PRINTFORML 『現在的話可以在{FLAG:207}号部屋揀到有趣的東西』
+				ELSE
+					PRINTFORML 『除了時間経過以外、打倒敵人也可以回復浄化力』
+				ENDIF
+			CASE 2
+				PRINTFORML 『現在的話可以在{FLAG:115}号部屋揀到強力的武器』
+			CASE 3
+				PRINTFORML 『現在的話可以在{FLAG:120}号部屋揀到上好的装飾品』
+			CASEELSE
+				PRINTFORML 『現在的話可以在{FLAG:121}号部屋揀到上好的装飾品』
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:5
+			CASE 0
+				PRINTFORML 『現在的話可以在{FLAG:135}号部屋找到不思議之泉』
+			CASE 1
+				IF FLAG:201 >= 200
+					PRINTFORML 『赤色石版的話就在{FLAG:202 % 100}号部屋』
+				ELSE
+					PRINTFORML 『火炎放射器実際上対章魚系的魔物沒有什麼效果』
+				ENDIF
+			CASE 2
+				IF FLAG:201 >= 200
+					PRINTFORML 『青色石版的話就在{FLAG:203 % 100}号部屋』
+				ELSE
+					PRINTFORML 『BOSS系的敵人可以使用全部４種類的性攻撃、但是実際上得意属性只有１個』
+					PRINTFORML 『選択得意属性的概率很高、威力也会相当的高』
+				ENDIF
+			CASE 3
+				IF FLAG:201 >= 200
+					PRINTFORML 『黄色石版的話就在{FLAG:204 % 100}号部屋』
+				ELSE
+					PRINTFORML 『作為装飾品的媚薬、在自慰中毒很低時的期待値相当的強力』
+				ENDIF
+			CASEELSE
+				PRINTFORML 『通過贈送道具和NPC打好関係之後、主人公被敵人捕食時会過来幇忙』
+				PRINTFORML 『ラスボスに捕まっている所へ全員集まってきても知らないけどね……』
+		ENDSELECT
+	ENDIF
+	
+	IF FLAG:AUTOMODE
+		TWAIT FLAG:AUTOMODE * 500, 0
+	ELSE
+		WAIT
+	ENDIF
+	LOCAL:3 = 1
+ELSE
+	;見つからなかった場合（通常は何もしない）
+ENDIF
+
+RETURN LOCAL:3
+

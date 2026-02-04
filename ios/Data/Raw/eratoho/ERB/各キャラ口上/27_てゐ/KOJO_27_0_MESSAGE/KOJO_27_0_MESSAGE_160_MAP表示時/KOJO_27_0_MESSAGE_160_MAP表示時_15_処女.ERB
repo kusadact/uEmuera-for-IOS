@@ -1,0 +1,49 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 15 処女
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_15(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 処女でないなら帰る
+	SIF !TALENT:0
+		RETURN 0
+		
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 真の処女
+	IF TALENT:0 == 1
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「誰かぁ……、あたしの処女貰ってよぉ……っ♥♥」\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（いつまで純潔を守れるんだろ……）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんなトコに居たんじゃ風前の灯火だわ、あたしの純潔……」\n"
+		ENDSELECT
+	
+	; 再生処女
+	ELSEIF TALENT:0 == 2
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「何度も処女喪失が味わえるとか、素敵ねぇ♥」\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（偽物の処女とか、喜んでいいんだか……）\n"
+		ENDSELECT
+	ENDIF
+	
+RETURN 1

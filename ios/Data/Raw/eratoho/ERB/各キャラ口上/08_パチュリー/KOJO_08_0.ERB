@@ -1,0 +1,144 @@
+﻿;--------------------------------------------------
+;■　東方触手宮_口上分岐セット
+;　　つくった人　やむっ
+;
+;CFLAG:900　拘束ドッペルさん物まねキャラ種類
+;CFLAG:901　直前に食らった攻撃番号
+;CFLAG:902　直前に食らった敵の名前番号
+;CFLAG:903　自慰中
+;--------------------------------------------------
+;口上選択時のタイトル
+@KOJO_TITLE_8_0
+RESULTS = 東方触手宮　パチュリー口上（2015/05/26）
+
+;--------------------------------------------------
+;口上選択時の詳細説明
+@KOJO_DETAIL_8_0
+PRINTFORML 絶対触手になんて負けたりしないパチュリー口上
+PRINTFORML 各種追加パッチ導入を推奨
+PRINTFORML ふたなり関係を見たい人はコンフィグのスイッチもONにしてね
+
+
+;--------------------------------------------------
+;文字色　紫
+@KOJO_DEFAULT_COLOR_8_0
+	;娘
+	IF CFLAG:104
+		RETURN RGBCOLOR(220, 100, 240)
+	;オリジナル
+	ELSE
+		RETURN RGBCOLOR(200, 40, 220)
+	ENDIF
+
+
+;--------------------------------------------------
+;呼び方
+;ARG:0 対象キャラ番号
+;ARG:1 0:通常、1:甘えモード
+;ARGS:0 未設定キャラ番号時の呼び名（未入力で自動検索）
+@CALLNAME_8_0(ARG:0, ARG:1, ARGS:0)
+#FUNCTIONS
+	;例外を除いてとりあえず常にオリジナル扱いで呼ぶ。
+	;○○の娘って呼びかける時はこの関数を使わない
+	;通常
+	IF ARG:1 == 0
+		SELECTCASE NO:(ARG:0)
+		;パチュリー
+		CASE 8
+			;オリジナル
+			IF CFLAG:(ARG:0):104 == 0
+				RETURNF "ママ"
+			;娘
+			ELSE
+				RETURNF "貴女"
+			ENDIF
+		;レミリア
+		CASE 10
+			RETURNF "レミィ"
+		;フラン
+		CASE 11
+			RETURNF "フラン"
+		;汎用
+		CASE 0
+			RETURNF "あなた"
+		;通常
+		CASEELSE
+			IF ARGS:0 == ""
+				RETURNF CALLNAME:(ARG:0)
+			ELSE
+				RETURNF ARGS:0
+			ENDIF
+		ENDSELECT
+	;甘えモード
+	ELSE
+		SELECTCASE NO:(ARG:0)
+		;霊夢
+		CASE 1
+			RETURNF "れいむぅ"
+		;魔理沙
+		CASE 2
+			RETURNF "まりさぁ"
+		;小悪魔
+		CASE 7
+			RETURNF "こぁ"
+		;パチュリー
+		CASE 8
+			;オリジナル
+			IF CFLAG:(ARG:0):104 == 0
+				RETURNF "ママぁ"
+			;娘
+			ELSE
+				RETURNF "貴女ぁ"
+			ENDIF
+		;咲夜
+		CASE 9
+			RETURNF "さくやぁ"
+		;レミリア
+		CASE 10
+			RETURNF "レミィ"
+		;フラン
+		CASE 11
+			RETURNF "フラン"
+		;アリス
+		CASE 14
+			RETURNF "アリスぅ"
+		;汎用
+		CASE 0
+			RETURNF "あなたぁ"
+		;通常
+		CASEELSE
+			IF ARGS:0 == ""
+				RETURNF CALLNAME:(ARG:0)
+			ELSE
+				RETURNF ARGS:0
+			ENDIF
+		ENDSELECT
+	ENDIF
+
+
+;--------------------------------------------------
+;口上本体
+@KOJO_8_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+;地の文はデフォルトのものを使用する場合こっちに；をつける
+CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;地の文も作る場合こっち
+;CALL KOJO_8_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+;文字色設定
+IF CFLAG:104
+	CALL KOJO_DEFAULT_COLOR_8_0
+	SETCOLOR RESULT
+ELSE
+	SETCOLOR CFLAG:700
+ENDIF
+
+;本体
+CALL KOJO_ROOT_8_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+
+RESETCOLOR
+;口上記入済み
+RETURN 1
+

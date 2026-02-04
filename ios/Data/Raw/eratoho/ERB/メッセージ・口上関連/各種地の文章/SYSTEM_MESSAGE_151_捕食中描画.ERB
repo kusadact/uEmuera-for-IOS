@@ -1,0 +1,1460 @@
+﻿;捕食中の描写
+@SYSTEM_MESSAGE_151(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+IF TARGET == 1
+	;主人公本人＝主観描写
+	SELECTCASE DA:(ARG:1):0
+		CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML (SYSTEM_MESSAGE_151)敌人的ID不正确 ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  (SYSTEM_MESSAGE_151)敵のIDが不正です ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+ENDIF
+
+		CASE 1 TO 2
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 膨大的触手块毫无保留地凌辱着%ARGS:0%的每一寸肌肤…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  膨大的触手块毫无保留地凌辱着%ARGS:0%的每一寸肌肤…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%在压倒性的暴力面前、生命力正被消磨殆尽、完全无力保护…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%在压倒性的暴力面前、生命力正被消磨殆尽、完全无力保护…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 身心都在快乐下融化成一团浆糊的%ARGS:0%感觉自己似乎正在消失…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  身心都在快乐下融化成一团浆糊的%ARGS:0%感觉自己似乎正在消失…
+ENDIF
+
+			ENDIF
+		CASE 4
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 塞进%ARGS:0%的嘴里的触手注入了无法辨认的粘液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  塞进%ARGS:0%的嘴里的触手注入了无法辨认的粘液…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 被肉壁吸收了四肢的%ARGS:0%的感觉正在逐渐消失…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被肉壁吸收了四肢的%ARGS:0%的感觉正在逐渐消失…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的意识逐渐远去、感觉自己被改造成了什么别的东西…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的意识逐渐远去、感觉自己被改造成了什么别的东西…
+ENDIF
+
+			ENDIF
+		CASE 5 TO 6
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 缠绕在全身上的藤蔓一样的东西吸走了%ARGS:0%的力量…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  缠绕在全身上的藤蔓一样的东西吸走了%ARGS:0%的力量…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 侵犯着所有的穴的藤蔓啜饮着%ARGS:0%的体液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  侵犯着所有的穴的藤蔓啜饮着%ARGS:0%的体液…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%的藤蔓进一步在%ARGS:0%身上缠绕收紧着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%的藤蔓进一步在%ARGS:0%身上缠绕收紧着…
+ENDIF
+
+			ENDIF
+		CASE 7 TO 8
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 蠕动的肉壁带来的令人窒息的压迫感吞噬着%ARGS:0%的希望...
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  蠕动的肉壁带来的令人窒息的压迫感吞噬着%ARGS:0%的希望…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 连上下左右都分不清的%ARGS:1%的体内缠绕的触手激烈地不断侵犯着%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  连上下左右都分不清的%ARGS:1%的体内缠绕的触手激烈地不断侵犯着%ARGS:0%…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 涂抹在无助的%ARGS:0%全身的粘液夺去了她的生命力…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  涂抹在无助的%ARGS:0%全身的粘液夺去了她的生命力…
+ENDIF
+
+			ENDIF
+		CASE 9 TO 10
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 从被吸盘吸附着的地方%ARGS:0%有什么东西被夺走了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从被吸盘吸附着的地方%ARGS:0%有什么东西被夺走了…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 插入的触手搏动着、逐渐破坏了%ARGS:0%的内心…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  插入的触手搏动着、逐渐破坏了%ARGS:0%的内心…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 被%ARGS:1%的触手包裹住全身的%ARGS:0%连话都说不出来了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被%ARGS:1%的触手包裹住全身的%ARGS:0%连话都说不出来了…
+ENDIF
+
+			ENDIF
+		CASE 11 TO 12
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 缠绕在一起的各种触手逐渐侵入%ARGS:0%的皮肤…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  缠绕在一起的各种触手逐渐侵入%ARGS:0%的皮肤…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 从肉壁和%ARGS:0%的皮肤接触的部分里被夺去了生命力…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从肉壁和%ARGS:0%的皮肤接触的部分里被夺去了生命力…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 沉入一滩温暖的粘液中、%ARGS:0%的下半身的生命正在流逝…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  沉入一滩温暖的粘液中、%ARGS:0%的下半身的生命正在流逝…
+ENDIF
+
+			ENDIF
+		CASE 13 TO 14
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的全身在%ARGS:1%的体内继续被玩弄着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的全身在%ARGS:1%的体内继续被玩弄着…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 从被史莱姆遮挡的混浊的视线中伸出的%ARGS:0%的手来看、生命确实在不断地被消磨殆尽…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从被史莱姆遮挡的混浊的视线中伸出的%ARGS:0%的手来看、生命确实在不断地被消磨殆尽…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 在史莱姆体内游动着的%ARGS:0%的生命力从全身上下开始溶解…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在史莱姆体内游动着的%ARGS:0%的生命力从全身上下开始溶解…
+ENDIF
+
+			ENDIF
+		CASE 15 TO 16
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被%ARGS:1%爱抚时、一切都因快感而变得雪白…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被%ARGS:1%爱抚时、一切都因快感而变得雪白…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 被被纠缠在一起插入的藤蔓吸取了什么东西的快感让%ARGS:0%不禁叹息着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被被纠缠在一起插入的藤蔓吸取了什么东西的快感让%ARGS:0%不禁叹息着…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 每当被凌辱地失去知觉时、%ARGS:0%的什么重要的东西就消失了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  每当被凌辱地失去知觉时、%ARGS:0%的什么重要的东西就消失了…
+ENDIF
+
+			ENDIF
+		CASE 31
+			IF ARG:2
+				IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%在全身都失去了力量的感觉中迷失了自我…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%在全身都失去了力量的感觉中迷失了自我…
+ENDIF
+
+				ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 被缠绕的触手无情地吸走生命…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被缠绕的触手无情地吸走生命…
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 仿佛全身都在融化、%ARGS:0%任凭被摆布着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  仿佛全身都在融化、%ARGS:0%任凭被摆布着…
+ENDIF
+
+				ENDIF
+			ELSE
+				IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%像傀儡一样被触手玩弄着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%像傀儡一样被触手玩弄着…
+ENDIF
+
+				ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 缠绕的触手无情地玩弄着%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  缠绕的触手无情地玩弄着%ARGS:0%…
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%没有吞下%ARGS:0%、用藤蔓反复凌辱着她…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%没有吞下%ARGS:0%、用藤蔓反复凌辱着她…
+ENDIF
+
+				ENDIF
+			ENDIF
+		CASE 44
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%挂着空虚的眼神主动扭起腰来…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%挂着空虚的眼神主动扭起腰来…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%看着似乎是自愿被侵犯的…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%看着似乎是自愿被侵犯的…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%继续充满爱意的奉仕着触手…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%继续充满爱意的奉仕着触手…
+ENDIF
+
+			ENDIF
+		CASE 49
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 每当%ARGS:1%又插入一根触手、%ARGS:0%的悲鸣就开始在洞穴里回响着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  每当%ARGS:1%又插入一根触手、%ARGS:0%的悲鸣就开始在洞穴里回响着…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被%ARGS:1%束缚着、脑袋被按进白浊浴池、尝到了窒息地狱的滋味…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被%ARGS:1%束缚着、脑袋被按进白浊浴池、尝到了窒息地狱的滋味…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 钩爪状的触手嵌入%ARGS:0%全身向不同方向拉扯着、带来了刻骨铭心的疼痛…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  钩爪状的触手嵌入%ARGS:0%全身向不同方向拉扯着、带来了刻骨铭心的疼痛…
+ENDIF
+
+			ENDIF
+		CASE 62 TO 63
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 被藤蔓的笼子捕获的%ARGS:0%的全身里有什么重要的东西被夺走了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被藤蔓的笼子捕获的%ARGS:0%的全身里有什么重要的东西被夺走了…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 侵犯着所有的穴的藤蔓啜饮着%ARGS:0%的体液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  侵犯着所有的穴的藤蔓啜饮着%ARGS:0%的体液…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 缠绕在全身上的藤蔓一样的东西吸走了%ARGS:0%的力量…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  缠绕在全身上的藤蔓一样的东西吸走了%ARGS:0%的力量…
+ENDIF
+
+			ENDIF
+		CASE 65 TO 66
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 在充满精液的睾丸中漂浮着的%ARGS:0%的身体里、生命力正逐渐消失……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在充满精液的睾丸中漂浮着的%ARGS:0%的身体里、生命力正逐渐消失……
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%的睾丸里、触手冲向了%ARGS:0%的身体、一个洞接着一个洞的侵犯着。
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW %ARGS:1%的睾丸里、触手冲向了%ARGS:0%的身体、一个洞接着一个洞的侵犯着。
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 为了从%ARGS:1%内部逃脱、%ARGS:0%用虚弱的手取推着睾丸的内壁。然而一根又一根触手缠住了她的手。
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  为了从%ARGS:1%内部逃脱、%ARGS:0%用虚弱的手取推着睾丸的内壁。然而一根又一根触手缠住了她的手。
+ENDIF
+
+			ENDIF
+		CASE 69
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 尾巴缠绕住了%ARGS:0%、%ARGS:1%像是在撒娇似的蹭了过来…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  尾巴缠绕住了%ARGS:0%、%ARGS:1%像是在撒娇似的蹭了过来…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 抱紧她、在她耳边低语、让她安心的%ARGS:1%的声音、渗透进了%ARGS:0%的大脑……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  抱紧她、在她耳边低语、让她安心的%ARGS:1%的声音、渗透进了%ARGS:0%的大脑……
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%玩弄着想要逃跑的%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%玩弄着想要逃跑的%ARGS:0%…
+ENDIF
+
+			ENDIF
+		CASE 86
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被囚禁在水晶的牢笼中…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被囚禁在水晶的牢笼中…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%受到了%ARGS:1%温柔的爱抚、沉浸在快感中…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%受到了%ARGS:1%温柔的爱抚、沉浸在快感中…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 被%ARGS:1%玩弄地发出娇声的%ARGS:0%的心里有什么东西坏掉了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被%ARGS:1%玩弄地发出娇声的%ARGS:0%的心里有什么东西坏掉了…
+ENDIF
+
+			ENDIF
+		CASE 93
+			IF RAND:8 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%一边侵犯着坐在膝盖上的%ARGS:0%、一边在耳边低语着爱意…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%一边侵犯着坐在膝盖上的%ARGS:0%、一边在耳边低语着爱意…
+ENDIF
+
+			ELSEIF RAND:7 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 每当在耳边听到%ARGS:1%的歌声、%ARGS:0%的\@ TALENT:100 ? 小小的 # 淫乱的 \@ 的身体就会颤抖抽搐起来
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  每当在耳边听到%ARGS:1%的歌声、%ARGS:0%的\@ TALENT:100 ? 小小的 # 淫乱的 \@ 的身体就会颤抖抽搐起来
+ENDIF
+
+			ELSEIF RAND:6 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 侵犯着%ARGS:0%的%ARGS:1%的歌声、引导着%ARGS:0%在睡梦中达到高潮…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  侵犯着%ARGS:0%的%ARGS:1%的歌声、引导着%ARGS:0%在睡梦中达到高潮…
+ENDIF
+
+			ELSEIF RAND:5 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 被凌辱时听着耳边的歌声、%ARGS:0%渐渐达到了高潮…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被凌辱时听着耳边的歌声、%ARGS:0%渐渐达到了高潮…
+ENDIF
+
+			ELSEIF RAND:4 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 让失去意识的%ARGS:0%听着摇篮曲、%ARGS:1%随心所欲的侵犯着%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  让失去意识的%ARGS:0%听着摇篮曲、%ARGS:1%随心所欲的侵犯着%ARGS:0%…
+ENDIF
+
+			ELSEIF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%配合着%ARGS:1%的歌声、有节奏地娇喘着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%配合着%ARGS:1%的歌声、有节奏地娇喘着…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%听着%ARGS:1%的歌声、仿佛在做梦一般…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%听着%ARGS:1%的歌声、仿佛在做梦一般…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 失去力量的%ARGS:0%、从背后被%ARGS:1%揉搓着胸部…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  失去力量的%ARGS:0%、从背后被%ARGS:1%揉搓着胸部…
+ENDIF
+
+			ENDIF
+		CASE 98
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被%ARGS:1%盯着而无路可逃、疯狂地自慰着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被%ARGS:1%盯着而无路可逃、疯狂地自慰着…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 被%ARGS:1%注视着的%ARGS:0%的全身被强行注入了快感…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被%ARGS:1%注视着的%ARGS:0%的全身被强行注入了快感…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%催眠了%ARGS:0%、告诉她谁才是主人…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%催眠了%ARGS:0%、告诉她谁才是主人…
+ENDIF
+
+			ENDIF
+		CASE 105
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%一边用尾巴慢慢勒住%ARGS:0%、一边用裂开的舌头恋恋不舍地吸吮着嘴唇……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%一边用尾巴慢慢勒住%ARGS:0%、一边用裂开的舌头恋恋不舍地吸吮着嘴唇……
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%在%ARGS:0%耳边喷出热烈的吐息、又用毒牙在脖子上注入了媚药……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%在%ARGS:0%耳边喷出热烈的吐息、又用毒牙在脖子上注入了媚药……
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被%ARGS:1%抖动玩弄着双肩双腿、同时被侵犯着前后两穴。
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被%ARGS:1%抖动玩弄着双肩双腿、同时被侵犯着前后两穴。
+ENDIF
+
+			ENDIF
+		CASEELSE
+			IF ARG:2
+				IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 全身缠绕着的触手一样的东西吸收着%ARGS:0%的力量……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  全身缠绕着的触手一样的东西吸收着%ARGS:0%的力量……
+ENDIF
+
+				ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 颤动的肉壁玩弄着%ARGS:0%的身体……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  颤动的肉壁玩弄着%ARGS:0%的身体……
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%在%ARGS:1%的体内持续被触手侵犯着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%在%ARGS:1%的体内持续被触手侵犯着…
+ENDIF
+
+				ENDIF
+			ELSE
+				IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 吸盘一样的触手从%ARGS:0%体内吸取着魔力……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  吸盘一样的触手从%ARGS:0%体内吸取着魔力……
+ENDIF
+
+				ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 插入%ARGS:0%小穴里的触手、融化了%ARGS:0%的心灵…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  插入%ARGS:0%小穴里的触手、融化了%ARGS:0%的心灵…
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 全身都被勒紧了的%ARGS:0%继续被%ARGS:1%侵犯着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  全身都被勒紧了的%ARGS:0%继续被%ARGS:1%侵犯着…
+ENDIF
+
+				ENDIF
+			ENDIF
+	ENDSELECT
+ELSE
+	;主人公以外＝客観描写
+	SELECTCASE DA:(ARG:1):0
+		CASE 0
+IF FLAG:AUTOMODE
+    PRINTFORML (SYSTEM_MESSAGE_151)敌人的ID不正确 ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  (SYSTEM_MESSAGE_151)敌人的ID不正确 ({ARG:1}, %ARGS:0%, %ARGS:1%, {ARG:2}, {ARG:3}, {ARG:4}, {ARG:5}, {ARG:6})
+ENDIF
+
+		CASE 1 TO 2
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 膨大的触手块毫无保留地凌辱着%ARGS:0%的每一寸肌肤…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  膨大的触手块毫无保留地凌辱着%ARGS:0%的每一寸肌肤…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%在压倒性的暴力面前、生命力无可奈何地被削弱了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%在压倒性的暴力面前、生命力无可奈何地被削弱了…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 激烈的凌辱带来的快乐下、%ARGS:0%像被玩坏了一样发出娇声、重复着晕厥和高潮…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  激烈的凌辱带来的快乐下、%ARGS:0%像被玩坏了一样发出娇声、重复着晕厥和高潮…
+ENDIF
+
+			ENDIF
+		CASE 4
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 从插入%ARGS:0%口中的触手里注入了不知是什么的粘液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从插入%ARGS:0%口中的触手里注入了不知是什么的粘液…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 透过触手的缝隙、可以看到四肢被肉壁吞噬的%ARGS:0%无力的低下头去的景象…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  透过触手的缝隙、可以看到四肢被肉壁吞噬的%ARGS:0%无力的低下头去的景象…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%好像讨厌害怕什么东西似的尖叫了一声、然后就晕过去了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%好像讨厌害怕什么东西似的尖叫了一声、然后就晕过去了……
+ENDIF
+
+			ENDIF
+		CASE 5 TO 6
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 全身缠绕着的像藤蔓一样的东西吸收着%ARGS:0%的力量…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  全身缠绕着的像藤蔓一样的东西吸收着%ARGS:0%的力量…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 侵入全身所有洞穴的藤蔓啜饮着%ARGS:0%的体液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  侵入全身所有洞穴的藤蔓啜饮着%ARGS:0%的体液…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%的藤蔓进一步缠绕收紧着%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%的藤蔓进一步缠绕收紧着%ARGS:0%…
+ENDIF
+
+			ENDIF
+		CASE 7 TO 8
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 在蠕动的腹部中传出了%ARGS:0%微弱的呻吟声…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在蠕动的腹部中传出了%ARGS:0%微弱的呻吟声…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被%ARGS:1%胀大的渐渐腹部吞下、一点一点地、但十分确定地、%ARGS:0%正变得越来越虚弱…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被%ARGS:1%胀大的渐渐腹部吞下、一点一点地、但十分确定地、%ARGS:0%正变得越来越虚弱…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%伸长身体、打算把%ARGS:0%送入身体更深处…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%伸长身体、打算把%ARGS:0%送入身体更深处…
+ENDIF
+
+			ENDIF
+		CASE 9 TO 10
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 从吸盘吸附的地方%ARGS:0%有什么东西被夺走了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从吸盘吸附的地方%ARGS:0%有什么东西被夺走了…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 每当插入的触手搏动起来时%ARGS:0%的瞳孔就会变得浑浊…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  每当插入的触手搏动起来时%ARGS:0%的瞳孔就会变得浑浊…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 被%ARGS:1%的触手包裹住全身、%ARGS:0%连话都说不出来了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被%ARGS:1%的触手包裹住全身、%ARGS:0%连话都说不出来了…
+ENDIF
+
+			ENDIF
+		CASE 11 TO 12
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%把自己的触手插入体内、继续凌辱着%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%把自己的触手插入体内、继续凌辱着%ARGS:0%…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 从%ARGS:1%的嘴里探出的%ARGS:0%的手臂反复地剧烈痉挛着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从%ARGS:1%的嘴里探出的%ARGS:0%的手臂反复地剧烈痉挛着…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 吞下了%ARGS:0%的%ARGS:1%的口中溢出了白浊液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  吞下了%ARGS:0%的%ARGS:1%的口中溢出了白浊液…
+ENDIF
+
+			ENDIF
+		CASE 13 TO 14
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的全身在%ARGS:1%的体内持续被玩弄着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的全身在%ARGS:1%的体内持续被玩弄着…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的腹部不断膨胀、下半身的周围积存着白浊的粘液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的腹部不断膨胀、下半身的周围积存着白浊的粘液…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 在史莱姆的体内游动着的%ARGS:0%的生命力开始从全身融化出来…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在史莱姆的体内游动着的%ARGS:0%的生命力开始从全身融化出来…
+ENDIF
+
+			ENDIF
+		CASE 15 TO 16
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 每当被%ARGS:1%爱抚时、%ARGS:0%都会发出悲鸣般的娇声…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  每当被%ARGS:1%爱抚时、%ARGS:0%都会发出悲鸣般的娇声…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 每当缠绕在一起插入的藤蔓从%ARGS:0%体内吸走什么东西时、她都会发出甜美的吐息声…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  每当缠绕在一起插入的藤蔓从%ARGS:0%体内吸走什么东西时、她都会发出甜美的吐息声…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 被凌辱的%ARGS:0%像是在主动寻求快乐一样无力地抱住了%ARGS:1%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被凌辱的%ARGS:0%像是在主动寻求快乐一样无力地抱住了%ARGS:1%…
+ENDIF
+
+			ENDIF
+		CASE 21
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 被美丽的蝴蝶停留的地方、%ARGS:0%有什么东西被夺走了……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被美丽的蝴蝶停留的地方、%ARGS:0%有什么东西被夺走了……
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被不可思议的鳞粉寸止了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被不可思议的鳞粉寸止了…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%只是一味地流淌着蜜液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%只是一味地流淌着蜜液…
+ENDIF
+
+			ENDIF
+		CASE 22
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被浓雾笼罩、意识渐渐模糊…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被浓雾笼罩、意识渐渐模糊…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%在雾中一个劲的自慰着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%在雾中一个劲的自慰着…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%用浓厚的淫雾包围了%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%用浓厚的淫雾包围了%ARGS:0%…
+ENDIF
+
+			ENDIF
+		CASE 23
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%把自己的触手插入%ARGS:0%体内凌辱着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%把自己的触手插入%ARGS:0%体内凌辱着…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 从%ARGS:1%的嘴里探出的%ARGS:0%的手臂反复地剧烈痉挛着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从%ARGS:1%的嘴里探出的%ARGS:0%的手臂反复地剧烈痉挛着…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 吞噬了%ARGS:0%的%ARGS:1%的口中溢出了白浊液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  吞噬了%ARGS:0%的%ARGS:1%的口中溢出了白浊液…
+ENDIF
+
+			ENDIF
+		CASE 27
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被%ARGS:1%的触手同时插入了上下两张嘴…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被%ARGS:1%的触手同时插入了上下两张嘴…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%漂亮的脸被触手的体液涂花了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%漂亮的脸被触手的体液涂花了…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%温柔地让を%ARGS:0%吮吸着自己引以为傲的触手…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%温柔地让を%ARGS:0%吮吸着自己引以为傲的触手…
+ENDIF
+
+			ENDIF
+
+		CASE 28
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的全身在%ARGS:1%的体内持续被玩弄着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的全身在%ARGS:1%的体内持续被玩弄着…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的腹部不断膨胀、下半身的周围积存着白浊的粘液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的腹部不断膨胀、下半身的周围积存着白浊的粘液…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 在红史莱姆体内游动着的%ARGS:0%的生命力从全身融化了出来…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在红史莱姆体内游动着的%ARGS:0%的生命力从全身融化了出来…
+ENDIF
+
+			ENDIF
+		CASE 29
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 从被吸盘吸着的地方上、%ARGS:0%有什么东西被夺走了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从被吸盘吸着的地方上、%ARGS:0%有什么东西被夺走了…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 每当插入的触手搏动起来时%ARGS:0%的瞳孔就会变得浑浊…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  每当插入的触手搏动起来时%ARGS:0%的瞳孔就会变得浑浊…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 被%ARGS:1%的触手包裹住全身、%ARGS:0%连话都说不出来了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被%ARGS:1%的触手包裹住全身、%ARGS:0%连话都说不出来了…
+ENDIF
+
+			ENDIF
+		CASE 30
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的后穴被鳗鱼钻了进去…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的后穴被鳗鱼钻了进去…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+				IF GET_PENIS(TARGET)
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的阴茎上流过了微弱的电流…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的阴茎上流过了微弱的电流…
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的阴蒂上流过了微弱的电流…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的阴蒂上流过了微弱的电流…
+ENDIF
+
+				ENDIF
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%紧紧缠绕在%ARGS:0%身上收紧着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%紧紧缠绕在%ARGS:0%身上收紧着…
+ENDIF
+
+			ENDIF
+		CASE 31
+			IF ARG:2
+				IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 大大膨胀起来的%ARGS:1%正满足地伸展着它的藤蔓…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  大大膨胀起来的%ARGS:1%正满足地伸展着它的藤蔓…
+ENDIF
+
+				ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%膨胀起来的身体里听不到任何声音
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%膨胀起来的身体里听不到任何声音
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 从%ARGS:1%的口中露出了%ARGS:0%身体的一部分、但很快又被吞噬了进去…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从%ARGS:1%的口中露出了%ARGS:0%身体的一部分、但很快又被吞噬了进去…
+ENDIF
+
+				ENDIF
+			ELSE
+				IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%像傀儡一样被触手玩弄着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%像傀儡一样被触手玩弄着…
+ENDIF
+
+				ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 缠绕在%ARGS:0%身上的触手正无情地玩弄着她…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  缠绕在%ARGS:0%身上的触手正无情地玩弄着她…
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%没有吞下%ARGS:0%、用藤蔓反复凌辱着她…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%没有吞下%ARGS:0%、用藤蔓反复凌辱着她…
+ENDIF
+
+				ENDIF
+			ENDIF
+
+		CASE 37
+			IF RAND:3 == 0
+				IF GET_PENIS(TARGET)
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的淫茎和乳头被丝线连接到了一起…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的淫茎和乳头被丝线连接到了一起…
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的淫核和乳头被丝线连接到了一起…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的淫核和乳头被丝线连接到了一起…
+ENDIF
+
+				ENDIF
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的乳头被丝线牵引着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的乳头被丝线牵引着…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%的弦、使得%ARGS:0%变为了演奏娇声的乐器…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%的弦、使得%ARGS:0%变为了演奏娇声的乐器…
+ENDIF
+
+			ENDIF
+		CASE 38
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被放进了冰棺里…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被放进了冰棺里…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%数着在%ARGS:0%体内塞入了几个冰块…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%数着在%ARGS:0%体内塞入了几个冰块…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%把原本插入%ARGS:0%下面的小嘴拔出塞进上面的嘴里、让她舔着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%把原本插入%ARGS:0%下面的小嘴拔出塞进上面的嘴里、让她舔着…
+ENDIF
+
+			ENDIF
+		CASE 39
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被脚上的尖爪插入了秘所、正挣扎着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被脚上的尖爪插入了秘所、正挣扎着…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+				IF GET_PENIS(TARGET)
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%用脚尖玩弄着%ARGS:0%的淫茎…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%用脚尖玩弄着%ARGS:0%的淫茎…
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%用脚尖玩弄着%ARGS:0%的淫核…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%用脚尖玩弄着%ARGS:0%的淫核…
+ENDIF
+
+				ENDIF
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%让%ARGS:0%舔了舔它引以为傲的脚爪、看着很高兴的样子…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%让%ARGS:0%舔了舔它引以为傲的脚爪、看着很高兴的样子…
+ENDIF
+
+			ENDIF
+
+		CASE 42
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%缩小了身体、钻进了动弹不得的%ARGS:0%的阴道内、开始恶作剧…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%缩小了身体、钻进了动弹不得的%ARGS:0%的阴道内、开始恶作剧…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 每当%ARGS:1%的触手压榨着乳房时、%ARGS:0%的眼神就会浑浊起来…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  每当%ARGS:1%的触手压榨着乳房时、%ARGS:0%的眼神就会浑浊起来…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%用带着荆棘的触手捆住了%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%用带着荆棘的触手捆住了%ARGS:0%…
+ENDIF
+
+			ENDIF
+		CASE 44
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%挂着空虚的眼神主动扭起腰来…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%挂着空虚的眼神主动扭起腰来…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%似乎是自愿被侵犯的…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%似乎是自愿被侵犯的…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%继续怜爱地奉仕着触手…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%继续怜爱地奉仕着触手…
+ENDIF
+
+			ENDIF
+		CASE 62 TO 63
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 从%ARGS:1%的藤蔓的缝隙里可以看到%ARGS:0%的抵抗渐渐减弱…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从%ARGS:1%的藤蔓的缝隙里可以看到%ARGS:0%的抵抗渐渐减弱…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 侵入了%ARGS:0%所有的穴的爬山虎啜饮着体液…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  侵入了%ARGS:0%所有的穴的爬山虎啜饮着体液…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 缠绕着全身的藤蔓一样的东西吸收了%ARGS:0%的力量…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  缠绕着全身的藤蔓一样的东西吸收了%ARGS:0%的力量…
+ENDIF
+
+			ENDIF
+		CASE 69
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%的尾巴缠住了%ARGS:1%、撒娇般的蹭着她…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%的尾巴缠住了%ARGS:1%、撒娇般的蹭着她…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%拥抱住%ARGS:0%、在她耳边低语着让她安心…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%拥抱住%ARGS:0%、在她耳边低语着让她安心…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%玩弄着试图逃跑的%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%玩弄着试图逃跑的%ARGS:0%…
+ENDIF
+
+			ENDIF
+		CASE 86
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被囚禁在水晶的牢笼中…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被囚禁在水晶的牢笼中…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%温柔地爱抚着无法动弹的%ARGS:0%的全身……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%温柔地爱抚着无法动弹的%ARGS:0%的全身……
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%用妖异的光包围了%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%用妖异的光包围了%ARGS:0%…
+ENDIF
+
+			ENDIF
+		CASE 93
+			IF RAND:8 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%一边侵犯着坐在膝盖上的%ARGS:0%、一边在耳边低语着爱意…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%一边侵犯着坐在膝盖上的%ARGS:0%、一边在耳边低语着爱意…
+ENDIF
+
+			ELSEIF RAND:7 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 每当在耳边听到%ARGS:1%的歌声、%ARGS:0%的\@ TALENT:100 ? 小小的 # 淫乱的 \@ 的身体就会颤抖抽搐起来
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  每当在耳边听到%ARGS:1%的歌声、%ARGS:0%的\@ TALENT:100 ? 小小的 # 淫乱的 \@ 的身体就会颤抖抽搐起来
+ENDIF
+
+			ELSEIF RAND:6 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 侵犯着%ARGS:0%的%ARGS:1%的歌声、引导着%ARGS:0%在睡梦中达到高潮…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  侵犯着%ARGS:0%的%ARGS:1%的歌声、引导着%ARGS:0%在睡梦中达到高潮…
+ENDIF
+
+			ELSEIF RAND:5 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 被凌辱时听着耳边的歌声、%ARGS:0%渐渐达到了高潮…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被凌辱时听着耳边的歌声、%ARGS:0%渐渐达到了高潮…
+ENDIF
+
+			ELSEIF RAND:4 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 让失去意识的%ARGS:0%听着摇篮曲、%ARGS:1%肆随心所欲的侵犯着%ARGS:0%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  让失去意识的%ARGS:0%听着摇篮曲、%ARGS:1%肆随心所欲的侵犯着%ARGS:0%…
+ENDIF
+
+			ELSEIF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%配合着%ARGS:1%的歌声、有节奏地娇喘着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%配合着%ARGS:1%的歌声、有节奏地娇喘着…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%听着%ARGS:1%的歌声、仿佛在做梦一般…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%听着%ARGS:1%的歌声、仿佛在做梦一般…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 失去力量的%ARGS:0%、从背后被%ARGS:1%揉搓着胸部…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  失去力量的%ARGS:0%、从背后被%ARGS:1%揉搓着胸部…
+ENDIF
+
+			ENDIF
+		CASE 98
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被%ARGS:1%盯着而无路可逃、疯狂地自慰着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被%ARGS:1%盯着而无路可逃、疯狂地自慰着…
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 被%ARGS:1%注视着、快感被强行灌进%ARGS:0%的全身…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被%ARGS:1%注视着、快感被强行灌进%ARGS:0%的全身…
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%在催眠中告诉了%ARGS:0%谁才是主人…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%在催眠中告诉了%ARGS:0%谁才是主人…
+ENDIF
+
+			ENDIF
+		CASE 105
+			IF RAND:3 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%一边用尾巴慢慢缠住%ARGS:0%、一边用分叉的舌头恋恋不舍地吮吸着她的嘴唇……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%一边用尾巴慢慢缠住%ARGS:0%、一边用分叉的舌头恋恋不舍地吮吸着她的嘴唇……
+ENDIF
+
+			ELSEIF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:1%对着%ARGS:0%的耳朵喷出热气、用毒牙在脖子上注入了媚药……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:1%对着%ARGS:0%的耳朵喷出热气、用毒牙在脖子上注入了媚药……
+ENDIF
+
+			ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML %ARGS:0%被%ARGS:1%抖动玩弄着双肩双脚、同时呗侵犯着前后两穴。
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  %ARGS:0%被%ARGS:1%抖动玩弄着双肩双脚、同时呗侵犯着前后两穴。
+ENDIF
+
+			ENDIF
+		CASEELSE
+			IF ARG:2
+				IF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 从大大膨胀起来的%ARGS:1%的身体里、传出了%ARGS:0%沉闷的娇声…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  从大大膨胀起来的%ARGS:1%的身体里、传出了%ARGS:0%沉闷的娇声…
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 被%ARGS:1%吞噬了的%ARGS:0%的抵抗正在减弱…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被%ARGS:1%吞噬了的%ARGS:0%的抵抗正在减弱…
+ENDIF
+
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+IF FLAG:AUTOMODE
+    PRINTFORML 像吸盘一样的触手从%ARGS:0%体内吸取着魔力…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  像吸盘一样的触手从%ARGS:0%体内吸取着魔力…
+ENDIF
+
+				ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 全身都被束缚的%ARGS:0%继续被%ARGS:1%侵犯着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  全身都被束缚的%ARGS:0%继续被%ARGS:1%侵犯着…
+ENDIF
+
+				ENDIF
+			ENDIF
+	ENDSELECT
+ENDIF
+

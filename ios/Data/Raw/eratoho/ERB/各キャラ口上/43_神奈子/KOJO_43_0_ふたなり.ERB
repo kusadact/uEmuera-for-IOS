@@ -1,0 +1,602 @@
+﻿;こっちもXXをキャラのNoに置き換えること
+;ふたなりの管理。趣味じゃない人はXXを置き換えたら後はYYを適当な数字で埋めて放置でおk
+@FUTANARI_43_0(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+SELECTCASE ARG:0
+	;射精
+	CASE 451
+		;射精中毒３かつ諦め時orMP1/4以下or発情中or深い催眠
+		IF ABL:12 > 2 && (TFLAG:16 == 2 || MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:43 > 1)
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「齁
+					;TranslatedMark 「ほっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORM 　齁齁咿噫噫
+					;TranslatedMark ほひぃぃぃっ
+					CALL HEARTCB(0xD02830)
+					PRINTFORML 　射精太苏胡惹齁哦哦噢哦
+					;TranslatedMark しゃしぇいしゅごぃのぉぉ
+					;自慰
+					IF CFLAG:805 == 3
+						IF FLAG:AUTOMODE
+							PRINTFORML 　自慰母猪神奈子的射精秀—……现在免费公开进行中———齁哦！」
+							;TranslatedMark オナバカかにゃこの射精ショー……無料公開実施中ーーーぅッ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 　自慰母猪神奈子的射精秀—……现在免费公开进行中———齁哦！」
+							;TranslatedMark オナバカかにゃこの射精ショー……無料公開実施中ーーーぅッ！」
+						ENDIF
+					ELSE
+						IF FLAG:AUTOMODE
+							PRINTFORML 　停不下来！种汁喷射停不下来啊啊啊啊啊！……」
+							;TranslatedMark とまんにゃい！ザー汁噴射とまんにゃぃぃいっ！……」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 　停不下来！种汁喷射停不下来啊啊啊啊啊！……」
+							;TranslatedMark とまんにゃい！ザー汁噴射とまんにゃぃぃいっ！……」
+						ENDIF
+					ENDIF
+				CASE 1
+					PRINTFORM 「嗯齁齁齁齁哦哦！！变成御柱射精成瘾的白痴母猪了哦哦哦
+					;TranslatedMark 「んっほぉおぉぉっ！！オンバシラ射精バカににゃるのぉぉ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+			ENDSELECT
+			
+		;射精中毒＋発情レベルが２以上で初射精ではない
+		ELSEIF (ABL:12 + CFLAG:28) > 1 && EXP:12
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML （唔咕啊啊、忍耐……不住了！）
+						;TranslatedMark （うぐっあ、我慢……できないぃっ！）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （唔咕啊啊、忍耐……不住了！）
+						;TranslatedMark （うぐっあ、我慢……できないぃっ！）
+					ENDIF
+				CASE 1
+					IF ABL:12 > 2
+						PRINTFORM 「出来……出来了！射精了啊……
+						;TranslatedMark 「出るッ……でるぅ！射精しちゃッ……
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ELSE
+						PRINTFORM 「唔啊啊啊！不行太刺激了…御柱…要出来了唔哦哦
+						;TranslatedMark 「んあぁああっ！だめぇっ…オンバシラ…でちゃうぅぅ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					ENDIF
+			ENDSELECT
+		ELSE
+			;初射精
+			IF EXP:12 == 0
+				IF FLAG:AUTOMODE
+					PRINTFORML 「——咕哇啊啊！……在、在这种地方、射精了……太失策了！」
+					;TranslatedMark 「――っくはぁぁッッ！　……く…こんな、所で射精とは……不覚っ！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「——咕哇啊啊！……在、在这种地方、射精了……太失策了！」
+					;TranslatedMark 「――っくはぁぁッッ！　……く…こんな、所で射精とは……不覚っ！」
+				ENDIF
+			;自慰
+			ELSEIF CFLAG:805 == 3
+				PRINTFORML 「嗯、咕唔唔……噫！
+				;TranslatedMark 「んっ、くぅぅ……ひっ！
+				IF FLAG:AUTOMODE
+					PRINTFORML 　快点……处理掉！得赶紧冷静下来……！」
+					;TranslatedMark はやく…済ませてっ！落ち着かせなくては……！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 　快点……处理掉！得赶紧冷静下来……！」
+					;TranslatedMark はやく…済ませてっ！落ち着かせなくては……！」
+				ENDIF
+			;諦め時orMP1/4以下or発情中or深い催眠でランダム、ただし自慰は除く
+			ELSEIF (TFLAG:16 == 2 || MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:43 > 1) && RAND:2 == 0
+				PRINTFORMDL 神奈子一边翻着白眼露出了丢人的阿黑颜、一边紧紧地抓住龟头想要抑制射精、
+				;TranslatedMark 神奈子は顔を白目を剥きながら亀頭を抑え射精を止めようとするが、
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 决堤的精液浊流轻而易举的就从指尖的缝隙里喷了出来……
+					;TranslatedMark 決壊したザーメンの濁流は、指の間から易々と噴出してしまった……
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 决堤的精液浊流轻而易举的就从指尖的缝隙里喷了出来……
+					;TranslatedMark 決壊したザーメンの濁流は、指の間から易々と噴出してしまった……
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「咕咿噫！啊啊……不行！……射精不行啊啊！！」
+					;TranslatedMark 「ぐひぃっ！あぁ……ダメッ！…射精だめぇっ！！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「咕咿噫！啊啊……不行！……射精不行啊啊！！」
+					;TranslatedMark 「ぐひぃっ！あぁ……ダメッ！…射精だめぇっ！！」
+				ENDIF
+			ENDIF
+		ENDIF
+		;エクスパンデッド・オンバシラ！
+		IF TALENT:170 == 3 && TALENT:171 == 1 && TALENT:172 == 2 && TALENT:177 == 1 && TALENT:178 == 1 && TALENT:180 == 4 && TALENT:185 == 2 && TALENT:186 == 2 && TALENT:187 == 1
+				PRINTFORMDL ――――嘟biu！噗咻咻咻！！――――
+				;TranslatedMark ――――どびゅっ！　ブシュゥゥゥッ！！！――――
+
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「———呼咿噫啊啊啊啊齁哦哦哦哦哦哦……！
+				;TranslatedMark 「―――ふぎぃぃあああがア゛ア゛ァァァッッ……！！！
+				CALL FLASH(2, 0xFFFFCC)
+				CALL QUAKE(3)
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 在黑暗中回响着神奈子的悲鸣声和像爆裂一样的射精声……。
+					;TranslatedMark 暗闇に神奈子の悲鳴と、破裂したような射精音が木霊する……。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 在黑暗中回响着神奈子的悲鸣声和像爆裂一样的射精声……。
+					;TranslatedMark 暗闇に神奈子の悲鳴と、破裂したような射精音が木霊する……。
+				ENDIF
+				PRINTFORMDL 腰围大小的、闪烁着黑色光芒的"超根"、欲望正在从其根部悬挂着的两颗巨大的淫乱睾丸中不断涌出
+				;TranslatedMark 胴回り程もある黒光りする“超根”は、その根元にぶら下がる二つの巨大な欲望の淫玉から常に湧き出す
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 炙热的涌流无法被阻挡、伴随着高潮而来的猛烈精液浊流，像是要从内部彻底掏空神奈子一般、从神奈子的御柱当中剧烈地喷射出来。
+					;TranslatedMark 熱い滾りを堰き止める事などできず、絶頂と共に凄まじい濁流となって、神奈子のオンバシラを内側から抉るように噴出する。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 炙热的涌流无法被阻挡、伴随着高潮而来的猛烈精液浊流，像是要从内部彻底掏空神奈子一般、从神奈子的御柱当中剧烈地喷射出来。
+					;TranslatedMark 熱い滾りを堰き止める事などできず、絶頂と共に凄まじい濁流となって、神奈子のオンバシラを内側から抉るように噴出する。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 仿佛固体一样"沉重"的浓稠精液块、即使喷射出来后也没有滴落，而是牢牢地粘在了射精后的神奈子自己身上。
+					;TranslatedMark まるで固形物のように“重い”ザーメンの塊は、噴出した後も滴り落ちる事なく、射晴した神奈子自身にベットリこびり付いた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 仿佛固体一样"沉重"的浓稠精液块、即使喷射出来后也没有滴落，而是牢牢地粘在了射精后的神奈子自己身上。
+					;TranslatedMark まるで固形物のように“重い”ザーメンの塊は、噴出した後も滴り落ちる事なく、射晴した神奈子自身にベットリこびり付いた。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 被周围大片大片凝胶一样的精液覆盖着，神奈子仿佛溺水般地陷入其中、眼珠翻白不停地抽搐着、脱力地躺在那里。
+					;TranslatedMark 辺り一面に広がるザーメンゼリーの中で溺れるように、神加奈子は白目を剥いて痙攣し、脱力したまま横たわっていた。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 被周围大片大片凝胶一样的精液覆盖着，神奈子仿佛溺水般地陷入其中、眼珠翻白不停地抽搐着、脱力地躺在那里。
+					;TranslatedMark 辺り一面に広がるザーメンゼリーの中で溺れるように、神加奈子は白目を剥いて痙攣し、脱力したまま横たわっていた。
+				ENDIF
+			CASEELSE
+				PRINTFORML 「―――嗬唔噗齁齁齁哦哦哦啊啊啊啊啊！！！
+				;TranslatedMark 「―――へうぶぅうぁぎゃあぁあああっぁ！！！
+				CALL FLASH(2, 0xFFFFCC)
+				CALL QUAKE(3)
+				PRINTFORMDL 雌竿被强制肥大化到了两臂合抱的程度、也被破坏了射精的敏感度限制、让它能够随时喷涌射精、
+				;TranslatedMark 両腕で抱える程に竿を肥大化させられ、幾らでも射精するよう感度の制限を破壊され、煮え立つ白いマグマを
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 睾丸也被被强行改造成了一副不断精炼着沸腾白色岩浆、恶心鼓胀的淫乱模样、不断喷涌的欲望让神奈子的雌竿像是要爆炸一样止不住悸动抽搐着。
+					;TranslatedMark 常に精製し続ける醜く膨れ上がった睾丸を移植された神奈子のオンバシラが、まるで爆ぜるように脈動した。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 睾丸也被被强行改造成了一副不断精炼着沸腾白色岩浆、恶心鼓胀的淫乱模样、不断喷涌的欲望让神奈子的雌竿像是要爆炸一样止不住悸动抽搐着。
+					;TranslatedMark 常に精製し続ける醜く膨れ上がった睾丸を移植された神奈子のオンバシラが、まるで爆ぜるように脈動した。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 变得像引信一样敏感的雌性御柱的快乐神经在这样的刺激下已经彻底暴走、无止尽的快感吞没神奈子的全身、仿佛要将其焚烧殆尽。
+					;TranslatedMark 信管のように鋭敏化したオンバシラの快感神経が暴走し、神奈子の全身を焼き尽くすようなアクメが襲う。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 变得像引信一样敏感的雌性御柱的快乐神经在这样的刺激下已经彻底暴走、无止尽的快感吞没神奈子的全身、仿佛要将其焚烧殆尽。
+					;TranslatedMark 信管のように鋭敏化したオンバシラの快感神経が暴走し、神奈子の全身を焼き尽くすようなアクメが襲う。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 伴随着超乎常识的膨大射精、神奈子吐着舌头翻着白眼、以像是要将脊椎折断一样的力度向上挺起了腰、
+					;TranslatedMark 常識を超える膨大な射精と共に、神奈子は背骨を折らん程に仰け反りながら、白目を剥いてひっくり返った。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 伴随着超乎常识的膨大射精、神奈子吐着舌头翻着白眼、以像是要将脊椎折断一样的力度向上挺起了腰、
+					;TranslatedMark 常識を超える膨大な射精と共に、神奈子は背骨を折らん程に仰け反りながら、白目を剥いてひっくり返った。
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORMDL 从黑的发亮的龟头中喷射出来的超浓稠精液打在了天花板上，然后又哗啦一声地落回到了射精者自己身上、将其覆盖在了浓稠腥臭的精液沼泽中。
+					;TranslatedMark 黒光りする亀頭から噴出した特濃精液は天井に叩き付けられると、下でノビている射精者自身の上にドチャッと落下した。
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMDW 从黑的发亮的龟头中喷射出来的超浓稠精液打在了天花板上，然后又哗啦一声地落回到了射精者自己身上、将其覆盖在了浓稠腥臭的精液沼泽中。
+					;TranslatedMark 黒光りする亀頭から噴出した特濃精液は天井に叩き付けられると、下でノビている射精者自身の上にドチャッと落下した。
+				ENDIF
+			ENDSELECT
+		ENDIF
+		;自慰絶頂管理
+		SIF CFLAG:805 == 3
+			CFLAG:805 = 0
+
+	;ふたなり終了
+	CASE 452
+		;射精中毒２以上　賢者タイム
+		IF ABL:12 > 1
+			PRINTFORM 「齁咕咕嗯嗯…嗯呼哦～
+			;TranslatedMark 「へっぐぅ…んふぅ～
+			CALL HEARTCB(0xD02830)
+			PRINTFORM 嗬咿……
+			;TranslatedMark へひぃッ……
+			CALL HEARTCB(0xD02830)
+			IF FLAG:AUTOMODE
+				PRINTFORML 」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 」
+			ENDIF
+			IF FLAG:AUTOMODE
+				PRINTFORMDL 终于成功解除了扶她具现的神奈子、揣着粗气用双手捂住仍然抽痛的阴核、脸上显露出了沉重的疲惫。
+				;TranslatedMark ようやく具現を解除する事に成功した神奈子は、尚も疼き続ける陰核を両手で押さえ、ふやけた表情で喘いでいる。
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMDW 终于成功解除了扶她具现的神奈子、揣着粗气用双手捂住仍然抽痛的阴核、脸上显露出了沉重的疲惫。
+				;TranslatedMark ようやく具現を解除する事に成功した神奈子は、尚も疼き続ける陰核を両手で押さえ、ふやけた表情で喘いでいる。
+			ENDIF
+		ELSE
+			;MPが1/4以下か発情中か妊娠か朦朧
+			IF MAXBASE:MP/4 >= BASE:MP || CFLAG:28 || CFLAG:36 >= 3 || FLAG:7 >= 11
+				IF FLAG:AUTOMODE
+					PRINTFORML 「——啊…嗯哼…咕唔」
+					;TranslatedMark 「――あッ…んうぅ……ぐふっ」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「——啊…嗯哼…咕唔」
+					;TranslatedMark 「――あッ…んうぅ……ぐふっ」
+				ENDIF
+				IF FLAG:AUTOMODE
+					PRINTFORML 「「啊！…居然被自己的“御柱”给操控得团团转！」
+					;TranslatedMark 「くぅ！…自分のオンバシラに振り回されるとは！」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「「啊！…居然被自己的“御柱”给操控得团团转！」
+					;TranslatedMark 「くぅ！…自分のオンバシラに振り回されるとは！」
+				ENDIF
+			ELSE
+				IF FLAG:AUTOMODE
+					PRINTFORML 「呜……哈啊……嗯嗯……终于、平静下来了吗……」
+					;TranslatedMark 「くっ…はぁっ……んんぅ……やっと、おさまったか……」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「呜……哈啊……嗯嗯……终于、平静下来了吗……」
+					;TranslatedMark 「くっ…はぁっ……んんぅ……やっと、おさまったか……」
+				ENDIF
+			ENDIF
+		ENDIF
+	;ふたなり時、戦闘中に発情　発情確率は射精中毒×５％
+	CASE 453
+		;射精中毒＋発情レベルが２以上
+		IF (ABL:12 + CFLAG:28) > 1
+			SELECTCASE RAND:2
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORML （哈啊～～…啊啊、不行！…御柱好疼啊啊）
+						;TranslatedMark （はぁ～～ッ…あぁ、だめ！…オンバシラ疼いちゃうぅっっ）
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW （哈啊～～…啊啊、不行！…御柱好疼啊啊）
+						;TranslatedMark （はぁ～～ッ…あぁ、だめ！…オンバシラ疼いちゃうぅっっ）
+					ENDIF
+				CASE 1
+					PRINTFORM 「啊，啊啊啊……现在、变大不行啊啊啊啊
+					;TranslatedMark 「あっ、ァア゛ア゛ぁぁっ…今、エクスパンデッドだめぇ
+					CALL HEARTCB(0xD02830)
+					IF FLAG:AUTOMODE
+						PRINTFORML 」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 」
+					ENDIF
+			ENDSELECT
+		ELSE
+			IF FLAG:AUTOMODE
+				PRINTFORML 「咿噫！该死、御柱又……擅自的～～～」
+				;TranslatedMark 「ひくっ！くそ、またオンバシラが……勝手にぃ～～ッ」
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 「咿噫！该死、御柱又……擅自的～～～」
+				;TranslatedMark 「ひくっ！くそ、またオンバシラが……勝手にぃ～～ッ」
+			ENDIF
+		ENDIF
+	;ふたなり永久化　必ず射精中毒３　個人的趣味で神奈子さまは元からふたなり付け替え可能設定、つまり先天的
+	CASE 454
+		PRINTFORM 「齁啊啊啊啊。
+		;TranslatedMark 「へあぁあぁ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 啊咿噫噫噫噫
+		;TranslatedMark あひぃぃぃっ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		PRINTFORM 「啊哈哈
+		;TranslatedMark 「あははぁ
+		CALL HEARTCB(0xD02830)
+		PRINTFORM 御柱……已经变不回去了啊啊
+		;TranslatedMark オンバシラ……戻らなくなっちゃったぁ
+		CALL HEARTCB(0xD02830)
+		IF FLAG:AUTOMODE
+			PRINTFORML 」
+			TWAIT FLAG:AUTOMODE * 400, 0
+		ELSE
+			PRINTFORMW 」
+		ENDIF
+		TALENT:176 = 1
+	;性欲発散（最初に襲った）
+	CASE 455
+				SELECTCASE ARG:1
+					;膣で　まだネタ段階
+					CASE 0, 1
+	;					PRINTFORM 
+					;胸で
+					CASE 5, 6
+	;					PRINTFORMW 
+					;巨乳で
+					CASE 7, 8
+	;					PRINTFORMW 
+					;尻で
+					CASE 10, 11
+	;					PRINTFORMW 
+					;口で
+					CASE 15, 16
+	;					PRINTFORMW 
+				ENDSELECT
+	;性欲発散（便乗して襲いかかった）
+	CASE 456
+				SELECTCASE ARG:1
+					;膣で
+					CASE 0, 1
+	;					PRINTFORMW 
+					;胸で
+					CASE 5, 6
+	;					PRINTFORMW 
+					;尻で
+					CASE 10, 11
+	;					PRINTFORMW 
+					;口で
+					CASE 15, 16
+	;					PRINTFORMW 
+				ENDSELECT
+	;性欲発散（相手が催眠状態）
+	CASE 457
+				SELECTCASE ARG:1
+					;膣で
+					CASE 0
+	;					PRINTFORMW 
+					;胸で
+					CASE 5
+	;					PRINTFORMW 
+					;尻で
+					CASE 10
+	;					PRINTFORMW 
+					;口で
+					CASE 15
+	;					PRINTFORMW 
+				ENDSELECT
+	;ふたなり治療される
+	CASE 459
+				SELECTCASE ARG:1
+					;膣で
+					CASE 0
+	;					PRINTFORMW 
+					;胸で
+					CASE 1
+	;					PRINTFORMW 
+					;尻で
+					CASE 2
+	;					PRINTFORMW 
+					;口で
+					CASE 3
+	;					PRINTFORMW 
+					;手で
+					CASE 4
+	;					PRINTFORMW 
+				ENDSELECT
+	;ふたなりで触手モンスターをおしおきする
+	CASE 460
+
+			SELECTCASE ARG:1
+				;スルー
+				CASE 0
+					IF FLAG:AUTOMODE
+						PRINTFORMDL 在离开的时候，神奈子狠狠地将对方的触手踩在了地上。
+						;TranslatedMark 去り際、幽香は相手の触手を盛大に踏みつけていった。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMDW 在离开的时候，神奈子狠狠地将对方的触手踩在了地上。
+						;TranslatedMark 去り際、幽香は相手の触手を盛大に踏みつけていった。
+					ENDIF
+				;逃がさない　味方全員射精中毒2以上だと発生
+				CASE -1
+					IF FLAG:AUTOMODE
+						PRINTFORML 「擅自把人家的身体折腾得那么厉害、然后就这样说『好了、再见哟』…这种事想也是不可能的、对吧？」
+						;TranslatedMark 「散々っぱら身体を弄り倒しておいて『ハイ、サヨウナラ』……とか、ないよねぇ？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「擅自把人家的身体折腾得那么厉害、然后就这样说『好了、再见哟』…这种事想也是不可能的、对吧？」
+						;TranslatedMark 「散々っぱら身体を弄り倒しておいて『ハイ、サヨウナラ』……とか、ないよねぇ？」
+					ENDIF
+				;膣で
+				CASE 1
+	;				PRINTFORMW 
+				;胸で
+				CASE 2
+	;				PRINTFORMW 
+				;尻で
+				CASE 3
+	;				PRINTFORMW 
+				;口で
+				CASE 4
+	;				PRINTFORMW 
+				;触手で
+				CASE 5
+	;				PRINTFORMW 
+
+			ENDSELECT
+	;ふたなり治療する
+	CASE 461
+				SELECTCASE ARG:1
+					;膣で
+					CASE 0
+						PRINTFORM 「嗯咿噫噫～～～～
+						;TranslatedMark 「んひぃぃ～～ッッ
+						CALL HEARTCB(0xD02830)
+						PRINTFORM 　更多
+						;TranslatedMark もっと
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 　再给我更多种汁吧！！」
+							;TranslatedMark もっとザー汁ちょうだいっ！！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 　再给我更多种汁吧！！」
+							;TranslatedMark もっとザー汁ちょうだいっ！！」
+						ENDIF
+						PRINTFORM 「神奈子的淫乱子宫，满满得灌进去让我怀孕吧啊啊～～
+						;TranslatedMark 「かにゃこのエロ子宮、ダボダボ注いで孕ませてぇ～～ッ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ！」
+						ENDIF
+					;胸で
+					CASE 1
+						IF FLAG:AUTOMODE
+							PRINTFORML 「嗯哼～～怎么样、我的胸部……说实话，对于萝莉体型的青蛙来说是不可能的吧」
+							;TranslatedMark 「んふぅ～～っ、どうだ私の胸はぁ……ロリ体型の蛙じゃ無理だろうからねぇ」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 「嗯哼～～怎么样、我的胸部……说实话，对于萝莉体型的青蛙来说是不可能的吧」
+							;TranslatedMark 「んふぅ～～っ、どうだ私の胸はぁ……ロリ体型の蛙じゃ無理だろうからねぇ」
+						ENDIF
+						PRINTFORM 「来、不用客气、尽情地发挥吧
+						;TranslatedMark 「さぁさぁ、遠慮せずにたっぷり出すがいい
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+					;尻で　どっちが変態だか
+					CASE 2
+						PRINTFORM 「去惹哦哦哦哦～～～～……哈啊、哈啊啊啊
+						;TranslatedMark 「んっくぅうう～～～～……はぁ、はぁぁんっ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML 」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW 」
+						ENDIF
+						PRINTFORM 「呼…呵呵…这里的小穴也、挺不错的呢…啊
+						;TranslatedMark 「ふっ…ふふ…こっちの穴も、いいもんだな…あッ
+						CALL HEARTCB(0xD02830)
+						IF FLAG:AUTOMODE
+							PRINTFORML ！」
+							TWAIT FLAG:AUTOMODE * 400, 0
+						ELSE
+							PRINTFORMW ！」
+						ENDIF
+					;口で
+					CASE 3
+						;精液中毒+発情レベルが2以上
+						IF (ABL:14 + CFLAG:28) >= 2
+							PRINTFORM 「咕噗…嗯姆嗯姆
+							;TranslatedMark 「くぶッ…んんむぅぅッ
+							CALL HEARTCB(0xD02830)
+							IF FLAG:AUTOMODE
+								PRINTFORML 嘞咯……」
+								;TranslatedMark レロォ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 嘞咯……」
+								;TranslatedMark レロォ……」
+							ENDIF
+							PRINTFORM 「贡品就只有这些吗？应该还有更多吧……这可是献给神的白粥啊
+							;TranslatedMark 「調(みつぎ)はこれだけか？もっと出るだろう…神の粥だよっ
+							CALL HEARTCB(0xD02830)
+							IF FLAG:AUTOMODE
+								PRINTFORML 」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 」
+							ENDIF
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「嗯噗……嗯咕姆！……呃噗 呃呼！……呕呕呕呃哇……」
+								;TranslatedMark 「んっぶっ…んむぐぅッ！……げふォッ　えほォッ！……おえぇぇッ…」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「嗯噗……嗯咕姆！……呃噗 呃呼！……呕呕呕呃哇……」
+								;TranslatedMark 「んっぶっ…んむぐぅッ！……げふォッ　えほォッ！……おえぇぇッ…」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「笨蛋！出来前不先说一声吗！……呃咕……有点呛进气管里了……」
+								;TranslatedMark 「ばか者！出す前に言わないか！……えぐっ……少し気管に入ったわ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「笨蛋！出来前不先说一声吗！……呃咕……有点呛进气管里了……」
+								;TranslatedMark 「ばか者！出す前に言わないか！……えぐっ……少し気管に入ったわ……」
+							ENDIF
+						ENDIF
+					;手で
+					CASE 4
+						;精液中毒+発情レベルが2以上
+						IF (ABL:14 + CFLAG:28) >= 2
+							IF FLAG:AUTOMODE
+								PRINTFORML 「呵呵呵、军神的手怎么样……虽然因为一直战斗搞得有点粗糙就是了……」
+								;TranslatedMark 「ふふふ、どうだ軍神の手は……戦ばかりでガサガサだけどねぇ……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「呵呵呵、军神的手怎么样……虽然因为一直战斗搞得有点粗糙就是了……」
+								;TranslatedMark 「ふふふ、どうだ軍神の手は……戦ばかりでガサガサだけどねぇ……」
+							ENDIF
+							PRINTFORM 「这样握住……看
+							;TranslatedMark 「これで握ると……ほら
+							CALL HEARTCB(0xD02830)
+							IF FLAG:AUTOMODE
+								PRINTFORML 　哈哈哈！真是个没耐性的人啊！」
+								;TranslatedMark はははっ！堪え性ないじゃないかっ！」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 　哈哈哈！真是个没耐性的人啊！」
+								;TranslatedMark はははっ！堪え性ないじゃないかっ！」
+							ENDIF
+						ELSE
+							IF FLAG:AUTOMODE
+								PRINTFORML 「敢让吾来给你手交、还真是大胆呢
+								;TranslatedMark 「私に手コキをさせるとは大した度胸じゃないの」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「敢让吾来给你手交、还真是大胆呢
+								;TranslatedMark 「私に手コキをさせるとは大した度胸じゃないの」
+							ENDIF
+							IF FLAG:AUTOMODE
+								PRINTFORML 「好吧、我会陪你到你精疲力尽为止……」
+								;TranslatedMark 「いいだろう、枯れるまで付き合ってやる……」
+								TWAIT FLAG:AUTOMODE * 400, 0
+							ELSE
+								PRINTFORMW 「好吧、我会陪你到你精疲力尽为止……」
+								;TranslatedMark 「いいだろう、枯れるまで付き合ってやる……」
+							ENDIF
+						ENDIF
+				ENDSELECT
+ENDSELECT
+	
+RETURN

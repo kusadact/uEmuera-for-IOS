@@ -1,0 +1,54 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 5 尿意
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_5(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 黄金水パッチOFF
+	SIF FLAG:522 != 1
+		RETURN 0
+		
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 通常時
+	; [正常]
+	IF BASE:6 <= 60
+		
+	; [尿意]
+	ELSEIF BASE:6 <= 80
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんなトコにトイレ――なんてあるわけないわよね……」\n"
+		ENDSELECT
+		
+	; [限界]
+	ELSEIF BASE:6 <= 90
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「おしっこもれちゃう……っ！　もれちゃううぅっっ……っ！！」\n"
+		ENDSELECT
+		
+	; [決壊]
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ほんとう……に……っ……　もれちゃう……よぉ……っ……！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ぅぅうっ……　と……といれ……ぇ……！」\n"
+		ENDSELECT
+	ENDIF
+RETURN 1

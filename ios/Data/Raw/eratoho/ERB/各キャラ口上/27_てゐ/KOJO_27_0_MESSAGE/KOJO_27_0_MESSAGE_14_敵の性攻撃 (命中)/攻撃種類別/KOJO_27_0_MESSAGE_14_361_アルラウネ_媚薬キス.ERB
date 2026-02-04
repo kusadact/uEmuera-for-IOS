@@ -1,0 +1,78 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 14 敵の性攻撃 (命中) - 攻撃種類別 0361 アルラウネ 媚薬キス
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_14_361(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+	
+	; 追加地の文関数(前)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_BEFORE("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_BEFORE")
+
+	; 追加地の文関数(後)を登録
+	CALL KOJO_27_0_REGIST_DESCRIPTION_AFTER("KOJO_27_0_SYSTEM_MESSAGE_14_DESCRIPTION_AFTER")
+	
+	; 睡眠・喪失・諦め
+	SIF CFLAG:25 || CFLAG:29 || TFLAG:16 == 2
+		RETURN 0
+
+	; 口を塞がれているのに通常口上が出ると違和感があるので優先口上指定
+	CALL KOJO_27_0_SET_IMPORTANT_FLAG()
+	
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+
+	; コマンドが強制自慰に書き換え済み
+	; 複数のアルラウネに、多重媚薬キスを喰らうというもの凄い狭い条件を想定
+	IF CFLAG:50 == 46
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ぶぢゅ……っ♥　んむぅ……っ♥♥　れるっ……レロロォ♥♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（くるっちゃう……♥　くるっちゃう……♥♥）\n"
+			CALL KOJO_27_0_PARAGRAPH_MESSAGE
+			CALL KOJO_27_0_ADD_MESSAGE, @"\d発情しきった%CALLNAME:TARGET%は自分から%ARGS:1%に舌を絡め、媚薬ディープキスを続けている…\d\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（オナニーするっ♥　オナニーするから、もう許してぇぇぇっ♥♥）\n"
+			CALL KOJO_27_0_PARAGRAPH_MESSAGE
+			CALL KOJO_27_0_ADD_MESSAGE, @"\d%CALLNAME:TARGET%は無意識に%ARGS:1%の舌を吸い、大量の媚薬を舐めとっている…\d\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（やめてよぉぉっ！　そんなにされたら……っ、オナニーとまんなくなっちゃうでしょぉぉっ！！）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（わかった！　わかったからぁぁっ！！　オナニーすればいいんでしょぉぉっ！！）\n"
+		ENDSELECT
+	
+	; 通常行動時
+	ELSE
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あたま……　ボーっとする……♥）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「ん……　ちゅ……っ♥　ちゅる……ぅ♥」\n"
+			CALL KOJO_27_0_PARAGRAPH_MESSAGE
+			CALL KOJO_27_0_ADD_MESSAGE, @"\d%CALLNAME:TARGET%は自分から%ARGS:1%に舌を絡め、媚薬混じりの唾液を夢中で舐めとっている\d\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（バケモノの……　女の子に、キスされてるのに……　きもちいい……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（なにこれっ……　あたまのなか……　まっしろに……　なっちゃう……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（あついぃっ……♥　あついよぉっ……♥　あついよぉぉっ……♥♥）\n"
+			CALL KOJO_27_0_PARAGRAPH_MESSAGE
+			CALL KOJO_27_0_ADD_MESSAGE, @"\d%CALLNAME:TARGET%は無意識に%ARGS:1%と舌を絡め、顔を涎と媚薬でべとべとに汚している…\d\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（コレ、ヤバいっ！　頭の奥、痺れ……っ！　うああぁぁっ……！！）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「んむぅ……っ！？　やめ……っ！！　舌吸う……にゃぁ……ぁっ！！」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「んむぅ……っ！？　んんっ！？　んんんぅぅ……っ！？」\n（なにこれ……っ！？　薬……っ！？）\n"
+		ENDSELECT
+	ENDIF
+	CALL KOJO_27_0_FIX_MESSAGE
+	
+	; 地の文側で\nするので口上側は\nで終わること
+RETURN 1

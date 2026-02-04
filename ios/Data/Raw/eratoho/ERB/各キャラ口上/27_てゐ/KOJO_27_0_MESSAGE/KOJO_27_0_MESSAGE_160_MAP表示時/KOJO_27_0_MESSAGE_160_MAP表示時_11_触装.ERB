@@ -1,0 +1,57 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 11 触装
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_11(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 触手服を着ていないなら帰る
+	SIF !CFLAG:40
+		RETURN 0
+		
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 触手中毒LVによって分岐
+	SELECTCASE ABL:11
+	CASE 0
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんな服、脱げたら焼き払ってやるんだから！」\n"
+		ENDSELECT
+		
+	CASE 1
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「この服ぅ……　どうやったら脱げるのよぉ……」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（この服……　あたしのカラダ、なでまわしてるっ……）\n"
+		ENDSELECT
+		
+	CASE 2
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（この服のせいで、ずっと全身愛撫されてるみたい……っ……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（やだ、あたし……　服に気持ちよくされるの……待ってる……）\n"
+		ENDSELECT
+		
+	CASE 3
+		SELECTCASE KOJO_MODE
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"（触手の……服っ……　ぞわぞわして……　気持ちい……い……っ……）\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（この服、次はいつ気持ちいいの来るかなぁ？）\n"
+		ENDSELECT
+	ENDSELECT
+RETURN 1

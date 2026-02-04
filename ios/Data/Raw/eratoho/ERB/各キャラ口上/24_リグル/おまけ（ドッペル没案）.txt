@@ -1,0 +1,921 @@
+﻿
+
+ドッペルゲンガーの攻撃を娘とかが使ってきたりするのでボツになった口上
+KOJO_24_0を開いてドッペルゲンガーの口上のとこを置換していけばそのまま使えると思います
+
+・2015/4/30　更新
+
+---------------------------------------------------------------------------------------------------------------
+
+
+	;敵の拘束攻撃発動
+	CASE 5
+		SELECTCASE ARG:1
+			;ドッペルゲンガー
+			;単体拘束
+			CASE 537
+				IF CFLAG:800 <= 0
+					PRINTFORMDL 『ふぅ……こんにちは♪』
+					;睡眠中
+					IF CFLAG:25
+						PRINTFORMDW リグルのよく知る者の姿……それは紛れもなく、リグル自身の姿だった
+						PRINTFORMDW 顔や体格、すべてがリグルと全く同じだが、明らかに違う点が一つだけある
+						PRINTFORM 『はあぁ、ボクのちんちん、すごいことになってる……
+						CALL HEARTCB(0xD02830)
+						PRINTFORML 』
+						PRINTFORMDW 『ふふ、ぐっすり寝ちゃって……起きたら、どんな反応するかな？』
+					ELSE
+IF FLAG:AUTOMODE
+    PRINTFORML 「お、お前は……！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「お、お前は……！？」
+ENDIF
+
+						PRINTFORMDL リグルのよく知る者の姿……それは紛れもなく、リグル自身の姿だった
+						PRINTFORMDW 顔や体格、すべてがリグルと全く同じだが、明らかに違う点が一つだけある
+						PRINTFORML 「う……なに、その、汚いのは！」
+						PRINTFORMD 『とぼけないでよ……これは、君の大好きなモノでしょ
+						CALL HEARTCB(0xD02830)
+						PRINTFORMDW 』
+						PRINTFORML 「なっ！？　……大体、私は“ボク”だなんて……！」
+						PRINTFORMD 『そんなことはいいからさぁ
+						CALL HEARTCB(0xD02830)
+						PRINTFORMD 　ねえ、いっぱいえっちしよっ
+						CALL HEARTCB(0xD02830)
+						PRINTFORMDW ？』
+					ENDIF
+					CFLAG:800 = 1
+				ELSE
+					;睡眠中
+					IF CFLAG:25
+						PRINTFORMDL 『……ふぅ。可愛い寝顔……』
+						PRINTFORMD 『もう逃さないよ？　ふふっ……
+						CALL HEARTCB(0xD02830)
+						PRINTFORMDW 』
+					ELSE
+						PRINTFORMD 『ふぅ……また会えて、嬉しいよ
+						CALL HEARTCB(0xD02830)
+						PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「っ……！　こいつは、私の偽物……！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「っ……！　こいつは、私の偽物……！」
+ENDIF
+
+						PRINTFORMD 『偽物？　ふふっ、“これ”は本物だよ？　ほら、君とシたくて、もうこんなになってる……
+						CALL HEARTCB(0xD02830)
+						PRINTFORMDL 』
+						PRINTFORML 「き、気持ち……悪、い……！」
+						PRINTFORMD 『そんな事言って、釘付けになってるみたいだけど……ほら、いくよっ
+						CALL HEARTCB(0xD02830)
+						PRINTFORMDW 』
+					ENDIF
+				ENDIF
+		ENDSELECT
+	;敵の性攻撃
+	CASE 14
+			SELECTCASE ARG:1
+				;ドッペルゲンガー
+				;強A
+				CASE 673
+					IF FLAG:99 == 0
+						;発情or淫乱orA感覚Lv3or触手中毒Lv3orおねだり中
+						IF CFLAG:28 || TALENT:74 || ABL:6 >= 3 || ABL:11 >= 3 || (CFLAG:50 >= 54 && CFLAG:50 <= 58)
+							PRINTFORMD 『さぁて……挿れちゃおっかな？　この、かわいいお尻に
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+							PRINTFORM 「お、お尻はッ！　お尻は、だめ……ぇえぇえええッッ
+							CALL HEARTCB(0xD02830,3)
+IF FLAG:AUTOMODE
+    PRINTFORML ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！」
+ENDIF
+
+							PRINTFORMD 『う、はぁぁ……ッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　キッツキツで、トロトロ……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDW 』
+							PRINTFORM 「ッあぁ
+							CALL HEARTCB(0xD02830)
+							PRINTFORM 　はっ、ふぁああッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM ！　ぁ゛――――
+							CALL HEARTCB(0xD02830,3)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+							PRINTFORMD 『はぁ、きもちい……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　あ……ッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　もう、イく……うッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDW 』
+							PRINTFORM 「はっ、や……ぁあああッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM ！　でてるうッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORM ！　おしりのなか、あっついよぉおおおおッ
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+						ELSE
+							PRINTFORMD 『さぁて……挿れちゃおっかな？　この、かわいいお尻に
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「なっ！？　なんで、そっち……ぃ゛あ゛ぁあああッ！！？？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「なっ！？　なんで、そっち……ぃ゛あ゛ぁあああッ！！？？」
+ENDIF
+
+							PRINTFORMD 『うっわ、キッツ……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　はぁ、これじゃ、すぐイっちゃうよ……んッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「ひゃあ、あううッ！　あぐ、あぁ……そこ、はぁッ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ひゃあ、あううッ！　あぐ、あぁ……そこ、はぁッ！？」
+ENDIF
+
+							PRINTFORMD 『うっ……はぁ、出る……うッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「ひっ、やぁあああぁッ！？　……いやあぁ、お尻の中にぃ……ッ！！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ひっ、やぁあああぁッ！？　……いやあぁ、お尻の中にぃ……ッ！！」
+ENDIF
+
+						ENDIF
+					ELSE
+						;発情or淫乱orA感m覚Lv3or触手中毒Lv3orおねだり中
+						IF CFLAG:28 || TALENT:74 || ABL:6 >= 3 || ABL:11 >= 3 || (CFLAG:50 >= 54 && CFLAG:50 <= 58)
+							PRINTFORMD 『これで、いっぱい楽しませてあげる
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+							PRINTFORM 「ひっ！？　や……んなぁああああッ
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！？」
+ENDIF
+
+							PRINTFORMD 『おー、もう出来上がってるね……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　早くちんちん挿れたいよぉ……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+							PRINTFORM 「あぁああああッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM ！　やだぁ、ああぁ、抜いてぇええええッ
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！」
+ENDIF
+
+						ELSE
+							PRINTFORMD 『これで、いっぱい楽しませてあげる
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「ひいっ！？　ぅぐ、あ……ッ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ひいっ！？　ぅぐ、あ……ッ！？」
+ENDIF
+
+							PRINTFORMD 『ん……まだ、キツいね……まあ、これもいいけど
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「っく、はああぁ！　う、動か、ない、でよっ！　んぁあああッ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「っく、はああぁ！　う、動か、ない、でよっ！　んぁあああッ！」
+ENDIF
+
+						ENDIF
+					ENDIF
+				;強B
+				CASE 674
+					IF FLAG:99 == 0
+						;発情or淫乱orB感覚Lv3or触手中毒Lv3orおねだり中
+						IF CFLAG:28 || TALENT:74 || ABL:7 >= 3 || ABL:11 >= 3 || (CFLAG:50 >= 54 && CFLAG:50 <= 58)
+							PRINTFORMD 『はぁっ、可愛いおっぱい……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+							PRINTFORM 「ん、やあぁ……ッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORM 　ふぁっ、やめふぇ……
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+							PRINTFORMD 『あはっ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 　顔、トロトロになってるよ？　もっとやってほしい？』
+							PRINTFORM 「あああ……ッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM 　もっとぉ……してぇ……
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+						ELSE
+							PRINTFORMD 『はぁっ、可愛いおっぱい……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「んんっ、さわるなぁ……！　自分のでも触っててよ……ッ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「んんっ、さわるなぁ……！　自分のでも触っててよ……ッ！」
+ENDIF
+
+							PRINTFORMD 『“自分の”、触ってるつもりだけど？　だから……キミもボクの、触っていいよ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL ？』
+IF FLAG:AUTOMODE
+    PRINTFORML 「だ、誰がそんなことっ！　いいから、はなせってばぁ……ッ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「だ、誰がそんなことっ！　いいから、はなせってばぁ……ッ！」
+ENDIF
+
+						ENDIF
+					ELSE
+						;発情or淫乱orB感覚Lv3or触手中毒Lv3orおねだり中
+						IF CFLAG:28 || TALENT:74 || ABL:7 >= 3 || ABL:11 >= 3 || (CFLAG:50 >= 54 && CFLAG:50 <= 58)
+							PRINTFORMD 『こんなのも、楽しいんじゃないかな……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+							PRINTFORM 「な、何を……ひゃあぁああああ
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！？」
+ENDIF
+
+							PRINTFORMDL 『あははっ、ねえ、きもちいい？』
+							PRINTFORM 「やぁ、あああッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORM ！　あう、ふうぅうううッ
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！」
+ENDIF
+
+						ELSE
+							PRINTFORMD 『こんなのも、楽しいんじゃないかな……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「わっ、何してるの！？　ちょっと、ああぁッ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「わっ、何してるの！？　ちょっと、ああぁッ！？」
+ENDIF
+
+							PRINTFORMD 『これでもう動けないね？　いっぱい嬲ってあげる……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「ひゃああ！？　ちょっ、やだぁあああぁッ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ひゃああ！？　ちょっ、やだぁあああぁッ！」
+ENDIF
+
+						ENDIF
+					ENDIF
+				;強C
+				CASE 675
+					IF FLAG:99 == 0
+						;発情or淫乱orC感覚Lv3or触手中毒Lv3orおねだり中
+						IF CFLAG:28 || TALENT:74 || ABL:8 >= 3 || ABL:11 >= 3 || (CFLAG:50 >= 54 && CFLAG:50 <= 58)
+							PRINTFORMD 『ふふっ……いっぱい可愛がってあげる
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+							PRINTFORM 「ん、ひぃいいぃッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM ！　や、ッひぃあああぁ
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！」
+ENDIF
+
+							PRINTFORMD 『あはははっ！　すっごい、どんどん蜜が溢れてくるよ……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+							PRINTFORM 「ひぃッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORM ！　もうやめ、ぇへ
+							CALL HEARTCB(0xD02830)
+							PRINTFORM 　ッぁはぁあああ
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML ！！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！！」
+ENDIF
+
+						ELSE
+							PRINTFORMD 『ふふっ……いっぱい可愛がってあげる
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「ひぃっ！？　ッあ、そこ……はぁ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ひぃっ！？　ッあ、そこ……はぁ！？」
+ENDIF
+
+							PRINTFORMD 『ん、いっぱい出てきた……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 　きもちいいの？』
+IF FLAG:AUTOMODE
+    PRINTFORML 「べ……別に、あうぅ……！　し、しつこいのよおっ！！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「べ……別に、あうぅ……！　し、しつこいのよおっ！！」
+ENDIF
+
+						ENDIF
+					ELSE
+						;発情or淫乱orC感覚Lv3or触手中毒Lv3orおねだり中
+						IF CFLAG:28 || TALENT:74 || ABL:8 >= 3 || ABL:11 >= 3 || (CFLAG:50 >= 54 && CFLAG:50 <= 58)
+							PRINTFORMDL 『ふふっ、可愛い……ん、むっ』
+							PRINTFORM 「ッひぃいい
+							CALL HEARTCB(0xD02830)
+							PRINTFORM ！？　ああぁ、あ゛
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM ！　ふっ、ふあぁッッ
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+							PRINTFORMD 『ん……ぢゅる、ちゅ……るる、はぁ……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　ちゃんと蜜まで飲まないと、ね
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDW 』
+						ELSE
+							PRINTFORMDL 『ふふっ、可愛い……ん、むっ』
+IF FLAG:AUTOMODE
+    PRINTFORML 「あっ！？　ちょっ、噛むな、ふぁあああッ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「あっ！？　ちょっ、噛むな、ふぁあああッ！？」
+ENDIF
+
+							PRINTFORMD 『んぁ……ちょっと、刺激が強すぎたかな？　今度は優しく、ね……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「やっ、こんの！　だからぁ、噛むなってぇえええッ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「やっ、こんの！　だからぁ、噛むなってぇえええッ！？」
+ENDIF
+
+						ENDIF
+					ENDIF
+				;強V
+				CASE 676
+					IF FLAG:99 == 0
+						;発情or淫乱orV感覚Lv3or触手中毒Lv3orおねだり中
+						IF CFLAG:28 || TALENT:74 || ABL:9 >= 3 || ABL:11 >= 3 || (CFLAG:50 >= 54 && CFLAG:50 <= 58)
+							PRINTFORM 「ぁ……ッッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM 　はいって……きたぁッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORML 」
+							PRINTFORMD 『あ……う、はぁッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　そ、そんなに、締め付けないでよぉ……ッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDW 』
+							PRINTFORM 「はぁ、はぁあッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORM 　あッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM ！　ここ、ここすごいい
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM 　あ、あぁああああ
+							CALL HEARTCB(0xD02830,3)
+IF FLAG:AUTOMODE
+    PRINTFORML ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！」
+ENDIF
+
+							PRINTFORMDW 『……自分から腰を振るような、こんなはしたない娘がボクだなんて……恥ずかしいよ……』
+							PRINTFORMD 『……なんて、ねっ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDW 』
+							PRINTFORM 「ッはぁあああぁ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM ！　もっと、もっとぉおくッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM 　おく、突いてぇえッッ
+							CALL HEARTCB(0xD02830,3)
+IF FLAG:AUTOMODE
+    PRINTFORML ！！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！！」
+ENDIF
+
+						ELSE
+							PRINTFORML 「う……あぁッ！？　ふ……ふか、い……ッ！」
+							PRINTFORMD 『んっ、ちゃんと奥まで入ったね……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　ふふっ、いっぱい気持ちよくさせてあげる
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDW 』
+							PRINTFORML 「や、やめ……、ッ！　ぁぐ！　く、うっ！？　はっ、はぁッ！？」
+							PRINTFORMD 『う、ああ……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　ぅん、ボクのほうが気持ちよくなっちゃう……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「うううっ！　もうやだっ、放してよぉッ！！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「うううっ！　もうやだっ、放してよぉッ！！」
+ENDIF
+
+						ENDIF
+					ELSE
+						;発情or淫乱orV感覚Lv3or触手中毒Lv3orおねだり中
+						IF CFLAG:28 || TALENT:74 || ABL:9 >= 3 || ABL:11 >= 3 || (CFLAG:50 >= 54 && CFLAG:50 <= 58)
+							PRINTFORMD 『よいしょっと……じゃあ、挿れるよっ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+							PRINTFORM 「はあぁ、入って……ぇッッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM ！　きたぁ、奥まで、えぁ……ぁ
+							CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+							PRINTFORMD 『動くよ……ん、あ、はっ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　んんっ、あ、すご……っ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+							PRINTFORM 「い゛っ
+							CALL HEARTCB(0xD02830)
+							PRINTFORM ！　あぐ、あッッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM 　ぃい゛ッ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORM ！　これ、よすぎて、あたま、ぁ゛――――
+							CALL HEARTCB(0xD02830,3)
+IF FLAG:AUTOMODE
+    PRINTFORML 」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  」
+ENDIF
+
+							PRINTFORMD 『はっ、はぁッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　いいよ、キミのイくとこ、いっぱい見せてぇ
+							CALL HEARTCB(0xD02830,2)
+							PRINTFORMDW 』
+						ELSE
+							PRINTFORMD 『よいしょっと……じゃあ、挿れるよっ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「やっ！？　う、く……ああぁッ！？　……はっ、う、うぁ……ッ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「やっ！？　う、く……ああぁッ！？　……はっ、う、うぁ……ッ！？」
+ENDIF
+
+							PRINTFORMD 『ん……はぁ、やっと奥まで入ったぁ……
+							CALL HEARTCB(0xD02830)
+							PRINTFORMD 　ふう、ぁ、締まり、強すぎ……ッ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「ううッ……何で、こんなことしなきゃいけないのよ……！　あううッ！！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ううッ……何で、こんなことしなきゃいけないのよ……！　あううッ！！」
+ENDIF
+
+							PRINTFORMD 『ふふっ、自分となんて、余計興奮するでしょ？　一緒に気持ちよくなろうね……っ
+							CALL HEARTCB(0xD02830)
+							PRINTFORMDW 』
+						ENDIF
+					ENDIF
+				CASEELSE
+			ENDSELECT
+	;敵の拘束攻撃命中
+	CASE 15
+		;睡眠状態はカット
+		IF CFLAG:25
+			
+		ELSE
+		SELECTCASE ARG:1
+			;ドッペルゲンガー
+			;単体拘束
+			CASE 537
+				PRINTFORML 「……やぁ！？　は、ぁ……ッ！」
+				PRINTFORMD 『ふふっ……捕まえた
+				CALL HEARTCB(0xD02830)
+				PRINTFORMD 　いっぱい、気持ちよくなろうね……
+				CALL HEARTCB(0xD02830)
+				PRINTFORMDW 』
+			;全体拘束
+			CASE 538
+				IF CFLAG:800 <= 0
+					PRINTFORML 「く……ぅっ！　捕まっちゃった……！」
+					PRINTFORMDW リグルを捕らえた%ARGS:1%の姿が揺らぎ、リグルの姿をとり始めた……！
+					PRINTFORML 「！？　こいつ、私の姿を……！」
+					PRINTFORMD 『ふふっ……君にだけは特別……自分自身とセックスさせてあげる
+					CALL HEARTCB(0xD02830)
+					PRINTFORMDL 』
+					PRINTFORML 「とんだお節介よ……！　さっさと解放しなさい！」
+					PRINTFORMDW リグルの言葉を他所に、触手の拘束はどんどん強くなっていく……
+					CFLAG:800 = 1
+				ELSE
+					PRINTFORML 「く……ぅっ！　また……！」
+					PRINTFORMDL リグルを捕らえた%ARGS:1%の姿が揺らぎ、リグルの姿をとり始めた……！
+					PRINTFORMDL 『ふふっ……ねえ、自分自身とえっちするのも、悪くないと思ってるんじゃない……？』
+IF FLAG:AUTOMODE
+    PRINTFORML 「そ、そんなわけ……！　いいから、早く離しなさい！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「そ、そんなわけ……！　いいから、早く離しなさい！」
+ENDIF
+
+				ENDIF
+			CASEELSE
+				
+		ENDSELECT
+	;敵の寄生攻撃命中
+	CASE 16
+		;睡眠時
+		IF CFLAG:25
+			
+		ELSE
+			SELECTCASE ARG:1
+				;ドッペルゲンガー
+				;特殊妊娠
+				CASE 837
+					;発情or淫乱or触手中毒Lv3orおねだり中or精液中毒Lv3
+					IF CFLAG:28 || TALENT:74 || ABL:11 >= 3 || (CFLAG:50 >= 54 && CFLAG:50 <= 58) || ABL:14 >= 3
+						SELECTCASE RAND:2
+							CASE 1
+								PRINTFORMD 『ッぁ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　はぁっ、やば、イきそ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDL 　ねぇ、中に出していい？』
+								PRINTFORM 「ぇ……ぁ……、ぁ、いやぁ
+								CALL HEARTCB(0xD02830)
+								PRINTFORM ！　だ、ダメ、中は……ぁああああッッ
+								CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！？」
+ENDIF
+
+								PRINTFORMD 『～～～～ッッ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORMD 　……あー……中出しは気持ちいいなぁ
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDL 』
+								PRINTFORM 「ぇ……ぁ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORM 　な……なんで……ぇっ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORML 」
+								PRINTFORMD 『だって……いっぱい中出しされるのも、子供生むのも、大好きなんでしょ？　ふふっ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDW 』
+							CASE 0
+								PRINTFORMD 『ぁ―――……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　ふふっ、どんな子供ができるか、楽しみだね……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDL 』
+								PRINTFORM 「ぇ……ぃやぁあああ
+								CALL HEARTCB(0xD02830)
+								PRINTFORM ！？　ぁっ、ダメ、できちゃう、ほんとにできちゃうぅッ
+								CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！」
+ENDIF
+
+								PRINTFORMD 『はっ、ボクのちんちんをキュンキュン締め付けて、必死で精液搾り取って、何言ってるんだか……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDL 』
+								PRINTFORM 「ち、違うッ
+								CALL HEARTCB(0xD02830)
+								PRINTFORM ！　これは、そんなのじゃなくてぇ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORML ！」
+								PRINTFORMD 『産まれたら、ちゃんと育ててあげるんだよ？　ボクとの、大事な子供なんだから……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDW 』
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 1
+								PRINTFORMD 『ッぁ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　はぁっ、やば、イきそ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDL 　ねぇ、中に出していい？』
+IF FLAG:AUTOMODE
+    PRINTFORML 「い、いやぁ！　中はぜった……ッいいいいい！！？？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「い、いやぁ！　中はぜった……ッいいいいい！！？？」
+ENDIF
+
+								PRINTFORMD 『～～～～ッッ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORMD 　……あー……中出しは気持ちいいなぁ
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDL 』
+								PRINTFORML 「……ぅ…ぁ……ッ！　なんで……っ！　中はダメって、言ったのに……ぃッ」
+								PRINTFORMD 『“ダメ”なんて聞いてないよ？　“中は絶対気持ちいい”なら、聞いた気もするけど
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDW 』
+							CASE 0
+								PRINTFORMD 『ぁ―――……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　ふふっ、どんな子供ができるか、楽しみだね……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「ぇ……ぃやぁあああッ！？　あ、やだぁ、アンタとの子供なんて、欲しくないわよぉッ！！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ぇ……ぃやぁあああッ！？　あ、やだぁ、アンタとの子供なんて、欲しくないわよぉッ！！」
+ENDIF
+
+								PRINTFORMD 『はっ……ボクのちんちんをキュンキュン締め付けて、必死で精液搾り取って、何言ってるんだか……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDL 』
+								PRINTFORML 「ち、違っ！　これは、そんなのじゃなくて……！」
+								PRINTFORMD 『産まれたら、ちゃんと育ててあげるんだよ？　ボクとの、大事な子供なんだから……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDW 』
+						ENDSELECT
+					ENDIF
+				;特殊妊娠（低威力）
+				CASE 838
+					;発情or淫乱or触手中毒Lv3orおねだり中or精液中毒Lv3
+					IF CFLAG:28 || TALENT:74 || ABL:11 >= 3 || (CFLAG:50 >= 54 && CFLAG:50 <= 58) || ABL:14 >= 3
+						SELECTCASE RAND:2
+							CASE 1
+								PRINTFORM 「い、いやぁッ
+								CALL HEARTCB(0xD02830)
+								PRINTFORM ！　は、はなしなさいよぉ
+								CALL HEARTCB(0xD02830)
+								PRINTFORML ！」
+								PRINTFORMD 『ふふっ……暴れちゃダ・メ
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　悪い子には、お仕置きしないとね……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDW 』
+								PRINTFORM 「……ひぃいいいいッッ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORM ！？　き、きッたあ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORM 　せーえきが、いっぱい、ぁ、すごいぃッ
+								CALL HEARTCB(0xD02830,3)
+								PRINTFORML 」
+								PRINTFORMD 『あっ
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　う、はぁ
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　全然止まんない……搾られちゃうッ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORMDW 』
+								PRINTFORM 「ぁ゛――――
+								CALL HEARTCB(0xD02830,3)
+								PRINTFORM 　お、おなかのなかぁ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORM 　あったかい、せーえきでいっぱいぃ……
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORML 」
+								PRINTFORMD 『……ふぅ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　喜んでもらえたみたいだね……キミのためなら、何度でも中出ししてあげる……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDW 』
+							CASE 0
+								PRINTFORMD 『ぁ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　す、すごいのがきそう……ッ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORMDL 』
+								PRINTFORM （あ……あぁ……ッ
+								CALL HEARTCB(0xD02830)
+								PRINTFORM 　だめぇ、逃げられないぃ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORM 　せーえきが、欲しい……ッ
+								CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML ）
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ）
+ENDIF
+
+								PRINTFORMD 『んぁ……い、イっく……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　……あっ、あぁああっ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORMDL ！』
+								PRINTFORM 「ひぃいいいッ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORM ！　あ、お、おぁあああぁッ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORML ！」
+								PRINTFORMD 『あははははッ！　そんなに体を反らして、喜んじゃって
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDW ！　ほらッ、おねだりしてみなよ！』
+								PRINTFORM 「ほ、欲しいですッ
+								CALL HEARTCB(0xD02830)
+								PRINTFORM 　あったかいせーえきが、いっっぱい欲しいですぅううううッ
+								CALL HEARTCB(0xD02830,2)
+IF FLAG:AUTOMODE
+    PRINTFORML ！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！」
+ENDIF
+
+								PRINTFORMD 『よくできました……っはぁ、ダメ、もう無理ッ、イくう……ッ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORMDL ！』
+								PRINTFORM 「あぁ、ください、せーえきくださ……――――ッッ
+								CALL HEARTCB(0xD02830,3)
+IF FLAG:AUTOMODE
+    PRINTFORML ！！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ！！」
+ENDIF
+
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:2
+							CASE 1
+								PRINTFORML 「い、いやぁッ！　は、はなしなさいよぉ！」
+								PRINTFORMD 『ふふっ……暴れちゃダ・メ
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　悪い子には、お仕置きしないとね……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDW 』
+								PRINTFORML 「……ひいぃッッ！？　いや、いやぁあああッ！？　あうぁっ、いつまで出すつもりなのよぉ！？」
+								PRINTFORMD 『あっ
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　う、はぁ
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　全然止まんない……搾られちゃうッ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORMDW 』
+								PRINTFORML 「ひッぐううぅ！？　ぁ……ダメ、これ……ぇ！！　ぁ……ッ……！！」
+								PRINTFORMD 『……ふぅ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　あれ？　落ちちゃった……？　そんなによかったのかな？　ふふっ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDW 』
+							CASE 0
+								PRINTFORMD 『ぁ……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　す、すごいのがきそう……
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORMDL 』
+IF FLAG:AUTOMODE
+    PRINTFORML 「ふ、震えてる……！？　い……いっやあ！！　こないで、こないでぇ……ッ！！」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ふ、震えてる……！？　い……いっやあ！！　こないで、こないでぇ……ッ！！」
+ENDIF
+
+								PRINTFORMD 『んぁ……い、イっく……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　……あっ、あぁああっ
+								CALL HEARTCB(0xD02830,2)
+								PRINTFORMDL ！』
+IF FLAG:AUTOMODE
+    PRINTFORML 「ぃ……ッやぁああああ！！？？　ぁッ、ぁああああ！？」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「ぃ……ッやぁああああ！！？？　ぁッ、ぁああああ！？」
+ENDIF
+
+								PRINTFORMD 『あっ、ダメだよぉ
+								CALL HEARTCB(0xD02830)
+								PRINTFORMD 　こぼさないで、全部飲まなきゃ……全くもう……
+								CALL HEARTCB(0xD02830)
+								PRINTFORMDL 」
+IF FLAG:AUTOMODE
+    PRINTFORML 「……ぁ……ぁぁ……　も、もう……　むり……ぃ」
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  「……ぁ……ぁぁ……　も、もう……　むり……ぃ」
+ENDIF
+
+						ENDSELECT
+					ENDIF
+				CASEELSE
+			ENDSELECT
+	;敵の拘束攻撃（回避）
+	CASE 25
+		SELECTCASE ARG:1
+			;ドッペルゲンガー
+			;単体拘束
+			CASE 537
+				PRINTFORML 「うわっと！　う、ちょっと危なかった……」
+				PRINTFORMDW リグルを捕まえるのに失敗したドッペルゲンガーは、再び%ARGS:1%の姿をとり始めた……
+			CASEELSE
+				
+		ENDSELECT
+	
+	CASEELSE
+
+
+----------------------------------------------------------------------------
+;地の文
+
+;敵の拘束攻撃命中
+	CASE 15
+		SELECTCASE ARG:1
+			;ドッペルゲンガー
+			;単体拘束
+			CASE 537
+				SETCOLOR 0x10EEEE
+				PRINTFORML %ARGS:0%の隙を突き、%ARGS:0%に変身した%ARGS:1%は%ARGS:0%を押し倒した！
+				RESETCOLOR
+			CASEELSE
+				CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+		ENDSELECT

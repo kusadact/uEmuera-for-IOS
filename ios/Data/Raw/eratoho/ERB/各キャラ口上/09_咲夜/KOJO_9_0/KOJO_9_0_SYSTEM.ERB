@@ -1,0 +1,69 @@
+﻿;十六夜咲夜口上オープニング
+;内容的は前と変わっていません
+;EDは触らないでおきます
+
+@KOJO_9_0_SYSTEM(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+SELECTCASE ARG:0
+
+	;記入済みのEDの地の文飛ばす
+	CASE 204, 206
+	;
+	
+	;OP
+	CASE 203
+		IF CHARANUM <= 2
+	;このゲームには「咲夜の時計」という速度が上がるアイテムがありますけど
+	;咲夜が時を止めるのに時計は必要ない、と思ってる自分としては違和感があったりします
+	;まあそういうアイテムが必要で、そのアイテムを敵に奪われるとか物凄く興奮しますけどね！
+			PRINTFORML いつものように館内の家事に従事している十六夜咲夜
+			PRINTFORML 紅魔館の最上階から地下まで掃除をやり終えた咲夜は早速次の家事へ手をつけるつもりだった
+			IF FLAG:AUTOMODE
+				PRINTFORML そのときである、館内に見覚えの無い扉があったのだ
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW そのときである、館内に見覚えの無い扉があったのだ
+			ENDIF
+			PRINTFORML その扉は表面が妙な艶で覆われており、不気味な色彩を放っていた
+			PRINTFORML 咲夜は魔女の知識を借りようとし、その場から離れようとした
+			IF FLAG:AUTOMODE
+				PRINTFORML そのときである　扉が開き、その部屋の中から伸びてきた触手に足を掴まれてしまったのだ！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW そのときである　扉が開き、その部屋の中から伸びてきた触手に足を掴まれてしまったのだ！
+			ENDIF
+			PRINTFORML その拍子に自分の懐中時計を落としてしまい、時間を止めることができなくなってしまった
+			IF FLAG:AUTOMODE
+				PRINTFORML 咲夜は近くにいるかもしれない妖精メイドに助けを呼んでもらおうと叫ぶ！
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 咲夜は近くにいるかもしれない妖精メイドに助けを呼んでもらおうと叫ぶ！
+			ENDIF
+			PRINTFORML …が、それよりも速く一瞬のうちに部屋の中へと引きずられてしまった…
+			PRINTFORML 触手の力は凄まじく、到底引き剥がせるものではなかった
+			IF FLAG:AUTOMODE
+				PRINTFORML ナイフを刺してみようとするも、触手の表面は妙な液体で濡れており、刃が滑ってしまうのだった
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW ナイフを刺してみようとするも、触手の表面は妙な液体で濡れており、刃が滑ってしまうのだった
+			ENDIF
+			PRINTFORML 何度もナイフを振り下ろすが、触手に傷はつかない　自分はどんどん部屋の奥へ吸い込まれていく
+			PRINTFORML その部屋の奥からはおぞましい気配と淫靡な匂いが漂ってきた…
+			PRINTFORML 諦めようとはせず、必死に抗う咲夜だが…とうとう咲夜は触手の迷宮に連れて行かれてしまったのだった…
+			PRINTFORML 
+			PRINTFORML 
+			IF FLAG:AUTOMODE
+				PRINTFORML 
+				TWAIT FLAG:AUTOMODE * 400, 0
+			ELSE
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+
+	;その他は通常の地の文
+	CASEELSE
+	CALL SYSTEM_MESSAGE(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+ENDSELECT
+
+

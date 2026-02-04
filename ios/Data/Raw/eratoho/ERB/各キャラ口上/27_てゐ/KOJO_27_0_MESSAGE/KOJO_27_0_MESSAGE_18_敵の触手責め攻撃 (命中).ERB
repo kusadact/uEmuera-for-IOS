@@ -1,0 +1,74 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 18 敵の触手責め攻撃 (命中)
+;    敵の触手責め攻撃には汎用口上が存在しない為、確実に個別口上が呼び出される
+;    その為、優先口上指定は不要
+; ------------------------------------------------------------------------------
+
+; □ 攻撃種類別
+; ◆ 0953 汚染攻撃(汚れを追加)
+@KOJO_27_0_SYSTEM_MESSAGE_18_953(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 睡眠時
+	SIF CFLAG:25
+		RETURN 0
+		
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+
+	; 通常時
+	SELECTCASE KOJO_MODE
+	CASE "淫乱"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（くさい♥　コレくさいっ♥　オスくさいぃっ♥♥）\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"「な、何す…おごぉっ！？　んぶぅっ！？　ごぶぅっ！？\n　ごほ…っ！　ごほっ…もう…やめへ…っ！　ごぼぉぉぉっ！！　んんんん…ぅぅうっ！！」\n"
+	ENDSELECT
+RETURN 1
+
+; 攻撃種類別
+; ◆ 0982 植物 or ローパー M攻撃
+@KOJO_27_0_SYSTEM_MESSAGE_18_982(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+
+	; 睡眠時
+	SIF CFLAG:25
+		RETURN 0
+		
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+
+	; 通常時
+	SELECTCASE KOJO_MODE
+	CASE "強気"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「こにょ……っ草っ！　食いちぎるわよ！」\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"（草食の口に植物突っ込むとかいい度胸してんじゃない！）\n"
+	CASEELSE
+		CALL KOJO_27_0_ADD_MESSAGE, @"（食えたもんじゃない奴の草の味がする……！）\n"
+		CALL KOJO_27_0_ADD_MESSAGE, @"「んんんっ！　やへろ……！　はにゃへぇ……！」\n"
+	ENDSELECT
+RETURN 1

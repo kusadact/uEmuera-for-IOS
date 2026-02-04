@@ -1,0 +1,1842 @@
+﻿
+;[FUTANARI_ADDITION.ERB] 睡眠時ふたなりレイプ・ふたなりセックス・アイテムねだり時の体要求
+;ARG:2,ARG:3にそれぞれ（交わってる）相手,　自分自身　のキャラIDが入っている
+;名前参照はそれぞれ　%CALLNAME:(ARG:2)%,　%CALLNAME:(ARG:3)%
+;とは言ってもARG:3には必ず口上キャラ自身のID（= TARGET）が入るので%CALLNAME:(ARG:3)%は使わなくても問題ない
+;LOCAL:6はレイプ・セックスイベント中の処女喪失で = 1　になるので、ふたなりレイプ開始時のCASE 0経由でCASE 4にきたか
+;直接CASE 4に来たかの分岐に使える
+;9_9を口上の番号に変えてご利用下さい。
+;@KOJO_9_1_FUTANARI(ARG:0,ARG:1,ARG:2,ARG:3,ARG:2)であったのを以下に変更しました。
+@KOJO_9_1_FUTANARI(ARG:0,ARG:1,ARG:2,ARG:3,ARG:4)
+
+SELECTCASE ARG:0
+	;NPC時ふたなり化
+	CASE 0
+		SELECTCASE ARG:1
+			;ARG:3がふたなり化
+			CASE 0
+			PRINTFORML ;２１２１
+		ENDSELECT
+	;ふたなりレイプ開始時
+	CASE 1
+		SELECTCASE ARG:1
+			;処女で犯される
+			CASE 0
+
+			;処女を犯す
+			CASE 1
+
+			;なし
+			CASE 2
+
+			;なし
+			CASE 3
+
+			;非処女で犯されるor処女喪失後　CASE 0からここに来たりもする
+			CASE 4
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああl何するつもり？ナニするつもりなのね♪仕方ないわよねこんな状況じゃ♪やるからには気持よくしてくださいね♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああl何するつもり？ナニするつもりなのね♪仕方ないわよねこんな状況じゃ♪やるからには気持よくしてくださいね♪」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「いや！いやよ！うそよね、いやぁ………」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「いや！いやよ！うそよね、いやぁ………」
+					ENDIF
+				ENDIF
+			;非処女を犯すor処女奪った後
+			CASE 5
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あら！あなた初めてだったのかしら♪思い出に残る素敵なロストバージンね♪そうは思わない？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あら！あなた初めてだったのかしら♪思い出に残る素敵なロストバージンね♪そうは思わない？」
+					ENDIF
+				ENDIF
+		ENDSELECT
+	;ふたなりレイプ抵抗成功
+	CASE 2
+		SELECTCASE ARG:1
+			;処女喪失後　抵抗成功時
+			CASE 0
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああ……ちょっと間に合わなかったかしら…まあそんな時もあるわよね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああ……ちょっと間に合わなかったかしら…まあそんな時もあるわよね」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 思わぬ形で処女を散らした咲夜だが動じる様子は全く見られない。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 思わぬ形で処女を散らした咲夜だが動じる様子は全く見られない。
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「うそ………私…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「うそ………私…」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 望まなぬ形での処女喪失に咲夜は呆然としている。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 望まなぬ形での処女喪失に咲夜は呆然としている。
+					ENDIF
+				ENDIF
+			;処女奪った後　抵抗成功される
+			CASE 1
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あら…初めてなのにこれで終わりでいいの？もっと心イクまでしたいんじゃないの？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あら…初めてなのにこれで終わりでいいの？もっと心イクまでしたいんじゃないの？」
+					ENDIF
+				ENDIF
+			;非処女で犯される　抵抗成功時
+			CASE 2
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ごめんなさい…今は気分じゃなくって。今度誘ってね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ごめんなさい…今は気分じゃなくって。今度誘ってね」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「やめてください！こんなことをしてる場合じゃありませんでしょ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「やめてください！こんなことをしてる場合じゃありませんでしょ！」
+					ENDIF
+				ENDIF
+			;非処女を犯す　抵抗成功される
+			CASE 3
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「残念ですわ、私ならそこらの職種にも負けないくらいの気持ち良いことをして差し上げられますのに」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「残念ですわ、私ならそこらの職種にも負けないくらいの気持ち良いことをして差し上げられますのに」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「そ、そうよね…当たり前よね…なにしてるのよ…私…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「そ、そうよね…当たり前よね…なにしてるのよ…私…」
+					ENDIF
+				ENDIF
+			;処女喪失後　抵抗成功後
+			CASE 4
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「んー、ちょっと嫌がってしまいましたけどなんだか半端な感じです。ねえ、もう一度してくださらない？」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「んー、ちょっと嫌がってしまいましたけどなんだか半端な感じです。ねえ、もう一度してくださらない？」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんなはずじゃ…こんなはずじゃなかったの…返して…私の…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんなはずじゃ…こんなはずじゃなかったの…返して…私の…」
+					ENDIF
+				ENDIF
+			;処女奪った後　諦める
+			CASE 5
+				PRINTFORML ;１０５
+			;非処女で犯される　抵抗成功後
+			CASE 6
+				PRINTFORML ;１０６
+			;非処女を犯す　諦める
+			CASE 7
+				PRINTFORML ;１０７
+		ENDSELECT
+	;ふたなりレイプ抵抗失敗
+	CASE 3
+		SELECTCASE ARG:1
+
+			;処女喪失後　抵抗失敗時
+			CASE 0
+				IF ABL:12 < 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんなの………冗談じゃないわよ…こんな、こんな…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんなの………冗談じゃないわよ…こんな、こんな…」
+					ENDIF
+				ENDIF
+			;処女奪った後　抵抗失敗時
+			CASE 1
+				PRINTFORML ;１０９
+			;非処女で犯される　抵抗失敗時
+			CASE 2
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああ♪ダメです♪やめてくださいってば」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああ♪ダメです♪やめてくださいってば」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 形ばかりの抵抗を示す咲夜だが蕩けた表情はこの後の快楽を待ちわびているのが明らかだ。
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 形ばかりの抵抗を示す咲夜だが蕩けた表情はこの後の快楽を待ちわびているのが明らかだ。
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「屈辱…だわ……やめなさいってば」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「屈辱…だわ……やめなさいってば」
+					ENDIF
+				ENDIF
+			;非処女を犯す　抵抗失敗時
+			CASE 3
+				PRINTFORML ;１１１
+		;犯される側（主人公）が触手服装備時
+			;処女喪失後　抵抗失敗後　触手服を着ている
+			CASE 4
+				PRINTFORML ;１１２
+			;処女奪った後　抵抗失敗後　触手服を弄る
+			CASE 5
+				PRINTFORML ;１１３
+			;非処女で犯される　抵抗失敗後　触手服を着ている
+			CASE 6
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああぁ！服がぐちょぐちょって♪この子を刺激しないで♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああぁ！服がぐちょぐちょって♪この子を刺激しないで♪」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「だ、だめぇ！ぁ、ぁああああ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「だ、だめぇ！ぁ、ぁああああ！」
+					ENDIF
+				ENDIF
+			;非処女を犯す　抵抗失敗後　触手服を弄る
+			CASE 7
+				PRINTFORML ;１１５
+		;犯される側（主人公）が触手服装備時その後
+			;処女喪失後　抵(ry後　触手服を弄られたあと挿入れられる直前
+			CASE 8
+				PRINTFORML ;１１６
+			;処女奪った後　抵(ry後　触手服を弄ったあと挿入れる直前
+			CASE 9
+				PRINTFORML ;１１７
+			;非処女で犯される　抵(ry後　触手服を弄られたあと挿入れられる直前
+			CASE 10
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああ、そんな…びくんびくんって、すごく元気がいい♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああ、そんな…びくんびくんって、すごく元気がいい♪」
+					ENDIF
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ここよ…ここをよく狙って…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ここよ…ここをよく狙って…」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ちょっと、やめてくださいよ、いま体中敏感で…」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ちょっと、やめてくださいよ、いま体中敏感で…」
+					ENDIF
+				ENDIF
+			;非処女を犯す　抵(ry後　触手服を弄ったあと挿入れる直前
+			CASE 11
+				PRINTFORML ;１１９
+		;犯される側（主人公）が触手服以外の服着用だとここ　服が破けた時の口上がこれの後に来るので注意
+			;処女喪失後　抵抗失敗時　服剥かれる
+			CASE 12
+				PRINTFORML ;１２０
+			;処女奪った後　抵抗失敗時　服を剥く
+			CASE 13
+				PRINTFORML ;１２１
+			;非処女で犯される　抵抗失敗時　服剥かれる
+			CASE 14
+				PRINTFORML ;１２２
+			;非処女を犯す　抵抗失敗時　服を剥く
+			CASE 15
+				PRINTFORML ;１２３
+		;犯される側（主人公）が触手服以外の服剥いたあと挿入れる直前
+			;処女喪失後　抵抗失敗後　服剥かれたあと挿入れられる直前
+			CASE 16
+				PRINTFORML ;１２４
+			;処女奪った後　抵抗失敗後　服を剥いたあと挿入れる直前
+			CASE 17
+				PRINTFORML ;１２５
+			;非処女で犯される　抵抗失敗後　服剥かれたあと挿入れられる直前
+			CASE 18
+				PRINTFORML ;１２６
+			;非処女を犯す　抵抗失敗後　服を剥いたあと挿入れる直前
+			CASE 19
+				PRINTFORML ;１２７
+		;犯される側（主人公）が裸　挿入れる直前
+			;処女喪失後　抵抗失敗後　挿入れられる直前
+			CASE 20
+				PRINTFORML ;１２８
+			;処女奪った後　抵抗失敗後　挿入れる直前
+			CASE 21
+				PRINTFORML ;１２９
+			;非処女で犯される　抵抗失敗後　挿入れられる直前
+			CASE 22
+				PRINTFORML ;１３０
+			;非処女を犯す　抵抗失敗後　挿入れる直前
+			CASE 23
+				PRINTFORML ;１３１
+		ENDSELECT
+	;ふたなりレイプ抵抗放棄
+	CASE 4
+		SELECTCASE ARG:1
+			;処女喪失後　挿入れられる直前
+			CASE 0
+				PRINTFORML ;１３２
+			;処女奪った後　挿入れる直前
+			CASE 1
+				PRINTFORML ;１３３
+			;非処女で犯される　挿入れられる直前
+			CASE 2
+				PRINTFORML ;１３４
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「大丈夫ですか、挿入れるところはここですよ。待ちきれなくて疼いてしまうんです♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「大丈夫ですか、挿入れるところはここですよ。待ちきれなくて疼いてしまうんです♪」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 「もう…早く済ませなさいよ」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「もう…早く済ませなさいよ」
+					ENDIF
+				ENDIF
+			;非処女を犯す　挿入れる直前
+			CASE 3
+				PRINTFORML ;１３５
+		ENDSELECT
+	;ふたなりレイプEPダメ～射精　一回目　お帰りまで
+	CASE 5
+		PRINTFORML ;１３６　一度に頻出
+			IF ABL:12 >= 3
+				IF RAND:6 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「やぁ、やめてくださいぃ♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「やぁ、やめてくださいぃ♪」
+					ENDIF
+				ELSEIF RAND:5 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「まだまだしてくださるんですよね♪期待してます」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「まだまだしてくださるんですよね♪期待してます」
+					ENDIF
+				ELSEIF RAND:4 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「こんなに激しいの♪癖になっちゃったわ♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「こんなに激しいの♪癖になっちゃったわ♪」
+					ENDIF
+				ELSEIF RAND:3 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 
+					ENDIF
+				ELSEIF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 
+					ENDIF
+				ENDIF
+			ELSE
+				IF RAND:3 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ひぃい！やだ、やめて！ぁあ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ひぃい！やだ、やめて！ぁあ！」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					IF FLAG:AUTOMODE
+						PRINTFORML 「嫌、嫌よ、ああ！」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「嫌、嫌よ、ああ！」
+					ENDIF
+				ELSE
+					IF FLAG:AUTOMODE
+						PRINTFORML 
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 
+					ENDIF
+				ENDIF
+			ENDIF
+		SELECTCASE ARG:1
+		;強い絶頂中田氏
+			;処女喪失後　EPダメ直後
+			CASE 0
+				PRINTFORML ;１３７
+			;処女奪った後　EPダメ直後
+			CASE 1
+				PRINTFORML ;１３８
+			;非処女で犯される　EPダメ直後
+			CASE 2
+				PRINTFORML ;１３９
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「ああ♪今のもう一度ください♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「ああ♪今のもう一度ください♪」
+					ENDIF
+				ELSE
+					
+				ENDIF
+			;非処女を犯す　EPダメ直後
+			CASE 3
+				PRINTFORML ;１４０
+			;処女喪失後　ペニス締め付け（強）
+			CASE 4
+				PRINTFORML ;１４１
+			;処女奪った後　ペニス締め付け（強）
+			CASE 5
+				PRINTFORML ;１４２
+			;非処女で犯される　ペニス締め付け（強）
+			CASE 6
+				PRINTFORML ;１４３
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「今はこの熱いのも私の♪私だけのものです♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「今はこの熱いのも私の♪私だけのものです♪」
+					ENDIF
+				ELSE
+					
+				ENDIF
+			;非処女を犯す　ペニス締め付け（強）
+			CASE 7
+				PRINTFORML ;１４４
+			;処女喪失後　射精後
+			CASE 8
+				PRINTFORML ;１４５
+			;処女奪った後　射精後
+			CASE 9
+				PRINTFORML ;１４６
+			;非処女で犯される　射精後
+			CASE 10
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「あっ…すごく熱い♪それにどろどろ…♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「あっ…すごく熱い♪それにどろどろ…♪」
+					ENDIF
+				ELSE
+					
+				ENDIF
+			;非処女を犯す　射精後
+			CASE 11
+				PRINTFORML ;１４８
+		;強い絶頂外田氏
+			;処女喪失後　EPダメ直後
+			CASE 12
+				PRINTFORML ;１４９
+			;処女奪った後　EPダメ直後
+			CASE 13
+				PRINTFORML ;１５０
+			;非処女で犯される　EPダメ直後
+			CASE 14
+				PRINTFORML ;１５１
+			;非処女を犯す　EPダメ直後
+			CASE 15
+				PRINTFORML ;１５２
+			;処女喪失後　ペニス締め付け（強）
+			CASE 16
+				PRINTFORML ;１５３
+			;処女奪った後　ペニス締め付け（強）
+			CASE 17
+				PRINTFORML ;１５４
+			;非処女で犯される　ペニス締め付け（強）
+			CASE 18
+				PRINTFORML ;１５５
+			;非処女を犯す　ペニス締め付け（強）
+			CASE 19
+				PRINTFORML ;１５６
+			;処女喪失後　射精後
+			CASE 20
+				PRINTFORML ;１５７
+			;処女奪った後　射精後
+			CASE 21
+				PRINTFORML ;１５８
+			;非処女で犯される　射精後
+			CASE 22
+				PRINTFORML ;１５９
+			;非処女を犯す　射精後
+			CASE 23
+				PRINTFORML ;１６０
+		;絶頂中田氏
+			;処女喪失後　EPダメ直後
+			CASE 24
+				PRINTFORML ;１６１
+			;処女奪った後　EPダメ直後
+			CASE 25
+				IF FLAG:AUTOMODE
+					PRINTFORML １６２
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW １６２
+				ENDIF
+			;非処女で犯される　EPダメ直後
+			CASE 26
+				PRINTFORML ;１６３
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「来るっ♪ああっあああ～♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「来るっ♪ああっあああ～♪」
+					ENDIF
+				ELSE
+					
+				ENDIF
+			;非処女を犯す　EPダメ直後
+			CASE 27
+				PRINTFORML ;１６４
+			;処女喪失後　ペニス締め付け
+			CASE 28
+				PRINTFORML ;１６５
+			;処女奪った後　ペニス締め付け
+			CASE 29
+				PRINTFORML ;１６６
+			;非処女で犯される　ペニス締め付け
+			CASE 30
+				PRINTFORML ;１６７
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あなたのここも我慢できないそうですし♪」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あなたのここも我慢できないそうですし♪」
+				ENDIF
+			;非処女を犯す　ペニス締め付け
+			CASE 31
+				PRINTFORML ;１６８
+			;処女喪失後　射精後
+			CASE 32
+				PRINTFORML ;１６９
+			;処女奪った後　射精後
+			CASE 33
+				PRINTFORML ;１７０
+			;非処女で犯される　射精後
+			CASE 34
+				PRINTFORML ;１７１
+				IF FLAG:AUTOMODE
+					PRINTFORML 「あ…ぁ…ぁ…♪私の膣内…どろどろ♪やっ！こぼれてきちゃう」
+					TWAIT FLAG:AUTOMODE * 400, 0
+				ELSE
+					PRINTFORMW 「あ…ぁ…ぁ…♪私の膣内…どろどろ♪やっ！こぼれてきちゃう」
+				ENDIF
+			;非処女を犯す　射精後
+			CASE 35
+				PRINTFORML ;１７２
+		;絶頂外田氏
+			;処女喪失後　EPダメ直後
+			CASE 36
+				PRINTFORML ;１７３
+			;処女奪った後　EPダメ直後
+			CASE 37
+				PRINTFORML ;１７４
+			;非処女で犯される　EPダメ直後
+			CASE 38
+				PRINTFORML ;１７５
+			;非処女を犯す　EPダメ直後
+			CASE 39
+				PRINTFORML ;１７６
+			;処女喪失後　ペニス締め付け
+			CASE 40
+				PRINTFORML ;１７７
+			;処女奪った後　ペニス締め付け
+			CASE 41
+				PRINTFORML ;１７８
+			;非処女で犯される　ペニス締め付け
+			CASE 42
+				PRINTFORML ;１７９
+			;非処女を犯す　ペニス締め付け
+			CASE 43
+				PRINTFORML ;１８０
+			;処女喪失後　射精後
+			CASE 44
+				PRINTFORML ;１８１
+			;処女奪った後　射精後
+			CASE 45
+				PRINTFORML ;１８２
+			;非処女で犯される　射精後
+			CASE 46
+				PRINTFORML ;１８３
+			;非処女を犯す　射精後
+			CASE 47
+				PRINTFORML ;１８４
+		;中田氏
+			;処女喪失後　EPダメ直後
+			CASE 48
+				PRINTFORML ;１８５
+			;処女奪った後　EPダメ直後
+			CASE 49
+				PRINTFORML ;１８６
+			;非処女で犯される　EPダメ直後
+			CASE 50
+				PRINTFORML ;１８７（タイミング？;中出し展開が確定の場合にでるということか
+				IF ABL:12 >= 3
+					IF FLAG:AUTOMODE
+						PRINTFORML 「私の膣内をずりゅっずりゅって♪だんだん速くなってますよ♪頑張って♪」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「私の膣内をずりゅっずりゅって♪だんだん速くなってますよ♪頑張って♪」
+					ENDIF
+				ELSE
+					
+				ENDIF
+			;非処女を犯す　EPダメ直後
+			CASE 51
+				PRINTFORML ;１８８
+			;処女喪失後　射精後
+			CASE 52
+				PRINTFORML ;１８９
+			;処女奪った後　射精後
+			CASE 53
+				PRINTFORML ;１９０
+			;非処女で犯される　射精後
+			CASE 54
+				PRINTFORML ;１９１（タイミング？
+					IF FLAG:AUTOMODE
+						PRINTFORML 「びくんびくんって♪…気持ちよくなってくれたんですね」
+						TWAIT FLAG:AUTOMODE * 400, 0
+					ELSE
+						PRINTFORMW 「びくんびくんって♪…気持ちよくなってくれたんですね」
+					ENDIF
+			;非処女を犯す　射精後
+			CASE 55
+				PRINTFORML ;１９２
+		;外田氏
+			;処女喪失後　EPダメ直後
+			CASE 56
+				PRINTFORML ;１９３
+			;処女奪った後　EPダメ直後
+			CASE 57
+				PRINTFORML ;１９４
+			;非処女で犯される　EPダメ直後
+			CASE 58
+				PRINTFORML ;１９５
+			;非処女を犯す　EPダメ直後
+			CASE 59
+				PRINTFORML ;１９６
+			;処女喪失後　射精後
+			CASE 60
+				PRINTFORML ;１９７
+			;処女奪った後　射精後
+			CASE 61
+				PRINTFORML ;１９８
+			;非処女で犯される　射精後
+			CASE 62
+				PRINTFORML ;１９９
+			;非処女を犯す　射精後
+			CASE 63
+				PRINTFORML ;２００
+		;お帰り
+			;処女喪失後
+			CASE 64
+				PRINTFORML ;２０１
+			;処女奪った後
+			CASE 65
+				PRINTFORML ;２０２
+			;非処女で犯される
+			CASE 66
+				PRINTFORML ;２０３
+			;非処女を犯す
+			CASE 67
+				PRINTFORML ;２０４
+		ENDSELECT
+	;ふたなりレイプ追加攻撃　触手服（二回目）　終わりまで
+	CASE 6
+		SELECTCASE ARG:1
+		;開始時
+			;処女喪失後
+			CASE 0
+				PRINTFORML ;２０５
+			;処女奪った後
+			CASE 1
+				PRINTFORML ;２０６
+			;非処女で犯される
+			CASE 2
+				PRINTFORML ;２０７
+			;非処女を犯す
+			CASE 3
+				PRINTFORML ;２０８
+		;犯す側ふたなり化
+			;処女喪失後
+			CASE 4
+				PRINTFORML ;２０９
+			;処女奪った後
+			CASE 5
+				PRINTFORML ;２１０
+			;非処女で犯される
+			CASE 6
+				PRINTFORML ;２１１
+			;非処女を犯す
+			CASE 7
+				PRINTFORML ;２１２
+		;触手愛撫　
+			;処女喪失後
+			CASE 8
+				PRINTFORML ;２１３
+			;処女奪った後
+			CASE 9
+				PRINTFORML ;２１４
+			;非処女で犯される
+			CASE 10
+				PRINTFORML ;２１５
+			;非処女を犯す
+			CASE 11
+				PRINTFORML ;２１６
+		;触手愛撫　犯す側射精中毒経験値高めだとこちらも
+			;処女喪失後
+			CASE 12
+				PRINTFORML ;２１７
+			;処女奪った後
+			CASE 13
+				PRINTFORML ;２１８
+			;非処女で犯される
+			CASE 14
+				PRINTFORML ;２１９
+			;非処女を犯す
+			CASE 15
+				PRINTFORML ;２２０
+		;妊娠確定で終了
+			;処女喪失後
+			CASE 16
+				PRINTFORML ;２２１
+			;処女奪った後
+			CASE 17
+				PRINTFORML ;２２２
+			;非処女で犯される
+			CASE 18
+				PRINTFORML ;２２３
+			;非処女を犯す
+			CASE 19
+				PRINTFORML ;２２４
+		;気絶で終了
+			;処女喪失後
+			CASE 20
+				PRINTFORML ;２２５
+			;処女奪った後
+			CASE 21
+				PRINTFORML ;２２６
+			;非処女で犯される
+			CASE 22
+				PRINTFORML ;２２７
+			;非処女を犯す
+			CASE 23
+				PRINTFORML ;２２８
+		;拘束脱出で終了
+			;処女喪失後
+			CASE 24
+				PRINTFORML ;２２９
+			;処女奪った後
+			CASE 25
+				PRINTFORML ;２３０
+			;非処女で犯される
+			CASE 26
+				PRINTFORML ;２３１
+			;非処女を犯す
+			CASE 27
+				PRINTFORML ;２３２
+		ENDSELECT
+	;ふたなりレイプ追加攻撃　発情（二回目）　終わりまで
+	CASE 7
+		SELECTCASE ARG:1
+		;再開直前
+			;処女喪失後
+			CASE 0
+				PRINTFORML ;２３３
+			;処女奪った後
+			CASE 1
+				PRINTFORML ;２３４
+			;非処女で犯される
+			CASE 2
+				PRINTFORML ;２３５
+			;非処女を犯す
+			CASE 3
+				PRINTFORML ;２３６
+		;レイプ再開
+			;処女喪失後
+			CASE 4
+				PRINTFORML ;２３７
+			;処女奪った後
+			CASE 5
+				PRINTFORML ;２３８
+			;非処女で犯される
+			CASE 6
+				PRINTFORML ;２３９
+			;非処女を犯す
+			CASE 7
+				PRINTFORML ;２４０
+		;ペニスが消えて満足
+			;処女喪失後
+			CASE 8
+				PRINTFORML ;２４１
+			;処女奪った後
+			CASE 9
+				PRINTFORML ;２４２
+			;非処女で犯される
+			CASE 10
+				PRINTFORML ;２４３
+			;非処女を犯す
+			CASE 11
+				PRINTFORML ;２４４
+		;満足
+			;処女喪失後
+			CASE 12
+				PRINTFORML ;２４５
+			;処女奪った後
+			CASE 13
+				PRINTFORML ;２４６
+			;非処女で犯される
+			CASE 14
+				PRINTFORML ;２４７
+			;非処女を犯す
+			CASE 15
+				PRINTFORML ;２４８
+		;ペニスが消えた
+			;処女喪失後
+			CASE 16
+				PRINTFORML ;２４９
+			;処女奪った後
+			CASE 17
+				PRINTFORML ;２５０
+			;非処女で犯される
+			CASE 18
+				PRINTFORML ;２５１
+			;非処女を犯す
+			CASE 19
+				PRINTFORML ;２５２
+		;体力が尽きる
+			;処女喪失後
+			CASE 20
+				PRINTFORML ;２５３
+			;処女奪った後
+			CASE 21
+				PRINTFORML ;２５４
+			;非処女で犯される
+			CASE 22
+				PRINTFORML ;２５５
+			;非処女を犯す
+			CASE 23
+				PRINTFORML ;２５６
+		ENDSELECT
+	;ふたなりセックス開始時～了承直後　表示される順番が 1or3→0or2→5or7→4or6→9or11
+	CASE 8
+		SELECTCASE ARG:1
+		;
+			;処女を頂く　お願いする
+			CASE 1
+				PRINTFORML ;２５７
+			;非処女に挿入れる　お願いする
+			CASE 3
+				PRINTFORML ;２５８
+			;処女　聞き入れる
+			CASE 0
+				PRINTFORML ;２５９
+			;非処女で受け入れる　聞き入れる
+			CASE 2
+				PRINTFORML ;２６０
+		;
+			;処女を頂く　聞き入れてもらえた
+			CASE 5
+				PRINTFORML ;２６１
+			;非処女に挿入れる　聞き入れてもらえた
+			CASE 7
+				PRINTFORML ;２６２
+			;処女　挿入される（処女喪失）
+			CASE 4
+				PRINTFORML ;２６３
+			;非処女で受け入れる　挿入される
+			CASE 6
+				PRINTFORML ;２６４
+		;
+			;処女を頂いた
+			CASE 9
+				PRINTFORML ;２６５
+			;非処女に挿入れた
+			CASE 11
+				PRINTFORML ;２６６
+		ENDSELECT
+	;ふたなりセックスEPダメ～射精　一回目　お帰りまで
+	CASE 9
+		SELECTCASE ARG:1
+		;強い絶頂中田氏
+			;処女喪失後　EPダメ直後
+			CASE 0
+				PRINTFORML ;２６７
+			;処女を頂いた　EPダメ直後
+			CASE 1
+				PRINTFORML ;２６８
+			;非処女で受け入れた　EPダメ直後
+			CASE 2
+				PRINTFORML ;２６９
+			;非処女に挿入れた　EPダメ直後
+			CASE 3
+				PRINTFORML ;２７０
+			;処女喪失後　ペニス締め付け（強）
+			CASE 4
+				PRINTFORML ;２７１
+			;処女を頂いた　ペニス締め付け（強）
+			CASE 5
+				PRINTFORML ;２７２
+			;非処女で受け入れた　ペニス締め付け（強）
+			CASE 6
+				PRINTFORML ;２７３
+			;非処女に挿入れた　ペニス締め付け（強）
+			CASE 7
+				PRINTFORML ;２７４
+			;処女喪失後　射精後
+			CASE 8
+				PRINTFORML ;２７５
+			;処女を頂いた　射精後
+			CASE 9
+				PRINTFORML ;２７６
+			;非処女で受け入れた　射精後
+			CASE 10
+				PRINTFORML ;２７７
+			;非処女に挿入れた　射精後
+			CASE 11
+				PRINTFORML ;２７８
+		;強い絶頂外田氏
+			;処女喪失後　EPダメ直後
+			CASE 12
+				PRINTFORML ;２７９
+			;処女を頂いた　EPダメ直後
+			CASE 13
+				PRINTFORML ;２８０
+			;非処女で受け入れた　EPダメ直後
+			CASE 14
+				PRINTFORML ;２８１
+			;非処女に挿入れた　EPダメ直後
+			CASE 15
+				PRINTFORML ;２８２
+			;処女喪失後　ペニス締め付け（強）
+			CASE 16
+				PRINTFORML ;２８３
+			;処女を頂いた　ペニス締め付け（強）
+			CASE 17
+				PRINTFORML ;２８４
+			;非処女で受け入れた　ペニス締め付け（強）
+			CASE 18
+				PRINTFORML ;２８５
+			;非処女に挿入れた　ペニス締め付け（強）
+			CASE 19
+				PRINTFORML ;２８６
+			;処女喪失後　射精後
+			CASE 20
+				PRINTFORML ;２８７
+			;処女を頂いた　射精後
+			CASE 21
+				PRINTFORML ;２８８
+			;非処女で受け入れた　射精後
+			CASE 22
+				PRINTFORML ;２８９
+			;非処女に挿入れた　射精後
+			CASE 23
+				PRINTFORML ;２９０
+		;絶頂中田氏
+			;処女喪失後　EPダメ直後
+			CASE 24
+				PRINTFORML ;２９１
+			;処女を頂いた　EPダメ直後
+			CASE 25
+				PRINTFORML ;２９２
+			;非処女で受け入れた　EPダメ直後
+			CASE 26
+				PRINTFORML ;２９３
+			;非処女に挿入れた　EPダメ直後
+			CASE 27
+				PRINTFORML ;２９４
+			;処女喪失後　ペニス締め付け
+			CASE 28
+				PRINTFORML ;２９５
+			;処女を頂いた　ペニス締め付け
+			CASE 29
+				PRINTFORML ;２９６
+			;非処女で受け入れた　ペニス締め付け
+			CASE 30
+				PRINTFORML ;２９７
+			;非処女に挿入れた　ペニス締め付け
+			CASE 31
+				PRINTFORML ;２９８
+			;処女喪失後　射精後
+			CASE 32
+				PRINTFORML ;２９９
+			;処女を頂いた　射精後
+			CASE 33
+				PRINTFORML ;３００
+			;非処女で受け入れた　射精後
+			CASE 34
+				PRINTFORML ;３０１
+			;非処女に挿入れた　射精後
+			CASE 35
+				PRINTFORML ;３０２
+		;絶頂外田氏
+			;処女喪失後　EPダメ直後
+			CASE 36
+				PRINTFORML ;３０３
+			;処女を頂いた　EPダメ直後
+			CASE 37
+				PRINTFORML ;３０４
+			;非処女で受け入れた　EPダメ直後
+			CASE 38
+				PRINTFORML ;３０５
+			;非処女に挿入れた　EPダメ直後
+			CASE 39
+				PRINTFORML ;３０６
+			;処女喪失後　ペニス締め付け
+			CASE 40
+				PRINTFORML ;３０７
+			;処女を頂いた　ペニス締め付け
+			CASE 41
+				PRINTFORML ;３０８
+			;非処女で受け入れた　ペニス締め付け
+			CASE 42
+				PRINTFORML ;３０９
+			;非処女に挿入れた　ペニス締め付け
+			CASE 43
+				PRINTFORML ;３１０
+			;処女喪失後　射精後
+			CASE 44
+				PRINTFORML ;３１１
+			;処女を頂いた　射精後
+			CASE 45
+				PRINTFORML ;３１２
+			;非処女で受け入れた　射精後
+			CASE 46
+				PRINTFORML ;３１３
+			;非処女に挿入れた　射精後
+			CASE 47
+				PRINTFORML ;３１４
+		;中田氏
+			;処女喪失後　EPダメ直後
+			CASE 48
+				PRINTFORML ;３１５
+			;処女を頂いた　EPダメ直後
+			CASE 49
+				PRINTFORML ;３１６
+			;非処女で受け入れた　EPダメ直後
+			CASE 50
+				PRINTFORML ;３１７
+			;非処女に挿入れた　EPダメ直後
+			CASE 51
+				PRINTFORML ;３１８
+			;処女喪失後　射精後
+			CASE 52
+				PRINTFORML ;３１９
+			;処女を頂いた　射精後
+			CASE 53
+				PRINTFORML ;３２０
+			;非処女で受け入れた　射精後
+			CASE 54
+				PRINTFORML ;３２１
+			;非処女に挿入れた　射精後
+			CASE 55
+				PRINTFORML ;３２２
+		;外田氏
+			;処女喪失後　EPダメ直後
+			CASE 56
+				PRINTFORML ;３２３
+			;処女を頂いた　EPダメ直後
+			CASE 57
+				PRINTFORML ;３２４
+			;非処女で受け入れた　EPダメ直後
+			CASE 58
+				PRINTFORML ;３２５
+			;非処女に挿入れた　EPダメ直後
+			CASE 59
+				PRINTFORML ;３２６
+			;処女喪失後　射精後
+			CASE 60
+				PRINTFORML ;３２７
+			;処女を頂いた　射精後
+			CASE 61
+				PRINTFORML ;３２８
+			;非処女で受け入れた　射精後
+			CASE 62
+				PRINTFORML ;３２９
+			;非処女に挿入れた　射精後
+			CASE 63
+				PRINTFORML ;３３０
+		ENDSELECT
+	;ふたなりセックス追加攻撃　触手服（二回目）　終わりまで
+	CASE 10
+		SELECTCASE ARG:1
+		;開始時
+			;処女喪失後
+			CASE 0
+				PRINTFORML ;３３１
+			;処女を頂いた
+			CASE 1
+				PRINTFORML ;３３２
+			;非処女で受け入れた
+			CASE 2
+				PRINTFORML ;３３３
+			;非処女に挿入れた
+			CASE 3
+				PRINTFORML ;３３４
+		;犯す側ふたなり化
+			;処女喪失後
+			CASE 4
+				PRINTFORML ;３３５
+			;処女を頂いた
+			CASE 5
+				PRINTFORML ;３３６
+			;非処女で受け入れた
+			CASE 6
+				PRINTFORML ;３３７
+			;非処女に挿入れた
+			CASE 7
+				PRINTFORML ;３３８
+		;触手愛撫　
+			;処女喪失後
+			CASE 8
+				PRINTFORML ;３３９
+			;処女を頂いた
+			CASE 9
+				PRINTFORML ;３４０
+			;非処女で受け入れた
+			CASE 10
+				PRINTFORML ;３４１
+			;非処女に挿入れた
+			CASE 11
+				PRINTFORML ;３４２
+		;触手愛撫　犯す側射精中毒経験値高めだとこちらも
+			;処女喪失後
+			CASE 12
+				PRINTFORML ;３４３
+			;処女を頂いた
+			CASE 13
+				PRINTFORML ;３４４
+			;非処女で受け入れた
+			CASE 14
+				PRINTFORML ;３４５
+			;非処女に挿入れた
+			CASE 15
+				PRINTFORML ;３４６
+		;妊娠確定で終了
+			;処女喪失後
+			CASE 16
+				PRINTFORML ;３４７
+			;処女を頂いた
+			CASE 17
+				PRINTFORML ;３４８
+			;非処女で受け入れた
+			CASE 18
+				PRINTFORML ;３４９
+			;非処女に挿入れた
+			CASE 19
+				PRINTFORML ;３５０
+		;気絶で終了
+			;処女喪失後
+			CASE 20
+				PRINTFORML ;３５１
+			;処女を頂いた
+			CASE 21
+				PRINTFORML ;３５２
+			;非処女で受け入れた
+			CASE 22
+				PRINTFORML ;３５３
+			;非処女に挿入れた
+			CASE 23
+				PRINTFORML ;３５４
+		;拘束脱出で終了
+			;処女喪失後
+			CASE 24
+				PRINTFORML ;３５５
+			;処女を頂いた
+			CASE 25
+				PRINTFORML ;３５６
+			;非処女で受け入れた
+			CASE 26
+				PRINTFORML ;３５７
+			;非処女に挿入れた
+			CASE 27
+				PRINTFORML ;３５８
+		ENDSELECT
+	;ふたなりセックス追加攻撃　発情（二回目）　了承直後orお断りまで　表示される順番が 1or3→(OK 0or2→5or7→4or6→9or11)(NG 8or10→13or15)
+	CASE 11
+		SELECTCASE ARG:1
+		;
+			;処女を頂いた　お願いする
+			CASE 1
+				PRINTFORML ;３５９
+			;非処女に挿入れた　お願いする
+			CASE 3
+				PRINTFORML ;３６０
+			;処女喪失後　聞き入れる
+			CASE 0
+				PRINTFORML ;３６１
+			;非処女で受け入れた　聞き入れる
+			CASE 2
+				PRINTFORML ;３６２
+		;
+			;処女を頂いた　聞き入れてもらえた
+			CASE 5
+				PRINTFORML ;３６３
+			;非処女に挿入れた　聞き入れてもらえた
+			CASE 7
+				PRINTFORML ;３６４
+			;処女喪失後　挿入される
+			CASE 4
+				PRINTFORML ;３６５
+			;非処女で受け入れた　挿入される
+			CASE 6
+				PRINTFORML ;３６６
+		;
+			;処女を頂いた　挿入された
+			CASE 9
+				PRINTFORML ;３６７
+			;非処女に挿入れた　挿入された
+			CASE 11
+				PRINTFORML ;３６８
+		;
+			;処女喪失後　お断りする
+			CASE 8
+				PRINTFORML ;３６９
+			;非処女で受け入れた　お断りする
+			CASE 10
+				PRINTFORML ;３７０
+			;処女を頂いた　お帰り
+			CASE 13
+				PRINTFORML ;３７１
+			;非処女に挿入れた　お帰り
+			CASE 15
+				PRINTFORML ;３７２
+		ENDSELECT
+	;ペニス伝染
+	CASE 12
+		SELECTCASE ARG:1
+			;うつされる側　レイプ
+			CASE 0
+				PRINTFORML ;３７３
+			;ペニス無くなる側　レイプ
+			CASE 1
+				PRINTFORML ;３７４
+			;うつされる側　セックス
+			CASE 2
+				PRINTFORML ;３７５
+			;ペニス無くなる側　セックス
+			CASE 3
+				PRINTFORML ;３７６
+		ENDSELECT
+	;ふたなりセックス追加攻撃　発情（二回目）　事後
+	CASE 13
+		SELECTCASE ARG:1
+		;ペニス消滅＆満足
+			;処女喪失後
+			CASE 0
+				PRINTFORML ;３７７
+			;処女頂いた後
+			CASE 1
+				PRINTFORML ;３７８
+			;非処女で犯される
+			CASE 2
+				PRINTFORML ;３７９
+			;非処女を犯す
+			CASE 3
+				PRINTFORML ;３８０
+		;満足
+			;処女喪失後
+			CASE 4
+				PRINTFORML ;３８１
+			;処女頂いた後
+			CASE 5
+				PRINTFORML ;３８２
+			;非処女で犯される
+			CASE 6
+				PRINTFORML ;３８３
+			;非処女を犯す
+			CASE 7
+				PRINTFORML ;３８４
+		;ペニス消滅
+			;処女喪失後
+			CASE 8
+				PRINTFORML ;３８５
+			;処女頂いた後
+			CASE 9
+				PRINTFORML ;３８６
+			;非処女で犯される
+			CASE 10
+				PRINTFORML ;３８７
+			;非処女を犯す
+			CASE 11
+				PRINTFORML ;３８８
+		;体力が尽きた
+			;処女喪失後
+			CASE 12
+				PRINTFORML ;３８９
+			;処女頂いた後
+			CASE 13
+				PRINTFORML ;３９０
+			;非処女で犯される
+			CASE 14
+				PRINTFORML ;３９１
+			;非処女を犯す
+			CASE 15
+				PRINTFORML ;３９２
+		ENDSELECT
+	;アイテム-お代は体で-　了承直後orお断りまで
+	CASE 14
+		SELECTCASE ARG:1
+		;
+			;処女を犯す身体要求時　好感度高
+			CASE 1
+				PRINTFORML ;３９３
+			;処女を犯す身体要求時　好感度中
+			CASE 5
+				PRINTFORML ;３９４
+			;処女を犯す身体要求時　好感度低
+			CASE 9
+				PRINTFORML ;３９５
+			;非処女を犯す身体要求時　好感度高
+			CASE 3
+				PRINTFORML ;３９６
+			;非処女を犯す身体要求時　好感度中
+			CASE 7
+				PRINTFORML ;３９７
+			;非処女を犯す身体要求時　好感度低
+			CASE 11
+				PRINTFORML ;３９８
+		;
+			;処女で犯される要求を飲む　好感度高
+			CASE 0
+				PRINTFORML ;３９９
+			;処女で犯される要求を飲む　好感度中
+			CASE 4
+				PRINTFORML ;４００
+			;処女で犯される要求を飲む　好感度低
+			CASE 8
+				PRINTFORML ;４０１
+			;非処女で犯される要求を飲む　好感度高
+			CASE 2
+				PRINTFORML ;４０２
+			;非処女で犯される要求を飲む　好感度中
+			CASE 6
+				PRINTFORML ;４０３
+			;非処女で犯される要求を飲む　好感度低
+			CASE 10
+				PRINTFORML ;４０４
+			;処女を犯す要求を飲んでくれた　好感度高
+			CASE 13
+				PRINTFORML ;４０５
+			;処女を犯す要求を飲んでくれた　好感度中
+			CASE 17
+				PRINTFORML ;４０６
+			;処女を犯す要求を飲んでくれた　好感度低
+			CASE 21
+				PRINTFORML ;４０７
+			;非処女を犯す要求を飲んでくれた　好感度高
+			CASE 15
+				PRINTFORML ;４０８
+			;非処女を犯す要求を飲んでくれた　好感度中
+			CASE 19
+				PRINTFORML ;４０９
+			;非処女を犯す要求を飲んでくれた　好感度低
+			CASE 23
+				PRINTFORML ;４１０
+		;
+			;処女で犯され処女喪失直後　好感度高
+			CASE 12
+				PRINTFORML ;４１１
+			;処女で犯され処女喪失直後　好感度中
+			CASE 16
+				PRINTFORML ;４１２
+			;処女で犯され処女喪失直後　好感度低
+			CASE 20
+				PRINTFORML ;４１３
+			;非処女で犯され挿入直後　好感度高
+			CASE 14
+				PRINTFORML ;４１４
+			;非処女で犯され挿入直後　好感度中
+			CASE 18
+				PRINTFORML ;４１５
+			;非処女で犯され挿入直後　好感度低
+			CASE 22
+				PRINTFORML ;４１６
+			;処女を犯し相手処女喪失直後　好感度高
+			CASE 25
+				PRINTFORML ;４１７
+			;処女を犯し相手処女喪失直後　好感度中
+			CASE 29
+				PRINTFORML ;４１８
+			;処女を犯し相手処女喪失直後　好感度低
+			CASE 33
+				PRINTFORML ;４１９
+			;非処女を犯し挿入直後　好感度高
+			CASE 27
+				PRINTFORML ;４２０
+			;非処女を犯し挿入直後　好感度中
+			CASE 31
+				PRINTFORML ;４２１
+			;非処女を犯し挿入直後　好感度低
+			CASE 35
+				PRINTFORML ;４２２
+		;
+			;お断り　処女　好感度高
+			CASE 24
+				PRINTFORML ;４２３
+			;お断り　処女　好感度中
+			CASE 28
+				PRINTFORML ;４２４
+			;お断り　処女　好感度低
+			CASE 32
+				PRINTFORML ;４２５
+			;お断り　非処女　好感度高
+			CASE 26
+				PRINTFORML ;４２６
+			;お断り　非処女　好感度中
+			CASE 32
+				PRINTFORML ;４２７
+			;お断り　非処女　好感度低
+			CASE 36
+				PRINTFORML ;４２８
+			;処女に断られる　好感度高
+			CASE 37
+				PRINTFORML ;４２９
+			;処女に断られる　好感度中
+			CASE 41
+				PRINTFORML ;４３０
+			;処女に断られる　好感度低
+			CASE 45
+				PRINTFORML ;４３１
+			;非処女に断られる　好感度高
+			CASE 39
+				PRINTFORML ;４３２
+			;非処女に断られる　好感度中
+			CASE 43
+				PRINTFORML ;４３３
+			;非処女に断られる　好感度低
+			CASE 47
+				PRINTFORML ;４３４
+
+		ENDSELECT
+	;アイテム-お代は体で-　EPダメ～射精
+	CASE 15
+		SELECTCASE ARG:1
+		;EPダメ後　絶頂後ペニス締め付け直前　中田氏前
+			;処女喪失後EPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度高
+			CASE 0
+				PRINTFORML ;４３５
+			;処女喪失後EPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度中
+			CASE 8
+				PRINTFORML ;４３６
+			;処女喪失後EPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度低
+			CASE 16
+				PRINTFORML ;４３７
+			;非処女で犯されEPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度高
+			CASE 2
+				PRINTFORML ;４３８
+			;非処女で犯されEPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度中
+			CASE 10
+				PRINTFORML ;４３９
+			;非処女で犯されEPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度低
+			CASE 18
+				PRINTFORML ;４４０
+			;処女を犯したEPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度高
+			CASE 1
+				PRINTFORML ;４４１
+			;処女を犯したEPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度中
+			CASE 9
+				PRINTFORML ;４４２
+			;処女を犯したEPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度低
+			CASE 17
+				PRINTFORML ;４４３
+			;非処女を犯したEPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度高
+			CASE 3
+				PRINTFORML ;４４４
+			;非処女を犯したEPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度中
+			CASE 11
+				PRINTFORML ;４４５
+			;非処女を犯したEPダメ後　絶頂後ペニス締め付け直前　中田氏前　好感度低
+			CASE 19
+				PRINTFORML ;４４６
+		;EPダメ後　絶頂後ペニス締め付け直前　外田氏前
+			;処女喪失後EPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度高
+			CASE 4
+				PRINTFORML ;４４７
+			;処女喪失後EPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度中
+			CASE 12
+				PRINTFORML ;４４８
+			;処女喪失後EPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度低
+			CASE 20
+				PRINTFORML ;４４９
+			;非処女で犯されEPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度高
+			CASE 6
+				PRINTFORML ;４５０
+			;非処女で犯されEPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度中
+			CASE 14
+				PRINTFORML ;４５１
+			;非処女で犯されEPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度低
+			CASE 22
+				PRINTFORML ;４５２
+			;処女を犯したEPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度高
+			CASE 5
+				PRINTFORML ;４５３
+			;処女を犯したEPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度中
+			CASE 13
+				PRINTFORML ;４５４
+			;処女を犯したEPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度低
+			CASE 21
+				PRINTFORML ;４５５
+			;非処女を犯したEPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度高
+			CASE 7
+				PRINTFORML ;４５６
+			;非処女を犯したEPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度中
+			CASE 15
+				PRINTFORML ;４５７
+			;非処女を犯したEPダメ後　絶頂後ペニス締め付け直前　外田氏前　好感度低
+			CASE 23
+				PRINTFORML ;４５８
+		;絶頂後ペニス締め付け中田氏直前
+			;処女喪失後　絶頂後ペニス締め付け　中田氏直前　好感度高
+			CASE 24
+				PRINTFORML ;４５９
+			;処女喪失後　絶頂後ペニス締め付け　中田氏直前　好感度中
+			CASE 32
+				PRINTFORML ;４６０
+			;処女喪失後　絶頂後ペニス締め付け　中田氏直前　好感度低
+			CASE 40
+				PRINTFORML ;４６１
+			;非処女で犯され　絶頂後ペニス締め付け　中田氏直前　好感度高
+			CASE 26
+				PRINTFORML ;４６２
+			;非処女で犯され　絶頂後ペニス締め付け　中田氏直前　好感度中
+			CASE 34
+				PRINTFORML ;４６３
+			;非処女で犯され　絶頂後ペニス締め付け　中田氏直前　好感度低
+			CASE 42
+				PRINTFORML ;４６４
+			;処女を犯した　絶頂後ペニス締め付け　中田氏直前　好感度高
+			CASE 25
+				PRINTFORML ;４６５
+			;処女を犯した　絶頂後ペニス締め付け　中田氏直前　好感度中
+			CASE 33
+				PRINTFORML ;４６６
+			;処女を犯した　絶頂後ペニス締め付け　中田氏直前　好感度低
+			CASE 41
+				PRINTFORML ;４６７
+			;非処女を犯した　絶頂後ペニス締め付け　中田氏直前　好感度高
+			CASE 27
+				PRINTFORML ;４６８
+			;非処女を犯した　絶頂後ペニス締め付け　中田氏直前　好感度中
+			CASE 35
+				PRINTFORML ;４６９
+			;非処女を犯した　絶頂後ペニス締め付け　中田氏直前　好感度低
+			CASE 43
+				PRINTFORML ;４７０
+		;絶頂後ペニス締め付け　外田氏直前
+			;処女喪失後　絶頂後ペニス締め付け　外田氏直前　好感度高
+			CASE 28
+				PRINTFORML ;４７１
+			;処女喪失後　絶頂後ペニス締め付け　外田氏直前　好感度中
+			CASE 36
+				PRINTFORML ;４７２
+			;処女喪失後　絶頂後ペニス締め付け　外田氏直前　好感度低
+			CASE 44
+				PRINTFORML ;４７３
+			;非処女で犯され　絶頂後ペニス締め付け　外田氏直前　好感度高
+			CASE 30
+				PRINTFORML ;４７４
+			;非処女で犯され　絶頂後ペニス締め付け　外田氏直前　好感度中
+			CASE 38
+				PRINTFORML ;４７５
+			;非処女で犯され　絶頂後ペニス締め付け　外田氏直前　好感度低
+			CASE 46
+				PRINTFORML ;４７６
+			;処女を犯した　絶頂後ペニス締め付け　外田氏直前　好感度高
+			CASE 29
+				PRINTFORML ;４７７
+			;処女を犯した　絶頂後ペニス締め付け　外田氏直前　好感度中
+			CASE 37
+				PRINTFORML ;４７８
+			;処女を犯した　絶頂後ペニス締め付け　外田氏直前　好感度低
+			CASE 45
+				PRINTFORML ;４７９
+			;非処女を犯した　絶頂後ペニス締め付け　外田氏直前　好感度高
+			CASE 31
+				PRINTFORML ;４８０
+			;非処女を犯した　絶頂後ペニス締め付け　外田氏直前　好感度中
+			CASE 39
+				PRINTFORML ;４８１
+			;非処女を犯した　絶頂後ペニス締め付け　外田氏直前　好感度低
+			CASE 47
+				PRINTFORML ;４８２
+		;絶頂なし中田氏直前
+			;処女喪失後　絶頂なし中田氏直前　好感度高
+			CASE 48
+				PRINTFORML ;４８３
+			;処女喪失後　絶頂なし中田氏直前　好感度中
+			CASE 56
+				PRINTFORML ;４８４
+			;処女喪失後　絶頂なし中田氏直前　好感度低
+			CASE 64
+				PRINTFORML ;４８５
+			;非処女で犯され　絶頂なし中田氏直前　好感度高
+			CASE 50
+				PRINTFORML ;４８６
+			;非処女で犯され　絶頂なし中田氏直前　好感度中
+			CASE 58
+				PRINTFORML ;４８７
+			;非処女で犯され　絶頂なし中田氏直前　好感度低
+			CASE 66
+				PRINTFORML ;４８８
+			;処女を犯した　絶頂なし中田氏直前　好感度高
+			CASE 49
+				PRINTFORML ;４８９
+			;処女を犯した　絶頂なし中田氏直前　好感度中
+			CASE 57
+				PRINTFORML ;４９０
+			;処女を犯した　絶頂なし中田氏直前　好感度低
+			CASE 65
+				PRINTFORML ;４９１
+			;非処女を犯した　絶頂なし中田氏直前　好感度高
+			CASE 51
+				PRINTFORML ;４９２
+			;非処女を犯した　絶頂なし中田氏直前　好感度中
+			CASE 59
+				PRINTFORML ;４９３
+			;非処女を犯した　絶頂なし中田氏直前　好感度低
+			CASE 67
+				PRINTFORML ;４９４
+		;絶頂なし外田氏直前
+			;処女喪失後　絶頂なし外田氏直前　好感度高
+			CASE 52
+				PRINTFORML ;４９５
+			;処女喪失後　絶頂なし外田氏直前　好感度中
+			CASE 60
+				PRINTFORML ;４９６
+			;処女喪失後　絶頂なし外田氏直前　好感度低
+			CASE 68
+				PRINTFORML ;４９７
+			;非処女で犯され　絶頂なし外田氏直前　好感度高
+			CASE 54
+				PRINTFORML ;４９８
+			;非処女で犯され　絶頂なし外田氏直前　好感度中
+			CASE 62
+				PRINTFORML ;４９９
+			;非処女で犯され　絶頂なし外田氏直前　好感度低
+			CASE 70
+				PRINTFORML ;５００
+			;処女を犯した　絶頂なし外田氏直前　好感度高
+			CASE 53
+				PRINTFORML ;５０１
+			;処女を犯した　絶頂なし外田氏直前　好感度中
+			CASE 61
+				PRINTFORML ;５０２
+			;処女を犯した　絶頂なし外田氏直前　好感度低
+			CASE 69
+				PRINTFORML ;５０３
+			;非処女を犯した　絶頂なし外田氏直前　好感度高
+			CASE 55
+				PRINTFORML ;５０４
+			;非処女を犯した　絶頂なし外田氏直前　好感度中
+			CASE 63
+				PRINTFORML ;５０５
+			;非処女を犯した　絶頂なし外田氏直前　好感度低
+			CASE 71
+				PRINTFORML ;５０６
+		;絶頂あり中田氏後
+			;処女喪失後　絶頂あり中田氏後　好感度高
+			CASE 72
+				PRINTFORML ;５０７
+			;処女喪失後　絶頂あり中田氏後　好感度中
+			CASE 80
+				PRINTFORML ;５０８
+			;処女喪失後　絶頂あり中田氏後　好感度低
+			CASE 88
+				PRINTFORML ;５０９
+			;非処女で犯され　絶頂あり中田氏後　好感度高
+			CASE 74
+				PRINTFORML ;５１０
+			;非処女で犯され　絶頂あり中田氏後　好感度中
+			CASE 82
+				PRINTFORML ;５１１
+			;非処女で犯され　絶頂あり中田氏後　好感度低
+			CASE 90
+				PRINTFORML ;５１２
+			;処女を犯した　絶頂あり中田氏後　好感度高
+			CASE 73
+				PRINTFORML ;５１３
+			;処女を犯した　絶頂あり中田氏後　好感度中
+			CASE 81
+				PRINTFORML ;５１４
+			;処女を犯した　絶頂あり中田氏後　好感度低
+			CASE 89
+				PRINTFORML ;５１５
+			;非処女を犯した　絶頂あり中田氏後　好感度高
+			CASE 75
+				PRINTFORML ;５１６
+			;非処女を犯した　絶頂あり中田氏後　好感度中
+			CASE 83
+				PRINTFORML ;５１７
+			;非処女を犯した　絶頂あり中田氏後　好感度低
+			CASE 91
+				PRINTFORML ;５１８
+		;絶頂あり外田氏後
+			;処女喪失後　絶頂あり外田氏後　好感度高
+			CASE 76
+				PRINTFORML ;５１９
+			;処女喪失後　絶頂あり外田氏後　好感度中
+			CASE 84
+				PRINTFORML ;５２０
+			;処女喪失後　絶頂あり外田氏後　好感度低
+			CASE 92
+				PRINTFORML ;５２１
+			;非処女で犯され　絶頂あり外田氏後　好感度高
+			CASE 78
+				PRINTFORML ;５２２
+			;非処女で犯され　絶頂あり外田氏後　好感度中
+			CASE 86
+				PRINTFORML ;５２３
+			;非処女で犯され　絶頂あり外田氏後　好感度低
+			CASE 94
+				PRINTFORML ;５２４
+			;処女を犯した　絶頂あり外田氏後　好感度高
+			CASE 77
+				PRINTFORML ;５２５
+			;処女を犯した　絶頂あり外田氏後　好感度中
+			CASE 85
+				PRINTFORML ;５２６
+			;処女を犯した　絶頂あり外田氏後　好感度低
+			CASE 93
+				PRINTFORML ;５２７
+			;非処女を犯した　絶頂あり外田氏後　好感度高
+			CASE 79
+				PRINTFORML ;５２８
+			;非処女を犯した　絶頂あり外田氏後　好感度中
+			CASE 87
+				PRINTFORML ;５２９
+			;非処女を犯した　絶頂あり外田氏後　好感度低
+			CASE 95
+				PRINTFORML ;５３０
+		;絶頂なし中田氏後
+			;処女喪失後　絶頂なし中田氏後　好感度高
+			CASE 96
+				PRINTFORML ;５３１
+			;処女喪失後　絶頂なし中田氏後　好感度中
+			CASE 104
+				PRINTFORML ;５３２
+			;処女喪失後　絶頂なし中田氏後　好感度低
+			CASE 112
+				PRINTFORML ;５３３
+			;非処女で犯され　絶頂なし中田氏後　好感度高
+			CASE 98
+				PRINTFORML ;５３４
+			;非処女で犯され　絶頂なし中田氏後　好感度中
+			CASE 106
+				PRINTFORML ;５３５
+			;非処女で犯され　絶頂なし中田氏後　好感度低
+			CASE 114
+				PRINTFORML ;５３６
+			;処女を犯した　絶頂なし中田氏後　好感度高
+			CASE 97
+				PRINTFORML ;５３７
+			;処女を犯した　絶頂なし中田氏後　好感度中
+			CASE 105
+				PRINTFORML ;５３８
+			;処女を犯した　絶頂なし中田氏後　好感度低
+			CASE 113
+				PRINTFORML ;５３９
+			;非処女を犯した　絶頂なし中田氏後　好感度高
+			CASE 99
+				PRINTFORML ;５４０
+			;非処女を犯した　絶頂なし中田氏後　好感度中
+			CASE 107
+				PRINTFORML ;５４１
+			;非処女を犯した　絶頂なし中田氏後　好感度低
+			CASE 115
+				PRINTFORML ;５４２
+		;絶頂なし外田氏後
+			;処女喪失後　絶頂なし外田氏後　好感度高
+			CASE 100
+				PRINTFORML ;５４３
+			;処女喪失後　絶頂なし外田氏後　好感度中
+			CASE 108
+				PRINTFORML ;５４４
+			;処女喪失後　絶頂なし外田氏後　好感度低
+			CASE 116
+				PRINTFORML ;５４５
+			;非処女で犯され　絶頂なし外田氏後　好感度高
+			CASE 102
+				PRINTFORML ;５４６
+			;非処女で犯され　絶頂なし外田氏後　好感度中
+			CASE 110
+				PRINTFORML ;５４７
+			;非処女で犯され　絶頂なし外田氏後　好感度低
+			CASE 118
+				PRINTFORML ;５４８
+			;処女を犯した　絶頂なし外田氏後　好感度高
+			CASE 101
+				PRINTFORML ;５４９
+			;処女を犯した　絶頂なし外田氏後　好感度中
+			CASE 109
+				PRINTFORML ;５５０
+			;処女を犯した　絶頂なし外田氏後　好感度低
+			CASE 117
+				PRINTFORML ;５５１
+			;非処女を犯した　絶頂なし外田氏後　好感度高
+			CASE 103
+				PRINTFORML ;５５２
+			;非処女を犯した　絶頂なし外田氏後　好感度中
+			CASE 111
+				PRINTFORML ;５５３
+			;非処女を犯した　絶頂なし外田氏後　好感度低
+			CASE 119
+				PRINTFORML ;５５４
+
+		ENDSELECT
+
+ENDSELECT
+
+RETURN

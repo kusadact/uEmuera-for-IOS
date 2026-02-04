@@ -1,0 +1,99 @@
+﻿;ランダムに発情したりするパッチ追加分
+;歩いてるとランダムに発情したりします
+;ARG:0	対象キャラの番号
+;確率	発情や自慰にいたる確率
+@RANDOM_ESTRUS(ARG:0,ARGS:0)
+#DIM 確率
+VARSET 確率
+;発情するパターン
+;基礎確率
+;現在ターン - 最後に発情したターン - 5
+確率 = DAY * 4 - 3 + TIME - CFLAG:(ARG:0):600 - 5
+;EP分岐
+IF BASE:(ARG:0):2 <= MAXBASE:(ARG:0):2 / 4
+	確率 += 2
+ELSEIF BASE:(ARG:0):2 <= MAXBASE:(ARG:0):2 / 2
+	確率 += 1
+ENDIF
+;触手中毒分岐
+SELECTCASE ABL:(ARG:0):触手中毒
+	CASE 3
+		確率 += 2
+	CASE 2
+		確率 += 1
+ENDSELECT
+;射精中毒分岐
+SELECTCASE ABL:(ARG:0):射精中毒
+	CASE 3
+		確率 += 2
+	CASE 2
+		確率 += 1
+ENDSELECT
+;百合中毒分岐
+SELECTCASE ABL:(ARG:0):百合中毒
+	CASE 3
+		確率 += 2
+	CASE 2
+		確率 += 1
+ENDSELECT
+;精液中毒分岐
+SELECTCASE ABL:(ARG:0):精液中毒
+	CASE 3
+		確率 += 2
+	CASE 2
+		確率 += 1
+ENDSELECT
+;現在の発情具合により分岐 5（青）以上にはならない
+SELECTCASE CFLAG:(ARG:0):28
+	CASE 5
+		確率 = -1
+	CASE 4
+		MIN 確率,3
+	CASE 3
+		MIN 確率,5
+	CASE 2
+		MIN 確率,5
+	CASE 1
+		MIN 確率,8
+	CASE 0
+		MIN 確率,10
+ENDSELECT
+
+IF RAND:100 < 確率
+	IF !CFLAG:(ARG:0):29
+		CFLAG:(ARG:0):28 ++
+		IF ABL:(ARG:0):触手中毒 >= 2 && !RAND:5
+			PRINTFORML 発生了什麼
+			PRINTFORML 変得依存触手的%ARGS:0%的肉体、期待着被触手侵犯而興奮起来了……
+			PRINTFORML %ARGS:0%発情了！
+		ELSEIF ABL:(ARG:0):射精中毒 >= 2 && !RAND:5 && GET_PENIS(ARG:0) > 0
+			PRINTFORML 発生了什麼
+			PRINTFORML 完全知道了射精快感的%ARGS:0%的陰茎、和擁有者的意志無関自己勃起了、期待着射精的快感……
+			PRINTFORML %ARGS:0%発情了！
+		ELSEIF ABL:(ARG:0):百合中毒 >= 2 && !RAND:5
+			PRINTFORML 発生了什麼
+			PRINTFORML %ARGS:0%的腦海中、柔軟的女体在其中不断浮現
+			PRINTFORML 完全知道和同性之間愛愛的快感的%ARGS:0%的肉体、正期待着那一刻……
+			PRINTFORML %ARGS:0%発情了！
+		ELSEIF ABL:(ARG:0):精液中毒 >= 2 && !RAND:5
+			PRINTFORML 発生了什麼
+			PRINTFORML 完全喜歡上精液的%ARGS:0%的肉体、期待着被射精的快感……
+			PRINTFORML %ARGS:0%発情了！
+		ELSE
+			PRINTFORML 這個迷宮的淫靡的氛囲強行侵蝕了%ARGS:0%的精神……
+			PRINTFORML %ARGS:0%発情了！
+		ENDIF
+		CALL RANDOM_ESTRUS_INITIALIZE(ARG:0)
+	ENDIF
+ENDIF
+
+;ランダム発情した最終時刻を保持
+@RANDOM_ESTRUS_INITIALIZE(CHARA_ID)
+#DIM CHARA_ID
+	
+	; キャラクタID異常は除外
+	SIF CHARA_ID < 0 || CHARA_ID >= CHARANUM
+		RETURN
+		
+	CFLAG:CHARA_ID:600 = DAY * 4 - 3 + TIME
+RETURN

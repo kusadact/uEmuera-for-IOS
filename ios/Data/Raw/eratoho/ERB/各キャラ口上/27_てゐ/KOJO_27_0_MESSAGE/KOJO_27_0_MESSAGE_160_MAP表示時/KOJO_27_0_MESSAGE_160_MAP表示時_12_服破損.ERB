@@ -1,0 +1,102 @@
+﻿
+; ------------------------------------------------------------------------------
+; ■ 160 MAP表示時 - 12 服破損
+; ------------------------------------------------------------------------------
+
+@KOJO_27_0_SYSTEM_MESSAGE_160_MAPTALK_12(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+#DIM PERCENT
+
+	; 催眠中
+	IF KOJO_27_0_IS_HYPNO()
+		; 催眠種類で分岐
+		SELECTCASE FLAG:526
+		; 拘束・肉体操作系
+		CASE 0
+			
+		; 発情・感情操作系
+		CASE 1
+			
+		; 無意識・認識操作系
+		CASE 2
+			RETURN 0
+		ENDSELECT
+	ENDIF
+	
+	; 衣服状態によって分岐
+	; 大破
+	IF BASE:CP <= 0
+		; 着替えセットのストックあり
+		IF ITEM:(73) >= 1
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「替えの服はあるけど、もーちょっと裸でもいいかなーなんて♥」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「替えの服はあるんだから、着た方がいいわよね……」\n"
+			ENDSELECT
+			
+		; 着替えセットのストックなし
+		ELSE
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「着替えもないし、裸でいるのはしょうがないわよね♥」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「素っ裸で歩き回るとか、襲ってくれって言ってるみたいなもんよね……」\n"
+			ENDSELECT
+		ENDIF
+		
+	; 濡透
+	ELSEIF BASE:CP - (BASE:5 * 4) <= 0
+		SELECTCASE KOJO_MODE
+		CASE "淫乱"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんなにスケスケの服じゃ、大事なトコ全部見えちゃうわ～♥」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「スケスケの服って、相手の興奮煽ったりしないかしら♥」\n"
+		CASE "発情"
+			CALL KOJO_27_0_ADD_MESSAGE, @"（濡れた服が張り付いて、身体のライン丸見えになってる……）\n"
+		CASEELSE
+			CALL KOJO_27_0_ADD_MESSAGE, @"「うええ、服がペタペタして気持ち悪い～」\n"
+			CALL KOJO_27_0_ADD_MESSAGE, @"「こんな服着てたら健康に悪いよ～」\n"
+		ENDSELECT
+		
+	ELSE
+		PERCENT = BASE:CP * 100 / MAXBASE:CP
+		
+		; 新品
+		IF PERCENT >= 100
+		; 通常
+		ELSEIF PERCENT > 66
+		; 損傷
+		ELSEIF PERCENT > 33
+			SELECTCASE KOJO_MODE
+			CASE "淫乱"
+				CALL KOJO_27_0_ADD_MESSAGE, @"「ここの生き物って、ちょっと破れた服でも隙間から入り込んで来るわよねえ♥」\n"
+			CASEELSE
+				CALL KOJO_27_0_ADD_MESSAGE, @"「破れてる服って不安だなあ、どっから入ってくるか知れたもんじゃないし」\n"
+			ENDSELECT
+		; 中破
+		ELSE
+			; 着替えセットのストックなし
+			IF ITEM:(73) == 0
+				SELECTCASE KOJO_MODE
+				CASE "淫乱"
+					CALL KOJO_27_0_ADD_MESSAGE, @"「『襲ってください』って格好だけど、着替えがないんだから仕方ないわよねえ♥」\n"
+				CASEELSE
+					CALL KOJO_27_0_ADD_MESSAGE, @"「替えの服さえあれば、とっとと着替えるんだけど……」\n"
+				ENDSELECT
+				
+			; 着替えセットのストック多い
+			ELSEIF ITEM:(73) == (GET_ITEM_MAX(73) / 2)
+				CALL KOJO_27_0_ADD_MESSAGE, @"「替えの服はいっぱいあるし、ボロボロの服なんか着なくてもいいと思うの」\n"
+			
+			; 着替えセットのストック少ない
+			ELSE
+				SELECTCASE KOJO_MODE
+				CASE "淫乱"
+					CALL KOJO_27_0_ADD_MESSAGE, @"「新品の服なんて、えっちな事されてすぐボロボロになっちゃうんだから着替えはまだ良いかな♪」\n"
+				CASEELSE
+					CALL KOJO_27_0_ADD_MESSAGE, @"「この服不安だなあ、替えの服がいっぱいあるならすぐ着替えるんだけど」\n"
+				ENDSELECT
+				
+			ENDIF
+		ENDIF
+	ENDIF
+RETURN 1

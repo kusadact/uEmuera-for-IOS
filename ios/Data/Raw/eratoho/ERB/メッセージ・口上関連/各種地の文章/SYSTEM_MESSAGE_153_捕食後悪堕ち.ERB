@@ -1,0 +1,224 @@
+﻿;全てを吸い尽くされた後、特定エネミーに産まれ合わる(悪堕ちする)場合の描写
+@SYSTEM_MESSAGE_153(ARG:0, ARG:1, ARGS:0, ARGS:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6)
+;ARG:0  角色番号
+;ARG:1  転生するエネミー番号
+;ARGS:0 角色文字列
+;ARGS:1 トドメを刺したエネミーの文字列(転生エネミーなら角色名をそのまま使用)
+
+;無条件に地の文を呼んでいる一部口上への対応
+IF FLAG:2000==0
+	RETURN
+ENDIF
+
+PRINTL ………
+PRINTL ……
+PRINTL …
+
+;トドメを刺したエネミーで文章を分岐
+;　簡易悪堕ちの場合トドメ＝転生先、通常悪堕ちの場合そうとは限らない(リタイア処理内で判定)
+SELECTCASE ARG:1
+	;バタフライ(パピヨン〇〇)
+	CASE 21
+		PRINTFORML 股间塞满了沾满精液的卵、以一丝不挂的姿态出现在%ARGS:1%面前的%ARGS:0%
+		PRINTFORML 那膨胀到快要炸裂开的%ARGS:0%的乳房、每当被啾啾地吮吸着时、就会从乳腺中滴下甜美的花蜜
+IF FLAG:AUTOMODE
+    PRINTFORML 在堕入迷宫的%ARGS:0%的背上、不知何时长出了酷似%ARGS:1%的美丽的蝶翅…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  在堕入迷宫的%ARGS:0%的背上、不知何时长出了酷似%ARGS:1%的美丽的蝶翅…
+ENDIF
+
+	;〇〇ポイズン
+	CASE 24
+		PRINTFORML 在%ARGS:0%体内植入的%ENEMY_NAME(ARG:1)%的种子、现在正在%ARGS:0%全身里伴着媚毒生根发芽
+		PRINTFORML 瘫倒在%ARGS:1%的胳膊里、%ARGS:0%浑身颤抖着、好像在发烧
+		PRINTFORML 可怜的无助少女、再也摆脱不掉这淫乱的热潮了
+IF FLAG:AUTOMODE
+    PRINTFORML 因为现在、%ARGS:0%也是%ENEMY_NAME(ARG:1)%中的一员了…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  因为现在、%ARGS:0%也是%ENEMY_NAME(ARG:1)%中的一员了…
+ENDIF
+
+	;〇〇ドール
+	CASE 26
+		PRINTFORML 完全精疲力尽的%ARGS:0%的身体、被不知道从哪里冒出来的%ENEMY_NAME(ARG:1)%团团包围了
+		PRINTFORML 就像对待傀儡一样、%ENEMY_NAME(ARG:1)%开始无情地重塑着%ARGS:0%的身体
+		PRINTFORML 就算感受到了被不可逆转地融入身体的触手、%ARGS:0%也无力抵抗了
+		PRINTFORML 凄惨地潮吹着反复绝顶、已经是%ARGS:0%唯一能做出的「反应」了…
+		PRINTFORML 最后、似乎完成了他们的「工作」的%ENEMY_NAME(ARG:1)%四散而去
+		PRINTFORML …留在中心的是、看着像是%ARGS:0%而又不是%ARGS:0%、是一个美丽的傀儡
+IF FLAG:AUTOMODE
+    PRINTFORML 刚才还确实是%ARGS:0%的少女、已经失去了所有的意志、变成了触手的傀儡…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  刚才还确实是%ARGS:0%的少女、已经失去了所有的意志、变成了触手的傀儡…
+ENDIF
+
+	;アルケニー〇〇
+	CASE 34
+		PRINTFORML %ARGS:1%用蜘蛛丝缠绕住耗尽了力量的%ARGS:0%、把她像茧一样包了起来
+		PRINTFORML 以恍惚的表情将生殖器刺入茧中、%ARGS:1%开始注入粘稠的液体
+		PRINTFORML 不久从蜘蛛丝内侧开始响起的%ARGS:0%的尖叫、逐渐变成了甜美的娇声…
+IF FLAG:AUTOMODE
+    PRINTFORML …伴随着应声裂开的茧、从里面爬出的是脸上浮现出淫乱的表情的%ENEMY_NAME(ARG:1)%！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  …伴随着应声裂开的茧、从里面爬出的是脸上浮现出淫乱的表情的%ENEMY_NAME(ARG:1)%だった！
+ENDIF
+
+	;スノウ〇〇
+	CASE 38
+		PRINTFORML 好像睡着了一样闭上眼睛的%ARGS:0%的身体、仍然被%ARGS:1%依依不舍地拥抱着
+		PRINTFORML 每当%ARGS:1%轻轻地吻上去、%ARGS:0%的身体就会失去热量
+		PRINTFORML 每当%ARGS:1%轻轻抚摸她的皮肤、%ARGS:0%的身体就会变得白净透明
+IF FLAG:AUTOMODE
+    PRINTFORML 冰冷而淫乱的爱抚一直持续了下去…不知不觉中、%ARGS:0%已重生为了美丽的%ENEMY_NAME(38)%！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  冰冷而淫乱的爱抚一直持续了下去…不知不觉中、%ARGS:0%已重生为了美丽的%ENEMY_NAME(38)%！
+ENDIF
+
+	;サキュバス〇〇
+	CASE 41
+		PRINTFORML 从%ARGS:1%的责备中被释放的%ARGS:0%、看起来显然很奇怪
+		PRINTFORML 秘所里不停地流出淫乱的爱蜜、因快感而湿润的眼睛毫不遮掩地展示着情欲
+IF FLAG:AUTOMODE
+    PRINTFORML 现在%ARGS:0%似乎也成为了堕落的女性受害者之一、化为了%ENEMY_NAME(ARG:1)%在迷宫中徘徊着…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  现在%ARGS:0%似乎也成为了堕落的女性受害者之一、化为了%ENEMY_NAME(ARG:1)%在迷宫中徘徊着…
+ENDIF
+
+	;スキュラ〇〇
+	CASE 48
+		PRINTFORML 玩弄着没有反应的%ARGS:0%的%ARGS:1%、好像突然想到什么似的停止了动作
+		PRINTFORML %ARGS:1%把%ARGS:0%扔到地上、开始把身体拖进它蠕动着触手下半身
+		PRINTFORML 精疲力竭的%ARGS:0%、无法抵抗就被%ARGS:1%的下半身吞噬了
+		PRINTFORML 吸盘触手的内侧、绝对无法挽回的“变化”正要开始…
+		PRINTFORML %ARGS:1%兴奋地抖动下半身时、%ARGS:0%的似娇声又似悲鸣的叫声在迷宫中回响着
+		PRINTFORML 混合了%ARGS:0%的爱液和%ARGS:1%的性液的肮脏液体、从触手的缝隙不断地流出
+		PRINTFORML 即使是处女也会为之疯狂的强烈快感折磨、在吸盘触手内重复了上千次…
+IF FLAG:AUTOMODE
+    PRINTFORML 终于被解放了的%ARGS:0%的下半身、变成了%ENEMY_NAME(ARG:1)%的样子！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  终于被解放了的%ARGS:0%的下半身、变成了%ENEMY_NAME(ARG:1)%的样子！
+ENDIF
+
+	;フェアリー〇〇
+	CASE 42
+		PRINTFORML 看着已经不再挣扎的%ARGS:0%的秘所、%ARGS:1%施展了某种魔法
+		PRINTFORML %ARGS:0%的下腹部发出淫乱的光芒、玫瑰花也从膣穴里钻出绽放
+		PRINTFORML 在%ARGS:1%快乐的歌声中、%ARGS:0%被一朵大玫瑰花完全吞没了
+IF FLAG:AUTOMODE
+    PRINTFORML …不久后从蔷薇中出现的小妖精、声音和容貌都和%ARGS:0%一模一样!
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  …不久后从蔷薇中出现的小妖精、声音和容貌都和%ARGS:0%一模一样!
+ENDIF
+
+	;ネコマタ〇〇
+	CASE 69
+		PRINTFORML 被%ARGS:1%的触手尾巴插入了女性器、%ARGS:0%继续漂亮地高潮着
+		PRINTFORML 在%ARGS:0%身边用力摇着耳朵、%ARGS:1%似乎对她表现出了「特別」的兴趣
+		PRINTFORML 爱怜地抱住气喘吁吁的%ARGS:0%、%ARGS:1%开始灌注她的「特別」的种子
+		PRINTFORML %ARGS:0%的子宫感受到滚烫的精子的瞬间、一种以往无法比拟的强烈快感席卷全身
+		PRINTFORML %ARGS:0%拼命守护的最后的理性、在高潮中也变得浑浊、淡薄起来
+		PRINTFORML 在改变身体的快乐的洪流中挣扎疯狂的%ARGS:0%、只是一味的像野兽一样吠叫着…
+		PRINTFORML …
+		PRINTFORML 持续在阴道内射精直到心满意足的%ARGS:1%对用腻了的少女失去兴趣、不知去了哪里
+IF FLAG:AUTOMODE
+    PRINTFORML 被遗弃后、一边痉挛一边倒在地上的%ARGS:0%…尻穴里长出了条触手尾巴、变成了一只可怜的母猫！
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  被遗弃后、一边痉挛一边倒在地上的%ARGS:0%…尻穴里长出了条触手尾巴、变成了一只可怜的母猫！
+ENDIF
+
+	;パツィルーイ(〇〇リップ)
+	CASE 73
+		;長いけどこいつにトドメ刺されるNPC滅多にいなそうだしいいよね
+		PRINTFORML 当%ARGS:0%恢复意识时、之前玩弄自己的%ARGS:1%不见了踪影
+		PRINTFORML 恢复自由了吗？
+		PRINTFORML 然而、如果另一个敌人攻击现在虚弱的身体、将无法抵抗。
+		PRINTFORML 需要找到一个安全的地方ＫＩＳＳ、需要ＫＩＳＳ、需要隐藏自己。
+		PRINTFORML 如果幸运的话、会遇到另一个女孩并迅速ＫＩＳＳ、
+		PRINTFORML 想ＫＩＳＳ、想ＫＩＳＳ、想ＫＩＳＳ、想ＫＩＳＳ、想ＫＩＳＳ。
+		PRINTFORML ＫＩＳＳ、ＫＩＳＳ、找到另一个女孩、一起、在迷宫中、ＫＩＳＳ、幸福。　
+		PRINTFORML 逃离迷宫、ＫＩＳＳ、ＫＩＳＳ、必须ＫＩＳＳ、要ＫＩＳＳ、更多的ＫＩＳＳ、更多的感觉、更多的幸福、更多的ＫＩＳＳ、更多的ＫＩＳＳ。
+IF FLAG:AUTOMODE
+    PRINTFORML ……完全没有意识到身体发生的变化、%ENEMY_NAME(ARG:1)%化的%ARGS:0%开始在迷宫中无尽地徘徊
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  ……完全没有意识到身体发生的变化、%ENEMY_NAME(ARG:1)%化的%ARGS:0%开始在迷宫中无尽地徘徊
+ENDIF
+
+	;マミー〇〇
+	CASE 85
+		PRINTFORML 动弹不得的%ARGS:0%的身体、瞬间被绷带状的触手覆盖
+		PRINTFORML 蠢动着的绷带缝隙中不时溅出的绝顶潮喷汁液、是现在%ARGS:0%还活着的唯一反应
+IF FLAG:AUTOMODE
+    PRINTFORML 完全力竭的%ARGS:0%、好像变成了被触手绷带随心所欲操纵的淫荡木乃伊…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  完全力竭的%ARGS:0%、好像变成了被触手绷带随心所欲操纵的淫荡木乃伊…
+ENDIF
+
+	;セイレーン〇〇
+	CASE 93
+		PRINTFORML 曾经是少女的%ARGS:0%、变成了%ARGS:1%最喜欢的乐器
+		PRINTFORML %ARGS:1%应和着歌曲和爱抚奏出绝顶、%ARGS:0%以安详的表情沉睡
+		PRINTFORML 慢慢地、%ARGS:0%的身体逐渐变得和%ENEMY_NAME(ARG:1)%一模一样
+		PRINTFORML 祝福新伙伴的诞生、迷宫中的%ENEMY_NAME(ARG:1)%一起唱起了歌…
+IF FLAG:AUTOMODE
+    PRINTFORML 
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  
+ENDIF
+
+	;〇〇ルージュ
+	CASE 151
+		PRINTFORML 无论是在现实还是在梦中、%ARGS:1%都一直侵犯着%ARGS:0%
+		PRINTFORML 被快感支配、无限的绝顶循环中、%ARGS:0%失却了思考的能力
+		PRINTFORML 梦境和现实的界限在脑海中变得模糊
+		PRINTFORML %ARGS:0%和%ARGS:1%的界限、在%ARGS:0%的身心中变得模糊
+IF FLAG:AUTOMODE
+    PRINTFORML 心灵和身体、都融化在梦中
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  心灵和身体、都融化在梦中
+ENDIF
+
+IF FLAG:AUTOMODE
+    PRINTFORML 已经不再是原来的少女的%ARGS:0%、成为了在梦境中小憩的%ENEMY_NAME(ARG:1)%…
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  已经不再是原来的少女的%ARGS:0%、成为了在梦境中小憩的%ENEMY_NAME(ARG:1)%…
+ENDIF
+
+	;ハニービー〇〇
+	CASE 153
+		PRINTFORML 完全力竭的%ARGS:0%被%ARGS:1%抱着飞向了某个地方
+		PRINTFORML %ARGS:1%的身影消失了一段时间后，迷宫的一个房间里再次响起了尖锐的翅膀声
+IF FLAG:AUTOMODE
+    PRINTFORML 跳着欢乐的舞蹈的%ARGS:1%怀中、温柔地抱着化为蜂少女的%ARGS:0%……
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  跳着欢乐的舞蹈的%ARGS:1%怀中、温柔地抱着化为蜂少女的%ARGS:0%……
+ENDIF
+
+	;通常悪堕ち・スライム化・ラミア化・アルラウネ化(従来のシステムメッセージ)
+	CASEELSE
+
+		PRINTFORML %ARGS:0%似乎被解放了...
+IF FLAG:AUTOMODE
+    PRINTFORML 但情况不对劲...
+    TWAIT FLAG:AUTOMODE * 400, 0
+ELSE
+    PRINTFORMW  但情况不对劲...
+ENDIF
+
+ENDSELECT
+PRINTL
+
